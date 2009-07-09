@@ -41,18 +41,18 @@
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">gis</Parameter>
       <Parameter name="table">
-	(select * from planet_osm_stations) as stations
+	(select * from planet_osm_stations_rel) as stations
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
    </Layer>
-   <Layer class="stops" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+   <Layer class="stations" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">gis</Parameter>
       <Parameter name="table">
-	(select * from planet_osm_point where (highway='bus_stop' or railway in ('tram_stop', 'halt', 'station') or amenity='bus_station' or aeroway='station') and part_of_station is null) as stops
+	(select * from planet_osm_stations_all where rel_id is null) as stations
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>

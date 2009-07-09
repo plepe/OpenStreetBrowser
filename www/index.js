@@ -102,7 +102,7 @@ function get_hash() {
 
 function call_back(data) {
   if(!data) {
-    //alert("no data");
+    alert("no data");
     return;
   }
 
@@ -115,6 +115,8 @@ function call_back(data) {
   map_div.className="map_with_info";
   var text_node=data.getElementsByTagName("text");
   if(text_node) {
+    if(!text_node[0])
+      alert("Returned data invalid");
     info_content.innerHTML=text_node[0].textContent;
   }
 
