@@ -4,8 +4,8 @@ export ROOT_PATH=/scratch/mapnik
 export SOFTWARE_PATH=/scratch/mapnik/software
 
 echo "* Delete old tiles"
-rm -r $ROOT_PATH/www-tiles
-mkdir $ROOT_PATH/www-tiles
+rm -r $ROOT_PATH/www/tiles
+mkdir $ROOT_PATH/www/tiles
 
 #echo "* Download new OSM-File"
 #cd $ROOT_PATH/data
