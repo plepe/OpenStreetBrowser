@@ -21,7 +21,7 @@ mkdir $ROOT_PATH/www-tiles
 
 echo "* Update style-sheet"
 cd $SOFTWARE_PATH/cascadenik
-$ROOT_PATH/src/combine_cascadenik.pl > publtrans.xml
+$ROOT_PATH/src/combine_cascadenik.pl > $ROOT_PATH/render/publtrans.xml
 
 echo "* Starting rendering"
 cd $ROOT_PATH/render
