@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map>
+<Map bgcolor="#b5d0d0" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+   <Stylesheet src="roads.mss" />
+   <Stylesheet src="land.mss" />
+   <Stylesheet src="water.mss" />
+   <Stylesheet src="road_features.mss" />
+   <Stylesheet src="amenities.mss" />
+   <Stylesheet src="rot_feature.mss" />
+
+<!-- all layers -->
+  <Layer class="world1" status="on" srs="+proj=merc +datum=WGS84 +over">
+    <StyleName>world1</StyleName>
+    <Datasource>
+      <Parameter name="type">shape</Parameter>
+      <Parameter name="file">/scratch/mapnik/data/world_boundaries/world_boundaries_m</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="world" status="on" srs="+proj=merc +datum=WGS84 +over">
+    <StyleName>world</StyleName>
+    <Datasource>
+      <Parameter name="type">shape</Parameter>
+      <Parameter name="file">/scratch/mapnik/data/world_boundaries/world_bnd_m</Parameter>
+    </Datasource>
+  </Layer>
+
+  <Layer class="coastpoly" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <StyleName>coast-poly</StyleName>
+    <Datasource>
+      <Parameter name="type">shape</Parameter>
+      <Parameter name="file">/scratch/mapnik/data/world_boundaries/processed_p</Parameter>
+    </Datasource>
+  </Layer>
+
+  <!-- LANDUSE -->
+  <Layer class="builtup" status="on" srs="+proj=merc +datum=WGS84 +over">
+    <StyleName>builtup</StyleName>
+    <Datasource>
+      <Parameter name="type">shape</Parameter>
+      <Parameter name="file">/scratch/mapnik/data/world_boundaries/builtup_area</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="landuse_extract" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+      (select name, way,
+        %SQL_LANDUSE%
+	from planet_osm_polygon_extract order by way_area desc) as landuse
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="landuse" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+      (select name, way,
+        %SQL_LANDUSE%
+        from planet_osm_polygon order by way_area desc) as landuse
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="roads_extract" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select way,
+	  'no' as tunnel,
+	  'no' as bridge,
+	  %SQL_highway%
+	  from (select *, CAST('' as text) as voltage from planet_osm_line_extract) as fake_extract
+	  order by %SQL_highway_level% asc
+	) as line_extract
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="roads_casing_end" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select way, 
+	  %SQL_bridge_tunnel%,
+	  highway, 
+	  %SQL_HIGHWAY_TYPE%
+	  from planet_osm_line
+	  order by %SQL_highway_level% asc
+	) as t
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="waterarea" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">(select name, way, (CASE WHEN "waterway" is not NULL THEN "waterway" WHEN "landuse" is not NULL THEN "landuse" WHEN "natural" is not NULL THEN "natural" END) as landuse from planet_osm_polygon where "natural" IN ('water', 'land') OR "landuse" IN ('water', 'reservoir', 'lake') OR "waterway" IN ('dock', 'riverbank')) as water</Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+
+%LAYERS%
+
+<!-- all layers: text -->
+<!--  <Layer class="roads_text" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select way, name,
+	  (CASE WHEN "bridge" in ('yes', 'true') THEN 'yes' ELSE 'no' END) as bridge,
+	  (CASE WHEN "tunnel" in ('yes', 'true') THEN 'yes' ELSE 'no' END) as tunnel,
+	  highway, 
+	  (CASE
+	    WHEN "highway" in ('unclassified', 'road', 'residential') THEN 'minor'
+	    WHEN "highway" in ('living_street', 'pedestrian', 'byway') THEN 'pedestrian'
+	    WHEN "highway" in ('service', 'bus_guideway') THEN 'service'
+	    WHEN "highway" in ('primary', 'secondary', 'tertiary') THEN "highway"
+	    WHEN "railway" in ('tram', 'light_rail', 'narrow_gauge') THEN 'tram'
+	    WHEN "railway" in ('rail', 'subway', 'preserved', 'monorail') THEN 'rail'
+	    WHEN "barrier" is not null THEN 'barrier'
+	    ELSE "highway" END) as highway_type
+	  from planet_osm_line
+	  order by highway_level desc
+	) as t
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer> -->
+
+  <Layer class="rot_feature" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">(select name, "highway" as type, way, 
+	 (CASE WHEN round(angle/3.14159265358979323846*8)+4=8 THEN 0 ELSE round(angle/3.14159265358979323846*8)+4 END) as rotate, on_highway
+	 from planet_osm_point order by z_order desc) as t</Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="amenity" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">(select name, way, 
+	%SQL_AMENITY%
+	 from planet_osm_point order by z_order desc) as t</Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <!--<Layer class="amenity" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">(select name, way as way, 
+	%SQL_AMENITY%
+	 from planet_osm_polygon order by z_order desc, way_area desc) as t</Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer> -->
+  <Layer class="area_text" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">(select name, way, way_area, (CASE
+	   WHEN "natural"='water' THEN 'water'
+	   WHEN "highway"='pedestrian' and "tunnel" in ('yes', 'true', '1') THEN 'pedestrian_tunnel'
+	   WHEN "highway"='pedestrian' THEN 'pedestrian'
+	   WHEN "leisure" in ('park') THEN 'park'
+	   END) as type
+	 from planet_osm_polygon 
+	   where "natural"='water' or "highway"='pedestrian' or "leisure" in ('park')
+	 order by z_order,way_area desc) as t</Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+
+%LAYERS2%
+
+  <Layer class="housenumber_lines" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">(
+        select osm_id, way, "addr:interpolation"
+          from planet_osm_line where "addr:interpolation" is not null) as t
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="housenumbers" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">(
+        select planet_osm_point.osm_id, "addr:housenumber" as number, planet_osm_point.way
+          from planet_osm_point left join housenumber on planet_osm_point.osm_id=housenumber.node_id where "addr:housenumber" is not null and housenumber.way is null) as t
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="housenumbers" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">(
+        select planet_osm_polygon.osm_id, "addr:housenumber" as number, planet_osm_polygon.way
+          from planet_osm_polygon left join housenumber on planet_osm_polygon.osm_id=housenumber.way_id where "addr:housenumber" is not null and housenumber.way is null) as t
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="hn" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+        (select * from housenumber) as t
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+
+</Map>

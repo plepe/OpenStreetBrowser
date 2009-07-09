@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# This script is used to generate a test rendering
+# Only a single database is used
+
+killall generate_tiles.py
+sleep 1
+
+export ROOT_PATH=/osm/skunkosm
+export SOFTWARE_PATH=/osm/osm/software
+export DB_NAME=skunk
+
+echo "* Delete old tiles"
+rm -r $ROOT_PATH/data/tiles/*
+
+echo "* Download new OSM-File"
+cd $ROOT_PATH/data
+wget -N http://download.geofabrik.de/osm/europe/austria.osm.bz2
+wget -N http://download.geofabrik.de/osm/europe/bulgaria.osm.bz2
+
+echo "* Importing to Database"
+cd $SOFTWARE_PATH/osm2pgsql
+psql -d gis -c "drop database $DB_NAME"
+psql -d gis -c "create database $DB_NAME"
+psql -d $DB_NAME -c "create language plpgsql"
+psql -d $DB_NAME -f /usr/share/postgresql/8.3/contrib/_int.sql
+psql -d $DB_NAME -f /usr/share/postgresql-8.3-postgis/lwpostgis.sql
+psql -d $DB_NAME -f /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql
+./osm2pgsql -c -s -m -d $DB_NAME $ROOT_PATH/data/austria.osm.bz2
+./osm2pgsql -a -s -m -d $DB_NAME $ROOT_PATH/data/bulgaria.osm.bz2
+
+echo "- init db for osmosis"
+psql $DB_NAME < ~/src/pgsql_simple_schema.sql
+
+cd $ROOT_PATH/data/
+~skunkosm/software/osmosis-current/bin/osmosis --read-xml ~/data/austria.osm.bz2 --write-pgsql-dump
+cd pgimport
+echo "- drop unneeded geometry"
+cut -f1-3 nodes.txt > nodes1.txt
+mv nodes1.txt nodes.txt
+echo "- load db from osmosis"
+psql $DB_NAME < ~/src/pgsql_simple_load.sql
+
+cd $ROOT_PATH/data/
+~skunkosm/software/osmosis-current/bin/osmosis --read-xml ~/data/bulgaria.osm.bz2 --write-pgsql-dump
+cd pgimport
+echo "- drop unneeded geometry"
+cut -f1-3 nodes.txt > nodes1.txt
+mv nodes1.txt nodes.txt
+echo "- load db from osmosis"
+psql $DB_NAME < ~/src/pgsql_simple_load.sql
+
+echo "* Preprocessing data"
+cd $ROOT_PATH
+for i in src/sql/*.sql ; do echo "Processing $i ..." ; psql $DB_NAME < $i ; done
+
+echo "* Update style-sheet"
+rm -f /tmp/cascadenik*png 2> /dev/null
+echo "BASE"
+echo "Layers"
+cd $ROOT_PATH/render
+./gen_layer.php > layers.mml
+./gen_land_point.php
+./gen_rotate_img.php
+cd $SOFTWARE_PATH/cascadenik
+$ROOT_PATH/src/combine_cascadenik.pl > $ROOT_PATH/render/base.xml
+echo "PT"
+cascadenik-compile.py $ROOT_PATH/render/overlay_pt.mml > $ROOT_PATH/render/overlay_pt.xml
+$ROOT_PATH/src/update_xml.pl $ROOT_PATH/render/overlay_pt.xml
+echo "CH"
+cascadenik-compile.py $ROOT_PATH/render/overlay_ch.mml > $ROOT_PATH/render/overlay_ch.xml
+$ROOT_PATH/src/update_xml.pl $ROOT_PATH/render/overlay_ch.xml
+echo "CAR"
+cascadenik-compile.py $ROOT_PATH/render/overlay_car.mml > $ROOT_PATH/render/overlay_car.xml
+$ROOT_PATH/src/update_xml.pl $ROOT_PATH/render/overlay_car.xml
+cd $ROOT_PATH
+$ROOT_PATH/src/gen_mss_from_wiki.php
+sleep 2
+
+echo "* Starting rendering"
+cd $ROOT_PATH/render
+nice ./render_all
+
+echo "* Finished"

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map>
+<Map bgcolor="#b5d0d0" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+   <Stylesheet src="places.mss" />
+
+   <Layer class="places_db" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+      (select name, name_en, (CASE WHEN "place"='city' AND "population">=1000000 THEN 'city_large' WHEN "place"='city' AND "population">=200000 THEN 'city_medium' WHEN "place"='town' AND "population">=30000 THEN 'town_large' ELSE "place" END) as place, "label" from planet_osm_place) as places
+<!--      (select planet_osm_point.*, (CASE WHEN population>1000000 THEN 'L' WHEN population>500000 THEN 'M' ELSE 'S' END) as pop_cat from planet_osm_point where place is not null order by place_level ASC, population DESC) as places -->
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+</Map>

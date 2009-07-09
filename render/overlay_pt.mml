@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map>
+
+<Map srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+   <Stylesheet src="overlay_pt.mss" />
+
+   <Layer class="routes" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+      (select way, 
+         (array['local', 'suburban', 'urban', 'regional', 'national', 'international'])[max(CASE
+	   WHEN importance='local' THEN 1
+	   WHEN importance='suburban' THEN 2
+	   WHEN importance='urban' THEN 3
+	   WHEN importance='regional' THEN 4
+	   WHEN importance='national' THEN 5
+	   WHEN importance='international' THEN 6 END)] as importance,
+	 (array['tram', 'bus', 'tram_bus'])[bit_or(CASE 
+	   WHEN route in ('tram', 'light_rail') THEN 1
+	   WHEN route in ('trolley', 'bus', 'minibus') THEN 2
+	   END)] as route,
+         (array['forward', 'backward', 'both'])[bit_or(CASE
+	   WHEN role[1]='forward' THEN 1
+	   WHEN role[1]='backward' THEN 2
+	   ELSE 3
+	 END)] as dir,
+	  (array['single', 'double'])[bit_or(CASE 
+	    WHEN "route" in ('trolley', 'bus', 'minibus') THEN 
+	      (CASE
+	        WHEN "oneway" in ('yes', 'true', '1') THEN 1
+		ELSE 2 END)
+	    WHEN "route" in ('tram', 'light_rail') THEN
+	      (CASE
+		WHEN "tracks" in ('1', 'single') THEN 1
+		ELSE 2 END) 
+	    ELSE
+	      (CASE
+		WHEN "tracks" in ('2', 'double') THEN 2
+		ELSE 1 END) END)] as tracks,
+	  (CASE WHEN "tunnel" in ('yes', 'true', '1') THEN 'yes' ELSE 'no' END) as tunnel,
+     	  (CASE
+	    WHEN "highway" in ('unclassified', 'road', 'residential') THEN 'minor'
+	    WHEN "highway" in ('living_street', 'pedestrian', 'byway') THEN 'pedestrian'
+	    WHEN "highway" in ('service', 'bus_guideway') THEN 'service'
+	    WHEN "highway" in ('primary', 'secondary', 'tertiary') THEN "highway"
+	    WHEN "highway" in ('path', 'cycleway', 'footway', 'bridleway', 'steps') THEN 'path'
+	    WHEN "railway" in ('tram', 'light_rail', 'narrow_gauge') THEN 'tram'
+	    WHEN "railway" in ('rail', 'subway', 'preserved', 'monorail') THEN 'rail'
+	    ELSE "highway" END) as highway_type
+       from planet_osm_line_route 
+       where route in ('trolley', 'bus', 'minibus', 'tram', 'light_rail')
+       group by way, tunnel, highway_type) as routes
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+   <Layer class="routes" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+      (select way, 
+         (array['local', 'suburban', 'urban', 'regional', 'national', 'international'])[max(CASE
+	   WHEN importance='local' THEN 1
+	   WHEN importance='suburban' THEN 2
+	   WHEN importance='urban' THEN 3
+	   WHEN importance='regional' THEN 4
+	   WHEN importance='national' THEN 5
+	   WHEN importance='international' THEN 6 END)] as importance,
+	 route,
+         (array['forward', 'backward', 'both'])[bit_or(CASE
+	   WHEN role[1]='forward' THEN 1
+	   WHEN role[1]='backward' THEN 2
+	   ELSE 3
+	 END)] as dir,
+	 'single' as tracks,
+	  (CASE WHEN "tunnel" in ('yes', 'true', '1') THEN 'yes' ELSE 'no' END) as tunnel,
+     	  (CASE
+	    WHEN "highway" in ('unclassified', 'road', 'residential') THEN 'minor'
+	    WHEN "highway" in ('living_street', 'pedestrian', 'byway') THEN 'pedestrian'
+	    WHEN "highway" in ('service', 'bus_guideway') THEN 'service'
+	    WHEN "highway" in ('primary', 'secondary', 'tertiary') THEN "highway"
+	    WHEN "highway" in ('path', 'cycleway', 'footway', 'bridleway', 'steps') THEN 'path'
+	    WHEN "railway" in ('tram', 'light_rail', 'narrow_gauge') THEN 'tram'
+	    WHEN "railway" in ('rail', 'subway', 'preserved', 'monorail') THEN 'rail'
+	    ELSE "highway" END) as highway_type
+       from planet_osm_line_route 
+       where route in ('train', 'rail', 'railway', 'subway', 'ferry')
+       group by way, tunnel, highway_type, route
+       ) as routes
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+   <Layer class="routes_features" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+      (select way, 
+         (array['local', 'suburban', 'urban', 'regional', 'national', 'international'])[max(CASE
+	   WHEN importance='local' THEN 1
+	   WHEN importance='suburban' THEN 2
+	   WHEN importance='urban' THEN 3
+	   WHEN importance='regional' THEN 4
+	   WHEN importance='national' THEN 5
+	   WHEN importance='international' THEN 6 END)] as importance,
+	 (array['tram', 'bus', 'tram_bus'])[bit_or(CASE 
+	   WHEN route in ('tram', 'light_rail') THEN 1
+	   WHEN route in ('trolley', 'bus', 'minibus') THEN 2
+	   END)] as route,
+         (array['forward', 'backward', 'both'])[bit_or(CASE
+	   WHEN role[1]='forward' THEN 1
+	   WHEN role[1]='backward' THEN 2
+	   ELSE 3
+	 END)] as dir,
+	  (array['single', 'double'])[bit_or(CASE 
+	    WHEN "route" in ('trolley', 'bus', 'minibus') THEN 
+	      (CASE
+	        WHEN "oneway" in ('yes', 'true', '1') THEN 1
+		ELSE 2 END)
+	    WHEN "route" in ('tram', 'light_rail') THEN
+	      (CASE
+		WHEN "tracks" in ('1', 'single') THEN 1
+		ELSE 2 END) 
+	    ELSE
+	      (CASE
+		WHEN "tracks" in ('2', 'double') THEN 2
+		ELSE 1 END) END)] as tracks,
+	  (CASE WHEN "tunnel" in ('yes', 'true', '1') THEN 'yes' ELSE 'no' END) as tunnel,
+     	  (CASE
+	    WHEN "highway" in ('unclassified', 'road', 'residential') THEN 'minor'
+	    WHEN "highway" in ('living_street', 'pedestrian', 'byway') THEN 'pedestrian'
+	    WHEN "highway" in ('service', 'bus_guideway') THEN 'service'
+	    WHEN "highway" in ('primary', 'secondary', 'tertiary') THEN "highway"
+	    WHEN "highway" in ('path', 'cycleway', 'footway', 'bridleway', 'steps') THEN 'path'
+	    WHEN "railway" in ('tram', 'light_rail', 'narrow_gauge') THEN 'tram'
+	    WHEN "railway" in ('rail', 'subway', 'preserved', 'monorail') THEN 'rail'
+	    ELSE "highway" END) as highway_type
+       from planet_osm_line_route 
+       where route in ('trolley', 'bus', 'minibus', 'tram', 'light_rail')
+       group by way, tunnel, highway_type
+       ) as routes
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+   <Layer class="routes_features" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+      (select way, 
+         (array['local', 'urban', 'regional', 'national', 'international'])[max(CASE
+	   WHEN importance='local' THEN 1
+	   WHEN importance='suburban' THEN 2
+	   WHEN importance='urban' THEN 3
+	   WHEN importance='regional' THEN 4
+	   WHEN importance='national' THEN 5
+	   WHEN importance='international' THEN 6 END)] as importance,
+	 (CASE WHEN route in ('train', 'rail', 'railway') THEN 'rail'
+	       ELSE "route" END) as route,
+         (array['forward', 'backward', 'both'])[bit_or(CASE
+	   WHEN role[1]='forward' THEN 1
+	   WHEN role[1]='backward' THEN 2
+	   ELSE 3
+	 END)] as dir,
+	 'single' as tracks,
+	  (CASE WHEN "tunnel" in ('yes', 'true', '1') THEN 'yes' ELSE 'no' END) as tunnel,
+     	  (CASE
+	    WHEN "highway" in ('unclassified', 'road', 'residential') THEN 'minor'
+	    WHEN "highway" in ('living_street', 'pedestrian', 'byway') THEN 'pedestrian'
+	    WHEN "highway" in ('service', 'bus_guideway') THEN 'service'
+	    WHEN "highway" in ('primary', 'secondary', 'tertiary') THEN "highway"
+	    WHEN "highway" in ('path', 'cycleway', 'footway', 'bridleway', 'steps') THEN 'path'
+	    WHEN "railway" in ('tram', 'light_rail', 'narrow_gauge') THEN 'tram'
+	    WHEN "railway" in ('rail', 'subway', 'preserved', 'monorail') THEN 'rail'
+	    ELSE "highway" END) as highway_type
+       from planet_osm_line_route 
+       where route in ('train', 'rail', 'railway', 'subway', 'ferry')
+       group by way, tunnel, highway_type, route
+       ) as routes
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+   <Layer class="stations_bbox" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select name, importance, bbox as way from planet_osm_stations) as stations
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+   <Layer class="stations_all" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select name, importance, way from planet_osm_point where
+  (highway='bus_stop' or railway='tram_stop' or
+    railway='station' or railway='halt' or
+    amenity='bus_station' or aeroway='station' or
+    amenity='ferry_terminal')
+	) as stations
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+   <Layer class="stations_center" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select name, importance, center as way from planet_osm_stations) as stations
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+   <Layer class="stations_top" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select name, importance, top as way from planet_osm_stations) as stations
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+   <Layer class="routestext" name="routes-text" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <StyleName>routes-text</StyleName>
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+      (select route_refs as ref, way, importance, route, tunnel, bridge, highway, railway,
+     	  (CASE
+	    WHEN "highway" in ('unclassified', 'road', 'residential') THEN 'minor'
+	    WHEN "highway" in ('living_street', 'pedestrian', 'byway') THEN 'pedestrian'
+	    WHEN "highway" in ('service', 'bus_guideway') THEN 'service'
+	    WHEN "highway" in ('primary', 'secondary', 'tertiary') THEN "highway"
+	    WHEN "railway" in ('tram', 'light_rail', 'narrow_gauge') THEN 'tram'
+	    WHEN "railway" in ('rail', 'subway', 'preserved', 'monorail') THEN 'rail'
+	    ELSE "highway" END) as highway_type
+ 
+      from planet_osm_line_routes_text where route=any(array['train','rail','railway','subway','light_rail','tram','trolley','bus','minibus','ferry'])) as routes
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+
+
+</Map>

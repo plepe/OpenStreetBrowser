@@ -1,0 +1,21 @@
+<?
+$network_levels=array("international"=>0, "national"=>0, "region"=>7, "urban"=>12, "local"=>13);
+$route_levels=array("train", "rail", "railway", "subway", "light_rail", "ferry", "tram", "trolley", "bus", "minibus");
+$route_types=array("train"=>"Train", "rail"=>"Railway", "railway"=>"Railway", "subway"=>"Subway", "light_rail"=>"Light Rail", "ferry"=>"Ferry", "tram"=>"Tram", "trolley"=>"Trolley", "bus"=>"Bus", "minibus"=>"Minibus");
+$db_name="gis";
+$db_user="www";
+$db_passwd="PASSWORD";
+$db_host="localhost";
+$SRID=900913;
+
+$type_list=array("w"=>"way", "n"=>"node", "r"=>"relation");
+$type_list_short=array("w"=>"way", "n"=>"node", "r"=>"rel");
+$type_list_plural=array("w"=>"ways", "n"=>"nodes", "r"=>"rels");
+$sql_debug=false;
+
+$wiki_stylesheet="http://wiki.openstreetmap.org/index.php?title=OpenStreetBrowser/Stylesheet&action=raw";
+$wiki_img="http://wiki.openstreetmap.org/wiki/Image:";
+$wiki_imgsrc="http://wiki.openstreetmap.org";
+$symbol_path="/home/osm/render/symbols";
+$style_path="/home/osm/render";
+$overlays=array("culture"=>"overlay_culture", "gastro"=>"overlay_food", "services"=>"overlay_services");

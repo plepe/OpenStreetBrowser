@@ -1,0 +1,186 @@
+<!-- Layer %LAYER_NUM% -->
+  <Layer class="roads_casing" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select way, 
+	  %SQL_bridge_tunnel%,
+	  highway, 
+	  %SQL_HIGHWAY_TYPE%
+	  from planet_osm_line
+	  where %LAYER_WHERE%
+	  order by %SQL_highway_level% asc
+	) as t1
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="square_casing" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select way,
+	    %SQL_bridge_tunnel%,
+	    (CASE
+	      WHEN "highway"='pedestrian' THEN 'pedestrian'
+	      WHEN "amenity"='parking' THEN 'parking'
+	      END) as type
+	  from planet_osm_polygon
+	  where %LAYER_WHERE%
+	  and ("highway"='pedestrian' or "amenity"='parking')
+	) as t2
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="square_fill" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select way,
+	    %SQL_bridge_tunnel%,
+	    (CASE
+	      WHEN "highway"='pedestrian' THEN 'pedestrian'
+	      WHEN "amenity"='parking' THEN 'parking'
+	      END) as type
+	  from planet_osm_polygon
+	  where %LAYER_WHERE%
+	  and ("highway"='pedestrian' or "amenity"='parking')
+	) as t3
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="roads_fill" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select way, 
+	  %SQL_bridge_tunnel%,
+	  highway, railway,
+	  %SQL_HIGHWAY_TYPE%
+	  from planet_osm_line
+	  where %LAYER_WHERE%
+	  order by %SQL_highway_level% asc
+	) as t4
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="roads_rail" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select way, 
+	  %SQL_bridge_tunnel%,
+	  highway,
+	  (CASE 
+	    WHEN "railway" in ('tram', 'light_rail') THEN 'tram'
+	    WHEN "railway" in ('rail', 'narrow_gauge', 'monorail', 'subway') THEN 'rail' 
+	    END) as railway,
+	  (CASE WHEN "railway" in ('subway', 'tram', 'light_rail') THEN
+	    (CASE
+	      WHEN "tracks" in ('left', 'right') THEN "tracks"
+	      WHEN "tracks" in ('1', 'single') THEN 'single'
+	      WHEN "tracks" in ('3', '4', '5', '6') THEN  'multiple'
+	      ELSE 'double' END) 
+	  ELSE
+	    (CASE
+	      WHEN "tracks" in ('2', 'double') THEN 'double'
+	      WHEN "tracks" in ('3', '4', '5', '6') THEN  'multiple'
+	      ELSE 'single' END) END) as tracks
+	  from planet_osm_line
+	  where %LAYER_WHERE%
+	  order by %SQL_highway_level% asc
+	) as t5
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="roads_features" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+	(select way, 
+	  %SQL_bridge_tunnel%,
+	  highway, 
+	  %SQL_HIGHWAY_TYPE%
+	  from planet_osm_line
+	  where %LAYER_WHERE%
+	  order by %SQL_highway_level% desc
+	) as t6
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+  <Layer class="buildings" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">(select name, way,
+       (CASE
+	  WHEN "amenity" in ('place_of_worship')
+	    THEN 'worship'
+	  WHEN "highway" in ('toll_booth')
+	    OR "railway" in ('station', 'platform')
+	    OR "aeroway" in ('terminal', 'helipad')
+	    OR "aerialway" in ('station')
+	    OR "amenity" in ('ferry_terminal')
+	    THEN 'road_amenities'
+	  WHEN "barrier" in ('hedge', 'fence')
+	    THEN 'nature_building'
+	  WHEN "power" in ('generator')
+	    OR "man_made" in ('gasometer', 'wasterwater_plant', 'watermill', 'water_tower', 'water_works', 'windmill', 'works', 'reservoir_covered')
+	    THEN 'industrial'
+	  WHEN "amenity" in ('college', 'cinema', 'kindergarten', 'library', 'school', 'university')
+	    THEN 'education'
+          WHEN "amenity" in ('theatre', 'arts_centre', 'cinema', 'fountain', 'studio')
+	    THEN 'culture'
+	  WHEN "shop" is not null
+	    THEN 'shop'
+	  WHEN "amenity" in ('hospital', 'emergency_phone', 'fire_station', 'police')
+	    THEN 'emergency'
+	  WHEN "amenity" in ('pharmacy', 'baby_hatch', 'dentist', 'doctors', 'veterinary')
+	    THEN 'health'
+	  WHEN "amenity" in ('government', 'gouvernment', 'public_building', 'court_house', 'embassy', 'prison', 'townhall')
+	    THEN 'public'
+	  WHEN "amenity" in ('post_office')
+	    THEN 'communication'
+	  WHEN "amenity" in ('hospital', 'baby_hatch', 'dentist', 'doctors', 'pharmacy', 'veterinary')
+	    THEN 'public'
+	  WHEN "tourism" in ('museum', 'artwork', 'attraction', 'viewpoint', 'theme_park', 'zoo')
+	    THEN 'culture'
+	  WHEN "military" is not null 
+	    THEN 'military'
+	  WHEN "historic" is not null
+	    THEN 'historic'
+	  WHEN "building" in ('residental', 'residential', 'apartments', 'block', 'flats', 'appartments')
+	     THEN 'residential'
+	  WHEN "amenity" in ('bicycle_parking', 'bicycle_rental', 'shelter')
+	    OR "leisure" in ('sports_centre', 'stadium', 'track', 'pitch', 'ice_rink')
+	    OR "sport" is not null
+	    THEN 'sport'
+	  ELSE
+	    'default'
+	END) as building 
+	 from planet_osm_polygon 
+	 where ("building" is not null or not "building" in ('no'))
+	 and %LAYER_WHERE%
+	 order by z_order,way_area desc) as buildings</Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
+
