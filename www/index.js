@@ -297,7 +297,7 @@ function init() {
   var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
   var layerTah = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
   var layertest1    = new OpenLayers.Layer.OSM("Test (Skunk)", "/skunk/tiles/", {numZoomLevels: 17});
-  var layertest2    = new OpenLayers.Layer.OSM("Test (Manu)", "/manu/tiles/", {numZoomLevels: 17});
+  var layertest2    = new OpenLayers.Layer.OSM("Test (Lesewesen)", "/lesewesen/tiles/", {numZoomLevels: 17});
   vector_layer=new OpenLayers.Layer.Vector("Data", {});
 
   map.addLayers([ layerpubtran, layerMapnik, layerTah, layertest1, layertest2, vector_layer]);
