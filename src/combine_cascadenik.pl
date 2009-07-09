@@ -2,7 +2,7 @@
 
 $root_path=$ENV{ROOT_PATH};
 
-open(O, "python compile.py $root_path/render/global.mml|");
+open(O, "python compile.py $root_path/render/routes.mml|");
 while($r=<O>) {
   if($r =~ /<Style /) {
     $mode=1;
@@ -21,7 +21,7 @@ while($r=<O>) {
 }
 close(O);
 
-open(O, "<osm-publ.mml");
+open(O, "<$root_path/render/global.mml");
 while($r=<O>) {
   if($r eq "INSERTSTYLE\n") {
     print $text[1];
