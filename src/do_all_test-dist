@@ -1,0 +1,29 @@
+#!/bin/bash
+
+export ROOT_PATH=/scratch/mapnik
+export SOFTWARE_PATH=/scratch/mapnik/software
+
+echo "* Delete old tiles"
+rm -r $ROOT_PATH/www-tiles
+mkdir $ROOT_PATH/www-tiles
+
+#echo "* Download new OSM-File"
+#cd $ROOT_PATH/data
+#wget -N http://download.geofabrik.de/osm/europe.osm.bz2
+#
+#echo "* Importing to Database"
+#cd $SOFTWARE_PATH/osm2pgsql
+#./osm2pgsql -c -s -m -d gis /scratch/mapnik/data/europe.osm.bz2
+#
+#echo "* Preprocessing data"
+#cd $ROOT_PATH
+#psql gis < src/process.sql
+
+echo "* Update style-sheet"
+cd $SOFTWARE_PATH/cascadenik
+$ROOT_PATH/src/combine_cascadenik.pl > publtrans.xml
+
+echo "* Starting rendering"
+cd $ROOT_PATH/render
+source ./my-mapnik-env
+./generate_tiles.py
