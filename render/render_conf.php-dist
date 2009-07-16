@@ -14,7 +14,7 @@ $list_places=array(
   array("Österreich"  ,  8.7  , 46.2  , 17.5  , 49.0  , 9)
 );
 $list_layer=array(
-//      Layer         , File           , minzoom
+//      Layer         , File           , minzoom[, maxzoom]
   array("base"        , "base"         ,  0),
   array("car"         , "overlay_car"  ,  0),
   array("ch"	      , "overlay_ch"   ,  3),

@@ -295,10 +295,10 @@ function init() {
 	    displayProjection: new OpenLayers.Projection("EPSG:4326")
 	  });
 
-  var layerpubtran = new OpenLayers.Layer.OSM("Public Transport", "http://pitr.cg.tuwien.ac.at/tiles/", {numZoomLevels: 17});
+  var layerpubtran = new OpenLayers.Layer.OSM("OpenStreetBrowser", "tiles/base/", {numZoomLevels: 17});
   var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
   var layerTah = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
-  var layertest1    = new OpenLayers.Layer.OSM("Test (Skunk)", "/skunk/tiles/", {numZoomLevels: 17});
+  var layertest1    = new OpenLayers.Layer.OSM("Main OSB", "/tiles/base/", {numZoomLevels: 17});
   var layertest2    = new OpenLayers.Layer.OSM("Test (Lesewesen)", "/lesewesen/tiles/", {numZoomLevels: 17});
   vector_layer=new OpenLayers.Layer.Vector("Data", {});
 
@@ -318,6 +318,7 @@ function init() {
 
   map.events.register("moveend", map, view_changed);
   map.events.register("movestart", map, view_changed_start);
+  overlays_init();
 }
 
 window.onload=init;
