@@ -1,0 +1,34 @@
+#!/usr/bin/php
+<?
+function current_load() {
+  $p=fopen("/proc/loadavg", "r");
+  $r=fgets($p);
+  fclose($p);
+  ereg("^([0-9\.]+) ", $r, $m);
+  return $m[1];
+}
+
+$left=65;
+$right=69;
+$top=40;
+$down=44;
+$from_zoom=7; /* positions for left/right/top/down from that zoom level */
+$min_zoom=8;
+$max_zoom=9;
+$tileset="base";
+$steps=2; // depends on renderd
+
+for($zoom=$min_zoom; $zoom<=$max_zoom; $zoom++) {
+  $mul=pow(2, $zoom-$from_zoom);
+  print "$zoom $mul:  ".floor($left*$mul)." ".ceil($right*$mul)."\n";
+  for($i=floor($left*$mul); $i<=ceil($right*$mul); $i+=$steps) {
+    for($j=floor($top*$mul); $j<=floor($down*$mul); $j+=$steps) {
+      while(current_load()>1.0) {
+	print "Waiting for lower load\n";
+	sleep(10);
+      }
+      system("wget -O - http://localhost/tiles/$tileset/$zoom/$i/$j.png/dirty > /dev/null");
+      sleep(5);
+    }
+  }
+}
