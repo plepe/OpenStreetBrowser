@@ -60,9 +60,10 @@
   polygon-fill: #ccb18b;
 }
 .landuse_extract[landuse=natural][sub_type=t0][zoom>=5][zoom<10],
-.landuse_extract[landuse=nature_reserve][zoom>=5][zoom<10],
 .landuse[landuse=natural][sub_type=t0][zoom>=10][zoom<14] {
   polygon-fill: #8dc56c;
+}
+.landuse_extract[landuse=nature_reserve][zoom>=5][zoom<10] {
 }
 .landuse[landuse=natural][sub_type=t0][zoom>=14] {
   polygon-pattern-file: url('/scratch/mapnik/data/symbols/forest.png');
