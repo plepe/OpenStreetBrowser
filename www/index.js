@@ -292,7 +292,11 @@ function init() {
 	    maxResolution: 156543.0399,
 	    units: 'm',
 	    projection: new OpenLayers.Projection("EPSG:900913"),
-	    displayProjection: new OpenLayers.Projection("EPSG:4326")
+	    displayProjection: new OpenLayers.Projection("EPSG:4326"),
+	    controls: [ new OpenLayers.Control.PanZoomBar(),
+			new OpenLayers.Control.LayerSwitcher(),
+			new OpenLayers.Control.Navigation() ]
+
 	  });
 
   var layerpubtran = new OpenLayers.Layer.OSM("OpenStreetBrowser", "tiles/base/", {numZoomLevels: 17});
