@@ -49,7 +49,7 @@ create table planet_osm_line_extract (
 SELECT AddGeometryColumn('planet_osm_line_extract', 'way', 900913, 'LINESTRING', 2);
 
 insert into planet_osm_line_extract
-  select osm_id, name, network, highway, waterway, railway, barrier, "natural",
+  select osm_id, name, network, highway, waterway, aeroway, railway, barrier, power, man_made, "natural",
     importance, way
   from planet_osm_line
   where ("highway" in ('motorway', 'trunk', 'primary', 'secondary', 'tertiary') or
