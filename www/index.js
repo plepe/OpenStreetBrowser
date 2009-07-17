@@ -1,5 +1,3 @@
-var style_default;
-var style_tunnel;
 var map;
 var vector_layer;
 var showing="";
@@ -7,8 +5,25 @@ var showing="";
 var display_data;
 var redraw_timer;
 var view_changed_timer;
-var highlight_feature;
+var highlight_feature=[];
 var highlight_feature_timer;
+var lang;
+var debug_msg;
+var shown_features=[];
+var showing_details=true;
+
+function show_msg(msg, debuginfo) {
+  hide_msg();
+  debug_msg=document.createElement("div");
+  debug_msg.className="debugMsg";
+  debug_msg.innerHTML=msg+"<br><pre id='debug'>"+debuginfo+"</pre><input type='button' value='Close' onClick='hide_msg()'>\n";
+  document.body.appendChild(debug_msg);
+}
+
+function hide_msg() {
+  if(debug_msg)
+    debug_msg.parentNode.removeChild(debug_msg);
+}
 
 function go_to(lon, lat, zoom) {
     var lonlat = new OpenLayers.LonLat(lon, lat);
@@ -34,75 +49,107 @@ function pan_to_highlight(lon, lat) {
   map.panTo(new OpenLayers.LonLat(lon, lat));
 }
 
-function set_highlight(list) {
-  highlight_feature=[];
-  var lon=0, lat=0;
+var last_highlight_request;
 
+function set_highlight_after_loading(response) {
+  var data=response.responseXML;
+
+  if(!data) {
+    alert("no data\n"+response.responseText);
+    return;
+  }
+
+  var osm=data.getElementsByTagName("osm");
+  load_objects_from_xml(osm);
+
+  var req=data.getElementsByTagName("request");
+  req=req[0];
+  var r=req.firstChild;
+  var list=[];
+  while(r) {
+    list.push(r.getAttribute("id"));
+    r=r.nextSibling;
+  }
+
+  real_set_highlight();
+}
+
+function real_set_highlight() {
+  var new_highlight_feature=[];
+
+  for(var i=0; i<last_highlight_request.length; i++) {
+    var el=get_loaded_object(last_highlight_request[i]);
+    if(el) {
+      var hl=el.get_highlight();
+      new_highlight_feature=new_highlight_feature.concat(hl);
+    }
+  }
+
+  vector_layer.addFeatures(new_highlight_feature);
+  for(var i in new_highlight_feature)
+    highlight_feature.push(new_highlight_feature[i]);
+}
+
+function set_highlight(list, dont_load) {
+  //highlight_feature=[];
   if(highlight_feature_timer)
     clearTimeout(highlight_feature_timer);
 
-  for(var i=0; i<list.length; i++) {
-    var el=get_loaded_element(list[i]);
-    var p=new OpenLayers.Geometry.Point(el.data.getAttribute("lon"), el.data.getAttribute("lat"));
-    lon+=Number(el.data.getAttribute("lon"));
-    lat+=Number(el.data.getAttribute("lat"));
+  var load_list=[];
+  last_highlight_request=list;
 
-    highlight_feature.push(new OpenLayers.Feature.Vector(p, 0, {
-      externalGraphic: "ring.png",
-      graphicWidth: 25,
-      graphicHeight: 25,
-      graphicXOffset: -13,
-      graphicYOffset: -13,
-      graphicOpacity: 1,
-      fill: "none"
-    }));
+  for(var i=0; i<list.length; i++) {
+    var el=get_loaded_object(list[i]);
+    if(!el) {
+      load_list.push(list[i]);
+    }
   }
 
-  vector_layer.addFeatures(highlight_feature);
+  if(load_list.length&&(!dont_load)) {
+    ajax("load_object", { "obj": load_list, "lang": lang}, set_highlight_after_loading);
+  }
 
-  lon=lon/list.length;
-  lat=lat/list.length;
-  highlight_feature_timer=setTimeout("pan_to_highlight("+lon+", "+lat+")", 500);
+  real_set_highlight();
+
+
+//  lon=lon/list.length;
+//  lat=lat/list.length;
+//  highlight_feature_timer=setTimeout("pan_to_highlight("+lon+", "+lat+")", 500);
 }
 
-function unset_hightlight() {
+function unset_highlight() {
   if(highlight_feature_timer)
     clearTimeout(highlight_feature_timer);
 
   vector_layer.removeFeatures(highlight_feature);
-  highlight_feature=0;
+  highlight_feature=[];
+  last_highlight_request=[];
 }
 
 function hide() {
-  var map_key=document.getElementById("map_key");
+  //var map_key=document.getElementById("map_key");
   var details=document.getElementById("details");
   var map=document.getElementById("map");
 
-  map_key.className="info_hidden";
   details.className="info_hidden";
-  map.className="map";
-}
-
-function search_focus(ob) {
-  ob.value="";
-}
-
-function search(ob) {
-  alert(ob.value);
-// TODO
+//  map.className="map";
 }
 
 function hide_features() {
-  vector_layer.removeFeatures(vector_layer.features);
+  vector_layer.removeFeatures(shown_features);
+  shown_features=[];
+  call_hooks("hide_features");
 }
 
 function get_hash() {
   return location.hash.substr(1);
 }
 
-function call_back(data) {
+function call_back(response) {
+  var data=response.responseXML;
+
   if(!data) {
-    alert("no data");
+    alert("no data\n"+response.responseText);
     return;
   }
 
@@ -112,19 +159,19 @@ function call_back(data) {
   showing=get_hash();
 
   info.className="info";
-  map_div.className="map_with_info";
+//  map_div.className="map";
   var text_node=data.getElementsByTagName("text");
   if(text_node) {
     if(!text_node[0])
-      alert("Returned data invalid");
-    info_content.innerHTML=text_node[0].textContent;
+      show_msg("Returned data invalid", response.responseText);
+    info_content.innerHTML=get_content(text_node[0]);
   }
 
   var osm=data.getElementsByTagName("osm");
-  load_elements_from_xml(osm);
+  load_objects_from_xml(osm);
 
   var x=get_hash();
-  x=get_loaded_element(x);
+  x=get_loaded_object(x);
 
   if(x) {
     x.display();
@@ -135,126 +182,46 @@ function call_back(data) {
     }
   }
 
+  check_overlays(data);
+  call_hooks("load_details", data, x);
+  showing_details=true;
+
   return;
-
-  display_data=data;
-
-  vector_layer.removeFeatures(vector_layer.features);
-
-  if(data[2]) {
-    var features=new Array();
-
-    for(var i in data[2]) {
-      var d=data[2][i];
-
-      if(d.type=="icon") {
-	var p=new OpenLayers.Geometry.Point(d.lon, d.lat);
-	switch(d.icon) {
-	  case "ring":
-	    features.push(new OpenLayers.Feature.Vector(p, 0, {
-	      externalGraphic: "ring.png",
-	      graphicWidth: 25,
-	      graphicHeight: 25,
-	      graphicXOffset: -13,
-	      graphicYOffset: -13,
-	      graphicOpacity: 1
-	    }));
-	    break;
-	  case "hst":
-	    features.push(new OpenLayers.Feature.Vector(p, 0, {
-	      externalGraphic: "hst.png",
-	      graphicWidth: 7,
-	      graphicHeight: 7,
-	      graphicXOffset: -4,
-	      graphicYOffset: -4,
-	      graphicOpacity: 1
-	    }));
-	    break;
-	}
-      }
-      else if(d.type=="linestring") {
-	var p=[];
-	for(var j in d.line)
-	  p.push(new OpenLayers.Geometry.Point(d.line[j].lon, d.line[j].lat));
-        var linestring=new OpenLayers.Geometry.LineString(p)
-        var vector=new OpenLayers.Feature.Vector(linestring, 0, {
-	  strokeWidth: 4,
-	  strokeColor: "black",
-	  strokeOpacity: 0.7
-	})
-
-	features.push(vector);
-      }
-    }
-
-    vector_layer.addFeatures(features);
-  }
-
-  if(get_hash()=="route") {
-    //if(display_data[2][280171726]) {
-      var lat=5952942.92746939; //display_data[2][280171726].lat;
-      var lon=1718481.67040048; //display_data[2][280171726].lon;
-
-      var p1=new OpenLayers.Vector.Point(new OpenLayers.LonLat(15.30, 48.00));
-      var p2=new OpenLayers.Vector.Point(new OpenLayers.LonLat(15.45, 47.06));
-
-      vector_layer.addFeature(p1);
-      vector_layer.addFeature(p1);
-
-      var line = new OpenLayers.Vector.Line(p1,p4);
-      line.setStyle(new OpenLayers.Vector.CanvasStyle({'strokeStyle':'blue', 'lineWidth': 2, 'globalAlpha': .5})); 
-
-      layer.addFeature(line);
-
-      vector_layer.addFeature(p1);
-    //}
-  }
-}
-
-function list_routes() {
-  var x=map.calculateBounds();
-  ajax("list_routes", { "left": x.left, "top": x.top, "right": x.right, "bottom": x.bottom, "zoom": map.zoom }, call_back);
-
-  var info_content=document.getElementById("details_content");
-  var map_div=document.getElementById("map");
-  var info=document.getElementById("details");
-
-  info.className="info_loading";
-  map_div.className="map_with_info";
-  if(showing!="list_routes")
-    info_content.innerHTML="Loading ...";
 }
 
 function redraw() {
   hide_features();
+  unset_highlight();
   var x=get_hash();
+  showing_details=false;
 
   if(x=="") {
-    hide();
+    list_reload();
   }
   else if(x=="mapkey") {
     hide();
-    var info=document.getElementById("map_key");
+    //var info=document.getElementById("map_key");
     var map=document.getElementById("map");
 
     info.className="info";
-    map.className="map_with_info";
+//    map.className="map";
   }
-  else if(x=="list_routes") {
-    list_routes();
+  else if(x.substr(0, 7)=="search_") {
+    first_load=0;
+    real_search(x.substr(7));
   }
   else {
     var param={"obj": x};
-    if(!get_loaded_element(x))
-      param["load"]=1;
+    param["lang"]=lang;
+    call_hooks("request_details", param);
     ajax("details", param, call_back);
 
     var details_content=document.getElementById("details_content");
     var details=document.getElementById("details");
-    var map=document.getElementById("map");
+//    var map=document.getElementById("map");
 
-    details_content.innerHTML="Loading ...";
-    map_key.className="info_hidden";
+    details_content.innerHTML="<div class=\"loading\"><img src=\"img/ajax_loader.gif\" /> loading</div>";
+    //map_key.className="info_hidden";
     details.className="info_loading";
   }
 }
@@ -262,6 +229,7 @@ function redraw() {
 var last_location_hash;
 function check_redraw() {
   if(location.hash!=last_location_hash) {
+    call_hooks("hash_changed");
     last_location_hash=location.hash;
     redraw();
   }
@@ -270,22 +238,35 @@ function check_redraw() {
 }
 
 function view_changed_start() {
+  first_load=0;
   if(view_changed_timer)
     clearTimeout(view_changed_timer);
 }
 
 function view_changed_delay() {
-  if(get_hash()=="list_routes")
-    list_routes();
+  if(get_hash()=="")
+    list_reload();
 }
 
 function view_changed() {
   if(view_changed_timer)
     clearTimeout(view_changed_timer);
-  view_changed_timer=setTimeout("view_changed_delay()", 500);
+  view_changed_timer=setTimeout("view_changed_delay()", 300);
+  check_mapkey();
 }
 
 function init() {
+  ob=document.getElementById("lang");
+  if(!ob)
+    lang="";
+  else
+    lang=ob.value;
+
+  if(!location.hash) {
+    location.hash="#";
+  }
+//  else if(location.hash=="#")
+
   map = new OpenLayers.Map("map",
 	  { maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
 	    numZoomLevels: 19,
@@ -296,33 +277,55 @@ function init() {
 	    controls: [ new OpenLayers.Control.PanZoomBar(),
 			new OpenLayers.Control.LayerSwitcher(),
 			new OpenLayers.Control.Navigation() ]
-
 	  });
 
-  var layerpubtran = new OpenLayers.Layer.OSM("OpenStreetBrowser", "tiles/base/", {numZoomLevels: 17});
-  var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
-  var layerTah = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
-  var layertest1    = new OpenLayers.Layer.OSM("Main OSB", "/tiles/base/", {numZoomLevels: 17});
-  var layertest2    = new OpenLayers.Layer.OSM("Test (Lesewesen)", "/lesewesen/tiles/", {numZoomLevels: 17});
-  vector_layer=new OpenLayers.Layer.Vector("Data", {});
+  var layerpubtran = new OpenLayers.Layer.OSM("OpenStreetBrowser", "http://www.openstreetbrowser.org/skunk/tiles/base/", {numZoomLevels: 19});
+//  var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
+//  var layerTah = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
+//  var layercycle = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
+//  var layertest1    = new OpenLayers.Layer.OSM("Test (Skunk)", "/tiles/base/", {numZoomLevels: 19});
+//  var layertest2    = new OpenLayers.Layer.OSM("Test (Lesewesen)", "/lesewesen/tiles/base/", {numZoomLevels: 17});
 
-  map.addLayers([ layerpubtran, layerMapnik, layerTah, layertest1, layertest2, vector_layer]);
-  map.addControl(new OpenLayers.Control.LayerSwitcher());
-  map.addControl(new OpenLayers.Control.Permalink());
+  //map.addLayers([ layerpubtran, layerMapnik, layerTah, layercycle, layertest1, layertest2]);
+  map.addLayers([ layerpubtran]);
 
-  if(start_lon) {
+  map.addControl(new OpenLayers.Control.Permalink(null, "http://www.openstreetbrowser.org/"));
+
+  if(start_lon&&(first_load)) {
     var lonlat = new OpenLayers.LonLat(start_lon, start_lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
     map.setCenter(lonlat, start_zoom);
   }
-
-  style_default=new OpenLayers.Style({"strokeWidth":"3", "strokeColor": "#000000", "strokeOpacity": 0.5, fillOpacity: "0" });
-  style_tunnel=new OpenLayers.Style({"strokeWidth":"3", "strokeColor": "#7f7f7f", fillOpacity: "0" });
 
   redraw_timer=setTimeout("check_redraw()", 300);
 
   map.events.register("moveend", map, view_changed);
   map.events.register("movestart", map, view_changed_start);
+  map.events.register("click", map, view_click);
+
   overlays_init();
+  map_key_init();
+
+  call_hooks("init");
+  setTimeout("call_hooks(\"post_init\")", 2000);
 }
 
+function add_funs(arr) {
+  arr.search=function(needle) {
+    for(var i=0; i<this.length; i++)
+      if(this[i]==needle)
+	return i;
+    return null;
+  }
+  arr.del=function(needle) {
+    var i=this.search(needle);
+    var new_arr=[];
+    for(var i=0; i<this.length; i++)
+      if(this[i]!=needle)
+        new_arr.push(this[i]);
+    add_funs(new_arr);
+    return new_arr;
+  }
+}
+
+//add_funs(info_lists);
 window.onload=init;
