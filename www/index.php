@@ -69,21 +69,6 @@ else
 <div class='logo'><a href="http://wiki.openstreetmap.org/wiki/OpenStreetBrowser"><img src="img/osb_logo.png" alt="OpenStreetBrowser" name="OpenStreetBrowser" border="0"/></a><p>OpenStreet <span class="bigger">Browser</span></p></div>
 <div class='search'>
 <input id='search' value='<?=lang("search_field")?>' onChange="search(this)" onFocus="search_focus(this)" />
-<div id='adv_search'>
-<select name='search_type'>
-  <option value='*'>*</option>
-  <option value='amenity'>Amenity</option>
-  <option value='type'>Type</option>
-  <option value='shop'>Shop</option>
-  <option value='place'>Place</option>
-</select>
-=
-<select id='search_value' name='search_value'>
-  <option value='*'>*</option>
-</select><br>
-<input type='radio' name='search_where' value='world'> everywhere
-<input type='radio' name='search_where' value='part'> map section<br>
-</div>
 </div>
 <div id='details' class='info'>
 <div id='details_content' class='details'><img src="img/ajax_loader.gif" /> loading</div>

@@ -318,7 +318,6 @@ function cemetery_info($ret, $object) {
   $text="";
 
   if($x=$object->tags->get("cemetery")) {
-  if($object->tags->get("cemetery"))
     show_overlay("culture");
     if($x=="grave")
       $is_grave=1;
