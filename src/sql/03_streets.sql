@@ -283,7 +283,7 @@ create index housenumber_way on housenumber using gist(way);
 create index housenumber_node_id on housenumber(node_id);
 create index housenumber_way_id on housenumber(way_id);
 
-insert into search select (select orig_place.v from coll_tags orig_place where orig_place.k='name' and orig_place.coll_id=id limit 1) as name, name.v as loc_name, (CASE WHEN name.k='name' THEN null ELSE substr(name.k, 6) END) as language, 'coll' as element, planet_osm_colls.id, 'street' as amenity_type, place.v as amenity_val from planet_osm_colls join coll_tags place on planet_osm_colls.id=place.coll_id join coll_tags name on planet_osm_colls.id=name.coll_id where place.k='type' and place.v='street' and (name.k='name' or name.k like 'name:%');
+insert into search select (select orig_place.v from coll_tags orig_place where orig_place.k='name' and orig_place.coll_id=id limit 1) as name, name.v as loc_name, (CASE WHEN name.k='name' THEN null ELSE substr(name.k, 6) END) as language, 'coll' as element, planet_osm_colls.id, 'type' as amenity_type, place.v as amenity_val from planet_osm_colls join coll_tags place on planet_osm_colls.id=place.coll_id join coll_tags name on planet_osm_colls.id=name.coll_id where place.k='type' and place.v='street' and (name.k='name' or name.k like 'name:%');
 
 drop table if exists housenumber_line;
 create table housenumber_line (

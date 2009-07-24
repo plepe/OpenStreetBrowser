@@ -26,6 +26,9 @@ body, li, td {
   width: 250px;
   margin-top: 3px;
 }
+div#adv_search {
+  display: none;
+}
 input#search {
   border: 1px solid #999;
   background-color:#efefef;
@@ -85,12 +88,9 @@ input#search {
   overflow: auto;
 }
 .info {
-  position: absolute;
   width: 250px;
   overflow: auto;
   overflow-x:hidden;
-  bottom: 38px;
-  top: 180px;
 }
 div#lang_select {
   position: absolute;

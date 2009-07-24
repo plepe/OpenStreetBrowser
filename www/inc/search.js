@@ -1,5 +1,7 @@
 function search_focus(ob) {
   ob.value="";
+  var ob1=document.getElementById("adv_search");
+  ob1.style.display="block";
 }
 
 function search(ob) {
