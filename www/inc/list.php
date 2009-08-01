@@ -13,7 +13,8 @@ $infolist_directory=array(
       "pub"=>array("type"=>"amenity", "subtype"=>"cuisine", "minzoom"=>11),
       "bar"=>array("type"=>"amenity", "minzoom"=>11),
       "nightclub"=>array("type"=>"amenity", "minzoom"=>11),
-      "casino"=>array("type"=>"amenity", "minzoom"=>11)
+      "casino"=>array("type"=>"amenity", "minzoom"=>11),
+      "bbq"=>array("type"=>"amenity", "minzoom"=>15, "subtype"=>"fuel")
     ),
     "cycle_hiking"=>array(
       "bicycle"=>array("type"=>"shop"),
