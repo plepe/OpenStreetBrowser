@@ -33,5 +33,14 @@ osm_id int4,
 admin_level int4
 );
 SELECT AddGeometryColumn('planet_osm_boundaries_only', 'way', 900913, 'LINESTRING', 2);
-insert into planet_osm_boundaries_only select osm_id, cast(admin_level as int), way from planet_osm_roads where "boundary"='administrative' and osm_id>0 and admin_level similar to '^[0-9]+$';
+
+insert into planet_osm_boundaries_only
+select osm_id, (CASE 
+    WHEN min(cast (r.admin_level as int)) is null THEN (array_sort(array_toint(regexp_split_to_array(l.admin_level, ' *; *'))))[1]
+    WHEN (array_sort(array_toint(regexp_split_to_array(l.admin_level, ' *; *'))))[1] is null THEN min(cast (r.admin_level as int)) 
+    WHEN (array_sort(array_toint(regexp_split_to_array(l.admin_level, ' *; *'))))[1]<min(cast (r.admin_level as int))
+      THEN (array_sort(array_toint(regexp_split_to_array(l.admin_level, ' *; *'))))[1]
+    ELSE min(cast (r.admin_level as int)) END) as admin_level,
+  way from planet_osm_line l join relation_members rm on l.osm_id=rm.member_id and rm.member_type=2 left join planet_osm_rels r on rm.relation_id=r.id and (r.type='boundary' or r.boundary='administrative') and r.admin_level similar to '^[0-9]+$' where l."boundary"='administrative' and osm_id>0 group by osm_id, l.admin_level, l.way;
+
 create index planet_osm_boundaries_only_way on planet_osm_boundaries_only using gist(way);

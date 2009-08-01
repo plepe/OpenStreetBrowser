@@ -22,6 +22,7 @@ create index planet_osm_line_barrier on planet_osm_line("barrier");
 create index planet_osm_line_natural on planet_osm_line("natural");
 create index planet_osm_line_power on planet_osm_line("power");
 create index planet_osm_line_man_made on planet_osm_line("man_made");
+create index planet_osm_line_boundary on planet_osm_line(boundary);
 
 create index planet_osm_point_waterway on planet_osm_point("waterway");
 create index planet_osm_point_railway on planet_osm_point("railway");
