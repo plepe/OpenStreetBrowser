@@ -30,7 +30,8 @@ insert into planet_osm_stop_to_station select
       station_member.member_role!='nearby'
     where
       station_rel.type='station' and
-      src.osm_id=station_member.member_id))),
+      src.osm_id=station_member.member_id
+    limit 1))),
   array_unique(to_intarray(dst.osm_id)),
   dst.name,
   src.importance
