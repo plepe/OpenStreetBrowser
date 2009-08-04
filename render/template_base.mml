@@ -13,7 +13,7 @@
     <StyleName>world1</StyleName>
     <Datasource>
       <Parameter name="type">shape</Parameter>
-      <Parameter name="file">/scratch/mapnik/data/world_boundaries/world_boundaries_m</Parameter>
+      <Parameter name="file">/scratch/mapnik/data/world_boundaries/shoreline_300</Parameter>
     </Datasource>
   </Layer>
   <Layer class="world" status="on" srs="+proj=merc +datum=WGS84 +over">
