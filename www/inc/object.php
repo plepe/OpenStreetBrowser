@@ -336,7 +336,7 @@ function register_object_type($key, $type, $class) {
   $object_types[$key][$type]=$class;
 }
 
-// using load_objects is faster then loading each object by it's on
+// using load_objects is faster then loading each object by its own
 function load_objects($list) {
   global $object_element_shorts;
   $list_by_type=array();
@@ -349,10 +349,10 @@ function load_objects($list) {
     if(is_array($id)) {
       $list_by_type[$id[element]][]=$id[id];
     }
-    else if(ereg("^(node|way|rel|coll)_([0-9]*)$", $id, $m)) {
+    else if(ereg("^(node|way|rel|coll)_([0-9]+)$", $id, $m)) {
       $list_by_type[$m[1]][]=$m[2];
     }
-    else if(ereg("^([nwrc])([0-9]*)$", $id, $m)) {
+    else if(ereg("^([nwrc])([0-9]+)$", $id, $m)) {
       $list_by_type[$object_element_shorts[$m[1]]][]=$m[2];
     }
   }
