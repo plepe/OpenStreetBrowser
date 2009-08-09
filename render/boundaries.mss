@@ -12,10 +12,10 @@
 .world1[zoom>=4][zoom<5] {
   line-width: 1;
 }
-.world[zoom>=5][zoom<6] {
+.world1[zoom>=5][zoom<6] {
   line-width: 1;
 }
-.world[zoom>=6][zoom<7] {
+.world1[zoom>=6][zoom<7] {
   line-width: 2;
 }
 .admin[admin_level=2][zoom>=7][zoom<11] {
