@@ -67,8 +67,15 @@ cd $ROOT_PATH/render
 cd $SOFTWARE_PATH/cascadenik
 $ROOT_PATH/src/combine_cascadenik.pl > $ROOT_PATH/render/base.xml
 echo "PT"
+cd $ROOT_PATH/render
+convert -background none img/src/stop_p_back.svg img/stop_p_back.png
+convert -background none img/src/stop_p_for.svg img/stop_p_for.png
+convert -background none img/src/stop_n_back.svg img/stop_n_back.png
+convert -background none img/src/stop_n_for.svg img/stop_n_for.png
+convert -background none img/src/stop.svg img/stop.png
 cascadenik-compile.py $ROOT_PATH/render/overlay_pt.mml > $ROOT_PATH/render/overlay_pt.xml
 $ROOT_PATH/src/update_xml.pl $ROOT_PATH/render/overlay_pt.xml
+./create_rotate_style
 echo "CH"
 cascadenik-compile.py $ROOT_PATH/render/overlay_ch.mml > $ROOT_PATH/render/overlay_ch.xml
 $ROOT_PATH/src/update_xml.pl $ROOT_PATH/render/overlay_ch.xml

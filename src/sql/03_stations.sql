@@ -89,6 +89,58 @@ insert into coll_tags select (array_sort(stations))[1], 'importance', importance
 insert into coll_tags select (array_sort(stations))[1], 'type', 'station' from planet_osm_stations where rel_id is null and array_dims(stations)!='[1:1]';
 insert into coll_members select (array_sort(stations))[1], p.osm_id, 1, '' from planet_osm_stations st left join planet_osm_point p on p.osm_id=any(st.stations) where rel_id is null and array_dims(stations)!='[1:1]';
 
+-- in which direction stations are being used?
+
+create table planet_osm_stops (
+  osm_id	int4	not null,
+  type		text	not null,
+  angle_p	int	null,
+  angle_n	int	null,
+  direction	int	not null,
+  primary key(osm_id)
+);
+SELECT AddGeometryColumn('planet_osm_stops', 'way', 900913, 'POINT', 2);
+
+insert into planet_osm_stops
+(select osm_id, type, 
+  round(ST_Azimuth((CASE 
+      WHEN pos-0.001/len<0 THEN line_interpolate_point(next_way, pos)
+      ELSE line_interpolate_point(next_way, pos-0.001/len)
+    END), line_interpolate_point(next_way, pos))/(2*pi()/72)) as angle_p,
+  round(ST_Azimuth(line_interpolate_point(next_way, pos),
+    (CASE 
+      WHEN pos+0.001/len>=1 THEN line_interpolate_point(next_way, pos)
+      ELSE line_interpolate_point(next_way, pos+0.001/len)
+  END))/(2*pi()/72)) as angle_n,
+  bit_or((CASE WHEN substr(rm.member_role, 1, 7)='forward' THEN 1 WHEN substr(rm.member_role, 1, 8)='backward' THEN 2 ELSE 3 END)) as direction,
+  line_interpolate_point(next_way, pos) as way
+from 
+(select t.osm_id, type,
+  poi_way, next_way, line_locate_point(next_way, poi_way) as pos, length(next_way) as len from (
+select poi.osm_id, 
+  (CASE
+    WHEN poi.highway='bus_stop' and poi.railway='tram_stop' THEN 'tram_bus_stop'
+    WHEN poi.highway in ('bus_stop') THEN poi.highway
+    WHEN poi.railway in ('tram_stop', 'station', 'halt') THEN poi.railway
+    WHEN poi.aerialway in ('station') THEN 'aerial_station'
+  END) as type,
+  poi.way as poi_way,
+  (select dst.way
+      from planet_osm_line dst
+      where
+       geometryfromtext('POLYGON((' || xmin(poi.way)-200 || ' ' || ymin(poi.way)-200 || ','
+                               || xmax(poi.way)+200 || ' ' || ymin(poi.way)-200 || ','
+			       || xmax(poi.way)+200 || ' ' || ymax(poi.way)+200 || ','
+			       || xmin(poi.way)-200 || ' ' || ymax(poi.way)+200 || ',' 
+			       || xmin(poi.way)-200 || ' ' || ymin(poi.way)-200 || '))',
+			        900913)&&dst.way
+    order by Distance(poi.way, dst.way) asc limit 1) as next_way
+       from planet_osm_point poi where 
+  (poi.highway='bus_stop' or poi.railway='tram_stop' or
+    poi.railway='station' or poi.railway='halt' or
+    poi.aerialway='station')
+      ) as t) as t1 left join relation_members rm on rm.member_id=t1.osm_id and rm.member_type=1 group by t1.osm_id, t1.type, t1.pos, t1.len, t1.next_way);
+
 -- feed stations in search
 insert into search select name, name, null as language, (CASE WHEN rel_id is not null THEN 'rel' WHEN array_dims(stations)!='[1:1]' THEN 'coll' ELSE 'node' END), (CASE WHEN rel_id is not null THEN rel_id ELSE (array_sort(stations))[1] END) as id, 'station', null  from planet_osm_stations where name is not null;
 

@@ -331,13 +331,26 @@
   text-halo-radius: 1;
   text-dy: -13;
 }
-.stations_all[importance=local][zoom>=16],
-.stations_all[importance=suburban][zoom>=16],
-.stations_all[importance=urban][zoom>=15],
-.stations_all[importance=regional][zoom>=15],
-.stations_all[importance=national][zoom>=14],
-.stations_all[importance=international][zoom>=14]
+.stops_p[direction=forward][zoom>=16]
 {
-  point-file: url('img/hst_middle.png');
-  point-allow-overlap: false;
+  point-file: url('img/stop_p_for.png');
+  point-allow-overlap: true;
+}
+.stops_p[direction=backward][zoom>=16]
+{
+  point-file: url('img/stop_p_back.png');
+  point-allow-overlap: true;
+}
+.stops_p[direction=both][zoom>=16] {
+  point-file: url('img/stop.png');
+}
+.stops_n[direction=forward][zoom>=16]
+{
+  point-file: url('img/stop_n_for.png');
+  point-allow-overlap: true;
+}
+.stops_n[direction=backward][zoom>=16]
+{
+  point-file: url('img/stop_n_back.png');
+  point-allow-overlap: true;
 }

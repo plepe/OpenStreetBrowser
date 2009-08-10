@@ -17,3 +17,10 @@ foreach($list as $l=>$opt) {
     fputs($f, "}\n");
   }
 }
+
+$steps=72;
+$l="stop";
+for($i=0; $i<$steps; $i++) {
+  $is=sprintf("%02d", $i);
+  system("convert -background none -rotate ".(90+$i/$steps*360)." img/src/$l.svg img/{$l}_{$is}.png");
+}
