@@ -54,3 +54,4 @@ create index planet_osm_polygon_landuse  on planet_osm_polygon("landuse");
 create index planet_osm_polygon_cemetery on planet_osm_polygon("cemetery");
 create index planet_osm_polygon_power    on planet_osm_polygon("power");
 create index planet_osm_polygon_man_made on planet_osm_polygon("man_made");
+create index planet_osm_polygon_name	 on planet_osm_polygon("name");
