@@ -15,7 +15,7 @@ update planet_osm_line
     WHEN layer in ('4', '+4') THEN 4
     WHEN layer in ('5', '+5') THEN 5 END)
   where 
-    "highway" in ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'primary_link', 'secondary', 'tertiary', 'unclassified', 'road', 'residential', 'service', 'bus_guideway', 'trunk', 'living_street', 'pedestrian', 'byway', 'path', 'cycleway', 'footway', 'bridleway', 'steps') or 
+    "highway" in ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'primary_link', 'secondary', 'tertiary', 'unclassified', 'road', 'residential', 'service', 'bus_guideway', 'track', 'living_street', 'pedestrian', 'byway', 'path', 'cycleway', 'footway', 'bridleway', 'steps') or 
     "railway" is not null or 
     "waterway" in ('river', 'canal', 'stream') or
     "power" in ('line', 'minor_line') or

@@ -8,13 +8,13 @@ function current_load() {
   return $m[1];
 }
 
-$left=65;
-$right=69;
-$top=40;
-$down=44;
-$from_zoom=7; /* positions for left/right/top/down from that zoom level */
-$min_zoom=8;
-$max_zoom=9;
+$left=14;
+$right=19;
+$top=8;
+$down=12;
+$from_zoom=5; /* positions for left/right/top/down from that zoom level */
+$min_zoom=5;
+$max_zoom=6;
 $tileset="base";
 $steps=2; // depends on renderd
 
