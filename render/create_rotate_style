@@ -4,7 +4,14 @@ $file="overlay_pt.xml";
 
 $dom=new DOMDocument();
 $dom->load($file);
-     
+ 
+# Indexing all files in img/
+$d=opendir("img/rotate/");
+while($r=readdir($d)) {
+  if((substr($r, 0, 1)!=".")&&(substr($r, -4)==".png"))
+    $img_files[]=$r;
+}
+
 $filters=$dom->getElementsByTagName("Filter");
 for($i=0; $i<$filters->length; $i++) {
   $filter=$filters->item($i);
@@ -12,32 +19,44 @@ for($i=0; $i<$filters->length; $i++) {
   if(eregi("\[(angle.*)\] = ([0-9]+)", $filter->nodeValue, $m)) {
     $rule=$filter->parentNode;
     $style=$rule->parentNode;
-    print "Style '".$style->getAttribute("name")."'\n";
-    print "$i $filter->nodeValue\n";
-    print_r($m);
     $steps=$m[2];
     $replace=$m[0];
     $varname=$m[1];
 
-    $list[]=array($style, $rule, $steps, $replace, $varname);
+    $list[]=array($style, $rule, $filter, $steps, $replace, $varname);
   }
 }
 
 foreach($list as $process) {
   $style=$process[0];
   $rule=$process[1];
-  $steps=$process[2];
-  $replace=$process[3];
-  $varname=$process[4];
+  $filter=$process[2];
+  $steps=$process[3];
+  $replace=$process[4];
+  $varname=$process[5];
+  print "Style '".$style->getAttribute("name")."'\n";
+  print "$filter->nodeValue\n";
 
   $style->removeChild($rule);
 
   $point=$rule->getElementsByTagName("PointSymbolizer");
   $point=$point->item(0);
   $orig_file=$point->getAttribute("file");
+
+  foreach($img_files as $r) {
+    $f=popen("compare -metric mae $orig_file img/rotate/$r /tmp/diff.png 2>&1", "r");
+    $comp=fgets($f);
+    pclose($f);
+    if(substr($comp, 0, 5)=="0 (0)") {
+      $orig_file="img/rotate/src/".substr($r, 0, -4).".svg";
+    }
+  }
+
   if(eregi("^(.*)\.png$", $point->getAttribute("file"), $m))
     $new_file=$m[1];
 
+  print "$orig_file -> $new_file\n";
+ 
   for($a=0; $a<$steps; $a++) {
     $n=$rule->cloneNode(true);
     
