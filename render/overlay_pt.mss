@@ -333,24 +333,29 @@
 }
 .stops_p[direction=forward][angle=72][zoom>=16]
 {
-  point-file: url('img/stop_p_for.png');
+  point-file: url('img/rotate/stop_p_for.png');
   point-allow-overlap: true;
 }
 .stops_p[direction=backward][angle=72][zoom>=16]
 {
-  point-file: url('img/stop_p_back.png');
+  point-file: url('img/rotate/stop_p_back.png');
   point-allow-overlap: true;
 }
 .stops_p[direction=both][zoom>=16] {
-  point-file: url('img/stop.png');
+  point-file: url('img/rotate/stop.png');
 }
 .stops_n[direction=forward][angle=72][zoom>=16]
 {
-  point-file: url('img/stop_n_for.png');
+  point-file: url('img/rotate/stop_n_for.png');
   point-allow-overlap: true;
 }
-.stops_n[direction=backward][zoom>=16]
+.stops_n[color_000000=CFF0000][type=tram_stop][direction=backward][zoom>=16]
 {
-  point-file: url('img/stop_n_back.png');
+  point-file: url('img/rotate/stop_n_back.png');
+  point-allow-overlap: true;
+}
+.stops_n[color_000000=C0000FF][type=bus_stop][direction=backward][zoom>=16]
+{
+  point-file: url('img/rotate/stop_n_back.png');
   point-allow-overlap: true;
 }
