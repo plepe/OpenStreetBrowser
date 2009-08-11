@@ -33,11 +33,20 @@ if($text=file_get_contents("http://iplocationtools.com/ip_query.php?ip=$_SERVER[
 }
 
 $first_load=1;
+$mlat=$_REQUEST[mlat];
+$mlon=$_REQUEST[mlon];
 if($_REQUEST[lon]) {
   $lon=$_REQUEST[lon];
   $lat=$_REQUEST[lat];
   $zoom=$_REQUEST[zoom];
   $first_load=0;
+}
+elseif($_REQUEST[mlon]) {
+  if(!$lon) {
+    $lon=$mlon;
+    $lat=$mlat;
+    $zoom=$_REQUEST[zoom];
+  }
 }
 else {
   if(isset($my_lat)) {
@@ -58,6 +67,10 @@ var start_lon=<?=$lon?>;
 var start_lat=<?=$lat?>;
 var first_load=<?=$first_load?>;
 <?
+if(isset($mlon))
+  print "var marker_pos={ lon: $mlon, lat: $mlat };\n";
+else
+  print "var marker_pos=null;\n";
 if(isset($my_lat))
   print "var my_pos={ lon: $my_lon, lat: $my_lat };\n";
 else
