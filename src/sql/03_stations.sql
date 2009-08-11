@@ -95,7 +95,7 @@ drop table if exists planet_osm_stops;
 create table planet_osm_stops (
   osm_id	int4	not null,
   type		text	not null,
-  importance	text	not null,
+  importance	text	null,
   angle_p	int	null,
   angle_n	int	null,
   direction	int	not null,
