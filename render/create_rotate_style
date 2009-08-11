@@ -1,85 +1,64 @@
 #!/usr/bin/php
 <?
 $file="overlay_pt.xml";
-$table_contains="as stops";
-$img="img/stop_%02d.png";
-$steps=72;
 
 $dom=new DOMDocument();
 $dom->load($file);
-$params=$dom->getElementsByTagname("Parameter");
-for($i=0; $i<$params->length; $i++) {
-  $ob=$params->item($i);
+     
+$filters=$dom->getElementsByTagName("Filter");
+for($i=0; $i<$filters->length; $i++) {
+  $filter=$filters->item($i);
 
-  if($ob->getAttribute("name")=="table") {
-    if(strstr($ob->nodeValue, $table_contains)) {
-      $layer=$ob->parentNode->parentNode;
-      print $layer->getAttribute("name")."\n";
-      
-      $style_names=$layer->getElementsByTagname("StyleName");
-      for($j=0; $j<$style_names->length; $j++) {
-	$stylename=$style_names->item($j);
-	print $stylename->nodeValue."\n";
+  if(eregi("\[(angle.*)\] = ([0-9]+)", $filter->nodeValue, $m)) {
+    $rule=$filter->parentNode;
+    $style=$rule->parentNode;
+    print "Style '".$style->getAttribute("name")."'\n";
+    print "$i $filter->nodeValue\n";
+    print_r($m);
+    $steps=$m[2];
+    $replace=$m[0];
+    $varname=$m[1];
 
-	$styles=$dom->getElementsByTagname("Style");
-	for($k=0; $k<$styles->length; $k++) {
-	  $style=$styles->item($k);
-
-	  if($style->getAttribute("name")==$stylename->nodeValue) {
-	    $rule_list=array();
-	    $rn=$style->firstChild;
-	    while($rn) {
-	      $r=$rn;
-	      $rule_list[]=$r;
-	      $rn=$r->nextSibling;
-	      $style->removeChild($r);
-	    }
-
-	    foreach($rule_list as $r) {
-	      if(get_class($r)=="DOMText") {
-		$style->appendChild($r);
-	      }
-	      else {
-		$p=$r->getElementsByTagName("PointSymbolizer");
-		$p=$p->item(0);
-		$orig_file=$p->getAttribute("file");
-		if(eregi("^(.*)\.png$", $p->getAttribute("file"), $m))
-		  $new_file=$m[1];
-
-		for($a=0; $a<$steps; $a++) {
-		  $n=$r->cloneNode(true);
-		  
-		  $f=$n->getElementsByTagName("Filter");
-		  if($f->length>0) {
-		    $f=$f->item(0);
-		    $f->nodeValue.=" and [angle] = $a";
-		  }
-		  else {
-		    $f=$dom->createElement("Filter");
-		    $f->nodeValue="[angle] = $a";
-		    $n->appendChild($f);
-		  }
-		  
-		  $p=$n->getElementsByTagName("PointSymbolizer");
-		  $p=$p->item(0);
-		  if($orig_file) {
-		    $img=sprintf("%s_%02d.png", $new_file, $a);
-		    system("convert -background none -rotate ".(270+$a/$steps*360)." $orig_file $img");
-
-		    $p->setAttribute("file", sprintf($img, $a));
-		    $size=getimagesize(sprintf($img, $a));
-		    $p->setAttribute("height", $size[0]);
-		    $p->setAttribute("width", $size[1]);
-		  }
-
-		  $style->appendChild($n);
-		}
-	      }
-	    }
-	  }
-	}
-      }
-    }
+    $list[]=array($style, $rule, $steps, $replace, $varname);
   }
 }
+
+foreach($list as $process) {
+  $style=$process[0];
+  $rule=$process[1];
+  $steps=$process[2];
+  $replace=$process[3];
+  $varname=$process[4];
+
+  $style->removeChild($rule);
+
+  $point=$rule->getElementsByTagName("PointSymbolizer");
+  $point=$point->item(0);
+  $orig_file=$point->getAttribute("file");
+  if(eregi("^(.*)\.png$", $point->getAttribute("file"), $m))
+    $new_file=$m[1];
+
+  for($a=0; $a<$steps; $a++) {
+    $n=$rule->cloneNode(true);
+    
+    $f=$n->getElementsByTagName("Filter");
+    $f=$f->item(0);
+    $f->nodeValue=strtr($f->nodeValue, array($replace=>"[$varname] = $a"));
+    
+    $p=$n->getElementsByTagName("PointSymbolizer");
+    $p=$p->item(0);
+    if($orig_file) {
+      $img=sprintf("%s_%02d.png", $new_file, $a);
+      system("convert -background none -rotate ".(270+$a/$steps*360)." $orig_file $img");
+
+      $p->setAttribute("file", sprintf($img, $a));
+      $size=getimagesize(sprintf($img, $a));
+      $p->setAttribute("height", $size[0]);
+      $p->setAttribute("width", $size[1]);
+    }
+
+    $style->appendChild($n);
+  }
+}
+
 $dom->save($file);

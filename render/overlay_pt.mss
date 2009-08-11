@@ -331,20 +331,20 @@
   text-halo-radius: 1;
   text-dy: -13;
 }
-.stops_p[direction=forward][zoom>=16]
+.stops_p[direction=forward][angle=72][zoom>=16]
 {
   point-file: url('img/stop_p_for.png');
   point-allow-overlap: true;
 }
-.stops_p[direction=backward][zoom>=16]
+.stops_p[direction=backward][angle=72][zoom>=16]
 {
   point-file: url('img/stop_p_back.png');
   point-allow-overlap: true;
 }
-.stops_p[direction=both][zoom>=16] {
+.stops_p[direction=both][angle=72][zoom>=16] {
   point-file: url('img/stop.png');
 }
-.stops_n[direction=forward][zoom>=16]
+.stops_n[direction=forward][angle=72][zoom>=16]
 {
   point-file: url('img/stop_n_for.png');
   point-allow-overlap: true;
