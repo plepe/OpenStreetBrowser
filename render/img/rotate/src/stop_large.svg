@@ -8,13 +8,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="15"
-   height="15"
+   width="10"
+   height="10"
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.46"
    version="1.0"
-   sodipodi:docname="stop_p_for.svg"
+   sodipodi:docname="stop_large.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs4">
@@ -36,16 +36,16 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="30.133333"
-     inkscape:cx="7.5"
-     inkscape:cy="7.5"
+     inkscape:zoom="44.909091"
+     inkscape:cx="5.5"
+     inkscape:cy="5.5"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="872"
      inkscape:window-height="726"
-     inkscape:window-x="667"
-     inkscape:window-y="25" />
+     inkscape:window-x="1574"
+     inkscape:window-y="227" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -69,8 +69,7 @@
        sodipodi:cy="7.5"
        sodipodi:rx="7"
        sodipodi:ry="7"
-       d="M 12.449747,12.449747 A 7,7 0 0 1 0.5,7.4999997 L 7.5,7.5 z"
-       sodipodi:start="0.78539816"
-       sodipodi:end="3.1415927" />
+       d="M 14.5,7.5 A 7,7 0 1 1 0.5,7.5 A 7,7 0 1 1 14.5,7.5 z"
+       transform="matrix(0.6428571,0,0,0.6428571,0.1785714,0.178572)" />
   </g>
 </svg>

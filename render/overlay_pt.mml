@@ -222,7 +222,7 @@
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
       <Parameter name="table">
-	(select angle_p as angle, type, way, 
+	(select angle_p as angle, type, importance, way, 
 	  (CASE WHEN direction=1 THEN 'forward'
 	        WHEN direction=2 THEN 'backward'
 		ELSE 'both' END) as direction from planet_osm_stops
@@ -238,7 +238,7 @@
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
       <Parameter name="table">
-	(select angle_n as angle, type, way,
+	(select angle_n as angle, type, importance, way,
 	  (CASE WHEN direction=1 THEN 'forward'
 	        WHEN direction=2 THEN 'backward'
 		ELSE 'both' END) as direction from planet_osm_stops

@@ -8,13 +8,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="15"
-   height="15"
+   width="10"
+   height="10"
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.46"
    version="1.0"
-   sodipodi:docname="stop_n_back.svg"
+   sodipodi:docname="stop_p_for_large.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs4">
@@ -36,15 +36,15 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="30.133333"
-     inkscape:cx="7.5"
-     inkscape:cy="7.5"
+     inkscape:zoom="49.4"
+     inkscape:cx="5"
+     inkscape:cy="5"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="872"
      inkscape:window-height="726"
-     inkscape:window-x="667"
+     inkscape:window-x="1438"
      inkscape:window-y="25" />
   <metadata
      id="metadata7">
@@ -65,12 +65,12 @@
        sodipodi:type="arc"
        style="fill:#000000;fill-opacity:1;stroke:#e9e9e9;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path2383"
-       sodipodi:cx="7.5"
-       sodipodi:cy="7.5"
-       sodipodi:rx="7"
-       sodipodi:ry="7"
-       d="M 2.5502524,2.5502526 A 7,7 0 0 1 14.5,7.4999999 L 7.5,7.5 z"
-       sodipodi:start="3.9269908"
-       sodipodi:end="6.2831853" />
+       sodipodi:cx="5"
+       sodipodi:cy="5"
+       sodipodi:rx="4.5"
+       sodipodi:ry="4.5"
+       d="M 8.1819805,8.1819805 A 4.5,4.5 0 0 1 0.5,4.9999998 L 5,5 z"
+       sodipodi:start="0.78539816"
+       sodipodi:end="3.1415927" />
   </g>
 </svg>

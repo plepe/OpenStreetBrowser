@@ -28,7 +28,8 @@ foreach($list as $process) {
   $style=$process[0];
   $rule=$process[1];
   $filter=$process[2];
-  print "Style '".$style->getAttribute("name")."'\n";
+  print "* Style '".$style->getAttribute("name")."'\n";
+  print "= $filter->nodeValue\n";
 
   $filter_parts=explode(" and ", $filter->nodeValue);
   $new_filter_parts=array();
@@ -40,17 +41,21 @@ foreach($list as $process) {
     elseif(eregi("\[(angle.*)\] = ([0-9]*)", $f, $m)) {
       $rotate=array($m[1], $m[2]);
     }
-    elseif(eregi("not \[color_(.*)\] = 'C([0-9A-F]*)'", $f, $m)) {
+    elseif(eregi("(not .*)_color_([0-9A-F]{3,6})_([0-9A-F]{3,6})(.*)", $f, $m)) {
+      $new_filter_parts[]="$m[1]$m[4]";
+    }
+    elseif(eregi("(.*)_color_([0-9A-F]{3,6})_([0-9A-F]{3,6})(.*)", $f, $m)) {
+      $new_filter_parts[]="$m[1]$m[4]";
+      $color_replace["#$m[2]"]="#$m[3]";
     }
     elseif(eregi("\[color_(.*)\] = 'C([0-9A-F]*)'", $f, $m)) {
-      $color_replace["#$m[1]"]="#$m[2]";
     }
     else {
       $new_filter_parts[]=$f;
     }
   }
   $filter->nodeValue=implode(" and ", $new_filter_parts);
-  print "$filter->nodeValue\n";
+  print "= $filter->nodeValue\n";
   if($rotate)
     print "rotate: $rotate[0] $rotate[1]\n";
   if($color_replace) foreach($color_replace as $r=>$c)
@@ -71,6 +76,11 @@ foreach($list as $process) {
     }
   }
 
+  if(eregi("^(.*)\.png$", $point->getAttribute("file"), $m))
+    $new_file=$m[1];
+
+  print "$orig_file -> $new_file\n";
+
   if($svg&&$color_replace) {
     $r=file_get_contents($orig_file);
     $r=strtr($r, $color_replace);
@@ -80,11 +90,7 @@ foreach($list as $process) {
     $orig_file="/tmp/tmp.svg";
   }
 
-  if(eregi("^(.*)\.png$", $point->getAttribute("file"), $m))
-    $new_file=$m[1];
 
-  print "$orig_file -> $new_file\n";
- 
   if($rotate) {
     $varname=$rotate[0];
     $steps=$rotate[1];

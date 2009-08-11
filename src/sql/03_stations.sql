@@ -8,7 +8,7 @@ update planet_osm_point set importance='regional' where importance='region';
 update planet_osm_point set importance='local' where highway='bus_stop' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
 update planet_osm_point set importance='local' where railway='tram_stop' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
 update planet_osm_point set importance='suburban' where railway='halt' and not (importance is null or importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_point set importance='suburban' from planet_osm_line l join planet_osm_ways w on l.osm_id=w.id where planet_osm_point.osm_id=any(w.nodes) and planet_osm_point.railway='station' and l.railway='subway' and (planet_osm_point.importance is null or not planet_osm_point.importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_point set importance='suburban', railway='subway_station' from planet_osm_line l join planet_osm_ways w on l.osm_id=w.id where planet_osm_point.osm_id=any(w.nodes) and planet_osm_point.railway='station' and l.railway='subway' and (planet_osm_point.importance is null or not planet_osm_point.importance in ('local', 'urban', 'regional', 'national', 'international'));
 update planet_osm_point set importance='urban' where railway='station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
 update planet_osm_point set importance='urban' where amenity='bus_station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
 
@@ -91,9 +91,11 @@ insert into coll_members select (array_sort(stations))[1], p.osm_id, 1, '' from 
 
 -- in which direction stations are being used?
 
+drop table if exists planet_osm_stops;
 create table planet_osm_stops (
   osm_id	int4	not null,
   type		text	not null,
+  importance	text	not null,
   angle_p	int	null,
   angle_n	int	null,
   direction	int	not null,
@@ -102,7 +104,7 @@ create table planet_osm_stops (
 SELECT AddGeometryColumn('planet_osm_stops', 'way', 900913, 'POINT', 2);
 
 insert into planet_osm_stops
-(select osm_id, type, 
+(select osm_id, type, importance,
   round(ST_Azimuth((CASE 
       WHEN pos-0.001/len<0 THEN line_interpolate_point(next_way, pos)
       ELSE line_interpolate_point(next_way, pos-0.001/len)
@@ -115,15 +117,16 @@ insert into planet_osm_stops
   bit_or((CASE WHEN substr(rm.member_role, 1, 7)='forward' THEN 1 WHEN substr(rm.member_role, 1, 8)='backward' THEN 2 ELSE 3 END)) as direction,
   line_interpolate_point(next_way, pos) as way
 from 
-(select t.osm_id, type,
+(select t.osm_id, type, importance,
   poi_way, next_way, line_locate_point(next_way, poi_way) as pos, length(next_way) as len from (
 select poi.osm_id, 
   (CASE
     WHEN poi.highway='bus_stop' and poi.railway='tram_stop' THEN 'tram_bus_stop'
     WHEN poi.highway in ('bus_stop') THEN poi.highway
-    WHEN poi.railway in ('tram_stop', 'station', 'halt') THEN poi.railway
+    WHEN poi.railway in ('tram_stop', 'station', 'subway_station', 'halt') THEN poi.railway
     WHEN poi.aerialway in ('station') THEN 'aerial_station'
-  END) as type,
+  END) as type, 
+  poi.importance,
   poi.way as poi_way,
   (select dst.way
       from planet_osm_line dst
@@ -137,9 +140,9 @@ select poi.osm_id,
     order by Distance(poi.way, dst.way) asc limit 1) as next_way
        from planet_osm_point poi where 
   (poi.highway='bus_stop' or poi.railway='tram_stop' or
-    poi.railway='station' or poi.railway='halt' or
+    poi.railway in ('station', 'subway_station') or poi.railway='halt' or
     poi.aerialway='station')
-      ) as t) as t1 left join relation_members rm on rm.member_id=t1.osm_id and rm.member_type=1 group by t1.osm_id, t1.type, t1.pos, t1.len, t1.next_way);
+      ) as t) as t1 left join relation_members rm on rm.member_id=t1.osm_id and rm.member_type=1 group by t1.osm_id, t1.type, t1.pos, t1.len, t1.importance, t1.next_way);
 
 -- feed stations in search
 insert into search select name, name, null as language, (CASE WHEN rel_id is not null THEN 'rel' WHEN array_dims(stations)!='[1:1]' THEN 'coll' ELSE 'node' END), (CASE WHEN rel_id is not null THEN rel_id ELSE (array_sort(stations))[1] END) as id, 'station', null  from planet_osm_stations where name is not null;
