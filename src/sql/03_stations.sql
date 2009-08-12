@@ -139,9 +139,9 @@ select poi.osm_id,
 			        900913)&&dst.way
     order by Distance(poi.way, dst.way) asc limit 1) as next_way
        from planet_osm_point poi where 
-  (poi.highway='bus_stop' or poi.railway='tram_stop' or
-    poi.railway in ('station', 'subway_station') or poi.railway='halt' or
-    poi.aerialway='station')
+  (poi.highway='bus_stop' or
+    poi.railway in ('tram_stop', 'station', 'subway_station', 'halt')
+    )
       ) as t) as t1 left join relation_members rm on rm.member_id=t1.osm_id and rm.member_type=1 group by t1.osm_id, t1.type, t1.pos, t1.len, t1.importance, t1.next_way);
 
 -- feed stations in search

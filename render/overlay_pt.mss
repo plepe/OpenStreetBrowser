@@ -441,3 +441,8 @@
 {
   point-allow-overlap: true;
 }
+.stop_o[type=subway_entrance][zoom>=16]
+{
+  point-file: url('img/subway_entrance.png');
+  point-allow-overlap: true;
+}
