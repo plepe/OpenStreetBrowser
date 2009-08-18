@@ -15,29 +15,33 @@ update planet_osm_point set importance='urban' where amenity='bus_station' and (
 create index planet_osm_point_name on planet_osm_point(name);
 
 -- stop_to_station finds nearby stops with same name
+-- potential BUG: id for point and polygon same in same station
 drop table if exists planet_osm_stop_to_station;
-create table planet_osm_stop_to_station(node_id int4 not null, 
+create table planet_osm_stop_to_station(id int4 not null, id_type int2 not null,
 rel_id int4[], stations int4[], name text, importance text, 
-primary key(node_id));
+primary key(id, id_type));
 insert into planet_osm_stop_to_station select 
   src.osm_id,
+  src.id_type,
   array_unique(to_intarray((select station_rel.id from
       planet_osm_rels station_rel 
     join 
       relation_members station_member on 
       station_member.relation_id=station_rel.id and
-      station_member.member_type='1' and
       station_member.member_role!='nearby'
     where
       station_rel.type='station' and
-      src.osm_id=station_member.member_id
+      src.osm_id=station_member.member_id and
+      src.id_type=station_member.member_type
     limit 1))),
   array_unique(to_intarray(dst.osm_id)),
   dst.name,
   src.importance
 from 
-  planet_osm_point dst,
-  planet_osm_point src
+  (select osm_id, 1 as id_type, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_point union
+   select osm_id, 2 as id_type, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_polygon) as dst,
+  (select osm_id, 1 as id_type, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_point union
+   select osm_id, 2 as id_type, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_polygon) as src
 where 
   src.name=dst.name and
   geometryfromtext('POLYGON((' || xmin(src.way)-500 || ' ' || ymin(src.way)-500 || ','
@@ -47,18 +51,19 @@ where
 			       || xmin(src.way)-500 || ' ' || ymin(src.way)-500 || '))',
 			        900913)&&dst.way and
   Distance(src.way, dst.way)<1000 and
-  (src.highway='bus_stop' or src.railway='tram_stop' or
-    src.railway='station' or src.railway='halt' or
+  (src.highway='bus_stop' or 
+  src.railway in ('tram_stop', 'subway_station', 'station', 'halt') or
     src.amenity='bus_station' or src.aeroway='terminal' or
     src.aerialway='station' or src.amenity='ferry_terminal') and
-  (dst.highway='bus_stop' or dst.railway='tram_stop' or
-    dst.railway='station' or dst.railway='halt' or
+  (dst.highway='bus_stop' or
+    dst.railway in ('tram_stop', 'subway_station', 'station', 'halt') or
     dst.amenity='bus_station' or dst.aeroway='terminal' or
-    src.aerialway='station' or dst.amenity='ferry_terminal')
-group by src.osm_id, src.importance, dst.name;
+    dst.aerialway='station' or dst.amenity='ferry_terminal')
+group by src.osm_id, src.id_type, src.importance, dst.name;
 
 -- delete all stops that are part of a station-rel
-delete from planet_osm_stop_to_station using planet_osm_point where planet_osm_stop_to_station.node_id=planet_osm_point.osm_id and part_of_station=1;
+delete from planet_osm_stop_to_station using planet_osm_point where planet_osm_stop_to_station.id=planet_osm_point.osm_id and planet_osm_stop_to_station.id_type=1 and part_of_station=1;
+delete from planet_osm_stop_to_station using planet_osm_polygon where planet_osm_stop_to_station.id=planet_osm_polygon.osm_id and planet_osm_stop_to_station.id_type=2 and part_of_station=1;
 
 -- stations_all combines stops that are close to each other
 drop table if exists planet_osm_stations;
@@ -67,12 +72,14 @@ SELECT AddGeometryColumn('planet_osm_stations', 'way', 900913, 'MULTIPOINT', 2);
 SELECT AddGeometryColumn('planet_osm_stations', 'center', 900913, 'POINT', 2);
 SELECT AddGeometryColumn('planet_osm_stations', 'bbox', 900913, 'LINESTRING', 2);
 SELECT AddGeometryColumn('planet_osm_stations', 'top', 900913, 'POINT', 2);
+SELECT AddGeometryColumn('planet_osm_stations', 'topline', 900913, 'LINESTRING', 2);
 insert into planet_osm_stations select name, array_unique(array_sort(stations)), (array_sort(max(rel_id)))[1], (CASE WHEN array_dims(stations)!='[1:1]' THEN (array_sort(stations))[1] ELSE null END),
-  (array['local','urban','regional','national','international'])
-    [max(CASE WHEN importance='urban' THEN 2 
-      WHEN importance='regional' THEN 3
-      WHEN importance='national' THEN 4
-      WHEN importance='international' THEN 5 ELSE 1 END)],
+  (array['local','suburban','urban','regional','national','international'])
+    [max(CASE WHEN importance='suburban' THEN 2 
+      WHEN importance='urban' THEN 3
+      WHEN importance='regional' THEN 4
+      WHEN importance='national' THEN 5
+      WHEN importance='international' THEN 6 ELSE 1 END)],
  avg(lon), avg(lat), ST_Collect(GeomFromText('POINT(' || lon || ' ' || lat || ')', 900913)) from planet_osm_stop_to_station station join planet_osm_nodes node on node.id=any(station.stations) group by name, array_sort(stations), array_dims(stations);
 
 -- delete all stations with relations and do it again for them
@@ -80,7 +87,8 @@ insert into planet_osm_stations select name, to_intarray(planet_osm_nodes.id), p
 update planet_osm_stations set 
   center=ST_Centroid(way),
   bbox=geomfromtext('LINESTRING(' || XMIN(way)||' '||YMIN(way) ||', '|| XMIN(way)||' '||YMAX(way) ||', '|| XMAX(way)||' '||YMAX(way)||', '|| XMAX(way)||' '||YMIN(way)||', '|| XMIN(way)||' '||YMIN(way) ||', '|| XMIN(way)||' '||YMAX(way)|| ')', 900913), 
-  top=GeometryFromText('POINT(' || x(centroid(envelope(way))) || ' ' || ymax(envelope(way)) || ')', 900913);
+  top=GeometryFromText('POINT(' || x(centroid(envelope(way))) || ' ' || ymax(envelope(way)) || ')', 900913),
+  topline=geomfromtext('LINESTRING(' || XMIN(way)||' '||YMIN(way) ||', '|| XMAX(way)||' '||YMIN(way)|| ')', 900913);
 
 -- feed stations in collection
 insert into planet_osm_colls select (array_sort(stations))[1], 'station' from planet_osm_stations where rel_id is null and array_dims(stations)!='[1:1]';

@@ -253,12 +253,12 @@
   text-spacing: 150;
   text-max-char-angle-delta: 20;
 }
-.stations_center[importance=local][zoom>=15][zoom<16] name,
-.stations_center[importance=suburban][zoom>=14][zoom<16] name,
-.stations_center[importance=urban][zoom>=13][zoom<14] name,
-.stations_center[importance=regional][zoom>=11][zoom<12] name,
-.stations_center[importance=national][zoom>=10][zoom<11] name,
-.stations_center[importance=international][zoom>=9][zoom<10] name
+.stations_top[importance=local][zoom>=15][zoom<16] name,
+.stations_top[importance=suburban][zoom>=14][zoom<16] name,
+.stations_top[importance=urban][zoom>=13][zoom<14] name,
+.stations_top[importance=regional][zoom>=11][zoom<12] name,
+.stations_top[importance=national][zoom>=10][zoom<11] name,
+.stations_top[importance=international][zoom>=9][zoom<10] name
 {
   text-size: 8;
   text-placement: point;
@@ -266,11 +266,12 @@
   text-fill: #007fff;
   text-avoid-edges: false;
   text-halo-radius: 1;
+  text-dy: -10;
 }
-.stations_center[importance=urban][zoom>=14][zoom<15] name,
-.stations_center[importance=regional][zoom>=13][zoom<15] name,
-.stations_center[importance=national][zoom>=11][zoom<14] name,
-.stations_center[importance=international][zoom>=10][zoom<14] name
+.stations_top[importance=urban][zoom>=14][zoom<15] name,
+.stations_top[importance=regional][zoom>=13][zoom<15] name,
+.stations_top[importance=national][zoom>=11][zoom<14] name,
+.stations_top[importance=international][zoom>=10][zoom<14] name
 {
   text-size: 10;
   text-placement: point;
@@ -278,33 +279,7 @@
   text-fill: #007fff;
   text-avoid-edges: false;
   text-halo-radius: 1;
-}
-.stations_center[importance=local][zoom>=15][zoom<16],
-.stations_center[importance=suburban][zoom>=14][zoom<16],
-.stations_center[importance=urban][zoom>=13][zoom<14],
-.stations_center[importance=regional][zoom>=11][zoom<12],
-.stations_center[importance=national][zoom>=10][zoom<11],
-.stations_center[importance=international][zoom>=9][zoom<10]
-{
-  point-file: url('img/hst_small.png');
-  text-dy: -7;
-  point-allow-overlap: false;
-}
-.stations_center[importance=urban][zoom>=14][zoom<15],
-.stations_center[importance=regional][zoom>=12][zoom<15],
-.stations_center[importance=national][zoom>=11][zoom<13],
-.stations_center[importance=international][zoom>=10][zoom<12]
-{
-  point-file: url('img/hst_middle.png');
-  text-dy: -9;
-  point-allow-overlap: false;
-}
-.stations_center[importance=national][zoom>=13][zoom<14] name,
-.stations_center[importance=international][zoom>=12][zoom<14] name
-{
-  point-file: url('img/hst_large.png');
   text-dy: -12;
-  point-allow-overlap: false;
 }
 .stations_bbox[importance=local][zoom>=16],
 .stations_bbox[importance=suburban][zoom>=16],
@@ -331,92 +306,100 @@
   text-halo-radius: 1;
   text-dy: -13;
 }
-.stops_p[direction=forward][angle=72][zoom>=14][zoom<15][importance=international],
-.stops_p[direction=forward][angle=72][zoom>=14][zoom<15][importance=national],
-.stops_p[direction=forward][angle=72][zoom>=15][zoom<16][importance=regional],
-.stops_p[direction=forward][angle=72][zoom>=15][zoom<16][importance=urban],
-.stops_p[direction=forward][angle=72][zoom>=16][importance=suburban],
-.stops_p[direction=forward][angle=72][zoom>=16][importance=local]
+.stops_p[direction=forward][angle=72][zoom>=9][zoom<10][importance=international],
+.stops_p[direction=forward][angle=72][zoom>10][zoom<11][importance=national],
+.stops_p[direction=forward][angle=72][zoom>=11][zoom<13][importance=regional],
+.stops_p[direction=forward][angle=72][zoom>=13][zoom<14][importance=urban],
+.stops_p[direction=forward][angle=72][zoom>=14][zoom<16][importance=suburban],
+.stops_p[direction=forward][angle=72][zoom>=15][zoom<17][importance=local]
 {
   point-file: url('img/rotate/stop_p_for_small.png');
   point-allow-overlap: true;
 }
-.stops_p[direction=backward][angle=72][zoom>=14][zoom<15][importance=international],
-.stops_p[direction=backward][angle=72][zoom>=14][zoom<15][importance=national],
-.stops_p[direction=backward][angle=72][zoom>=15][zoom<16][importance=regional],
-.stops_p[direction=backward][angle=72][zoom>=15][zoom<16][importance=urban],
-.stops_p[direction=backward][angle=72][zoom>=16][importance=suburban],
-.stops_p[direction=backward][angle=72][zoom>=16][importance=local]
+.stops_p[direction=backward][angle=72][zoom>=9][zoom<10][importance=international],
+.stops_p[direction=backward][angle=72][zoom>=10][zoom<11][importance=national],
+.stops_p[direction=backward][angle=72][zoom>=11][zoom<13][importance=regional],
+.stops_p[direction=backward][angle=72][zoom>=13][zoom<14][importance=urban],
+.stops_p[direction=backward][angle=72][zoom>=14][zoom<16][importance=suburban],
+.stops_p[direction=backward][angle=72][zoom>=15][zoom<17][importance=local]
 {
   point-file: url('img/rotate/stop_p_back_small.png');
   point-allow-overlap: true;
 }
-.stops_p[direction=forward][angle=72][zoom>=15][importance=international],
-.stops_p[direction=forward][angle=72][zoom>=15][importance=national],
-.stops_p[direction=forward][angle=72][zoom>=16][importance=regional],
-.stops_p[direction=forward][angle=72][zoom>=16][importance=urban]
+.stops_p[direction=forward][angle=72][zoom>=10][importance=international],
+.stops_p[direction=forward][angle=72][zoom>=11][importance=national],
+.stops_p[direction=forward][angle=72][zoom>=13][importance=regional],
+.stops_p[direction=forward][angle=72][zoom>=14][importance=urban],
+.stops_p[direction=forward][angle=72][zoom>=16][importance=suburban],
+.stops_p[direction=forward][angle=72][zoom>=17][importance=local]
 {
   point-file: url('img/rotate/stop_p_for_large.png');
   point-allow-overlap: true;
 }
-.stops_p[direction=backward][angle=72][zoom>=15][importance=international],
-.stops_p[direction=backward][angle=72][zoom>=15][importance=national],
-.stops_p[direction=backward][angle=72][zoom>=16][importance=regional],
-.stops_p[direction=backward][angle=72][zoom>=16][importance=urban]
+.stops_p[direction=backward][angle=72][zoom>=10][importance=international],
+.stops_p[direction=backward][angle=72][zoom>=11][importance=national],
+.stops_p[direction=backward][angle=72][zoom>=13][importance=regional],
+.stops_p[direction=backward][angle=72][zoom>=14][importance=urban],
+.stops_p[direction=backward][angle=72][zoom>=16][importance=suburban],
+.stops_p[direction=backward][angle=72][zoom>=17][importance=local]
 {
   point-file: url('img/rotate/stop_p_back_large.png');
   point-allow-overlap: true;
 }
-.stops_p[direction=both][zoom>=14][zoom<15][importance=international],
-.stops_p[direction=both][zoom>=14][zoom<15][importance=national],
-.stops_p[direction=both][zoom>=15][zoom<16][importance=regional],
-.stops_p[direction=both][zoom>=15][zoom<16][importance=urban],
-.stops_p[direction=both][zoom>=16][importance=suburban],
-.stops_p[direction=both][zoom>=16][importance=local]
+.stops_p[direction=both][zoom>=9][zoom<10][importance=international],
+.stops_p[direction=both][zoom>=10][zoom<11][importance=national],
+.stops_p[direction=both][zoom>=11][zoom<13][importance=regional],
+.stops_p[direction=both][zoom>=13][zoom<14][importance=urban],
+.stops_p[direction=both][zoom>=14][zoom<16][importance=suburban],
+.stops_p[direction=both][zoom>=15][zoom<17][importance=local]
 {
   point-file: url('img/rotate/stop_small.png');
 }
-.stops_p[direction=both][zoom>=14][zoom<15][importance=international],
-.stops_p[direction=both][zoom>=14][zoom<15][importance=national],
-.stops_p[direction=both][zoom>=15][zoom<16][importance=regional],
-.stops_p[direction=both][zoom>=15][zoom<16][importance=urban],
+.stops_p[direction=both][zoom>=10][importance=international],
+.stops_p[direction=both][zoom>=11][importance=national],
+.stops_p[direction=both][zoom>=13][importance=regional],
+.stops_p[direction=both][zoom>=14][importance=urban],
 .stops_p[direction=both][zoom>=16][importance=suburban],
-.stops_p[direction=both][zoom>=16][importance=local]
+.stops_p[direction=both][zoom>=17][importance=local]
 {
   point-file: url('img/rotate/stop_large.png');
 }
-.stops_n[direction=forward][angle=72][zoom>=14][zoom<15][importance=international],
-.stops_n[direction=forward][angle=72][zoom>=14][zoom<15][importance=national],
-.stops_n[direction=forward][angle=72][zoom>=15][zoom<16][importance=regional],
-.stops_n[direction=forward][angle=72][zoom>=15][zoom<16][importance=urban],
-.stops_n[direction=forward][angle=72][zoom>=16][importance=suburban],
-.stops_n[direction=forward][angle=72][zoom>=16][importance=local]
+.stops_n[direction=forward][angle=72][zoom>=9][zoom<10][importance=international],
+.stops_n[direction=forward][angle=72][zoom>=10][zoom<11][importance=national],
+.stops_n[direction=forward][angle=72][zoom>=11][zoom<13][importance=regional],
+.stops_n[direction=forward][angle=72][zoom>=13][zoom<14][importance=urban],
+.stops_n[direction=forward][angle=72][zoom>=14][zoom<16][importance=suburban],
+.stops_n[direction=forward][angle=72][zoom>=15][zoom<17][importance=local]
 {
   point-file: url('img/rotate/stop_n_for_small.png');
   point-allow-overlap: true;
 }
-.stops_n[direction=backward][angle=72][zoom>=14][zoom<15][importance=international],
-.stops_n[direction=backward][angle=72][zoom>=14][zoom<15][importance=national],
-.stops_n[direction=backward][angle=72][zoom>=15][zoom<16][importance=regional],
-.stops_n[direction=backward][angle=72][zoom>=15][zoom<16][importance=urban],
-.stops_n[direction=backward][angle=72][zoom>=16][importance=suburban],
-.stops_n[direction=backward][angle=72][zoom>=16][importance=local]
+.stops_n[direction=backward][angle=72][zoom>=9][zoom<10][importance=international],
+.stops_n[direction=backward][angle=72][zoom>=10][zoom<11][importance=national],
+.stops_n[direction=backward][angle=72][zoom>=11][zoom<13][importance=regional],
+.stops_n[direction=backward][angle=72][zoom>=13][zoom<14][importance=urban],
+.stops_n[direction=backward][angle=72][zoom>=14][zoom<16][importance=suburban],
+.stops_n[direction=backward][angle=72][zoom>=15][zoom<17][importance=local]
 {
   point-file: url('img/rotate/stop_n_back_small.png');
   point-allow-overlap: true;
 }
-.stops_n[direction=forward][angle=72][zoom>=15][importance=international],
-.stops_n[direction=forward][angle=72][zoom>=15][importance=national],
-.stops_n[direction=forward][angle=72][zoom>=16][importance=regional],
-.stops_n[direction=forward][angle=72][zoom>=16][importance=urban]
+.stops_n[direction=forward][angle=72][zoom>=10][importance=international],
+.stops_n[direction=forward][angle=72][zoom>=11][importance=national],
+.stops_n[direction=forward][angle=72][zoom>=13][importance=regional],
+.stops_n[direction=forward][angle=72][zoom>=14][importance=urban],
+.stops_n[direction=forward][angle=72][zoom>=16][importance=suburban],
+.stops_n[direction=forward][angle=72][zoom>=17][importance=local]
 {
   point-file: url('img/rotate/stop_n_for_large.png');
   point-allow-overlap: true;
 }
-.stops_n[direction=backward][angle=72][zoom>=15][importance=international],
-.stops_n[direction=backward][angle=72][zoom>=15][importance=national],
-.stops_n[direction=backward][angle=72][zoom>=16][importance=regional],
-.stops_n[direction=backward][angle=72][zoom>=16][importance=urban]
+.stops_n[direction=backward][angle=72][zoom>=10][importance=international],
+.stops_n[direction=backward][angle=72][zoom>=11][importance=national],
+.stops_n[direction=backward][angle=72][zoom>=13][importance=regional],
+.stops_n[direction=backward][angle=72][zoom>=14][importance=urban],
+.stops_n[direction=backward][angle=72][zoom>=16][importance=suburban],
+.stops_n[direction=backward][angle=72][zoom>=17][importance=local]
 {
   point-file: url('img/rotate/stop_n_back_large.png');
   point-allow-overlap: true;
@@ -441,8 +424,54 @@
 {
   point-allow-overlap: true;
 }
-.stop_o[type=subway_entrance][zoom>=16]
+.stops_o[type=amenity_taxi][zoom>=14]
+{
+  point-file: url('img/amenity_taxi.png');
+  point-allow-overlap: true;
+}
+.stops_o[type=railway_subway_entrance][zoom>=16]
 {
   point-file: url('img/subway_entrance.png');
   point-allow-overlap: true;
+}
+.stops_o[type=aeroway_terminal][zoom>=9][zoom<16]
+{
+  point-file: url('img/aeroway_terminal.png');
+  point-allow-overlap: true;
+}
+.stations_type[type=railway_station][zoom>=14][importance=international],
+.stations_type[type=railway_station][zoom>=14][importance=national],
+.stations_type[type=railway_station][zoom>=15][importance=regional],
+.stations_type[type=railway_station][zoom>=15][importance=urban],
+.stations_type[type=railway_station][zoom>=16][importance=suburban],
+.stations_type[type=railway_station][zoom>=16][importance=local]
+{
+  shield-file: url('img/railway_station.png');
+}
+.stations_type[type=railway_tram_stop][zoom>=14][importance=international],
+.stations_type[type=railway_tram_stop][zoom>=14][importance=national],
+.stations_type[type=railway_tram_stop][zoom>=15][importance=regional],
+.stations_type[type=railway_tram_stop][zoom>=15][importance=urban],
+.stations_type[type=railway_tram_stop][zoom>=16][importance=suburban],
+.stations_type[type=railway_tram_stop][zoom>=16][importance=local]
+{
+  shield-file: url('img/railway_tram_stop.png');
+}
+.stations_type[type=highway_bus_stop][zoom>=14][importance=international],
+.stations_type[type=highway_bus_stop][zoom>=14][importance=national],
+.stations_type[type=highway_bus_stop][zoom>=15][importance=regional],
+.stations_type[type=highway_bus_stop][zoom>=15][importance=urban],
+.stations_type[type=highway_bus_stop][zoom>=16][importance=suburban],
+.stations_type[type=highway_bus_stop][zoom>=16][importance=local]
+{
+  shield-file: url('img/highway_bus_stop.png');
+}
+.stations_type[type=aerialway_station][zoom>=14][importance=international],
+.stations_type[type=aerialway_station][zoom>=14][importance=national],
+.stations_type[type=aerialway_station][zoom>=15][importance=regional],
+.stations_type[type=aerialway_station][zoom>=15][importance=urban],
+.stations_type[type=aerialway_station][zoom>=16][importance=suburban],
+.stations_type[type=aerialway_station][zoom>=16][importance=local]
+{
+  shield-file: url('img/highway_bus_stop.png');
 }

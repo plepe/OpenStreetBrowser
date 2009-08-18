@@ -253,8 +253,18 @@
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
       <Parameter name="table">
-	(select railway as type from planet_osm_point where
-	  railway in ('subway_entrance')
+	(select (CASE 
+	  WHEN railway in ('subway_entrance') THEN 'railway_'||"railway"
+	  WHEN aeroway in ('terminal') THEN 'aeroway_'||"aeroway"
+	  WHEN amenity in ('taxi') THEN 'amenity_'||"amenity"
+	END) as type, way from
+	(select railway, aeroway, amenity, way from planet_osm_point 
+	 union
+	 select railway, aeroway, amenity, way from planet_osm_polygon) as t
+	where
+	  railway in ('subway_entrance') or
+	  aeroway in ('terminal') or
+	  amenity in ('taxi')
 	) as stops
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
@@ -284,6 +294,55 @@
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
    </Layer>
+   <!-- <Layer class="stations_type" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="geometry_field">topline</Parameter>
+      <Parameter name="table">
+	(select distinct t.coll_id, type, st.topline, st.importance from (
+	    select cm.coll_id, p.osm_id, 'aeroway_terminal' as type from coll_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type=2 where aeroway='terminal'
+	  union
+	    select cm.coll_id, p.osm_id, 'aeroway_terminal' as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where aeroway='terminal'
+	  union
+	    select cm.coll_id, p.osm_id, 'amenity_'||"amenity" as type from coll_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type=2 where amenity in ('ferry_terminal', 'bus_station')
+	  union
+	    select cm.coll_id, p.osm_id, 'amenity_'||"amenity" as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where amenity in ('ferry_terminal', 'bus_station')
+	  union
+	    select cm.coll_id, p.osm_id, 'aerialway_station' as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where aerialway='station'
+	  union
+	    select cm.coll_id, p.osm_id, 'railway_'||"railway" as type from coll_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type=2 where railway in ('station', 'subway_station')
+	  union
+	    select cm.coll_id, p.osm_id, 'railway_'||"railway" as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where railway in ('station', 'subway_station', 'halt', 'tram_stop')
+	  union
+	    select cm.coll_id, p.osm_id, 'highway_bus_stop' as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where highway='bus_stop'
+	  ) as t left join planet_osm_stations st on t.coll_id=st.coll_id
+	  
+	  union
+
+	select distinct t.relation_id, type, st.topline, st.importance from (
+	    select cm.relation_id, p.osm_id, 'aeroway_terminal' as type from relation_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type=2 where aeroway='terminal'
+	  union
+	    select cm.relation_id, p.osm_id, 'aeroway_terminal' as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where aeroway='terminal'
+	  union
+	    select cm.relation_id, p.osm_id, 'amenity_'||"amenity" as type from relation_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type=2 where amenity in ('ferry_terminal', 'bus_station')
+	  union
+	    select cm.relation_id, p.osm_id, 'amenity_'||"amenity" as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where amenity in ('ferry_terminal', 'bus_station')
+	  union
+	    select cm.relation_id, p.osm_id, 'aerialway_station' as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where aerialway='station'
+	  union
+	    select cm.relation_id, p.osm_id, 'railway_'||"railway" as type from relation_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type=2 where railway in ('station', 'subway_station')
+	  union
+	    select cm.relation_id, p.osm_id, 'railway_'||"railway" as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where railway in ('station', 'subway_station', 'halt', 'tram_stop')
+	  union
+	    select cm.relation_id, p.osm_id, 'highway_bus_stop' as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where highway='bus_stop'
+	  ) as t left join planet_osm_stations st on t.relation_id=st.rel_id) as stations
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer> -->
+
    <Layer class="routestext" name="routes-text" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <StyleName>routes-text</StyleName>
     <Datasource>
