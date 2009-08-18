@@ -12,6 +12,13 @@ SFUNC = array_append,
 STYPE = int4[],
 INITCOND = '{}'); 
 
+drop aggregate if exists to_intarray(int[]);
+CREATE AGGREGATE to_intarray (
+BASETYPE = int4[],
+SFUNC = array_cat,
+STYPE = int4[],
+INITCOND = '{}'); 
+
 create or replace function array_toint(anyarray)
 returns int[]
 as $$
