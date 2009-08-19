@@ -177,6 +177,17 @@ class object {
     $this->tags->get_xml($obj, $root);
 
   }
+
+  function get_ways() {
+    $ret=array();
+
+    $res=sql_query("select * from way_nodes where node_id='$this->only_id'");
+    while($elem=pg_fetch_assoc($res)) {
+      $ret[]="way_".$elem[way_id];
+    }
+
+    return $ret;
+  }
 }
 
 // elem can by either a string or an array. if id is a string it has to be
