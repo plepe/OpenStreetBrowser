@@ -461,6 +461,22 @@
   point-file: url('img/aeroway_aerodrome.png');
   point-allow-overlap: true;
 }
+.stops_o[type=aeroway_terminal][zoom>=15]
+{
+  point-file: url('img/aeroway_terminal.png');
+  point-allow-overlap: true;
+}
+.stops_o[type=aeroway_terminal][zoom>=16] name
+{
+  text-size: 8;
+  text-placement: point;
+  text-face-name: "DejaVu Sans Book";
+  text-halo-fill: #2c94c2;
+  text-fill: #000000;
+  text-avoid-edges: false;
+  text-halo-radius: 1;
+  text-dy: 9;
+}
 .stops_o[type=amenity_pt_tickets][zoom>=17]
 {
   point-file: url('img/amenity_pt_tickets.png');
