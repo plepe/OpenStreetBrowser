@@ -250,7 +250,7 @@
   text-avoid-edges: false;
   text-halo-radius: 1;
   text-min-distance: 20;
-  text-spacing: 150;
+  text-spacing: 200;
   text-max-char-angle-delta: 20;
 }
 .stations_top[importance=local][zoom>=15][zoom<16] name,

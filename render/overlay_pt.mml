@@ -253,15 +253,15 @@
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
       <Parameter name="table">
-	(select (CASE 
+	(select name, (CASE 
 	  WHEN railway in ('subway_entrance') THEN 'railway_'||"railway"
 	  WHEN aeroway in ('aerodrome', 'terminal') THEN 'aeroway_'||"aeroway"
 	  WHEN amenity in ('taxi') THEN 'amenity_'||"amenity"
 	  WHEN amenity='vending_machine' and vending='public_transport_tickets' THEN 'amenity_pt_tickets'
 	END) as type, way from
-	(select railway, aeroway, amenity, vending, way from planet_osm_point 
+	(select name, railway, aeroway, amenity, vending, way from planet_osm_point 
 	 union
-	 select railway, aeroway, amenity, vending, way from planet_osm_polygon) as t
+	 select name, railway, aeroway, amenity, vending, way from planet_osm_polygon) as t
 	where
 	  railway in ('subway_entrance') or
 	  aeroway in ('aerodrome', 'terminal') or
