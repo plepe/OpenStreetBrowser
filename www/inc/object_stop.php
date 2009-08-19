@@ -9,7 +9,7 @@ $stop_types=array(
   array("railway", "tram_stop"),
   array("railway", "station"),
   array("railway", "halt"),
-  array("aeroway", "terminal"),
+  array("aeroway", "aerodrome"),
   array("aerialway", "station")
 );
 
