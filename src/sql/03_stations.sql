@@ -47,8 +47,8 @@ insert into planet_osm_stop_to_station select
       src.osm_id=station_member.member_id and
       src.id_type=station_member.member_type
     limit 1))),
-  array_unique(to_intarray(CASE WHEN dst.id_type=1 THEN dst.osm_id END)),
-  array_unique(to_intarray(CASE WHEN dst.id_type=2 THEN dst.osm_id END)),
+  array_sort(array_unique(to_intarray(CASE WHEN dst.id_type=1 THEN dst.osm_id END))),
+  array_sort(array_unique(to_intarray(CASE WHEN dst.id_type=2 THEN dst.osm_id END))),
   dst.name,
   src.importance
 from 
@@ -89,12 +89,12 @@ SELECT AddGeometryColumn('planet_osm_stations', 'top', 900913, 'POINT', 2);
 SELECT AddGeometryColumn('planet_osm_stations', 'topline', 900913, 'LINESTRING', 2);
 insert into planet_osm_stations
   select name,
-    array_unique(array_sort(point_stations)),
-    array_unique(array_sort(polygon_stations)),
+    point_stations,
+    polygon_stations,
     (array_sort(max(rel_id)))[1],
     (CASE
-      WHEN array_dims(point_stations)!='[1:1]' THEN (array_sort(point_stations))[1]
-      WHEN array_dims(polygon_stations)!='[1:1]' THEN (array_sort(polygon_stations))[1]
+      WHEN array_count(point_stations)>0 THEN point_stations[1]
+      WHEN array_count(polygon_stations)>0 THEN polygon_stations[1]
       ELSE null
     END),
     (array['local','suburban','urban','regional','national','international'])
@@ -111,7 +111,10 @@ from planet_osm_stop_to_station station
    select osm_id, 2 as id_type, way from planet_osm_polygon) as object
      on (object.osm_id=any(station.point_stations) and object.id_type=1) or
         (object.osm_id=any(station.polygon_stations) and object.id_type=2)
-group by name, array_sort(point_stations), array_dims(point_stations), array_sort(polygon_stations), array_dims(polygon_stations);
+group by name, point_stations, polygon_stations;
+
+-- we don't need this temporary table anymore
+drop table planet_osm_stop_to_station;
 
 -- delete all stations with relations and do it again for them
 -- TODO: add polygons!
