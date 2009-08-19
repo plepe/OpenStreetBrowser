@@ -191,7 +191,20 @@ select poi.osm_id,
       ) as t) as t1 left join relation_members rm on rm.member_id=t1.osm_id and rm.member_type=1 group by t1.osm_id, t1.type, t1.pos, t1.len, t1.importance, t1.next_way);
 
 -- feed stations in search
-insert into search select name, name, null as language, (CASE WHEN rel_id is not null THEN 'rel' WHEN array_dims(stations)!='[1:1]' THEN 'coll' ELSE 'node' END), (CASE WHEN rel_id is not null THEN rel_id ELSE (array_sort(stations))[1] END) as id, 'station', null  from planet_osm_stations where name is not null;
+insert into search 
+  select name, name, null as language, 
+    (CASE 
+      WHEN rel_id is not null THEN 'rel'
+      WHEN coll_id is not null THEN 'coll'
+      WHEN array_count(polygon_stations)>0 THEN 'way'
+      ELSE 'node' END),
+    (CASE
+      WHEN rel_id is not null THEN rel_id
+      WHEN coll_id is not null THEN coll_id
+      WHEN array_count(polygon_stations)>0 THEN
+      polygon_stations[1] ELSE point_stations[1] END) as id,
+    'station', null
+  from planet_osm_stations where name is not null;
 
 create index planet_osm_stations_way on planet_osm_stations using gist(way);
 create index planet_osm_stations_bbox on planet_osm_stations using gist(bbox);
