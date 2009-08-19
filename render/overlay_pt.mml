@@ -255,7 +255,7 @@
       <Parameter name="table">
 	(select (CASE 
 	  WHEN railway in ('subway_entrance') THEN 'railway_'||"railway"
-	  WHEN aeroway in ('terminal') THEN 'aeroway_'||"aeroway"
+	  WHEN aeroway in ('aerodrome') THEN 'aeroway_'||"aeroway"
 	  WHEN amenity in ('taxi') THEN 'amenity_'||"amenity"
 	  WHEN amenity='vending_machine' and vending='public_transport_tickets' THEN 'amenity_pt_tickets'
 	END) as type, way from
@@ -264,7 +264,7 @@
 	 select railway, aeroway, amenity, vending, way from planet_osm_polygon) as t
 	where
 	  railway in ('subway_entrance') or
-	  aeroway in ('terminal') or
+	  aeroway in ('aerodrome') or
 	  amenity in ('taxi', 'vending_machine')
 	) as stops
       </Parameter>

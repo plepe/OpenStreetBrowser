@@ -456,9 +456,9 @@
   text-halo-radius: 1;
   text-dy: 9;
 }
-.stops_o[type=aeroway_terminal][zoom>=8][zoom<16]
+.stops_o[type=aeroway_aerodrome][zoom>=8][zoom<16]
 {
-  point-file: url('img/aeroway_terminal.png');
+  point-file: url('img/aeroway_aerodrome.png');
   point-allow-overlap: true;
 }
 .stops_o[type=amenity_pt_tickets][zoom>=17]
