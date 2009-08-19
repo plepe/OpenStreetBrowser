@@ -424,19 +424,46 @@
 {
   point-allow-overlap: true;
 }
-.stops_o[type=amenity_taxi][zoom>=14]
+.stops_o[type=amenity_taxi][zoom>=15] name
 {
   point-file: url('img/amenity_taxi.png');
   point-allow-overlap: true;
 }
-.stops_o[type=railway_subway_entrance][zoom>=16]
+.stops_o[type=amenity_taxi][zoom>=16] name
 {
-  point-file: url('img/subway_entrance.png');
+  text-size: 8;
+  text-placement: point;
+  text-face-name: "DejaVu Sans Book";
+  text-halo-fill: #0000ff;
+  text-fill: #000000;
+  text-avoid-edges: false;
+  text-halo-radius: 1;
+  text-dy: 9;
+}
+.stops_o[type=railway_subway_entrance][zoom>=15] name
+{
+  point-file: url('img/railway_subway_entrance.png');
   point-allow-overlap: true;
 }
-.stops_o[type=aeroway_terminal][zoom>=9][zoom<16]
+.stops_o[type=railway_subway_entrance][zoom>=16] name
+{
+  text-size: 8;
+  text-placement: point;
+  text-face-name: "DejaVu Sans Book";
+  text-halo-fill: #0000ff;
+  text-fill: #000000;
+  text-avoid-edges: false;
+  text-halo-radius: 1;
+  text-dy: 9;
+}
+.stops_o[type=aeroway_terminal][zoom>=8][zoom<16]
 {
   point-file: url('img/aeroway_terminal.png');
+  point-allow-overlap: true;
+}
+.stops_o[type=amenity_pt_tickets][zoom>=17]
+{
+  point-file: url('img/amenity_pt_tickets.png');
   point-allow-overlap: true;
 }
 .stations_type[type=railway_station][zoom>=14][importance=international],

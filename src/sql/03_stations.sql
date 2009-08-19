@@ -12,6 +12,13 @@ update planet_osm_point set importance='suburban', railway='subway_station' from
 update planet_osm_point set importance='urban' where railway='station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
 update planet_osm_point set importance='urban' where amenity='bus_station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
 
+alter table planet_osm_polygon add column importance text;
+update planet_osm_polygon set importance=network where importance is null and network in ('local', 'suburban', 'urban', 'regional', 'national', 'international');
+update planet_osm_polygon set importance='regional' where importance='region';
+update planet_osm_polygon set importance='suburban', railway='subway_station' from planet_osm_line l join planet_osm_ways w on l.osm_id=w.id where planet_osm_point.osm_id=any(w.nodes) and planet_osm_point.railway='station' and l.railway='subway' and (planet_osm_point.importance is null or not planet_osm_point.importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_polygon set importance='urban' where railway='station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_polygon set importance='urban' where amenity='bus_station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
+
 create index planet_osm_point_name on planet_osm_point(name);
 
 -- stop_to_station finds nearby stops with same name
@@ -38,10 +45,10 @@ insert into planet_osm_stop_to_station select
   dst.name,
   src.importance
 from 
-  (select osm_id, 1 as id_type, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_point union
-   select osm_id, 2 as id_type, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_polygon) as dst,
-  (select osm_id, 1 as id_type, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_point union
-   select osm_id, 2 as id_type, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_polygon) as src
+  (select osm_id, 1 as id_type, importance, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_point union
+   select osm_id, 2 as id_type, importance, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_polygon) as dst,
+  (select osm_id, 1 as id_type, importance, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_point union
+   select osm_id, 2 as id_type, importance, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_polygon) as src
 where 
   src.name=dst.name and
   geometryfromtext('POLYGON((' || xmin(src.way)-500 || ' ' || ymin(src.way)-500 || ','
