@@ -57,23 +57,25 @@ function route_info($ret, $object) {
 
     if(eregi("^stop.*$", $role, $m)) {
       $stop_index[$id]=sizeof($stop_list);
-      $stop_list[$id]=array("dir"=>0, "id"=>$id);
+      $stop_list[$id]=array("dir"=>0, "id"=>$id, "role"=>"both");
       $stop_id_list[]=$mem[0]->only_id;
       $load_list[]=$id;
     }
     elseif(eregi("^forward[:_]stop.*$", $role, $m)) {
       $stop_index[$id]=sizeof($stop_list);
-      $stop_list[$id]=array("dir"=>1, "id"=>$id);
+      $stop_list[$id]=array("dir"=>1, "id"=>$id, "role"=>"forward");
       $stop_id_list[]=$mem[0]->only_id;
       $load_list[]=$id;
     }
     elseif(eregi("^backward[:_]stop.*$", $role, $m)) {
       $stop_index[$id]=sizeof($stop_list);
-      $stop_list[$id]=array("dir"=>-1, "id"=>$id);
+      $stop_list[$id]=array("dir"=>-1, "id"=>$id, "role"=>"backward");
       $stop_id_list[]=$mem[0]->only_id;
       $load_list[]=$id;
     }
   }
+
+  load_objects($load_list);
 
   foreach($stop_list as $i=>$stop) {
     $stop_list[$i]["possible_-1"]=array();
@@ -87,9 +89,9 @@ function route_info($ret, $object) {
     "XMAX(p.way)+50||' '||YMIN(p.way)-50||','||".
     "XMAX(p.way)+50||' '||YMAX(p.way)+50||','||".
     "XMIN(p.way)-50||' '||YMAX(p.way)+50||','||".
-    "XMIN(p.way)-50||' '||YMIN(p.way)-50||'))', 900913)&&l.way and Distance(p.way, l.way)<50 join relation_members rm on l.osm_id=rm.member_id and rm.member_type=2 where rm.relation_id='{$object->only_id}' and p.osm_id in (".implode(",", $stop_id_list).")");
+    "XMIN(p.way)-50||' '||YMIN(p.way)-50||'))', 900913)&&l.way and Distance(p.way, l.way)<20 join relation_members rm on l.osm_id=rm.member_id and rm.member_type=2 where rm.relation_id='{$object->only_id}' and p.osm_id in (".implode(",", $stop_id_list).")");
   while($elem=pg_fetch_assoc($res)) {
-    $stop_list[$elem[stop_id]][ways][]=$elem[way_id];
+    $stop_list[$elem[stop_id]][ways][]=array("way_id"=>$elem[way_id], "pos"=>$elem[pos]);
     $way_stop_list[$elem[way_id]][$elem[stop_id]]=$elem;
   }
 
@@ -99,80 +101,82 @@ function route_info($ret, $object) {
     $nodes[$elem[first]][]=$elem[way_id];
     $nodes[$elem[last]][]=$elem[way_id];
   }
-  
+
   $data=array(
     "stop_list"=>$stop_list,
     "stop_index"=>$stop_index,
+    "way_stop_list"=>$way_stop_list,
     "ways"=>$ways,
-    "nodes"=>$nodes,
-    "way_stop_list"=>$way_stop_list);
+    "nodes"=>$nodes);
+  //print_r($ways);
 
   function possible_way($stop0, &$data, $rek=array()) {
     $ret=array();
 //    print "rek ".implode(",", $rek)."\n";
+    //print "stop0 ";print_r($stop0);
+    if(in_array("$stop0[dir]$stop0[id]", $rek))
+      return array();
+    $rek[]="$stop0[dir]$stop0[id]";
 
     if(!$stop0[ways])
       return array();
     foreach($stop0[ways] as $way0) {
-      if(!in_array($way0, $rek)) {
-	if(isset($stop0[pos]))
-	  $pos0=$stop0[pos];
-	else
-	  $pos0=$data[way_stop_list][$way0][$stop0[id]][pos];
-	$poss=array();
-	if($data[way_stop_list][$way0])
-	foreach($data[way_stop_list][$way0] as $poss_stop) {
-	  $stopo=$data[stop_list][$data[stop_index][$poss_stop[stop_id]]];
-	  if(($stop0["dir"]==1)&&($poss_stop["pos"]>$pos0)&&($stopo["dir"]!=-1))
-	    $poss[$poss_stop["pos"]]=$poss_stop;
-	  if(($stop0["dir"]==-1)&&($poss_stop["pos"]<$pos0)&&($stopo["dir"]!=1))
-	    $poss[$poss_stop["pos"]]=$poss_stop;
-	}
-	$k=array_keys($poss);
-	if($stop0["dir"]==1)
-	  sort($k);
-	else
-	  rsort($k);
+      $pos0=$way0[pos];
+      $poss=array();
+      if($data[way_stop_list][$way0[way_id]])
+      foreach($data[way_stop_list][$way0[way_id]] as $poss_stop) {
+	//print "poss_stop "; print_r($poss_stop);
+	$stopo=$data[stop_list][$poss_stop[stop_id]];
+//	print "stop0 "; print_r($stop0);
+//	print "stopo "; print_r($stopo);
+	if(($stop0["dir"]==1)&&($poss_stop["pos"]>$pos0)&&($stopo["dir"]!=-1))
+	  $poss[$poss_stop["pos"]]=$poss_stop;
+	if(($stop0["dir"]==-1)&&($poss_stop["pos"]<$pos0)&&($stopo["dir"]!=1))
+	  $poss[$poss_stop["pos"]]=$poss_stop;
+      }
+      //print "dir".$stop0[dir]; print "poss ";print_r($poss);
+      $k=array_keys($poss);
+      if($stop0["dir"]==1)
+	sort($k);
+      else
+	rsort($k);
+	//print "dir".$stop0[dir]; print_r($k);
 
-	if(sizeof($poss)) {
-	  $ret[]=array($poss[$k[0]][stop_id], $stop0["dir"]);
-	}
-	else {
-	  $end=$data[ways][$way0];
-	  if($stop0["dir"]==1)
-	    $end=$end[last];
-	  else
-	    $end=$end[first];
+      if(sizeof($poss)) {
+	$ret[]=array("stop_id"=>$poss[$k[0]][stop_id], "dir"=>$stop0["dir"], "way"=>$way0[way_id]);
+      }
+      else {
+	$end=$data[ways][$way0[way_id]];
+	if($stop0["dir"]==1)
+	  $end=$end[last];
+	else
+	  $end=$end[first];
 //	  print "END";
 //	  print_r($end);
 //	  print_r($way0);
-	  $s=array(array(
-	      "dir"=>1,
-	      "id"=>$end,
-	      "pos"=>0
-	    ), array(
-	      "dir"=>-1,
-	      "id"=>$end,
-	      "pos"=>9999
-	    ));
-	  foreach($data[nodes][$end] as $w) {
-	    if($w==$way0) {
-	    }
-	    elseif($data[ways][$w][first]==$end) {
-	      $s[0][ways][]=$w;
-	    }
-	    else {
-	      $s[1][ways][]=$w;
-	    }
+	$s=array(array(
+	    "dir"=>1,
+	    "id"=>$end,
+	    "pos"=>0
+	  ), array(
+	    "dir"=>-1,
+	    "id"=>$end,
+	  ));
+	foreach($data[nodes][$end] as $w) {
+	  if(($w==$way0[way_id])&&(sizeof($data[nodes][$end])>1)) {
 	  }
-
-	  $r=$rek;
-	  $r[]=$way0;
-	  if($d=possible_way($s[0], $data, $r))
-	    $ret=array_merge($ret, $d);
-	  if($d=possible_way($s[1], $data, $r))
-	    $ret=array_merge($ret, $d);
+	  elseif($data[ways][$w][first]==$end) {
+	    $s[0][ways][]=array("way_id"=>$w, "pos"=>0);
+	  }
+	  else {
+	    $s[1][ways][]=array("way_id"=>$w, "pos"=>9999);
+	  }
 	}
+
+	if($d=possible_way($s[0], $data, $rek))
+	  $ret=array_merge($ret, $d);
+	if($d=possible_way($s[1], $data, $rek))
+	  $ret=array_merge($ret, $d);
       }
     }
     /*
@@ -205,25 +209,28 @@ function route_info($ret, $object) {
       $poss=possible_way($s, $data);
       $stop_list[$i]["possible_-1"]=$poss;
       foreach($poss as $p) {
-        $stop_list[$p[0]]["come_".$p[1]][]=array($stop[id], $stop["dir"]);
+        $stop_list[$p[stop_id]]["come_".$p[dir]][]=array("stop_id"=>$stop[id], "dir"=>$stop["dir"]);
       }
     }
     if($stop["dir"]>-1) {
+      //print "!!!!!!\n";
       $s["dir"]=1;
       $poss=possible_way($s, $data);
       $stop_list[$i]["possible_1"]=$poss;
       foreach($poss as $p) {
-        $stop_list[$p[0]]["come_".$p[1]][]=array($stop[id], $stop["dir"]);
+        $stop_list[$p[stop_id]]["come_".$p[dir]][]=array("stop_id"=>$stop[id], "dir"=>$stop["dir"]);
       }
     }
+
+    //print_r($stop_list[$i]);
   }
 
-print_r($stop_list);
+//print_r($stop_list);
   $turn=1;
   $last=array("possible"=>null, "come"=>null);
   foreach($stop_list as $i=>$stop) {
     $stop_ob=load_object($stop[id]);
-	print $stop[id]." ".$stop_ob->tags->get("name")."\n";
+    //print $stop[id]." ".$stop_ob->tags->get("name")."\n";
 
     $dir=-2;
     $success_p=0;
@@ -232,14 +239,14 @@ print_r($stop_list);
       $dir_1=0;
 
       foreach($last["possible"] as $p) {
-	if($p[0]==$stop[id]) {
+	if($p[stop_id]==$stop[id]) {
 	  $success_p=1;
 	  foreach($stop["come_-1"] as $c) {
-	    if($c[0]==$last["possible_id"])
+	    if($c[stop_id]==$last["possible_id"])
 	      $dir_1=1;
 	  }
 	  foreach($stop["come_1"] as $c) {
-	    if($c[0]==$last["possible_id"])
+	    if($c[stop_id]==$last["possible_id"])
 	      $dir1=1;
 	  }
 	}
@@ -270,7 +277,7 @@ print_r($stop_list);
       $last["possible_id"]=$stop[id];
     }
       if($success_p) {
-	print "YEAHp $dir!\n";
+	//print "YEAHp $dir!\n";
       }
 
     $dir=-2;
@@ -280,22 +287,22 @@ print_r($stop_list);
       $dir_1=0;
 
       foreach($last["come"] as $p) {
-	if($p[0]==$stop[id]) {
+	if($p[stop_id]==$stop[id]) {
 	  $success_n=1;
 	  foreach($stop["possible_-1"] as $c) {
-	    if($c[0]==$last["come_id"])
+	    if($c[stop_id]==$last["come_id"])
 	      $dir1=1;
 	  }
 	  foreach($stop["possible_1"] as $c) {
-	    if($c[0]==$last["come_id"])
+	    if($c[stop_id]==$last["come_id"])
 	      $dir_1=1;
 	  }
 	}
       }
 
       if($success_n) {
-	$stop_list[$last["come_id"]]["prev1"]=$stop[id];
-	$stop_list[$stop[id]]["next1"]=$last["come_id"];
+	$stop_list[$last["come_id"]]["next1"]=$stop[id];
+	$stop_list[$stop[id]]["prev1"]=$last["come_id"];
 	$last["come_id"]=$stop[id];
       }
 
@@ -332,7 +339,7 @@ print_r($stop_list);
 //      }
 
       if($success_n) {
-	print "YEAHn $dir!\n";
+	//print "YEAHn $dir!\n";
       }
 
       if((!$success_p)&&(!$success_n)) {
@@ -350,7 +357,7 @@ print_r($stop_list);
       $res=array(
         "name"=>$stop_ob->tags->get("name"),
         "stop"=>$stop);
-      print_r($last);
+//      print_r($last);
   }
 
 //  print_r($result);
@@ -360,12 +367,81 @@ print_r($stop_list);
 //	unset($no_next[$sp]);
 //      }
 //  }
-  print_r($stop_list);
+  //print_r($stop_list);
 //  print_r($way_stop_list);
 //  print_r($ways);
-  return;
 
-  load_objects($load_list);
+  if(sizeof($stop_list)) {
+    $text.="<table cellpadding=0 cellspacing=0>\n";
+
+    foreach($stop_list as $stop) {
+      $stop_ob=load_object($stop[id]);
+      if($stop[role]=="both") {
+	if($stop[prev0]&&$stop[next0])
+	  $img_left="stop_left_both";
+        elseif($stop[prev0])
+	  $img_left="stop_left_prev";
+	elseif($stop[next0])
+	  $img_left="stop_left_next";
+	else
+	  $img_left="stop_left_none";
+	if($stop[prev1]&&$stop[next1])
+	  $img_right="stop_right_both";
+        elseif($stop[prev1])
+	  $img_right="stop_right_prev";
+	elseif($stop[next1])
+	  $img_right="stop_right_next";
+	else
+	  $img_right="stop_right_none";
+
+	$text.="<tr><td><img src='img/$img_left.png'></td><td><img src='img/$img_right.png'></td><td>{$stop_ob->tags->get("name")}</td></tr>\n";
+      }
+      else {
+	// right or left?
+	if($stop[prev1]||$stop[next1])
+	  $side=1;
+	else
+	  $side=0;
+
+	$waiting[side]=0;
+	if($stop["prev$side"]&&$stop["next$side"]) {
+	  $img="stop_single_both";
+	  $waiting[$side]=1;
+	}
+        elseif($stop["prev$side"])
+	  $img="stop_single_prev";
+	elseif($stop["next$side"]) {
+	  $img="stop_single_next";
+	  $waiting[$side]=1;
+	}
+	else {
+	  $img="stop_single_none";
+	}
+
+	if($waiting[!$side]) {
+	  $img_other="stop_none_both";
+	}
+	else {
+	  $img_other="stop_none_none";
+	}
+
+        $text.="<tr>";
+	if($side)
+	  $text.="<td><img src='img/$img_other.png'></td><td><img src='img/$img.png'></td>";
+	else
+	  $text.="<td><img src='img/$img.png'></td><td><img src='img/$img_other.png'></td>";
+	
+	$text.="<td>{$stop_ob->tags->get("name")}</td></tr>\n";
+      }
+    }
+
+    $text.="</table>\n";
+
+    $text.="<pre>".print_r($stop_list, 1)."</pre>";
+    $ret[]=array("stops", $text);
+  }
+
+  return $ret;
 
   if(sizeof($stop_list)) {
     $stop_list_sort=array_keys($stop_list);
