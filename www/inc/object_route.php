@@ -77,13 +77,6 @@ function route_info($ret, $object) {
 
   load_objects($load_list);
 
-  foreach($stop_list as $i=>$stop) {
-    $stop_list[$i]["possible_-1"]=array();
-    $stop_list[$i]["possible_1"]=array();
-    $stop_list[$i]["come_-1"]=array();
-    $stop_list[$i]["come_1"]=array();
-  }
-
   $res=sql_query("select 'way_'||l.osm_id as way_id, 'node_'||p.osm_id as stop_id, (select sequence_id from way_nodes wn join planet_osm_nodes nodes on wn.node_id=nodes.id where wn.way_id=l.osm_id order by Distance(p.way, geometryfromtext('POINT('||nodes.lon||' '||nodes.lat||')', 900913)) asc limit 1) as pos, Distance(p.way, l.way) as d from planet_osm_point p join planet_osm_line l on geometryfromtext('POLYGON(('||".
     "XMIN(p.way)-50||' '||YMIN(p.way)-50||','||".
     "XMAX(p.way)+50||' '||YMIN(p.way)-50||','||".
@@ -112,14 +105,26 @@ function route_info($ret, $object) {
 
   function possible_way($stop0, &$data, $rek=array()) {
     $ret=array();
-//    print "rek ".implode(",", $rek)."\n";
     //print "stop0 ";print_r($stop0);
-    if(in_array("$stop0[dir]$stop0[id]", $rek))
-      return array();
-    $rek[]="$stop0[dir]$stop0[id]";
-
     if(!$stop0[ways])
       return array();
+    
+    $ways=array();
+    foreach($stop0[ways] as $w) {
+      if(!in_array("$w[way_id]_$stop0[dir]_$stop0[id]", $rek)) {
+	$ways[]=$w;
+	$rek[]="$w[way_id]_$stop0[dir]_$stop0[id]";
+      }
+    }
+
+    if(!sizeof($ways))
+      return array();
+
+//    if(in_array("$stop0[dir]$stop0[id]", $rek))
+//      return array();
+//    $rek[]="$stop0[dir]$stop0[id]";
+    //print "rek ".implode(",", $rek)."\n";
+
     foreach($stop0[ways] as $way0) {
       $pos0=$way0[pos];
       $poss=array();
@@ -143,7 +148,7 @@ function route_info($ret, $object) {
 	//print "dir".$stop0[dir]; print_r($k);
 
       if(sizeof($poss)) {
-	$ret[]=array("stop_id"=>$poss[$k[0]][stop_id], "dir"=>$stop0["dir"], "way"=>$way0[way_id]);
+	$ret[]=array("stop_id"=>$poss[$k[0]][stop_id], "dir"=>$stop0["dir"], "way"=>$way0[way_id], "rek"=>$rek);
       }
       else {
 	$end=$data[ways][$way0[way_id]];
@@ -154,29 +159,28 @@ function route_info($ret, $object) {
 //	  print "END";
 //	  print_r($end);
 //	  print_r($way0);
-	$s=array(array(
-	    "dir"=>1,
-	    "id"=>$end,
-	    "pos"=>0
-	  ), array(
-	    "dir"=>-1,
-	    "id"=>$end,
-	  ));
 	foreach($data[nodes][$end] as $w) {
 	  if(($w==$way0[way_id])&&(sizeof($data[nodes][$end])>1)) {
 	  }
 	  elseif($data[ways][$w][first]==$end) {
-	    $s[0][ways][]=array("way_id"=>$w, "pos"=>0);
+	    $s=array(
+	      "dir"=>1,
+	      "id"=>$end,
+	      "pos"=>0,
+	      "ways"=>array(array("way_id"=>$w, "pos"=>0)));
+	    if($d=possible_way($s, $data, $rek))
+	      $ret=array_merge($ret, $d);
 	  }
 	  else {
-	    $s[1][ways][]=array("way_id"=>$w, "pos"=>9999);
+	    $s=array(
+	      "dir"=>-1,
+	      "id"=>$end,
+	      "pos"=>9999,
+	      "ways"=>array(array("way_id"=>$w, "pos"=>9999)));
+	    if($d=possible_way($s, $data, $rek))
+	      $ret=array_merge($ret, $d);
 	  }
 	}
-
-	if($d=possible_way($s[0], $data, $rek))
-	  $ret=array_merge($ret, $d);
-	if($d=possible_way($s[1], $data, $rek))
-	  $ret=array_merge($ret, $d);
       }
     }
     /*
@@ -203,51 +207,64 @@ function route_info($ret, $object) {
   }
 
   foreach($stop_list as $i=>$stop) {
-    $s=$stop;
-    if($stop["dir"]<1) {
-      $s["dir"]=-1;
-      $poss=possible_way($s, $data);
-      $stop_list[$i]["possible_-1"]=$poss;
-      foreach($poss as $p) {
-        $stop_list[$p[stop_id]]["come_".$p[dir]][]=array("stop_id"=>$stop[id], "dir"=>$stop["dir"]);
-      }
-    }
-    if($stop["dir"]>-1) {
-      //print "!!!!!!\n";
-      $s["dir"]=1;
-      $poss=possible_way($s, $data);
-      $stop_list[$i]["possible_1"]=$poss;
-      foreach($poss as $p) {
-        $stop_list[$p[stop_id]]["come_".$p[dir]][]=array("stop_id"=>$stop[id], "dir"=>$stop["dir"]);
-      }
-    }
+    foreach($stop[ways] as $way) {
+      $s=$stop;
+      $s[ways]=array($way);
 
-    //print_r($stop_list[$i]);
+      if($stop["dir"]>-1) {
+	$s["dir"]=1;
+	$poss=possible_way($s, $data);
+	$stop_list[$i][possible][$way[way_id]][1]=$poss;
+	foreach($poss as $p) {
+	  $stop_list[$p[stop_id]][come][$p[way]][$p[dir]][]=array("stop_id"=>$stop[id], "dir"=>$stop["dir"], "way"=>$way[way_id]);
+	}
+      }
+      if($stop["dir"]<1) {
+	$s["dir"]=-1;
+	$poss=possible_way($s, $data);
+	$stop_list[$i][possible][$way[way_id]][-1]=$poss;
+	foreach($poss as $p) {
+	  $stop_list[$p[stop_id]][come][$p[way]][$p[dir]][]=array("stop_id"=>$stop[id], "dir"=>$stop["dir"], "way"=>$way[way_id]);
+	}
+      }
+    }
   }
 
-//print_r($stop_list);
+  function posscome_merge($posscome) {
+    $ret=array();
+    if(!$posscome)
+      return array();
+    foreach($posscome as $way) {
+     foreach($way as $dir) {
+       foreach($dir as $poss) {
+	 $ret[]=$poss;
+       }
+     }
+    }
+
+    return $ret;
+  }
+
   $turn=1;
   $last=array("possible"=>null, "come"=>null);
   foreach($stop_list as $i=>$stop) {
     $stop_ob=load_object($stop[id]);
     //print $stop[id]." ".$stop_ob->tags->get("name")."\n";
 
-    $dir=-2;
     $success_p=0;
     if($last["possible"]) {
-      $dir1=0;
-      $dir_1=0;
-
+      $come_match=array();
       foreach($last["possible"] as $p) {
 	if($p[stop_id]==$stop[id]) {
 	  $success_p=1;
-	  foreach($stop["come_-1"] as $c) {
-	    if($c[stop_id]==$last["possible_id"])
-	      $dir_1=1;
-	  }
-	  foreach($stop["come_1"] as $c) {
-	    if($c[stop_id]==$last["possible_id"])
-	      $dir1=1;
+	  foreach($stop["come"] as $come_way_id=>$come_way) {
+	    foreach($come_way as $come_dir=>$come_list) {
+	      foreach($come_list as $come) {
+		if($come[stop_id]==$last["possible_id"]) {
+		  $come_match[]=array("way_id"=>$come_way_id, "dir"=>$come_dir);
+		}
+	      }
+	    }
 	  }
 	}
       }
@@ -256,46 +273,38 @@ function route_info($ret, $object) {
 	$stop_list[$last["possible_id"]]["next0"]=$stop[id];
 	$stop_list[$stop[id]]["prev0"]=$last["possible_id"];
 	$last["possible_id"]=$stop[id];
-      }
+	//print "$success_p $dir_1 $way_1 $dir1 $way1\n";
+	$stop_list[$stop[id]][come_match]=$come_match;
+//	print "come_match ";print_r($come_match);
 
-      if($dir_1&&$dir1) {
-	$dir=0;
-	$last["possible"]=array_merge($stop["possible_-1"], $stop["possible_1"]);
-      }
-      elseif($dir_1) {
-        $dir=-1;
-	$last["possible"]=$stop["possible_-1"];
-      }
-      elseif($dir1) {
-        $dir=1;
-	$last["possible"]=$stop["possible_1"];
+	$last["possible"]=array();
+	foreach($come_match as $match) {
+	  if($stop["possible"][$match["way_id"]]&&
+	     $stop["possible"][$match["way_id"]][$match["dir"]])
+	    $last["possible"]=array_merge($last["possible"],
+	      $stop["possible"][$match["way_id"]][$match["dir"]]);
+	}
       }
     }
     else {
-      $p=array_merge($stop["possible_-1"], $stop["possible_1"]);
-      $last["possible"]=$p;
+      $last["possible"]=posscome_merge($stop[possible]);
       $last["possible_id"]=$stop[id];
     }
-      if($success_p) {
-	//print "YEAHp $dir!\n";
-      }
 
-    $dir=-2;
     $success_n=0;
     if($last["come"]) {
-      $dir1=0;
-      $dir_1=0;
-
+      $poss_match=array();
       foreach($last["come"] as $p) {
 	if($p[stop_id]==$stop[id]) {
 	  $success_n=1;
-	  foreach($stop["possible_-1"] as $c) {
-	    if($c[stop_id]==$last["come_id"])
-	      $dir1=1;
-	  }
-	  foreach($stop["possible_1"] as $c) {
-	    if($c[stop_id]==$last["come_id"])
-	      $dir_1=1;
+	  foreach($stop["possible"] as $poss_way_id=>$poss_way) {
+	    foreach($poss_way as $poss_dir=>$poss_list) {
+	      foreach($poss_list as $poss) {
+		if($poss[stop_id]==$last["come_id"]) {
+		  $poss_match[]=array("way_id"=>$poss_way_id, "dir"=>$poss_dir);
+		}
+	      }
+	    }
 	  }
 	}
       }
@@ -304,60 +313,39 @@ function route_info($ret, $object) {
 	$stop_list[$last["come_id"]]["next1"]=$stop[id];
 	$stop_list[$stop[id]]["prev1"]=$last["come_id"];
 	$last["come_id"]=$stop[id];
-      }
+	$stop_list[$stop[id]][poss_match]=$poss_match;
+	//print "poss_match"; print_r($poss_match);
 
-      if($dir_1&&$dir1) {
-	$dir=0;
-	$last["come"]=array_merge($stop["come_-1"], $stop["come_1"]);
-      }
-      elseif($dir_1) {
-        $dir=-1;
-	$last["come"]=$stop["come_1"];
-      }
-      elseif($dir1) {
-        $dir=1;
-	$last["come"]=$stop["come_-1"];
+      //print "stop ";print_r($stop);
+	$last["come"]=array();
+	foreach($poss_match as $match) {
+	  if($stop["come"][$match["way_id"]]&&
+	     $stop["come"][$match["way_id"]][$match["dir"]])
+	    $last["come"]=array_merge($last["come"],
+	      $stop["come"][$match["way_id"]][$match["dir"]]);
+	}
       }
     }
     else {
-      $p=array_merge($stop["come_-1"], $stop["come_1"]);
-      $last["come"]=$p;
+      $last["come"]=posscome_merge($stop[come]);
       $last["come_id"]=$stop[id];
     }
 
-//      $success=0;
-//      if($last[-1][possible])
-//      foreach($last[-1][possible] as $p) {
-//	if($p[0]==$stop[id]) {
-//	  $success=1;
-//	}
-//      }
-//      foreach($last[1][possible] as $p) {
-//	if($p[0]==$stop[id]) {
-//	  $success=1;
-//	}
-//      }
-
-      if($success_n) {
-	//print "YEAHn $dir!\n";
-      }
-
-      if((!$success_p)&&(!$success_n)) {
-	$p=array_merge($stop["possible_-1"], $stop["possible_1"]);
-	$last["possible"]=$p;
-	$last["possible_id"]=$stop[id];
-	$p=array_merge($stop["come_-1"], $stop["come_1"]);
-	$last["come"]=$p;
-	$last["come_id"]=$stop[id];
-      }
+    if((!$success_p)&&(!$success_n)) {
+      $last["possible"]=posscome_merge($stop[possible]);
+      $last["possible_id"]=$stop[id];
+      $last["come"]=posscome_merge($stop[come]);
+      $last["come_id"]=$stop[id];
+    }
 //    if(sizeof($result)&&
 //       ($result[sizeof($result)-1][name]==$stop_ob->tags->get("name"))) {
 //    }
 //    else {
-      $res=array(
-        "name"=>$stop_ob->tags->get("name"),
-        "stop"=>$stop);
-//      print_r($last);
+//      $res=array(
+//        "name"=>$stop_ob->tags->get("name"),
+//        "stop"=>$stop);
+      //print "last "; print_r($last);
+    $stop_list[$i][last]=$last;
   }
 
 //  print_r($result);
@@ -394,7 +382,8 @@ function route_info($ret, $object) {
 	else
 	  $img_right="stop_right_none";
 
-	$text.="<tr><td><img src='img/$img_left.png'></td><td><img src='img/$img_right.png'></td><td>{$stop_ob->tags->get("name")}</td></tr>\n";
+        $highlight="onMouseOver='set_highlight([\"$stop_ob->id\"])' onMouseOut='unset_highlight()'";
+	$text.="<tr><td $highlight><img src='img/$img_left.png'></td><td $highlight><img src='img/$img_right.png'></td><td>{$stop_ob->tags->get("name")} $stop_ob->id</td></tr>\n";
       }
       else {
 	// right or left?
@@ -426,12 +415,13 @@ function route_info($ret, $object) {
 	}
 
         $text.="<tr>";
+        $highlight="onMouseOver='set_highlight([\"$stop_ob->id\"])' onMouseOut='unset_highlight()'";
 	if($side)
-	  $text.="<td><img src='img/$img_other.png'></td><td><img src='img/$img.png'></td>";
+	  $text.="<td><img src='img/$img_other.png'></td><td $highlight><img src='img/$img.png'></td>";
 	else
-	  $text.="<td><img src='img/$img.png'></td><td><img src='img/$img_other.png'></td>";
+	  $text.="<td $highlight><img src='img/$img.png'></td><td><img src='img/$img_other.png'></td>";
 	
-	$text.="<td>{$stop_ob->tags->get("name")}</td></tr>\n";
+	$text.="<td>{$stop_ob->tags->get("name")} $stop_ob->id</td></tr>\n";
       }
     }
 
