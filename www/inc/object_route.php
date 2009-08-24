@@ -392,7 +392,10 @@ function route_info($ret, $object) {
     $text.="<table cellpadding=0 cellspacing=0>\n";
 
     $waiting=array(0, 0);
-    foreach($stop_list as $stop) {
+    $stop_list_keys=array_keys($stop_list);
+    for($i=0; $i<sizeof($stop_list_keys); $i++) {
+      $stop=$stop_list[$stop_list_keys[$i]];
+
       $stop_ob=load_object($stop[id]);
       if($stop[role]=="both") {
 	$waiting=array(0, 0);
@@ -430,10 +433,10 @@ function route_info($ret, $object) {
       }
       else {
 	// right or left?
-	if($stop[prev1]||$stop[next1])
-	  $side=1;
-	else
+	if($stop[prev0]||$stop[next0])
 	  $side=0;
+	else
+	  $side=1;
 
 	$waiting[$side]=0;
 	if($stop["prev$side"]&&$stop["next$side"]) {
@@ -451,6 +454,7 @@ function route_info($ret, $object) {
 	}
 
         $otherside=(int)!$side;
+	$other_highlight="";
 	if((!$waiting[$otherside])&&($stop["next$otherside"])) {
 	  $img_other="stop_to".($side?"right":"left")."_next";
 	  $img.="_from".($side?"left":"right");
@@ -462,7 +466,27 @@ function route_info($ret, $object) {
 	  $waiting[$otherside]=0;
 	}
 	elseif($waiting[$otherside]) {
-	  $img_other="stop_none_both";
+	  $next_stop=$stop_list[$stop_list_keys[$i+1]];
+	  $next_stop_ob=load_object($next_stop[id]);
+	  if(($next_stop_ob->tags->get("name")==$stop_ob->tags->get("name"))&&
+	     ($next_stop["prev$otherside"]||($next_stop["next$otherside"]))) {
+	    $i++;
+	    $waiting[$otherside]=0;
+	    if($next_stop["prev$otherside"]&&$next_stop["next$otherside"]) {
+	      $img_other="stop_single_both";
+	      $waiting[$otherside]=1;
+	    }
+	    elseif($next_stop["prev$otherside"])
+	      $img_other="stop_single_prev";
+	    elseif($next_stop["next$otherside"]) {
+	      $img_other="stop_single_next";
+	      $waiting[$otherside]=1;
+	    }
+	    $other_highlight="onMouseOver='set_highlight([\"$next_stop_ob->id\"])' onMouseOut='unset_highlight()'";
+	  }
+	  else {
+	    $img_other="stop_none_both";
+	  }
 	}
 	else {
 	  $img_other="stop_none_none";
@@ -471,9 +495,9 @@ function route_info($ret, $object) {
         $text.="<tr>";
         $highlight="onMouseOver='set_highlight([\"$stop_ob->id\"])' onMouseOut='unset_highlight()'";
 	if($side)
-	  $text.="<td><img src='img/$img_other.png'></td><td $highlight><img src='img/$img.png'></td>";
+	  $text.="<td><img $other_highlight src='img/$img_other.png'></td><td $highlight><img src='img/$img.png'></td>";
 	else
-	  $text.="<td $highlight><img src='img/$img.png'></td><td><img src='img/$img_other.png'></td>";
+	  $text.="<td $highlight><img src='img/$img.png'></td><td><img $other_highlight src='img/$img_other.png'></td>";
 	
 	$text.="<td>{$stop_ob->tags->get("name")}</td></tr>\n";
       }
