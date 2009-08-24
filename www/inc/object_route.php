@@ -505,7 +505,7 @@ function route_info($ret, $object) {
 
     $text.="</table>\n";
 
-    $text.="<pre>".print_r($stop_list, 1)."</pre>";
+//    $text.="<pre>".print_r($stop_list, 1)."</pre>";
     $ret[]=array("stops", $text);
   }
 
