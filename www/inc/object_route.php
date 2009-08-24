@@ -103,6 +103,10 @@ function route_info($ret, $object) {
     $nodes[$elem[first]][]=$elem[way_id];
     $nodes[$elem[last]][]=$elem[way_id];
   }
+  
+  foreach($nodes as $node_id=>$way_ids) {
+    $nodes[$node_id]=array_unique($way_ids);
+  }
 
   $data=array(
     "stop_list"=>$stop_list,
@@ -110,20 +114,26 @@ function route_info($ret, $object) {
     "way_stop_list"=>$way_stop_list,
     "ways"=>$ways,
     "nodes"=>$nodes);
-  //print_r($ways);
 
-  function possible_way($stop0, $cur_stop_id, &$data, $rek=array()) {
+  function possible_way($stop0, $cur_stop_id, &$data, $rek=array(), &$tried=array()) {
     $ret=array();
-    //print "stop0 ";print_r($stop0);
     if(!$stop0[ways])
       return array();
     
+    //print_r($stop0[ways]);
     $ways=array();
     foreach($stop0[ways] as $w) {
-      if(!in_array("$w[way_id]_$stop0[dir]_$stop0[id]", $rek)) {
+      $r="$w[way_id]_$stop0[dir]_$stop0[id]";
+      if(!in_array($r, $rek)) {
 	$ways[]=$w;
-	$rek[]="$w[way_id]_$stop0[dir]_$stop0[id]";
+	$rek[]=$r;
       }
+
+      if($tried[$r]) {
+	//print "Already tried $r\n";
+	return;
+      }
+      $tried[$r]=1;
     }
 
     if(!sizeof($ways))
@@ -132,11 +142,13 @@ function route_info($ret, $object) {
 //    if(in_array("$stop0[dir]$stop0[id]", $rek))
 //      return array();
 //    $rek[]="$stop0[dir]$stop0[id]";
-    //print "rek ".implode(",", $rek)."\n";
+//    print "rek ".sizeof($rek).": ".implode(",", $rek)."\n";
+//    print "stop0 ";print_r($stop0);
 
     foreach($stop0[ways] as $way0) {
       $pos0=$way0[pos];
       $poss=array();
+//      print "way_stop_list "; print_r($data[way_stop_list][$way0[way_id]]);
       if($data[way_stop_list][$way0[way_id]])
       foreach($data[way_stop_list][$way0[way_id]] as $poss_stop) {
 //	print "poss_stop "; print_r($poss_stop);
@@ -156,7 +168,7 @@ function route_info($ret, $object) {
 	sort($k);
       else
 	rsort($k);
-	//print "dir".$stop0[dir]; print_r($k);
+//	print "dir".$stop0[dir]; print_r($k);
 
       if(sizeof($poss)) {
 	$ret[]=array("stop_id"=>$poss[$k[0]][stop_id], "dir"=>$stop0["dir"], "way"=>$way0[way_id], "rek"=>$rek);
@@ -170,6 +182,7 @@ function route_info($ret, $object) {
 //	  print "END";
 //	  print_r($end);
 //	  print_r($way0);
+//print_r($data[nodes][$end]);
 	foreach($data[nodes][$end] as $w) {
 	  if(($w==$way0[way_id])&&(sizeof($data[nodes][$end])>1)) {
 	  }
@@ -179,7 +192,7 @@ function route_info($ret, $object) {
 	      "id"=>$end,
 	      "pos"=>0,
 	      "ways"=>array(array("way_id"=>$w, "pos"=>0)));
-	    if($d=possible_way($s, $cur_stop_id, $data, $rek))
+	    if($d=possible_way($s, $cur_stop_id, $data, $rek, $tried))
 	      $ret=array_merge($ret, $d);
 	  }
 	  else {
@@ -188,7 +201,7 @@ function route_info($ret, $object) {
 	      "id"=>$end,
 	      "pos"=>9999,
 	      "ways"=>array(array("way_id"=>$w, "pos"=>9999)));
-	    if($d=possible_way($s, $cur_stop_id, $data, $rek))
+	    if($d=possible_way($s, $cur_stop_id, $data, $rek, $tried))
 	      $ret=array_merge($ret, $d);
 	  }
 	}
@@ -217,8 +230,12 @@ function route_info($ret, $object) {
     return $ret;
   }
 
+  $end_node=array(null, null);
+  //print_r($data);
+
   foreach($stop_list as $i=>$stop) {
-    foreach($stop[ways] as $way) {
+    //print "$i\n";
+    if($stop[ways]) foreach($stop[ways] as $way) {
       $s=$stop;
       $s[ways]=array($way);
 
@@ -239,6 +256,7 @@ function route_info($ret, $object) {
 	}
       }
     }
+    //print_r($stop_list[$i]);
   }
 
   function posscome_merge($posscome) {
