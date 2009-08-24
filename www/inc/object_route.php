@@ -394,25 +394,38 @@ function route_info($ret, $object) {
     foreach($stop_list as $stop) {
       $stop_ob=load_object($stop[id]);
       if($stop[role]=="both") {
-	if($stop[prev0]&&$stop[next0])
+	$waiting=array(0, 0);
+	if($stop[prev0]&&$stop[next0]) {
 	  $img_left="stop_left_both";
-        elseif($stop[prev0])
+	  $waiting[0]=1;
+	}
+        elseif($stop[prev0]) {
 	  $img_left="stop_left_prev";
-	elseif($stop[next0])
+	}
+	elseif($stop[next0]) {
 	  $img_left="stop_left_next";
-	else
+	  $waiting[0]=1;
+	}
+	else {
 	  $img_left="stop_left_none";
-	if($stop[prev1]&&$stop[next1])
+	}
+	if($stop[prev1]&&$stop[next1]) {
 	  $img_right="stop_right_both";
-        elseif($stop[prev1])
+	  $waiting[1]=1;
+	}
+        elseif($stop[prev1]) {
 	  $img_right="stop_right_prev";
-	elseif($stop[next1])
+	}
+	elseif($stop[next1]) {
 	  $img_right="stop_right_next";
-	else
+	  $waiting[1]=1;
+	}
+	else {
 	  $img_right="stop_right_none";
+	}
 
         $highlight="onMouseOver='set_highlight([\"$stop_ob->id\"])' onMouseOut='unset_highlight()'";
-	$text.="<tr><td $highlight><img src='img/$img_left.png'></td><td $highlight><img src='img/$img_right.png'></td><td>{$stop_ob->tags->get("name")} $stop_ob->id</td></tr>\n";
+	$text.="<tr><td $highlight><img src='img/$img_left.png'></td><td $highlight><img src='img/$img_right.png'></td><td>{$stop_ob->tags->get("name")}</td></tr>\n";
       }
       else {
 	// right or left?
@@ -421,7 +434,7 @@ function route_info($ret, $object) {
 	else
 	  $side=0;
 
-	$waiting[side]=0;
+	$waiting[$side]=0;
 	if($stop["prev$side"]&&$stop["next$side"]) {
 	  $img="stop_single_both";
 	  $waiting[$side]=1;
@@ -450,7 +463,7 @@ function route_info($ret, $object) {
 	else
 	  $text.="<td $highlight><img src='img/$img.png'></td><td><img src='img/$img_other.png'></td>";
 	
-	$text.="<td>{$stop_ob->tags->get("name")} $stop_ob->id</td></tr>\n";
+	$text.="<td>{$stop_ob->tags->get("name")}</td></tr>\n";
       }
     }
 
