@@ -391,6 +391,7 @@ function route_info($ret, $object) {
   if(sizeof($stop_list)) {
     $text.="<table cellpadding=0 cellspacing=0>\n";
 
+    $waiting=array(0, 0);
     foreach($stop_list as $stop) {
       $stop_ob=load_object($stop[id]);
       if($stop[role]=="both") {
@@ -449,7 +450,18 @@ function route_info($ret, $object) {
 	  $img="stop_single_none";
 	}
 
-	if($waiting[!$side]) {
+        $otherside=(int)!$side;
+	if((!$waiting[$otherside])&&($stop["next$otherside"])) {
+	  $img_other="stop_to".($side?"right":"left")."_next";
+	  $img.="_from".($side?"left":"right");
+	  $waiting[$otherside]=1;
+	}
+	elseif(($waiting[$otherside])&&($stop["prev$otherside"])&&(!$stop["next$otherside"])) {
+	  $img_other="stop_to".($side?"right":"left")."_prev";
+	  $img.="_from".($side?"left":"right");
+	  $waiting[$otherside]=0;
+	}
+	elseif($waiting[$otherside]) {
 	  $img_other="stop_none_both";
 	}
 	else {
