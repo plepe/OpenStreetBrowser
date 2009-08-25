@@ -42,6 +42,17 @@ class place_node extends place {
                  "lat"=>$bbox[1]+($bbox[3]-$bbox[1])/2);
 
   }
+
+  function get_ways() {
+    $ret=array();
+
+    $res=sql_query("select * from way_nodes where node_id='{$this->data[id]}'");
+    while($elem=pg_fetch_assoc($res)) {
+      $ret[]="way_".$elem[way_id];
+    }
+
+    return $ret;
+  }
 }
 
 class place_gen_node extends place {
@@ -144,6 +155,17 @@ class place_way extends place {
                  "lat"=>$bbox[1]+($bbox[3]-$bbox[1])/2,
 		 "way"=>$this->data[way]);
 
+  }
+
+  function get_nodes() {
+    $ret=array();
+
+    $res=sql_query("select * from way_nodes where way_id='{$this->data[id]}'");
+    while($elem=pg_fetch_assoc($res)) {
+      $ret[]="node_".$elem[node_id];
+    }
+
+    return $ret;
   }
 }
 

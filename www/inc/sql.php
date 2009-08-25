@@ -4,6 +4,7 @@ function sql_query($qry) {
 
   if($sql_debug)
     debug($qry);
+    //print "$qry\n";
 
   return pg_query($qry);
 }

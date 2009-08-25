@@ -12,6 +12,13 @@ SFUNC = array_append,
 STYPE = int4[],
 INITCOND = '{}'); 
 
+drop aggregate if exists to_intarray(int[]);
+CREATE AGGREGATE to_intarray (
+BASETYPE = int4[],
+SFUNC = array_cat,
+STYPE = int4[],
+INITCOND = '{}'); 
+
 create or replace function array_toint(anyarray)
 returns int[]
 as $$
@@ -84,4 +91,19 @@ return next $1[i];
 end loop;
 return;
 end' language plpgsql strict immutable;
+
+CREATE OR REPLACE FUNCTION array_count(anyarray)
+RETURNS int
+AS $$
+declare
+arr alias for $1;
+i int;
+begin
+  if(arr is null) then
+    return 0;
+  end if;
+  return cast (substring(array_dims(arr), ':(.+)]$') as int);
+end;
+$$ language 'plpgsql';
+
 
