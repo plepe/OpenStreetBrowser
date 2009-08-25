@@ -27,6 +27,60 @@ update planet_osm_polygon set importance='national' where aeroway='aerodrome' an
 update planet_osm_polygon set importance='suburban' where aerialway='station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
 update planet_osm_polygon set importance='urban' where amenity='ferry_terminal' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
 
+-- in which direction stations are being used?
+drop table if exists planet_osm_stops;
+create table planet_osm_stops (
+  osm_id	int4	not null,
+  type		text	not null,
+  importance	text	null,
+  angle_p	int	null,
+  angle_n	int	null,
+  direction	int	not null,
+  primary key(osm_id)
+);
+SELECT AddGeometryColumn('planet_osm_stops', 'way', 900913, 'POINT', 2);
+
+insert into planet_osm_stops
+(select osm_id, type, importance,
+  round(ST_Azimuth((CASE 
+      WHEN pos-0.001/len<0 THEN line_interpolate_point(next_way, pos)
+      ELSE line_interpolate_point(next_way, pos-0.001/len)
+    END), line_interpolate_point(next_way, pos))/(2*pi()/72)) as angle_p,
+  round(ST_Azimuth(line_interpolate_point(next_way, pos),
+    (CASE 
+      WHEN pos+0.001/len>=1 THEN line_interpolate_point(next_way, pos)
+      ELSE line_interpolate_point(next_way, pos+0.001/len)
+  END))/(2*pi()/72)) as angle_n,
+  bit_or((CASE WHEN substr(rm.member_role, 1, 7)='forward' THEN 1 WHEN substr(rm.member_role, 1, 8)='backward' THEN 2 ELSE 3 END)) as direction,
+  line_interpolate_point(next_way, pos) as way
+from 
+(select t.osm_id, type, importance,
+  poi_way, next_way, line_locate_point(next_way, poi_way) as pos, length(next_way) as len from (
+select poi.osm_id, 
+  (CASE
+    WHEN poi.highway='bus_stop' and poi.railway='tram_stop' THEN 'tram_bus_stop'
+    WHEN poi.highway in ('bus_stop') THEN poi.highway
+    WHEN poi.railway in ('tram_stop', 'station', 'subway_station', 'halt') THEN poi.railway
+    WHEN poi.aerialway in ('station') THEN 'aerial_station'
+  END) as type, 
+  poi.importance,
+  poi.way as poi_way,
+  (select dst.way
+      from planet_osm_line dst
+      where
+       geometryfromtext('POLYGON((' || xmin(poi.way)-200 || ' ' || ymin(poi.way)-200 || ','
+                               || xmax(poi.way)+200 || ' ' || ymin(poi.way)-200 || ','
+			       || xmax(poi.way)+200 || ' ' || ymax(poi.way)+200 || ','
+			       || xmin(poi.way)-200 || ' ' || ymax(poi.way)+200 || ',' 
+			       || xmin(poi.way)-200 || ' ' || ymin(poi.way)-200 || '))',
+			        900913)&&dst.way
+    order by Distance(poi.way, dst.way) asc limit 1) as next_way
+       from planet_osm_point poi where 
+  (poi.highway='bus_stop' or
+    poi.railway in ('tram_stop', 'station', 'subway_station', 'halt')
+    )
+      ) as t) as t1 left join relation_members rm on rm.member_id=t1.osm_id and rm.member_type=1 group by t1.osm_id, t1.type, t1.pos, t1.len, t1.importance, t1.next_way);
+
 -- stop_to_station finds nearby stops with same name
 -- potential BUG: id for point and polygon same in same station
 drop table if exists planet_osm_stop_to_station;
@@ -98,12 +152,13 @@ insert into planet_osm_stations
       ELSE null
     END),
     (array['local','suburban','urban','regional','national','international'])
-      [max(CASE WHEN importance='suburban' THEN 2 
-	WHEN importance='urban' THEN 3
-	WHEN importance='regional' THEN 4
-	WHEN importance='national' THEN 5
-	WHEN importance='international' THEN 6 ELSE 1 END)],
-    ST_Collect(object.way)
+      [max(CASE
+        WHEN station.importance='suburban' THEN 2 
+	WHEN station.importance='urban' THEN 3
+	WHEN station.importance='regional' THEN 4
+	WHEN station.importance='national' THEN 5
+	WHEN station.importance='international' THEN 6 ELSE 1 END)],
+    ST_Collect(CASE WHEN stops.way is not null THEN stops.way ELSE object.way END)
 from planet_osm_stop_to_station station 
   join 
   (select osm_id, 1 as id_type, way from planet_osm_point
@@ -111,6 +166,7 @@ from planet_osm_stop_to_station station
    select osm_id, 2 as id_type, way from planet_osm_polygon) as object
      on (object.osm_id=any(station.point_stations) and object.id_type=1) or
         (object.osm_id=any(station.polygon_stations) and object.id_type=2)
+  left join planet_osm_stops stops on object.id_type=1 and object.osm_id=stops.osm_id
 group by name, point_stations, polygon_stations;
 
 -- we don't need this temporary table anymore
@@ -134,61 +190,6 @@ insert into coll_tags select coll_id, 'importance', importance from planet_osm_s
 insert into coll_tags select coll_id, 'type', 'station' from planet_osm_stations where rel_id is null and coll_id is not null;
 insert into coll_members select coll_id, p.osm_id, 1, '' from planet_osm_stations st join planet_osm_point p on p.osm_id=any(st.point_stations) where rel_id is null and coll_id is not null;
 insert into coll_members select coll_id, p.osm_id, 2, '' from planet_osm_stations st join planet_osm_polygon p on p.osm_id=any(st.polygon_stations) where rel_id is null and coll_id is not null;
-
--- in which direction stations are being used?
-
-drop table if exists planet_osm_stops;
-create table planet_osm_stops (
-  osm_id	int4	not null,
-  type		text	not null,
-  importance	text	null,
-  angle_p	int	null,
-  angle_n	int	null,
-  direction	int	not null,
-  primary key(osm_id)
-);
-SELECT AddGeometryColumn('planet_osm_stops', 'way', 900913, 'POINT', 2);
-
-insert into planet_osm_stops
-(select osm_id, type, importance,
-  round(ST_Azimuth((CASE 
-      WHEN pos-0.001/len<0 THEN line_interpolate_point(next_way, pos)
-      ELSE line_interpolate_point(next_way, pos-0.001/len)
-    END), line_interpolate_point(next_way, pos))/(2*pi()/72)) as angle_p,
-  round(ST_Azimuth(line_interpolate_point(next_way, pos),
-    (CASE 
-      WHEN pos+0.001/len>=1 THEN line_interpolate_point(next_way, pos)
-      ELSE line_interpolate_point(next_way, pos+0.001/len)
-  END))/(2*pi()/72)) as angle_n,
-  bit_or((CASE WHEN substr(rm.member_role, 1, 7)='forward' THEN 1 WHEN substr(rm.member_role, 1, 8)='backward' THEN 2 ELSE 3 END)) as direction,
-  line_interpolate_point(next_way, pos) as way
-from 
-(select t.osm_id, type, importance,
-  poi_way, next_way, line_locate_point(next_way, poi_way) as pos, length(next_way) as len from (
-select poi.osm_id, 
-  (CASE
-    WHEN poi.highway='bus_stop' and poi.railway='tram_stop' THEN 'tram_bus_stop'
-    WHEN poi.highway in ('bus_stop') THEN poi.highway
-    WHEN poi.railway in ('tram_stop', 'station', 'subway_station', 'halt') THEN poi.railway
-    WHEN poi.aerialway in ('station') THEN 'aerial_station'
-  END) as type, 
-  poi.importance,
-  poi.way as poi_way,
-  (select dst.way
-      from planet_osm_line dst
-      where
-       geometryfromtext('POLYGON((' || xmin(poi.way)-200 || ' ' || ymin(poi.way)-200 || ','
-                               || xmax(poi.way)+200 || ' ' || ymin(poi.way)-200 || ','
-			       || xmax(poi.way)+200 || ' ' || ymax(poi.way)+200 || ','
-			       || xmin(poi.way)-200 || ' ' || ymax(poi.way)+200 || ',' 
-			       || xmin(poi.way)-200 || ' ' || ymin(poi.way)-200 || '))',
-			        900913)&&dst.way
-    order by Distance(poi.way, dst.way) asc limit 1) as next_way
-       from planet_osm_point poi where 
-  (poi.highway='bus_stop' or
-    poi.railway in ('tram_stop', 'station', 'subway_station', 'halt')
-    )
-      ) as t) as t1 left join relation_members rm on rm.member_id=t1.osm_id and rm.member_type=1 group by t1.osm_id, t1.type, t1.pos, t1.len, t1.importance, t1.next_way);
 
 -- feed stations in search
 insert into search 

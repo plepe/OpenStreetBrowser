@@ -260,7 +260,7 @@
 .stations_top[importance=national][zoom>=10][zoom<11] name,
 .stations_top[importance=international][zoom>=9][zoom<10] name
 {
-  text-size: 8;
+  text-size: 9;
   text-placement: point;
   text-face-name: "DejaVu Sans Book";
   text-fill: #007fff;
@@ -273,7 +273,7 @@
 .stations_top[importance=national][zoom>=11][zoom<14] name,
 .stations_top[importance=international][zoom>=10][zoom<14] name
 {
-  text-size: 10;
+  text-size: 11;
   text-placement: point;
   text-face-name: "DejaVu Sans Book";
   text-fill: #007fff;
@@ -298,7 +298,7 @@
 .stations_top[importance=national][zoom>=14] name,
 .stations_top[importance=international][zoom>=14] name
 {
-  text-size: 10;
+  text-size: 11;
   text-placement: point;
   text-face-name: "DejaVu Sans Book";
   text-fill: #007fff;
@@ -434,8 +434,8 @@
   text-size: 8;
   text-placement: point;
   text-face-name: "DejaVu Sans Book";
-  text-halo-fill: #0000ff;
-  text-fill: #000000;
+  text-halo-fill: #ffffff;
+  text-fill: #0000ff;
   text-avoid-edges: false;
   text-halo-radius: 1;
   text-dy: 9;
@@ -450,8 +450,8 @@
   text-size: 8;
   text-placement: point;
   text-face-name: "DejaVu Sans Book";
-  text-halo-fill: #0000ff;
-  text-fill: #000000;
+  text-halo-fill: #ffffff;
+  text-fill: #d4009f;
   text-avoid-edges: false;
   text-halo-radius: 1;
   text-dy: 9;
@@ -471,8 +471,8 @@
   text-size: 8;
   text-placement: point;
   text-face-name: "DejaVu Sans Book";
-  text-halo-fill: #2c94c2;
-  text-fill: #000000;
+  text-fill: #2c94c2;
+  text-halo-fill: #ffffff;
   text-avoid-edges: false;
   text-halo-radius: 1;
   text-dy: 9;
