@@ -344,6 +344,28 @@
     </Datasource>
    </Layer> -->
 
+   <Layer class="pt_line" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+      (select 
+        osm_id, name, ref,
+        (CASE
+	  WHEN "railway" in ('platform') THEN 'railway_'||"railway"
+	  END) as type,
+	char_length(ref) as ref_length,
+	way
+      from planet_osm_line
+      where
+        railway in ('platform')
+      ) as t
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+
    <Layer class="routestext" name="routes-text" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <StyleName>routes-text</StyleName>
     <Datasource>

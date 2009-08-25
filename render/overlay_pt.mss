@@ -518,3 +518,54 @@
 {
   shield-file: url('img/highway_bus_stop.png');
 }
+.pt_line[type=railway_platform][zoom>=17] ref
+{
+  shield-size: 8;
+  shield-fill: #ffffff;
+  shield-face-name: "DejaVu Sans Book";
+  shield-spacing: 200;
+  shield-min-distance: 100;
+  shield-height: 10;
+}
+.pt_line[type=railway_platform][char_length=1][zoom>=17] ref
+{
+  shield-file: url('img/railway_platform_1.png');
+  shield-width: 31;
+}
+.pt_line[type=railway_platform][char_length=2][zoom>=17] ref
+{
+  shield-file: url('img/railway_platform_2.png');
+  shield-width: 31;
+}
+.pt_line[type=railway_platform][char_length=3][zoom>=17] ref
+{
+  shield-file: url('img/railway_platform_3.png');
+  shield-width: 31;
+}
+.pt_line[type=railway_platform][char_length=4][zoom>=17] ref
+{
+  shield-file: url('img/railway_platform_4.png');
+  shield-width: 31;
+}
+.pt_line[type=railway_platform][char_length=5][zoom>=17] ref
+{
+  shield-file: url('img/railway_platform_5.png');
+  shield-width: 31;
+}
+.pt_line[type=railway_platform][char_length=6][zoom>=17] ref
+{
+  shield-file: url('img/railway_platform_6.png');
+  shield-width: 31;
+}
+.pt_line[type=railway_platform][char_length>6][zoom>=17] ref
+{
+  text-size: 8;
+  text-placement: point;
+  text-face-name: "DejaVu Sans Book";
+  text-fill: #ffffff;
+  text-halo-fill: #000057;
+  text-avoid-edges: false;
+  text-halo-radius: 1;
+  text-spacing: 200;
+  text-min-distance: 100;
+}
