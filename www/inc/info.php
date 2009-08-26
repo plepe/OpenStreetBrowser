@@ -149,7 +149,7 @@ function osm_info($ret, $object, $param) {
 
     foreach($list as $elem) {
       $ob=load_object($elem);
-      $r.=list_entry($ob->id, $ob->long_name(), array($ob->tags->get("type")));//." - ".$elem[member_role]);
+      $r.=list_entry($ob->id, $ob->long_name(), array($ob->tags->get("type"), ($elem[member_role]?"as $elem[member_role]":"no role")));
       $load_xml[]=$ob->id;
     }
 
