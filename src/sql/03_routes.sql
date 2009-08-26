@@ -5,6 +5,7 @@ update planet_osm_rels set importance='suburban' where type='route' and route='t
 update planet_osm_rels set importance='suburban' where type='route' and route='bus' and (importance is null or not importance in ('local', 'suburban', 'urban', 'regional', 'national', 'international'));
 update planet_osm_rels set importance='urban' where type='route' and route='light_rail' and (importance is null or not importance in ('local', 'suburban', 'urban', 'regional', 'national', 'international'));
 update planet_osm_rels set importance='suburban' where type='route' and route='trolley' and (importance is null or not importance in ('local', 'suburban', 'urban', 'regional', 'national', 'international'));
+update planet_osm_rels set importance='suburban' where type='route' and route='trolleybus' and (importance is null or not importance in ('local', 'suburban', 'urban', 'regional', 'national', 'international'));
 update planet_osm_rels set importance='urban' where type='route' and route='subway' and (importance is null or not importance in ('local', 'suburban', 'urban', 'regional', 'national', 'international'));
 update planet_osm_rels set importance='regional' where type='route' and route='train' and (importance is null or not importance in ('local', 'suburban', 'urban', 'regional', 'national', 'international'));
 update planet_osm_rels set importance='regional' where type='route' and route='rail' and (importance is null or not importance in ('local', 'suburban', 'urban', 'regional', 'national', 'international'));

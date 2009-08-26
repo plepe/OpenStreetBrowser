@@ -27,6 +27,7 @@ function route_info($ret, $object) {
     case "minibus":
     case "ferry":
     case "trolley":
+    case "trolleybus":
       show_overlay("pt");
       break;
   }

@@ -19,7 +19,7 @@
 	   WHEN importance='international' THEN 6 END)] as importance,
 	 (array['tram', 'bus', 'tram_bus'])[bit_or(CASE 
 	   WHEN route in ('tram', 'light_rail') THEN 1
-	   WHEN route in ('trolley', 'bus', 'minibus') THEN 2
+	   WHEN route in ('trolley', 'trolleybus', 'bus', 'minibus') THEN 2
 	   END)] as route,
          (array['forward', 'backward', 'both'])[bit_or(CASE
 	   WHEN role[1]='forward' THEN 1
@@ -27,7 +27,7 @@
 	   ELSE 3
 	 END)] as dir,
 	  (array['single', 'double'])[bit_or(CASE 
-	    WHEN "route" in ('trolley', 'bus', 'minibus') THEN 
+	    WHEN "route" in ('trolley', 'trolleybus', 'bus', 'minibus') THEN 
 	      (CASE
 	        WHEN "oneway" in ('yes', 'true', '1') THEN 1
 		ELSE 2 END)
@@ -50,7 +50,7 @@
 	    WHEN "railway" in ('rail', 'subway', 'preserved', 'monorail') THEN 'rail'
 	    ELSE "highway" END) as highway_type
        from planet_osm_line_route 
-       where route in ('trolley', 'bus', 'minibus', 'tram', 'light_rail')
+       where route in ('trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail')
        group by way, tunnel, highway_type) as routes
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
@@ -111,7 +111,7 @@
 	   WHEN importance='international' THEN 6 END)] as importance,
 	 (array['tram', 'bus', 'tram_bus'])[bit_or(CASE 
 	   WHEN route in ('tram', 'light_rail') THEN 1
-	   WHEN route in ('trolley', 'bus', 'minibus') THEN 2
+	   WHEN route in ('trolley', 'trolleybus', 'bus', 'minibus') THEN 2
 	   END)] as route,
          (array['forward', 'backward', 'both'])[bit_or(CASE
 	   WHEN role[1]='forward' THEN 1
@@ -119,7 +119,7 @@
 	   ELSE 3
 	 END)] as dir,
 	  (array['single', 'double'])[bit_or(CASE 
-	    WHEN "route" in ('trolley', 'bus', 'minibus') THEN 
+	    WHEN "route" in ('trolley', 'trolleybus', 'bus', 'minibus') THEN 
 	      (CASE
 	        WHEN "oneway" in ('yes', 'true', '1') THEN 1
 		ELSE 2 END)
@@ -142,7 +142,7 @@
 	    WHEN "railway" in ('rail', 'subway', 'preserved', 'monorail') THEN 'rail'
 	    ELSE "highway" END) as highway_type
        from planet_osm_line_route 
-       where route in ('trolley', 'bus', 'minibus', 'tram', 'light_rail')
+       where route in ('trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail')
        group by way, tunnel, highway_type
        ) as routes
       </Parameter>
@@ -382,7 +382,7 @@
 	    WHEN "railway" in ('rail', 'subway', 'preserved', 'monorail') THEN 'rail'
 	    ELSE "highway" END) as highway_type
  
-      from planet_osm_line_routes_text where route=any(array['train','rail','railway','subway','light_rail','tram','trolley','bus','minibus','ferry'])) as routes
+      from planet_osm_line_routes_text where route=any(array['train','rail','railway','subway','light_rail','tram','trolley','trolleybus','bus','minibus','ferry'])) as routes
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>

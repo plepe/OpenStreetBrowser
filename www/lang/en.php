@@ -83,6 +83,7 @@ $lang_str["route_light_rail"]="Light Rail";
 $lang_str["route_subway"]="Subway";
 $lang_str["route_tram"]="Tram";
 $lang_str["route_trolley"]="Trolley";
+$lang_str["route_trolleybus"]="Trolley";
 $lang_str["route_bus"]="Bus";
 $lang_str["route_minibus"]="Minibus";
 $lang_str["route_ferry"]="Ferry";

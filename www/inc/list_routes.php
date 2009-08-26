@@ -26,7 +26,7 @@ class infolist_routes extends infolist {
            from planet_osm_rels rels ".
              "join planet_osm_line_route line_route ".
 	       "on line_route.id=rels.id and line_route.way&&PolyFromText('POLYGON(($bounds[left] $bounds[top], $bounds[right] $bounds[top], $bounds[right] $bounds[bottom], $bounds[left] $bounds[bottom], $bounds[left] $bounds[top]))', $SRID) where rels.importance in (".implode(", ", $importance).") ".
-	         "and rels.type='route' and rels.route in ('train', 'rail', 'railway', 'subway', 'light_rail', 'tram', 'trolley', 'bus', 'minibus', 'ferry') ".
+	         "and rels.type='route' and rels.route in ('train', 'rail', 'railway', 'subway', 'light_rail', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'ferry') ".
            "union ".
            "select 'rel' as element, rels.id, rels.* ".
              "from planet_osm_rels rels ".
@@ -37,7 +37,7 @@ class infolist_routes extends infolist {
 		   "and point.way&&PolyFromText('POLYGON(($bounds[left] $bounds[top], $bounds[right] $bounds[top], $bounds[right] $bounds[bottom], $bounds[left] $bounds[bottom], $bounds[left] $bounds[top]))', $SRID) ".
 	     "where rels.importance in (".implode(", ", $importance).") ".
 	       "and rels.type='route' ".
-	       "and rels.route in ('train', 'rail', 'railway', 'subway', 'light_rail', 'tram', 'trolley', 'bus', 'minibus', 'ferry') ) ".
+	       "and rels.route in ('train', 'rail', 'railway', 'subway', 'light_rail', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'ferry') ) ".
 	     "order by ref"; 
     $res=sql_query($qry);
 
