@@ -305,6 +305,7 @@
   text-avoid-edges: false;
   text-halo-radius: 1;
   text-dy: -13;
+  text-allow-overlap: true;
 }
 .stops_p[direction=forward][angle=72][zoom>=9][zoom<10][importance=international],
 .stops_p[direction=forward][angle=72][zoom>10][zoom<11][importance=national],
@@ -522,42 +523,42 @@
 {
   shield-size: 8;
   shield-fill: #ffffff;
+  shield-halo-fill: #000057;
   shield-face-name: "DejaVu Sans Book";
-  shield-spacing: 200;
-  shield-min-distance: 100;
-  shield-height: 10;
+  shield-min-distance: 15;
+  shield-height: 11;
 }
-.pt_line[type=railway_platform][char_length=1][zoom>=17] ref
+.pt_line[type=railway_platform][ref_length=1][zoom>=17] ref
 {
   shield-file: url('img/railway_platform_1.png');
-  shield-width: 31;
+  shield-width: 9;
 }
-.pt_line[type=railway_platform][char_length=2][zoom>=17] ref
+.pt_line[type=railway_platform][ref_length=2][zoom>=17] ref
 {
   shield-file: url('img/railway_platform_2.png');
-  shield-width: 31;
+  shield-width: 13;
 }
-.pt_line[type=railway_platform][char_length=3][zoom>=17] ref
+.pt_line[type=railway_platform][ref_length=3][zoom>=17] ref
 {
   shield-file: url('img/railway_platform_3.png');
-  shield-width: 31;
+  shield-width: 17;
 }
-.pt_line[type=railway_platform][char_length=4][zoom>=17] ref
+.pt_line[type=railway_platform][ref_length=4][zoom>=17] ref
 {
   shield-file: url('img/railway_platform_4.png');
-  shield-width: 31;
+  shield-width: 21;
 }
-.pt_line[type=railway_platform][char_length=5][zoom>=17] ref
+.pt_line[type=railway_platform][ref_length=5][zoom>=17] ref
 {
   shield-file: url('img/railway_platform_5.png');
-  shield-width: 31;
+  shield-width: 26;
 }
-.pt_line[type=railway_platform][char_length=6][zoom>=17] ref
+.pt_line[type=railway_platform][ref_length=6][zoom>=17] ref
 {
   shield-file: url('img/railway_platform_6.png');
-  shield-width: 31;
+  shield-width: 30;
 }
-.pt_line[type=railway_platform][char_length>6][zoom>=17] ref
+.pt_line[type=railway_platform][ref_length>6][zoom>=17] ref
 {
   text-size: 8;
   text-placement: point;

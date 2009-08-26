@@ -398,6 +398,7 @@ function power_info($ret, $object) {
     $ret[]=array("general_info", $text);
   }
 }
+
 function power_list_description($ret, $object, $list) {
   switch($object->tags->get("power")) {
     case "generator":
@@ -408,3 +409,11 @@ function power_list_description($ret, $object, $list) {
 
 register_hook("info", power_info);
 register_hook("list_description", power_list_description);
+
+function pt_info($ret, $object) {
+  switch($object->tags->get("railway")) {
+    case "platform":
+      show_overlay("pt");
+  }
+}
+register_hook("info", pt_info);
