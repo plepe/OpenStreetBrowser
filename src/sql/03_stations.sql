@@ -20,7 +20,7 @@ update planet_osm_point set importance='urban' where amenity='ferry_terminal' an
 alter table planet_osm_polygon add column importance text;
 update planet_osm_polygon set importance=network where importance is null and network in ('local', 'suburban', 'urban', 'regional', 'national', 'international');
 update planet_osm_polygon set importance='regional' where importance='region';
-update planet_osm_polygon set importance='suburban', railway='subway_station' from planet_osm_line l join planet_osm_ways w on l.osm_id=w.id where planet_osm_point.osm_id=any(w.nodes) and planet_osm_point.railway='station' and l.railway='subway' and (planet_osm_point.importance is null or not planet_osm_point.importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_polygon set importance='suburban', railway='subway_station' from planet_osm_line l join planet_osm_ways w on l.osm_id=w.id where planet_osm_polygon.osm_id=any(w.nodes) and planet_osm_polygon.railway='station' and l.railway='subway' and (planet_osm_polygon.importance is null or not planet_osm_polygon.importance in ('local', 'urban', 'regional', 'national', 'international'));
 update planet_osm_polygon set importance='urban' where railway='station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
 update planet_osm_polygon set importance='urban' where amenity='bus_station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
 update planet_osm_polygon set importance='national' where aeroway='aerodrome' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
