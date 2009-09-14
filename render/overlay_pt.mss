@@ -523,7 +523,6 @@
 {
   shield-size: 8;
   shield-fill: #ffffff;
-  shield-halo-fill: #000057;
   shield-face-name: "DejaVu Sans Book";
   shield-min-distance: 15;
   shield-height: 11;

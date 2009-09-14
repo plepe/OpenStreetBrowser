@@ -45,8 +45,9 @@ register_hook("info", food_drink_info);
 
 // SPORT
 function sport_list_description($ret, $object, $list) {
-  if($value=$object->tags->get("sport"))
-    $ret[]="sport_$value";
+  if($list!="leisure_sport_tourism|sport")
+    if($value=$object->tags->get("sport"))
+      $ret[]=lang("sport_$value");
 }
 
 function sport_info($ret, $object) {
