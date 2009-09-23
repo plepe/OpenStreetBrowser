@@ -78,11 +78,13 @@ function route_info($ret, $object) {
 
   load_objects($load_list);
 
-  $res=sql_query("select 'way_'||l.osm_id as way_id, 'node_'||p.osm_id as stop_id, sequence_id as pos from planet_osm_point p join way_nodes wn on wn.node_id=p.osm_id join planet_osm_line l on wn.way_id=l.osm_id join relation_members rm on rm.member_type=2 and rm.member_id=l.osm_id where rm.relation_id='{$object->only_id}' and p.osm_id in (".implode(",", $stop_id_list).")");
-  while($elem=pg_fetch_assoc($res)) {
-    $stop_list[$elem[stop_id]][ways][]=array("way_id"=>$elem[way_id], "pos"=>$elem[pos]);
-    $way_stop_list[$elem[way_id]][$elem[stop_id]]=$elem;
-    unset($stop_id_list[array_search(substr($elem[stop_id], 5), $stop_id_list)]);
+  if(sizeof($stop_id_list)) {
+    $res=sql_query("select 'way_'||l.osm_id as way_id, 'node_'||p.osm_id as stop_id, sequence_id as pos from planet_osm_point p join way_nodes wn on wn.node_id=p.osm_id join planet_osm_line l on wn.way_id=l.osm_id join relation_members rm on rm.member_type=2 and rm.member_id=l.osm_id where rm.relation_id='{$object->only_id}' and p.osm_id in (".implode(",", $stop_id_list).")");
+    while($elem=pg_fetch_assoc($res)) {
+      $stop_list[$elem[stop_id]][ways][]=array("way_id"=>$elem[way_id], "pos"=>$elem[pos]);
+      $way_stop_list[$elem[way_id]][$elem[stop_id]]=$elem;
+      unset($stop_id_list[array_search(substr($elem[stop_id], 5), $stop_id_list)]);
+    }
   }
 
   if(sizeof($stop_id_list)) {
