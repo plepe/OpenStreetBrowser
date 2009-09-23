@@ -1,6 +1,6 @@
 -- table point gets a flag, whether it is part of a station-rel
 alter table planet_osm_poipoly add column part_of_station int;
-update planet_osm_poipoly set part_of_station=1 from relation_members, planet_osm_rels where planet_osm_point.osm_id=relation_members.member_id and relation_members.member_type='1' and planet_osm_rels.id=relation_members.relation_id and planet_osm_rels.type='station' and relation_members.member_role!='nearby';
+update planet_osm_poipoly set part_of_station=1 from relation_members, planet_osm_rels where planet_osm_poipoly.osm_id=relation_members.member_id and relation_members.member_type='1' and planet_osm_rels.id=relation_members.relation_id and planet_osm_rels.type='station' and relation_members.member_role!='nearby';
 
 -- update importance in point where missing or wrong
 update planet_osm_poipoly set importance=network where importance is null and network in ('local', 'suburban', 'urban', 'regional', 'national', 'international');
@@ -19,6 +19,8 @@ update planet_osm_poipoly set importance='urban' where amenity='ferry_terminal' 
 drop table if exists planet_osm_stops;
 create table planet_osm_stops (
   osm_id	int4	not null,
+  id_type	varchar(4) not null,
+  full_id	varchar(32) not null,
   type		text	not null,
   importance	text	null,
   angle_p	int	null,
@@ -29,7 +31,7 @@ create table planet_osm_stops (
 SELECT AddGeometryColumn('planet_osm_stops', 'way', 900913, 'POINT', 2);
 
 insert into planet_osm_stops
-(select osm_id, type, importance,
+(select osm_id, id_type, full_id, type, importance,
   round(ST_Azimuth((CASE 
       WHEN pos-0.001/len<0 THEN line_interpolate_point(next_way, pos)
       ELSE line_interpolate_point(next_way, pos-0.001/len)
@@ -42,9 +44,9 @@ insert into planet_osm_stops
   bit_or((CASE WHEN substr(rm.member_role, 1, 7)='forward' THEN 1 WHEN substr(rm.member_role, 1, 8)='backward' THEN 2 ELSE 3 END)) as direction,
   line_interpolate_point(next_way, pos) as way
 from 
-(select t.osm_id, type, importance,
+(select t.osm_id, t.id_type, t.full_id, type, importance,
   poi_way, next_way, line_locate_point(next_way, poi_way) as pos, length(next_way) as len from (
-select poi.osm_id, 
+select poi.osm_id, poi.id_type, poi.full_id,
   (CASE
     WHEN poi.highway='bus_stop' and poi.railway='tram_stop' THEN 'tram_bus_stop'
     WHEN poi.highway in ('bus_stop') THEN poi.highway
@@ -67,17 +69,21 @@ select poi.osm_id,
   (poi.highway='bus_stop' or
     poi.railway in ('tram_stop', 'station', 'subway_station', 'halt')
     )
-      ) as t) as t1 left join relation_members rm on rm.member_id=t1.osm_id and rm.member_type=1 group by t1.osm_id, t1.type, t1.pos, t1.len, t1.importance, t1.next_way);
+      ) as t) as t1 left join relation_members rm on rm.member_id=t1.osm_id and rm.member_type=1 group by t1.osm_id, t1.id_type, t1.full_id, t1.type, t1.pos, t1.len, t1.importance, t1.next_way);
 
 -- stop_to_station finds nearby stops with same name
 -- potential BUG: id for point and polygon same in same station
 drop table if exists planet_osm_stop_to_station;
-create table planet_osm_stop_to_station(id varchar(32) not null,
-rel_id int4[], stations varchar(32)[], name text, importance text, 
-primary key(id, id_type));
+create table planet_osm_stop_to_station(
+  id varchar(32) not null,
+  rel_id int4[],
+  stations varchar(32)[],
+  name text,
+  importance text, 
+  primary key(id)
+);
 insert into planet_osm_stop_to_station select 
   src.full_id,
-  src.id_type,
   array_unique(to_intarray((select station_rel.id from
       planet_osm_rels station_rel 
     join 
@@ -86,8 +92,8 @@ insert into planet_osm_stop_to_station select
       station_member.member_role!='nearby'
     where
       station_rel.type='station' and
-      src.full_id=station_member.member_id and
-      src.id_type=station_member.member_type
+      src.osm_id=station_member.member_id and
+      src.id_type=(array['node','way'])[station_member.member_type]
     limit 1))),
   array_sort(array_unique(to_textarray(dst.full_id))),
   dst.name,
@@ -115,18 +121,24 @@ where
 group by src.full_id, src.importance, dst.name;
 
 -- delete all stops that are part of a station-rel
-delete from planet_osm_stop_to_station using planet_osm_poipoly where planet_osm_stop_to_station.id=planet_osm_point.osm_id and planet_osm_stop_to_station.id_type=planet_osm_poipoly.id_type and part_of_station=1;
+delete from planet_osm_stop_to_station using planet_osm_poipoly where planet_osm_stop_to_station.id=planet_osm_poipoly.full_id and part_of_station=1;
 
 -- stations_all combines stops that are close to each other
 drop table if exists planet_osm_stations;
-create table planet_osm_stations(name text, stations varchar(32)[], rel_id int4, coll_id int4, importance text);
+create table planet_osm_stations(
+  name        text,
+  stations    varchar(32)[],
+  rel_id      int4,
+  coll_id     int4,
+  importance  text
+);
 SELECT AddGeometryColumn('planet_osm_stations', 'way', 900913, 'GEOMETRY', 2);
 SELECT AddGeometryColumn('planet_osm_stations', 'center', 900913, 'POINT', 2);
 SELECT AddGeometryColumn('planet_osm_stations', 'bbox', 900913, 'LINESTRING', 2);
 SELECT AddGeometryColumn('planet_osm_stations', 'top', 900913, 'POINT', 2);
 SELECT AddGeometryColumn('planet_osm_stations', 'topline', 900913, 'LINESTRING', 2);
 insert into planet_osm_stations
-  select name,
+  select station.name,
     stations,
     (array_sort(max(rel_id)))[1],
     cast(substr(stations[1], position('_' in stations[1])+1) as int),
@@ -142,15 +154,14 @@ from planet_osm_stop_to_station station
   join 
   planet_osm_poipoly as object
      on object.full_id=any(station.stations)
-  left join planet_osm_stops stops and object.full_id='node_'||stops.osm_id
-group by name, point_stations, polygon_stations;
+  left join planet_osm_stops stops on object.full_id='node_'||stops.osm_id
+group by station.name, stations;
 
 -- we don't need this temporary table anymore
 -- drop table planet_osm_stop_to_station;
 
 -- delete all stations with relations and do it again for them
--- TODO: add polygons!
-insert into planet_osm_stations select name, to_intarray(planet_osm_nodes.id), null, planet_osm_rels.id, null, importance, ST_Collect(GeomFromText('POINT(' || lon || ' ' || lat || ')', 900913))  from planet_osm_rels join relation_members on relation_members.relation_id=planet_osm_rels.id and member_type='1' join planet_osm_nodes on planet_osm_nodes.id=relation_members.member_id where type='station' group by planet_osm_rels.id, name, importance;
+insert into planet_osm_stations select planet_osm_rels.name, to_textarray(planet_osm_poipoly.full_id), planet_osm_rels.id, null, planet_osm_rels.importance, ST_Collect(way)  from planet_osm_rels join relation_members on relation_members.relation_id=planet_osm_rels.id join planet_osm_poipoly on planet_osm_poipoly.osm_id=relation_members.member_id and planet_osm_poipoly.id_type=(array['node', 'way'])[relation_members.member_type] where type='station' group by planet_osm_rels.id, planet_osm_rels.name, planet_osm_rels.importance;
 
 -- create geo objects of stations
 update planet_osm_stations set 
@@ -164,8 +175,16 @@ insert into planet_osm_colls select coll_id, 'station' from planet_osm_stations 
 insert into coll_tags select coll_id, 'name', name from planet_osm_stations where rel_id is null and coll_id is not null;
 insert into coll_tags select coll_id, 'importance', importance from planet_osm_stations where rel_id is null and coll_id is not null;
 insert into coll_tags select coll_id, 'type', 'station' from planet_osm_stations where rel_id is null and coll_id is not null;
-insert into coll_members select coll_id, p.osm_id, 1, '' from planet_osm_stations st join planet_osm_point p on 'node_'||p.osm_id=any(st.stations) where rel_id is null and coll_id is not null;
-insert into coll_members select coll_id, p.osm_id, 2, '' from planet_osm_stations st join planet_osm_polygon p on 'way_'||p.osm_id=any(st.stations) where rel_id is null and coll_id is not null;
+insert into coll_members 
+  select coll_id, p.osm_id, 
+    (CASE WHEN id_type='node' THEN 1
+	  WHEN id_type='way'  THEN 2
+    END),
+    ''
+  from planet_osm_stations st
+    join planet_osm_poipoly p
+      on p.full_id=any(st.stations)
+  where rel_id is null and coll_id is not null;
 
 -- feed stations in search
 insert into search 
@@ -173,12 +192,13 @@ insert into search
     (CASE 
       WHEN rel_id is not null THEN 'rel'
       WHEN coll_id is not null THEN 'coll'
-      WHEN array_count(polygon_stations)>0 THEN 'way'
-      ELSE 'node' END),
+      ELSE substr(stations[1], 0, position('_' in stations[1]))
+    END),
     (CASE
       WHEN rel_id is not null THEN rel_id
       WHEN coll_id is not null THEN coll_id
-      cast(substr(stations[1], position('_' in stations[1])+1) as int) as id,
+      ELSE cast(substr(stations[1], position('_' in stations[1])+1) as int)
+    END),
     'station', null
   from planet_osm_stations where name is not null;
 
