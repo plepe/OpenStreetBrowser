@@ -1,31 +1,19 @@
 -- table point gets a flag, whether it is part of a station-rel
-alter table planet_osm_point add column part_of_station int;
-alter table planet_osm_polygon add column part_of_station int;
-update planet_osm_point set part_of_station=1 from relation_members, planet_osm_rels where planet_osm_point.osm_id=relation_members.member_id and relation_members.member_type='1' and planet_osm_rels.id=relation_members.relation_id and planet_osm_rels.type='station' and relation_members.member_role!='nearby';
-update planet_osm_polygon set part_of_station=1 from relation_members, planet_osm_rels where planet_osm_polygon.osm_id=relation_members.member_id and relation_members.member_type='1' and planet_osm_rels.id=relation_members.relation_id and planet_osm_rels.type='station' and relation_members.member_role!='nearby';
+alter table planet_osm_poipoly add column part_of_station int;
+update planet_osm_poipoly set part_of_station=1 from relation_members, planet_osm_rels where planet_osm_point.osm_id=relation_members.member_id and relation_members.member_type='1' and planet_osm_rels.id=relation_members.relation_id and planet_osm_rels.type='station' and relation_members.member_role!='nearby';
 
 -- update importance in point where missing or wrong
-update planet_osm_point set importance=network where importance is null and network in ('local', 'suburban', 'urban', 'regional', 'national', 'international');
-update planet_osm_point set importance='regional' where importance='region';
-update planet_osm_point set importance='local' where highway='bus_stop' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_point set importance='local' where railway='tram_stop' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_point set importance='suburban' where railway='halt' and not (importance is null or importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_point set importance='suburban', railway='subway_station' from planet_osm_line l join planet_osm_ways w on l.osm_id=w.id where planet_osm_point.osm_id=any(w.nodes) and planet_osm_point.railway='station' and l.railway='subway' and (planet_osm_point.importance is null or not planet_osm_point.importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_point set importance='urban' where railway='station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_point set importance='urban' where amenity='bus_station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_point set importance='national' where aeroway='aerodrome' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_point set importance='suburban' where aerialway='station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_point set importance='urban' where amenity='ferry_terminal' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
-
-alter table planet_osm_polygon add column importance text;
-update planet_osm_polygon set importance=network where importance is null and network in ('local', 'suburban', 'urban', 'regional', 'national', 'international');
-update planet_osm_polygon set importance='regional' where importance='region';
-update planet_osm_polygon set importance='suburban', railway='subway_station' from planet_osm_line l join planet_osm_ways w on l.osm_id=w.id where planet_osm_polygon.osm_id=any(w.nodes) and planet_osm_polygon.railway='station' and l.railway='subway' and (planet_osm_polygon.importance is null or not planet_osm_polygon.importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_polygon set importance='urban' where railway='station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_polygon set importance='urban' where amenity='bus_station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_polygon set importance='national' where aeroway='aerodrome' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_polygon set importance='suburban' where aerialway='station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
-update planet_osm_polygon set importance='urban' where amenity='ferry_terminal' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_poipoly set importance=network where importance is null and network in ('local', 'suburban', 'urban', 'regional', 'national', 'international');
+update planet_osm_poipoly set importance='regional' where importance='region';
+update planet_osm_poipoly set importance='local' where highway='bus_stop' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_poipoly set importance='local' where railway='tram_stop' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_poipoly set importance='suburban' where railway='halt' and not (importance is null or importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_poipoly set importance='suburban', railway='subway_station' from planet_osm_line l join planet_osm_ways w on l.osm_id=w.id where planet_osm_poipoly.osm_id=any(w.nodes) and planet_osm_poipoly.railway='station' and l.railway='subway' and (planet_osm_poipoly.importance is null or not planet_osm_poipoly.importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_poipoly set importance='urban' where railway='station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_poipoly set importance='urban' where amenity='bus_station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_poipoly set importance='national' where aeroway='aerodrome' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_poipoly set importance='suburban' where aerialway='station' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
+update planet_osm_poipoly set importance='urban' where amenity='ferry_terminal' and (importance is null or not importance in ('local', 'urban', 'regional', 'national', 'international'));
 
 -- in which direction stations are being used?
 drop table if exists planet_osm_stops;
@@ -75,7 +63,7 @@ select poi.osm_id,
 			       || xmin(poi.way)-200 || ' ' || ymin(poi.way)-200 || '))',
 			        900913)&&dst.way
     order by Distance(poi.way, dst.way) asc limit 1) as next_way
-       from planet_osm_point poi where 
+       from planet_osm_poipoly poi where 
   (poi.highway='bus_stop' or
     poi.railway in ('tram_stop', 'station', 'subway_station', 'halt')
     )
@@ -84,11 +72,11 @@ select poi.osm_id,
 -- stop_to_station finds nearby stops with same name
 -- potential BUG: id for point and polygon same in same station
 drop table if exists planet_osm_stop_to_station;
-create table planet_osm_stop_to_station(id int4 not null, id_type int2 not null,
-rel_id int4[], point_stations int4[], polygon_stations int4[], name text, importance text, 
+create table planet_osm_stop_to_station(id varchar(32) not null,
+rel_id int4[], stations varchar(32)[], name text, importance text, 
 primary key(id, id_type));
 insert into planet_osm_stop_to_station select 
-  src.osm_id,
+  src.full_id,
   src.id_type,
   array_unique(to_intarray((select station_rel.id from
       planet_osm_rels station_rel 
@@ -98,18 +86,15 @@ insert into planet_osm_stop_to_station select
       station_member.member_role!='nearby'
     where
       station_rel.type='station' and
-      src.osm_id=station_member.member_id and
+      src.full_id=station_member.member_id and
       src.id_type=station_member.member_type
     limit 1))),
-  array_sort(array_unique(to_intarray(CASE WHEN dst.id_type=1 THEN dst.osm_id END))),
-  array_sort(array_unique(to_intarray(CASE WHEN dst.id_type=2 THEN dst.osm_id END))),
+  array_sort(array_unique(to_textarray(dst.full_id))),
   dst.name,
   src.importance
 from 
-  (select osm_id, 1 as id_type, importance, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_point union
-   select osm_id, 2 as id_type, importance, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_polygon) as dst,
-  (select osm_id, 1 as id_type, importance, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_point union
-   select osm_id, 2 as id_type, importance, name, highway, railway, amenity, aeroway, aerialway, way from planet_osm_polygon) as src
+  planet_osm_poipoly as dst,
+  planet_osm_poipoly as src
 where 
   src.name=dst.name and
   geometryfromtext('POLYGON((' || xmin(src.way)-500 || ' ' || ymin(src.way)-500 || ','
@@ -127,15 +112,14 @@ where
     dst.railway in ('tram_stop', 'subway_station', 'station', 'halt') or
     dst.amenity='bus_station' or dst.aeroway='aerodrome' or
     dst.aerialway='station' or dst.amenity='ferry_terminal')
-group by src.osm_id, src.id_type, src.importance, dst.name;
+group by src.full_id, src.importance, dst.name;
 
 -- delete all stops that are part of a station-rel
-delete from planet_osm_stop_to_station using planet_osm_point where planet_osm_stop_to_station.id=planet_osm_point.osm_id and planet_osm_stop_to_station.id_type=1 and part_of_station=1;
-delete from planet_osm_stop_to_station using planet_osm_polygon where planet_osm_stop_to_station.id=planet_osm_polygon.osm_id and planet_osm_stop_to_station.id_type=2 and part_of_station=1;
+delete from planet_osm_stop_to_station using planet_osm_poipoly where planet_osm_stop_to_station.id=planet_osm_point.osm_id and planet_osm_stop_to_station.id_type=planet_osm_poipoly.id_type and part_of_station=1;
 
 -- stations_all combines stops that are close to each other
 drop table if exists planet_osm_stations;
-create table planet_osm_stations(name text, point_stations int[], polygon_stations int[], rel_id int4, coll_id int4, importance text);
+create table planet_osm_stations(name text, stations varchar(32)[], rel_id int4, coll_id int4, importance text);
 SELECT AddGeometryColumn('planet_osm_stations', 'way', 900913, 'GEOMETRY', 2);
 SELECT AddGeometryColumn('planet_osm_stations', 'center', 900913, 'POINT', 2);
 SELECT AddGeometryColumn('planet_osm_stations', 'bbox', 900913, 'LINESTRING', 2);
@@ -143,14 +127,9 @@ SELECT AddGeometryColumn('planet_osm_stations', 'top', 900913, 'POINT', 2);
 SELECT AddGeometryColumn('planet_osm_stations', 'topline', 900913, 'LINESTRING', 2);
 insert into planet_osm_stations
   select name,
-    point_stations,
-    polygon_stations,
+    stations,
     (array_sort(max(rel_id)))[1],
-    (CASE
-      WHEN array_count(point_stations)>0 THEN point_stations[1]
-      WHEN array_count(polygon_stations)>0 THEN polygon_stations[1]
-      ELSE null
-    END),
+    cast(substr(stations[1], position('_' in stations[1])+1) as int),
     (array['local','suburban','urban','regional','national','international'])
       [max(CASE
         WHEN station.importance='suburban' THEN 2 
@@ -161,16 +140,13 @@ insert into planet_osm_stations
     ST_Collect(CASE WHEN stops.way is not null THEN stops.way ELSE object.way END)
 from planet_osm_stop_to_station station 
   join 
-  (select osm_id, 1 as id_type, way from planet_osm_point
-   union
-   select osm_id, 2 as id_type, way from planet_osm_polygon) as object
-     on (object.osm_id=any(station.point_stations) and object.id_type=1) or
-        (object.osm_id=any(station.polygon_stations) and object.id_type=2)
-  left join planet_osm_stops stops on object.id_type=1 and object.osm_id=stops.osm_id
+  planet_osm_poipoly as object
+     on object.full_id=any(station.stations)
+  left join planet_osm_stops stops and object.full_id='node_'||stops.osm_id
 group by name, point_stations, polygon_stations;
 
 -- we don't need this temporary table anymore
-drop table planet_osm_stop_to_station;
+-- drop table planet_osm_stop_to_station;
 
 -- delete all stations with relations and do it again for them
 -- TODO: add polygons!
@@ -188,8 +164,8 @@ insert into planet_osm_colls select coll_id, 'station' from planet_osm_stations 
 insert into coll_tags select coll_id, 'name', name from planet_osm_stations where rel_id is null and coll_id is not null;
 insert into coll_tags select coll_id, 'importance', importance from planet_osm_stations where rel_id is null and coll_id is not null;
 insert into coll_tags select coll_id, 'type', 'station' from planet_osm_stations where rel_id is null and coll_id is not null;
-insert into coll_members select coll_id, p.osm_id, 1, '' from planet_osm_stations st join planet_osm_point p on p.osm_id=any(st.point_stations) where rel_id is null and coll_id is not null;
-insert into coll_members select coll_id, p.osm_id, 2, '' from planet_osm_stations st join planet_osm_polygon p on p.osm_id=any(st.polygon_stations) where rel_id is null and coll_id is not null;
+insert into coll_members select coll_id, p.osm_id, 1, '' from planet_osm_stations st join planet_osm_point p on 'node_'||p.osm_id=any(st.stations) where rel_id is null and coll_id is not null;
+insert into coll_members select coll_id, p.osm_id, 2, '' from planet_osm_stations st join planet_osm_polygon p on 'way_'||p.osm_id=any(st.stations) where rel_id is null and coll_id is not null;
 
 -- feed stations in search
 insert into search 
@@ -202,8 +178,7 @@ insert into search
     (CASE
       WHEN rel_id is not null THEN rel_id
       WHEN coll_id is not null THEN coll_id
-      WHEN array_count(polygon_stations)>0 THEN
-      polygon_stations[1] ELSE point_stations[1] END) as id,
+      cast(substr(stations[1], position('_' in stations[1])+1) as int) as id,
     'station', null
   from planet_osm_stations where name is not null;
 
