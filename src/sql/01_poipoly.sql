@@ -12,6 +12,7 @@ insert into planet_osm_poipoly
 
 create index planet_osm_poipoly_id_type     on planet_osm_poipoly("id_type");
 create index planet_osm_poipoly_full_id     on planet_osm_poipoly("full_id");
+create index planet_osm_poipoly_osm_id      on planet_osm_poipoly("osm_id");
 create index planet_osm_poipoly_way         on planet_osm_poipoly using gist(way);
 
 create index planet_osm_poipoly_waterway    on planet_osm_poipoly("waterway");
