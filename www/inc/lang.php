@@ -1,14 +1,29 @@
 <?
 function lang() {
   global $lang_str;
+  $offset=1;
 
   $key=func_get_arg(0);
-  $params=array_slice(func_get_args(), 1);
+  if(is_integer(func_get_arg(1))) {
+    $offset++;
+    $count=func_get_arg(1);
+  }
+  else
+    $count=1;
+  $params=array_slice(func_get_args(), $offset);
 
   if(!$lang_str[$key])
     return $key.(sizeof($params)?" ".implode(", ", $params):"");
 
-  return vsprintf($lang_str[$key], $params);
+  $l=$lang_str[$key];
+  if(is_array($l)) {
+    $count--;
+    if(!isset($l[$count]))
+      $count=1;
+    $l=$l[$count];
+  }
+
+  return vsprintf($l, $params);
 }
 
 $available_languages=array(
