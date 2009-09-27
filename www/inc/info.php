@@ -107,6 +107,8 @@ register_hook("info", network_info);
 function religion_list_description($ret, $object, $list) {
   if($value=$object->tags->get("religion"))
     $ret[]=lang("tag_religion/$value");
+  if($value=$object->tags->get("denomination"))
+    $ret[]=lang("tag_denomination/$value");
 }
 
 function religion_info($ret, $object) {
