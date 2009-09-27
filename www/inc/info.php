@@ -1,4 +1,10 @@
 <?
+function amenity_info($ret, $object) {
+    $data[]=array("general_info", $object->tags->compile_text("#tag_amenity#: #amenity_%amenity%#<br />\n"));
+}
+
+register_hook("info", amenity_info);
+
 // ADDRESS
 function address_info($ret, $object) {
   $ret[]=array("address", $object->tags->compile_text("%addr:street% %addr:housenumber%<br />\n"));
