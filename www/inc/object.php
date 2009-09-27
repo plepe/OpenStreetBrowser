@@ -104,8 +104,6 @@ class object {
 
     $data=array();
 
-    $data[]=array("general_info", $this->tags->compile_text("#tag_amenity#: #amenity_%amenity%#<br />\n"));
-
     call_hooks("info", &$data, $this, $param);
 
     $chapter=array();

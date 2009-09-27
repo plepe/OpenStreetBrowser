@@ -1,6 +1,7 @@
 <?
 class tags {
   private $data;
+  public $compiled_tags=array();
 
   function __construct($parse_text_k, $parse_text_v=null) {
     if(is_array($parse_text_k)) {
@@ -67,9 +68,11 @@ class tags {
     $match=0;
 
     while(ereg("^(.*)(%[^%]+%)(.*)$", $text, $m)) {
-      if($rep=$this->get_lang(substr($m[2], 1, -1)))
+      $tag=substr($m[2], 1, -1);
+      if($rep=$this->get_lang($tag))
 	$match++;
       $text=$m[1].$rep.$m[3];
+      $this->compiled_tags[]=$tag;
     }
 
     if(!$match)
