@@ -3,7 +3,7 @@ $hide_tags=array("created_by", "openGeoDB:*", "opengeodb:*");
 $hide_tags_preg="/(".implode("|", $hide_tags).")/";
 
 function amenity_info($ret, $object) {
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_amenity#: #amenity_%amenity%#<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/amenity#: #tag_amenity/%amenity%#<br />\n"));
 }
 
 register_hook("info", amenity_info);
@@ -18,9 +18,9 @@ register_hook("info", address_info);
 
 // SHOP
 function shop_info($ret, $object) {
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_shop#: %shop%<br />\n"));
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_vending#: %vending%<br />\n"));
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_opening_hours#: %opening_hours%<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/shop#: %shop%<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/vending#: %vending%<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/opening_hours#: %opening_hours%<br />\n"));
 
   if($object->tags->get("shop"))
     show_overlay("shop");
@@ -33,17 +33,17 @@ register_hook("info", shop_info);
 // FOOD & DRINK
 function food_drink_list_description($ret, $object, $list) {
   if($value=$object->tags->get("cuisine"))
-    $ret[]="cuisine_$value";
+    $ret[]=lang("tag_cuisine/$value");
 }
 
 function food_drink_info($ret, $object) {
   global $infolist_directory;
 
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_cuisine#: #cuisine_%cuisine%#<br />\n"));
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_old_name#: %old_name%<br />\n"));
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_food#: #yes_%food%#<br />\n"));
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_accomodation#: %accomodation%<br />\n"));
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_real_ale#: %real_ale%<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/cuisine#: #tag_cuisine/%cuisine%#<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/old_name#: %old_name%<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/food#: #yes/%food%#<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/accomodation#: %accomodation%<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/real_ale#: %real_ale%<br />\n"));
 
   if($infolist_directory[leisure_sport_tourism][food_drink][$object->tags->get("amenity")])
     show_overlay("food");
@@ -56,11 +56,11 @@ register_hook("info", food_drink_info);
 function sport_list_description($ret, $object, $list) {
   if($list!="leisure_sport_tourism|sport")
     if($value=$object->tags->get("sport"))
-      $ret[]=lang("sport_$value");
+      $ret[]=lang("tag_sport/$value");
 }
 
 function sport_info($ret, $object) {
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_sport#: %sport%<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/sport#: %sport%<br />\n"));
 }
 
 register_hook("list_description", sport_list_description);
@@ -69,14 +69,14 @@ register_hook("info", sport_info);
 // Network
 function network_info($ret, $object) {
   if($object->tags->get("type")!="network") {
-    $ret[]=array("general_info", $object->tags->compile_text("#tag_operator#: %operator%<br />\n"));
-    $ret[]=array("general_info", $object->tags->compile_text("#tag_network#: %network%<br />\n"));
+    $ret[]=array("general_info", $object->tags->compile_text("#tag/operator#: %operator%<br />\n"));
+    $ret[]=array("general_info", $object->tags->compile_text("#tag/network#: %network%<br />\n"));
     return;
   }
 
   $ret[]=array("general_info", "This entity describes a network<br />\n");
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_operator#: %operator%<br />\n"));
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_network#: %network%<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/operator#: %operator%<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/network#: %network%<br />\n"));
 
   $text="";
 
@@ -106,12 +106,12 @@ register_hook("info", network_info);
 // RELIGION
 function religion_list_description($ret, $object, $list) {
   if($value=$object->tags->get("religion"))
-    $ret[]="religion_$value";
+    $ret[]=lang("tag_religion/$value");
 }
 
 function religion_info($ret, $object) {
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_religion#: #%religion%#<br />\n"));
-  $ret[]=array("general_info", $object->tags->compile_text("#tag_denomination#: #%denomination%#<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/religion#: #tag_religion/%religion%#<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag/denomination#: #tag_denomination/%denomination%#<br />\n"));
 }
 
 register_hook("list_description", religion_list_description);
@@ -206,10 +206,10 @@ function places_info($ret, $object) {
   if(!$tags->get("place"))
     return;
 
-  $r.=lang("tag_place").": ".lang("place_".$tags->get("place"))."<br />\n";
-  $r.=$tags->compile_text("#tag_capital#: %capital%<br />\n");
-  $r.=$tags->compile_text("#tag_is_in#: %is_in%<br />\n");
-  $r.=$tags->compile_text("#tag_population#: %population%<br />\n");
+  $r.=lang("tag/place").": ".lang("place/".$tags->get("place"))."<br />\n";
+  $r.=$tags->compile_text("#tag/capital#: #yes/%capital%#<br />\n");
+  $r.=$tags->compile_text("#tag/is_in#: %is_in%<br />\n");
+  $r.=$tags->compile_text("#tag/population#: %population%<br />\n");
 
   $ret[]=array("general_info", $r);
 }
@@ -219,8 +219,8 @@ register_hook("info", places_info);
 function comm_info($ret, $object) {
   $tags=$object->tags;
 
-  $r.=$tags->compile_text("#tag_website#: <a href='%website%'>%website%</a><br />\n");
-  $r.=$tags->compile_text("#tag_website#: <a href='%url%'>%url%</a><br />\n");
+  $r.=$tags->compile_text("#tag/website#: <a href='%website%'>%website%</a><br />\n");
+  $r.=$tags->compile_text("#tag/website#: <a href='%url%'>%url%</a><br />\n");
 
   $ret[]=array("general_info", $r);
 }
@@ -397,12 +397,12 @@ function power_info($ret, $object) {
 
     switch($power) {
       case "line":
-        $text.=$object->tags->compile_text("#tag_voltage#: %voltage%<br />\n");
-        $text.=$object->tags->compile_text("#tag_cables#: %cables%<br />\n");
-        $text.=$object->tags->compile_text("#tag_wires#: %wires%<br />\n");
+        $text.=$object->tags->compile_text("#tag/voltage#: %voltage%<br />\n");
+        $text.=$object->tags->compile_text("#tag/cables#: %cables%<br />\n");
+        $text.=$object->tags->compile_text("#tag/wires#: %wires%<br />\n");
         break;
       case "generator":
-        $text.=$object->tags->compile_text("#tag_power_source#: #power_source_%power_source%#<br />\n");
+        $text.=$object->tags->compile_text("#tag/power_source#: #tag_power_source/%power_source%#<br />\n");
     }
 
     $ret[]=array("general_info", $text);
@@ -413,7 +413,7 @@ function power_list_description($ret, $object, $list) {
   switch($object->tags->get("power")) {
     case "generator":
       if($value=$object->tags->get("power_source"))
-	$ret[]=lang("power_source_$value");
+	$ret[]=lang("tag_power_source/$value");
   }
 }
 
