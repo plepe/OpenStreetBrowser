@@ -1,6 +1,9 @@
 <?
+$hide_tags=array("created_by", "openGeoDB:*", "opengeodb:*");
+$hide_tags_preg="/(".implode("|", $hide_tags).")/";
+
 function amenity_info($ret, $object) {
-    $data[]=array("general_info", $object->tags->compile_text("#tag_amenity#: #amenity_%amenity%#<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag_amenity#: #amenity_%amenity%#<br />\n"));
 }
 
 register_hook("info", amenity_info);
@@ -424,3 +427,15 @@ function pt_info($ret, $object) {
   }
 }
 register_hook("info", pt_info);
+
+function other_tags($ret, $object) {
+  global $hide_tags_preg;
+
+  foreach($object->tags->data() as $key=>$v) {
+    if((!in_array($key, $object->tags->compiled_tags))&&
+       (!preg_match($hide_tags_preg, $key))) {
+      $ret[]=array("general_info", $object->tags->compile_text("#tag/$key#: #$key_%$key%#<br />\n"));
+    }
+  }
+}
+register_hook("info", other_tags);
