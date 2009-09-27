@@ -12,14 +12,24 @@ function lang() {
     $count=1;
   $params=array_slice(func_get_args(), $offset);
 
-  if(!$lang_str[$key]) {
+  ereg("^(.*)/(.*)$", $key, $m);
+  $key_exp=explode(";", $m[2]);
+  if(sizeof($key_exp)>1) {
+    foreach($key_exp as $key_index=>$key_value) {
+      $key_exp[$key_index]=lang("$m[1]/$key_value", $count);
+    }
+    $l=implode(", ", $key_exp);
+  }
+  elseif(!$lang_str[$key]) {
     if(ereg("/(.*)$", $key, $m))
       $key=$m[1];
 
     return $key.(sizeof($params)?" ".implode(", ", $params):"");
   }
+  else {
+    $l=$lang_str[$key];
+  }
 
-  $l=$lang_str[$key];
   if(is_array($l)) {
     $count--;
     if(!isset($l[$count]))
