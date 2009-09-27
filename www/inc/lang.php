@@ -4,7 +4,7 @@ function lang() {
   $offset=1;
 
   $key=func_get_arg(0);
-  if(is_integer(func_get_arg(1))) {
+  if((sizeof(func_get_args())>1)&&is_integer(func_get_arg(1))) {
     $offset++;
     $count=func_get_arg(1);
   }
@@ -12,8 +12,12 @@ function lang() {
     $count=1;
   $params=array_slice(func_get_args(), $offset);
 
-  if(!$lang_str[$key])
+  if(!$lang_str[$key]) {
+    if(ereg("/(.*)$", $key, $m))
+      $key=$m[1];
+
     return $key.(sizeof($params)?" ".implode(", ", $params):"");
+  }
 
   $l=$lang_str[$key];
   if(is_array($l)) {
