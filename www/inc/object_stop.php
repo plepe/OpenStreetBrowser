@@ -163,22 +163,19 @@ class infolist_stop extends infolist {
     }
     $importance[]="'international'";
 
-    $qry="select point_stations, polygon_stations, rel_id, coll_id from planet_osm_stations where importance in (".implode(",", $importance).") and way&&PolyFromText('POLYGON(($bounds[left] $bounds[top], $bounds[right] $bounds[top], $bounds[right] $bounds[bottom], $bounds[left] $bounds[bottom], $bounds[left] $bounds[top]))', $SRID)";
+    $qry="select stations, rel_id, coll_id from planet_osm_stations where importance in (".implode(",", $importance).") and way&&PolyFromText('POLYGON(($bounds[left] $bounds[top], $bounds[right] $bounds[top], $bounds[right] $bounds[bottom], $bounds[left] $bounds[bottom], $bounds[left] $bounds[top]))', $SRID)";
     $res=sql_query($qry);
 
     $list=array();
     while($elem=pg_fetch_assoc($res)) {
-      $elem[point_stations]=parse_array($elem[point_stations]);
-      $elem[polygon_stations]=parse_array($elem[polygon_stations]);
+      $elem[stations]=parse_array($elem[stations]);
 
       if($elem[rel_id])
 	$list[]="rel_$elem[rel_id]";
       else if($elem[coll_id])
 	$list[]="coll_$elem[coll_id]";
-      else if($elem[point_stations][0])
-	$list[]="node_{$elem[point_stations][0]}";
-      else if($elem[polygon_stations][0])
-	$list[]="node_{$elem[polygon_stations][0]}";
+      else if($elem[stations][0])
+	$list[]="node_{$elem[stations][0]}";
     }
 
     $xlist=array();
