@@ -101,6 +101,8 @@ function route_info($ret, $object) {
   }
 
   $res=sql_query("select 'way_'||member_id as way_id, 'node_'||(select node_id from way_nodes where way_id=member_id and sequence_id=0) as first, 'node_'||(select node_id from way_nodes where way_id=member_id order by sequence_id desc limit 1) as last from relation_members rm where relation_id='{$object->only_id}' and member_type='2'");
+  $nodes=array();
+  $ways=array();
   while($elem=pg_fetch_assoc($res)) {
     $ways[$elem[way_id]]=$elem;
     $nodes[$elem[first]][]=$elem[way_id];
