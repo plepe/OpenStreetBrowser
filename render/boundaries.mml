@@ -1,16 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE Map>
-<Map bgcolor="#b5d0d0" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
    <Stylesheet src="boundaries.mss" />
 
-  <Layer class="world1" status="on" srs="+proj=merc +datum=WGS84 +over">
+  <Layer class="bound_world1" status="on" srs="+proj=merc +datum=WGS84 +over">
     <StyleName>world1</StyleName>
     <Datasource>
       <Parameter name="type">shape</Parameter>
       <Parameter name="file">/scratch/mapnik/data/world_boundaries/world_boundaries_m</Parameter>
     </Datasource>
   </Layer>
-  <Layer class="world" status="on" srs="+proj=merc +datum=WGS84 +over">
+  <Layer class="bound_world" status="on" srs="+proj=merc +datum=WGS84 +over">
     <StyleName>world</StyleName>
     <Datasource>
       <Parameter name="type">shape</Parameter>
@@ -18,7 +15,7 @@
     </Datasource>
   </Layer>
 
-  <Layer class="coastpoly" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+  <Layer class="bound_coastpoly" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <StyleName>coast-poly</StyleName>
     <Datasource>
       <Parameter name="type">shape</Parameter>
@@ -36,6 +33,3 @@
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
   </Layer>
-
-
-</Map>

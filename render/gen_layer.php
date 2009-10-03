@@ -2,14 +2,12 @@
 <?
 include("config_queries.php");
 $base    =file_get_contents("template_base.mml");
-$template1=file_get_contents("template_layer1.mml");
-$template2=file_get_contents("template_layer2.mml");
 
 // When you add more keys here, don't forget to add these keys also to the 
 // layer detection in src/sql/02_layer.sql
 // THese keys  should also have an index (src/sql/01_indices.sql)
 
-function fit($template, $num, $where=0) {
+function fit($template, $num=0, $where=0) {
   global $query;
 
   $rep=array(
@@ -28,16 +26,35 @@ function fit($template, $num, $where=0) {
   return strtr($template, $rep);
 }
 
-$base=fit($base, 0);
+$base=fit($base);
 
-$layers1="";
-for($l=-5; $l<=5; $l++) {
-  $layers1.= fit($template1, $l);
+while(ereg("%INSERTLAYERS ([^%]*)%", $base, $m)) {
+  $insert=file_get_contents("$m[1].mml");
+
+  $insert_full="";
+  for($l=-5; $l<=5; $l++) {
+    $insert_full.= fit($insert, $l);
+  }
+
+  $base=strtr($base, array($m[0]=>$insert_full));
 }
 
-$layers2="";
-for($l=5; $l>=-5; $l--) {
-  $layers1.= fit($template2, $l);
+while(ereg("%INSERTLAYERSBACK ([^%]*)%", $base, $m)) {
+  $insert=file_get_contents("$m[1].mml");
+
+  $insert_full="";
+  for($l=5; $l>=-5; $l--) {
+    $insert_full.= fit($insert, $l);
+  }
+
+  $base=strtr($base, array($m[0]=>$insert_full));
 }
 
-print strtr($base, array("%LAYERS%"=>$layers1, "%LAYERS2%"=>$layers2));
+while(ereg("%INSERT ([^%]*)%", $base, $m)) {
+  $insert=file_get_contents("$m[1].mml");
+  $insert=fit($insert);
+
+  $base=strtr($base, array($m[0]=>$insert));
+}
+
+print $base;

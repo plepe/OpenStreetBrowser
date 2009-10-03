@@ -1,21 +1,21 @@
 .admin,
-.world1 {
+.bound_world1 {
   line-color: #950bed;
   line-opacity: 0.6;
 }
-.world1[zoom<2] {
+.bound_world1[zoom<2] {
   line-width: 0.25;
 }
-.world1[zoom>=2][zoom<4] {
+.bound_world1[zoom>=2][zoom<4] {
   line-width: 0.5;
 }
-.world1[zoom>=4][zoom<5] {
+.bound_world1[zoom>=4][zoom<5] {
   line-width: 1;
 }
-.world1[zoom>=5][zoom<6] {
+.bound_world1[zoom>=5][zoom<6] {
   line-width: 1;
 }
-.world1[zoom>=6][zoom<7] {
+.bound_world1[zoom>=6][zoom<7] {
   line-width: 2;
 }
 .admin[admin_level=2][zoom>=7][zoom<11] {

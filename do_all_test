@@ -60,11 +60,10 @@ mkdir -p $TMPDIR
 echo "BASE"
 echo "Layers"
 cd $ROOT_PATH/render
-./gen_layer.php > layers.mml
-./gen_land_point.php
 ./gen_rotate_img.php
-cd $SOFTWARE_PATH/cascadenik
-$ROOT_PATH/src/combine_cascadenik.pl > $ROOT_PATH/render/base.xml
+./gen_layer.php > base.mml
+cascadenik-compile.py $ROOT_PATH/render/base.mml > $ROOT_PATH/render/base.xml
+$ROOT_PATH/src/update_xml.pl $ROOT_PATH/render/base.xml
 echo "PT"
 cd $ROOT_PATH/render
 convert -background none img/src/stop_p_back.svg img/stop_p_back.png
