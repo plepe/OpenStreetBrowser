@@ -55,7 +55,8 @@ cd $ROOT_PATH
 for i in src/sql/*.sql ; do echo "Processing $i ..." ; psql $DB_NAME < $i ; done
 
 echo "* Update style-sheet"
-rm -f /tmp/cascadenik*png 2> /dev/null
+export TMPDIR="/osm/`whoami`-style/`date +%Y%m%d-%H%M`"
+mkdir -p $TMPDIR
 echo "BASE"
 echo "Layers"
 cd $ROOT_PATH/render

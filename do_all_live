@@ -59,6 +59,8 @@ svn update conf.php render/
 export DB_NAME=gis
 
 echo "* Update style-sheet"
+export TMPDIR="/osm/`whoami`-style/`date +%Y%m%d-%H%M`"
+mkdir -p $TMPDIR
 echo "BASE"
 echo "Layers"
 cd $ROOT_PATH/render
