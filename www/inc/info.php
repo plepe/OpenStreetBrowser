@@ -221,8 +221,16 @@ register_hook("info", places_info);
 function comm_info($ret, $object) {
   $tags=$object->tags;
 
-  $r.=$tags->compile_text("#tag/website#: <a href='%website%'>%website%</a><br />\n");
-  $r.=$tags->compile_text("#tag/website#: <a href='%url%'>%url%</a><br />\n");
+  if($v=$object->tags->get("website")) {
+    if(!eregi("^[a-z0-9]://", $v))
+      $v="http://$v";
+    $r.=$tags->compile_text("#tag/website#: <a href='$v'>%website%</a><br />\n");
+  }
+  if($v=$object->tags->get("url")) {
+    if(!eregi("^[a-z0-9]://", $v))
+      $v="http://$v";
+    $r.=$tags->compile_text("#tag/website#: <a href='$v'>%url%</a><br />\n");
+  }
 
   $ret[]=array("general_info", $r);
 }
