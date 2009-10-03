@@ -526,6 +526,7 @@
   shield-face-name: "DejaVu Sans Book";
   shield-min-distance: 15;
   shield-height: 11;
+  shield-spacing: 200;
 }
 .pt_line[type=railway_platform][ref_length=1][zoom>=17] ref
 {
@@ -568,4 +569,5 @@
   text-halo-radius: 1;
   text-spacing: 200;
   text-min-distance: 100;
+  text-max-char-angle-delta: 20;
 }
