@@ -161,11 +161,13 @@ foreach($overlays as $overlay=>$overlay_file) {
   foreach($values_list as $keys_imp=>$values_data) {
     $data=$values_data[data];
     $icon=$data[icon];
+    $icon_prefix=false;
 
     if(eregi("\[\[Image:(.*)\]\]", $icon, $m)) {
       $icon=strtr($m[1], array(" "=>"_"));
       if($img_list[$icon]) {
 	$icon="$symbol_path/$icon";
+	$icon_prefix=true;
       }
       else {
 	$img_src=fopen("$wiki_img$icon", "r");
@@ -184,9 +186,16 @@ foreach($overlays as $overlay=>$overlay_file) {
 
 	    $img_list[$icon]=1;
 	    $icon="$symbol_path/$icon";
+	    $icon_prefix=true;
 	  }
 	}
 	fclose($img_src);
+
+	if(!$icon_prefix) {
+	  // No icon available? Use old one ...
+	  $icon="$symbol_path/$icon";
+	  $icon_prefix=true;
+	}
       }
     }
     else
