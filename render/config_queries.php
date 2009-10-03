@@ -8,6 +8,7 @@ $query["highway"]= <<<EOT
 	    WHEN "highway" in ('living_street', 'pedestrian', 'byway') THEN 'pedestrian'
 	    WHEN "highway" in ('service', 'bus_guideway', 'track') THEN 'service'
 	    WHEN "highway" in ('path', 'cycleway', 'footway', 'bridleway', 'steps') THEN 'path'
+	    WHEN "railway" in ('platform') THEN 'path'
 	    WHEN "railway" in ('tram', 'light_rail', 'narrow_gauge', 'rail', 'subway', 'preserved', 'monorail') THEN 'railway'
 	    WHEN "aeroway" in ('runway') THEN 'aeroway'
 	    WHEN "aeroway" in ('taxiway') THEN 'aeroway'
@@ -230,6 +231,7 @@ $query["highway_level"]=<<<EOT
   WHEN "highway" in ('unclassified', 'road', 'residential') THEN 4
   WHEN "highway" in ('living_street', 'service', 'pedestrian', 'steps', 'bus_guideway', 'byway') THEN 3
   WHEN "highway" in ('track', 'path', 'cycleway', 'footway', 'bridleway', 'ford') THEN 2
+  WHEN "railway" in ('platform') THEN 2
   WHEN "railway" in ('tram', 'rail', 'narrow_gauge', 'light_rail') THEN 1
   WHEN "barrier" is not null THEN 0
   WHEN "power" is not null THEN 0
