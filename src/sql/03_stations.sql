@@ -54,7 +54,7 @@ select poi.osm_id, poi.id_type, poi.full_id,
     WHEN poi.aerialway in ('station') THEN 'aerial_station'
   END) as type, 
   poi.importance,
-  poi.way as poi_way,
+  ST_Centroid(poi.way) as poi_way,
   (select dst.way
       from planet_osm_line dst
       where
