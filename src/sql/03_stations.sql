@@ -64,6 +64,7 @@ select poi.osm_id, poi.id_type, poi.full_id,
 			       || xmin(poi.way)-200 || ' ' || ymax(poi.way)+200 || ',' 
 			       || xmin(poi.way)-200 || ' ' || ymin(poi.way)-200 || '))',
 			        900913)&&dst.way
+	and dst.osm_id>0
     order by Distance(poi.way, dst.way) asc limit 1) as next_way
        from planet_osm_poipoly poi where 
   (poi.highway='bus_stop' or
