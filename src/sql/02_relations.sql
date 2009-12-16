@@ -1,11 +1,11 @@
 --alter table planet_osm_rels add column node_parts int[] null;
---update planet_osm_rels set node_parts=(select to_intarray(member_id) from relation_members where member_type='1' and relation_members.relation_id=planet_osm_rels.id group by relation_id);
+--update planet_osm_rels set node_parts=(select to_intarray(member_id) from relation_members where member_type='N' and relation_members.relation_id=planet_osm_rels.id group by relation_id);
 --
 --alter table planet_osm_rels add column way_parts int[] null;
---update planet_osm_rels set way_parts=(select to_intarray(member_id) from relation_members where member_type='2' and relation_members.relation_id=planet_osm_rels.id group by relation_id);
+--update planet_osm_rels set way_parts=(select to_intarray(member_id) from relation_members where member_type='W' and relation_members.relation_id=planet_osm_rels.id group by relation_id);
 --
 --alter table planet_osm_rels add column rel_parts int[] null;
---update planet_osm_rels set rel_parts=(select to_intarray(member_id) from relation_members where member_type='3' and relation_members.relation_id=planet_osm_rels.id group by relation_id);
+--update planet_osm_rels set rel_parts=(select to_intarray(member_id) from relation_members where member_type='R' and relation_members.relation_id=planet_osm_rels.id group by relation_id);
 
 alter table planet_osm_rels add column name text;
 update planet_osm_rels set name=(select v from relation_tags where relation_tags.relation_id=planet_osm_rels.id and k='name' limit 1);

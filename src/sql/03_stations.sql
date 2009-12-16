@@ -1,6 +1,6 @@
 -- table point gets a flag, whether it is part of a station-rel
 alter table planet_osm_poipoly add column part_of_station int;
-update planet_osm_poipoly set part_of_station=1 from relation_members, planet_osm_rels where planet_osm_poipoly.osm_id=relation_members.member_id and relation_members.member_type='1' and planet_osm_rels.id=relation_members.relation_id and planet_osm_rels.type='station' and relation_members.member_role!='nearby';
+update planet_osm_poipoly set part_of_station=1 from relation_members, planet_osm_rels where planet_osm_poipoly.osm_id=relation_members.member_id and relation_members.member_type='N' and planet_osm_rels.id=relation_members.relation_id and planet_osm_rels.type='station' and relation_members.member_role!='nearby';
 
 -- update importance in point where missing or wrong
 update planet_osm_poipoly set importance=network where importance is null and network in ('local', 'suburban', 'urban', 'regional', 'national', 'international');
@@ -70,7 +70,7 @@ select poi.osm_id, poi.id_type, poi.full_id,
   (poi.highway='bus_stop' or
     poi.railway in ('tram_stop', 'station', 'subway_station', 'halt')
     )
-      ) as t) as t1 left join relation_members rm on rm.member_id=t1.osm_id and rm.member_type=1 group by t1.osm_id, t1.id_type, t1.full_id, t1.type, t1.pos, t1.len, t1.importance, t1.next_way);
+      ) as t) as t1 left join relation_members rm on rm.member_id=t1.osm_id and rm.member_type='N' group by t1.osm_id, t1.id_type, t1.full_id, t1.type, t1.pos, t1.len, t1.importance, t1.next_way);
 
 -- stop_to_station finds nearby stops with same name
 -- potential BUG: id for point and polygon same in same station
@@ -94,7 +94,8 @@ insert into planet_osm_stop_to_station select
     where
       station_rel.type='station' and
       src.osm_id=station_member.member_id and
-      src.id_type=(array['node','way'])[station_member.member_type]
+      src.id_type=(CASE WHEN station_member.member_type='N' THEN 'node'
+                        WHEN station_member.member_type='W' THEN' way')
     limit 1))),
   array_sort(array_unique(to_textarray(dst.full_id))),
   dst.name,
@@ -162,7 +163,8 @@ group by station.name, stations;
 -- drop table planet_osm_stop_to_station;
 
 -- delete all stations with relations and do it again for them
-insert into planet_osm_stations select planet_osm_rels.name, to_textarray(planet_osm_poipoly.full_id), planet_osm_rels.id, null, planet_osm_rels.importance, ST_Collect(way)  from planet_osm_rels join relation_members on relation_members.relation_id=planet_osm_rels.id join planet_osm_poipoly on planet_osm_poipoly.osm_id=relation_members.member_id and planet_osm_poipoly.id_type=(array['node', 'way'])[relation_members.member_type] where type='station' group by planet_osm_rels.id, planet_osm_rels.name, planet_osm_rels.importance;
+insert into planet_osm_stations select planet_osm_rels.name, to_textarray(planet_osm_poipoly.full_id), planet_osm_rels.id, null, planet_osm_rels.importance, ST_Collect(way)  from planet_osm_rels join relation_members on relation_members.relation_id=planet_osm_rels.id join planet_osm_poipoly on planet_osm_poipoly.osm_id=relation_members.member_id and planet_osm_poipoly.id_type=(CASE WHEN relation_members.member_type='N' THEN 'node'
+                                                                 WHEN relation_members.member_type='W' THEN' way') where type='station' group by planet_osm_rels.id, planet_osm_rels.name, planet_osm_rels.importance;
 
 -- create geo objects of stations
 update planet_osm_stations set 
@@ -178,8 +180,8 @@ insert into coll_tags select coll_id, 'importance', importance from planet_osm_s
 insert into coll_tags select coll_id, 'type', 'station' from planet_osm_stations where rel_id is null and coll_id is not null;
 insert into coll_members 
   select coll_id, p.osm_id, 
-    (CASE WHEN id_type='node' THEN 1
-	  WHEN id_type='way'  THEN 2
+    (CASE WHEN id_type='node' THEN 'N'
+	  WHEN id_type='way'  THEN 'W'
     END),
     ''
   from planet_osm_stations st

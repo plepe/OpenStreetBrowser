@@ -164,7 +164,7 @@ insert
     planet_osm_streets.osm_id,
     way_tags.k,
     (to_textarray(way_tags.v))[1]
-  from planet_osm_streets join coll_members on coll_members.coll_id=planet_osm_streets.osm_id join way_tags on way_tags.way_id=coll_members.member_id and coll_members.member_type=2 and
+  from planet_osm_streets join coll_members on coll_members.coll_id=planet_osm_streets.osm_id join way_tags on way_tags.way_id=coll_members.member_id and coll_members.member_type='W' and
   (way_tags.k like 'wikipedia:%' or way_tags.k like 'name:%')
   group by planet_osm_streets.osm_id, planet_osm_streets.way_parts, planet_osm_streets.network, way_tags.k;
 
@@ -232,9 +232,9 @@ from planet_osm_polygon ob
   where planet_osm_polygon.osm_id=t.osm_id and str.osm_id=t.str_id;
 
 
-insert into coll_members select distinct root.osm_id, next.osm_id, 2, 'housenumber' from planet_osm_streets root join planet_osm_line next on root.name=next."addr:street" where root.osm_id>0 and next.osm_id>0 and makepolygon(geometryfromtext('LINESTRING(' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ')', 900913))&&next.way and Distance(root.way, next.way)<200;
-insert into coll_members select distinct root.osm_id, next.osm_id, 1, 'housenumber' from planet_osm_streets root join planet_osm_point next on root.name=next."addr:street" where root.osm_id>0 and next.osm_id>0 and makepolygon(geometryfromtext('LINESTRING(' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ')', 900913))&&next.way and Distance(root.way, next.way)<200;
-insert into coll_members select distinct root.osm_id, next.osm_id, 2, 'housenumber' from planet_osm_streets root join planet_osm_polygon next on root.name=next."addr:street" where root.osm_id>0 and next.osm_id>0 and makepolygon(geometryfromtext('LINESTRING(' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ')', 900913))&&next.way and Distance(root.way, next.way)<200;
+insert into coll_members select distinct root.osm_id, next.osm_id, 'W', 'housenumber' from planet_osm_streets root join planet_osm_line next on root.name=next."addr:street" where root.osm_id>0 and next.osm_id>0 and makepolygon(geometryfromtext('LINESTRING(' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ')', 900913))&&next.way and Distance(root.way, next.way)<200;
+insert into coll_members select distinct root.osm_id, next.osm_id, 'N', 'housenumber' from planet_osm_streets root join planet_osm_point next on root.name=next."addr:street" where root.osm_id>0 and next.osm_id>0 and makepolygon(geometryfromtext('LINESTRING(' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ')', 900913))&&next.way and Distance(root.way, next.way)<200;
+insert into coll_members select distinct root.osm_id, next.osm_id, 'W', 'housenumber' from planet_osm_streets root join planet_osm_polygon next on root.name=next."addr:street" where root.osm_id>0 and next.osm_id>0 and makepolygon(geometryfromtext('LINESTRING(' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ')', 900913))&&next.way and Distance(root.way, next.way)<200;
 
 drop table if exists housenumber;
 create table housenumber (
@@ -245,7 +245,7 @@ number text
 );
 SELECT AddGeometryColumn('housenumber', 'way', 900913, 'LINESTRING', 2);
 insert into housenumber 
-(select osm_id, null, (select coll_id from coll_members cm where cm.member_id=osm_id and cm.member_type='1' limit 1), number, (CASE WHEN length(line)>0 THEN translate(scale(translate(line, -x(centroid(line)), -y(centroid(line))), 100/length(line), 100/length(line)), x(poi_way), y(poi_way)) END) as way from
+(select osm_id, null, (select coll_id from coll_members cm where cm.member_id=osm_id and cm.member_type='N' limit 1), number, (CASE WHEN length(line)>0 THEN translate(scale(translate(line, -x(centroid(line)), -y(centroid(line))), 100/length(line), 100/length(line)), x(poi_way), y(poi_way)) END) as way from
 (select osm_id, number, poi_way,
   line_interpolate_point(next_way, pos) as next_poi,
   makeline((CASE 
@@ -260,10 +260,10 @@ from
 (select t.osm_id, number, poi_way, next_way, line_locate_point(next_way, poi_way) as pos, length(next_way) as len from (
 select poi.osm_id, poi."addr:housenumber" as number, poi.way as poi_way, 
   (select l.way
-    from coll_members find_street1 join coll_members find_street2 on find_street2.coll_id=find_street1.coll_id and find_street2.member_type=2 join planet_osm_line l on l.osm_id=find_street2.member_id where find_street1.member_id=poi.osm_id and find_street1.member_type=1 order by distance(poi.way, l.way) asc limit 1) as next_way from planet_osm_point poi where poi."addr:housenumber" is not null and poi."addr:street" is not null) as t) as t2) as t3);
+    from coll_members find_street1 join coll_members find_street2 on find_street2.coll_id=find_street1.coll_id and find_street2.member_type='W' join planet_osm_line l on l.osm_id=find_street2.member_id where find_street1.member_id=poi.osm_id and find_street1.member_type='N' order by distance(poi.way, l.way) asc limit 1) as next_way from planet_osm_point poi where poi."addr:housenumber" is not null and poi."addr:street" is not null) as t) as t2) as t3);
 
 insert into housenumber 
-(select null, osm_id, (select coll_id from coll_members cm where cm.member_id=osm_id and cm.member_type='2' limit 1), number, (CASE WHEN length(line)>0 THEN translate(scale(translate(line, -x(centroid(line)), -y(centroid(line))), 100/length(line), 100/length(line)), x(poi_way), y(poi_way)) END) as way from
+(select null, osm_id, (select coll_id from coll_members cm where cm.member_id=osm_id and cm.member_type='W' limit 1), number, (CASE WHEN length(line)>0 THEN translate(scale(translate(line, -x(centroid(line)), -y(centroid(line))), 100/length(line), 100/length(line)), x(poi_way), y(poi_way)) END) as way from
 (select osm_id, number, poi_way,
   line_interpolate_point(next_way, pos) as next_poi,
   makeline((CASE 
@@ -278,7 +278,7 @@ from
 (select t.osm_id, number, poi_way, next_way, line_locate_point(next_way, poi_way) as pos, length(next_way) as len from (
 select poi.osm_id, poi."addr:housenumber" as number, Centroid(poi.way) as poi_way, 
   (select l.way
-    from coll_members find_street1 join coll_members find_street2 on find_street2.coll_id=find_street1.coll_id and find_street2.member_type=2 join planet_osm_line l on l.osm_id=find_street2.member_id where find_street1.member_id=poi.osm_id and find_street1.member_type=2 order by distance(Centroid(poi.way), l.way) asc limit 1) as next_way from planet_osm_polygon poi where poi."addr:housenumber" is not null and poi."addr:street" is not null) as t) as t2) as t3);
+    from coll_members find_street1 join coll_members find_street2 on find_street2.coll_id=find_street1.coll_id and find_street2.member_type='W' join planet_osm_line l on l.osm_id=find_street2.member_id where find_street1.member_id=poi.osm_id and find_street1.member_type='W' order by distance(Centroid(poi.way), l.way) asc limit 1) as next_way from planet_osm_polygon poi where poi."addr:housenumber" is not null and poi."addr:street" is not null) as t) as t2) as t3);
 create index housenumber_way on housenumber using gist(way);
 create index housenumber_node_id on housenumber(node_id);
 create index housenumber_way_id on housenumber(way_id);
@@ -301,7 +301,7 @@ select osm_id, coll_id,
 interpolation from
 (select osm_id, coll_id, cast(first as int) as first, cast(last as int) as last, interpolation from
   (select osm_id, 
-    (select coll_id from coll_members cm where cm.member_id=osm_id and cm.member_type='2' limit 1) as coll_id,
+    (select coll_id from coll_members cm where cm.member_id=osm_id and cm.member_type='W' limit 1) as coll_id,
     (select "addr:housenumber" from way_nodes join planet_osm_point on way_nodes.way_id=planet_osm_line.osm_id and way_nodes.node_id=planet_osm_point.osm_id order by way_nodes.sequence_id asc limit 1) as first,
     (select "addr:housenumber" from way_nodes join planet_osm_point on way_nodes.way_id=planet_osm_line.osm_id and way_nodes.node_id=planet_osm_point.osm_id order by way_nodes.sequence_id desc limit 1) as last,
     "addr:interpolation" as interpolation

@@ -17,7 +17,7 @@ drop table if exists coll_members;
 create table coll_members (
   coll_id	int4		not null,
   member_id	int4		not null,
-  member_type	smallint 	not null,
+  member_type	character(1)    not null,
   member_role	text		
 );
 
