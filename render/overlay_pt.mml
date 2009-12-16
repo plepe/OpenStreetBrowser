@@ -302,41 +302,41 @@
       <Parameter name="geometry_field">topline</Parameter>
       <Parameter name="table">
 	(select distinct t.coll_id, type, st.topline, st.importance from (
-	    select cm.coll_id, p.osm_id, 'aeroway_terminal' as type from coll_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type=2 where aeroway='terminal'
+	    select cm.coll_id, p.osm_id, 'aeroway_terminal' as type from coll_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type='W' where aeroway='terminal'
 	  union
-	    select cm.coll_id, p.osm_id, 'aeroway_terminal' as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where aeroway='terminal'
+	    select cm.coll_id, p.osm_id, 'aeroway_terminal' as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type='N' where aeroway='terminal'
 	  union
-	    select cm.coll_id, p.osm_id, 'amenity_'||"amenity" as type from coll_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type=2 where amenity in ('ferry_terminal', 'bus_station')
+	    select cm.coll_id, p.osm_id, 'amenity_'||"amenity" as type from coll_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type='W' where amenity in ('ferry_terminal', 'bus_station')
 	  union
-	    select cm.coll_id, p.osm_id, 'amenity_'||"amenity" as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where amenity in ('ferry_terminal', 'bus_station')
+	    select cm.coll_id, p.osm_id, 'amenity_'||"amenity" as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type='N' where amenity in ('ferry_terminal', 'bus_station')
 	  union
-	    select cm.coll_id, p.osm_id, 'aerialway_station' as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where aerialway='station'
+	    select cm.coll_id, p.osm_id, 'aerialway_station' as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type='N' where aerialway='station'
 	  union
-	    select cm.coll_id, p.osm_id, 'railway_'||"railway" as type from coll_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type=2 where railway in ('station', 'subway_station')
+	    select cm.coll_id, p.osm_id, 'railway_'||"railway" as type from coll_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type='W' where railway in ('station', 'subway_station')
 	  union
-	    select cm.coll_id, p.osm_id, 'railway_'||"railway" as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where railway in ('station', 'subway_station', 'halt', 'tram_stop')
+	    select cm.coll_id, p.osm_id, 'railway_'||"railway" as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type='N' where railway in ('station', 'subway_station', 'halt', 'tram_stop')
 	  union
-	    select cm.coll_id, p.osm_id, 'highway_bus_stop' as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where highway='bus_stop'
+	    select cm.coll_id, p.osm_id, 'highway_bus_stop' as type from coll_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type='N' where highway='bus_stop'
 	  ) as t left join planet_osm_stations st on t.coll_id=st.coll_id
 	  
 	  union
 
 	select distinct t.relation_id, type, st.topline, st.importance from (
-	    select cm.relation_id, p.osm_id, 'aeroway_terminal' as type from relation_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type=2 where aeroway='terminal'
+	    select cm.relation_id, p.osm_id, 'aeroway_terminal' as type from relation_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type='W' where aeroway='terminal'
 	  union
-	    select cm.relation_id, p.osm_id, 'aeroway_terminal' as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where aeroway='terminal'
+	    select cm.relation_id, p.osm_id, 'aeroway_terminal' as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type='N' where aeroway='terminal'
 	  union
-	    select cm.relation_id, p.osm_id, 'amenity_'||"amenity" as type from relation_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type=2 where amenity in ('ferry_terminal', 'bus_station')
+	    select cm.relation_id, p.osm_id, 'amenity_'||"amenity" as type from relation_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type='W' where amenity in ('ferry_terminal', 'bus_station')
 	  union
-	    select cm.relation_id, p.osm_id, 'amenity_'||"amenity" as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where amenity in ('ferry_terminal', 'bus_station')
+	    select cm.relation_id, p.osm_id, 'amenity_'||"amenity" as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type='N' where amenity in ('ferry_terminal', 'bus_station')
 	  union
-	    select cm.relation_id, p.osm_id, 'aerialway_station' as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where aerialway='station'
+	    select cm.relation_id, p.osm_id, 'aerialway_station' as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type='N' where aerialway='station'
 	  union
-	    select cm.relation_id, p.osm_id, 'railway_'||"railway" as type from relation_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type=2 where railway in ('station', 'subway_station')
+	    select cm.relation_id, p.osm_id, 'railway_'||"railway" as type from relation_members cm left join planet_osm_polygon p on cm.member_id=p.osm_id and cm.member_type='W' where railway in ('station', 'subway_station')
 	  union
-	    select cm.relation_id, p.osm_id, 'railway_'||"railway" as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where railway in ('station', 'subway_station', 'halt', 'tram_stop')
+	    select cm.relation_id, p.osm_id, 'railway_'||"railway" as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type='N' where railway in ('station', 'subway_station', 'halt', 'tram_stop')
 	  union
-	    select cm.relation_id, p.osm_id, 'highway_bus_stop' as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type=1 where highway='bus_stop'
+	    select cm.relation_id, p.osm_id, 'highway_bus_stop' as type from relation_members cm left join planet_osm_point p on cm.member_id=p.osm_id and cm.member_type='N' where highway='bus_stop'
 	  ) as t left join planet_osm_stations st on t.relation_id=st.rel_id) as stations
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
