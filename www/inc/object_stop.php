@@ -27,7 +27,7 @@ class object_stop extends object {
   }
 
   function find_station() {
-    $res=sql_query("select 'rel' as element, planet_osm_rels.id, type as rel_type, members from planet_osm_rels join relation_members on planet_osm_rels.id=relation_members.relation_id where relation_members.member_id='$this->only_id' and relation_members.member_type='1';");
+    $res=sql_query("select 'rel' as element, planet_osm_rels.id, type as rel_type, members from planet_osm_rels join relation_members on planet_osm_rels.id=relation_members.relation_id where relation_members.member_id='$this->only_id' and relation_members.member_type='N';");
 
     while($elem=pg_fetch_assoc($res)) {
       if($elem[rel_type]=="station") {
@@ -70,17 +70,17 @@ function stop_info($ret, $object) {
   $stop_list=array();
   switch($object->place()->get_type()) {
     case "node":
-      $qry="select distinct 'rel' as element, routes.id, routes.members, planet_osm_nodes.id as stop_id from planet_osm_nodes join relation_members on planet_osm_nodes.id=relation_members.member_id and relation_members.member_type='1' join planet_osm_rels routes on relation_members.relation_id=routes.id where planet_osm_nodes.id='$object->only_id' and routes.type='route';";
+      $qry="select distinct 'rel' as element, routes.id, routes.members, planet_osm_nodes.id as stop_id from planet_osm_nodes join relation_members on planet_osm_nodes.id=relation_members.member_id and relation_members.member_type='N' join planet_osm_rels routes on relation_members.relation_id=routes.id where planet_osm_nodes.id='$object->only_id' and routes.type='route';";
       break;
   case "way":
-      $qry="select distinct 'rel' as element, routes.id, routes.members, planet_osm_ways.id as stop_id from planet_osm_ways join relation_members on planet_osm_ways.id=relation_members.member_id and relation_members.member_type='2' join planet_osm_rels routes on relation_members.relation_id=routes.id where planet_osm_ways.id='$object->only_id' and routes.type='route';";
+      $qry="select distinct 'rel' as element, routes.id, routes.members, planet_osm_ways.id as stop_id from planet_osm_ways join relation_members on planet_osm_ways.id=relation_members.member_id and relation_members.member_type='W' join planet_osm_rels routes on relation_members.relation_id=routes.id where planet_osm_ways.id='$object->only_id' and routes.type='route';";
       break;
     case "rel":
       $is_rel=1;
-      $qry="select distinct 'rel' as element, routes.id, routes.members, planet_osm_nodes.id as stop_id from planet_osm_rels station join relation_members station_members on station.id=station_members.relation_id join planet_osm_nodes on station_members.member_id=planet_osm_nodes.id and station_members.member_type='1' join relation_members on planet_osm_nodes.id=relation_members.member_id and relation_members.member_type='1' join planet_osm_rels routes on relation_members.relation_id=routes.id where station.id='$object->only_id' and routes.type='route';";
+      $qry="select distinct 'rel' as element, routes.id, routes.members, planet_osm_nodes.id as stop_id from planet_osm_rels station join relation_members station_members on station.id=station_members.relation_id join planet_osm_nodes on station_members.member_id=planet_osm_nodes.id and station_members.member_type='N' join relation_members on planet_osm_nodes.id=relation_members.member_id and relation_members.member_type='N' join planet_osm_rels routes on relation_members.relation_id=routes.id where station.id='$object->only_id' and routes.type='route';";
       break;
     case "coll":
-      $qry="select distinct 'rel' as element, routes.id, routes.members, planet_osm_nodes.id as stop_id from planet_osm_colls station join coll_members st_mem on station.id=st_mem.coll_id join planet_osm_nodes on planet_osm_nodes.id=st_mem.member_id and st_mem.member_type='1' join relation_members on planet_osm_nodes.id=relation_members.member_id and relation_members.member_type='1' join planet_osm_rels routes on relation_members.relation_id=routes.id where station.id='$object->only_id' and routes.type='route';";
+      $qry="select distinct 'rel' as element, routes.id, routes.members, planet_osm_nodes.id as stop_id from planet_osm_colls station join coll_members st_mem on station.id=st_mem.coll_id join planet_osm_nodes on planet_osm_nodes.id=st_mem.member_id and st_mem.member_type='N' join relation_members on planet_osm_nodes.id=relation_members.member_id and relation_members.member_type='N' join planet_osm_rels routes on relation_members.relation_id=routes.id where station.id='$object->only_id' and routes.type='route';";
       break;
   }
 

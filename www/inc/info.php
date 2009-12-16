@@ -80,7 +80,7 @@ function network_info($ret, $object) {
 
   $text="";
 
-  $res=sql_query("select 'rel' as element, c.id, c.members from planet_osm_rels r join relation_members on r.id=relation_members.relation_id join planet_osm_rels c on c.id=relation_members.member_id and relation_members.member_type='3' where r.id='$object->only_id'");
+  $res=sql_query("select 'rel' as element, c.id, c.members from planet_osm_rels r join relation_members on r.id=relation_members.relation_id join planet_osm_rels c on c.id=relation_members.member_id and relation_members.member_type='R' where r.id='$object->only_id'");
   $list=array();
   while($elem=pg_fetch_assoc($res)) {
     $x=load_object($elem);

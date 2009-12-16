@@ -265,10 +265,10 @@ function load_object($elem=0, $tags=null) {
         $qry="select nodes, astext(CASE WHEN l.way is not null THEN l.way WHEN p.way is not null THEN p.way WHEN r.way is not null THEN r.way END) as way from planet_osm_ways left join planet_osm_line l on id=l.osm_id left join planet_osm_polygon p on id=p.osm_id left join relation_members r1 on r1.member_id=id and r1.member_role='outer' left join planet_osm_polygon r on r.osm_id=-r1.relation_id where id='$object_id'";
 	break;
       case "rel":
-	$qry="select (select to_textarray((CASE WHEN member_type=1 THEN 'n' WHEN member_type=2 THEN 'w' WHEN member_type=3 THEN 'r' ELSE 'c' END) || member_id) from relation_members where relation_id=id) as member_ids, (select to_textarray(member_role) from relation_members where relation_id=id) as member_roles from planet_osm_rels where id='$object_id'";
+	$qry="select (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from relation_members where relation_id=id) as member_ids, (select to_textarray(member_role) from relation_members where relation_id=id) as member_roles from planet_osm_rels where id='$object_id'";
 	break;
       case "coll":
-	$qry="select (select to_textarray((CASE WHEN member_type=1 THEN 'n' WHEN member_type=2 THEN 'w' WHEN member_type=3 THEN 'r' ELSE 'c' END) || member_id) from coll_members where coll_id=id) as member_ids, (select to_textarray(member_role) from coll_members where coll_id=id) as member_roles from planet_osm_colls where id='$object_id'";
+	$qry="select (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from coll_members where coll_id=id) as member_ids, (select to_textarray(member_role) from coll_members where coll_id=id) as member_roles from planet_osm_colls where id='$object_id'";
 	break;
     }
 
@@ -390,7 +390,7 @@ function load_objects($list) {
       tag_preload($elem);
     }
 
-    $qry="select 'rel' as element, id, (select to_textarray((CASE WHEN member_type=1 THEN 'n' WHEN member_type=2 THEN 'w' WHEN member_type=3 THEN 'r' ELSE 'c' END) || member_id) from relation_members where relation_id=id) as member_ids, (select to_textarray(member_role) from relation_members where relation_id=id) as member_roles from planet_osm_rels where id in (".implode(",", $list_by_type[rel]).")";
+    $qry="select 'rel' as element, id, (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from relation_members where relation_id=id) as member_ids, (select to_textarray(member_role) from relation_members where relation_id=id) as member_roles from planet_osm_rels where id in (".implode(",", $list_by_type[rel]).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
       $ret[]=load_object($elem);
@@ -404,7 +404,7 @@ function load_objects($list) {
       tag_preload($elem);
     }
 
-    $qry="select 'coll' as element, id, (select to_textarray((CASE WHEN member_type=1 THEN 'n' WHEN member_type=2 THEN 'w' WHEN member_type=3 THEN 'r' ELSE 'c' END) || member_id) from coll_members where coll_id=id) as member_ids, (select to_textarray(member_role) from coll_members where coll_id=id) as member_roles from planet_osm_colls where id in (".implode(",", $list_by_type[coll]).")";
+    $qry="select 'coll' as element, id, (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from coll_members where coll_id=id) as member_ids, (select to_textarray(member_role) from coll_members where coll_id=id) as member_roles from planet_osm_colls where id in (".implode(",", $list_by_type[coll]).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
       $ret[]=load_object($elem);

@@ -33,7 +33,7 @@ class infolist_routes extends infolist {
 	       "join relation_members members ".
 	         "on rels.id=members.relation_id ".
                "join planet_osm_point point ".
-	         "on point.osm_id=members.member_id and members.member_type='1' ".
+	         "on point.osm_id=members.member_id and members.member_type='N' ".
 		   "and point.way&&PolyFromText('POLYGON(($bounds[left] $bounds[top], $bounds[right] $bounds[top], $bounds[right] $bounds[bottom], $bounds[left] $bounds[bottom], $bounds[left] $bounds[top]))', $SRID) ".
 	     "where rels.importance in (".implode(", ", $importance).") ".
 	       "and rels.type='route' ".

@@ -145,7 +145,7 @@ class place_way extends place {
     $bbox=bbox($this->data[way]);
     if(!$bbox) {
       $res=sql_query("select astext(ST_Centroid(way)) as way from planet_osm_polygon where osm_id='{$this->data[id]}' union ".
-                     "select astext(ST_Centroid(way)) as way from relation_members rm left join planet_osm_polygon po on rm.relation_id=-po.osm_id where member_id='{$this->data[id]}' and member_type='2' and member_role='outer'");
+                     "select astext(ST_Centroid(way)) as way from relation_members rm left join planet_osm_polygon po on rm.relation_id=-po.osm_id where member_id='{$this->data[id]}' and member_type='W' and member_role='outer'");
 
       $elem=pg_fetch_assoc($res);
       $bbox=bbox($elem[way]);
@@ -220,7 +220,7 @@ class place_rel extends place {
   }
 
   function get_centre() {
-    $res=sql_query("select rm.relation_id, astext(ST_Centroid(ST_Collect(CASE WHEN p.way is not null THEN p.way WHEN l.way is not null THEN l.way WHEN po.way is not null THEN po.way WHEN mp.way is not null THEN mp.way END))) as way from relation_members rm left join planet_osm_point p on rm.member_id=p.osm_id and rm.member_type='1' left join planet_osm_line l on rm.member_id=l.osm_id and rm.member_type='2' left join planet_osm_polygon po on rm.member_id=po.osm_id and rm.member_type='2' left join planet_osm_polygon mp on mp.osm_id=-rm.relation_id where relation_id='{$this->data[id]}' group by relation_id");
+    $res=sql_query("select rm.relation_id, astext(ST_Centroid(ST_Collect(CASE WHEN p.way is not null THEN p.way WHEN l.way is not null THEN l.way WHEN po.way is not null THEN po.way WHEN mp.way is not null THEN mp.way END))) as way from relation_members rm left join planet_osm_point p on rm.member_id=p.osm_id and rm.member_type='N' left join planet_osm_line l on rm.member_id=l.osm_id and rm.member_type='W' left join planet_osm_polygon po on rm.member_id=po.osm_id and rm.member_type='W' left join planet_osm_polygon mp on mp.osm_id=-rm.relation_id where relation_id='{$this->data[id]}' group by relation_id");
     $elem=pg_fetch_assoc($res);
     $bbox=bbox($elem[way]);
     return array("lon"=>$bbox[0]+($bbox[2]-$bbox[0])/2,
@@ -296,7 +296,7 @@ function places_geometry($list) {
   }
 
   function get_centre() {
-    $res=sql_query("select rm.coll_id, astext(ST_Centroid(ST_Collect(CASE WHEN p.way is not null THEN p.way WHEN l.way is not null THEN l.way WHEN po.way is not null THEN po.way WHEN mp.way is not null THEN mp.way END))) as way from coll_members rm left join planet_osm_point p on rm.member_id=p.osm_id and rm.member_type='1' left join planet_osm_line l on rm.member_id=l.osm_id and rm.member_type='2' left join planet_osm_polygon po on rm.member_id=po.osm_id and rm.member_type='2' left join planet_osm_polygon mp on mp.osm_id=-rm.coll_id where coll_id='{$this->data[id]}' group by coll_id");
+    $res=sql_query("select rm.coll_id, astext(ST_Centroid(ST_Collect(CASE WHEN p.way is not null THEN p.way WHEN l.way is not null THEN l.way WHEN po.way is not null THEN po.way WHEN mp.way is not null THEN mp.way END))) as way from coll_members rm left join planet_osm_point p on rm.member_id=p.osm_id and rm.member_type='N' left join planet_osm_line l on rm.member_id=l.osm_id and rm.member_type='W' left join planet_osm_polygon po on rm.member_id=po.osm_id and rm.member_type='W' left join planet_osm_polygon mp on mp.osm_id=-rm.coll_id where coll_id='{$this->data[id]}' group by coll_id");
     $elem=pg_fetch_assoc($res);
     $bbox=bbox($elem[way]);
     return array("lon"=>$bbox[0]+($bbox[2]-$bbox[0])/2,

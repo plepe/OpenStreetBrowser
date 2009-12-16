@@ -19,7 +19,7 @@ function find_objects($param) {
 
   $qry="select element, (CASE WHEN id<0 THEN (select member_id from relation_members where relation_id=-id and member_role='outer' limit 1) ELSE id END), distance, way_area, instead from (".
     "select 'way' as element, 2 as r_type, osm_id as id, way, $distance-1.5*$dist_mul as distance, 1 as way_area, 
-    (select 'coll_' || coll_id from coll_members left join planet_osm_colls on coll_id=id where member_id=osm_id and member_type='2' and type='street')
+    (select 'coll_' || coll_id from coll_members left join planet_osm_colls on coll_id=id where member_id=osm_id and member_type='W' and type='street')
      as instead
       from planet_osm_line ".
     " union ".

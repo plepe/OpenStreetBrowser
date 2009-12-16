@@ -42,7 +42,7 @@ function route_info($ret, $object) {
   $ret[]=array("general_info", $tags->compile_text("#tag_description#: %description%<br />\n"));
 
   $text="";
-  $res_i=sql_query("select * from planet_osm_rels join relation_members on planet_osm_rels.id=relation_members.relation_id and relation_members.member_type='3' where '{$object->data["id"]}'=relation_members.member_id and type='network'");
+  $res_i=sql_query("select * from planet_osm_rels join relation_members on planet_osm_rels.id=relation_members.relation_id and relation_members.member_type='R' where '{$object->data["id"]}'=relation_members.member_id and type='network'");
   if(pg_num_rows($res_i))
     $text.="This route is part of the networks:\n";
   while($elem_i=pg_fetch_assoc($res_i)) {
@@ -79,7 +79,7 @@ function route_info($ret, $object) {
   load_objects($load_list);
 
   if(sizeof($stop_id_list)) {
-    $res=sql_query("select 'way_'||l.osm_id as way_id, 'node_'||p.osm_id as stop_id, sequence_id as pos from planet_osm_point p join way_nodes wn on wn.node_id=p.osm_id join planet_osm_line l on wn.way_id=l.osm_id join relation_members rm on rm.member_type=2 and rm.member_id=l.osm_id where rm.relation_id='{$object->only_id}' and p.osm_id in (".implode(",", $stop_id_list).")");
+    $res=sql_query("select 'way_'||l.osm_id as way_id, 'node_'||p.osm_id as stop_id, sequence_id as pos from planet_osm_point p join way_nodes wn on wn.node_id=p.osm_id join planet_osm_line l on wn.way_id=l.osm_id join relation_members rm on rm.member_type='W' and rm.member_id=l.osm_id where rm.relation_id='{$object->only_id}' and p.osm_id in (".implode(",", $stop_id_list).")");
     while($elem=pg_fetch_assoc($res)) {
       $stop_list[$elem[stop_id]][ways][]=array("way_id"=>$elem[way_id], "pos"=>$elem[pos]);
       $way_stop_list[$elem[way_id]][$elem[stop_id]]=$elem;
@@ -93,14 +93,14 @@ function route_info($ret, $object) {
       "XMAX(p.way)+50||' '||YMIN(p.way)-50||','||".
       "XMAX(p.way)+50||' '||YMAX(p.way)+50||','||".
       "XMIN(p.way)-50||' '||YMAX(p.way)+50||','||".
-      "XMIN(p.way)-50||' '||YMIN(p.way)-50||'))', 900913)&&l.way and Distance(p.way, l.way)<20 join relation_members rm on l.osm_id=rm.member_id and rm.member_type=2 where rm.relation_id='{$object->only_id}' and p.osm_id in (".implode(",", $stop_id_list).")");
+      "XMIN(p.way)-50||' '||YMIN(p.way)-50||'))', 900913)&&l.way and Distance(p.way, l.way)<20 join relation_members rm on l.osm_id=rm.member_id and rm.member_type='W' where rm.relation_id='{$object->only_id}' and p.osm_id in (".implode(",", $stop_id_list).")");
     while($elem=pg_fetch_assoc($res)) {
       $stop_list[$elem[stop_id]][ways][]=array("way_id"=>$elem[way_id], "pos"=>$elem[pos]);
       $way_stop_list[$elem[way_id]][$elem[stop_id]]=$elem;
     }
   }
 
-  $res=sql_query("select 'way_'||member_id as way_id, 'node_'||(select node_id from way_nodes where way_id=member_id and sequence_id=0) as first, 'node_'||(select node_id from way_nodes where way_id=member_id order by sequence_id desc limit 1) as last from relation_members rm where relation_id='{$object->only_id}' and member_type='2'");
+  $res=sql_query("select 'way_'||member_id as way_id, 'node_'||(select node_id from way_nodes where way_id=member_id and sequence_id=0) as first, 'node_'||(select node_id from way_nodes where way_id=member_id order by sequence_id desc limit 1) as last from relation_members rm where relation_id='{$object->only_id}' and member_type='W'");
   $nodes=array();
   $ways=array();
   while($elem=pg_fetch_assoc($res)) {
