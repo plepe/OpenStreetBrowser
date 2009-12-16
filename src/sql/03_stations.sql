@@ -95,7 +95,7 @@ insert into planet_osm_stop_to_station select
       station_rel.type='station' and
       src.osm_id=station_member.member_id and
       src.id_type=(CASE WHEN station_member.member_type='N' THEN 'node'
-                        WHEN station_member.member_type='W' THEN' way')
+                        WHEN station_member.member_type='W' THEN' way' END)
     limit 1))),
   array_sort(array_unique(to_textarray(dst.full_id))),
   dst.name,
@@ -164,7 +164,7 @@ group by station.name, stations;
 
 -- delete all stations with relations and do it again for them
 insert into planet_osm_stations select planet_osm_rels.name, to_textarray(planet_osm_poipoly.full_id), planet_osm_rels.id, null, planet_osm_rels.importance, ST_Collect(way)  from planet_osm_rels join relation_members on relation_members.relation_id=planet_osm_rels.id join planet_osm_poipoly on planet_osm_poipoly.osm_id=relation_members.member_id and planet_osm_poipoly.id_type=(CASE WHEN relation_members.member_type='N' THEN 'node'
-                                                                 WHEN relation_members.member_type='W' THEN' way') where type='station' group by planet_osm_rels.id, planet_osm_rels.name, planet_osm_rels.importance;
+                                                                 WHEN relation_members.member_type='W' THEN' way' END) where type='station' group by planet_osm_rels.id, planet_osm_rels.name, planet_osm_rels.importance;
 
 -- create geo objects of stations
 update planet_osm_stations set 
