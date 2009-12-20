@@ -22,7 +22,7 @@ function search_result(data) {
   details_content.innerHTML=text[0].textContent;
   details.className="info";
 
-  var osm=data.getElementsByTagName("osm");
+  var osm=data.responseXML.getElementsByTagName("osm");
   load_objects_from_xml(osm);
 
 }
