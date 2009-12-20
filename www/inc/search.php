@@ -10,7 +10,7 @@ function search($param) {
   $resdom=new DOMDocument();
   $resdom->loadXML($res);
 
-  $ret="Search results:<ul>\n";
+  $ret="<b>Search results</b> (provided by <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>):<ul>\n";
   $obl=$resdom->getElementsByTagname("place");
   for($i=0; $i<$obl->length; $i++) {
     $ob=$obl->item($i);
