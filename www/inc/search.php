@@ -24,6 +24,7 @@ function search($param) {
 
     $ret.=list_entry("{$type}_{$id}", $ob->getAttribute("display_name"));
   }
+  $ret.="<a href='javascript:search_more()'>more results</a>";
   $ret.="</ul>\n";
 
   return $ret;
