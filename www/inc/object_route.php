@@ -79,7 +79,7 @@ function route_info($ret, $object) {
   load_objects($load_list);
 
   if(sizeof($stop_id_list)) {
-    $res=sql_query("select 'way_'||l.osm_id as way_id, 'node_'||p.osm_id as stop_id, sequence_id as pos from planet_osm_point p join way_nodes wn on wn.node_id=p.osm_id join planet_osm_line l on wn.way_id=l.osm_id join relation_members rm on rm.member_type='W' and rm.member_id=l.osm_id where rm.relation_id='{$object->only_id}' and p.osm_id in (".implode(",", $stop_id_list).")");
+    $res=sql_query("select 'way_'||l.osm_id as way_id, 'node_'||p.osm_id as stop_id, wn.sequence_id as pos from planet_osm_point p join way_nodes wn on wn.node_id=p.osm_id join planet_osm_line l on wn.way_id=l.osm_id join relation_members rm on rm.member_type='W' and rm.member_id=l.osm_id where rm.relation_id='{$object->only_id}' and p.osm_id in (".implode(",", $stop_id_list).")");
     while($elem=pg_fetch_assoc($res)) {
       $stop_list[$elem[stop_id]][ways][]=array("way_id"=>$elem[way_id], "pos"=>$elem[pos]);
       $way_stop_list[$elem[way_id]][$elem[stop_id]]=$elem;
@@ -88,7 +88,7 @@ function route_info($ret, $object) {
   }
 
   if(sizeof($stop_id_list)) {
-    $res=sql_query("select 'way_'||l.osm_id as way_id, 'node_'||p.osm_id as stop_id, (select sequence_id from way_nodes wn join planet_osm_nodes nodes on wn.node_id=nodes.id where wn.way_id=l.osm_id order by Distance(p.way, geometryfromtext('POINT('||nodes.lon||' '||nodes.lat||')', 900913)) asc limit 1) as pos, Distance(p.way, l.way) as d from planet_osm_point p join planet_osm_line l on geometryfromtext('POLYGON(('||".
+    $res=sql_query("select 'way_'||l.osm_id as way_id, 'node_'||p.osm_id as stop_id, (select wn.sequence_id from way_nodes wn join planet_osm_nodes nodes on wn.node_id=nodes.id where wn.way_id=l.osm_id order by Distance(p.way, geometryfromtext('POINT('||nodes.lon||' '||nodes.lat||')', 900913)) asc limit 1) as pos, Distance(p.way, l.way) as d from planet_osm_point p join planet_osm_line l on geometryfromtext('POLYGON(('||".
       "XMIN(p.way)-50||' '||YMIN(p.way)-50||','||".
       "XMAX(p.way)+50||' '||YMIN(p.way)-50||','||".
       "XMAX(p.way)+50||' '||YMAX(p.way)+50||','||".
@@ -100,7 +100,7 @@ function route_info($ret, $object) {
     }
   }
 
-  $res=sql_query("select 'way_'||member_id as way_id, 'node_'||(select node_id from way_nodes where way_id=member_id and sequence_id=0) as first, 'node_'||(select node_id from way_nodes where way_id=member_id order by sequence_id desc limit 1) as last from relation_members rm where relation_id='{$object->only_id}' and member_type='W'");
+  $res=sql_query("select 'way_'||member_id as way_id, 'node_'||(select node_id from way_nodes where way_id=member_id and way_nodes.sequence_id=0) as first, 'node_'||(select node_id from way_nodes where way_id=member_id order by way_nodes.sequence_id desc limit 1) as last from relation_members rm where relation_id='{$object->only_id}' and member_type='W'");
   $nodes=array();
   $ways=array();
   while($elem=pg_fetch_assoc($res)) {
