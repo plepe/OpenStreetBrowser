@@ -285,7 +285,7 @@ function housenumbers($ret, $object) {
     }
   }
 
-  $res=sql_query("select member_id, (select \"addr:housenumber\" from way_nodes join planet_osm_point on node_id=osm_id where way_id=member_id and sequence_id=0) as first, (select \"addr:housenumber\" from way_nodes join planet_osm_point on node_id=osm_id where way_id=member_id order by sequence_id desc limit 1) as last from coll_members where coll_id='$object->only_id'");
+  $res=sql_query("select member_id, (select \"addr:housenumber\" from way_nodes join planet_osm_point on node_id=osm_id where way_id=member_id and way_nodes.sequence_id=0) as first, (select \"addr:housenumber\" from way_nodes join planet_osm_point on node_id=osm_id where way_id=member_id order by way_nodes.sequence_id desc limit 1) as last from coll_members where coll_id='$object->only_id'");
   $list_ways=array();
   while($elem=pg_fetch_assoc($res)) {
     $list_ways[$elem[member_id]]=$elem;
