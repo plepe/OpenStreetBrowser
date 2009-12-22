@@ -276,6 +276,9 @@ function load_object($elem=0, $tags=null) {
     $elem=pg_fetch_assoc($res);
   }
 
+  if(!$elem)
+    return null;
+
   // load tags
   if($tags)
     // already loaded

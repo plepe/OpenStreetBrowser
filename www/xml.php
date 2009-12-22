@@ -6,9 +6,9 @@ function objects_to_xml($list, $xml, $osm, $all=0, $bounds=0) {
   call_hooks("modify_geometry", $list);
   if($list) foreach($list as $id) {
     $r=load_object($id);
-    $loaded[]=$r->id;
 
     if($r) {
+      $loaded[]=$r->id;
       $c=$r->get_xml($osm, $xml, 1, $bounds);
 //      if($c)
 //	$osm->appendChild($c);
