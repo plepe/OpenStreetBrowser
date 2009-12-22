@@ -82,6 +82,10 @@ function real_set_highlight() {
     if(el) {
       var hl=el.get_highlight();
       new_highlight_feature=new_highlight_feature.concat(hl);
+
+      var ob=document.getElementById("list_"+last_highlight_request[i]);
+      if(ob)
+	ob.className="listitem_highlight";
     }
   }
 
@@ -102,6 +106,10 @@ function set_highlight(list, dont_load) {
     var el=get_loaded_object(list[i]);
     if(!el) {
       load_list.push(list[i]);
+
+      var ob=document.getElementById("list_"+list[i]);
+      if(ob)
+	ob.className="listitem_loading";
     }
   }
 
@@ -120,6 +128,13 @@ function set_highlight(list, dont_load) {
 function unset_highlight() {
   if(highlight_feature_timer)
     clearTimeout(highlight_feature_timer);
+
+  var obs=document.getElementsByTagName("li");
+  for(var i=0; i<obs.length; i++) {
+    if(obs[i].id&&obs[i].id.match(/^list_/)) {
+      obs[i].className="listitem";
+    }
+  }
 
   vector_layer.removeFeatures(highlight_feature);
   highlight_feature=[];

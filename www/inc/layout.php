@@ -74,5 +74,5 @@ function list_entry($id, $name, $app=array()) {
   else
     $app="";
 
-  return "<li><a href='#{$id}' onMouseOver='set_highlight([\"{$id}\"])' onMouseOut='unset_highlight()'>{$name}</a>$app</li>\n";
+  return "<li class='listitem' id='list_{$id}'><a href='#{$id}' onMouseOver='set_highlight([\"{$id}\"])' onMouseOut='unset_highlight()'>{$name}</a>$app</li>\n";
 }

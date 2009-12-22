@@ -206,3 +206,14 @@ li a:hover { background-color:#ccc; }
   font-family: Tahoma,Arial,Verdana;
   font-size: smaller;
 }
+li.listitem {
+}
+li.listitem_loading {
+  font-style: italic;
+}
+li.listitem_highlight {
+  font-weight: bold;
+}
+li.listitem_notfound {
+  color: #ff0000;
+}
