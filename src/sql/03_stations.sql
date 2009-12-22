@@ -189,22 +189,6 @@ insert into coll_members
       on p.full_id=any(st.stations)
   where rel_id is null and coll_id is not null;
 
--- feed stations in search
-insert into search 
-  select name, name, null as language, 
-    (CASE 
-      WHEN rel_id is not null THEN 'rel'
-      WHEN coll_id is not null THEN 'coll'
-      ELSE substr(stations[1], 0, position('_' in stations[1]))
-    END),
-    (CASE
-      WHEN rel_id is not null THEN rel_id
-      WHEN coll_id is not null THEN coll_id
-      ELSE cast(substr(stations[1], position('_' in stations[1])+1) as int)
-    END),
-    'station', null
-  from planet_osm_stations where name is not null;
-
 create index planet_osm_stations_way on planet_osm_stations using gist(way);
 create index planet_osm_stations_bbox on planet_osm_stations using gist(bbox);
 create index planet_osm_stations_center on planet_osm_stations using gist(center);

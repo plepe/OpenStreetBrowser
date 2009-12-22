@@ -5,7 +5,6 @@ grant all on planet_osm_ways to www;
 grant all on planet_osm_stations to www;
 grant all on planet_osm_boundaries to www;
 grant all on planet_osm_colls to www;
-grant all on search to www;
 grant all on planet_osm_streets to www;
 
 grant all on nodes to www;
@@ -24,4 +23,3 @@ grant all on housenumber_line to www;
 grant all on planet_osm_place to www;
 grant all on geo to www;
 grant all on spatial_ref_sys to www;
-

@@ -77,7 +77,3 @@ create index planet_osm_place_node_id on planet_osm_place(id_place_node);
 --
 --create index planet_osm_point_place_level on planet_osm_point(place_level);
 --create index planet_osm_point_population on planet_osm_point(population);
-
-delete from search where amenity_type='place';
-insert into search select (select orig_place.v from node_tags orig_place where orig_place.k='name' and orig_place.node_id=id) as  name, name.v as loc_name, (CASE WHEN name.k='name' THEN null ELSE substr(name.k, 6) END) as language, 'node' as type, nodes.id, 'place' as amenity_type, place.v as amenity_val from nodes join node_tags place on nodes.id=place.node_id join node_tags name on nodes.id=name.node_id where place.k='place' and (name.k='name' or name.k like 'name:%');
-
