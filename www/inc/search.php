@@ -8,6 +8,8 @@ function search($param) {
     $add_param="&exclude_place_ids=$param[shown]";
   }
 
+  $search_str=urlencode($search_str);
+
   $res=file_get_contents("http://nominatim.openstreetmap.org/search?q=$search_str&format=xml$add_param");
   $resdom=new DOMDocument();
   $resdom->loadXML($res);
