@@ -2,17 +2,27 @@
 function search($param) {
   global $load_xml;
   $search_str=$param[value];
-  $add_param="";
+  $add_param=array();
+  $ret="";
 
-  if($param[shown]) {
-    $add_param="&exclude_place_ids=$param[shown]";
-  }
+  $search_str=urlencode($search_str);
+  $add_param[]="q=$search_str";
 
-  $res=file_get_contents("http://nominatim.openstreetmap.org/search?q=$search_str&format=xml$add_param");
+  if($param[shown])
+    $add_param[]="exclude_place_ids=$param[shown]";
+
+  if($param[viewbox])
+    $add_param[]="viewbox=$param[viewbox]";
+
+  $add_param[]="format=xml";
+
+  $res=file_get_contents("http://nominatim.openstreetmap.org/search?".
+                         implode("&", $add_param));
   $resdom=new DOMDocument();
   $resdom->loadXML($res);
 
-  $ret="<b>Search results</b> (provided by <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>):";
+  $ret.="<a class='zoom' href='javascript:list_reload()'>".lang("info_back")."</a><br>\n";
+  $ret.="<b>Search results</b> (provided by <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>):";
   if($param[shown])
     $ret.="<a nominatim_id='$param[shown]'></a>";
   $ret.="<ul>\n";
