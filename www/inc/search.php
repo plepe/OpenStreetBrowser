@@ -11,6 +11,9 @@ function search($param) {
   if($param[shown])
     $add_param[]="exclude_place_ids=$param[shown]";
 
+  if($param[viewbox])
+    $add_param[]="viewbox=$param[viewbox]";
+
   $add_param[]="format=xml";
 
   $res=file_get_contents("http://nominatim.openstreetmap.org/search?".

@@ -10,8 +10,18 @@ function search(ob) {
   location.hash="#search_"+ob.value;
 }
 
-function real_search(value) {
-  ajax("search", { "value": value }, search_result);
+function real_search(value, param) {
+  if(!param)
+    param={};
+
+  param.value=value;
+
+  var x=map.calculateBounds().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+  var viewbox=[ x.left, x.top, x.right, x.bottom ];
+  param.viewbox=viewbox.join(",");
+
+  ajax("search", param, search_result);
+
   search_last=value;
   details_content.innerHTML="Loading ...";
   details.className="info_loading";
@@ -42,7 +52,5 @@ function search_more() {
     }
   }
 
-  ajax("search", { "value": search_last, "shown": shown.join(",") }, search_result);
-  details_content.innerHTML="Loading ...";
-  details.className="info_loading";
+  return real_search(search_last, { shown: shown.join(",") });
 }
