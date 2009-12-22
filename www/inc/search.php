@@ -21,8 +21,10 @@ function search($param) {
   $resdom=new DOMDocument();
   $resdom->loadXML($res);
 
+  $ret.="<div class='box_opened'>\n";
   $ret.="<a class='zoom' href='javascript:list_reload()'>".lang("info_back")."</a><br>\n";
-  $ret.="<b>Search results</b> (provided by <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>):";
+
+  $ret.="<h1>Search results</h1>\n";
   if($param[shown])
     $ret.="<a nominatim_id='$param[shown]'></a>";
   $ret.="<ul>\n";
@@ -42,8 +44,12 @@ function search($param) {
 
     $ret.=$r;
   }
-  $ret.="<a href='javascript:search_more()'>more results</a>";
   $ret.="</ul>\n";
+
+  $ret.="<a href='javascript:search_more()'>more results</a><br>\n";
+  $ret.="(search provided by <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>)<br>\n";
+
+  $ret.="</div>\n";
 
   return $ret;
 }
