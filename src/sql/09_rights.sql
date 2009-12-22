@@ -21,5 +21,4 @@ grant all on coll_members to www;
 grant all on housenumber to www;
 grant all on housenumber_line to www;
 grant all on planet_osm_place to www;
-grant all on geo to www;
 grant all on spatial_ref_sys to www;
