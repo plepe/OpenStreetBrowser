@@ -3,6 +3,7 @@ function search($param) {
   global $load_xml;
   $search_str=$param[value];
   $add_param=array();
+  $ret="";
 
   $search_str=urlencode($search_str);
   $add_param[]="q=$search_str";
@@ -17,7 +18,8 @@ function search($param) {
   $resdom=new DOMDocument();
   $resdom->loadXML($res);
 
-  $ret="<b>Search results</b> (provided by <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>):";
+  $ret.="<a class='zoom' href='javascript:list_reload()'>".lang("info_back")."</a><br>\n";
+  $ret.="<b>Search results</b> (provided by <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>):";
   if($param[shown])
     $ret.="<a nominatim_id='$param[shown]'></a>";
   $ret.="<ul>\n";
