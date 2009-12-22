@@ -215,5 +215,5 @@ li.listitem_highlight {
   font-weight: bold;
 }
 li.listitem_notfound {
-  color: #ff0000;
+  text-decoration: line-through;
 }

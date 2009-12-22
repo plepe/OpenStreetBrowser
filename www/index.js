@@ -11,6 +11,7 @@ var lang;
 var debug_msg;
 var shown_features=[];
 var showing_details=true;
+var loaded_list={};
 
 function show_msg(msg, debuginfo) {
   hide_msg();
@@ -65,9 +66,8 @@ function set_highlight_after_loading(response) {
   var req=data.getElementsByTagName("request");
   req=req[0];
   var r=req.firstChild;
-  var list=[];
   while(r) {
-    list.push(r.getAttribute("id"));
+    loaded_list[r.getAttribute("id")]=1;
     r=r.nextSibling;
   }
 
@@ -86,6 +86,13 @@ function real_set_highlight() {
       var ob=document.getElementById("list_"+last_highlight_request[i]);
       if(ob)
 	ob.className="listitem_highlight";
+    }
+    else {
+      if(loaded_list[last_highlight_request[i]]) {
+	var ob=document.getElementById("list_"+last_highlight_request[i]);
+	if(ob)
+	  ob.className="listitem_notfound";
+      }
     }
   }
 
