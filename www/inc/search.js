@@ -33,15 +33,16 @@ function search_more() {
   var details_content=document.getElementById("details_content");
   var as=details_content.getElementsByTagName("a");
   var ai;
+  var id;
+  var shown=[];
 
   for(ai=0; ai<as.length; ai++) {
-    alert(ai.href);
-//    if(var id=ai.href.match(/#([a-z]+_[0-9]+)$/)) {
-//      alert(id);
-//    }
+    if(id=as[ai].getAttribute("nominatim_id")) {
+      shown.push(id);
+    }
   }
 
-  ajax("search", { "value": search_last }, search_result);
+  ajax("search", { "value": search_last, "shown": shown.join(",") }, search_result);
   details_content.innerHTML="Loading ...";
   details.className="info_loading";
 }

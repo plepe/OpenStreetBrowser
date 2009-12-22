@@ -1,16 +1,21 @@
 <?
-$nominatim_ids=array();
-
 function search($param) {
-  global $nominatim_ids;
   global $load_xml;
   $search_str=$param[value];
+  $add_param="";
 
-  $res=file_get_contents("http://nominatim.openstreetmap.org/search?q=$search_str&format=xml");
+  if($param[shown]) {
+    $add_param="&exclude_place_ids=$param[shown]";
+  }
+
+  $res=file_get_contents("http://nominatim.openstreetmap.org/search?q=$search_str&format=xml$add_param");
   $resdom=new DOMDocument();
   $resdom->loadXML($res);
 
-  $ret="<b>Search results</b> (provided by <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>):<ul>\n";
+  $ret="<b>Search results</b> (provided by <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>):";
+  if($param[shown])
+    $ret.="<a nominatim_id='$param[shown]'></a>";
+  $ret.="<ul>\n";
   $obl=$resdom->getElementsByTagname("place");
   for($i=0; $i<$obl->length; $i++) {
     $ob=$obl->item($i);
@@ -20,9 +25,12 @@ function search($param) {
       $type="rel";
     $id=$ob->getAttribute("osm_id");
 
-    $nominatim_ids["{$type}_{$id}"]=$ob->getAttribute("place_id");
+    $nominatim_id=$ob->getAttribute("place_id");
 
-    $ret.=list_entry("{$type}_{$id}", $ob->getAttribute("display_name"));
+    $r=list_entry("{$type}_{$id}", $ob->getAttribute("display_name"));
+    $r=strtr($r, array("<a href="=>"<a nominatim_id='$nominatim_id' href="));
+
+    $ret.=$r;
   }
   $ret.="<a href='javascript:search_more()'>more results</a>";
   $ret.="</ul>\n";
