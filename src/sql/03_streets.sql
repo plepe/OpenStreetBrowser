@@ -304,6 +304,6 @@ interpolation from
     (select "addr:housenumber" from way_nodes join planet_osm_point on way_nodes.way_id=planet_osm_line.osm_id and way_nodes.node_id=planet_osm_point.osm_id order by way_nodes.sequence_id desc limit 1) as last,
     "addr:interpolation" as interpolation
     from planet_osm_line where "addr:interpolation" in ('odd', 'even', 'all', 'alphabetic')) as t
-  where first similar to '[0-9]*' and last similar to '[0-9]*') as t1;
+  where first similar to '[0-9]+' and last similar to '[0-9]+') as t1;
 
 --create index 
