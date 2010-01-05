@@ -5,8 +5,13 @@
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
       <Parameter name="table">
-      (select name, name_en, (CASE WHEN "place"='city' AND "population">=1000000 THEN 'city_large' WHEN "place"='city' AND "population">=200000 THEN 'city_medium' WHEN "place"='town' AND "population">=30000 THEN 'town_large' ELSE "place" END) as place, "label" from planet_osm_place) as places
-<!--      (select planet_osm_point.*, (CASE WHEN population>1000000 THEN 'L' WHEN population>500000 THEN 'M' ELSE 'S' END) as pop_cat from planet_osm_point where place in ('continent', 'country', 'state', 'city', 'town') order by place_level ASC, population DESC) as places -->
+      (select name, name_en, (CASE 
+        WHEN "place"='city' AND "pop_cat"='L' THEN 'city_large'
+	WHEN "place"='city' AND "pop_cat"='M' THEN 'city_medium'
+	WHEN "place"='town' AND "pop_cat"='L' THEN 'town_large'
+	ELSE "place"
+      END) as place, "label" from planet_osm_place
+      where place in ('continent', 'country', 'state', 'city', 'region', 'town', 'island') as places
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
@@ -17,8 +22,12 @@
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
       <Parameter name="table">
-      (select name, name_en, (CASE WHEN "place"='city' AND "population">=1000000 THEN 'city_large' WHEN "place"='city' AND "population">=200000 THEN 'city_medium' WHEN "place"='town' AND "population">=30000 THEN 'town_large' ELSE "place" END) as place, "label" from planet_osm_place) as places
-<!--      (select planet_osm_point.*, (CASE WHEN population>1000000 THEN 'L' WHEN population>500000 THEN 'M' ELSE 'S' END) as pop_cat from planet_osm_point where place is not null order by place_level ASC, population DESC) as places -->
+      (select name, name_en, (CASE 
+        WHEN "place"='city' AND "pop_cat"='L' THEN 'city_large'
+	WHEN "place"='city' AND "pop_cat"='M' THEN 'city_medium'
+	WHEN "place"='town' AND "pop_cat"='L' THEN 'town_large'
+	ELSE "place"
+      END) as place, "label" from planet_osm_place) as places
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>

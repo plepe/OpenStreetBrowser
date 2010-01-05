@@ -27,6 +27,7 @@ insert into planet_osm_place
       WHEN place='hamlet' THEN 9
       WHEN place='locality' THEN 10
       WHEN place='island' THEN 11
+      WHEN place='islet' THEN 12
       ELSE null END) as place_level,
     poi.name, name_en.v,
     cast(pop.v as int4) as population,
