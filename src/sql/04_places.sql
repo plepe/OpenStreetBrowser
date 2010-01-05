@@ -30,8 +30,12 @@ insert into planet_osm_place
       ELSE null END) as place_level,
     poi.name, name_en.v,
     cast(pop.v as int4) as population,
-    (CASE WHEN cast(pop.v as int4)>1000000 THEN 'L' 
-      WHEN cast(pop.v as int4)>500000 THEN 'M' 
+    (CASE
+      WHEN place='city'    and cast(pop.v as int4)>1000000  THEN 'L' 
+      WHEN place='city'    and cast(pop.v as int4)>200000   THEN 'M' 
+      WHEN place='town'    and cast(pop.v as int4)>30000    THEN 'L'
+      WHEN place='country' and cast(pop.v as int4)>20000000 THEN 'L'
+      WHEN place='country' and cast(pop.v as int4)>1000000  THEN 'M'
       ELSE 'S' END),
     poi.way,
     planet_osm_boundaries.way,
