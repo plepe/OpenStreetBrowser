@@ -30,9 +30,6 @@ function time_count_active() {
 
   time_count_last=now;
 
-  var ob=document.getElementById("lang_select");
-  ob.innerHTML=time_count_time;
-
   var expiry=new Date();
   expiry.setTime(expiry.getTime()+30*86400000);
   document.cookie='time_count='+time_count_time+"; expires="+expiry.toGMTString()+"; path=/";
