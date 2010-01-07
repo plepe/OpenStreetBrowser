@@ -49,6 +49,8 @@ function view_click(event) {
   var pos=map.getLonLatFromPixel(event.xy);
   first_load=0;
 
+  call_hooks("view_click", event);
+
   if(click_override) {
     click_override(event, pos);
     return;

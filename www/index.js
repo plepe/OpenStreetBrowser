@@ -259,10 +259,12 @@ function check_redraw() {
   redraw_timer=setTimeout("check_redraw()", 300);
 }
 
-function view_changed_start() {
+function view_changed_start(event) {
   first_load=0;
   if(view_changed_timer)
     clearTimeout(view_changed_timer);
+
+  call_hooks("view_changed_start", event);
 }
 
 function view_changed_delay() {
@@ -270,11 +272,13 @@ function view_changed_delay() {
     list_reload();
 }
 
-function view_changed() {
+function view_changed(event) {
   if(view_changed_timer)
     clearTimeout(view_changed_timer);
   view_changed_timer=setTimeout("view_changed_delay()", 300);
   check_mapkey();
+
+  call_hooks("view_changed", event);
 }
 
 function init() {

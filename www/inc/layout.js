@@ -5,6 +5,8 @@ function box_change(ob) {
 function box_click(boxname, subboxname) {
   var ob;
 
+  call_hooks("list_request", boxname, subboxname);
+
   if(!subboxname)
     ob=document.getElementsByName(boxname);
   else
