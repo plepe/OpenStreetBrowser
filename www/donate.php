@@ -126,7 +126,7 @@ I myself promise to donate 5% of this income to the <a href='http://www.osmfound
 <input type="image" src="http://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" valign="middle" />
 </form>
 </div>
-<a href="donors.html">Live Donor List</a> - <a href='javascript:close_donation()'>Close Window</a>
+<a href="donors.html">Live Donor List</a> - <a href='mailto:skunk@xover.mud.at?subject=OpenStreetBrowser%20Donation'>Send me a comment</a><br/><a href='javascript:close_donation()'>Close Window</a>
 </div>
 		</div>
 	</body>
