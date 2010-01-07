@@ -1,6 +1,23 @@
 var time_count_last=new Date().getTime();
 var time_count_time=0;
 
+function time_count_check_cookie() {
+  var cookie;
+  if(cookie=document.cookie) {
+    var cookies=cookie.split(/;/);
+
+    for(var i=0; i<cookies.length; i++) {
+      var m;
+
+      if(m=cookies[i].match(/time_count=([0-9]+)/)) {
+	time_count_time=parseInt(m[1]);
+      }
+    }
+  }
+}
+
+time_count_check_cookie();
+
 function time_count_active() {
   var now=new Date().getTime();
 
@@ -15,6 +32,10 @@ function time_count_active() {
 
   var ob=document.getElementById("lang_select");
   ob.innerHTML=time_count_time;
+
+  var expiry=new Date();
+  expiry.setTime(expiry.getTime()+30*86400000);
+  document.cookie='time_count='+time_count_time+"; expires="+expiry.toGMTString()+"; path=/";
 }
 
 register_hook("view_changed", time_count_active);
