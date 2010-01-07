@@ -40,18 +40,19 @@ function time_count_active() {
 }
 
 function time_count_do_beg() {
-  var div=document.createElement("div");
+  var div=document.createElement("iframe");
 
   document.body.appendChild(div);
   div.className="beg";
-
-  div.innerHTML="PLEASE!";
+  div.id="donation";
 
   div.style.position="absolute";
-  div.style.left=(window.innerWidth/2-200)+"px";
-  div.style.right=(window.innerWidth/2+200)+"px";
-  div.style.top=(window.innerHeight/2-150)+"px";
-  div.style.bottom=(window.innerHeight/2+150)+"px";
+  div.style.left=(window.innerWidth/2-250)+"px";
+  div.style.right=(window.innerWidth/2+250)+"px";
+  div.style.top=(window.innerHeight/2-200)+"px";
+  div.style.bottom=(window.innerHeight/2+200)+"px";
+
+  div.src="donate.php";
 
   time_count_beg=time_count_time;
 }
@@ -64,6 +65,12 @@ function time_count_check_beg() {
   if(time_count_time-time_count_beg>2*60*60*1000) {
     time_count_do_beg();
   }
+}
+
+function close_donation() {
+  var div=document.getElementById("donation");
+
+  div.parentNode.removeChild(div);
 }
 
 register_hook("view_changed", time_count_active);
