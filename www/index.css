@@ -217,3 +217,10 @@ li.listitem_highlight {
 li.listitem_notfound {
   text-decoration: line-through;
 }
+.beg {
+  background: white;
+  text-align: center;
+  width: 400px;
+  height: 300px;
+  border: 2px solid black;
+}

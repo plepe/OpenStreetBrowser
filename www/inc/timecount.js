@@ -1,5 +1,6 @@
 var time_count_last=new Date().getTime();
 var time_count_time=0;
+var time_count_beg=0;
 
 function time_count_check_cookie() {
   var cookie;
@@ -9,8 +10,9 @@ function time_count_check_cookie() {
     for(var i=0; i<cookies.length; i++) {
       var m;
 
-      if(m=cookies[i].match(/time_count=([0-9]+)/)) {
+      if(m=cookies[i].match(/time_count=([0-9]+),([0-9]+)/)) {
 	time_count_time=parseInt(m[1]);
+	time_count_beg=parseInt(m[2]);
       }
     }
   }
@@ -32,7 +34,36 @@ function time_count_active() {
 
   var expiry=new Date();
   expiry.setTime(expiry.getTime()+30*86400000);
-  document.cookie='time_count='+time_count_time+"; expires="+expiry.toGMTString()+"; path=/";
+  document.cookie='time_count='+time_count_time+","+time_count_beg+"; expires="+expiry.toGMTString()+"; path=/";
+
+  time_count_check_beg();
+}
+
+function time_count_do_beg() {
+  var div=document.createElement("div");
+
+  document.body.appendChild(div);
+  div.className="beg";
+
+  div.innerHTML="PLEASE!";
+
+  div.style.position="absolute";
+  div.style.left=(window.innerWidth/2-200)+"px";
+  div.style.right=(window.innerWidth/2+200)+"px";
+  div.style.top=(window.innerHeight/2-150)+"px";
+  div.style.bottom=(window.innerHeight/2+150)+"px";
+
+  time_count_beg=time_count_time;
+}
+
+function time_count_check_beg() {
+  if((time_count_beg==0)&&(time_count_time>15000*60)) {
+    time_count_do_beg();
+  }
+
+  if(time_count_time-time_count_beg>2*60*60*1000) {
+    time_count_do_beg();
+  }
 }
 
 register_hook("view_changed", time_count_active);
