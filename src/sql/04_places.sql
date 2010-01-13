@@ -11,7 +11,7 @@ create table planet_osm_place (
 );
 SELECT AddGeometryColumn('planet_osm_place', 'label', 900913, 'POINT', 2);
 SELECT AddGeometryColumn('planet_osm_place', 'area', 900913, 'GEOMETRY', 2);
-SELECT AddGeometryColumn('planet_osm_place', 'guess_area', 900913, 'POLYGON', 2);
+SELECT AddGeometryColumn('planet_osm_place', 'guess_area', 900913, 'GEOMETRY', 2);
 
 insert into planet_osm_place 
   select poi.osm_id, planet_osm_boundaries.rel_id, poi.place, 
@@ -40,7 +40,15 @@ insert into planet_osm_place
       ELSE 'S' END),
     poi.way,
     planet_osm_boundaries.way,
-    (CASE WHEN planet_osm_boundaries.poly is not null THEN planet_osm_boundaries.poly ELSE Buffer(poi.way, (CASE WHEN place='city' THEN 20000 WHEN place='town' THEN 5000 WHEN place='village' THEN 2000 WHEN place='hamlet' THEN 1000 END)) END)
+    (CASE 
+      WHEN planet_osm_boundaries.poly is not null THEN planet_osm_boundaries.poly
+      ELSE Buffer(poi.way, (CASE
+        WHEN place='city' THEN 20000
+	WHEN place='town' THEN 5000
+	WHEN place='village' THEN 2000
+	WHEN place='hamlet' THEN 1000
+      END))
+    END)
   from planet_osm_point poi 
     left join node_tags pop on poi.osm_id=pop.node_id and 
       pop.k='population' and pop.v similar to '^[0-9]+$'
