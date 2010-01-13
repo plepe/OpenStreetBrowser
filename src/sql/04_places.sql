@@ -42,12 +42,14 @@ insert into planet_osm_place
     planet_osm_boundaries.way,
     (CASE 
       WHEN planet_osm_boundaries.poly is not null THEN planet_osm_boundaries.poly
-      ELSE Buffer(poi.way, (CASE
-        WHEN place='city' THEN 20000
-	WHEN place='town' THEN 5000
-	WHEN place='village' THEN 2000
-	WHEN place='hamlet' THEN 1000
-      END))
+      WHEN place in ('city', 'town', 'village', 'hamlet') THEN
+	Buffer(poi.way, (CASE
+	  WHEN place='city' THEN 20000
+	  WHEN place='town' THEN 5000
+	  WHEN place='village' THEN 2000
+	  WHEN place='hamlet' THEN 1000
+	END))
+      ELSE poi.way
     END)
   from planet_osm_point poi 
     left join node_tags pop on poi.osm_id=pop.node_id and 
