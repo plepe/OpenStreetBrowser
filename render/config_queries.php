@@ -100,7 +100,7 @@ $query["landuse"]=<<<EOT
 	   THEN 'residential'
 	 WHEN "historic" is not null
 	   THEN 'historic'
-	 WHEN "tourism" in ('attraction', 'theme_park', 'zoo', 'yes')
+	 WHEN "tourism" is not null
 	   THEN 'tourism'
 	 WHEN ("building" is null OR "building"='no') THEN (CASE
 	   WHEN "amenity" in ('college', 'cinema', 'kindergarten', 'library', 'school', 'theatre', 'arts_centre', 'university')
