@@ -147,7 +147,7 @@ insert
   select 
     planet_osm_streets.osm_id,
     planet_osm_line.osm_id,
-    2
+    'W', 
   from planet_osm_streets join planet_osm_line on planet_osm_line.osm_id=any(planet_osm_streets.way_parts);
 
 insert 
