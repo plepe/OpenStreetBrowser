@@ -84,7 +84,7 @@ $query["landuse"]=<<<EOT
 	 WHEN "landuse" in ('forest')
 	   THEN 'natural'
 	 WHEN "leisure" in ('common', 'garden')
-	   OR "landuse" in ('meadow', 'farm', 'farmyard', 'vineyard', 'orchard')
+	   OR "landuse" in ('meadow', 'farm', 'farmyard', 'farmland', 'vineyard', 'orchard')
 	   OR "natural" in ('fell')
 	   THEN 'garden'
 	 WHEN "landuse" in ('school')
@@ -126,7 +126,7 @@ $query["landuse"]=<<<EOT
 	      WHEN "natural" in ('beach') THEN 't5'
 	      END)
 	  WHEN "landuse" in ('forest') THEN 't0'
- 	  WHEN "landuse" in ('quarry', 'farmyard', 'landfill', 'brownfield', 
+ 	  WHEN "landuse" in ('quarry', 'farmyard', 'farmland', 'landfill', 'brownfield', 
 	                    'railway', 'construction', 'military', 'industrial')
 	   OR "amenity" in ('bus_station')
 	   OR "aeroway" in ('aerodrome', 'apron')
