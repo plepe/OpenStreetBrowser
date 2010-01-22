@@ -23,7 +23,7 @@
 .routes[route=train],
 .routestext[route=rail] ref,
 .routestext[route=railway] ref,
-.routestext[route=train] ref,
+.routestext[route=train] ref
 {
   line-color: #202020;
   text-fill: #202020;
@@ -36,7 +36,7 @@
   text-fill: #d4009f;
 }
 .routes[route=tram],
-.routestext[route=tram] ref,
+.routestext[route=tram] ref
 {
   text-fill: #ff0000;
   line-color: #ff0000;
