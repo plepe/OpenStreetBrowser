@@ -1,10 +1,7 @@
 .world1[zoom<5] {
   polygon-fill: #f2efd9;
 }
-.world[zoom>=5][zoom<10] {
-  polygon-fill: #f2efd9;
-}
-.coastpoly[zoom>=10] {
+.coastpoly[zoom>=5] {
   polygon-fill: #f2efd9;
 }
 .builtup[zoom<11] {
