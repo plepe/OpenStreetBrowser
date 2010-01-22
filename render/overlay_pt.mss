@@ -23,19 +23,20 @@
 .routes[route=train],
 .routestext[route=rail] ref,
 .routestext[route=railway] ref,
-.routestext[route=train] ref
+.routestext[route=train] ref,
 {
   line-color: #202020;
   text-fill: #202020;
 }
 .routes[route=subway],
-.routestext[route=subway] ref
+.routestext[route=subway] ref,
+.stop_routes[route=subway] ref
 {
   line-color: #d4009f;
   text-fill: #d4009f;
 }
 .routes[route=tram],
-.routestext[route=tram] ref
+.routestext[route=tram] ref,
 {
   text-fill: #ff0000;
   line-color: #ff0000;
@@ -212,7 +213,10 @@
 .routes[route=train],
 .routestext[route=rail] ref,
 .routestext[route=railway] ref,
-.routestext[route=train] ref
+.routestext[route=train] ref,
+.stop_routes[route=rail] ref,
+.stop_routes[route=railway] ref,
+.stop_routes[route=train] ref
 {
   line-color: #202020;
   text-fill: #202020;
@@ -220,19 +224,26 @@
 .routes[route=tram],
 .routes[route=light_rail],
 .routestext[route=tram] ref,
-.routestext[route=light_rail] ref
+.routestext[route=light_rail] ref,
+.stop_routes[route=tram] ref,
+.stop_routes[route=light_rail] ref
 {
   line-color: #ff0000;
   text-fill: #ff0000;
 }
 .routes[route=ferry],
-.routestext[route=ferry] ref
+.routestext[route=ferry] ref,
+.stop_routes[route=ferry] ref
 {
   line-color: #00ffff;
   text-fill: #00ffff;
 }
 .routes[route=bus],
-.routestext[route=bus] ref
+.routestext[route=bus] ref,
+.stop_routes[route=bus] ref,
+.stop_routes[route=minibus] ref,
+.stop_routes[route=trolley] ref,
+.stop_routes[route=trolleybus] ref
 {
   line-color: #0000ff;
   text-fill: #0000ff;
@@ -570,4 +581,29 @@
   text-spacing: 200;
   text-min-distance: 100;
   text-max-char-angle-delta: 20;
+}
+.stop_routes[zoom>=18] ref
+{
+  text-size: 10;
+  text-placement: point;
+  text-face-name: "DejaVu Sans Book";
+  text-avoid-edges: true;
+  text-halo-radius: 1;
+  point-allow-overlap: false;
+}
+.stop_routes[row=1] ref
+{
+  text-dy: 10;
+}
+.stop_routes[row=2] ref
+{
+  text-dy: 20;
+}
+.stop_routes[row=3] ref
+{
+  text-dy: 30;
+}
+.stop_routes[row=4] ref
+{
+  text-dy: 40;
 }

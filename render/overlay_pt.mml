@@ -295,6 +295,34 @@
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
    </Layer>
+   <Layer class="stop_routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">
+      (select
+        way, member_id, route,
+	array_to_string(array_sort(to_textarray(ref)), ', ') as ref,
+	array_pos(
+	  (select
+	    array_unique(to_textarray(r1.route))
+	  from relation_members rm1
+	    left join planet_osm_rels r1 on rm1.relation_id=r1.id
+	  where
+	    rm1.member_id=rm.member_id and rm1.member_type='N' and
+	    r1.type='route' and
+	    r1.route in ('train', 'rail', 'railway', 'subway', 'tram', 'bus', 'trolley', 'minibus', 'ferry', 'light_rail', 'trolleybus')
+	  group by member_id), route) as row
+      from relation_members rm
+        left join planet_osm_rels r on rm.relation_id=r.id
+      where member_type='N' and type='route' and
+	route in ('train', 'rail', 'railway', 'subway', 'tram', 'bus', 'trolley', 'minibus', 'ferry', 'light_rail', 'trolleybus')
+      group by route, member_id order by member_id) as stop_routes
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
    <!-- <Layer class="stations_type" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
