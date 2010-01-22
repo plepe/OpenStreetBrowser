@@ -11,7 +11,7 @@
 	WHEN "place"='town' AND "pop_cat"='L' THEN 'town_large'
 	ELSE "place"
       END) as place, "label" from planet_osm_place
-      where place in ('continent', 'country', 'state', 'city', 'region', 'town', 'island')) as places
+      where place in ('continent', 'country', 'state', 'city', 'region', 'town', 'island') order by %SQL_places_sort%) as places
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
@@ -27,7 +27,7 @@
 	WHEN "place"='city' AND "pop_cat"='M' THEN 'city_medium'
 	WHEN "place"='town' AND "pop_cat"='L' THEN 'town_large'
 	ELSE "place"
-      END) as place, "label" from planet_osm_place) as places
+      END) as place, "label" from planet_osm_place order by %SQL_places_sort%) as places
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>

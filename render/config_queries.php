@@ -193,6 +193,27 @@ $query["places"]=<<<EOT
        END) as place,
        "label" from planet_osm_place) as places
 EOT;
+$query["places_sort"]=<<<EOT
+     (CASE
+       WHEN "place"='continent' THEN 0
+       WHEN "place"='country'   THEN 1
+       WHEN "place"='state'     THEN 2
+       WHEN "place"='city'      THEN 3
+       WHEN "place"='region'    THEN 4
+       WHEN "place"='island'    THEN 5
+       WHEN "place"='town'      THEN 6
+       WHEN "place"='village'   THEN 7
+       WHEN "place"='hamlet'    THEN 8
+       WHEN "place"='suburb'    THEN 9
+       WHEN "place"='locality'  THEN 10
+       WHEN "place"='islet'     THEN 11
+       ELSE                          20
+     END) ASC,
+     (CASE
+       WHEN "population" is null THEN 0
+       ELSE                           "population"
+     END) DESC
+EOT;
 $query["shop"]=<<<EOT
 (CASE 
   WHEN "shop" in ('supermarket', 'groceries', 'grocery') THEN 'supermarket'
