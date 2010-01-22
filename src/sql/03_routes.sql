@@ -63,7 +63,7 @@ drop table if exists planet_osm_line_routes_text;
 create table planet_osm_line_routes_text (line_ids int4[], route_ids int4[], route_refs text, importance text, route text, tunnel text, bridge text, highway text, railway text);
 SELECT AddGeometryColumn('planet_osm_line_routes_text', 'way', 900913, 'MULTILINESTRING', 2);
 
-insert into planet_osm_line_routes_text select to_intarray(line_id), array_sort(route_ids), array_to_string(array_sort(route_refs), ', '), importance, route, tunnel, bridge, highway, railway, ST_Multi(ST_LineMerge(ST_Collect(way))) from planet_osm_line_routes group by array_sort(route_ids), array_sort(route_refs), importance, route, tunnel, bridge, highway, railway;
+insert into planet_osm_line_routes_text select to_intarray(line_id), array_sort(route_ids), array_to_string(array_nat_sort(route_refs), ', '), importance, route, tunnel, bridge, highway, railway, ST_Multi(ST_LineMerge(ST_Collect(way))) from planet_osm_line_routes group by array_sort(route_ids), array_nat_sort(route_refs), importance, route, tunnel, bridge, highway, railway;
 
 
 create index planet_osm_line_route_way on planet_osm_line_route using gist(way);
