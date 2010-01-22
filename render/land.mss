@@ -60,7 +60,7 @@
 .landuse_extract[landuse=nature_reserve][zoom>=5][zoom<10] {
 }
 .landuse[landuse=natural][sub_type=t0][zoom>=14] {
-  polygon-pattern-file: url('/scratch/mapnik/data/symbols/forest.png');
+  polygon-pattern-file: url('img/forest.png');
 }
 .landuse_extract[landuse=natural][sub_type=t1][zoom>=5][zoom<10],
 .landuse[landuse=natural][sub_type=t1][zoom>=10] {
