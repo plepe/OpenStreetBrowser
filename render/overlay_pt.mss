@@ -584,7 +584,7 @@
 }
 .stop_routes[zoom>=18] ref
 {
-  text-size: 10;
+  text-size: 8;
   text-placement: point;
   text-face-name: "DejaVu Sans Book";
   text-avoid-edges: true;
@@ -593,17 +593,17 @@
 }
 .stop_routes[row=1] ref
 {
-  text-dy: 10;
+  text-dy: 8;
 }
 .stop_routes[row=2] ref
 {
-  text-dy: 20;
+  text-dy: 17;
 }
 .stop_routes[row=3] ref
 {
-  text-dy: 30;
+  text-dy: 26;
 }
 .stop_routes[row=4] ref
 {
-  text-dy: 40;
+  text-dy: 35;
 }
