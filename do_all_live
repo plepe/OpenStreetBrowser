@@ -41,7 +41,7 @@ psql -d gisnew -c "create language plpgsql"
 psql -d gisnew -f /usr/share/postgresql-8.3-postgis/lwpostgis.sql
 psql -d gisnew -f /usr/share/postgresql/8.3/contrib/_int.sql
 echo "= osm2pgsql"
-./osm2pgsql -c -s -m -d $DB_NAME ~/data/europe.osm.bz2
+./osm2pgsql -c -s -m -d $DB_NAME -S $ROOT_PATH/render/osm2pgsql.style ~/data/europe.osm.bz2
 echo "= osmosis"
 echo "- init db for osmosis"
 psql $DB_NAME < ~/src/pgsql_simple_schema.sql

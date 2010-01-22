@@ -37,8 +37,8 @@ psql -d $DB_NAME -c "create language plpgsql"
 psql -d $DB_NAME -f /usr/share/postgresql/8.3/contrib/_int.sql
 psql -d $DB_NAME -f /usr/share/postgresql-8.3-postgis/lwpostgis.sql
 psql -d $DB_NAME -f /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql
-./osm2pgsql -c -s -m -d $DB_NAME $ROOT_PATH/data/austria.osm.bz2
-./osm2pgsql -a -s -m -d $DB_NAME $ROOT_PATH/data/bulgaria.osm.bz2
+./osm2pgsql -c -s -m -d $DB_NAME -S $ROOT_PATH/render/osm2pgsql.style $ROOT_PATH/data/austria.osm.bz2
+./osm2pgsql -a -s -m -d $DB_NAME -S $ROOT_PATH/render/osm2pgsql.style $ROOT_PATH/data/bulgaria.osm.bz2
 
 echo "- init db for osmosis"
 psql $DB_NAME < ~/src/pgsql_simple_schema.sql
