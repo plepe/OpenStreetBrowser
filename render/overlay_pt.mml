@@ -313,10 +313,11 @@
 	    r1.type='route' and
 	    r1.route in ('train', 'rail', 'railway', 'subway', 'tram', 'bus', 'trolley', 'minibus', 'ferry', 'light_rail', 'trolleybus')
 	  group by rm1.member_id), r.route) as row
-      from relation_members rm
-        left join planet_osm_rels r on rm.relation_id=r.id
-	left join planet_osm_point p on rm.member_id=p.osm_id
-      where member_type='N' and type='route' and
+      from
+	planet_osm_point p
+        join relation_members rm on rm.member_id=p.osm_id and member_type='N'
+        join planet_osm_rels r on rm.relation_id=r.id
+      where r.type='route' and
 	r.route in ('train', 'rail', 'railway', 'subway', 'tram', 'bus', 'trolley', 'minibus', 'ferry', 'light_rail', 'trolleybus')
       group by r.route, rm.member_id, p.way order by rm.member_id) as stop_routes
       </Parameter>
