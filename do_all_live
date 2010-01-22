@@ -19,8 +19,19 @@ svn update src/
 echo "* Download new OSM-File"
 cd $ROOT_PATH/data
 wget -N http://download.geofabrik.de/osm/europe.osm.bz2
+wget -N -nv http://tile.openstreetmap.org/world_boundaries-spherical.tgz
+wget -N -nv http://hypercube.telascience.org/~kleptog/processed_p.zip
+wget -N -nv http://tileserv.openstreetmap.org/shoreline_300.tar.bz2
 
 echo "* Importing to Database"
+echo "- Shapefiles"
+cd $ROOT_PATH/data
+tar xzf world_boundaries-spherical.tgz
+unzip processed_p.zip
+mv coastlines/* world_boundaries/
+rmdir coastlines
+tar xjf shoreline_300.tar.bz2 -C world_boundaries
+
 echo "- prepare osm2pgsql"
 cd $SOFTWARE_PATH/osm2pgsql
 psql -d gis -c "drop database gisold"
