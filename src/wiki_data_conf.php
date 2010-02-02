@@ -26,7 +26,7 @@ foreach($wiki_data["Values"] as $src) {
   $list_columns=array();
   $l=strtr(parse_wholekey($src[keys], &$list_columns), array("\""=>"\\\""));
 
-  $r="'type_'||\\\"osm_id\\\"||'||$src[desc]||$src[icon]'";
+  $r="'$src[desc]||$src[icon]'";
 
   $prior=9;
   if(eregi("\(([0-9]+)\)", $src[overlay], $m))
