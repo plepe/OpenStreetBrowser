@@ -83,7 +83,7 @@ function list_print($res) {
   }
   elseif($x=$lang_str["$info[0]=".$ob->tags->get("$info[0]")]) {
     $x=strtr($x, $make_valid);
-    $ret.="  description:$lang=\"$x\"\n";
+    $ret.="  description_trans=\"$x\"\n";
   }
 
   if($x=$info[1]) {
