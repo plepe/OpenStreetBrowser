@@ -1,5 +1,14 @@
 var list_open={"culture": 1, "culture/religion": 1};
 var category_leaf={};
+var overlays={
+  "gastro": "food",
+  "services": "services",
+  "culture": "culture",
+  "shop": "shop",
+  "transport/pt": "pt",
+  "transport/ch": "ch",
+  "transport/car": "car"
+};
 
 function load_list(path) {
 
@@ -13,6 +22,8 @@ function new_box_change(ob) {
     div.innerHTML=show_list(ob.name);
     list_reload([ob.name]);
   }
+
+  list_check_overlays(ob.name, ob.checked);
 }
 
 function new_box_click(boxname) {
@@ -24,6 +35,17 @@ function new_box_click(boxname) {
   ob.checked=!ob.checked;
 
   new_box_change(ob);
+}
+
+function list_check_overlays(path, state) {
+  var o;
+
+  if(!overlays_layers)
+    return;
+
+  if(o=overlays[path]) {
+    overlays_layers[o].setVisibility(state);
+  }
 }
 
 function box_open(head, path, content, state) {
@@ -87,8 +109,9 @@ function show_list(path, _list) {
       var r=show_list(p, _list[i]);
       ret+=box_open(i, p, r);
     }
-    else
+    else {
       ret+=box_closed(i, p);
+    }
   }
 
   if(path=="") {

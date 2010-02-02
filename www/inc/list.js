@@ -62,8 +62,6 @@ function list_call_back(response) {
     list_reload();
   }
 
-  check_overlays(data);
-
   var osm=data.getElementsByTagName("osm");
   load_objects_from_xml(osm);
 
@@ -169,16 +167,6 @@ function list_reload(info_lists) {
   }
 
   ajax_direct("list.php", { "viewbox": x.left +","+ x.top +","+ x.right +","+ x.bottom, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_call_back);
-
-//  var info_content=document.getElementById("details_content");
-//  var map_div=document.getElementById("map");
-//  var info=document.getElementById("details");
-//
-//  info.className="info_loading";
-//  map_div.className="map";
-//  if(showing!="list_routes") {
-//    info_content.innerHTML="<div class=\"loading\"><img src=\"img/ajax_loader.gif\" /> loading</div>";
-//  }
 
   list_last=info_lists;
 }
