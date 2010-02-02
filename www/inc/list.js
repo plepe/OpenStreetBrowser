@@ -50,72 +50,6 @@ function list_make_list(cat) {
   return ret;
 }
 
-function list_call_back(response) {
-  var data=response.responseXML;
-  list_reload_working=0;
-
-  if(!data) {
-    alert("no data\n"+response.responseText);
-    return;
-  }
-
-  var info_content=document.getElementById("details_content");
-  var map_div=document.getElementById("map");
-  var info=document.getElementById("details");
-  var request;
-  if(request=data.getElementsByTagName("request"))
-    request=request[0];
-
-  if(!request) {
-    alert("response empty - parsing error?");
-    return;
-  }
-
-  info.className="info";
-  var cats=data.getElementsByTagName("category");
-  for(var cati=0; cati<cats.length; cati++) {
-    var cat=cats[cati];
-    var cat_id=cat.getAttribute("id");
-    if(!category_leaf[cat_id])
-      continue;
-    var div=document.getElementById("content_"+cat_id);
-    if(div) {
-      var ret="<ul>";
-      ret+=list_make_list(cat);
-      ret+="</ul>\n";
-      div.innerHTML=ret;
-    }
-
-    if(request) {
-      list_cache.push({
-	viewbox:        request.getAttribute("viewbox"),
-        category:       request.getAttribute("category"),
-	text:     	ret,
-      });
-      list_cache.clean_up();
-    }
-  }
-//  map_div.className="map";
-//  var text_node=data.getElementsByTagName("text");
-//  if(text_node) {
-//    if(!text_node[0])
-//      show_msg("Returned data invalid", response.responseText);
-//    var text=get_content(text_node[0]);
-////alert(text_node[0].nodeValue);
-////    info_content.appendChild(text_node[0].cloneNode(true));
-//    info_content.innerHTML=text;
-//  }
-
-  if(list_reload_necessary) {
-    list_reload();
-  }
-
-  var osm=data.getElementsByTagName("osm");
-  load_objects_from_xml(osm);
-
-  return;
-}
-
 function list_more_call_back(response) {
   var data=response.responseXML;
   list_reload_working=0;
@@ -235,7 +169,7 @@ function list_reload(info_lists) {
     if(category_leaf[info_lists[i]]) {
       var div=document.getElementById("content_"+info_lists[i]);
       if(div)
-	div.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+t("loading");
+	div.innerHTML="<ul><span id='more_"+info_lists[i]+"'><img class='loading' src='img/ajax_loader.gif'> "+t("loading")+"</span></ul>";
     }
   }
 
@@ -247,5 +181,5 @@ function list_reload(info_lists) {
   }
 
 
-  ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_call_back);
+  ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_more_call_back);
 }
