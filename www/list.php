@@ -34,6 +34,7 @@ function list_print($res) {
   global $lang_str;
 
   $ret.="  id=\"$id\"\n";
+  $ret.="  center=\"$res[center]\"\n";
 
   if($x=$ob->tags->get("name"))
     $ret.="  name=\"$x\"\n";
@@ -62,29 +63,41 @@ function get_list() {
   global $request;
   $max_count=10+1;
   $list=array();
+  $importance=array("international", "national", "regional", "urban", "suburban", "local");
+  $types=array(
+    "point"=>array(
+      "id_type"=>"node",
+      "id_name"=>"osm_id",
+      "geo"=>"astext(way) as center",
+    ),
+    "polygon"=>array(
+      "id_type"=>"way",
+      "id_name"=>"osm_id",
+      "geo"=>"astext(ST_Centroid(way)) as center",
+    ),
+    "line"=>array(
+      "id_type"=>"way",
+      "id_name"=>"osm_id",
+      "geo"=>"astext(ST_Centroid(way)) as center",
+    ),
+    "rels"=>array(
+      "id_type"=>"rel",
+      "id_name"=>"id",
+      "geo"=>"(select astext(ST_Centroid(ST_Collect((CASE WHEN p.way is not null THEN p.way WHEN po.way is not null THEN po.way WHEN l.way is not null THEN l.way END)))) from relation_members rm left join planet_osm_point p on rm.member_id=p.osm_id and rm.member_type='N' left join planet_osm_polygon po on rm.member_id=po.osm_id and rm.member_type='W' left join planet_osm_line l on rm.member_id=l.osm_id and rm.member_type='W' where rm.relation_id=planet_osm_rels.id) as center",
+    ));
+  $search_types=array("point", "polygon");
+  $cat="gastro";
 
-  if(1) {
-    $qryc="select * from (select 'node' as type, osm_id as id, (CASE {$request[gastro][suburban]} END) as res from planet_osm_point as t1) as t where res is not null and id>0 limit $max_count";
-    $resc=sql_query($qryc);
-    $max_count-=pg_num_rows($resc);
-    while($elemc=pg_fetch_assoc($resc))
-      $list[]=$elemc;
-  }
-
-  if($max_count>0) {
-    $qryc="select * from (select 'way' as type, osm_id as id, (CASE {$request[gastro][suburban]} END) as res from planet_osm_polygon as t1) as t where res is not null and id>0 limit $max_count";
-    $resc=sql_query($qryc);
-    $max_count-=pg_num_rows($resc);
-    while($elemc=pg_fetch_assoc($resc))
-      $list[]=$elemc;
-  }
-
-  if($max_count>0) {
-    $qryc="select * from (select 'way' as type, osm_id as id, (CASE {$request[gastro][suburban]} END) as res from planet_osm_line as t1) as t where res is not null and id>0 limit $max_count";
-    $resc=sql_query($qryc);
-    $max_count-=pg_num_rows($resc);
-    while($elemc=pg_fetch_assoc($resc))
-      $list[]=$elemc;
+  foreach($importance as $imp) {
+    foreach($search_types as $t) {
+      if(($max_count>0)&&($request[$cat][$imp])) {
+	$qryc="select * from (select '{$types[$t][id_type]}' as type, {$types[$t][id_name]} as id, {$types[$t][geo]}, (CASE {$request[$cat][$imp]} END) as res from planet_osm_$t as t1) as t where res is not null and id>0 limit $max_count";
+	$resc=sql_query($qryc);
+	$max_count-=pg_num_rows($resc);
+	while($elemc=pg_fetch_assoc($resc))
+	  $list[]=$elemc;
+      }
+    }
   }
 
 //  if($max_count>0) {
