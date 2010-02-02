@@ -11,11 +11,16 @@ function get_row($r, $f) {
     return null;
 
   do {
-    $cells=explode("||", $r);
-    if($cells[0]=="")
-      array_splice($cells, 0, 1);
-    elseif(ereg("^\|.*\|(.*)$", $r, $m))
+    $r=trim($r);
+    if($r=="|")
+      $cells=array("");
+    else {
+      $cells=explode("||", $r);
+      if($cells[0]=="")
+	array_splice($cells, 0, 1);
+      elseif(ereg("^\|.*\|(.*)$", $r, $m))
       $cells[0]=$m[1];
+    }
 
     $row=array_merge($row, $cells);
     $r=fgets($f);
