@@ -14,6 +14,14 @@
 {
   point-file: url('img/parking_small.png');
 }
+.amenity_car[amenity=traffic_signals][zoom>=15]
+{
+  point-file: url('img/traffic_signals.png');
+}
+.amenity_car[amenity=stop][zoom>=15]
+{
+  point-file: url('img/stop.png');
+}
 .text[highway=motorway_junction][zoom>=11][zoom<15] ref
 {
   text-fill: #000000;

@@ -8,7 +8,7 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
-      <Parameter name="table">(select * from planet_osm_point where amenity=any(array['parking','fuel','car_repair'])) as amenity</Parameter>
+      <Parameter name="table">(select * from planet_osm_point where amenity in ('parking','fuel','car_repair', 'stop', 'traffic_signals')) as amenity</Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
