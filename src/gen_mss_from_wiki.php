@@ -85,10 +85,14 @@ foreach($overlays as $overlay=>$overlay_file) {
       }
       else {
 	$img_src=fopen("$wiki_img$icon", "r");
+	if(!$img_src)
+	  print "Can't open $wiki_img$icon\n";
 	while($r=fgets($img_src)) {
 	  if(eregi("<div class=\"fullImageLink\" .*<a href=\"([^\"]*)\">", $r, $m)) {
 	    print $m[1]."\n";
 	    $img=file_get_contents("$wiki_imgsrc$m[1]");
+	    if(!$img)
+	      print "Can't download $wiki_imgsrc$m[1]\n";
 	    $img_d=fopen("$symbol_path/$icon", "w");
 	    fwrite($img_d, $img);
 	    fclose($img_d);
