@@ -134,8 +134,14 @@ foreach($overlays as $overlay=>$overlay_file) {
       $style_text.="  <Rule>\n";
       $style_text.="    <Filter>[type] = $index and [network] = '$network'</Filter>\n";
       $style_text.="    <MaxScaleDenominator>{$scales_levels[$zoom[onlyicon]]}</MaxScaleDenominator>\n";
-      $style_text.="    <TextSymbolizer dy=\"".ceil($imgsize[1]/2+6)."\" face_name=\"DejaVu Sans Book\" fill=\"#000000\" halo_fill=\"{$category_data["bg-color"]}\" halo_radius=\"1\" name=\"name\" placement=\"point\" size=\"10\"/>\n";
-      $style_text.="    <TextSymbolizer dy=\"".ceil($imgsize[1]/2+10+6)."\" face_name=\"DejaVu Sans Book\" fill=\"#000000\" halo_fill=\"{$category_data["bg-color"]}\" halo_radius=\"1\" name=\"desc\" placement=\"point\" size=\"8\"/>\n";
+      $style_text.="    <TextSymbolizer dy=\"".ceil($imgsize[1]/2+6)."\" face_name=\"DejaVu Sans Book\" fill=\"#000000\" name=\"name\" placement=\"point\" size=\"10\"";
+      if($category_data["bg-color"])
+        $style_text.=" halo_fill=\"{$category_data["bg-color"]}\" halo_radius=\"1\"";
+      $style_text.="/>\n";
+      $style_text.="    <TextSymbolizer dy=\"".ceil($imgsize[1]/2+10+6)."\" face_name=\"DejaVu Sans Book\" fill=\"#000000\" name=\"desc\" placement=\"point\" size=\"8\"";
+      if($category_data["bg-color"])
+        $style_text.=" halo_fill=\"{$category_data["bg-color"]}\" halo_radius=\"1\"";
+      $style_text.="/>\n";
       $style_text.="  </Rule>\n";
     }
 
