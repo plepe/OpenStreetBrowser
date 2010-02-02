@@ -54,10 +54,7 @@ foreach($process_overlays as $overlay) {
   $values_list=array();
   foreach($wiki_data["Values"] as $src) {
     if(eregi("$overlay\(([0-9]*)\)", $src[overlay], $m)) {
-      $keys_parts=explode(",", $src[keys]);
-      $keys=explode(" ", $keys_parts[0]);
-      $keys_imp=implode(" ", $keys);
-	$values_list[$m[1]][$keys_imp]=array("category"=>$src[category], "data"=>$src, "priority"=>$m[1], "alias"=>array_splice($keys_parts, 1, sizeof($keys_parts)));
+      $values_list[$m[1]][]=array("category"=>$src[category], "data"=>$src, "priority"=>$m[1]);
     }
   }
 
@@ -67,7 +64,7 @@ foreach($process_overlays as $overlay) {
       $v=array_merge($v, $values_list[$i]);
   }
   $values_list=$v;
-//  print_r($values_list);
+ //print_r($values_list);
 
   $index=0;
   $sql_type="";
@@ -79,7 +76,7 @@ foreach($process_overlays as $overlay) {
   $style_text="";
   $list_columns=array();
 
-  foreach($values_list as $keys_imp=>$values_data) {
+  foreach($values_list as $values_data) {
     $data=$values_data[data];
     $icon=$data[icon];
     $icon_prefix=false;
@@ -159,26 +156,7 @@ foreach($process_overlays as $overlay) {
     $sql_type.="  WHEN ";
     $sql_network.="  WHEN ";
 
-    $keys=explode(" ", $keys_imp);
-    $l=array();
-    foreach($keys as $i=>$k) {
-      $l1=parse_key($k, &$list_columns);
-      if($l1) $l[]=$l1;
-    }
-
-    $alias=array();
-    foreach($values_data[alias] as $a) {
-      $a=explode(" ", $a);
-      $b=array();
-      foreach($a as $a1)
-	$l1=parse_key($a1, &$list_columns);
-        if($l1) $b[]=$l1;
-      $alias[]=implode(" and ", $b);
-    }
-
-    $statement=implode(" and ", $l);
-    if(sizeof($alias))
-      $statement="($statement) or (".implode(") or (", $alias).")";
+    $statement=parse_wholekey($data[keys], &$list_columns);
     $sql_type.=$statement;
     $sql_network.=$statement;
       $sql_desc.="  WHEN ";
@@ -187,19 +165,6 @@ foreach($process_overlays as $overlay) {
       $sql_desc.=" THEN \"$data[desc]\"\n";
     else
       $sql_desc.=" THEN ''\n";
-  //  if($data[subkeys]) foreach($data[subkeys] as $subkey) {
-  //    $subkeys=explode(" ", $subkey);
-  ////    print $subkey;
-  //    $l=array();
-  //
-  //    foreach($subkeys as $k) {
-  //      $l1=explode("=", $k);
-  //      $l[]="[$l1[0]]='$l1[1]'";
-  //    }
-  //
-  //    print " and not (".implode(" and ", $l).")";
-  //
-  //  }
     $sql_type.=" THEN $index\n";
     $sql_network.=" THEN '{$data[network]}'\n";
 
