@@ -1,4 +1,3 @@
-lang_str["amenity=restaurant"]=[ "Restaurant", "Restaurants" ];
-lang_str["amenity=cafe"]      =[ "Kaffehaus", "Kaffeehäuser" ];
-lang_str["amenity=pub"]       =[ "Pub", "Pubs" ];
-
+lang_str["tag:amenity=restaurant"]=[ "Restaurant", "Restaurants" ];
+lang_str["tag:amenity=cafe"]      =[ "Kaffehaus", "Kaffeehäuser" ];
+lang_str["tag:amenity=pub"]       =[ "Pub", "Pubs" ];
