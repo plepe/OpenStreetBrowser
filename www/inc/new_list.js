@@ -6,7 +6,7 @@ var overlays={
   "culture": "culture",
   "shop": "shop",
   "transport/pt": "pt",
-  "transport/ch": "ch",
+  "transport/alternative": "ch",
   "transport/car": "car"
 };
 
