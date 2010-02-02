@@ -57,3 +57,6 @@ lang_str["cat:transport/alternative"]=[ "Alternative (Cycling, Hiking, ...)" ];
 lang_str["cat:transport/alternative/amenities"]=[ "Amenities" ];
 lang_str["cat:transport/alternative/routes"]=[ "Routes" ];
 lang_str["cat:transport/other"]=[ "Other" ];
+lang_str["cat:industry"]=[ "Industry" ];
+lang_str["cat:industry/power"]=[ "Power" ];
+lang_str["cat:industry/works"]=[ "Works" ];

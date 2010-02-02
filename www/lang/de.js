@@ -54,3 +54,6 @@ lang_str["cat:transport/alternative"]=[ "Alternativ (Rad, Wandern, ...)" ];
 lang_str["cat:transport/alternative/amenities"]=[ "Einrichtungen" ];
 lang_str["cat:transport/alternative/routes"]=[ "Routes" ];
 lang_str["cat:transport/other"]=[ "Andere" ];
+lang_str["cat:industry"]=[ "Industrie" ];
+lang_str["cat:industry/power"]=[ "Energie" ];
+lang_str["cat:industry/works"]=[ "Fabriken" ];
