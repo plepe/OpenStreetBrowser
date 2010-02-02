@@ -84,7 +84,10 @@ else
 <input id='search' value='<?=lang("search_field")?>' onChange="search(this)" onFocus="search_focus(this)" />
 </div>
 <div id='details' class='info'>
-<div id='details_content' class='details'><img src="img/ajax_loader.gif" /> loading</div>
+<div id='details_content' class='details'>
+<?
+print list_template();
+?>
 </div>
 </div>
 <div id='lang_select'>

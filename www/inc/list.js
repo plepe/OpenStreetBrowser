@@ -17,15 +17,15 @@ function list_call_back(response) {
 
   info.className="info";
 //  map_div.className="map";
-  var text_node=data.getElementsByTagName("text");
-  if(text_node) {
-    if(!text_node[0])
-      show_msg("Returned data invalid", response.responseText);
-    var text=get_content(text_node[0]);
-//alert(text_node[0].nodeValue);
-//    info_content.appendChild(text_node[0].cloneNode(true));
-    info_content.innerHTML=text;
-  }
+//  var text_node=data.getElementsByTagName("text");
+//  if(text_node) {
+//    if(!text_node[0])
+//      show_msg("Returned data invalid", response.responseText);
+//    var text=get_content(text_node[0]);
+////alert(text_node[0].nodeValue);
+////    info_content.appendChild(text_node[0].cloneNode(true));
+//    info_content.innerHTML=text;
+//  }
 
   if(list_reload_necessary) {
     list_reload();
@@ -43,6 +43,8 @@ function list_reload() {
   var x=map.calculateBounds();
   var info_lists=[];
   var form=document.getElementById("list_form");
+  show_list();
+  return;
 
   if(!x)
     return;
@@ -63,7 +65,7 @@ function list_reload() {
   list_reload_working=1;
   list_reload_necessary=0;
 
-  ajax("load_list", { "left": x.left, "top": x.top, "right": x.right, "bottom": x.bottom, "zoom": map.zoom, "items": info_lists, "lang": lang }, list_call_back);
+  ajax_direct("list.php", { "viewbox": x.left +","+ x.top +","+ x.right +","+ x.bottom, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_call_back);
 
   var info_content=document.getElementById("details_content");
   var map_div=document.getElementById("map");
