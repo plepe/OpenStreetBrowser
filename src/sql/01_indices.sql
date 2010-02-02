@@ -30,6 +30,8 @@ create index planet_osm_point_highway on planet_osm_point("highway");
 create index planet_osm_point_barrier on planet_osm_point("barrier");
 create index planet_osm_point_power on planet_osm_point("power");
 create index planet_osm_point_man_made on planet_osm_point("man_made");
+create index planet_osm_point_sport on planet_osm_point("sport");
+create index planet_osm_point_leisure on planet_osm_point("leisure");
 
 create index way_nodes_seq_id on way_nodes("sequence_id");
 
@@ -55,3 +57,5 @@ create index planet_osm_polygon_cemetery on planet_osm_polygon("cemetery");
 create index planet_osm_polygon_power    on planet_osm_polygon("power");
 create index planet_osm_polygon_man_made on planet_osm_polygon("man_made");
 create index planet_osm_polygon_name	 on planet_osm_polygon("name");
+create index planet_osm_polygon_sport    on planet_osm_polygon("sport");
+create index planet_osm_polygon_leisure  on planet_osm_polygon("leisure");

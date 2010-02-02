@@ -58,7 +58,7 @@ foreach($wiki_data["Values"] as $src) {
     $src[importance]=array($src[importance]);
 
   $more=parse_src_more($src[more]);
-  $tables=array("point", "polygon");
+  $tables=array("polygon", "point");
   if($more[tables]) {
     $tables=explode(",", $more[tables]);
   }
