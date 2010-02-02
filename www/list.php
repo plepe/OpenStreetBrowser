@@ -9,6 +9,7 @@ options:
   srs=900913
   exclude=node_123456,way_12345,...
   lang=en
+  count=10
 
 example: 
   http://.../list.php?viewbox=1820510.3841097,6140479.7509884,1821443.1547203,6139601.9194918&zoom=17&category=gastro&lang=en
@@ -20,6 +21,29 @@ include "inc/tags.php";
 include "inc/object.php";
 include "inc/lang.php";
 require "/osm/skunkosm/x.php";
+
+$importance=array("international", "national", "regional", "urban", "suburban", "local");
+$types=array(
+  "point"=>array(
+    "id_type"=>"node",
+    "id_name"=>"osm_id",
+    "geo"=>"astext(way) as center",
+  ),
+  "polygon"=>array(
+    "id_type"=>"way",
+    "id_name"=>"osm_id",
+    "geo"=>"astext(ST_Centroid(way)) as center",
+  ),
+  "line"=>array(
+    "id_type"=>"way",
+    "id_name"=>"osm_id",
+    "geo"=>"astext(ST_Centroid(way)) as center",
+  ),
+  "rels"=>array(
+    "id_type"=>"rel",
+    "id_name"=>"id",
+    "geo"=>"(select astext(ST_Centroid(ST_Collect((CASE WHEN p.way is not null THEN p.way WHEN po.way is not null THEN po.way WHEN l.way is not null THEN l.way END)))) from relation_members rm left join planet_osm_point p on rm.member_id=p.osm_id and rm.member_type='N' left join planet_osm_polygon po on rm.member_id=po.osm_id and rm.member_type='W' left join planet_osm_line l on rm.member_id=l.osm_id and rm.member_type='W' where rm.relation_id=planet_osm_rels.id) as center",
+));
 
 $ret=main();
 Header("content-type: text/xml; charset=utf-8");
@@ -59,33 +83,17 @@ function list_print($res) {
   return $ret;
 }
 
-function get_list() {
+function get_list($param) {
   global $request;
+  global $importance;
+  global $types;
+
   $count=10;
+  if($param['count'])
+    $count=$param['count'];
+
   $max_count=$count+1;
   $list=array();
-  $importance=array("international", "national", "regional", "urban", "suburban", "local");
-  $types=array(
-    "point"=>array(
-      "id_type"=>"node",
-      "id_name"=>"osm_id",
-      "geo"=>"astext(way) as center",
-    ),
-    "polygon"=>array(
-      "id_type"=>"way",
-      "id_name"=>"osm_id",
-      "geo"=>"astext(ST_Centroid(way)) as center",
-    ),
-    "line"=>array(
-      "id_type"=>"way",
-      "id_name"=>"osm_id",
-      "geo"=>"astext(ST_Centroid(way)) as center",
-    ),
-    "rels"=>array(
-      "id_type"=>"rel",
-      "id_name"=>"id",
-      "geo"=>"(select astext(ST_Centroid(ST_Collect((CASE WHEN p.way is not null THEN p.way WHEN po.way is not null THEN po.way WHEN l.way is not null THEN l.way END)))) from relation_members rm left join planet_osm_point p on rm.member_id=p.osm_id and rm.member_type='N' left join planet_osm_polygon po on rm.member_id=po.osm_id and rm.member_type='W' left join planet_osm_line l on rm.member_id=l.osm_id and rm.member_type='W' where rm.relation_id=planet_osm_rels.id) as center",
-    ));
   $search_types=array("point", "polygon");
   $cat="gastro";
 
@@ -129,7 +137,7 @@ function get_list() {
 function main() {
   $ret ="<?xml version='1.0' encoding='UTF-8'?>\n";
   $ret.="<results generator='OpenStreetBrowser'>\n";
-  $ret.=get_list();
+  $ret.=get_list($_REQUEST);
   $ret.="</results>\n";
 
   return $ret;
