@@ -8,7 +8,7 @@ function list_make_list(cat) {
 
   for(var placei=0; placei<places.length; placei++) {
     var place=places[placei];
-    ret+="<li><element id='"+place.getAttribute("id")+"'>"+place.getAttribute("name")+"</element></li>\n";
+    ret+=list_entry(place);
   }
 
   if(cat.getAttribute("complete")!="true") {

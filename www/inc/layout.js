@@ -17,3 +17,12 @@ function box_click(boxname, subboxname) {
 
   box_change(ob);
 }
+
+function list_entry(ob) {
+//  if(sizeof($app)>0)
+//    $app=" (".implode(", ", $app).")";
+//  else
+//    $app="";
+
+  return "<li class='listitem' id='list_"+ob.getAttribute("id")+"'><element id='"+ob.getAttribute("id")+"'><a href='#"+ob.getAttribute("id")+"' onMouseOver='set_highlight([\""+ob.getAttribute("id")+"\"])' onMouseOut='unset_highlight()'>"+ob.getAttribute("name")+"</a></element></li>\n";
+}
