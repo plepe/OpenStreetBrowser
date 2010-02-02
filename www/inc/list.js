@@ -166,7 +166,12 @@ function list_reload(info_lists) {
     }
   }
 
-  ajax_direct("list.php", { "viewbox": x.left +","+ x.top +","+ x.right +","+ x.bottom, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_call_back);
-
   list_last=info_lists;
+
+  if(info_lists.length==0) {
+    list_reload_working=0;
+    return;
+  }
+
+  ajax_direct("list.php", { "viewbox": x.left +","+ x.top +","+ x.right +","+ x.bottom, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_call_back);
 }
