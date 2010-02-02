@@ -61,7 +61,8 @@ function list_print($res) {
 
 function get_list() {
   global $request;
-  $max_count=10+1;
+  $count=10;
+  $max_count=$count+1;
   $list=array();
   $importance=array("international", "national", "regional", "urban", "suburban", "local");
   $types=array(
@@ -108,10 +109,19 @@ function get_list() {
 //      $list[]=$elemc;
 //  }
 
-  $ret="";
+  $more=0;
+  if(sizeof($list)>$count) {
+    $list=array_slice($list, 0, $count);
+    $more=1;
+  }
+
+  $ret ="<category id='$cat'";
+  $ret.=" complete='".($more?"false":"true")."'";
+  $ret.=">\n";
   foreach($list as $l) {
     $ret.=list_print($l);
   }
+  $ret.="</category>\n";
 
   return $ret;
 }
