@@ -1,6 +1,33 @@
+var list_cache=[];
+// entry in list_cache: [ viewbox, category, data ]
 var list_last=[];
 var list_reload_necessary=1;
 var list_reload_working=0;
+
+list_cache.clean_up=function() {
+  while(this.length>10) {
+    this.shift();
+  }
+}
+
+list_cache.search_element=function(viewbox, category) {
+  for(var i=0; i<this.length; i++) {
+    if((this[i].viewbox==viewbox)&&
+       (this[i].category==category))
+      return this[i];
+  }
+
+  return null;
+}
+
+list_cache.search=function(viewbox, category) {
+  var ret;
+
+  if(ret=list_cache.search_element(viewbox, category))
+    return ret.text;
+
+  return null;
+}
 
 function list_make_list(cat) {
   var ret="";
@@ -31,6 +58,9 @@ function list_call_back(response) {
   var info_content=document.getElementById("details_content");
   var map_div=document.getElementById("map");
   var info=document.getElementById("details");
+  var request;
+  if(request=data.getElementsByTagName("request"))
+    request=request[0];
 
   info.className="info";
   var cats=data.getElementsByTagName("category");
@@ -45,6 +75,15 @@ function list_call_back(response) {
       ret+=list_make_list(cat);
       ret+="</ul>\n";
       div.innerHTML=ret;
+    }
+
+    if(request) {
+      list_cache.push({
+	viewbox:        request.getAttribute("viewbox"),
+        category:       request.getAttribute("category"),
+	text:     	ret,
+      });
+      list_cache.clean_up();
     }
   }
 //  map_div.className="map";
@@ -77,6 +116,10 @@ function list_more_call_back(response) {
     return;
   }
 
+  var request;
+  if(request=data.getElementsByTagName("request"))
+    request=request[0];
+
   var cats=data.getElementsByTagName("category");
   for(var cati=0; cati<cats.length; cati++) {
     var cat=cats[cati];
@@ -89,8 +132,12 @@ function list_more_call_back(response) {
     var ul=div.getElementsByTagName("ul");
     ul=ul[0];
 
-    if(div) {
-      ul.innerHTML+=list_make_list(cat);
+    var text=list_make_list(cat);
+    ul.innerHTML+=text;
+
+    var ob;
+    if(ob=list_cache.search_element(request.getAttribute("viewbox"), cat_id)) {
+      ob.text=div.innerHTML;
     }
   }
 //  map_div.className="map";
@@ -138,6 +185,7 @@ function list_reload(info_lists) {
 
   if(!x)
     return;
+  var viewbox=x.left +","+ x.top +","+ x.right +","+ x.bottom;
 
   if(!info_lists) {
     var info_lists=[];
@@ -159,6 +207,17 @@ function list_reload(info_lists) {
   list_reload_necessary=0;
 
   for(var i in info_lists) {
+    var ret;
+
+    if(ret=list_cache.search(viewbox, info_lists[i])) {
+      var div=document.getElementById("content_"+info_lists[i]);
+      div.innerHTML=ret;
+
+      delete(info_lists[i]);
+    }
+  }
+
+  for(var i in info_lists) {
     if(category_leaf[info_lists[i]]) {
       var div=document.getElementById("content_"+info_lists[i]);
       if(div)
@@ -173,5 +232,6 @@ function list_reload(info_lists) {
     return;
   }
 
-  ajax_direct("list.php", { "viewbox": x.left +","+ x.top +","+ x.right +","+ x.bottom, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_call_back);
+
+  ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_call_back);
 }
