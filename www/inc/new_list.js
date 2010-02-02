@@ -59,7 +59,7 @@ function box_open(head, path, content, state) {
        (content==null?"":" checked='checked'")+
        " onChange='new_box_change(this)' />"+
        "<a href='javascript:new_box_click(\""+path+"\")'>"+
-       head+"</a></h"+level+">\n";
+       t("cat:"+path)+"</a></h"+level+">\n";
   if(content!=null)
     ret+=content;
   ret+="<div class='box_content_"+level+"' id='content_"+path+"'>\n";
