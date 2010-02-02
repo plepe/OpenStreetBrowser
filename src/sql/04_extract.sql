@@ -43,8 +43,7 @@ create table planet_osm_line_extract (
   power		text,
   man_made	text,
   "natural"	text,
-  importance	text,
-  primary key(osm_id)
+  importance	text
 );
 SELECT AddGeometryColumn('planet_osm_line_extract', 'way', 900913, 'LINESTRING', 2);
 
@@ -61,3 +60,4 @@ insert into planet_osm_line_extract
     and osm_id>=0;
 
 create index planet_osm_line_extract_way on planet_osm_line_extract using gist(way);
+create index planet_osm_line_extract_osm_id on planet_osm_line_extract(osm_id);
