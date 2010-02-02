@@ -66,6 +66,11 @@ function list_call_back(response) {
   if(request=data.getElementsByTagName("request"))
     request=request[0];
 
+  if(!request) {
+    alert("response empty - parsing error?");
+    return;
+  }
+
   info.className="info";
   var cats=data.getElementsByTagName("category");
   for(var cati=0; cati<cats.length; cati++) {
@@ -123,6 +128,11 @@ function list_more_call_back(response) {
   var request;
   if(request=data.getElementsByTagName("request"))
     request=request[0];
+
+  if(!request) {
+    alert("response empty - parsing error?");
+    return;
+  }
 
   var cats=data.getElementsByTagName("category");
   for(var cati=0; cati<cats.length; cati++) {

@@ -87,7 +87,7 @@ function list_print($res) {
   $info=explode("||", $res[res]);
   $lang="en";
   global $lang_str;
-  $make_valid=array("&"=>"&amp;");
+  $make_valid=array("&"=>"&amp;", "\""=>"&quot;");
 
   $ret.="  id=\"$id\"\n";
   $ret.="  center=\"$res[center]\"\n";
