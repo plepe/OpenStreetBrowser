@@ -28,4 +28,5 @@
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
    </Layer>
+   <InsertLayer name="ch" />
 </Map>
