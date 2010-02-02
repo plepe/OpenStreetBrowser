@@ -1,10 +1,10 @@
 var list_open={"culture": 1, "culture/religion": 1};
 var category_leaf={};
 var overlays={
-  "gastro": "food",
+  "leisure/gastro": "food",
+  "leisure/shop": "shop",
   "services": "services",
   "culture": "culture",
-  "shop": "shop",
   "transport/pt": "pt",
   "transport/alternative": "ch",
   "transport/car": "car"
