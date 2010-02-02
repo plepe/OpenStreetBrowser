@@ -198,6 +198,12 @@ function main() {
   $ret ="<?xml version='1.0' encoding='UTF-8'?>\n";
   $ret.="<results generator='OpenStreetBrowser'>\n";
 
+  $ret.="<request";
+  foreach($_REQUEST as $rk=>$rv) {
+    $ret.=" $rk=\"".htmlentities(stripslashes($rv))."\"";
+  }
+  $ret.="/>\n";
+
   $r=$_REQUEST;
   if($r[category]) {
     $cs=explode(",", $r[category]);
