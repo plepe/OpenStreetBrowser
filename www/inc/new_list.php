@@ -1,5 +1,5 @@
 <?
-include "/osm/skunkosm/x.php";
+$category_list=unserialize(file_get_contents("/osm/skunkosm/category_list.save"));
 
 function list_template() {
   global $category_list;
