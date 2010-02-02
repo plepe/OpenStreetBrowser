@@ -18,7 +18,7 @@ function new_box_change(ob) {
   }
 }
 
-function box_click(boxname, subboxname) {
+function new_box_click(boxname, subboxname) {
   var ob;
 
   if(!subboxname)

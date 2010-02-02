@@ -16,6 +16,22 @@ function list_call_back(response) {
   var info=document.getElementById("details");
 
   info.className="info";
+  var cats=data.getElementsByTagName("category");
+  for(var cati=0; cati<cats.length; cati++) {
+    var cat=cats[cati];
+    var div=document.getElementById("content_"+cat.getAttribute("id"));
+    var ret="<ul>";
+    if(div) {
+      var places=cat.getElementsByTagName("place");
+      for(var placei=0; placei<places.length; placei++) {
+	var place=places[placei];
+	ret+="<li>"+place.getAttribute("name")+"</li>\n";
+      }
+    }
+    ret+="</ul>\n";
+
+    div.innerHTML=ret;
+  }
 //  map_div.className="map";
 //  var text_node=data.getElementsByTagName("text");
 //  if(text_node) {
@@ -64,6 +80,13 @@ function list_reload(info_lists) {
   }
   list_reload_working=1;
   list_reload_necessary=0;
+
+  for(var i=0; i<info_lists.length; i++) {
+    var cat=info_lists[i];
+    var div=document.getElementById("content_"+cat);
+    if(div)
+      div.innerHTML="<img src='img/ajax_loader.gif'> loading";
+  }
 
   ajax_direct("list.php", { "viewbox": x.left +","+ x.top +","+ x.right +","+ x.bottom, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_call_back);
 
