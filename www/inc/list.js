@@ -87,6 +87,14 @@ function list_more_call_back(response) {
     if(ob=list_cache.search_element(request.getAttribute("viewbox"), cat_id)) {
       ob.text=div.innerHTML;
     }
+    else {
+      list_cache.push({
+	viewbox: request.getAttribute("viewbox"),
+	category: request.getAttribute("category"),
+	text: div.innerHTML,
+      });
+      list_cache.clean_up();
+    }
   }
 //  map_div.className="map";
 //  var text_node=data.getElementsByTagName("text");
