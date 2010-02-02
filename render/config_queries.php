@@ -153,10 +153,11 @@ $query["base_amenity"]=<<<EOT
 	   (CASE
 	     /* type = natural_big and natural */
 	     WHEN "natural" is not null THEN (CASE
-	       WHEN "natural" in ('peak', 'volcano') THEN 't1'
+	       WHEN "natural" in ('peak') THEN 't1'
 	       WHEN "natural" in ('cliff') THEN 't2'
 	       WHEN "natural" in ('cave_entrance') THEN 't3'
 	       WHEN "natural" in ('land') THEN 't4'
+	       WHEN "natural" in ('volcano') THEN 't5'
 
 	       WHEN "natural" in ('spring') THEN 't1'
 	       WHEN "natural" in ('beach') THEN 't2'

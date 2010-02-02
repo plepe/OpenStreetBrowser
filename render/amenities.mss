@@ -100,6 +100,9 @@
 .amenity[type=natural_big][sub_type=t1][zoom>=11] name {
   point-file: url('img/peak.png');
 }
+.amenity[type=natural_big][sub_type=t5][zoom>=11] name {
+  point-file: url('img/volcano.png');
+}
 .amenity[type=natural_big][sub_type=t3][zoom>=11] name {
   point-file: url('img/cave.png');
 }
