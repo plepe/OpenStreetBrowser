@@ -86,12 +86,9 @@ cd $ROOT_PATH/render
 cascadenik-compile.py $ROOT_PATH/render/base.mml > $ROOT_PATH/render/base.xml
 $ROOT_PATH/src/update_xml $ROOT_PATH/render/base.xml
 echo "PT"
+cd $ROOT_PATH/render/img/rotate/src
+for i in *.svg ; do convert -background none $i ../`echo $i | sed "s/svg$/png/"` ; done
 cd $ROOT_PATH/render
-convert -background none img/src/stop_p_back.svg img/stop_p_back.png
-convert -background none img/src/stop_p_for.svg img/stop_p_for.png
-convert -background none img/src/stop_n_back.svg img/stop_n_back.png
-convert -background none img/src/stop_n_for.svg img/stop_n_for.png
-convert -background none img/src/stop.svg img/stop.png
 cascadenik-compile.py $ROOT_PATH/render/overlay_pt.mml > $ROOT_PATH/render/overlay_pt.xml
 $ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_pt.xml
 ./create_rotate_style

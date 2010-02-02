@@ -81,7 +81,6 @@ foreach($list as $process) {
   }
 
   if(eregi("^(.*)\/([^\/]*)\.png$", $point->getAttribute("file"), $m)) {
-    unlink($point->getAttribute("file"));
     $new_file="$m[1]/$new_name";
   }
 
@@ -119,6 +118,9 @@ foreach($list as $process) {
 	$img=sprintf("%s_%02d.png", $new_file, $a);
 	if(!$converted)
 	  system("convert -background none -rotate ".(270+$a/$steps*360)." $orig_file $img");
+        if(!file_exists($img)) {
+	  echo "Not converted!\n"; exit;
+	}
 
 	$p->setAttribute("file", $img);
 	$size=getimagesize($img);
@@ -128,18 +130,25 @@ foreach($list as $process) {
 
       $style->appendChild($n);
     }
+
+    unlink($point->getAttribute("file"));
   }
   else {
-    $img="$new_file.png";
+    $img="{$new_file}.png";
     if($orig_file!=$img) {
       system("convert -background none $orig_file $img");
+      if(!file_exists($img)) {
+	echo "Not converted!\n"; exit;
+      }
 
+      unlink($point->getAttribute("file"));
       $point->setAttribute("file", $img);
       $size=getimagesize($img);
       $point->setAttribute("height", $size[0]);
       $point->setAttribute("width", $size[1]);
     }
   }
+
 }
 
 $dom->save($file);

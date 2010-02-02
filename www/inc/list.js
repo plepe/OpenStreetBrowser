@@ -194,6 +194,24 @@ function list_reload(info_lists) {
   ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_more_call_back);
 }
 
+function get_sub_lists(cat) {
+  var cat_ex=cat.split("/");
+  var cat_list=category_list;
+  var ret=[];
+
+  for(var i=0; i<cat_ex.length; i++) {
+    cat_list=cat_list[cat_ex[i]];
+  }
+
+  for(var i in cat_list) {
+    var c=cat+"/"+i;
+    ret.push(c);
+    ret.push(get_sub_lists(c));
+  }
+
+  return ret;
+}
+
 function new_box_change(ob) {
   var div=document.getElementById("content_"+ob.name);
   var list=document.getElementById("list_"+ob.name);
@@ -249,8 +267,22 @@ function list_check_overlays(path, state) {
   if(!overlays_layers)
     return;
 
-  if(o=overlays[path]) {
-    overlays_layers[o].setVisibility(state);
+  var lists=get_sub_lists(path);
+  lists.push(path);
+
+  if(state==true) {
+    for(var i=0; i<lists.length; i++) {
+      if((o=overlays[lists[i]])&&(list_open[lists[i]])) {
+	overlays_layers[o].setVisibility(true);
+      }
+    }
+  }
+  else {
+    for(var i=0; i<lists.length; i++) {
+      if(o=overlays[lists[i]]) {
+	overlays_layers[o].setVisibility(false);
+      }
+    }
   }
 }
 

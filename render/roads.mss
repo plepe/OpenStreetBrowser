@@ -119,7 +119,7 @@
 { line-color: #b7b8cc; }
 .roads_fill[highway_type=barrier]
 { line-color: #bf685c; }
-.roads_fill[highway_type=natural][sub_type=t3] /* stream=cliff */
+.roads_fill[highway_type=natural][sub_type=t1][zoom>=12] /* natural=cliff */
 { line-pattern-file: url('img/cliff.png'); }
 .roads_fill[highway_type=service][sub_type=t2]
 { line-color: #a77300; }
