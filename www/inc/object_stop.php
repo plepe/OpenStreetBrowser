@@ -1,6 +1,6 @@
 <?
 require_once("object.php");
-require_once("list.php");
+require_once("inc/list.php");
 
 $stop_types=array(
   array("amenity", "bus_station"),

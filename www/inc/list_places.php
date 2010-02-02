@@ -1,7 +1,7 @@
 <?
 # Necessary include files
 require_once("object.php");
-require_once("list.php");
+require_once("inc/list.php");
 
 # important vars and constants
 $place_list=array(

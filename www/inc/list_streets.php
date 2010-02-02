@@ -1,6 +1,6 @@
 <?
 # Necessary include files
-require_once("list.php");
+require_once("inc/list.php");
 
 # registering
 register_list("places", "streets", "infolist_streets");
