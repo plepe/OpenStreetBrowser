@@ -104,6 +104,28 @@ function get_list($param) {
   if($param['count'])
     $count=$param['count'];
 
+  if($param['exclude']) {
+    $excl_list=explode(",", $param['exclude']);
+    $exclude_list=array();
+    foreach($excl_list as $e) {
+      if(ereg("(node|way|rel)_([0-9]*)", $e, $m))
+	$exclude_list[$m[1]][]=$m[2];
+    }
+
+    foreach($exclude_list as $type=>$excl_list) {
+      $exclude_list[$type]="id not in (".implode(", ", $excl_list).")";
+    }
+
+    if($exclude_list[node])
+      $sql_where["point"][]=$exclude_list[node];
+    if($exclude_list[way]) {
+      $sql_where["polygon"][]=$exclude_list[way];
+      $sql_where["line"][]=$exclude_list[way];
+    }
+    if($exclude_list[rel])
+      $sql_where["rels"][]=$exclude_list[rel];
+  }
+
   $max_count=$count+1;
   $list=array();
   $search_types=array("point", "polygon");
@@ -112,7 +134,13 @@ function get_list($param) {
   foreach($importance as $imp) {
     foreach($search_types as $t) {
       if(($max_count>0)&&($request[$cat][$imp])) {
-	$qryc="select * from (select '{$types[$t][id_type]}' as type, {$types[$t][id_name]} as id, {$types[$t][geo]}, (CASE {$request[$cat][$imp]} END) as res from planet_osm_$t as t1) as t where res is not null and id>0 limit $max_count";
+	$where="";
+	if(sizeof($sql_where[$t]))
+	  $where.="and ".implode(" and ", $sql_where[$t]);
+	if(sizeof($sql_where['*']))
+	  $where.="and ".implode(" and ", $sql_where['*']);
+
+	$qryc="select * from (select '{$types[$t][id_type]}' as type, {$types[$t][id_name]} as id, {$types[$t][geo]}, (CASE {$request[$cat][$imp]} END) as res from planet_osm_$t as t1) as t where res is not null and id>0 $where limit $max_count";
 	$resc=sql_query($qryc);
 	$max_count-=pg_num_rows($resc);
 	while($elemc=pg_fetch_assoc($resc))
