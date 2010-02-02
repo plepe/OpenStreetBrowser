@@ -76,9 +76,14 @@ function parse_key($key, $list_columns) {
     if($i==0)
       $list_columns[$m[1]][]="*";
   }
-  elseif(eregi("^([a-z0-9_]+)(=|!=)(.*)$", $key, $m)) {
+  elseif(eregi("^([a-z0-9_]+)(=|!=|<|>|<=|>=)(.*)$", $key, $m)) {
     if(($m[2]=="=")&&($m[3]=="*")) {
       $ret="\"$m[1]\" is not null";
+      if($i==0)
+	$list_columns[$m[1]][]="*";
+    }
+    elseif(($m[2]=="=")&&($m[3]=="")) {
+      $ret="(\"$m[1]\"='' or \"$m[1]\" is null)";
       if($i==0)
 	$list_columns[$m[1]][]="*";
     }
@@ -91,6 +96,17 @@ function parse_key($key, $list_columns) {
       $ret="\"$m[1]\" not in ('".implode("', '", explode(";", $m[3]))."')";
       if($i==0) foreach(explode(";", $m[3]) as $m3) {
 	$list_columns[$m[1]][]="!$m3";
+      }
+    }
+    elseif(in_array($m[2], array(">", "<", ">=", "<="))) {
+      if(eregi("^(.*)(>|<|>=|<=|=)(.*)$", $m[3], $m1)) {
+	$ret="(\"$m[1]\" similar to '[0-9]+' and cast(\"$m[1]\" as int)$m[2]$m1[1] and cast(\"$m[1]\" as int)$m1[2]$m1[3])";
+      }
+      else {
+	$ret="(\"$m[1]\" similar to '[0-9]+' and cast(\"$m[1]\" as int)$m[2]$m[3])";
+      }
+	if($i==0) foreach(explode(";", $m[3]) as $m3) {
+	  $list_columns[$m[1]][]="*";
       }
     }
   }

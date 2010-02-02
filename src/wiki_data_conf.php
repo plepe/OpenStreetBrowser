@@ -109,7 +109,17 @@ foreach($req as $category=>$d1) {
       foreach($d2 as $tables=>$d3) {
 	foreach($d3 as $col=>$vals) {
 	  $res[$category][$importance][$tables]['columns'][$col]=$vals;
-	  $res[$category][$importance][$tables]['where'][]="\"$col\" in ('".implode("', '", $vals)."')";
+	  // if all values are "positive" (no 'not null' and no 'not in (...)') 
+	  // then we can make use of indices
+	  $pos=true;
+	  foreach($vals as $v) {
+	    if((substr($v, 0, 1)=="!")||($v=="*")) {
+	      $pos=false;
+	    }
+	  }
+
+	  if($pos)
+	    $res[$category][$importance][$tables]['where'][]="\"$col\" in ('".implode("', '", $vals)."')";
 	}
       }
     }
