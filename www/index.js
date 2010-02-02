@@ -114,6 +114,7 @@ function redraw() {
   showing_details=false;
 
   if(x=="") {
+    show_list();
     list_reload();
   }
   else if(x=="mapkey") {

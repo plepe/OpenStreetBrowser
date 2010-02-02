@@ -1,6 +1,6 @@
 var list_cache=[];
 // entry in list_cache: [ viewbox, category, data ]
-var list_last=[];
+var list_open={};
 var list_reload_necessary=1;
 var list_reload_working=0;
 var category_leaf={};
@@ -77,7 +77,8 @@ function list_more_call_back(response) {
       continue;
     var div=document.getElementById("content_"+cat_id);
     var more=document.getElementById("more_"+cat_id);
-    more.parentNode.removeChild(more);
+    if(more)
+      more.parentNode.removeChild(more);
     var ul=div.getElementsByTagName("ul");
     ul=ul[0];
 
@@ -153,7 +154,7 @@ function list_reload(info_lists) {
       }
     }
     else
-      info_lists=list_last;
+      info_lists=list_open;
   }
 
   if(list_reload_working) {
@@ -182,8 +183,6 @@ function list_reload(info_lists) {
     }
   }
 
-  list_last=info_lists;
-
   if(info_lists.length==0) {
     list_reload_working=0;
     return;
@@ -195,12 +194,31 @@ function list_reload(info_lists) {
 
 function new_box_change(ob) {
   var div=document.getElementById("content_"+ob.name);
+  var list=document.getElementById("list_"+ob.name);
   div.innerHTML="";
 
   if(ob.checked) {
     div.innerHTML=show_list(ob.name);
     if(category_leaf[ob.name])
       list_reload([ob.name]);
+    else {
+      var sub_lists=[];
+      var sub_ob=div.getElementsByTagName("input");
+      for(var si=0; si<sub_ob.length; si++) {
+	if(sub_ob[si].checked)
+	  sub_lists.push(sub_ob[si].name);
+      }
+      list_reload(sub_lists);
+    }
+  }
+
+  if(ob.checked) {
+    list_open[ob.name]=1;
+    list.className="box_open_"+ob.name.split("/").length;
+  }
+  else {
+    delete list_open[ob.name];
+    list.className="box_closed_"+ob.name.split("/").length;
   }
 
   list_check_overlays(ob.name, ob.checked);
@@ -240,9 +258,9 @@ function box_open(head, path, content, state) {
        " onChange='new_box_change(this)' />"+
        "<a href='javascript:new_box_click(\""+path+"\")'>"+
        t("cat:"+path)+"</a></h"+level+">\n";
+  ret+="<div class='box_content_"+level+"' id='content_"+path+"'>\n";
   if(content!=null)
     ret+=content;
-  ret+="<div class='box_content_"+level+"' id='content_"+path+"'>\n";
   ret+="</div>\n";
   ret+="</div>\n";
 
@@ -286,7 +304,8 @@ function show_list(path, _list) {
       category_leaf[p]=1;
     }
 
-    if(check&&check.checked) {
+    if((check&&check.checked)||
+       ((!check)&&list_open[p])) {
       var r=show_list(p, _list[i]);
       ret+=box_open(i, p, r);
     }
