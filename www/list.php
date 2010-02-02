@@ -27,22 +27,22 @@ $types=array(
   "point"=>array(
     "id_type"=>"node",
     "id_name"=>"osm_id",
-    "geo"=>"astext(way) as center",
+    "geo"=>"way",
   ),
   "polygon"=>array(
     "id_type"=>"way",
     "id_name"=>"osm_id",
-    "geo"=>"astext(ST_Centroid(way)) as center",
+    "geo"=>"way",
   ),
   "line"=>array(
     "id_type"=>"way",
     "id_name"=>"osm_id",
-    "geo"=>"astext(ST_Centroid(way)) as center",
+    "geo"=>"way",
   ),
   "rels"=>array(
     "id_type"=>"rel",
     "id_name"=>"id",
-    "geo"=>"(select astext(ST_Centroid(ST_Collect((CASE WHEN p.way is not null THEN p.way WHEN po.way is not null THEN po.way WHEN l.way is not null THEN l.way END)))) from relation_members rm left join planet_osm_point p on rm.member_id=p.osm_id and rm.member_type='N' left join planet_osm_polygon po on rm.member_id=po.osm_id and rm.member_type='W' left join planet_osm_line l on rm.member_id=l.osm_id and rm.member_type='W' where rm.relation_id=planet_osm_rels.id) as center",
+    //"geo"=>"(select (ST_Collect((CASE WHEN p.way is not null THEN p.way WHEN po.way is not null THEN po.way WHEN l.way is not null THEN l.way END)))) from relation_members rm left join planet_osm_point p on rm.member_id=p.osm_id and rm.member_type='N' left join planet_osm_polygon po on rm.member_id=po.osm_id and rm.member_type='W' left join planet_osm_line l on rm.member_id=l.osm_id and rm.member_type='W' where rm.relation_id=planet_osm_rels.id) as center",
 ));
 
 $ret=main();
@@ -129,6 +129,12 @@ function get_list($param) {
       $sql_where["rels"][]=$exclude_list[rel];
   }
 
+  // viewbox
+  if($param[viewbox]) {
+    $coord=explode(",", $param[viewbox]);
+    $sql_where['*'][]="way&&PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913)";
+  }
+
 //// set some more vars
   $max_count=$count+1;
   $list=array();
@@ -145,7 +151,7 @@ function get_list($param) {
 	if(sizeof($sql_where['*']))
 	  $where.="and ".implode(" and ", $sql_where['*']);
 
-	$qryc="select * from (select '{$types[$t][id_type]}' as type, {$types[$t][id_name]} as id, {$types[$t][geo]}, (CASE {$request[$cat][$imp]} END) as res from planet_osm_$t as t1) as t where res is not null and id>0 $where limit $max_count";
+	$qryc="select *, astext(ST_Centroid(way)) as center from (select '{$types[$t][id_type]}' as type, {$types[$t][id_name]} as id, {$types[$t][geo]} as way, (CASE {$request[$cat][$imp]} END) as res from planet_osm_$t as t1) as t where res is not null and id>0 $where limit $max_count";
 	$resc=sql_query($qryc);
 	$max_count-=pg_num_rows($resc);
 	while($elemc=pg_fetch_assoc($resc))
