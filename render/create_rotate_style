@@ -56,10 +56,13 @@ foreach($list as $process) {
   }
   $filter->nodeValue=implode(" and ", $new_filter_parts);
   print "= $filter->nodeValue\n";
+  $new_name="";
   if($rotate)
     print "rotate: $rotate[0] $rotate[1]\n";
-  if($color_replace) foreach($color_replace as $r=>$c)
+  if($color_replace) foreach($color_replace as $r=>$c) {
     print "color: $r $c\n";
+    $new_name.="-$r$c";
+  }
 
   $point=$rule->getElementsByTagName("PointSymbolizer");
   $point=$point->item(0);
@@ -73,11 +76,14 @@ foreach($list as $process) {
     if(substr($comp, 0, 5)=="0 (0)") {
       $orig_file="img/rotate/src/".substr($r, 0, -4).".svg";
       $svg=true;
+      $new_name=substr($r, 0, -4).$new_name;
     }
   }
 
-  if(eregi("^(.*)\.png$", $point->getAttribute("file"), $m))
-    $new_file=$m[1];
+  if(eregi("^(.*)\/([^\/]*)\.png$", $point->getAttribute("file"), $m)) {
+    unlink($point->getAttribute("file"));
+    $new_file="$m[1]/$new_name";
+  }
 
   print "$orig_file -> $new_file\n";
 
@@ -90,8 +96,11 @@ foreach($list as $process) {
     $orig_file="/tmp/tmp.svg";
   }
 
-
+  $converted=0;
   if($rotate) {
+    if(file_exists("{$new_file}_00.png"))
+      $converted=1;
+
     $varname=$rotate[0];
     $steps=$rotate[1];
 
@@ -108,10 +117,11 @@ foreach($list as $process) {
       $p=$p->item(0);
       if($orig_file) {
 	$img=sprintf("%s_%02d.png", $new_file, $a);
-	system("convert -background none -rotate ".(270+$a/$steps*360)." $orig_file $img");
+	if(!$converted)
+	  system("convert -background none -rotate ".(270+$a/$steps*360)." $orig_file $img");
 
-	$p->setAttribute("file", sprintf($img, $a));
-	$size=getimagesize(sprintf($img, $a));
+	$p->setAttribute("file", $img);
+	$size=getimagesize($img);
 	$p->setAttribute("height", $size[0]);
 	$p->setAttribute("width", $size[1]);
       }
@@ -120,9 +130,19 @@ foreach($list as $process) {
     }
   }
   else {
-    if($orig_file!="$new_file.png")
-      system("convert -background none $orig_file $new_file.png");
+    $img="$new_file.png";
+    if($orig_file!=$img) {
+      system("convert -background none $orig_file $img");
+
+      $point->setAttribute("file", $img);
+      $size=getimagesize($img);
+      $point->setAttribute("height", $size[0]);
+      $point->setAttribute("width", $size[1]);
+    }
   }
 }
 
 $dom->save($file);
+
+unlink("/tmp/diff.png");
+unlink("/tmp/tmp.svg");
