@@ -1,7 +1,7 @@
 var info_no_show=["routing", "internal"];
 
 function info_change() {
-  var form=document.forms.info;
+  var form=document.forms.details_content;
   var el=form.getElementsByTagName("input");
   for(var i=0; i<el.length; i++) {
     if(el[i].type=="checkbox") {

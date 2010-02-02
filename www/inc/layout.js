@@ -1,5 +1,5 @@
 function box_change(ob) {
-  ob.form.submit();
+  info_change();
 }
 
 function box_click(boxname, subboxname) {
