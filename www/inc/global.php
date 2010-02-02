@@ -14,7 +14,7 @@ while($r=readdir($dir)) {
       break;
     case "js":
       if(!$design_hidden)
-	if($r!="hooks.js")
+	if(!in_array($r, array("hooks.js", "lang.js")))
 	  print "<script type='text/javascript' src='inc/$r'></script>\n";
       break;
     case "css":
