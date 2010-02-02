@@ -195,7 +195,22 @@ function list_reload(info_lists) {
 function new_box_change(ob) {
   var div=document.getElementById("content_"+ob.name);
   var list=document.getElementById("list_"+ob.name);
-  div.innerHTML="";
+  var level=ob.name.split("/").length;
+
+  if(ob.checked) {
+    list_open[ob.name]=1;
+    list.className="box_open_"+level;
+    
+    div=document.createElement("div");
+    div.className="box_content_"+level+"_open";
+    div.id="content_"+ob.name;
+    list.appendChild(div);
+  }
+  else {
+    delete list_open[ob.name];
+    list.className="box_closed_"+level;
+    div.parentNode.removeChild(div);
+  }
 
   if(ob.checked) {
     div.innerHTML=show_sub_list(ob.name);
@@ -210,17 +225,6 @@ function new_box_change(ob) {
       }
       list_reload(sub_lists);
     }
-  }
-
-  if(ob.checked) {
-    list_open[ob.name]=1;
-    list.className="box_open_"+ob.name.split("/").length;
-    div.className="box_content_"+ob.name.split("/").length+"_open";
-  }
-  else {
-    delete list_open[ob.name];
-    list.className="box_closed_"+ob.name.split("/").length;
-    div.className="box_content_"+ob.name.split("/").length+"_closed";
   }
 
   list_check_overlays(ob.name, ob.checked);
@@ -260,10 +264,14 @@ function box_open(head, path, content, state) {
        " onChange='new_box_change(this)' />"+
        "<a href='javascript:new_box_click(\""+path+"\")'>"+
        t("cat:"+path)+"</a></h"+level+">\n";
-  ret+="<div class='box_content_"+level+"_"+state+"' id='content_"+path+"'>\n";
-  if(content!=null)
-    ret+=content;
-  ret+="</div>\n";
+
+  if(state=="open") {
+    ret+="<div class='box_content_"+level+"_"+state+"' id='content_"+path+"'>\n";
+    if(content!=null)
+      ret+=content;
+    ret+="</div>\n";
+  }
+
   ret+="</div>\n";
 
   return ret;
