@@ -1,4 +1,3 @@
-var list_open={"culture": 1, "culture/religion": 1};
 var category_leaf={};
 var overlays={
   "leisure/gastro": "food",
@@ -9,10 +8,6 @@ var overlays={
   "transport/alternative": "ch",
   "transport/car": "car"
 };
-
-function load_list(path) {
-
-}
 
 function new_box_change(ob) {
   var div=document.getElementById("content_"+ob.name);
