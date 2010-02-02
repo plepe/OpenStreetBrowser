@@ -8,15 +8,14 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
-      <Parameter name="table">(select "osm_id",
+      <Parameter name="table">(select "osm_id", way,
 	  %SQL_highway%,
 	  (CASE
 	    WHEN "impassable"='yes' THEN 'impassable'
 	    ELSE "smoothness"
-	  END) as smoothness,
-	  "way"
+	  END) as smoothness
 	from planet_osm_line
-	where "smoothness" in ('impassable') or "impasssable"='yes') as highway_smoothness
+	where "smoothness" in ('impassable') or "impassable"='yes') as highway_smoothness
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
