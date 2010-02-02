@@ -100,16 +100,16 @@ $ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_car.xml
 cd $ROOT_PATH
 echo "Other"
 cp $ROOT_PATH/render/overlay_services.template $ROOT_PATH/render/overlay_services.xml
-$ROOT_PATH/src/update_xml.php $ROOT_PATH/render/overlay_services.xml
+$ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_services.xml
 
 cp $ROOT_PATH/render/overlay_culture.template $ROOT_PATH/render/overlay_culture.xml
-$ROOT_PATH/src/update_xml.php $ROOT_PATH/render/overlay_culture.xml
+$ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_culture.xml
 
 cp $ROOT_PATH/render/overlay_food.template $ROOT_PATH/render/overlay_food.xml
-$ROOT_PATH/src/update_xml.php $ROOT_PATH/render/overlay_food.xml
+$ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_food.xml
 
 cp $ROOT_PATH/render/shop.template $ROOT_PATH/render/shop.xml
-$ROOT_PATH/src/update_xml.php $ROOT_PATH/render/shop.xml
+$ROOT_PATH/src/update_xml $ROOT_PATH/render/shop.xml
 
 sleep 2
 
