@@ -33,6 +33,10 @@ function list_make_list(cat) {
   var ret="";
   var places=cat.getElementsByTagName("place");
 
+  if(places.length==0) {
+    ret+=t("nothing found")+"\n";
+  }
+
   for(var placei=0; placei<places.length; placei++) {
     var place=places[placei];
     ret+=list_entry(place);
@@ -40,7 +44,7 @@ function list_make_list(cat) {
 
   if(cat.getAttribute("complete")!="true") {
     var cat_id=cat.getAttribute("id")
-    ret+="<a id='more_"+cat_id+"' href='javascript:list_more(\""+cat_id+"\")'>more</a>\n";
+    ret+="<a id='more_"+cat_id+"' href='javascript:list_more(\""+cat_id+"\")'>"+t("more")+"</a>\n";
   }
 
   return ret;
@@ -166,7 +170,7 @@ function list_more(cat) {
 
   var div=document.getElementById("more_"+cat);
   if(div)
-    div.innerHTML="<img class='loading' src='img/ajax_loader.gif'> loading";
+    div.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+t("loading");
 
   var there=[];
   div=document.getElementById("content_"+cat);
@@ -221,7 +225,7 @@ function list_reload(info_lists) {
     if(category_leaf[info_lists[i]]) {
       var div=document.getElementById("content_"+info_lists[i]);
       if(div)
-	div.innerHTML="<img class='loading' src='img/ajax_loader.gif'> loading";
+	div.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+t("loading");
     }
   }
 

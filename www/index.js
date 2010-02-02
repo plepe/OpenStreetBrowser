@@ -138,7 +138,7 @@ function redraw() {
     var details=document.getElementById("details");
 //    var map=document.getElementById("map");
 
-    details_content.innerHTML="<div class=\"loading\"><img src=\"img/ajax_loader.gif\" /> loading</div>";
+    details_content.innerHTML="<div class=\"loading\"><img src=\"img/ajax_loader.gif\" /> "+t("loading")+"</div>";
     //map_key.className="info_hidden";
     details.className="info_loading";
   }

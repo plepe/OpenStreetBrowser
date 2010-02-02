@@ -1,3 +1,7 @@
+lang_str["more"]                  =[ "more" ];
+lang_str["nothing found"]         =[ "nothing found" ];
+lang_str["loading"]               =[ "loading" ];
+
 lang_str["tag:amenity=restaurant"]=[ "restaurant", "restaurants" ];
 lang_str["tag:amenity=cafe"]      =[ "cafe", "cafes" ];
 lang_str["tag:amenity=pub"]       =[ "pub", "pubs" ];
