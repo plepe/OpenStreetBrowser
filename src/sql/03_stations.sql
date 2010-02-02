@@ -71,6 +71,7 @@ select poi.osm_id, poi.id_type, poi.full_id,
     poi.railway in ('tram_stop', 'station', 'subway_station', 'halt')
     )
       ) as t) as t1 left join relation_members rm on rm.member_id=t1.osm_id and rm.member_type='N' group by t1.osm_id, t1.id_type, t1.full_id, t1.type, t1.pos, t1.len, t1.importance, t1.next_way);
+create index planet_osm_stops_way on planet_osm_stops using gist(way);
 
 -- stop_to_station finds nearby stops with same name
 -- potential BUG: id for point and polygon same in same station
