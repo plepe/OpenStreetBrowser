@@ -100,10 +100,13 @@ function get_list($param) {
   global $importance;
   global $types;
 
+//// process params ////
+  // count
   $count=10;
   if($param['count'])
     $count=$param['count'];
 
+  // exclude
   if($param['exclude']) {
     $excl_list=explode(",", $param['exclude']);
     $exclude_list=array();
@@ -126,11 +129,13 @@ function get_list($param) {
       $sql_where["rels"][]=$exclude_list[rel];
   }
 
+//// set some more vars
   $max_count=$count+1;
   $list=array();
   $search_types=array("point", "polygon");
   $cat="gastro";
 
+//// now run, until we are finished
   foreach($importance as $imp) {
     foreach($search_types as $t) {
       if(($max_count>0)&&($request[$cat][$imp])) {
