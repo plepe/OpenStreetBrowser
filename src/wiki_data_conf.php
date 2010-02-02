@@ -26,7 +26,12 @@ foreach($wiki_data["Values"] as $src) {
   $list_columns=array();
   $l=strtr(parse_wholekey($src[keys], &$list_columns), array("\""=>"\\\""));
 
-  $r="'$src[desc]||$src[icon]'";
+  $r="'$src[desc]||$src[icon]";
+  $r1=array();
+  foreach($list_columns as $key=>$values) {
+    $r1[]="$key='||\\\"$key\\\"||'";
+  }
+  $r.="||".implode(" ", $r1)."'";
 
   $prior=9;
   if(eregi("\(([0-9]+)\)", $src[overlay], $m))

@@ -87,7 +87,12 @@ function list_print($res) {
 
   if($x=$info[1]) {
     $x=strtr($x, $make_valid);
-    $ret.="  icon=\"$info[1]\"\n";
+    $ret.="  icon=\"$x\"\n";
+  }
+
+  if($x=$info[2]) {
+    $x=strtr($x, $make_valid);
+    $ret.="  data=\"$x\"\n";
   }
 
   $ret.="/>\n";
