@@ -154,7 +154,7 @@ function get_list($param) {
 	if(sizeof($sql_where['*']))
 	  $where.="and ".implode(" and ", $sql_where['*']);
 
-	$qryc="select *, astext(ST_Centroid(way)) as center from (select '{$types[$t][id_type]}' as type, {$types[$t][id_name]} as id, {$types[$t][geo]} as way, (CASE {$request[$cat][$imp]} END) as res from planet_osm_$t as t1) as t where res is not null and id>0 $where limit $max_count";
+	$qryc="select *, astext(ST_Centroid(way)) as center from (select '{$types[$t][id_type]}' as type, {$types[$t][id_name]} as id, {$types[$t][geo]} as way, (CASE {$request[$cat][$imp]} END) as res from planet_osm_$t where {$request[$cat][sql_where]}) as t where res is not null and id>0 $where limit $max_count";
 	$resc=sql_query($qryc);
 	$max_count-=pg_num_rows($resc);
 	while($elemc=pg_fetch_assoc($resc))

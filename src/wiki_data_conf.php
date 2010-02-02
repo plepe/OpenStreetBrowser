@@ -33,8 +33,10 @@ foreach($wiki_data["Values"] as $src) {
     $prior=$m[1];
 
   $req[$src[category]][$src[network]][$prior][]="WHEN $l THEN $r";
-  foreach($list_columns as $col=>$d)
-    $columns[$src[category]][$col]=1;
+  if(!$columns[$src[category]])
+    $columns[$src[category]]=array();
+  $columns[$src[category]]=array_merge_recursive($columns[$src[category]], $list_columns);
+
 }
 
 $ret ="<? // Don't change this file, generated automatically\n";
@@ -52,7 +54,14 @@ foreach($req as $category=>$d1) {
   }
 
   $cols=array_keys($columns[$category]);
-  $ret.="    \"columns\"=>array(\"".implode("\", \"", $cols)."\"),\n";
+  $ret.="    \"columns\"=>array(\n";
+  $ret1=array();
+  foreach($columns[$category] as $col=>$vals) {
+    $ret.="      \"$col\"=>array(\"".implode("\", \"", $vals)."\"),\n";
+    $ret1[]="\\\"$col\\\" in ('".implode("', '", $vals)."')";
+  }
+  $ret.="    ),\n";
+  $ret.="    \"sql_where\"=>\"".implode(" OR ", $ret1)."\",\n";
 
   $ret.="  ),\n";
 }
