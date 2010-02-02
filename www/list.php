@@ -65,6 +65,11 @@ $types=array(
     "id_name"=>array("rel_id", "coll_id", "stations[0]"),
     "geo"=>"way",
     ),
+  "streets"=>array(
+    "id_type"=>"coll",
+    "id_name"=>"osm_id",
+    "geo"=>"way",
+  ),
 );
 
 $ret=main();

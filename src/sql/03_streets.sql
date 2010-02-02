@@ -112,12 +112,12 @@ commit;
 
 SELECT AddGeometryColumn('planet_osm_streets', 'way', 900913, 'MULTILINESTRING', 2);
 alter table planet_osm_streets add column waytype text;
-alter table planet_osm_streets add column network text;
+alter table planet_osm_streets add column importance text;
 
 update planet_osm_streets set way=(select ST_Multi(ST_LineMerge(ST_Collect(way))) from planet_osm_line join planet_osm_streets_parts on planet_osm_line.osm_id=planet_osm_streets_parts.part where planet_osm_streets_parts.osm_id=planet_osm_streets.osm_id);
 
 update planet_osm_streets set 
-  network=(CASE 
+  importance=(CASE 
     WHEN highway_level%10=4 THEN 'international' 
     WHEN highway_level%10=3 THEN 'national' 
     WHEN highway_level%10=2 THEN 'region' 
@@ -138,8 +138,8 @@ insert
   into planet_osm_colls 
   select 
     planet_osm_streets.osm_id, planet_osm_streets.waytype, 
-    array['name', 'network'],
-    array[name, network]
+    array['name', 'importance'],
+    array[name, importance]
   from planet_osm_streets;
 
 insert 
@@ -166,15 +166,15 @@ insert
     (to_textarray(way_tags.v))[1]
   from planet_osm_streets join coll_members on coll_members.coll_id=planet_osm_streets.osm_id join way_tags on way_tags.way_id=coll_members.member_id and coll_members.member_type='W' and
   (way_tags.k like 'wikipedia:%' or way_tags.k like 'name:%')
-  group by planet_osm_streets.osm_id, planet_osm_streets.way_parts, planet_osm_streets.network, way_tags.k;
+  group by planet_osm_streets.osm_id, planet_osm_streets.way_parts, planet_osm_streets.importance, way_tags.k;
 
 
 insert 
   into coll_tags
   select 
     planet_osm_streets.osm_id,
-    'network',
-    network
+    'importance',
+    importance 
   from planet_osm_streets;
 
 insert 
@@ -186,7 +186,7 @@ insert
   from planet_osm_streets;
 
 create index planet_osm_streets_way on planet_osm_streets using gist(way);
-create index planet_osm_streets_network on planet_osm_streets(network);
+create index planet_osm_streets_importance on planet_osm_streets(importance);
 
 update planet_osm_line set "addr:street"=str.name from planet_osm_line str,
 (select ob.osm_id, 
