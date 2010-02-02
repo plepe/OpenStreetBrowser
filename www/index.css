@@ -180,7 +180,12 @@ a { color:#333; text-decoration:none; }
 .box_closed_1:hover { 
   background-color:#efefef; 
 }
-.box_content_2 { }
+.box_content_1_open { }
+.box_content_1_closed { display: none; }
+.box_content_2_open { }
+.box_content_2_closed { display: none; }
+.box_content_3_open { }
+.box_content_3_closed { display: none; }
 .infobox_opened { clear: both; }
 .infobox_closed { clear: both; }
 ul { padding:0; margin:0 0 7px 15px; list-style-type:square; line-height:120%; padding-left: 20px; }

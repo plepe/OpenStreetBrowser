@@ -215,10 +215,12 @@ function new_box_change(ob) {
   if(ob.checked) {
     list_open[ob.name]=1;
     list.className="box_open_"+ob.name.split("/").length;
+    div.className="box_content_"+ob.name.split("/").length+"_open";
   }
   else {
     delete list_open[ob.name];
     list.className="box_closed_"+ob.name.split("/").length;
+    div.className="box_content_"+ob.name.split("/").length+"_closed";
   }
 
   list_check_overlays(ob.name, ob.checked);
@@ -258,7 +260,7 @@ function box_open(head, path, content, state) {
        " onChange='new_box_change(this)' />"+
        "<a href='javascript:new_box_click(\""+path+"\")'>"+
        t("cat:"+path)+"</a></h"+level+">\n";
-  ret+="<div class='box_content_"+level+"' id='content_"+path+"'>\n";
+  ret+="<div class='box_content_"+level+"_"+state+"' id='content_"+path+"'>\n";
   if(content!=null)
     ret+=content;
   ret+="</div>\n";
