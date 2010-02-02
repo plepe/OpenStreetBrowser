@@ -116,6 +116,9 @@
   text-halo-fill: #9ce69c;
   text-size: 8;
 }
+.amenity[type=natural][sub_type=t1][zoom>=16] {
+  point-file: url('img/spring.png');
+}
 .amenity[type=natural][sub_type=t4][zoom>=16] {
   point-file: url('img/tree.png');
 }
