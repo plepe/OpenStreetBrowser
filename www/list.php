@@ -44,7 +44,13 @@ $types=array(
     "id_type"=>"rel",
     "id_name"=>"id",
     //"geo"=>"(select (ST_Collect((CASE WHEN p.way is not null THEN p.way WHEN po.way is not null THEN po.way WHEN l.way is not null THEN l.way END)))) from relation_members rm left join planet_osm_point p on rm.member_id=p.osm_id and rm.member_type='N' left join planet_osm_polygon po on rm.member_id=po.osm_id and rm.member_type='W' left join planet_osm_line l on rm.member_id=l.osm_id and rm.member_type='W' where rm.relation_id=planet_osm_rels.id) as center",
-));
+  ),
+  "place"=>array(
+    "id_type"=>"node",
+    "id_name"=>"id_place_node",
+    "geo"=>"guess_area"
+  ),
+);
 
 $ret=main();
 Header("content-type: text/xml; charset=utf-8");
@@ -125,8 +131,10 @@ function get_list($param) {
       $exclude_list[$type]="id not in (".implode(", ", $excl_list).")";
     }
 
-    if($exclude_list[node])
+    if($exclude_list[node]) {
       $sql_where["point"][]=$exclude_list[node];
+      $sql_where["place"][]=$exclude_list[node];
+    }
     if($exclude_list[way]) {
       $sql_where["polygon"][]=$exclude_list[way];
       $sql_where["line"][]=$exclude_list[way];
@@ -148,7 +156,13 @@ function get_list($param) {
 //// set some more vars
   $max_count=$count+1;
   $list=array();
-  $search_types=array("point", "polygon");
+
+//// search in which tables?
+  if($cat=="places/places")
+    $search_types=array("place");
+
+  if(!$search_types)
+    $search_types=array("point", "polygon");
 
 //// now run, until we are finished
   foreach($importance as $imp) {

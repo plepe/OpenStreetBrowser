@@ -4,7 +4,7 @@ require_once("src/wiki_stuff.php");
 
 $columns=array(
   "Categories"=>array("category", "bg-color", "fg-color"),
-  "Values"=>array("keys", "desc", "category", "network", "icon", "overlay"),
+  "Values"=>array("keys", "desc", "category", "network", "icon", "overlay", "more"),
   "Importance"=>array("key", "onlyicon", "icontext")
 );
 
