@@ -155,22 +155,16 @@ function get_list($param) {
       $exclude_list[$type]="{$type}_id not in (".implode(", ", $excl_list).")";
     }
 
-    if($exclude_list[node]) {
-      $sql_where["point"][]=$exclude_list[node];
-      $sql_where["place"][]=$exclude_list[node];
-      $sql_where["stations"][]=$exclude_list[node];
-    }
-    if($exclude_list[way]) {
-      $sql_where["polygon"][]=$exclude_list[way];
-      $sql_where["line"][]=$exclude_list[way];
-    }
-    if($exclude_list[rel]) {
-      $sql_where["rels"][]=$exclude_list[rel];
-      $sql_where["route"][]=$exclude_list[rel];
-      $sql_where["stations"][]=$exclude_list[rel];
-    }
-    if($exclude_list[coll]) {
-      $sql_where["stations"][]=$exclude_list[coll];
+    foreach($types as $type=>$type_conf) {
+      if(is_array($type_conf[id_type])) {
+	foreach($type_conf[id_type] as $id_type)
+	  if($exclude_list[$id_type])
+	    $sql_where[$type][]=$exclude_list[$id_type];
+      }
+      else {
+	if($exclude_list[$type_conf[id_type]])
+	  $sql_where[$type][]=$exclude_list[$type_conf[id_type]];
+      }
     }
   }
 
