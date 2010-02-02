@@ -21,7 +21,9 @@ include "inc/debug.php";
 include "inc/tags.php";
 include "inc/object.php";
 include "inc/lang.php";
-require "/osm/skunkosm/x.php";
+
+$request=unserialize(file_get_contents("/osm/skunkosm/request.save"));
+$cat_list=unserialize(file_get_contents("/osm/skunkosm/category_list.save"));
 
 $importance=array("international", "national", "regional", "urban", "suburban", "local");
 $types=array(
