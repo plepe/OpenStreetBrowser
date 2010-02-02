@@ -42,7 +42,14 @@ foreach($wiki_data["Importance"] as $src) {
   $scales[$src[key]]=$src;
 }
 
-foreach($overlays as $overlay=>$overlay_file) {
+$process_overlays=array();
+foreach($wiki_data["Values"] as $src) {
+  if(ereg("^([a-z:]*)\(", $src[overlay], $m))
+    $process_overlays[$m[1]]=1;
+}
+$process_overlays=array_keys($process_overlays);
+
+foreach($process_overlays as $overlay) {
   print "* $overlay\n";
   $values_list=array();
   foreach($wiki_data["Values"] as $src) {
@@ -223,10 +230,7 @@ foreach($overlays as $overlay=>$overlay_file) {
 	  WHEN "network"='local' THEN 0 END)
 EOT;
 
-  $file=fopen("$style_path/$overlay_file.xml", "w");
-  fputs($file, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-  fputs($file, "<!DOCTYPE Map>\n");
-  fputs($file, "<Map srs=\"+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over\">\n");
+  $file=fopen("$style_path/$overlay.layer", "w");
   fputs($file, "  <Style name=\"foobar\">\n");
   fputs($file, $style_icon);
   fputs($file, "  </Style>\n");
@@ -253,5 +257,4 @@ EOT;
   fputs($file, "      <Parameter name=\"extent\">-20037508,-19929239,20037508,19929239</Parameter>\n");
   fputs($file, "    </Datasource>\n");
   fputs($file, "  </Layer>\n");
-  fputs($file, "</Map>\n");
 }
