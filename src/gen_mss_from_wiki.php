@@ -232,7 +232,7 @@ EOT;
 
   // XML doesn't like < and >
   $sql_desc=strtr($sql_desc, array("<"=>"&lt;", ">"=>"&gt;"));
-  $sql_type=strtr($sql_desc, array("<"=>"&lt;", ">"=>"&gt;"));
+  $sql_type=strtr($sql_type, array("<"=>"&lt;", ">"=>"&gt;"));
   $sql_network=strtr($sql_network, array("<"=>"&lt;", ">"=>"&gt;"));
 
   $file=fopen("$style_path/$overlay.layer", "w");
