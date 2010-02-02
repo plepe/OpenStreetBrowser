@@ -18,5 +18,11 @@ function t(str, count) {
       return l[0];
   }
 
+  if(l=str.match(/^tag:[^=]*=(.*)$/))
+    return l[1];
+
+  if(l=str.match(/^[^:]*:(.*)$/))
+    return l[1];
+
   return str;
 }
