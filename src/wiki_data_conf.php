@@ -45,7 +45,7 @@ foreach($wiki_data["Values"] as $src) {
   $r.="$src[icon]";
   $r1=array();
   foreach($list_columns as $key=>$values) {
-    $r1[]="$key='||\"$key\"||'";
+    $r1[]="$key='||(CASE WHEN \"$key\" is null THEN '' ELSE \"$key\" END)||'";
   }
   $r.="||".implode(" ", $r1)."'";
 
