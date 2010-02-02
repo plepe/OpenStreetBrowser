@@ -1,5 +1,37 @@
 var list_open={"culture": 1, "culture/religion": 1};
 
+function load_list(path) {
+
+}
+
+function new_box_change(ob) {
+  var div=document.getElementById("content_"+ob.name);
+  div.innerHTML="";
+
+  if(list_open[ob.name]) {
+    delete list_open[ob.name];
+  }
+  else {
+    list_open[ob.name]=1;
+    div.innerHTML=show_list(ob.name);
+    list_reload([ob.name]);
+  }
+}
+
+function box_click(boxname, subboxname) {
+  var ob;
+
+  if(!subboxname)
+    ob=document.getElementsByName(boxname);
+  else
+    ob=document.getElementsByName(boxname+"|"+subboxname);
+
+  ob=ob[0];
+  ob.checked=!ob.checked;
+
+  new_box_change(ob);
+}
+
 function box_open(head, path, content) {
   var ret="";
   var level=path.split(/\//).length;
@@ -7,11 +39,13 @@ function box_open(head, path, content) {
   ret+="<div class='box_open_"+level+"' id='list_"+path+"'>\n";
   ret+="<h"+level+"><input type='checkbox' name='"+path+"' "+
        (content==null?"":" checked='checked'")+
-       " onChange='box_change(this)' />"+
-       "<a href='javascript:box_click(\""+path+"\")'>"+
+       " onChange='new_box_change(this)' />"+
+       "<a href='javascript:new_box_click(\""+path+"\")'>"+
        head+"</a></h"+level+">\n";
+  ret+="<div class='box_content' id='content_"+path+"'>\n";
   if(content!=null)
     ret+=content;
+  ret+="</div>\n";
   ret+="</div>\n";
 
   return ret;
@@ -32,6 +66,13 @@ function show_list(path, _list) {
   }
   else {
     level=path.split(/\//);
+    if(!_list) {
+      p=path.split(/\//);
+      _list=category_list;
+
+      for(var i=0; i<p.length; i++)
+	_list=_list[p[i]];
+    }
   }
 
   for(var i in _list) {

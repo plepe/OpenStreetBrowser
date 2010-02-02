@@ -39,24 +39,24 @@ function list_call_back(response) {
   return;
 }
 
-function list_reload() {
+function list_reload(info_lists) {
   var x=map.calculateBounds();
-  var info_lists=[];
   var form=document.getElementById("list_form");
-  show_list();
-  return;
 
   if(!x)
     return;
 
-  if(form) {
-    for(var i=0;i<form.elements.length;i++) {
-      if(form.elements[i].checked)
-	info_lists.push(form.elements[i].name);
+  if(!info_lists) {
+    var info_lists=[];
+    if(form) {
+      for(var i=0;i<form.elements.length;i++) {
+	if(form.elements[i].checked)
+	  info_lists.push(form.elements[i].name);
+      }
     }
+    else
+      info_lists=list_last;
   }
-  else
-    info_lists=list_last;
 
   if(list_reload_working) {
     list_reload_necessary=1;
@@ -73,9 +73,9 @@ function list_reload() {
 
   info.className="info_loading";
 //  map_div.className="map";
-  if(showing!="list_routes") {
-    info_content.innerHTML="<div class=\"loading\"><img src=\"img/ajax_loader.gif\" /> loading</div>";
-  }
+//  if(showing!="list_routes") {
+//    info_content.innerHTML="<div class=\"loading\"><img src=\"img/ajax_loader.gif\" /> loading</div>";
+//  }
 
   list_last=info_lists;
 }

@@ -178,6 +178,8 @@ function view_changed(event) {
 }
 
 function init() {
+  show_list();
+
   ob=document.getElementById("lang");
   if(!ob)
     lang="";
