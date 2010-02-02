@@ -11,6 +11,7 @@ $columns=array(
 $wiki_data=read_wiki();
 $list_category=array();
 $list_importance=array();
+$req=array();
 
 foreach($wiki_data[Importance] as $wd) {
   $list_importance[]=$wd[key];
@@ -20,11 +21,34 @@ foreach($wiki_data["Categories"] as $src) {
   $list_category[]=$src[category];
 }
 
-print_r($list_category);
 $list_columns=array();
 foreach($wiki_data["Values"] as $src) {
-  print_r($src[keys]);
-  $l=parse_wholekey($src[keys], &$list_columns);
-  print_r($l);
-  print "\n";
+  $l=strtr(parse_wholekey($src[keys], &$list_columns), array("\""=>"\\\""));
+
+  $r="'type_'||\\\"osm_id\\\"||'||$src[desc]||$src[icon]'";
+
+  $prior=9;
+  if(eregi("\(([0-9]+)\)", $src[overlay], $m))
+    $prior=$m[1];
+
+  $req[$src[category]][$src[network]][$prior][]="WHEN $l THEN $r";
 }
+
+$ret ="<? // Don't change this file, generated automatically\n";
+$ret.="\$request=array(\n";
+foreach($req as $category=>$d1) {
+  $ret.="  \"$category\"=>array(\n";
+  foreach($d1 as $importance=>$d2) {
+    $ret.="    \"$importance\"=>\n";
+    $d2_sort=array_keys($d2);
+    sort($d2_sort);
+    foreach($d2_sort as $p) {
+      $sqlstr=$d2[$p];
+      $ret.="      \"".implode("\\n\".\n      \"", $sqlstr)."\",\n";
+    }
+  }
+  $ret.="  ),\n";
+}
+$ret.=");\n";
+
+print $ret;
