@@ -36,12 +36,17 @@ function list_entry(ob) {
     }
   }
 
-  var title_parts=ob.getAttribute("data").split(/ /);
-  title=[];
-  for(var i=0; i<title_parts.length; i++) {
-    title.push(t("tag:"+title_parts[i], 1));
+  var title_parts;
+  if(title_parts=ob.getAttribute("data")) {
+    title_parts=title_parts.split(/ /);
+    title=[];
+    for(var i=0; i<title_parts.length; i++) {
+      title.push(t("tag:"+title_parts[i], 1));
+    }
+    title=title.join(", ");
   }
-  title=title.join(", ");
+  else
+    title="";
 
   var name=ob.getAttribute("name");
   if(!name)

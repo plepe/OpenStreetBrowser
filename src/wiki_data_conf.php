@@ -65,7 +65,10 @@ foreach($wiki_data["Values"] as $src) {
 
   foreach($tables as $t)
     foreach($src[importance] as $imp)
-      $req[$src[category]][$imp][$t][$prior][]="WHEN $l THEN $r";
+      if($l)
+	$req[$src[category]][$imp][$t][$prior][]="WHEN $l THEN $r";
+      else
+	$req[$src[category]][$imp][$t][$prior][]=1;
 
   if(!$columns[$src[category]])
     $columns[$src[category]]=array();
@@ -94,8 +97,13 @@ foreach($req as $category=>$d1) {
     $res[$category][columns][$col]=$vals;
     $ret1[]="\"$col\" in ('".implode("', '", $vals)."')";
   }
-  $res[$category][sql_where]=implode(" OR ", $ret1).
-    ($imp_match[$category]?" and importance='%importance%'":"");
+
+  $res[$category][sql_where]=array();
+  if(sizeof($ret1))
+    $res[$category][sql_where][]=implode(" OR ", $ret1);
+  if($imp_match[$category])
+    $res[$category][sql_where][]="importance='%importance%'";
+  $res[$category][sql_where]=implode(" and ", $res[$category][sql_where]);
 }
 
 function to_cat_list($cat_list, $cat_part) {

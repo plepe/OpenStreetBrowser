@@ -31,16 +31,19 @@ $types=array(
     "id_type"=>"node",
     "id_name"=>"osm_id",
     "geo"=>"way",
+    "need_>0"=>1,
   ),
   "polygon"=>array(
     "id_type"=>"way",
     "id_name"=>"osm_id",
     "geo"=>"way",
+    "need_>0"=>1,
   ),
   "line"=>array(
     "id_type"=>"way",
     "id_name"=>"osm_id",
     "geo"=>"way",
+    "need_>0"=>1,
   ),
   "rels"=>array(
     "id_type"=>"rel",
@@ -57,6 +60,11 @@ $types=array(
     "id_name"=>"id",
     "geo"=>"way"
   ),
+  "stations"=>array(
+    "id_type"=>array("rel", "coll", "node"),
+    "id_name"=>array("rel_id", "coll_id", "stations[0]"),
+    "geo"=>"way",
+    ),
 );
 
 $ret=main();
@@ -64,7 +72,11 @@ Header("content-type: text/xml; charset=utf-8");
 print $ret;
 
 function list_print($res) {
-  $id="$res[type]_$res[id]";
+  foreach($res as $k=>$v) {
+    if($v&&preg_match("/^(.*)_id$/", $k, $m))
+      $id="$m[1]_$v";
+  }
+
   $ret="<place\n";
   $ob=load_object($id);
   $info=explode("||", $res[res]);
@@ -130,17 +142,18 @@ function get_list($param) {
     $excl_list=explode(",", $param['exclude']);
     $exclude_list=array();
     foreach($excl_list as $e) {
-      if(ereg("(node|way|rel)_([0-9]*)", $e, $m))
+      if(ereg("(node|way|rel|coll)_([0-9]*)", $e, $m))
 	$exclude_list[$m[1]][]=$m[2];
     }
 
     foreach($exclude_list as $type=>$excl_list) {
-      $exclude_list[$type]="id not in (".implode(", ", $excl_list).")";
+      $exclude_list[$type]="{$type}_id not in (".implode(", ", $excl_list).")";
     }
 
     if($exclude_list[node]) {
       $sql_where["point"][]=$exclude_list[node];
       $sql_where["place"][]=$exclude_list[node];
+      $sql_where["stations"][]=$exclude_list[node];
     }
     if($exclude_list[way]) {
       $sql_where["polygon"][]=$exclude_list[way];
@@ -149,6 +162,10 @@ function get_list($param) {
     if($exclude_list[rel]) {
       $sql_where["rels"][]=$exclude_list[rel];
       $sql_where["route"][]=$exclude_list[rel];
+      $sql_where["stations"][]=$exclude_list[rel];
+    }
+    if($exclude_list[coll]) {
+      $sql_where["stations"][]=$exclude_list[coll];
     }
   }
 
@@ -170,14 +187,44 @@ function get_list($param) {
   foreach($importance as $imp) {
     if(($max_count>0)&&($request[$cat][$imp])) {
       foreach($request[$cat][$imp] as $t=>$req_data) {
-	$where="";
+	$qry_where=array();
 	if(sizeof($sql_where[$t]))
-	  $where.="and ".implode(" and ", $sql_where[$t]);
+	  $qry_where[]=implode(" and ", $sql_where[$t]);
 	if(sizeof($sql_where['*']))
-	  $where.="and ".implode(" and ", $sql_where['*']);
+	  $qry_where[]=implode(" and ", $sql_where['*']);
 	$req_where=strtr($request[$cat][sql_where], array("%importance%"=>$imp));
+	$qryc="select *, astext(ST_Centroid(way)) as center from (select ";
+	if(is_array($types[$t][id_name]))
+	  foreach($types[$t][id_name] as $i=>$id_name) {
+	    $qryc.="{$types[$t][id_name][$i]} as {$types[$t][id_type][$i]}_id, ";
+	  }
+	else
+	  $qryc.="{$types[$t][id_name]} as {$types[$t][id_type]}_id, ";
+        $qryc.="{$types[$t][geo]} as way";
+	if($req_data!=1)
+	  $qryc.=", (CASE {$req_data} END) as res ";
+	$qryc.=" from planet_osm_$t where $req_where) as t ";
+	
+	if($req_data!=1)
+	  $qry_where[]="res is not null";
 
-	$qryc="select *, astext(ST_Centroid(way)) as center from (select '{$types[$t][id_type]}' as type, {$types[$t][id_name]} as id, {$types[$t][geo]} as way, (CASE {$req_data} END) as res from planet_osm_$t where $req_where) as t where res is not null and id>0 $where limit $max_count";
+	if($types[$t]["need_>0"]) {
+	  if(is_array($types[$t][id_name])) {
+	    $q=array();
+	    foreach($types[$t][id_name] as $i=>$id_name)
+	      $q[]="{$types[$t][id_type][$i]}_id>0";
+	    $qry_where[]="(".implode(" or ", $q).") ";
+	  }
+	  else
+	    $qry_where[]="{$types[$t][id_type]}_id>0 ";
+	}
+
+	if(sizeof($qry_where))
+	  $qryc.="where ".implode(" and ", $qry_where)." ";
+
+	$qryc.="limit $max_count";
+	//print $qryc;
+
 	$resc=sql_query($qryc);
 	$max_count-=pg_num_rows($resc);
 	while($elemc=pg_fetch_assoc($resc))
