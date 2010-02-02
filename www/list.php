@@ -56,25 +56,37 @@ function list_print($res) {
   $info=explode("||", $res[res]);
   $lang="en";
   global $lang_str;
+  $make_valid=array("&"=>"&amp;");
 
   $ret.="  id=\"$id\"\n";
   $ret.="  center=\"$res[center]\"\n";
 
-  if($x=$ob->tags->get("name"))
+  if($x=$ob->tags->get("name")) {
+    $x=strtr($x, $make_valid);
     $ret.="  name=\"$x\"\n";
+  }
 
-  if($x=$ob->tags->get("name:$lang"))
+  if($x=$ob->tags->get("name:$lang")) {
+    $x=strtr($x, $make_valid);
     $ret.="  name:$lang=\"$x\"\n";
+  }
 
-  if($x=$ob->tags->get("$info[0]"))
+  if($x=$ob->tags->get("$info[0]")) {
+    $x=strtr($x, $make_valid);
     $ret.="  description=\"$x\"\n";
+  }
 
-  if($x=$ob->tags->get("$info[0]:$lang"))
+  if($x=$ob->tags->get("$info[0]:$lang")) {
+    $x=strtr($x, $make_valid);
     $ret.="  description:$lang=\"$x\"\n";
-  elseif($x=$lang_str[$ob->tags->get("$info[0]")])
+  }
+  elseif($x=$lang_str[$ob->tags->get("$info[0]")]) {
+    $x=strtr($x, $make_valid);
     $ret.="  description:$lang=\"$x\"\n";
+  }
 
-  if($info[1]) {
+  if($x=$info[1]) {
+    $x=strtr($x, $make_valid);
     $ret.="  icon=\"$info[1]\"\n";
   }
 
