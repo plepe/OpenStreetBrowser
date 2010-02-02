@@ -39,7 +39,10 @@ foreach($wiki_data["Values"] as $src) {
   $list_columns=array();
   $l=parse_wholekey($src[keys], &$list_columns);
 
-  $r="'$src[desc]||$src[icon]";
+  $r="'$src[desc]||";
+  if(eregi("^\[\[(.*)\.svg\]\]", $src[icon], $m))
+    $src[icon]="[[$m[1].png]]";
+  $r.="$src[icon]";
   $r1=array();
   foreach($list_columns as $key=>$values) {
     $r1[]="$key='||\"$key\"||'";
