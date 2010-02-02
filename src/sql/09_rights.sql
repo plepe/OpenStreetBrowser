@@ -6,6 +6,7 @@ grant all on planet_osm_stations to www;
 grant all on planet_osm_boundaries to www;
 grant all on planet_osm_colls to www;
 grant all on planet_osm_streets to www;
+grant all on planet_osm_route to www;
 
 grant all on nodes to www;
 grant all on node_tags to www;
