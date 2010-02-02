@@ -8,6 +8,7 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="geometry_field">way</Parameter>
       <Parameter name="table">(select "osm_id", way,
 	  %SQL_highway%,
 	  (CASE

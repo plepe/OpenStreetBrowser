@@ -50,6 +50,7 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="geometry_field">way</Parameter>
       <Parameter name="table">
       (select name, way,
         %SQL_LANDUSE%
