@@ -1,13 +1,4 @@
 var category_leaf={};
-var overlays={
-  "leisure/gastro": "food",
-  "leisure/shop": "shop",
-  "services": "services",
-  "culture": "culture",
-  "transport/pt": "pt",
-  "transport/alternative": "ch",
-  "transport/car": "car"
-};
 
 function new_box_change(ob) {
   var div=document.getElementById("content_"+ob.name);

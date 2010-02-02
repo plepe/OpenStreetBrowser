@@ -3,7 +3,7 @@ require_once("conf.php");
 require_once("src/wiki_stuff.php");
 
 $columns=array(
-  "Categories"=>array("category", "bg-color", "fg-color"),
+  "Categories"=>array("category", "bg-color", "fg-color", "overlay"),
   "Values"=>array("keys", "desc", "category", "importance", "icon", "overlay", "more"),
   "Importance"=>array("key", "onlyicon", "icontext")
 );
@@ -151,11 +151,21 @@ $f=fopen("request.save", "w");
 fwrite($f, serialize($res));
 fclose($f);
 
+$overlays=array();
+
 foreach($wiki_data[Categories] as $cat=>$data) {
   $cat_part=explode("/", $data[category]);
   to_cat_list(&$cat_list, $cat_part);
+
+  if($data[overlay]) {
+    $overlays[$data[category]]=$data[overlay];
+  }
 }
 
 $f=fopen("category_list.save", "w");
 fwrite($f, serialize($cat_list));
+fclose($f);
+
+$f=fopen("overlays.save", "w");
+fwrite($f, serialize($overlays));
 fclose($f);

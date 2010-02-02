@@ -1,5 +1,6 @@
 <?
 $category_list=unserialize(file_get_contents("/osm/skunkosm/category_list.save"));
+$overlays=unserialize(file_get_contents("/osm/skunkosm/overlays.save"));
 
 function list_template() {
   global $category_list;
@@ -14,8 +15,9 @@ function list_template() {
 
 function html_done_list() {
   global $category_list;
+  global $overlays;
 
-  html_export_var(array("category_list"=>$category_list));
+  html_export_var(array("category_list"=>$category_list, "overlays"=>$overlays));
 }
 
 register_hook("html_done", html_done_list);
