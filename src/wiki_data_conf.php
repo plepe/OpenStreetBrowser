@@ -76,4 +76,21 @@ foreach($wiki_data[Categories] as $cat=>$data) {
   $cat_part=explode("/", $data[category]);
   to_cat_list(&$cat_list, $cat_part);
 }
-print_r($cat_list);
+
+function print_cat_list($cat_list, $level=1) {
+  $ret="";
+  $indent=str_repeat("  ", $level);
+
+  foreach($cat_list as $cat=>$list) {
+    $ret.="$indent\"$cat\"=>array(\n";
+    $ret.=print_cat_list($list, $level+1);
+    $ret.="$indent),\n";
+  }
+
+  return $ret;
+}
+
+$ret.="\$category_list=array(\n";
+$ret.=print_cat_list($cat_list);
+$ret.=");\n";
+print $ret;
