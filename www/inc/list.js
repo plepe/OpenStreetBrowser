@@ -121,7 +121,7 @@ function list_more(cat) {
 
   var div=document.getElementById("more_"+cat);
   if(div)
-    div.innerHTML="<img src='img/ajax_loader.gif'> loading";
+    div.innerHTML="<img class='loading' src='img/ajax_loader.gif'> loading";
 
   var there=[];
   div=document.getElementById("content_"+cat);
@@ -164,17 +164,17 @@ function list_reload(info_lists) {
     if(category_leaf[info_lists[i]]) {
       var div=document.getElementById("content_"+info_lists[i]);
       if(div)
-	div.innerHTML="<img src='img/ajax_loader.gif'> loading";
+	div.innerHTML="<img class='loading' src='img/ajax_loader.gif'> loading";
     }
   }
 
   ajax_direct("list.php", { "viewbox": x.left +","+ x.top +","+ x.right +","+ x.bottom, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_call_back);
 
-  var info_content=document.getElementById("details_content");
-  var map_div=document.getElementById("map");
-  var info=document.getElementById("details");
-
-  info.className="info_loading";
+//  var info_content=document.getElementById("details_content");
+//  var map_div=document.getElementById("map");
+//  var info=document.getElementById("details");
+//
+//  info.className="info_loading";
 //  map_div.className="map";
 //  if(showing!="list_routes") {
 //    info_content.innerHTML="<div class=\"loading\"><img src=\"img/ajax_loader.gif\" /> loading</div>";

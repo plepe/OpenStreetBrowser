@@ -26,11 +26,13 @@ function new_box_click(boxname) {
   new_box_change(ob);
 }
 
-function box_open(head, path, content) {
+function box_open(head, path, content, state) {
   var ret="";
   var level=path.split(/\//).length;
+  if(!state)
+    state="open";
 
-  ret+="<div class='box_open_"+level+"' id='list_"+path+"'>\n";
+  ret+="<div class='box_"+state+"_"+level+"' id='list_"+path+"'>\n";
   ret+="<h"+level+"><input type='checkbox' id='check_"+path+"' name='"+path+"' "+
        (content==null?"":" checked='checked'")+
        " onChange='new_box_change(this)' />"+
@@ -38,7 +40,7 @@ function box_open(head, path, content) {
        head+"</a></h"+level+">\n";
   if(content!=null)
     ret+=content;
-  ret+="<div class='box_content' id='content_"+path+"'>\n";
+  ret+="<div class='box_content_"+level+"' id='content_"+path+"'>\n";
   ret+="</div>\n";
   ret+="</div>\n";
 
@@ -46,7 +48,7 @@ function box_open(head, path, content) {
 }
 
 function box_closed(head, path) {
-  return box_open(head, path, null);
+  return box_open(head, path, null, "closed");
 }
 
 function show_list(path, _list) {

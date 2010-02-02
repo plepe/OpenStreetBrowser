@@ -117,7 +117,7 @@ h1 {
   padding:3px 5px;
 }
 h1 input { display: none; }
-.box_opened h1, .object h1 { border-bottom:1px dotted #ddd; margin-bottom:5px; }
+.box_open_1 h1, .object h1 { border-bottom:1px dotted #ddd; margin-bottom:5px; }
 
 h2 {
   margin: 0;
@@ -161,24 +161,25 @@ a { color:#333; text-decoration:none; }
   overflow: auto;
   background: white;
 }
-.box_opened {
+.box_open_1 {
   background-color:#efefef;
   border-bottom: 1px dotted #999;
   padding-bottom:5px;
 }
-.box_closed { 
+.box_closed_1 { 
   border-bottom: 1px dotted #999;
 }
-.box_closed:hover { 
+.box_closed_1:hover { 
   background-color:#efefef; 
 }
-.subbox_content { padding-left:27px; }
+.box_content_2 { }
 .infobox_opened { clear: both; }
 .infobox_closed { clear: both; }
-ul { padding:0; margin:0 0 7px 15px; list-style-type:square; line-height:120%; }
+ul { padding:0; margin:0 0 7px 15px; list-style-type:square; line-height:120%; padding-left: 20px; }
 li { padding-bottom:2px; }
 li a:hover { background-color:#ccc; }
-.loading { padding-top:16px; }
+div.loading { padding-top:16px; }
+img.loading { padding-left: 13px; border-width: 0px; }
 
 .object { background-color:#efefef; }
 .object h2 { 
