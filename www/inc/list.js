@@ -93,7 +93,7 @@ function list_more_call_back(response) {
       list_cache.push({
 	viewbox: request.getAttribute("viewbox"),
 	category: request.getAttribute("category"),
-	text: div.innerHTML,
+	text: div.innerHTML
       });
       list_cache.clean_up();
     }
