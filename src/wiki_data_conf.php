@@ -51,11 +51,10 @@ foreach($wiki_data["Values"] as $src) {
     $prior=$m[1];
 
   if($src[importance]=="*") {
-    $imp_match[$src[category]]=1;
-    $src[importance]=$list_importance;
+    $importance=$list_importance;
   }
   else
-    $src[importance]=array($src[importance]);
+    $importance=array($src[importance]);
 
   $more=parse_src_more($src[more]);
   $tables=array("polygon", "point");
@@ -63,23 +62,32 @@ foreach($wiki_data["Values"] as $src) {
     $tables=explode(",", $more[tables]);
   }
 
-  foreach($tables as $t)
-    foreach($src[importance] as $imp)
+  foreach($tables as $t) {
+    foreach($importance as $imp)
       if($l)
-	$req[$src[category]][$imp][$t][$prior][]="WHEN $l THEN $r";
+	$req[$src['category']][$imp][$t]['case'][$prior][]="WHEN $l THEN $r";
       else
-	$req[$src[category]][$imp][$t][$prior][]=1;
+	$req[$src['category']][$imp][$t]['case'][$prior][]=1;
 
-  if(!$columns[$src[category]])
-    $columns[$src[category]]=array();
-  $columns[$src[category]]=array_merge_recursive($columns[$src[category]], $list_columns);
+    if($src[importance]=="*") {
+      if(!$columns_all[$src[category]][$t])
+	$columns_all[$src[category]][$t]=array();
+      $columns_all[$src[category]][$t]=array_merge_recursive($columns_all[$src[category]][$t], $list_columns);
+    }
+    else {
+      if(!$columns[$src[category]][$imp][$t])
+	$columns[$src[category]][$imp][$t]=array();
+      $columns[$src[category]][$imp][$t]=array_merge_recursive($columns[$src[category]][$imp][$t], $list_columns);
+    }
+  }
 
 }
 
 $res=array();
 foreach($req as $category=>$d1) {
   foreach($d1 as $importance=>$d2) {
-    foreach($d2 as $tables=>$d3) {
+    foreach($d2 as $tables=>$d4) {
+      $d3=$d4['case'];
       $d3_sort=array_keys($d3);
       sort($d3_sort);
       $ret="";
@@ -87,23 +95,45 @@ foreach($req as $category=>$d1) {
 	$sqlstr=$d3[$p];
 	$ret.=implode("\n", $sqlstr);
       }
-      $res[$category][$importance][$tables]=$ret;
+      $res[$category][$importance][$tables]['case']=$ret;
     }
   }
 
-  $cols=array_keys($columns[$category]);
-  $ret1=array();
-  foreach($columns[$category] as $col=>$vals) {
-    $res[$category][columns][$col]=$vals;
-    $ret1[]="\"$col\" in ('".implode("', '", $vals)."')";
+  if($columns[$category]) {
+    $cols=array_keys($columns[$category]);
+    $ret1=array();
+    foreach($columns[$category] as $importance=>$d2) {
+      foreach($d2 as $tables=>$d3) {
+	foreach($d3 as $col=>$vals) {
+	  //$res[$category][$importance][$tables]['columns'][$col]=$vals;
+	  $res[$category][$importance][$tables]['where'][]="\"$col\" in ('".implode("', '", $vals)."')";
+	}
+      }
+    }
+  }
+
+  if($columns_all[$category]) {
+    $cols=array_keys($columns_all[$category]);
+    $ret1=array();
+    foreach($columns_all[$category] as $tables=>$d2) {
+      foreach($list_importance as $importance) {
+	$res[$category][$importance][$tables]['where_imp']=array();
+	foreach($d2 as $col=>$vals) {
+	  //$res[$category][$importance][$tables]['columns'][$col]=$vals;
+	  $res[$category][$importance][$tables]['where_imp'][]="\"$col\" in ('".implode("', '", $vals)."')";
+	}
+      }
+    }
   }
 
   $res[$category][sql_where]=array();
-  if(sizeof($ret1))
-    $res[$category][sql_where][]=implode(" OR ", $ret1);
-  if($imp_match[$category])
-    $res[$category][sql_where][]="importance='%importance%'";
-  $res[$category][sql_where]=implode(" and ", $res[$category][sql_where]);
+  foreach($ret1 as $t=>$ret2) {
+    if(sizeof($ret2))
+      $res[$category][sql_where][$t][]=implode(" OR ", $ret2);
+    if($imp_match[$category])
+      $res[$category][sql_where][$t][]="importance='%importance%'";
+    $res[$category][sql_where][$t]=implode(" and ", $res[$category][sql_where][$t]);
+  }
 }
 
 function to_cat_list($cat_list, $cat_part) {

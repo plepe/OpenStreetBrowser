@@ -197,7 +197,23 @@ function get_list($param) {
 	  $qry_where[]=implode(" and ", $sql_where[$t]);
 	if(sizeof($sql_where['*']))
 	  $qry_where[]=implode(" and ", $sql_where['*']);
-	$req_where=strtr($request[$cat][sql_where], array("%importance%"=>$imp));
+
+	$req_where=array();
+	if($req_data[where])
+	  $req_where[]=implode(" or ", $req_data[where]);
+
+	if(is_array($req_data[where_imp])) {
+	  if(sizeof($req_data[where_imp]))
+	    $req_where[]="(".implode(" or ", $req_data[where_imp]).") and \"importance\"='$imp'";
+	  else
+	    $req_where[]="\"importance\"='$imp'";
+	}
+
+	if(sizeof($req_where))
+	  $req_where="where ".implode(" or ", $req_where);
+	else
+	  $req_where="";
+
 	$qryc="select *, astext(ST_Centroid(way)) as center from (select ";
 	if(is_array($types[$t][id_name]))
 	  foreach($types[$t][id_name] as $i=>$id_name) {
@@ -206,9 +222,11 @@ function get_list($param) {
 	else
 	  $qryc.="{$types[$t][id_name]} as {$types[$t][id_type]}_id, ";
         $qryc.="{$types[$t][geo]} as way";
-	if($req_data!=1)
-	  $qryc.=", (CASE {$req_data} END) as res ";
-	$qryc.=" from planet_osm_$t where $req_where) as t ";
+	if($req_data['case']!=1)
+	  $qryc.=", (CASE {$req_data['case']} END) as res ";
+	else
+	  $qryc.=", '' as res ";
+	$qryc.=" from planet_osm_$t $req_where) as t ";
 	
 	if($req_data!=1)
 	  $qry_where[]="res is not null";
@@ -228,7 +246,7 @@ function get_list($param) {
 	  $qryc.="where ".implode(" and ", $qry_where)." ";
 
 	$qryc.="limit $max_count";
-	//print $qryc;
+	//print "$qryc\n";
 
 	$resc=sql_query($qryc);
 	$max_count-=pg_num_rows($resc);
