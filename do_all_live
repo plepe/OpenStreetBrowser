@@ -66,18 +66,25 @@ read
 echo "* SVN - Update style"
 svn update conf.php render/
 
+echo "List"
+php $ROOT_PATH/src/wiki_data_conf.php
+php src/wiki_create_indexes.php | psql $DB_NAME
+
 export DB_NAME=gis
 
 echo "* Update style-sheet"
 export TMPDIR="/osm/`whoami`-style/`date +%Y%m%d-%H%M`"
 mkdir -p $TMPDIR
+echo "WIKI Style"
+cd $ROOT_PATH
+$ROOT_PATH/src/gen_mss_from_wiki.php
 echo "BASE"
 echo "Layers"
 cd $ROOT_PATH/render
 ./gen_rotate_img.php
 ./gen_layer.php > base.mml
 cascadenik-compile.py $ROOT_PATH/render/base.mml > $ROOT_PATH/render/base.xml
-$ROOT_PATH/src/update_xml.pl $ROOT_PATH/render/base.xml
+$ROOT_PATH/src/update_xml $ROOT_PATH/render/base.xml
 echo "PT"
 cd $ROOT_PATH/render
 convert -background none img/src/stop_p_back.svg img/stop_p_back.png
@@ -86,17 +93,26 @@ convert -background none img/src/stop_n_back.svg img/stop_n_back.png
 convert -background none img/src/stop_n_for.svg img/stop_n_for.png
 convert -background none img/src/stop.svg img/stop.png
 cascadenik-compile.py $ROOT_PATH/render/overlay_pt.mml > $ROOT_PATH/render/overlay_pt.xml
-$ROOT_PATH/src/update_xml.pl $ROOT_PATH/render/overlay_pt.xml
+$ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_pt.xml
 ./create_rotate_style
 echo "CH"
 cascadenik-compile.py $ROOT_PATH/render/overlay_ch.mml > $ROOT_PATH/render/overlay_ch.xml
-$ROOT_PATH/src/update_xml.pl $ROOT_PATH/render/overlay_ch.xml
+$ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_ch.xml
 echo "CAR"
 cascadenik-compile.py $ROOT_PATH/render/overlay_car.mml > $ROOT_PATH/render/overlay_car.xml
-$ROOT_PATH/src/update_xml.pl $ROOT_PATH/render/overlay_car.xml
-echo "WIKI Style"
-cd $ROOT_PATH
-$ROOT_PATH/src/gen_mss_from_wiki.php
+$ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_car.xml
+echo "Other"
+cp $ROOT_PATH/render/overlay_services.template $ROOT_PATH/render/overlay_services.xml
+$ROOT_PATH/src/update_xml.php $ROOT_PATH/render/overlay_services.xml
+
+cp $ROOT_PATH/render/overlay_culture.template $ROOT_PATH/render/overlay_culture.xml
+$ROOT_PATH/src/update_xml.php $ROOT_PATH/render/overlay_culture.xml
+
+cp $ROOT_PATH/render/overlay_food.template $ROOT_PATH/render/overlay_food.xml
+$ROOT_PATH/src/update_xml.php $ROOT_PATH/render/overlay_food.xml
+
+cp $ROOT_PATH/render/shop.template $ROOT_PATH/render/shop.xml
+$ROOT_PATH/src/update_xml.php $ROOT_PATH/render/shop.xml
 
 echo "=== Updated Style. Press key to continue"
 read

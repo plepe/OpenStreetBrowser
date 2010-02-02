@@ -1,6 +1,6 @@
 <?
 include("conf.php");
-$sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
+//$sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
 $request=unserialize(file_get_contents("/osm/skunkosm/request.save"));
 $done=array();
 
@@ -11,7 +11,7 @@ foreach($request as $category=>$d1) {
 	if((!$done[$table])||(!$done[$table][$column])) {
 	  $qry="create index planet_osm_{$table}_{$column} on planet_osm_{$table}(\"{$column}\");";
 	  print "$qry\n";
-	  pg_query($qry);
+	  //pg_query($qry);
 
 	  $done[$table][$column]=1;
 	}
