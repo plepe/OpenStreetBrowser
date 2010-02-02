@@ -5,7 +5,7 @@ http://..../list.php?[options]
 options:
   viewbox=left,top,right,bottom
   zoom=12
-  category=cat
+  category=culture/religion,gastro
   srs=900913
   exclude=node_123456,way_12345,...
   lang=en
@@ -191,7 +191,16 @@ function get_list($param) {
 function main() {
   $ret ="<?xml version='1.0' encoding='UTF-8'?>\n";
   $ret.="<results generator='OpenStreetBrowser'>\n";
-  $ret.=get_list($_REQUEST);
+
+  $r=$_REQUEST;
+  if($r[category]) {
+    $cs=explode(",", $r[category]);
+    foreach($cs as $c) {
+      $r[category]=$c;
+      $ret.=get_list($r);
+    }
+  }
+
   $ret.="</results>\n";
 
   return $ret;
