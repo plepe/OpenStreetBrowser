@@ -105,7 +105,7 @@ foreach($req as $category=>$d1) {
     foreach($columns[$category] as $importance=>$d2) {
       foreach($d2 as $tables=>$d3) {
 	foreach($d3 as $col=>$vals) {
-	  //$res[$category][$importance][$tables]['columns'][$col]=$vals;
+	  $res[$category][$importance][$tables]['columns'][$col]=$vals;
 	  $res[$category][$importance][$tables]['where'][]="\"$col\" in ('".implode("', '", $vals)."')";
 	}
       }
@@ -119,7 +119,7 @@ foreach($req as $category=>$d1) {
       foreach($list_importance as $importance) {
 	$res[$category][$importance][$tables]['where_imp']=array();
 	foreach($d2 as $col=>$vals) {
-	  //$res[$category][$importance][$tables]['columns'][$col]=$vals;
+	  $res[$category][$importance][$tables]['columns'][$col]=$vals;
 	  $res[$category][$importance][$tables]['where_imp'][]="\"$col\" in ('".implode("', '", $vals)."')";
 	}
       }
