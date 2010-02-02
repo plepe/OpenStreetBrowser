@@ -41,7 +41,8 @@ function list_entry(ob) {
     title_parts=title_parts.split(/ /);
     title=[];
     for(var i=0; i<title_parts.length; i++) {
-      title.push(t("tag:"+title_parts[i], 1));
+      var title_parts_key=title_parts[i].split(/=/);
+      title.push(t("tag:"+title_parts_key[0], 1)+"="+t("tag:"+title_parts[i], 1));
     }
     title=title.join(", ");
   }
