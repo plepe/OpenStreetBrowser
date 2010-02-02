@@ -89,3 +89,25 @@ function parse_key($key, $list_columns) {
 
   return $ret;
 }
+
+function parse_wholekey($k, $list_columns) {
+  $ret=array();
+
+  $keys_list=explode(",", $k);
+  foreach($keys_list as $keys_part) {
+    $keys=explode(" ", $keys_part);
+
+    $l=array();
+    foreach($keys as $i=>$k) {
+      $l1=parse_key($k, &$list_columns);
+      if($l1) $l[]=$l1;
+    }
+
+    $ret[]=implode(" AND ", $l);
+  }
+
+  if(sizeof($ret)>1)
+    return "(".implode(") OR (", $ret).")";
+  else
+    return $ret[0];
+}
