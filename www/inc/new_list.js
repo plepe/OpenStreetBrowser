@@ -20,7 +20,8 @@ function new_box_change(ob) {
 
   if(ob.checked) {
     div.innerHTML=show_list(ob.name);
-    list_reload([ob.name]);
+    if(category_leaf[ob.name])
+      list_reload([ob.name]);
   }
 
   list_check_overlays(ob.name, ob.checked);

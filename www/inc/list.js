@@ -195,7 +195,7 @@ function list_reload(info_lists) {
     var info_lists=[];
     if(form) {
       for(var i=0;i<form.elements.length;i++) {
-	if(form.elements[i].checked)
+	if(category_leaf[form.elements[i].name]&&form.elements[i].checked)
 	  info_lists.push(form.elements[i].name);
       }
     }
