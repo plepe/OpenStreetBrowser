@@ -230,6 +230,11 @@ foreach($process_overlays as $overlay) {
 	  WHEN "network"='local' THEN 0 END)
 EOT;
 
+  // XML doesn't like < and >
+  $sql_desc=strtr($sql_desc, array("<"=>"&lt;", ">"=>"&gt;"));
+  $sql_type=strtr($sql_desc, array("<"=>"&lt;", ">"=>"&gt;"));
+  $sql_network=strtr($sql_network, array("<"=>"&lt;", ">"=>"&gt;"));
+
   $file=fopen("$style_path/$overlay.layer", "w");
   fputs($file, "  <Style name=\"foobar\">\n");
   fputs($file, $style_icon);
