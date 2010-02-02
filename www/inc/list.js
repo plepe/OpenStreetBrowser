@@ -198,7 +198,7 @@ function new_box_change(ob) {
   div.innerHTML="";
 
   if(ob.checked) {
-    div.innerHTML=show_list(ob.name);
+    div.innerHTML=show_sub_list(ob.name);
     if(category_leaf[ob.name])
       list_reload([ob.name]);
     else {
@@ -273,25 +273,35 @@ function box_closed(head, path) {
   return box_open(head, path, null, "closed");
 }
 
-function show_list(path, _list) {
+function show_list() {
+  var ret="";
+  var level;
+  var _list;
+
+  _list=category_list;
+  level=0;
+  ret+="<div class='list_info'>"+t("list_info")+"</div>\n";
+
+  ret+=show_sub_list("", _list);
+
+  var ob=document.getElementById("details_content");
+  ob.innerHTML=ret;
+
+  return ret;
+}
+
+function show_sub_list(path, _list) {
   var ret="";
   var p;
   var level;
-  if(!path) {
-    path="";
-    _list=category_list;
-    level=0;
-    ret+="<div class='list_info'>"+t("list_info")+"</div>\n";
-  }
-  else {
-    level=path.split(/\//).length;
-    if(!_list) {
-      p=path.split(/\//);
-      _list=category_list;
 
-      for(var i=0; i<p.length; i++)
-	_list=_list[p[i]];
-    }
+  level=path.split(/\//).length;
+  if(!_list) {
+    p=path.split(/\//);
+    _list=category_list;
+
+    for(var i=0; i<p.length; i++)
+      _list=_list[p[i]];
   }
 
   for(var i in _list) {
@@ -308,17 +318,12 @@ function show_list(path, _list) {
 
     if((check&&check.checked)||
        ((!check)&&list_open[p])) {
-      var r=show_list(p, _list[i]);
+      var r=show_sub_list(p, _list[i]);
       ret+=box_open(i, p, r);
     }
     else {
       ret+=box_closed(i, p);
     }
-  }
-
-  if(path=="") {
-    var ob=document.getElementById("details_content");
-    ob.innerHTML=ret;
   }
 
   return ret;
