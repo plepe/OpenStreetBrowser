@@ -87,12 +87,12 @@ function list_print($res) {
   $ret.="  id=\"$id\"\n";
   $ret.="  center=\"$res[center]\"\n";
 
-  if($x=$ob->tags->get("name")) {
+  if($x=$ob->long_name()) {
     $x=strtr($x, $make_valid);
     $ret.="  name=\"$x\"\n";
   }
 
-  if($x=$ob->tags->get("name:$lang")) {
+  if($x=$ob->long_name($lang)) {
     $x=strtr($x, $make_valid);
     $ret.="  name_trans=\"$x\"\n";
   }
