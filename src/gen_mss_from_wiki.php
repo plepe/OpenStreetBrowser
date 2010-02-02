@@ -201,9 +201,16 @@ foreach($overlays as $overlay=>$overlay_file) {
 
   $sql_where=array();
   foreach($list_columns as $key=>$values) {
-    if(in_array("*", $values))
-      $sql_where[]="\"$key\" is not null";
-    else
+    // if all values are "positive" (no 'not null' and no 'not in (...)') 
+    // then we can make use of indices
+    $pos=true;
+    foreach($values as $v) {
+      if((substr($v, 0, 1)=="!")||($v=="*")) {
+	$pos=false;
+      }
+    }
+
+    if($pos)
       $sql_where[]="\"$key\" in ('".implode("', '", array_unique($values))."')";
   }
 

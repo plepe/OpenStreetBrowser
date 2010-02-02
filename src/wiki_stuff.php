@@ -76,19 +76,22 @@ function parse_key($key, $list_columns) {
     if($i==0)
       $list_columns[$m[1]][]="*";
   }
-  else {
-    $l1=explode("=", $key);
-    if(sizeof($l1)==1)
-      return null;
-    if($l1[1]=="*") {
-      $ret="\"$l1[0]\" is not null";
+  elseif(eregi("^([a-z0-9_]+)(=|!=)(.*)$", $key, $m)) {
+    if(($m[2]=="=")&&($m[3]=="*")) {
+      $ret="\"$m[1]\" is not null";
       if($i==0)
-	$list_columns[$l1[0]][]="*";
+	$list_columns[$m[1]][]="*";
     }
-    else {
-      $ret="\"$l1[0]\"='$l1[1]'";
+    elseif($m[2]=="=") {
+      $ret="\"$m[1]\"='$m[3]'";
       if($i==0)
-	$list_columns[$l1[0]][]=$l1[1];
+	$list_columns[$m[1]][]=$m[3];
+    }
+    elseif($m[2]=="!=") {
+      $ret="\"$m[1]\" not in ('".implode("', '", explode(";", $m[3]))."')";
+      if($i==0) foreach(explode(";", $m[3]) as $m3) {
+	$list_columns[$m[1]][]="!$m3";
+      }
     }
   }
 
