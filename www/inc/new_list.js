@@ -69,9 +69,6 @@ function show_list(path, _list) {
     }
   }
 
-  if(level==0)
-    ret+="<form id='list_form'>\n";
-
   for(var i in _list) {
     if(path!="")
       p=path+"/"+i;
@@ -96,9 +93,6 @@ function show_list(path, _list) {
     var ob=document.getElementById("details_content");
     ob.innerHTML=ret;
   }
-
-  if(level==0)
-    ret+="</form>\n";
 
   return ret;
 }

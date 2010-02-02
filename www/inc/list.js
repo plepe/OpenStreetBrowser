@@ -60,7 +60,7 @@ function list_call_back(response) {
 
 function list_reload(info_lists) {
   var x=map.calculateBounds();
-  var form=document.getElementById("list_form");
+  var form=document.getElementById("details_content");
 
   if(!x)
     return;
