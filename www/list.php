@@ -68,7 +68,7 @@ function list_print($res) {
 
   if($x=$ob->tags->get("name:$lang")) {
     $x=strtr($x, $make_valid);
-    $ret.="  name:$lang=\"$x\"\n";
+    $ret.="  name_trans=\"$x\"\n";
   }
 
   if($x=$ob->tags->get("$info[0]")) {
@@ -78,9 +78,9 @@ function list_print($res) {
 
   if($x=$ob->tags->get("$info[0]:$lang")) {
     $x=strtr($x, $make_valid);
-    $ret.="  description:$lang=\"$x\"\n";
+    $ret.="  description_trans=\"$x\"\n";
   }
-  elseif($x=$lang_str[$ob->tags->get("$info[0]")]) {
+  elseif($x=$lang_str["$info[0]=".$ob->tags->get("$info[0]")]) {
     $x=strtr($x, $make_valid);
     $ret.="  description:$lang=\"$x\"\n";
   }
@@ -135,11 +135,14 @@ function get_list($param) {
     $sql_where['*'][]="way&&PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913)";
   }
 
+  // category
+  if(!($cat=$param[category]))
+    return "";
+
 //// set some more vars
   $max_count=$count+1;
   $list=array();
   $search_types=array("point", "polygon");
-  $cat="gastro";
 
 //// now run, until we are finished
   foreach($importance as $imp) {
