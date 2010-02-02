@@ -79,23 +79,25 @@ function list_more_call_back(response) {
     var more=document.getElementById("more_"+cat_id);
     if(more)
       more.parentNode.removeChild(more);
-    var ul=div.getElementsByTagName("ul");
-    ul=ul[0];
+    if(div) {
+      var ul=div.getElementsByTagName("ul");
+      ul=ul[0];
 
-    var text=list_make_list(cat);
-    ul.innerHTML+=text;
+      var text=list_make_list(cat);
+      ul.innerHTML+=text;
 
-    var ob;
-    if(ob=list_cache.search_element(request.getAttribute("viewbox"), cat_id)) {
-      ob.text=div.innerHTML;
-    }
-    else {
-      list_cache.push({
-	viewbox: request.getAttribute("viewbox"),
-	category: request.getAttribute("category"),
-	text: div.innerHTML
-      });
-      list_cache.clean_up();
+      var ob;
+      if(ob=list_cache.search_element(request.getAttribute("viewbox"), cat_id)) {
+	ob.text=div.innerHTML;
+      }
+      else {
+	list_cache.push({
+	  viewbox: request.getAttribute("viewbox"),
+	  category: request.getAttribute("category"),
+	  text: div.innerHTML
+	});
+	list_cache.clean_up();
+      }
     }
   }
 //  map_div.className="map";
