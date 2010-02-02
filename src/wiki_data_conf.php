@@ -59,3 +59,21 @@ foreach($req as $category=>$d1) {
 $ret.=");\n";
 
 print $ret;
+
+function to_cat_list($cat_list, $cat_part) {
+  $t=$cat_part[0];
+  array_shift($cat_part);
+
+  if(!$cat_list[$t])
+    $cat_list[$t]=array();
+ 
+  if(sizeof($cat_part))
+    to_cat_list(&$cat_list[$t], $cat_part);
+}
+
+$ret="";
+foreach($wiki_data[Categories] as $cat=>$data) {
+  $cat_part=explode("/", $data[category]);
+  to_cat_list(&$cat_list, $cat_part);
+}
+print_r($cat_list);
