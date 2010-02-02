@@ -2,6 +2,7 @@ lang_str["more"]                  =[ "more" ];
 lang_str["nothing found"]         =[ "nothing found" ];
 lang_str["loading"]               =[ "loading" ];
 lang_str["unnamed"]               =[ "(unnamed)" ];
+lang_str["list_info"]             =[ "Choose a category to browse map content or click on an object on the map for details" ];
 
 lang_str["tag:amenity=restaurant"]=[ "restaurant", "restaurants" ];
 lang_str["tag:amenity=cafe"]      =[ "cafe", "cafes" ];

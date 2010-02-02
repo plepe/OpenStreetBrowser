@@ -82,6 +82,7 @@ function show_list(path, _list) {
     path="";
     _list=category_list;
     level=0;
+    ret+="<div class='list_info'>"+t("list_info")+"</div>\n";
   }
   else {
     level=path.split(/\//).length;
