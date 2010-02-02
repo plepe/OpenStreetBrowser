@@ -166,19 +166,10 @@ function get_list($param) {
   $max_count=$count+1;
   $list=array();
 
-//// search in which tables?
-  if($cat=="places/places")
-    $search_types=array("place");
-  if(preg_match("/\/routes$/", $cat))
-    $search_types=array("route");
-
-  if(!$search_types)
-    $search_types=array("point", "polygon");
-
 //// now run, until we are finished
   foreach($importance as $imp) {
-    foreach($search_types as $t) {
-      if(($max_count>0)&&($request[$cat][$imp])) {
+    if(($max_count>0)&&($request[$cat][$imp])) {
+      foreach($request[$cat][$imp] as $t=>$req_data) {
 	$where="";
 	if(sizeof($sql_where[$t]))
 	  $where.="and ".implode(" and ", $sql_where[$t]);
@@ -186,7 +177,7 @@ function get_list($param) {
 	  $where.="and ".implode(" and ", $sql_where['*']);
 	$req_where=strtr($request[$cat][sql_where], array("%importance%"=>$imp));
 
-	$qryc="select *, astext(ST_Centroid(way)) as center from (select '{$types[$t][id_type]}' as type, {$types[$t][id_name]} as id, {$types[$t][geo]} as way, (CASE {$request[$cat][$imp]} END) as res from planet_osm_$t where $req_where) as t where res is not null and id>0 $where limit $max_count";
+	$qryc="select *, astext(ST_Centroid(way)) as center from (select '{$types[$t][id_type]}' as type, {$types[$t][id_name]} as id, {$types[$t][geo]} as way, (CASE {$req_data} END) as res from planet_osm_$t where $req_where) as t where res is not null and id>0 $where limit $max_count";
 	$resc=sql_query($qryc);
 	$max_count-=pg_num_rows($resc);
 	while($elemc=pg_fetch_assoc($resc))

@@ -22,6 +22,18 @@ foreach($wiki_data["Categories"] as $src) {
   $list_category[]=$src[category];
 }
 
+function parse_src_more($str) {
+  $ret=array();
+
+  $es=explode(" ", $str);
+  foreach($es as $e) {
+    if(preg_match("/^([^=]+)=(.*)$/", $e, $m))
+      $ret[$m[1]]=$m[2];
+  }
+
+  return $ret;
+}
+
 $imp_match=array();
 foreach($wiki_data["Values"] as $src) {
   $list_columns=array();
@@ -45,8 +57,15 @@ foreach($wiki_data["Values"] as $src) {
   else
     $src[importance]=array($src[importance]);
 
-  foreach($src[importance] as $imp)
-    $req[$src[category]][$imp][$prior][]="WHEN $l THEN $r";
+  $more=parse_src_more($src[more]);
+  $tables=array("point", "polygon");
+  if($more[tables]) {
+    $tables=explode(",", $more[tables]);
+  }
+
+  foreach($tables as $t)
+    foreach($src[importance] as $imp)
+      $req[$src[category]][$imp][$t][$prior][]="WHEN $l THEN $r";
 
   if(!$columns[$src[category]])
     $columns[$src[category]]=array();
@@ -57,14 +76,16 @@ foreach($wiki_data["Values"] as $src) {
 $res=array();
 foreach($req as $category=>$d1) {
   foreach($d1 as $importance=>$d2) {
-    $d2_sort=array_keys($d2);
-    sort($d2_sort);
-    $ret="";
-    foreach($d2_sort as $p) {
-      $sqlstr=$d2[$p];
-      $ret.=implode("\n", $sqlstr);
+    foreach($d2 as $tables=>$d3) {
+      $d3_sort=array_keys($d3);
+      sort($d3_sort);
+      $ret="";
+      foreach($d3_sort as $p) {
+	$sqlstr=$d3[$p];
+	$ret.=implode("\n", $sqlstr);
+      }
+      $res[$category][$importance][$tables]=$ret;
     }
-    $res[$category][$importance]=$ret;
   }
 
   $cols=array_keys($columns[$category]);
