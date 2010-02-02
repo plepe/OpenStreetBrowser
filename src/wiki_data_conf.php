@@ -4,7 +4,7 @@ require_once("src/wiki_stuff.php");
 
 $columns=array(
   "Categories"=>array("category", "bg-color", "fg-color"),
-  "Values"=>array("keys", "desc", "category", "network", "icon", "overlay", "more"),
+  "Values"=>array("keys", "desc", "category", "importance", "icon", "overlay", "more"),
   "Importance"=>array("key", "onlyicon", "icontext")
 );
 
@@ -22,6 +22,7 @@ foreach($wiki_data["Categories"] as $src) {
   $list_category[]=$src[category];
 }
 
+$imp_match=array();
 foreach($wiki_data["Values"] as $src) {
   $list_columns=array();
   $l=strtr(parse_wholekey($src[keys], &$list_columns), array("\""=>"\\\""));
@@ -37,7 +38,16 @@ foreach($wiki_data["Values"] as $src) {
   if(eregi("\(([0-9]+)\)", $src[overlay], $m))
     $prior=$m[1];
 
-  $req[$src[category]][$src[network]][$prior][]="WHEN $l THEN $r";
+  if($src[importance]=="*") {
+    $imp_match[$src[category]]=1;
+    $src[importance]=$list_importance;
+  }
+  else
+    $src[importance]=array($src[importance]);
+
+  foreach($src[importance] as $imp)
+    $req[$src[category]][$imp][$prior][]="WHEN $l THEN $r";
+
   if(!$columns[$src[category]])
     $columns[$src[category]]=array();
   $columns[$src[category]]=array_merge_recursive($columns[$src[category]], $list_columns);
@@ -66,7 +76,9 @@ foreach($req as $category=>$d1) {
     $ret1[]="\\\"$col\\\" in ('".implode("', '", $vals)."')";
   }
   $ret.="    ),\n";
-  $ret.="    \"sql_where\"=>\"".implode(" OR ", $ret1)."\",\n";
+  $ret.="    \"sql_where\"=>\"".implode(" OR ", $ret1).
+    ($imp_match[$category]?" and importance='%importance%'":"").
+    "\",\n";
 
   $ret.="  ),\n";
 }

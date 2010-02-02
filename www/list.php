@@ -50,6 +50,11 @@ $types=array(
     "id_name"=>"id_place_node",
     "geo"=>"guess_area"
   ),
+  "route"=>array(
+    "id_type"=>"rel",
+    "id_name"=>"id",
+    "geo"=>"way"
+  ),
 );
 
 $ret=main();
@@ -139,8 +144,10 @@ function get_list($param) {
       $sql_where["polygon"][]=$exclude_list[way];
       $sql_where["line"][]=$exclude_list[way];
     }
-    if($exclude_list[rel])
+    if($exclude_list[rel]) {
       $sql_where["rels"][]=$exclude_list[rel];
+      $sql_where["route"][]=$exclude_list[rel];
+    }
   }
 
   // viewbox
@@ -160,6 +167,8 @@ function get_list($param) {
 //// search in which tables?
   if($cat=="places/places")
     $search_types=array("place");
+  if(preg_match("/\/routes$/", $cat))
+    $search_types=array("route");
 
   if(!$search_types)
     $search_types=array("point", "polygon");
@@ -173,8 +182,9 @@ function get_list($param) {
 	  $where.="and ".implode(" and ", $sql_where[$t]);
 	if(sizeof($sql_where['*']))
 	  $where.="and ".implode(" and ", $sql_where['*']);
+	$req_where=strtr($request[$cat][sql_where], array("%importance%"=>$imp));
 
-	$qryc="select *, astext(ST_Centroid(way)) as center from (select '{$types[$t][id_type]}' as type, {$types[$t][id_name]} as id, {$types[$t][geo]} as way, (CASE {$request[$cat][$imp]} END) as res from planet_osm_$t where {$request[$cat][sql_where]}) as t where res is not null and id>0 $where limit $max_count";
+	$qryc="select *, astext(ST_Centroid(way)) as center from (select '{$types[$t][id_type]}' as type, {$types[$t][id_name]} as id, {$types[$t][geo]} as way, (CASE {$request[$cat][$imp]} END) as res from planet_osm_$t where $req_where) as t where res is not null and id>0 $where limit $max_count";
 	$resc=sql_query($qryc);
 	$max_count-=pg_num_rows($resc);
 	while($elemc=pg_fetch_assoc($resc))

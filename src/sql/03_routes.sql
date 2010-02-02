@@ -21,6 +21,32 @@ update planet_osm_rels set importance='suburban' where network='' and route in (
 update planet_osm_rels set importance='regional' where importance is null and type='route' and route='hiking';
 update planet_osm_rels set importance='urban' where importance is null and type='route' and route in ('foot', 'bicycle', 'mtb');
 
+-- build table with all routes
+drop table if exists planet_osm_route;
+create table planet_osm_route (
+  id int4 not null,
+  route text,
+  ref text,
+  importance text,
+  primary key(id)
+);
+SELECT AddGeometryColumn('planet_osm_route', 'way', 900913, 'GEOMETRY', 2);
+insert into planet_osm_route
+  select
+    r.id, r.route, r.ref, r.importance,
+    ST_Collect(l.way)
+  from
+    planet_osm_rels r
+    join relation_members rm on r.id=rm.relation_id
+    join planet_osm_line l on l.osm_id=rm.member_id and rm.member_type='W'
+  where
+    r.type='route'
+  group by
+    r.id, r.route, r.ref, r.importance;
+create index planet_osm_route_way on planet_osm_route using gist(way);
+create index planet_osm_route_route on planet_osm_route(route);
+create index planet_osm_route_importance on planet_osm_route(importance);
+
 -- build table with all lines that are part of a route
 drop table if exists planet_osm_line_route;
 create table planet_osm_line_route (
