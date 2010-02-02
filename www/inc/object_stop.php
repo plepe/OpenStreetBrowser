@@ -18,7 +18,6 @@ foreach($stop_types as $t) {
   register_object_type($t[0], $t[1], "object_stop");
 }
 
-register_list("transport", "pt_stops", "infolist_stop");
 register_hook("info", stop_info);
 
 class object_stop extends object {
@@ -140,62 +139,4 @@ function this_format_routes($list, $stops) {
   }
 
   return $ret;
-}
-
-class infolist_stop extends infolist {
-  function show_info($bounds) {
-    global $SRID;
-    global $importance_order;
-
-    $importance=array();
-    if($bounds[zoom]>14) {
-      $importance[]="'local'";
-    }
-    if($bounds[zoom]>12) {
-      $importance[]="'suburban'";
-      $importance[]="'urban'";
-    }
-    if($bounds[zoom]>10) {
-      $importance[]="'regional'";
-    }
-    if($bounds[zoom]>8) {
-      $importance[]="'national'";
-    }
-    $importance[]="'international'";
-
-    $qry="select stations, rel_id, coll_id from planet_osm_stations where importance in (".implode(",", $importance).") and way&&PolyFromText('POLYGON(($bounds[left] $bounds[top], $bounds[right] $bounds[top], $bounds[right] $bounds[bottom], $bounds[left] $bounds[bottom], $bounds[left] $bounds[top]))', $SRID)";
-    $res=sql_query($qry);
-
-    $list=array();
-    while($elem=pg_fetch_assoc($res)) {
-      $elem[stations]=parse_array($elem[stations]);
-
-      if($elem[rel_id])
-	$list[]="rel_$elem[rel_id]";
-      else if($elem[coll_id])
-	$list[]="coll_$elem[coll_id]";
-      else if($elem[stations][0])
-	$list[]="node_{$elem[stations][0]}";
-    }
-
-    $xlist=array();
-    foreach(load_objects($list) as $l) {
-      $xlist[$l->long_name()][]=$l;
-    }
-    $list=$xlist;
-
-    $list_s=array_keys($list);
-    natsort($list_s);
-
-    foreach($list_s as $k) {
-      $x=$list[$k];
-      foreach($list[$k] as $x) {
-	$ret.="<li><a href='#{$x->id}' onMouseOver='set_highlight([\"{$x->id}\"])' onMouseOut='unset_highlight()'>{$x->long_name()}</a></li>\n";
-      }
-    }
-
-    return $ret;
-
-
-  }
 }
