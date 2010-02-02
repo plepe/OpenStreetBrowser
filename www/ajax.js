@@ -71,6 +71,58 @@ function ajax(funcname, param, _callback) {
   }
 }
 
+function ajax_direct(url, param, _callback) {
+  // private
+  this.xmldata;
+  // public
+  var req=false;
+  var callback;
+
+  function req_change() {
+    if(req.readyState==4) {
+      this.xmldata=req.responseXML;
+
+      if(callback)
+        callback(req);
+    }
+  }
+
+  // branch for native XMLHttpRequest object
+  if(window.XMLHttpRequest) {
+    try {
+      req = new XMLHttpRequest();
+    }
+    catch(e) {
+      req = false;
+    }
+    // branch for IE/Windows ActiveX version
+  } else if(window.ActiveXObject) {
+    try {
+      req = new ActiveXObject("Msxml2.XMLHTTP");
+    }
+    catch(e) {
+      try {
+        req = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      catch(e) {
+        req = false;
+      }
+    }
+  }
+
+  if(req) {
+    var p=new Array();
+    ajax_build_request(param, null, p);
+    p=p.join("&");
+
+    callback=_callback;
+    req.onreadystatechange = req_change;
+    req.open("GET", url+"?"+p, 1);
+    last_params=p;
+    req.send("");
+  }
+}
+
 function ajax_read_formated_text(xmldata, key) {
   ret="";
 
@@ -101,7 +153,10 @@ function ajax_read_value(xmldata, key) {
 function ajax_build_request(param, prefix, ret) {
   if(typeof param=="object") {
     for(var k in param) {
-      ajax_build_request(param[k], prefix+"["+k+"]", ret);
+      if(!prefix)
+	ajax_build_request(param[k], k, ret);
+      else
+	ajax_build_request(param[k], prefix+"["+k+"]", ret);
     }
   }
   else if(typeof param=="number") {
