@@ -14,6 +14,7 @@ options:
 example: 
   http://.../list.php?viewbox=1820510.3841097,6140479.7509884,1821443.1547203,6139601.9194918&zoom=17&category=gastro&lang=en
 */
+$design_hidden=1;
 include "code.php";
 include "inc/sql.php";
 include "inc/debug.php";

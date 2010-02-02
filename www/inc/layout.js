@@ -36,10 +36,12 @@ function list_entry(ob) {
     }
   }
 
-  var title_parts=ob.getAttribute("data").split("/");
+  var title_parts=ob.getAttribute("data").split(/ /);
+  title=[];
   for(var i=0; i<title_parts.length; i++) {
-    title+=" "+title_parts[i];
+    title.push(t("tag:"+title_parts[i], 1));
   }
+  title=title.join(", ");
 
   return "<li class='listitem' style=\""+li_style+"\" id='list_"+ob.getAttribute("id")+"' title='"+title+"'><element id='"+ob.getAttribute("id")+"'><a href='#"+ob.getAttribute("id")+"' onMouseOver='set_highlight([\""+ob.getAttribute("id")+"\"])' onMouseOut='unset_highlight()'>"+ob.getAttribute("name")+"</a>"+add+"</element></li>\n";
 }
