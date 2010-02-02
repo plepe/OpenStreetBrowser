@@ -21,6 +21,7 @@ function box_click(boxname, subboxname) {
 function list_entry(ob) {
   var add="";
   var li_style="";
+  var title="";
 
   if(ob.getAttribute("description"))
     add=" ("+ob.getAttribute("description")+")";
@@ -35,5 +36,10 @@ function list_entry(ob) {
     }
   }
 
-  return "<li class='listitem' style=\""+li_style+"\" id='list_"+ob.getAttribute("id")+"'><element id='"+ob.getAttribute("id")+"'><a href='#"+ob.getAttribute("id")+"' onMouseOver='set_highlight([\""+ob.getAttribute("id")+"\"])' onMouseOut='unset_highlight()'>"+ob.getAttribute("name")+"</a>"+add+"</element></li>\n";
+  var title_parts=ob.getAttribute("data").split("/");
+  for(var i=0; i<title_parts.length; i++) {
+    title+=" "+title_parts[i];
+  }
+
+  return "<li class='listitem' style=\""+li_style+"\" id='list_"+ob.getAttribute("id")+"' title='"+title+"'><element id='"+ob.getAttribute("id")+"'><a href='#"+ob.getAttribute("id")+"' onMouseOver='set_highlight([\""+ob.getAttribute("id")+"\"])' onMouseOut='unset_highlight()'>"+ob.getAttribute("name")+"</a>"+add+"</element></li>\n";
 }
