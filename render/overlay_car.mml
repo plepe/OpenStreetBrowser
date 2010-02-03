@@ -8,6 +8,25 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="table">(select "osm_id",
+	  %SQL_highway%,
+	  (CASE
+	    WHEN "impassable"='yes' THEN 'impassable'
+	    ELSE "smoothness"
+	  END) as smoothness,
+	  "way"
+	from planet_osm_line
+	where "smoothness" in ('impassable') or "impasssable"='yes') as highway_smoothness
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+  <InsertLayer name="car" />
+   <Layer class="text" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">__DBNAME__</Parameter>
       <Parameter name="geometry_field">way</Parameter>
       <Parameter name="table">(select "osm_id", way,
 	  %SQL_highway%,
