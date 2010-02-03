@@ -43,9 +43,41 @@ foreach($wiki_data["Importance"] as $src) {
 }
 
 $process_overlays=array();
+// Download symbols
+$img_list=array();
 foreach($wiki_data["Values"] as $src) {
   if(ereg("^([a-z:]*)\(", $src[overlay], $m))
     $process_overlays[$m[1]]=1;
+
+  if(eregi("\[\[Image:(.*)\]\]", $src[icon], $m)) {
+    $icon=strtr($m[1], array(" "=>"_"));
+    if(!$img_list[$icon]) {
+      $img_src=fopen("$wiki_img$icon", "r");
+      if(!$img_src)
+	print "Can't open $wiki_img$icon\n";
+      while($r=fgets($img_src)) {
+	if(eregi("<div class=\"fullImageLink\" .*<a href=\"([^\"]*)\">", $r, $m)) {
+	  print $m[1]."\n";
+	  $img=file_get_contents("$wiki_imgsrc$m[1]");
+	  if(!$img)
+	    print "Can't download $wiki_imgsrc$m[1]\n";
+	  $img_d=fopen("$symbol_path/$icon", "w");
+	  fwrite($img_d, $img);
+	  fclose($img_d);
+
+	  $icon_path="$symbol_path/$icon";
+
+	  if(eregi("^(.*)\.svg$", $icon, $m)) {
+	    system("convert -background none '$symbol_path/$icon' 'PNG:$symbol_path/$m[1].png'");
+	    $icon_path="$symbol_path/$m[1].png";
+	  }
+
+	  $img_list[$icon]=$icon_path;
+	}
+      }
+      fclose($img_src);
+    }
+  }
 }
 $process_overlays=array_keys($process_overlays);
 
@@ -84,45 +116,13 @@ foreach($process_overlays as $overlay) {
     if(eregi("\[\[Image:(.*)\]\]", $icon, $m)) {
       $icon=strtr($m[1], array(" "=>"_"));
       if($img_list[$icon]) {
-	$icon="$symbol_path/$icon";
-	$icon_prefix=true;
+	$icon=$img_list[$icon];
       }
-      else {
-	$img_src=fopen("$wiki_img$icon", "r");
-	if(!$img_src)
-	  print "Can't open $wiki_img$icon\n";
-	while($r=fgets($img_src)) {
-	  if(eregi("<div class=\"fullImageLink\" .*<a href=\"([^\"]*)\">", $r, $m)) {
-	    print $m[1]."\n";
-	    $img=file_get_contents("$wiki_imgsrc$m[1]");
-	    if(!$img)
-	      print "Can't download $wiki_imgsrc$m[1]\n";
-	    $img_d=fopen("$symbol_path/$icon", "w");
-	    fwrite($img_d, $img);
-	    fclose($img_d);
-
-	    if(eregi("^(.*)\.svg$", $icon, $m)) {
-	      system("convert -background none '$symbol_path/$icon' 'PNG:$symbol_path/$m[1].png'");
-	      $icon="$m[1].png";
-	    }
-
-	    $img_list[$icon]=1;
-	    $icon="$symbol_path/$icon";
-	    $icon_prefix=true;
-	  }
-	}
-	fclose($img_src);
-
-	if(!$icon_prefix) {
-	  // No icon available? Use old one ...
-	  $icon="$symbol_path/$icon";
-	  $icon_prefix=true;
-	}
-      }
+      else
+	unset($icon);
     }
     else
       unset($icon);
-
 
     if($icon)
       $imgsize=getimagesize($icon);
