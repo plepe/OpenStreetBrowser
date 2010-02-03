@@ -91,13 +91,14 @@ node,way   addr:street  	text	linear
 node,way   addr:housenumber	text	linear
 node,way   addr:postcode	text	linear
 node,way   addr:city		text	linear
-node,way   z_order      int4         linear # This is calculated during import
-way        way_area     real                # This is calculated during import
 node,way	cemetery	text	polygon
 way	   voltage		text	linear
 node,way   heritage		text	polygon
 node,way   heritage:operator	text	polygon
 node,way	capacity	text	polygon
+node,way	operator	text	polygon
+node,way   z_order      int4         linear # This is calculated during import
+way        way_area     real                # This is calculated during import
 
 # If you're interested in bicycle routes, you may want the following fields
 # To make these work you need slim mode or the necessary data won't be remembered.
