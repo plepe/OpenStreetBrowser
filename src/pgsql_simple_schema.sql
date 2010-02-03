@@ -35,7 +35,7 @@ CREATE TABLE nodes (
     id bigint NOT NULL,
     version int NOT NULL,
     user_id int NOT NULL,
-    tstamp timestamp without time zone NOT NULL
+    tstamp timestamp without time zone NOT NULL,
     changeset_id bigint NOT NULL
 );
 -- Add a postgis point column holding the location of the node.
@@ -55,7 +55,7 @@ CREATE TABLE ways (
     id bigint NOT NULL,
     version int NOT NULL,
     user_id int NOT NULL,
-    tstamp timestamp without time zone NOT NULL
+    tstamp timestamp without time zone NOT NULL,
     changeset_id bigint NOT NULL
 );
 
@@ -81,7 +81,7 @@ CREATE TABLE relations (
     id bigint NOT NULL,
     version int NOT NULL,
     user_id int NOT NULL,
-    tstamp timestamp without time zone NOT NULL
+    tstamp timestamp without time zone NOT NULL,
     changeset_id bigint NOT NULL
 );
 
