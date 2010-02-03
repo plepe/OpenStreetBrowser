@@ -96,8 +96,10 @@ echo "CH"
 cascadenik-compile.py $ROOT_PATH/render/overlay_ch.mml > $ROOT_PATH/render/overlay_ch.xml
 $ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_ch.xml
 echo "CAR"
-cascadenik-compile.py $ROOT_PATH/render/overlay_car.mml > $ROOT_PATH/render/overlay_car.xml
+render/gen_mml.php $ROOT_PATH/render/overlay_car > $ROOT_PATH/render/overlay_car_compiled.mml
+cascadenik-compile.py $ROOT_PATH/render/overlay_car_compiled.mml > $ROOT_PATH/render/overlay_car.xml
 $ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_car.xml
+
 echo "Other"
 cp $ROOT_PATH/render/overlay_services.template $ROOT_PATH/render/overlay_services.xml
 $ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_services.xml
