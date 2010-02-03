@@ -97,6 +97,7 @@ node,way	cemetery	text	polygon
 way	   voltage		text	linear
 node,way   heritage		text	polygon
 node,way   heritage:operator	text	polygon
+node,way	capacity	text	polygon
 
 # If you're interested in bicycle routes, you may want the following fields
 # To make these work you need slim mode or the necessary data won't be remembered.
