@@ -45,6 +45,9 @@ foreach($wiki_data["Importance"] as $src) {
 $process_overlays=array();
 // Download symbols
 $img_list=array();
+$process_overlays=array();
+// Download symbols
+$img_list=array();
 foreach($wiki_data["Values"] as $src) {
   if(ereg("^([a-z:]*)\(", $src[overlay], $m))
     $process_overlays[$m[1]]=1;
