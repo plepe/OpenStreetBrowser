@@ -148,7 +148,6 @@ foreach($list as $process) {
       $point->setAttribute("width", $size[1]);
     }
   }
-
 }
 
 $dom->save($file);
