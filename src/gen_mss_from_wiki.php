@@ -49,7 +49,7 @@ $process_overlays=array();
 // Download symbols
 $img_list=array();
 foreach($wiki_data["Values"] as $src) {
-  if(ereg("^([a-z:]*)\(", $src[overlay], $m))
+  if(ereg("^([a-z:_]*)\(", $src[overlay], $m))
     $process_overlays[$m[1]]=1;
 
   if(eregi("\[\[Image:(.*)\]\]", $src[icon], $m)) {
