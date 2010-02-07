@@ -113,6 +113,9 @@ $ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_food.xml
 cp $ROOT_PATH/render/shop.template $ROOT_PATH/render/shop.xml
 $ROOT_PATH/src/update_xml $ROOT_PATH/render/shop.xml
 
+cp $ROOT_PATH/render/agri_ind.template $ROOT_PATH/render/agri_ind.xml
+$ROOT_PATH/src/update_xml $ROOT_PATH/render/agri_ind.xml
+
 echo "=== Updated Style. Press key to continue"
 read
 
