@@ -108,15 +108,22 @@ begin
   while src_i<=array_count(src) loop
     ret_i:=1;
     found:=false;
-    while ret_i<=array_count(ret) loop
+
+    if src[src_i] is null then
+      found:=true;
+    end if;
+
+    while (ret_i<=array_count(ret)) and not found loop
       if src[src_i]=ret[ret_i] then
 	found:=true;
       end if;
       ret_i:=ret_i+1;
     end loop;
+
     if found=false then
       ret=array_append(ret, src[src_i]);
     end if;
+
     src_i:=src_i+1;
   end loop;
   return ret;
