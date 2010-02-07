@@ -71,14 +71,6 @@ create table planet_osm_streets_tmp (
   name text,
   primary key(osm_id)
 );
-drop table if exists planet_osm_streets_parts;
-create table planet_osm_streets_parts (
-  osm_id	int4	not null,
-  part		int4	not null
-);
-create index planet_osm_streets_parts_pkey on planet_osm_streets_parts(osm_id);
-create index planet_osm_streets_parts_part on planet_osm_streets_parts(part);
-
 drop table if exists streets_tmp2;
 create table streets_tmp2 (
   osm_id	int4	not null,
@@ -126,9 +118,6 @@ begin
 
 --	raise notice 'foo bar %', ids[1];
 	insert into planet_osm_streets_tmp values (ids[1], ids, max_highway_level, name);
-	for index in array_lower(ids, 1)..array_upper(ids, 1) loop
-	  insert into planet_osm_streets_parts values (ids[1], ids[index]);
-	end loop;
 	return 1;
 end;
 $$ language plpgsql;
