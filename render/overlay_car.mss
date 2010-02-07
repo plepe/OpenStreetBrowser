@@ -1,27 +1,3 @@
-.amenity_car[amenity=fuel][zoom>=13]
-{
-  point-file: url('img/fuel.png');
-}
-.amenity_car[amenity=car_repair][zoom>=13]
-{
-  point-file: url('img/car_repair.png');
-}
-.amenity_car[amenity=parking][zoom>=15]
-{
-  point-file: url('img/parking.png');
-}
-.amenity_car[amenity=parking][zoom>=14][zoom<15]
-{
-  point-file: url('img/parking_small.png');
-}
-.amenity_car[amenity=traffic_signals][zoom>=15]
-{
-  point-file: url('img/traffic_signals.png');
-}
-.amenity_car[amenity=stop][zoom>=15]
-{
-  point-file: url('img/stop.png');
-}
 .text[highway=motorway_junction][zoom>=11][zoom<15] ref
 {
   text-fill: #000000;
