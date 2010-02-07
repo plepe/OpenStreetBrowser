@@ -43,6 +43,7 @@ lang_str["cat:services/public"]=[ "Public Services" ];
 lang_str["cat:services/tourism"]=[ "Touristic Services" ];
 lang_str["cat:places"]=[ "Place", "Places" ];
 lang_str["cat:places/places"]=[ "Place", "Places" ];
+lang_str["cat:places/residential"]=[ "Residential Areas" ];
 lang_str["cat:places/streets"]=[ "Street Directory" ];
 lang_str["cat:places/natural"]=[ "Natural Formations" ];
 lang_str["cat:transport"]=[ "Transportation" ];

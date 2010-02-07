@@ -41,6 +41,7 @@ lang_str["cat:services/public"]=[ "Öffentliche Dienste" ];
 lang_str["cat:services/tourism"]=[ "Tourismusdienste" ];
 lang_str["cat:places"]=[ "Ort", "Orte" ];
 lang_str["cat:places/places"]=[ "Ort", "Orte" ];
+lang_str["cat:places/residential"]=[ "Wohngebiete" ];
 lang_str["cat:places/streets"]=[ "Straßenverzeichnis" ];
 lang_str["cat:places/natural"]=[ "Natürliche Formationen" ];
 lang_str["cat:transport"]=[ "Transport" ];
