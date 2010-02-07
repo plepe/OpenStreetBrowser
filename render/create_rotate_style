@@ -149,7 +149,6 @@ foreach($list as $process) {
     }
   }
 
-  unlink($point->getAttribute("file"));
 }
 
 $dom->save($file);
