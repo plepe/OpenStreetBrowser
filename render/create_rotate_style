@@ -148,6 +148,8 @@ foreach($list as $process) {
       $point->setAttribute("width", $size[1]);
     }
   }
+
+  unlink($point->getAttribute("file"));
 }
 
 $dom->save($file);
