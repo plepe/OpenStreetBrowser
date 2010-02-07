@@ -197,6 +197,22 @@ insert
   into coll_tags
   select 
     planet_osm_streets.osm_id,
+    (CASE
+      WHEN "highway" is not null THEN 'highway'
+      WHEN "railway" is not null THEN 'railway'
+      WHEN "waterway" is not null THEN 'waterway'
+    END),
+    (CASE
+      WHEN "highway" is not null THEN "highway"
+      WHEN "railway" is not null THEN "railway"
+      WHEN "waterway" is not null THEN "waterway"
+    END)
+  from planet_osm_streets;
+
+insert 
+  into coll_tags
+  select 
+    planet_osm_streets.osm_id,
     way_tags.k,
     (to_textarray(way_tags.v))[1]
   from planet_osm_streets join coll_members on coll_members.coll_id=planet_osm_streets.osm_id join way_tags on way_tags.way_id=coll_members.member_id and coll_members.member_type='W' and
