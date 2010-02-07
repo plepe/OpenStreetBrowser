@@ -55,10 +55,13 @@ foreach($wiki_data["Values"] as $src) {
   if(eregi("\[\[Image:(.*)\]\]", $src[icon], $m)) {
     $icon=strtr($m[1], array(" "=>"_"));
     if(!$img_list[$icon]) {
-      $img_src=fopen("$wiki_img$icon", "r");
-      if(!$img_src)
+      $img_data=gzfile("$wiki_img$icon");
+
+      if(!$img_data)
 	print "Can't open $wiki_img$icon\n";
-      while($r=fgets($img_src)) {
+
+      unset($icon_path);
+      foreach($img_data as $r) {
 	if(eregi("<div class=\"fullImageLink\" .*<a href=\"([^\"]*)\">", $r, $m)) {
 	  print $m[1]."\n";
 	  $img=file_get_contents("$wiki_imgsrc$m[1]");
@@ -78,7 +81,11 @@ foreach($wiki_data["Values"] as $src) {
 	  $img_list[$icon]=$icon_path;
 	}
       }
-      fclose($img_src);
+
+      if(!$icon_path) {
+	print "not found!\n";
+	exit;
+      }
     }
   }
 }
