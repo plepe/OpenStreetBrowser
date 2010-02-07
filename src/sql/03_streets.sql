@@ -13,16 +13,28 @@ insert into streets_tmp1
   select distinct 
     root.osm_id, root.name, 
     (CASE 
-      WHEN root."network"='international' THEN 4 
-      WHEN root."network"='national' THEN 3 
-      WHEN root."network"='region' THEN 2 
-      WHEN root."network"='urban' THEN 1 
+      WHEN root."network"='international' THEN 5 
+      WHEN root."network"='national' THEN 4 
+      WHEN root."network"='region' THEN 3 
+      WHEN root."network"='regional' THEN 3 
+      WHEN root."network"='urban' THEN 2 
+      WHEN root."network"='suburban' THEN 1 
       WHEN root."network"='local' THEN 0 
-      WHEN root.highway='motorway' THEN 4 
-      WHEN root.highway in ('trunk', 'primary') THEN 3 
-      WHEN root.highway in ('secondary', 'tertiary') or root."railway" in ('rail') or root."waterway" in ('river', 'canal') THEN 2 
-      WHEN root."waterway" in ('stream') THEN 0 
-      ELSE 1 
+      WHEN root.highway='motorway' THEN 5 
+      WHEN root.highway='trunk' THEN 4 
+      WHEN root.highway in ('primary') 
+        OR (root."railway" in ('rail') and root."usage" in ('main'))
+        THEN 4 
+      WHEN (root."railway" in ('rail') and (root."usage" in ('', 'branch') or root."usage" is null))
+	THEN 3
+      WHEN root.highway in ('secondary', 'tertiary')
+	OR root."waterway" in ('river')
+	THEN 3 
+      WHEN root."waterway" in ('stream', 'drain')
+        THEN 1 
+      WHEN root."waterway" in ('ditch')
+        THEN 0
+      ELSE 2 
     END)+(CASE 
       WHEN root."highway" is not null THEN 30 
       WHEN root."railway" is not null THEN 20
@@ -33,11 +45,26 @@ insert into streets_tmp1
     join planet_osm_line next on root.name=next.name 
   where root.osm_id>0 and next.osm_id>0 and 
     makepolygon(geometryfromtext('LINESTRING(' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymin(root.way)-200 || ',' || xmax(root.way)+200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymax(root.way)+200 || ',' || xmin(root.way)-200 || ' ' || ymin(root.way)-200 || ')', 900913))&&next.way and
-    Distance(root.way, next.way)<200 
-  group by root.osm_id, root.name, root.highway, root.railway, root.waterway, root.network;
+    Distance(root.way, next.way)<200
+    and ((root."highway" is not null and next."highway" is not null)
+      or (root."railway"=next."railway")
+      or (root."waterway"=next."waterway"))
+    and (
+      root."highway" in ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'primary_link', 'secondary', 'secondary_link', 'tertiary', 'unclassified', 'road', 'residential', 'living_street', 'service', 'track', 'pedestrian', 'bus_guideway', 'path', 'cycleway', 'footway', 'bridleway', 'steps')
+      or 
+      root."railway" in ('rail', 'tram', 'light_rail', 'subway', 'preserved', 'narrow_gauge', 'monorail', 'funicular')
+      or
+      root."waterway" in ('stream', 'river', 'canal', 'ditch', 'drain'))
+    and (
+      next."highway" in ('motorway', 'motorway_link', 'trunk', 'trunk_link', 'primary', 'primary_link', 'secondary', 'secondary_link', 'tertiary', 'unclassified', 'road', 'residential', 'living_street', 'service', 'track', 'pedestrian', 'bus_guideway', 'path', 'cycleway', 'footway', 'bridleway', 'steps')
+      or 
+      next."railway" in ('rail', 'tram', 'light_rail', 'subway', 'preserved', 'narrow_gauge', 'monorail', 'funicular')
+      or
+      next."waterway" in ('stream', 'river', 'canal', 'ditch', 'drain'))
+  group by root.osm_id, root.name, root.highway, root.railway, root.waterway, root.network, root."usage";
 
-drop table if exists planet_osm_streets;
-create table planet_osm_streets (
+drop table if exists planet_osm_streets_tmp;
+create table planet_osm_streets_tmp (
   osm_id	int4	not null,
   way_parts	int4[]  not null,
   highway_level int default 0,
@@ -98,7 +125,7 @@ begin
 	end loop;
 
 --	raise notice 'foo bar %', ids[1];
-	insert into planet_osm_streets values (ids[1], ids, max_highway_level, name);
+	insert into planet_osm_streets_tmp values (ids[1], ids, max_highway_level, name);
 	for index in array_lower(ids, 1)..array_upper(ids, 1) loop
 	  insert into planet_osm_streets_parts values (ids[1], ids[index]);
 	end loop;
@@ -110,29 +137,48 @@ begin;
 select collect_streets(osm_id, name) from streets_tmp1;
 commit;
 
-SELECT AddGeometryColumn('planet_osm_streets', 'way', 900913, 'MULTILINESTRING', 2);
-alter table planet_osm_streets add column waytype text;
-alter table planet_osm_streets add column importance text;
+drop table if exists planet_osm_streets;
+create table planet_osm_streets (
+  osm_id	int4	not null,
+  way_parts	int4[]  not null,
+  highway_level int default 0,
+  waytype	text,
+  importance	text,
+  highway	text[],
+  railway	text[],
+  waterway	text[],
+  name text,
+  primary key(osm_id)
+);
+SELECT AddGeometryColumn('planet_osm_streets', 'way', 900913, 'GEOMETRY', 2);
 
-update planet_osm_streets set way=(select ST_Multi(ST_LineMerge(ST_Collect(way))) from planet_osm_line join planet_osm_streets_parts on planet_osm_line.osm_id=planet_osm_streets_parts.part where planet_osm_streets_parts.osm_id=planet_osm_streets.osm_id);
+insert into planet_osm_streets
+  select st.osm_id, st.way_parts, st.highway_level,
+    (CASE
+      WHEN st.highway_level>=30 THEN 'street'
+      WHEN st.highway_level>=20 THEN 'railway'
+      WHEN st.highway_level>=10 THEN 'waterway'
+      ELSE 'same_name'
+    END),
+     (CASE 
+      WHEN st.highway_level%10=5 THEN 'international' 
+      WHEN st.highway_level%10=4 THEN 'national' 
+      WHEN st.highway_level%10=3 THEN 'regional' 
+      WHEN st.highway_level%10=2 THEN 'urban' 
+      WHEN st.highway_level%10=1 THEN 'suburban' 
+      ELSE 'local' END),
+    to_textarray(l."highway"),
+    to_textarray(l."railway"),
+    to_textarray(l."waterway"),
+    (to_textarray(l.name))[1],
+    ST_Collect(l.way)
+  from planet_osm_streets_tmp st join
+    planet_osm_line l on l.osm_id=any(st.way_parts)
+  group by st.osm_id, st.way_parts, st.highway_level;
 
-update planet_osm_streets set 
-  importance=(CASE 
-    WHEN highway_level%10=4 THEN 'international' 
-    WHEN highway_level%10=3 THEN 'national' 
-    WHEN highway_level%10=2 THEN 'region' 
-    WHEN highway_level%10=1 THEN 'urban' 
-    ELSE 'local' END),
-  waytype=(CASE
-    WHEN highway_level>=30 THEN 'street'
-    WHEN highway_level>=20 THEN 'railway'
-    WHEN highway_level>=10 THEN 'waterway'
-    ELSE 'same_name'
-  END);
-
-alter table planet_osm_streets drop column highway_level;
 drop table streets_tmp2;
 drop table streets_tmp1;
+drop table planet_osm_streets_tmp;
 
 insert 
   into planet_osm_colls 
