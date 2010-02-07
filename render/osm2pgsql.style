@@ -97,6 +97,7 @@ node,way   heritage		text	polygon
 node,way   heritage:operator	text	polygon
 node,way	capacity	text	polygon
 node,way	operator	text	polygon
+way		usage		text	linear
 node,way   z_order      int4         linear # This is calculated during import
 way        way_area     real                # This is calculated during import
 
