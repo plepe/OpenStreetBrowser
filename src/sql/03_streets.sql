@@ -133,9 +133,9 @@ create table planet_osm_streets (
   highway_level int default 0,
   waytype	text,
   importance	text,
-  highway	text[],
-  railway	text[],
-  waterway	text[],
+  highway	text,
+  railway	text,
+  waterway	text,
   name text,
   primary key(osm_id)
 );
@@ -156,9 +156,9 @@ insert into planet_osm_streets
       WHEN st.highway_level%10=2 THEN 'urban' 
       WHEN st.highway_level%10=1 THEN 'suburban' 
       ELSE 'local' END),
-    to_textarray(l."highway"),
-    to_textarray(l."railway"),
-    to_textarray(l."waterway"),
+    array_to_string(array_unique(to_textarray(l."highway")), ';'),
+    array_to_string(array_unique(to_textarray(l."railway")), ';'),
+    array_to_string(array_unique(to_textarray(l."waterway")), ';'),
     (to_textarray(l.name))[1],
     ST_Collect(l.way)
   from planet_osm_streets_tmp st join
