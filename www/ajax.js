@@ -193,3 +193,61 @@ function get_content(ob) {
   else
     return ob.textContent;
 }
+
+function ajax_post(url, getparam, postdata, _callback) {
+  // private
+  this.xmldata;
+  // public
+  var req=false;
+  var callback;
+
+  function req_change() {
+    if(req.readyState==4) {
+      this.xmldata=req.responseXML;
+
+      if(callback)
+        callback(req);
+    }
+  }
+
+  // branch for native XMLHttpRequest object
+  if(window.XMLHttpRequest) {
+    try {
+      req = new XMLHttpRequest();
+    }
+    catch(e) {
+      req = false;
+    }
+    // branch for IE/Windows ActiveX version
+  } else if(window.ActiveXObject) {
+    try {
+      req = new ActiveXObject("Msxml2.XMLHTTP");
+    }
+    catch(e) {
+      try {
+        req = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      catch(e) {
+        req = false;
+      }
+    }
+  }
+
+  if(req) {
+    var p=new Array();
+    ajax_build_request(getparam, null, p);
+    p=p.join("&");
+
+    callback=_callback;
+    req.onreadystatechange = req_change;
+    req.open("POST", url+"?"+p, 1);
+
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.setRequestHeader("Content-length", postdata.length);
+    req.setRequestHeader("Connection", "close");
+
+    req.send(postdata);
+  }
+}
+
+

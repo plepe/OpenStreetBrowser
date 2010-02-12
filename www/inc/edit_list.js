@@ -43,8 +43,7 @@ function edit_list_set_list_data() {
 
   ret+="</list>\n";
 
-  alert(ret);
-  //ajax_post("save_list.php", ret, edit_list_callback);
+  ajax_post("lists.php", { todo: 'save', id: 'new' }, ret, edit_list_callback);
 }
 
 function edit_list_element_set(id) {
