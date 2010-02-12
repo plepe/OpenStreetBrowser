@@ -131,7 +131,7 @@ function list_print($res) {
   return $ret;
 }
 
-function get_list($param) {
+function get_list($param, $list_data=null) {
   global $request;
   global $importance;
   global $types;
@@ -182,10 +182,15 @@ function get_list($param) {
   $max_count=$count+1;
   $list=array();
 
+//// where do we get our request-config from?
+  if(!$list_data)
+    $list_data=$request;
+  $list_data=$list_data[$cat];
+
 //// now run, until we are finished
   foreach($importance as $imp) {
-    if(($max_count>0)&&($request[$cat][$imp])) {
-      foreach($request[$cat][$imp] as $t=>$req_data) {
+    if(($max_count>0)&&($list_data[$imp])) {
+      foreach($list_data[$imp] as $t=>$req_data) {
 	$qry_where=array();
 	if(sizeof($sql_where[$t]))
 	  $qry_where[]=implode(" and ", $sql_where[$t]);
@@ -276,6 +281,7 @@ function get_list($param) {
 }
 
 function main() {
+  global $lists_dir;
   $ret ="<?xml version='1.0' encoding='UTF-8'?>\n";
   $ret.="<results generator='OpenStreetBrowser'>\n";
 
@@ -289,8 +295,19 @@ function main() {
   if($r[category]) {
     $cs=explode(",", $r[category]);
     foreach($cs as $c) {
+      unset($load_cat);
+      // This is a custom list
+      if(preg_match("/^(list_[^\/]+)(\/*)$/", $c, $m)) {
+	$load_cat=unserialize(file_get_contents("$lists_dir/$m[1].xml.save"));
+	foreach($load_cat as $cat=>$data) {
+	  if(preg_match("/^root(.*)$/", $cat, $m)) {
+	    $load_cat["$c$m[1]"]=$data;
+	  }
+	}
+      }
+
       $r[category]=$c;
-      $ret.=get_list($r);
+      $ret.=get_list($r, $load_cat);
     }
   }
 
