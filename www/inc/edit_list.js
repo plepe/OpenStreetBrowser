@@ -1,5 +1,6 @@
 var edit_list_highest_element_id=0;
 var edit_list_form;
+var list_importance=[ "international", "national", "regional", "urban", "suburban", "local" ];
 
 function new_dom_document() {
   var text="<?xml version='1.0' encoding='UTF-8'?><list/>\n";
@@ -94,6 +95,15 @@ function edit_list_element_form(data) {
   ret+="<tr><td colspan='2' class='help'>Please insert a tag/value-pair, e.g. \"amenity=bar\". If you want to match on several tags, e.g. christian church, write \"amenity=place_of_worship religion=christian\". If a tag can hold on of several values, write \"amenity=bar;restaurant\". See <a href='http://wiki.openstreetmap.org/wiki/Map_Features' target='_new'>Map Features</a> for possible values.</td></tr>\n";
   ret+="<tr><td>Further description:</td><td><input name='"+data.id+".description' value='"+data.description+"'/></td></tr>\n";
   ret+="<tr><td colspan='2' class='help'>Insert a tag-name which further describes this element, e.g. \"cuisine\" for restaurants. If you don't know, rather leave this field empty.</td></tr>\n";
+  ret+="<tr><td>Importance:</td><td><select name='"+data.id+".importance'>\n";
+  for(var i=0; i<list_importance.length; i++) {
+    ret+="  <option";
+    if(data.importance==list_importance[i])
+      ret+=" selected='selected'";
+    ret+=">"+list_importance[i]+"</option>\n";
+  }
+  ret+="</select></td></tr>\n";
+  ret+="<tr><td colspan='2' class='help'>What importance does this element have? E.g. a bench in a park is of local importance, not many people would want to walk miles for it. A parliament should have national importance.</td></tr>\n";
   ret+="<tr><td>Icon:</td><td><input name='"+data.id+".icon' value='"+data.icon+"'/></td></tr>\n";
 
   ret+="</table>\n";
