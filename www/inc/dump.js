@@ -40,7 +40,7 @@ function print_r(x, max, sep, l) {
 
 		for (i in x) {
 //			try {
-				r += tab + '[' + '] : ' + print_r(x[i], max, sep, (l + 1));
+				r += tab + '[' + i + '] : ' + print_r(x[i], max, sep, (l + 1));
 //			} catch(e) {
 //				return "[ERROR: " + e + "]\n";
 //			}
