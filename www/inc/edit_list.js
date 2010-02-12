@@ -1,7 +1,50 @@
 var edit_list_highest_element_id=0;
 var edit_list_form;
 
-function edit_list_set_list_data(ob) {
+function new_dom_document() {
+  var text="<?xml version='1.0' encoding='UTF-8'?><list/>\n";
+  if(window.DOMParser) {
+    parser=new DOMParser();
+    xmlDoc=parser.parseFromString(text,"text/xml");
+  }
+  else { // Internet Explorer
+    xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+    xmlDoc.async="false";
+    xmlDoc.loadXML(text);
+  }
+
+  return xmlDoc;
+} 
+
+function edit_list_callback() {
+  alert("saved");
+}
+
+function edit_list_set_list_data() {
+  var ret="";
+
+  ret="<?xml version='1.0' encoding='UTF-8'?>\n";
+
+  ret+="<list>\n";
+  ret+="  <name>"+edit_list_form.elements.name.value+"</name>\n";
+  ret+="  <lang>"+edit_list_form.elements.lang.value+"</lang>\n";
+
+  ret.list=[];
+  for(var i=0; i<edit_list_highest_element_id; i++) {
+    var data=edit_list_get_data(i);
+    if(data) {
+      ret+="  <element>\n";
+      for(var j in data) {
+	ret+="    <"+j+">"+data[j]+"</"+j+">\n";
+      }
+      ret+="  </element>\n";
+    }
+  }
+
+  ret+="</list>\n";
+
+  alert(ret);
+  //ajax_post("save_list.php", ret, edit_list_callback);
 }
 
 function edit_list_element_set(id) {
