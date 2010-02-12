@@ -253,3 +253,11 @@ div.edit_list {
 td.help {
   font-size: 8pt;
 }
+div.edit_list_element {
+  border: 1px solid black;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  padding: 2px;
+  margin-left: 2px;
+  margin-right: 2px;
+}

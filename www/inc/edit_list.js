@@ -41,9 +41,12 @@ function edit_list_element_form(data) {
   var ret="";
 
   ret ="<div id='edit_element_"+data.id+"'>\n";
+  if(!data.name)
+    ret+="New element\n";
+  else
+    ret+="(foo) "+data.name+"\n";
   ret+="<input type='hidden' name='"+data.id+".id' value='"+data.id+"'/></td></tr>\n";
   ret+="<table>\n";
-  ret+="<tr><td colspan='2'>New element</td></tr>\n";
   ret+="<tr><td>Name:</td><td><input name='"+data.id+".name' value='"+data.name+"'/></td></tr>\n";
   ret+="<tr><td>Tag:</td><td><input name='"+data.id+".tag' value='"+data.tag+"'/></td></tr>\n";
   ret+="<tr><td colspan='2' class='help'>Please insert a tag/value-pair, e.g. \"amenity=bar\". If you want to match on several tags, e.g. christian church, write \"amenity=place_of_worship religion=christian\". If a tag can hold on of several values, write \"amenity=bar;restaurant\". See <a href='http://wiki.openstreetmap.org/wiki/Map_Features' target='_new'>Map Features</a> for possible values.</td></tr>\n";
@@ -61,6 +64,7 @@ function edit_list_element_form(data) {
 function edit_list_new_element() {
   var data={ id: edit_list_highest_element_id++, tag: "", description: "", name: "", icon: "" };
   var div=document.createElement("div");
+  div.className='edit_list_element';
   div.innerHTML=edit_list_element_form(data);
   div.id="edit_list_element_"+data.id;
 
