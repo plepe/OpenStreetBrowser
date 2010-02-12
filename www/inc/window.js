@@ -7,7 +7,7 @@ function win(cl) {
   this.win.appendChild(this.content);
 
   this.close=function() {
-    win.parentNode.removeChild(win);
+    this.win.parentNode.removeChild(this.win);
     delete(this);
   }
 }

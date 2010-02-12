@@ -1,5 +1,6 @@
 var edit_list_highest_element_id=0;
 var edit_list_form;
+var edit_list_win;
 var list_importance=[ "international", "national", "regional", "urban", "suburban", "local" ];
 
 function new_dom_document() {
@@ -19,6 +20,9 @@ function new_dom_document() {
 
 function edit_list_callback() {
   alert("saved");
+
+  edit_list_win.close();
+  edit_list_win=null;
 }
 
 function edit_list_set_list_data() {
@@ -130,7 +134,7 @@ function edit_list_edit_element(id) {
 }
 
 function edit_list() {
-  var w=new win("edit_list");
+  edit_list_win=new win("edit_list");
   var data={ id: 1, name: "", desc: "", lang: "english" };
   var ret="";
 
@@ -155,10 +159,40 @@ function edit_list() {
   edit_list_form=document.getElementById("edit_list");
 }
 
+//  ajax_direct("lists.php", { todo: "load", id: id }, lists_load_callback);
+//function lists_load_callback(data) {
+//  var xml=data.responseXML;
+//}
+
+function load_lists_list(id, name) {
+  if(edit_list_win) {
+    edit_list_win.close();
+    edit_list_win=null;
+  }
+
+  category_list[id]=[];
+  lang_str["cat:"+id]=[ name ];
+  show_list();
+}
+
 function lists_list_callback(data) {
-  alert(data.responseText);
+  var list=data.responseXML;
+  var obs=list.getElementsByTagName("list");
+  var ret="";
+
+  ret+="Choose a list:<ul>\n";
+  for(var i=0; i<obs.length; i++) {
+    var ob=obs[i];
+
+    ret+="<li><a href='javascript:load_lists_list(\""+ob.getAttribute("id")+
+      "\", \""+ob.textContent+"\")'>"+ob.textContent+"</a></li>\n";
+  }
+
+  edit_list_win.content.innerHTML=ret;
 }
 
 function lists_list() {
+  edit_list_win=new win("edit_list");
+  edit_list_win.content.innerHTML="Loading ...";
   ajax_direct("lists.php", { todo: "list" }, lists_list_callback);
 }
