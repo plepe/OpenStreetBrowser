@@ -250,3 +250,6 @@ div.edit_list {
   overflow: auto;
   z-index: 10001;
 }
+td.help {
+  font-size: 8pt;
+}
