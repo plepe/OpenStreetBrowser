@@ -144,3 +144,11 @@ function edit_list() {
 
   edit_list_form=document.getElementById("edit_list");
 }
+
+function lists_list_callback(data) {
+  alert(data.responseText);
+}
+
+function lists_list() {
+  ajax_direct("lists.php", { todo: "list" }, lists_list_callback);
+}
