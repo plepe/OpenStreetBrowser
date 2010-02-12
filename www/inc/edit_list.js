@@ -51,7 +51,7 @@ function edit_list_element_form(data) {
   ret+="<tr><td>Tag:</td><td><input name='"+data.id+".tag' value='"+data.tag+"'/></td></tr>\n";
   ret+="<tr><td colspan='2' class='help'>Please insert a tag/value-pair, e.g. \"amenity=bar\". If you want to match on several tags, e.g. christian church, write \"amenity=place_of_worship religion=christian\". If a tag can hold on of several values, write \"amenity=bar;restaurant\". See <a href='http://wiki.openstreetmap.org/wiki/Map_Features' target='_new'>Map Features</a> for possible values.</td></tr>\n";
   ret+="<tr><td>Further description:</td><td><input name='"+data.id+".description' value='"+data.description+"'/></td></tr>\n";
-  ret+="<tr><td colspan='2' class='help'>Insert a tag-name which further describes this element, e.g. \"cuisine\" for restaurants. You you don't know, rather leave this field empty.</td></tr>\n";
+  ret+="<tr><td colspan='2' class='help'>Insert a tag-name which further describes this element, e.g. \"cuisine\" for restaurants. If you don't know, rather leave this field empty.</td></tr>\n";
   ret+="<tr><td>Icon:</td><td><input name='"+data.id+".icon' value='"+data.icon+"'/></td></tr>\n";
 
   ret+="</table>\n";
