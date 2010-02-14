@@ -8,10 +8,13 @@ function process_element($node, $cat) {
   global $columns;
   global $columns_all;
   global $req;
+  global $importance_levels;
 
   $cur=$node->firstChild;
   while($cur) {
-    $src[$cur->nodeName]=$cur->nodeValue;
+    if($cur->nodeName=="tag") {
+      $src[$cur->getAttribute("k")]=$cur->getAttribute("v");
+    }
     $cur=$cur->nextSibling;
   }
 
@@ -30,8 +33,11 @@ function process_element($node, $cat) {
 
   $prior=9;
 
-  if($src[importance]=="*") {
-    $importance=$list_importance;
+  if(!$src[importance]) {
+    $importance="local";
+  }
+  else if($src[importance]=="*") {
+    $importance=array_keys($importance_levels);
   }
   else
     $importance=array($src[importance]);
@@ -64,22 +70,12 @@ function process_element($node, $cat) {
 function process_list($node, $cat) {
   $cur=$node->firstChild;
   $data=array();
-  unset($leaf);
 
   while($cur) {
-    if($cur->nodeName=="list") {
-      if($leaf===true) {
-	print "Lists can either contain sublists or elements.";
-	exit;
-      }
-      process_sublist($cur);
-      $leaf=false;
+    if($cur->nodeName=="tag") {
+      $data[$cur->getAttribute("k")]=$cur->getAttribute("v");
     }
     elseif($cur->nodeName=="element") {
-      if($leaf===true) {
-	print "Lists can either contain sublists or elements.";
-	exit;
-      }
       process_element($cur, $cat);
     }
     $cur=$cur->nextSibling;

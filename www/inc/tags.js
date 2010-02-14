@@ -49,7 +49,7 @@ function tags(d) {
       indent="";
 
     for(var key in data) {
-      ret+=indent+"<tag k=\""+key+"\" v=\""+data[key]+"\">\n";
+      ret+=indent+"<tag k=\""+key+"\" v=\""+data[key]+"\" />\n";
     }
 
     return ret;
