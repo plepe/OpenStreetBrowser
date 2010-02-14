@@ -1,6 +1,6 @@
 var browser_lists={};
 
-function browser_list_element(browser_list, id, tags) {
+function browser_list_element(browser_list, id, _tags) {
   // constructor
   if(!id) {
     this.id=uniqid();
@@ -8,11 +8,11 @@ function browser_list_element(browser_list, id, tags) {
   }
   else {
     this.id=id;
-    this.tags=tags;
+    this.tags=_tags;
   }
 
   // editor
-  this.editor=function() {
+  this.editor=function(visible) {
     var ret="";
 
     ret+="<div class='edit_list_element' id='edit_list_element_"+this.id+"'>\n";
@@ -24,7 +24,10 @@ function browser_list_element(browser_list, id, tags) {
       ret+=this.tags.get("name");
     ret+="</a>\n";
 
-    ret+="<div id='edit_element_"+this.id+"_content'>\n";
+    ret+="<div id='edit_element_"+this.id+"_content'";
+    if(!visible)
+      ret+=" style='display: none;'";
+    ret+">\n";
     ret+="<p>Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Edit_List'>Help</a>):\n";
     ret+=this.tags.editor();
     ret+="<input type='button' value='Ok' onClick='edit_list_element_set(\""+this.id+"\")'>\n";
@@ -125,7 +128,7 @@ function browser_list(id) {
     this.list.push(el);
 
     var ellist=document.getElementById("list_"+this.id);
-    ellist.innerHTML+=el.editor();
+    ellist.innerHTML+=el.editor(true);
   }
 
   // set_list_data
