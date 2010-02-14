@@ -43,6 +43,18 @@ function tags(d) {
     return data;
   }
 
+  this.xml=function(indent) {
+    var ret="";
+    if(!indent)
+      indent="";
+
+    for(var key in data) {
+      ret+=indent+"<tag k=\""+key+"\" v=\""+data[key]+"\">\n";
+    }
+
+    return ret;
+  }
+
   this.editor=function(div) {
     var ret="";
     var i=0;
