@@ -326,9 +326,6 @@ function show_list() {
 
   ret+=show_sub_list("", _list);
 
-  ret+="<a href='javascript:edit_list()'>"+t("create_list")+"</a>\n";
-  ret+="<a href='javascript:lists_list()'>List lists</a>\n";
-
   var ob=document.getElementById("details_content");
   ob.innerHTML=ret;
 

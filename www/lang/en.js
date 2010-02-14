@@ -68,4 +68,4 @@ lang_str["cat:agri_ind/resources"]=[ "Resource Extraction" ];
 lang_str["cat:agri_ind/landfill"]=[ "Disposal" ];
 lang_str["cat:agri_ind/military"]=[ "Military" ];
 
-lang_str["create_list"]=[ "Create a new list" ];
+lang_str["more_browser_lists"]=[ "More lists" ];
