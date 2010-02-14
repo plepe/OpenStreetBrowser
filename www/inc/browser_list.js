@@ -29,7 +29,9 @@ function browser_list_element(browser_list, id, _tags) {
       ret+=" style='display: none;'";
     ret+">\n";
     ret+="<p>Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Edit_List'>Help</a>):\n";
+    ret+="<div>\n";
     ret+=this.tags.editor();
+    ret+="</div>\n";
     ret+="<input type='button' value='Ok' onClick='edit_list_element_set(\""+this.id+"\")'>\n";
     ret+="</div>\n";
 
@@ -104,7 +106,7 @@ function browser_list(id) {
     ret+=this.tags.editor();
 
     ret+="<hr>\n";
-    ret+="<div id='list_"+this.id+"'></div>\n";
+    ret+="<div id='el_list_"+this.id+"'></div>\n";
     for(i=0; i<this.list.length; i++) {
       ret+=this.list[i].editor();
     }
@@ -127,7 +129,7 @@ function browser_list(id) {
     var el=new browser_list_element(this);
     this.list.push(el);
 
-    var ellist=document.getElementById("list_"+this.id);
+    var ellist=document.getElementById("el_list_"+this.id);
     ellist.innerHTML+=el.editor(true);
   }
 
@@ -216,8 +218,10 @@ function lists_list_callback(data) {
     ret+="<li><a href='javascript:load_browser_list(\""+ob.getAttribute("id")+"\")'>"+
       ob.textContent+"</a></li>\n";
   }
+  ret+="</ul>\n";
 
   ret+="<p><a href='javascript:edit_list()'>New list</a><br>\n";
+  ret+="<p><a href='javascript:window_close(\""+edit_list_win.id+"\")'>Cancel</a><br>\n";
   edit_list_win.content.innerHTML=ret;
 }
 
