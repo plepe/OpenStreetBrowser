@@ -332,6 +332,8 @@ function show_list() {
   var ob=document.getElementById("details_content");
   ob.innerHTML=ret;
 
+  call_hooks("show_list", ob);
+
   return ret;
 }
 

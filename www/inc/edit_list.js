@@ -158,6 +158,21 @@ function edit_list() {
 //  var xml=data.responseXML;
 //}
 
+function lists_show_list(div) {
+  var inputs=div.getElementsByTagName("input");
+
+  for(var i=0; i<inputs.length; i++) {
+    if(inputs[i].name.match(/^list_/)) {
+      var l=document.createElement("span");
+      l.className="list_tools";
+      l.innerHTML="<a href='javascript:edit_list(\""+inputs[i].name+"\")'>edit</a>\n";
+      inputs[i].parentNode.parentNode.insertBefore(l, inputs[i].parentNode.parentNode.firstChild);
+    }
+  }
+}
+
+register_hook("show_list", lists_show_list);
+
 function load_lists_list(id, name) {
   if(edit_list_win) {
     edit_list_win.close();

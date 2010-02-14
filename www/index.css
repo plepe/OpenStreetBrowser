@@ -261,3 +261,10 @@ div.edit_list_element {
   margin-left: 2px;
   margin-right: 2px;
 }
+span.list_tools {
+  font-size: 8pt;
+  font-weight: normal;
+  float: right;
+  margin-right: 2px;
+  margin-top: 1px;
+}
