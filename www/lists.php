@@ -1,5 +1,6 @@
 <?
 include "../conf.php";
+include "inc/tags.php";
 include "../src/wiki_stuff.php";
 
 function process_element($node, $cat) {
@@ -196,8 +197,9 @@ switch($_GET[todo]) {
       if(preg_match("/^(.*)\.xml$/", $f, $m)) {
 	$x=new DOMDocument();
 	$x->loadXML(file_get_contents("$lists_dir/$f"));
-	$name=$x->getElementsByTagName("name")->item(0)->nodeValue;
-	$ret.="  <list id='$m[1]'>$name</list>\n";
+	$tags=new tags();
+	$tags->readDOM($x->firstChild);
+	$ret.="  <list id='$m[1]'>".$tags->get("name")."</list>\n";
       }
     }
 
