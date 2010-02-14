@@ -54,7 +54,9 @@ function tags(d) {
       ret+="  <tr>\n";
       ret+="    <td><input name='key' value=\""+key+"\" onChange='editor_update(\""+editor_id+"\")'></td>\n";
       ret+="    <td><input name='val' value=\""+data[key]+"\" onChange='editor_update(\""+editor_id+"\")'></td>\n";
+      ret+="    <td><a href='javascript:editor_remove_row(\""+editor_id+"\", "+i+")'>X</a></td>\n";
       ret+="  </tr>\n";
+      i++;
     }
     ret+="</table>";
     ret+="<a href='javascript:editor_add_tag(\""+editor_id+"\")'>Add Tag</a>\n";
@@ -67,11 +69,13 @@ function tags(d) {
 
   this.editor_add_tag=function(editor_id) {
     var table=document.getElementById(editor_id);
-    var tr=table.insertRow(table.rows.length);
+    var l=table.rows.length;
+    var tr=table.insertRow(l);
     var ret="";
 
     ret+="    <td><input name='key' onChange='editor_update(\""+editor_id+"\")'></td>\n";
     ret+="    <td><input name='val' onChange='editor_update(\""+editor_id+"\")'></td>\n";
+    ret+="    <td><a href='javascript:editor_remove_row(\""+editor_id+"\", "+l+")'>X</a></td>\n";
 
     tr.innerHTML=ret;
   }
@@ -89,6 +93,20 @@ function tags(d) {
 
     data=d;
   }
+
+  this.editor_remove_row=function(editor_id, row) {
+    var table=document.getElementById(editor_id);
+
+    table.deleteRow(row);
+    for(var i=0; i<table.rows.length; i++) {
+      var tr=table.rows[i];
+
+      tr.cells[2].innerHTML="<a href='javascript:editor_remove_row(\""+editor_id+"\", "+i+")'>X</a>";
+    }
+
+    this.editor_update(editor_id);
+    alert(print_r(data));
+  }
 }
 
 function editor_add_tag(editor_id) {
@@ -97,4 +115,8 @@ function editor_add_tag(editor_id) {
 
 function editor_update(editor_id) {
   return tag_editors[editor_id].editor_update(editor_id);
+}
+
+function editor_remove_row(editor_id, row) {
+  return tag_editors[editor_id].editor_remove_row(editor_id, row);
 }
