@@ -27,23 +27,34 @@ function edit_list_callback() {
 
 function edit_list_set_list_data() {
   var ret="";
+  var f=edit_list_form.getElementsByTagName("table");
+  var i=0;
+  var list;
+  var elements=[];
 
+  for(var fi=0; fi<f.length; fi++) {
+    if(f[fi].id.match(/^editor_/)) {
+      var t=tag_editors[f[fi].id];
+      if(i==0) {
+	list=t;
+      }
+      else {
+	elements.push(t);
+      }
+      i++;
+    }
+  }
+  
   ret="<?xml version='1.0' encoding='UTF-8'?>\n";
 
   ret+="<list>\n";
-  ret+="  <name>"+edit_list_form.elements.name.value+"</name>\n";
-  ret+="  <lang>"+edit_list_form.elements.lang.value+"</lang>\n";
+  ret+=list.xml("  ");
 
   ret.list=[];
-  for(var i=0; i<edit_list_highest_element_id; i++) {
-    var data=edit_list_get_data(i);
-    if(data) {
-      ret+="  <element>\n";
-      for(var j in data) {
-	ret+="    <"+j+">"+data[j]+"</"+j+">\n";
-      }
-      ret+="  </element>\n";
-    }
+  for(var i=0; i<elements.length; i++) {
+    ret+="  <element>\n";
+    ret+=elements[i].xml("    ");
+    ret+="  </element>\n";
   }
 
   ret+="</list>\n";
@@ -52,48 +63,34 @@ function edit_list_set_list_data() {
 }
 
 function edit_list_element_set(id) {
-  var div=document.getElementById("edit_list_element_"+id);
-  var data=edit_list_get_data(id);
-
-  div.innerHTML="<a href='javascript: edit_list_edit_element("+data.id+")'>(foo) "+data.name+"</a>"+edit_list_hidden_form(data);
+  var tdiv=document.getElementById("edit_element_"+id+"_content");
+  tdiv.style.display="none";
 }
 
-function edit_list_get_data(id) {
-  var div=document.getElementById("edit_list_element_"+id);
-
-  var data={};
-  for(var i=0; i<edit_list_form.elements.length; i++) {
-    var fi=edit_list_form.elements[i];
-
-    if(fi.name)
-      if(m=fi.name.match("^"+id+"\.([a-z_]+)")) {
-	data[m[1]]=fi.value;
-      }
-  }
-
-  return data;
+function edit_list_explode(id) {
+  var tdiv=document.getElementById("edit_element_"+id+"_content");
+  tdiv.style.display="block";
 }
 
-function edit_list_hidden_form(data) {
-  ret="";
-
-  for(var i in data) {
-    ret+="<input type='hidden' name='"+data.id+"."+i+"' value='"+data[i]+"'/>\n";
-  }
-
-  return ret;
-}
-
-function edit_list_element_form(data) {
+function edit_list_element_form(id, tags) {
   var ret="";
 
-  ret ="<div id='edit_element_"+data.id+"'>\n";
-  if(!data.name)
-    ret+="New element\n";
+  ret ="<div id='edit_element_"+id+"'>\n";
+  ret+="<a id='edit_element_"+id+"_name' href='javascript:edit_list_explode(\""+id+"\")'>";
+  if(!tags.get("name"))
+    ret+="New element";
   else
-    ret+="(foo) "+data.name+"\n";
-  ret+="<input type='hidden' name='"+data.id+".id' value='"+data.id+"'/></td></tr>\n";
-  ret+="<table>\n";
+    ret+="(foo) "+tags.get("name");
+  ret+="</a>\n";
+  ret+="<input type='hidden' name='"+id+".id' value='yes'/>\n";
+
+  ret+="<div id='edit_element_"+id+"_content'>\n";
+  
+  ret+="<p>Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Edit_List'>Help</a>):\n";
+
+  ret+="<div>"+tags.editor()+"</div>\n";
+
+/*  ret+="<table>\n";
   ret+="<tr><td>Name:</td><td><input name='"+data.id+".name' value='"+data.name+"'/></td></tr>\n";
   ret+="<tr><td>Tag:</td><td><input name='"+data.id+".tag' value='"+data.tag+"'/></td></tr>\n";
   ret+="<tr><td colspan='2' class='help'>Please insert a tag/value-pair, e.g. \"amenity=bar\". If you want to match on several tags, e.g. christian church, write \"amenity=place_of_worship religion=christian\". If a tag can hold on of several values, write \"amenity=bar;restaurant\". See <a href='http://wiki.openstreetmap.org/wiki/Map_Features' target='_new'>Map Features</a> for possible values.</td></tr>\n";
@@ -110,19 +107,20 @@ function edit_list_element_form(data) {
   ret+="<tr><td colspan='2' class='help'>What importance does this element have? E.g. a bench in a park is of local importance, not many people would want to walk miles for it. A parliament should have national importance.</td></tr>\n";
   ret+="<tr><td>Icon:</td><td><input name='"+data.id+".icon' value='"+data.icon+"'/></td></tr>\n";
 
-  ret+="</table>\n";
-  ret+="<input type='button' value='Ok' onClick='edit_list_element_set("+data.id+")'>\n";
+  ret+="</table>\n"; */
+  ret+="<input type='button' value='Ok' onClick='edit_list_element_set("+id+")'>\n";
   ret+="</div>\n";
 
   return ret;
 }
 
 function edit_list_new_element() {
-  var data={ id: edit_list_highest_element_id++, tag: "", description: "", name: "", icon: "" };
+  var _tags=new tags({ name: "", tag: "", description: "", icon: "" });
+  var id=edit_list_highest_element_id++;
   var div=document.createElement("div");
   div.className='edit_list_element';
-  div.innerHTML=edit_list_element_form(data);
-  div.id="edit_list_element_"+data.id;
+  div.innerHTML=edit_list_element_form(id, _tags);
+  div.id="edit_list_element_"+id;
 
   var ellist=document.getElementById("edit_list_element_list");
   ellist.appendChild(div);
@@ -135,16 +133,12 @@ function edit_list_edit_element(id) {
 
 function edit_list() {
   edit_list_win=new win("edit_list");
-  var data={ id: 1, name: "", desc: "", lang: "english" };
+  var data=new tags({ id: 1, name: "", desc: "", lang: "english" });
   var ret="";
 
   ret ="<form id='edit_list' action='javascript: edit_list_set_list_data()'>\n";
   ret+="<input type='hidden' name='name' value='"+data.id+"'/>\n";
-  ret+="<table>\n";
-  ret+="<tr><td>Name:</td><td><input name='name' value='"+data.name+"'/></td></tr>\n";
-  ret+="<tr><td>Description:</td><td><textarea name='desc'>"+data.desc+"</textarea></td></tr>\n";
-  ret+="<tr><td>Language:</td><td><input name='lang' value='"+data.lang+"'/></td></tr>\n";
-  ret+="</table>\n";
+  ret+=data.editor();
 
   ret+="<hr>\n";
   ret+="<div id='edit_list_element_list'></div>\n";
@@ -154,7 +148,7 @@ function edit_list() {
   ret+="<input type='submit' value='Save'/>\n";
   ret+="</form>\n";
 
-  w.content.innerHTML=ret;
+  edit_list_win.content.innerHTML=ret;
 
   edit_list_form=document.getElementById("edit_list");
 }
