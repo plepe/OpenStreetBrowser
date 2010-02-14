@@ -6,6 +6,9 @@ function tags(d) {
   if(typeof d=="object") {
     data=d;
   }
+  else {
+    data={};
+  }
 
   this.get=function(k) {
     return data[k];
@@ -118,6 +121,17 @@ function tags(d) {
 
     this.editor_update(editor_id);
     alert(print_r(data));
+  }
+
+  this.readDOM=function(dom) {
+    var cur=dom.firstChild;
+
+    while(cur) {
+      if(cur.nodeName=="tag") {
+	this.set(cur.getAttribute("k"), cur.getAttribute("v"));
+      }
+      cur=cur.nextSibling;
+    }
   }
 }
 

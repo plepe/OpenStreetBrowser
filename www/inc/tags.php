@@ -3,9 +3,12 @@ class tags {
   private $data;
   public $compiled_tags=array();
 
-  function __construct($parse_text_k, $parse_text_v=null) {
+  function __construct($parse_text_k=null, $parse_text_v=null) {
     if(is_array($parse_text_k)) {
       $this->data=$parse_text_k;
+    }
+    elseif($parse_text_k==null) {
+      $this->data=array();
     }
     else {
       $ks=parse_array($parse_text_k);
@@ -83,6 +86,17 @@ class tags {
     }
 
     return $text;
+  }
+
+  function readDOM($dom) {
+    $cur=$dom->firstChild;
+
+    while($cur) {
+      if($cur->nodeName=="tag") {
+	$this->set($cur->getAttribute("k"), $cur->getAttribute("v"));
+      }
+      $cur=$cur->nextSibling;
+    }
   }
 }
 
