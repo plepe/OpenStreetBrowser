@@ -152,13 +152,14 @@ insert into planet_osm_stations
 	WHEN station.importance='regional' THEN 4
 	WHEN station.importance='national' THEN 5
 	WHEN station.importance='international' THEN 6 ELSE 1 END)],
-    ST_Collect(CASE WHEN stops.way is not null THEN stops.way ELSE object.way END)
+    ST_Collect(CASE WHEN stops.way is not null THEN stops.way ELSE ST_Centroid(object.way) END)
 from planet_osm_stop_to_station station 
   join 
   planet_osm_poipoly as object
      on object.full_id=any(station.stations)
   left join planet_osm_stops stops on object.full_id='node_'||stops.osm_id
 group by station.name, stations;
+-- TODO: only take centroids, even if member was polygon (because of relation with geo-collection)
 
 -- we don't need this temporary table anymore
 -- drop table planet_osm_stop_to_station;
