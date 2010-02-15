@@ -50,6 +50,7 @@ lang_str["cat:transport"]=[ "Transportation" ];
 lang_str["cat:transport/car"]=[ "Individual Traffic" ];
 lang_str["cat:transport/car/amenities"]=[ "Amenities" ];
 lang_str["cat:transport/car/routes"]=[ "Routes" ];
+lang_str["cat:transport/car/furniture"]=[ "Street Furniture" ];
 lang_str["cat:transport/pt"]=[ "Public Transportation" ];
 lang_str["cat:transport/pt/amenities"]=[ "Amenities" ];
 lang_str["cat:transport/pt/routes"]=[ "Routes" ];
