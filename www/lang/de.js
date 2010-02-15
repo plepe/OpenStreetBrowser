@@ -47,6 +47,7 @@ lang_str["cat:places/natural"]=[ "Natürliche Formationen" ];
 lang_str["cat:transport"]=[ "Transport" ];
 lang_str["cat:transport/car"]=[ "Motorisierter Individualverkehr" ];
 lang_str["cat:transport/car/amenities"]=[ "Einrichtungen" ];
+lang_str["cat:transport/car/furniture"]=[ "Straßenausstattung" ];
 lang_str["cat:transport/pt"]=[ "Public Transportation" ];
 lang_str["cat:transport/pt/amenities"]=[ "Einrichtungen" ];
 lang_str["cat:transport/pt/routes"]=[ "Routen" ];
