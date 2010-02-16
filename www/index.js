@@ -235,7 +235,7 @@ function init() {
   setTimeout("call_hooks(\"post_init\")", 2000);
 
   if(marker_pos) {
-    var size = new OpenLayers.Size(10,17);
+    var size = new OpenLayers.Size(21,25);
     var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
     var icon = new OpenLayers.Icon('http://www.openstreetmap.org/openlayers/img/marker.png',size,offset);
     layermarkers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(marker_pos.lon,marker_pos.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),icon));
