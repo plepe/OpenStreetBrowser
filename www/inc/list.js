@@ -33,6 +33,7 @@ list_cache.search=function(viewbox, category) {
 function list_make_list(cat) {
   var ret="";
   var places=cat.getElementsByTagName("place");
+  var cat_id=cat.getAttribute("id");
 
   if(places.length==0) {
     ret+=t("nothing found")+"\n";
@@ -41,10 +42,12 @@ function list_make_list(cat) {
   for(var placei=0; placei<places.length; placei++) {
     var place=places[placei];
     ret+=list_entry(place);
+    dyn_overlay_show(cat_id, place);
   }
 
+  dyn_overlays_showall(cat_id);
+
   if(cat.getAttribute("complete")!="true") {
-    var cat_id=cat.getAttribute("id")
     ret+="<a id='more_"+cat_id+"' href='javascript:list_more(\""+cat_id+"\")'>"+t("more")+"</a>\n";
   }
 
@@ -304,6 +307,11 @@ function box_open(head, path, content, state) {
     if(content!=null)
       ret+=content;
     ret+="</div>\n";
+
+    call_hooks("show_category", path);
+  }
+  else {
+    call_hooks("hide_category", path);
   }
 
   ret+="</div>\n";
