@@ -1,4 +1,5 @@
 var dyn_overlay={};
+var dyn_overlay_imgs={};
 
 function dyn_overlay_show(category, place) {
   var geo=place.getAttribute("center");
@@ -16,14 +17,21 @@ function dyn_overlay_show(category, place) {
   if(dyn_overlay[category].ids[id])
     return;
 
+  if(!dyn_overlay_imgs[icon]) {
+    var newImg = new Image();
+    newImg.src = icon;
+    dyn_overlay_imgs[icon]={ width: newImg.width, height: newImg.height };
+    delete newImg;
+  }
+
   var f=new OpenLayers.Feature.Vector(p[0], 0, {
     strokeWidth: 4,
     strokeColor: "black",
     externalGraphic: icon,
-    graphicWidth: 25,
-    graphicHeight: 25,
-    graphicXOffset: -13,
-    graphicYOffset: -13,
+    graphicWidth: dyn_overlay_imgs[icon].width,
+    graphicHeight: dyn_overlay_imgs[icon].height,
+    graphicXOffset: -(dyn_overlay_imgs[icon].width+1)/2,
+    graphicYOffset: -(dyn_overlay_imgs[icon].height+1)/2,
     fill: "none"
   });
 
