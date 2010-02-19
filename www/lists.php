@@ -201,10 +201,43 @@ switch($_GET[todo]) {
 
     lock_dir("$lists_dir");
 
-    $f=fopen("$lists_dir/$id.xml", "w");
+    $file=new DOMDocument();
     $postdata = file_get_contents("php://input");
-    fprintf($f, $postdata);
+    $file->loadXML($postdata);
+
+    $l=$file->getElementByTagName("list");
+    for($i=0; $i<$l->length; $i++) {
+      $version=$l->item($i)->getAttribute("version");
+      $l->item($i)->removeAttribute("version");
+    }
+
+    chdir($lists_dir);
+    $branch=uniqid();
+    system("git branch $branch $version");
+    system("git checkout $branch");
+
+    $f=fopen("$lists_dir/$id.xml", "w");
+    fprintf($f, $file->saveXML());
     fclose($f);
+
+    system("git add $lists_dir/$id.xml");
+    system("git commit -m 'update' --author='webuser <web@user>'");
+    system("git checkout master");
+    $p=popen("git merge $branch", "r");
+    $error=0;
+    while($r=fgets($p)) {
+      if(preg_match("/^CONFLICT /", $r)) {
+	$error=1;
+      }
+    }
+    pclose($p);
+
+    if($error) {
+      system("git reset --hard");
+    }
+    else {
+      system("git branch -d $branch");
+    }
 
     process_file("$lists_dir/$id.xml");
 
@@ -213,7 +246,12 @@ switch($_GET[todo]) {
     Header("Content-Type: text/xml; charset=UTF-8");
     print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
     print "<result>\n";
-    print "  <status>Ok</status>\n";
+    if($error) {
+      print "  <status branch='$branch'>Failed to merge</status>\n";
+    }
+    else {
+      print "  <status>Ok</status>\n";
+    }
     print "  <id>$id</id>\n";
     print "</result>\n";
 
