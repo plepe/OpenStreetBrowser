@@ -175,6 +175,28 @@ switch($_GET[todo]) {
       exit;
     }
 
+    if(!$lists_dir) {
+      print "Variable \$lists_dir is not set!<br>\n");
+      exit;
+    }
+    if(!file_exists("$lists_dir")) {
+      mkdir("$lists_dir");
+      if(!file_exists("$lists_dir")) {
+	print "$lists_dir doesn't exist! Create and make sure it's writable by the webserver!");
+	exit;
+      }
+    }
+    if(!file_exists("$lists_dir/.git")) {
+      chdir($lists_dir);
+      system("git init");
+      system("git commit --allow-empty");
+
+      if(!file_exists("$lists_dir/.git")) {
+        print "Could not create git repository!");
+	exit;
+      }
+    }
+
     $f=fopen("$lists_dir/$id.xml", "w");
     $postdata = file_get_contents("php://input");
     fprintf($f, $postdata);
