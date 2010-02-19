@@ -228,15 +228,34 @@ switch($_GET[todo]) {
 
     chdir($lists_dir);
     $branch=uniqid();
-    system("git branch $branch $version");
-    system("git checkout $branch");
 
-    $f=fopen("$lists_dir/$id.xml", "w");
-    fprintf($f, $file->saveXML());
-    fclose($f);
+    if($conflict_branch=$_GET[branch]) {
+      $branch=uniqid();
 
-    system("git add $lists_dir/$id.xml");
-    system("git commit -m 'update' --author='webuser <web@user>'");
+      system("git branch $branch $_GET[version]");
+      system("git checkout $branch");
+      system("git merge $conflict_branch");
+
+      $f=fopen("$lists_dir/$id.xml", "w");
+      fprintf($f, $file->saveXML());
+      fclose($f);
+
+      system("git add $lists_dir/$id.xml");
+      system("git commit -m 'Fix merge' --author='webuser <web@user>'");
+      system("git branch -d $conflict_branch");
+    }
+    else {
+      system("git branch $branch $version");
+      system("git checkout $branch");
+
+      $f=fopen("$lists_dir/$id.xml", "w");
+      fprintf($f, $file->saveXML());
+      fclose($f);
+
+      system("git add $lists_dir/$id.xml");
+      system("git commit -m 'update' --author='webuser <web@user>'");
+    }
+
     system("git checkout master");
     $p=popen("git merge $branch", "r");
     $error=0;
@@ -261,11 +280,12 @@ switch($_GET[todo]) {
     Header("Content-Type: text/xml; charset=UTF-8");
     print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
     print "<result>\n";
+    $version=category_version();
     if($error) {
-      print "  <status branch='$branch'>Failed to merge</status>\n";
+      print "  <status branch='$branch' version='$version'>Failed to merge</status>\n";
     }
     else {
-      print "  <status>Ok</status>\n";
+      print "  <status version='$version'>Ok</status>\n";
     }
     print "  <id>$id</id>\n";
     print "</result>\n";
