@@ -3,6 +3,21 @@ include "../conf.php";
 include "inc/tags.php";
 include "../src/wiki_stuff.php";
 
+function category_version() {
+  global $lists_dir;
+
+  chdir($lists_dir);
+  $p=popen("git log -n1", "r");
+  $r=fgets($p);
+  pclose($p);
+
+  if(!preg_match("/^commit ([a-z0-9]+)/", $r, $m)) {
+    print "Couldn't get file version.\n";
+    exit;
+  }
+  return $m[1];
+}
+
 function process_element($node, $cat) {
   $src=array();
   $ret=array();
@@ -293,16 +308,7 @@ switch($_GET[todo]) {
     $file=new DOMDocument();
     $file->loadXML(file_get_contents("$lists_dir/$id.xml"));
     
-    chdir($lists_dir);
-    $p=popen("git log -n1", "r");
-    $r=fgets($p);
-    pclose($p);
-
-    if(!preg_match("/^commit ([a-z0-9]+)/", $r, $m)) {
-      print "Couldn't get file version.\n";
-      exit;
-    }
-    $version=$m[1];
+    $version=category_version();
 
     $l=$file->getElementByTagName("list");
     for($i=0; $i<$l->length; $i++) {
