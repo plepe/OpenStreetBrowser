@@ -209,7 +209,7 @@ switch($_GET[todo]) {
     unlock_dir("$lists_dir");
 
     Header("Content-Type: text/xml; charset=UTF-8");
-    print "<?xml version='1.0' encoding='UTF-8' ?>\n";
+    print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
     print "<result>\n";
     print "  <status>Ok</status>\n";
     print "  <id>$id</id>\n";
@@ -230,7 +230,7 @@ switch($_GET[todo]) {
     }
 
     Header("Content-Type: text/xml; charset=UTF-8");
-    print "<?xml version='1.0' encoding='UTF-8' ?>\n";
+    print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
     print "<result>\n";
     print $ret;
     print "</result>\n";
