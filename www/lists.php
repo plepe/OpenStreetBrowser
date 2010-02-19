@@ -164,6 +164,18 @@ function process_file($file) {
   fclose($f);
 }
 
+// Check if git repository is ready
+if(!file_exists("$lists_dir/.git")) {
+  chdir($lists_dir);
+  system("git init");
+  system("git commit --allow-empty");
+
+  if(!file_exists("$lists_dir/.git")) {
+    print "Could not create git repository!");
+    exit;
+  }
+}
+
 $id=$_GET[id];
 switch($_GET[todo]) {
   case "save":
@@ -183,16 +195,6 @@ switch($_GET[todo]) {
       mkdir("$lists_dir");
       if(!file_exists("$lists_dir")) {
 	print "$lists_dir doesn't exist! Create and make sure it's writable by the webserver!");
-	exit;
-      }
-    }
-    if(!file_exists("$lists_dir/.git")) {
-      chdir($lists_dir);
-      system("git init");
-      system("git commit --allow-empty");
-
-      if(!file_exists("$lists_dir/.git")) {
-        print "Could not create git repository!");
 	exit;
       }
     }
