@@ -197,12 +197,16 @@ switch($_GET[todo]) {
       }
     }
 
+    lock_dir("$lists_dir");
+
     $f=fopen("$lists_dir/$id.xml", "w");
     $postdata = file_get_contents("php://input");
     fprintf($f, $postdata);
     fclose($f);
 
     process_file("$lists_dir/$id.xml");
+
+    unlock_dir("$lists_dir");
 
     Header("Content-Type: text/xml; charset=UTF-8");
     print "<?xml version='1.0' encoding='UTF-8' ?>\n";
