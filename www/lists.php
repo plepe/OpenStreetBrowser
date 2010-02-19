@@ -218,6 +218,9 @@ switch($_GET[todo]) {
     break;
   case "list":
     $ret="";
+
+    lock_dir($lists_dir);
+
     $d=opendir("$lists_dir");
     while($f=readdir($d)) {
       if(preg_match("/^(.*)\.xml$/", $f, $m)) {
@@ -228,6 +231,9 @@ switch($_GET[todo]) {
 	$ret.="  <list id='$m[1]'>".$tags->get("name")."</list>\n";
       }
     }
+    closedir($d);
+
+    unlock_dir($lists_dir);
 
     Header("Content-Type: text/xml; charset=UTF-8");
     print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
@@ -242,8 +248,31 @@ switch($_GET[todo]) {
       exit;
     }
 
+    lock_dir($lists_dir);
+
+    $file=new DOMDocument();
+    $file->loadXML(file_get_contents("$lists_dir/$id.xml"));
+    
+    chdir($lists_dir);
+    $p=popen("git log -n1", "r");
+    $r=fgets($p);
+    pclose($p);
+
+    if(!preg_match("/^commit ([a-z0-9]+)/", $r, $m)) {
+      print "Couldn't get file version.\n";
+      exit;
+    }
+    $version=$m[1];
+
+    $l=$file->getElementByTagName("list");
+    for($i=0; $i<$l->length; $i++) {
+      $l->item($i)->setAttribute("version", $version);
+    }
+
+    unlock_dir($lists_dir);
+
     Header("Content-Type: text/xml; charset=UTF-8");
-    print file_get_contents("$lists_dir/$id.xml");
+    print $file->saveXML();
 
     break;
   default:
