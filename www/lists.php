@@ -318,17 +318,29 @@ switch($_GET[todo]) {
 
     break;
   case "load":
-    if(!file_exists("$lists_dir/$id.xml")) {
-      print "File not found!\n";
-      exit;
-    }
-
     lock_dir($lists_dir);
 
+    if($_GET[version]) {
+      chdir($lists_dir);
+      $p=popen("git show $_GET[version]:$id.xml");
+      while($r=fgets($p)) {
+	$content.=$r;
+      }
+      pclose($p);
+    }
+    else {
+      if(!file_exists("$lists_dir/$id.xml")) {
+	unlock_dir($lists_dir);
+	print "File not found!\n";
+	exit;
+      }
+
+      $content=file_get_contents("$lists_dir/$id.xml")
+      $version=category_version();
+    }
+
     $file=new DOMDocument();
-    $file->loadXML(file_get_contents("$lists_dir/$id.xml"));
-    
-    $version=category_version();
+    $file->loadXML($content);
 
     $l=$file->getElementByTagName("list");
     for($i=0; $i<$l->length; $i++) {
