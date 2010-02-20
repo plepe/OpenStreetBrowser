@@ -221,10 +221,10 @@ function category_check_state() {
 //    version   the version of the file last loaded
 //
 // return:
-//   success: 0
-//   error:   array(
-//     'status'=>'status message',
+//   array(
+//     'status'=>'status message',  // boolean true if success
 //     'branch'=>'id of conflicting branch'
+//     'id'=>    'id of file'
 //   )
 function category_save($id, $content, $param=array()) {
   global $lists_dir;
@@ -315,10 +315,10 @@ function category_save($id, $content, $param=array()) {
   process_file("$lists_dir/$id.xml");
 
   if($error) {
-    return array("status"=>"merge failed", "branch"=>$branch);
+    return array("status"=>"merge failed", "branch"=>$branch, "id"=>$id);
   }
   else {
-    return 0;
+    return array("status"=>true, "id"=>$id);
   }
 }
 
@@ -383,6 +383,7 @@ function category_load($id, $param=array()) {
       $content.=$r;
     }
     pclose($p);
+    $version=$param[version];
   }
   else {
     if(!file_exists("$lists_dir/$id.xml")) {

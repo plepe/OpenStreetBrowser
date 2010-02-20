@@ -8,14 +8,14 @@ include "../src/wiki_stuff.php";
 $id=$_GET[id];
 switch($_GET[todo]) {
   case "save":
-    $error=category_save($id, file_get_contents("php://input"), $_GET);
+    $status=category_save($id, file_get_contents("php://input"), $_GET);
 
     Header("Content-Type: text/xml; charset=UTF-8");
     print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
     print "<result>\n";
     $version=category_version();
 
-    if($error) {
+    if($status[status]!==true) {
       print "  <status version='$version'";
       foreach($error as $ek=>$ev) {
 	print " $ek='$ev'";
@@ -25,7 +25,7 @@ switch($_GET[todo]) {
     else {
       print "  <status version='$version' status='ok' />\n";
     }
-    print "  <id>$id</id>\n";
+    print "  <id>$status[id]</id>\n";
     print "</result>\n";
 
     break;
