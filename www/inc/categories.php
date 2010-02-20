@@ -252,9 +252,12 @@ function category_save($id, $content, $param=array()) {
   lock_dir("$lists_dir");
 
   $file=new DOMDocument();
-  $file->loadXML($content);
+  if(!($file->loadXML($content))) {
+    unlock_dir($lists_dir);
+    return array("status"=>"Could not load data");
+  }
 
-  $l=$file->getElementByTagName("list");
+  $l=$file->getElementsByTagName("list");
   for($i=0; $i<$l->length; $i++) {
     $version=$l->item($i)->getAttribute("version");
     $l->item($i)->removeAttribute("version");
@@ -287,7 +290,7 @@ function category_save($id, $content, $param=array()) {
     fclose($f);
 
     system("git add $lists_dir/$id.xml");
-    system("git commit -m 'update' --author='webuser <web@user>'");
+    system("git commit -m 'Change category $id' --author='webuser <web@user>'");
   }
 
   system("git checkout master");
@@ -307,9 +310,9 @@ function category_save($id, $content, $param=array()) {
     system("git branch -d $branch");
   }
 
-  process_file("$lists_dir/$id.xml");
-
   unlock_dir("$lists_dir");
+
+  process_file("$lists_dir/$id.xml");
 
   if($error) {
     return array("status"=>"merge failed", "branch"=>$branch);
@@ -375,7 +378,7 @@ function category_load($id, $param=array()) {
 
   if($param[version]) {
     chdir($lists_dir);
-    $p=popen("git show $param[version]:$id.xml");
+    $p=popen("git show $param[version]:$id.xml", "r");
     while($r=fgets($p)) {
       $content.=$r;
     }
@@ -395,7 +398,7 @@ function category_load($id, $param=array()) {
   $file=new DOMDocument();
   $file->loadXML($content);
 
-  $l=$file->getElementByTagName("list");
+  $l=$file->getElementsByTagName("list");
   for($i=0; $i<$l->length; $i++) {
     $l->item($i)->setAttribute("version", $version);
   }
@@ -403,5 +406,3 @@ function category_load($id, $param=array()) {
   unlock_dir($lists_dir);
   return $file->saveXML();
 }
-
-
