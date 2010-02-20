@@ -1,5 +1,6 @@
 <?
 include "../conf.php";
+include "inc/lock.php";
 include "inc/tags.php";
 include "inc/categories.php";
 include "../src/wiki_stuff.php";

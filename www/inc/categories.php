@@ -175,16 +175,39 @@ function process_file($file) {
   fclose($f);
 }
 
-// Check if git repository is ready
-if(!file_exists("$lists_dir/.git")) {
-  chdir($lists_dir);
-  system("git init");
-  system("git commit --allow-empty");
+// category_check_state
+// checks whether category-database is in sane state
+//
+// parameters:
+// 
+// return:
+// true        oh yeah, everything alright
+// message     no, contains statement
+function category_check_state() {
+  global $lists_dir;
 
-  if(!file_exists("$lists_dir/.git")) {
-    print "Could not create git repository!";
-    exit;
+  // $lists_dir set?
+  if(!$lists_dir) {
+    return "Variable \$lists_dir is not set!";
   }
+
+  // No directory to change into ...
+  if(!file_exists("$lists_dir")) {
+    return "$lists_dir does not exist!";
+  }
+
+  // Check if git repository is ready
+  if(!file_exists("$lists_dir/.git")) {
+    chdir($lists_dir);
+    system("git init");
+    system("git commit -m 'Init' --allow-empty");
+
+    if(!file_exists("$lists_dir/.git")) {
+      return "Could not create git repository!";
+    }
+  }
+
+  return true;
 }
 
 // function category_save()
@@ -206,6 +229,10 @@ if(!file_exists("$lists_dir/.git")) {
 function category_save($id, $content, $param=array()) {
   global $lists_dir;
 
+  if(($state=category_check_state())!==true) {
+    return array('status'=>$state);
+  }
+
   if($id=="new") {
     $id=uniqid("list_");
   }
@@ -214,10 +241,6 @@ function category_save($id, $content, $param=array()) {
     exit;
   }
 
-  if(!$lists_dir) {
-    print "Variable \$lists_dir is not set!<br>\n";
-    exit;
-  }
   if(!file_exists("$lists_dir")) {
     mkdir("$lists_dir");
     if(!file_exists("$lists_dir")) {
@@ -306,6 +329,10 @@ function category_save($id, $content, $param=array()) {
 function category_list() {
   global $lists_dir;
 
+  if($state=category_check_state()!==true) {
+    return array('status'=>$state);
+  }
+
   $ret=array();
   lock_dir($lists_dir);
 
@@ -336,8 +363,13 @@ function category_list() {
 //
 // return:
 // content as text
+// array('status')  on error
 function category_load($id, $param=array()) {
   global $lists_dir;
+
+  if($state=category_check_state()!==true) {
+    return array('status'=>$state);
+  }
 
   lock_dir($lists_dir);
 
