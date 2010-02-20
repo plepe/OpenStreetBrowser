@@ -282,6 +282,27 @@ function category_new($id, $content, $param=array()) {
     }
 }
 
+function category_list() {
+    $ret=array();
+    lock_dir($lists_dir);
+
+    $d=opendir("$lists_dir");
+    while($f=readdir($d)) {
+      if(preg_match("/^(.*)\.xml$/", $f, $m)) {
+	$x=new DOMDocument();
+	$x->loadXML(file_get_contents("$lists_dir/$f"));
+	$tags=new tags();
+	$tags->readDOM($x->firstChild);
+	$ret[$m[1]]=$tags->get("name");
+      }
+    }
+    closedir($d);
+
+    unlock_dir($lists_dir);
+
+    return $ret;
+}
+
 $id=$_GET[id];
 switch($_GET[todo]) {
   case "save":
@@ -307,28 +328,14 @@ switch($_GET[todo]) {
 
     break;
   case "list":
-    $ret="";
-
-    lock_dir($lists_dir);
-
-    $d=opendir("$lists_dir");
-    while($f=readdir($d)) {
-      if(preg_match("/^(.*)\.xml$/", $f, $m)) {
-	$x=new DOMDocument();
-	$x->loadXML(file_get_contents("$lists_dir/$f"));
-	$tags=new tags();
-	$tags->readDOM($x->firstChild);
-	$ret.="  <list id='$m[1]'>".$tags->get("name")."</list>\n";
-      }
-    }
-    closedir($d);
-
-    unlock_dir($lists_dir);
+    $list=category_list();
 
     Header("Content-Type: text/xml; charset=UTF-8");
     print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
     print "<result>\n";
-    print $ret;
+    foreach($list as $k=>$v) {
+	print "  <list id='$k'>$v</list>\n";
+    }
     print "</result>\n";
 
     break;
