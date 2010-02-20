@@ -303,6 +303,40 @@ function category_list() {
     return $ret;
 }
 
+function category_load($id, $param) {
+    lock_dir($lists_dir);
+
+    if($param[version]) {
+      chdir($lists_dir);
+      $p=popen("git show $param[version]:$id.xml");
+      while($r=fgets($p)) {
+	$content.=$r;
+      }
+      pclose($p);
+    }
+    else {
+      if(!file_exists("$lists_dir/$id.xml")) {
+	unlock_dir($lists_dir);
+	print "File not found!\n";
+	exit;
+      }
+
+      $content=file_get_contents("$lists_dir/$id.xml")
+      $version=category_version();
+    }
+
+    $file=new DOMDocument();
+    $file->loadXML($content);
+
+    $l=$file->getElementByTagName("list");
+    for($i=0; $i<$l->length; $i++) {
+      $l->item($i)->setAttribute("version", $version);
+    }
+
+    unlock_dir($lists_dir);
+    return $file->saveXML();
+}
+
 $id=$_GET[id];
 switch($_GET[todo]) {
   case "save":
@@ -340,39 +374,10 @@ switch($_GET[todo]) {
 
     break;
   case "load":
-    lock_dir($lists_dir);
-
-    if($_GET[version]) {
-      chdir($lists_dir);
-      $p=popen("git show $_GET[version]:$id.xml");
-      while($r=fgets($p)) {
-	$content.=$r;
-      }
-      pclose($p);
-    }
-    else {
-      if(!file_exists("$lists_dir/$id.xml")) {
-	unlock_dir($lists_dir);
-	print "File not found!\n";
-	exit;
-      }
-
-      $content=file_get_contents("$lists_dir/$id.xml")
-      $version=category_version();
-    }
-
-    $file=new DOMDocument();
-    $file->loadXML($content);
-
-    $l=$file->getElementByTagName("list");
-    for($i=0; $i<$l->length; $i++) {
-      $l->item($i)->setAttribute("version", $version);
-    }
-
-    unlock_dir($lists_dir);
+    $content=category_load($id, $_GET);
 
     Header("Content-Type: text/xml; charset=UTF-8");
-    print $file->saveXML();
+    print $content;
 
     break;
   default:
