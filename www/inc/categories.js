@@ -68,7 +68,7 @@ function browser_list(id) {
 
   // load
   this.load=function() {
-    ajax_direct("lists.php", { todo: "load", id: this.id }, this.load_callback.bind(this));
+    ajax_direct("categories.php", { todo: "load", id: this.id }, this.load_callback.bind(this));
   }
 
   // constructor
@@ -156,7 +156,7 @@ function browser_list(id) {
 
     ret+="</list>\n";
 
-    ajax_post("lists.php", { todo: 'save', id: this.id }, ret, this.save_callback.bind(this));
+    ajax_post("categories.php", { todo: 'save', id: this.id }, ret, this.save_callback.bind(this));
   }
 
   // save_callback
@@ -228,7 +228,7 @@ function lists_list_callback(data) {
 function list_browser_lists() {
   edit_list_win=new win("edit_list");
   edit_list_win.content.innerHTML="Loading ...";
-  ajax_direct("lists.php", { todo: "list" }, lists_list_callback);
+  ajax_direct("categories.php", { todo: "list" }, lists_list_callback);
 }
 
 function browser_lists_show_list(div) {
