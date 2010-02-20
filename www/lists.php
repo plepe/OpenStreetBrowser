@@ -191,156 +191,195 @@ if(!file_exists("$lists_dir/.git")) {
   }
 }
 
-function category_new($id, $content, $param=array()) {
-    if($id=="new") {
-      $id=uniqid("list_");
-    }
-    if(!$id) {
-      print "No ID given!\n";
-      exit;
-    }
+// function category_save()
+// saves a category and processes it
+//
+// parameters:
+// $id       the id of the file, could be 'new'
+// $content  the content of the file
+// $param    additional params
+//    branch    the branch of a conflicting merge
+//    version   the version of the file last loaded
+//
+// return:
+//   success: 0
+//   error:   array(
+//     'status'=>'status message',
+//     'branch'=>'id of conflicting branch'
+//   )
+function category_save($id, $content, $param=array()) {
+  global $lists_dir;
 
-    if(!$lists_dir) {
-      print "Variable \$lists_dir is not set!<br>\n");
-      exit;
-    }
+  if($id=="new") {
+    $id=uniqid("list_");
+  }
+  if(!$id) {
+    print "No ID given!\n";
+    exit;
+  }
+
+  if(!$lists_dir) {
+    print "Variable \$lists_dir is not set!<br>\n");
+    exit;
+  }
+  if(!file_exists("$lists_dir")) {
+    mkdir("$lists_dir");
     if(!file_exists("$lists_dir")) {
-      mkdir("$lists_dir");
-      if(!file_exists("$lists_dir")) {
-	print "$lists_dir doesn't exist! Create and make sure it's writable by the webserver!");
-	exit;
-      }
+      print "$lists_dir doesn't exist! Create and make sure it's writable by the webserver!");
+      exit;
     }
+  }
 
-    lock_dir("$lists_dir");
+  lock_dir("$lists_dir");
 
-    $file=new DOMDocument();
-    $file->loadXML($content);
+  $file=new DOMDocument();
+  $file->loadXML($content);
 
-    $l=$file->getElementByTagName("list");
-    for($i=0; $i<$l->length; $i++) {
-      $version=$l->item($i)->getAttribute("version");
-      $l->item($i)->removeAttribute("version");
-    }
+  $l=$file->getElementByTagName("list");
+  for($i=0; $i<$l->length; $i++) {
+    $version=$l->item($i)->getAttribute("version");
+    $l->item($i)->removeAttribute("version");
+  }
 
-    chdir($lists_dir);
+  chdir($lists_dir);
+  $branch=uniqid();
+
+  if($conflict_branch=$param[branch]) {
     $branch=uniqid();
 
-    if($conflict_branch=$param[branch]) {
-      $branch=uniqid();
+    system("git branch $branch $param[version]");
+    system("git checkout $branch");
+    system("git merge $conflict_branch");
 
-      system("git branch $branch $param[version]");
-      system("git checkout $branch");
-      system("git merge $conflict_branch");
+    $f=fopen("$lists_dir/$id.xml", "w");
+    fprintf($f, $file->saveXML());
+    fclose($f);
 
-      $f=fopen("$lists_dir/$id.xml", "w");
-      fprintf($f, $file->saveXML());
-      fclose($f);
+    system("git add $lists_dir/$id.xml");
+    system("git commit -m 'Fix merge' --author='webuser <web@user>'");
+    system("git branch -d $conflict_branch");
+  }
+  else {
+    system("git branch $branch $version");
+    system("git checkout $branch");
 
-      system("git add $lists_dir/$id.xml");
-      system("git commit -m 'Fix merge' --author='webuser <web@user>'");
-      system("git branch -d $conflict_branch");
+    $f=fopen("$lists_dir/$id.xml", "w");
+    fprintf($f, $file->saveXML());
+    fclose($f);
+
+    system("git add $lists_dir/$id.xml");
+    system("git commit -m 'update' --author='webuser <web@user>'");
+  }
+
+  system("git checkout master");
+  $p=popen("git merge $branch", "r");
+  $error=0;
+  while($r=fgets($p)) {
+    if(preg_match("/^CONFLICT /", $r)) {
+      $error=1;
     }
-    else {
-      system("git branch $branch $version");
-      system("git checkout $branch");
+  }
+  pclose($p);
 
-      $f=fopen("$lists_dir/$id.xml", "w");
-      fprintf($f, $file->saveXML());
-      fclose($f);
+  if($error) {
+    system("git reset --hard");
+  }
+  else {
+    system("git branch -d $branch");
+  }
 
-      system("git add $lists_dir/$id.xml");
-      system("git commit -m 'update' --author='webuser <web@user>'");
+  process_file("$lists_dir/$id.xml");
+
+  unlock_dir("$lists_dir");
+
+  if($error) {
+    return array("status"=>"merge failed", "branch"=>$branch);
+  }
+  else {
+    return 0;
+  }
+}
+
+// category_list()
+// lists all categories
+//
+// parameters:
+//
+// return:
+// array('category_id'=>'name', ...)
+function category_list() {
+  global $lists_dir;
+
+  $ret=array();
+  lock_dir($lists_dir);
+
+  $d=opendir("$lists_dir");
+  while($f=readdir($d)) {
+    if(preg_match("/^(.*)\.xml$/", $f, $m)) {
+      $x=new DOMDocument();
+      $x->loadXML(file_get_contents("$lists_dir/$f"));
+      $tags=new tags();
+      $tags->readDOM($x->firstChild);
+      $ret[$m[1]]=$tags->get("name");
     }
+  }
+  closedir($d);
 
-    system("git checkout master");
-    $p=popen("git merge $branch", "r");
-    $error=0;
+  unlock_dir($lists_dir);
+
+  return $ret;
+}
+
+// category_load()
+// returns content of a category
+//
+// parameters:
+// $id     the if of the category
+// $param  optional parameters
+//   version    a certain version of that file
+//
+// return:
+// content as text
+function category_load($id, $param=array()) {
+  global $lists_dir;
+
+  lock_dir($lists_dir);
+
+  if($param[version]) {
+    chdir($lists_dir);
+    $p=popen("git show $param[version]:$id.xml");
     while($r=fgets($p)) {
-      if(preg_match("/^CONFLICT /", $r)) {
-	$error=1;
-      }
+      $content.=$r;
     }
     pclose($p);
-
-    if($error) {
-      system("git reset --hard");
-    }
-    else {
-      system("git branch -d $branch");
-    }
-
-    process_file("$lists_dir/$id.xml");
-
-    unlock_dir("$lists_dir");
-
-    if($error) {
-      return array("status"=>"merge failed", "branch"=>$branch);
-    }
-    else {
-      return 0;
-    }
-}
-
-function category_list() {
-    $ret=array();
-    lock_dir($lists_dir);
-
-    $d=opendir("$lists_dir");
-    while($f=readdir($d)) {
-      if(preg_match("/^(.*)\.xml$/", $f, $m)) {
-	$x=new DOMDocument();
-	$x->loadXML(file_get_contents("$lists_dir/$f"));
-	$tags=new tags();
-	$tags->readDOM($x->firstChild);
-	$ret[$m[1]]=$tags->get("name");
-      }
-    }
-    closedir($d);
-
-    unlock_dir($lists_dir);
-
-    return $ret;
-}
-
-function category_load($id, $param) {
-    lock_dir($lists_dir);
-
-    if($param[version]) {
-      chdir($lists_dir);
-      $p=popen("git show $param[version]:$id.xml");
-      while($r=fgets($p)) {
-	$content.=$r;
-      }
-      pclose($p);
-    }
-    else {
-      if(!file_exists("$lists_dir/$id.xml")) {
-	unlock_dir($lists_dir);
-	print "File not found!\n";
-	exit;
-      }
-
-      $content=file_get_contents("$lists_dir/$id.xml")
-      $version=category_version();
+  }
+  else {
+    if(!file_exists("$lists_dir/$id.xml")) {
+      unlock_dir($lists_dir);
+      print "File not found!\n";
+      exit;
     }
 
-    $file=new DOMDocument();
-    $file->loadXML($content);
+    $content=file_get_contents("$lists_dir/$id.xml")
+    $version=category_version();
+  }
 
-    $l=$file->getElementByTagName("list");
-    for($i=0; $i<$l->length; $i++) {
-      $l->item($i)->setAttribute("version", $version);
-    }
+  $file=new DOMDocument();
+  $file->loadXML($content);
 
-    unlock_dir($lists_dir);
-    return $file->saveXML();
+  $l=$file->getElementByTagName("list");
+  for($i=0; $i<$l->length; $i++) {
+    $l->item($i)->setAttribute("version", $version);
+  }
+
+  unlock_dir($lists_dir);
+  return $file->saveXML();
 }
 
 $id=$_GET[id];
 switch($_GET[todo]) {
   case "save":
-    $error=category_new($id, file_get_contents("php://input"), $_GET);
+    $error=category_save($id, file_get_contents("php://input"), $_GET);
 
     Header("Content-Type: text/xml; charset=UTF-8");
     print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
