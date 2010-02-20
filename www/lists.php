@@ -191,9 +191,7 @@ if(!file_exists("$lists_dir/.git")) {
   }
 }
 
-$id=$_GET[id];
-switch($_GET[todo]) {
-  case "save":
+function category_new($id, $content, $param=array()) {
     if($id=="new") {
       $id=uniqid("list_");
     }
@@ -217,8 +215,7 @@ switch($_GET[todo]) {
     lock_dir("$lists_dir");
 
     $file=new DOMDocument();
-    $postdata = file_get_contents("php://input");
-    $file->loadXML($postdata);
+    $file->loadXML($content);
 
     $l=$file->getElementByTagName("list");
     for($i=0; $i<$l->length; $i++) {
@@ -229,10 +226,10 @@ switch($_GET[todo]) {
     chdir($lists_dir);
     $branch=uniqid();
 
-    if($conflict_branch=$_GET[branch]) {
+    if($conflict_branch=$param[branch]) {
       $branch=uniqid();
 
-      system("git branch $branch $_GET[version]");
+      system("git branch $branch $param[version]");
       system("git checkout $branch");
       system("git merge $conflict_branch");
 
@@ -277,15 +274,33 @@ switch($_GET[todo]) {
 
     unlock_dir("$lists_dir");
 
+    if($error) {
+      return array("status"=>"merge failed", "branch"=>$branch);
+    }
+    else {
+      return 0;
+    }
+}
+
+$id=$_GET[id];
+switch($_GET[todo]) {
+  case "save":
+    $error=category_new($id, file_get_contents("php://input"), $_GET);
+
     Header("Content-Type: text/xml; charset=UTF-8");
     print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
     print "<result>\n";
     $version=category_version();
+
     if($error) {
-      print "  <status branch='$branch' version='$version'>Failed to merge</status>\n";
+      print "  <status version='$version'";
+      foreach($error as $ek=>$ev) {
+	print " $ek='$ev'";
+      }
+      print " />\n";
     }
     else {
-      print "  <status version='$version'>Ok</status>\n";
+      print "  <status version='$version' status='ok' />\n";
     }
     print "  <id>$id</id>\n";
     print "</result>\n";
