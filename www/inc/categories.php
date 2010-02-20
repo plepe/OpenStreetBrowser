@@ -277,7 +277,7 @@ function category_save($id, $content, $param=array()) {
     fprintf($f, $file->saveXML());
     fclose($f);
 
-    system("git add $lists_dir/$id.xml");
+    system("git add $id.xml");
     system("git commit -m 'Fix merge' --author='webuser <web@user>'");
     system("git branch -d $conflict_branch");
   }
@@ -289,7 +289,7 @@ function category_save($id, $content, $param=array()) {
     fprintf($f, $file->saveXML());
     fclose($f);
 
-    system("git add $lists_dir/$id.xml");
+    system("git add $id.xml");
     system("git commit -m 'Change category $id' --author='webuser <web@user>'");
   }
 
