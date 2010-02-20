@@ -182,7 +182,7 @@ if(!file_exists("$lists_dir/.git")) {
   system("git commit --allow-empty");
 
   if(!file_exists("$lists_dir/.git")) {
-    print "Could not create git repository!");
+    print "Could not create git repository!";
     exit;
   }
 }
@@ -215,13 +215,13 @@ function category_save($id, $content, $param=array()) {
   }
 
   if(!$lists_dir) {
-    print "Variable \$lists_dir is not set!<br>\n");
+    print "Variable \$lists_dir is not set!<br>\n";
     exit;
   }
   if(!file_exists("$lists_dir")) {
     mkdir("$lists_dir");
     if(!file_exists("$lists_dir")) {
-      print "$lists_dir doesn't exist! Create and make sure it's writable by the webserver!");
+      print "$lists_dir doesn't exist! Create and make sure it's writable by the webserver!";
       exit;
     }
   }
@@ -356,7 +356,7 @@ function category_load($id, $param=array()) {
       exit;
     }
 
-    $content=file_get_contents("$lists_dir/$id.xml")
+    $content=file_get_contents("$lists_dir/$id.xml");
     $version=category_version();
   }
 
