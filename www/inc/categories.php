@@ -264,14 +264,9 @@ function category_save($id, $content, $param=array()) {
   }
 
   chdir($lists_dir);
-  $branch=uniqid();
-
-  if($conflict_branch=$param[branch]) {
-    $branch=uniqid();
-
-    system("git branch $branch $param[version]");
+  if($branch=$param[branch]) {
     system("git checkout $branch");
-    system("git merge $conflict_branch");
+    system("git rebase $param[version]");
 
     $f=fopen("$lists_dir/$id.xml", "w");
     fprintf($f, $file->saveXML());
@@ -279,9 +274,10 @@ function category_save($id, $content, $param=array()) {
 
     system("git add $id.xml");
     system("git commit -m 'Fix merge' --author='webuser <web@user>'");
-    system("git branch -d $conflict_branch");
   }
   else {
+    $branch=uniqid();
+
     system("git branch $branch $version");
     system("git checkout $branch");
 
@@ -293,8 +289,7 @@ function category_save($id, $content, $param=array()) {
     system("git commit -m 'Change category $id' --author='webuser <web@user>'");
   }
 
-  system("git checkout master");
-  $p=popen("git merge $branch", "r");
+  $p=popen("git rebase master", "r");
   $error=0;
   while($r=fgets($p)) {
     if(preg_match("/^CONFLICT /", $r)) {
@@ -304,9 +299,12 @@ function category_save($id, $content, $param=array()) {
   pclose($p);
 
   if($error) {
-    system("git reset --hard");
+    system("git rebase --abort");
+    system("git checkout master");
   }
   else {
+    system("git checkout master");
+    system("git merge $branch");
     system("git branch -d $branch");
   }
 
