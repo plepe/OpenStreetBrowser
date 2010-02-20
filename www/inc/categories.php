@@ -406,3 +406,38 @@ function category_load($id, $param=array()) {
   unlock_dir($lists_dir);
   return $file->saveXML();
 }
+
+// category_history()
+// returns history of a category
+//
+// parameters:
+// $id     the id of the category
+// $param  optional parameters
+//
+// return:
+// array('status')
+function category_history($id, $param=array()) {
+  global $lists_dir;
+  $ret=array();
+
+  if($state=category_check_state()!==true) {
+    return array('status'=>$state);
+  }
+
+  chdir($lists_dir);
+
+  $p=popen("git log --pretty=medium $id.xml", "r");
+  while($r=fgets($p)) {
+    $r=trim($r);
+    if(preg_match("/^commit (.*)$/", $r, $m)) {
+      $ret[]=array("version"=>$m[1]);
+    }
+    elseif(preg_match("/^([A-Za-z0-9]+):\h(.*)$/", $r, $m)) {
+      $ret[sizeof($ret)-1][$m[1]]=$m[2];
+    }
+  }
+  pclose($p);
+
+  return $ret;
+}
+
