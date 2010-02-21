@@ -28,7 +28,7 @@ switch($_GET[todo]) {
 
     if($status[status]!==true) {
       print "  <status version='$version'";
-      foreach($error as $ek=>$ev) {
+      foreach($status as $ek=>$ev) {
 	print " $ek='$ev'";
       }
       print " />\n";
