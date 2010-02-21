@@ -374,7 +374,17 @@ function category_load($id, $param=array()) {
 
   lock_dir($lists_dir);
 
-  if($param[version]) {
+  if($param[branch]) {
+    chdir($lists_dir);
+    system("git checkout $param[branch]");
+    system("git rebase $param[version]");
+
+    $content=file_get_contents("$lists_dir/$id.xml");
+
+    $version=category_version();
+    return $content;
+  }
+  elseif($param[version]) {
     chdir($lists_dir);
     $p=popen("git show $param[version]:$id.xml", "r");
     while($r=fgets($p)) {
