@@ -49,6 +49,8 @@ function browser_list(id) {
     
     this.tags.readDOM(list);
 
+    this.version=list.getAttribute("version");
+
     var cur=list.firstChild;
     while(cur) {
       if(cur.nodeName=="element") {
@@ -144,7 +146,7 @@ function browser_list(id) {
    
     ret="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
-    ret+="<list id=\""+this.id+"\">\n";
+    ret+="<list id=\""+this.id+"\" version=\""+this.version+"\">\n";
     ret+=this.tags.xml("  ");
 
     ret.list=[];
