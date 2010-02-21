@@ -162,11 +162,24 @@ function browser_list(id) {
   }
 
   // save_callback
-  this.save_callback=function() {
-    alert("Saved.");
+  this.save_callback=function(data) {
+    var result=data.responseXML;
+    
+    var stat=result.getElementsByTagName("status");
+    var stat=stat[0];
 
-    this.win.close();
-    this.win=null;
+    switch(stat.getAttribute("status")) {
+      case "ok":
+	alert("Saved.");
+	this.win.close();
+	this.win=null;
+	break;
+      case "merge failed":
+        this.resolve_conflict(stat.getAttribute("branch"), stat.getAttribute("version"));
+	break;
+      default:
+	alert("Saved with status "+stat.getAttribute("status"));
+    }
   }
 }
 
