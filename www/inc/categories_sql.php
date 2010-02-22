@@ -2,6 +2,89 @@
 // Parses a matching string as used in categories
 function parse_match($match) {
   $match_parts=parse_explode($match);
+  $parts=array();
+
+  foreach($match_parts as $part) {
+    $parts[]=build_match_part($part);
+  }
+
+  print_r($parts);
+}
+
+function postgre_escape($str) {
+  return "E'".strtr($str, array("'"=>"\\'"))."'";
+}
+
+function build_match_part($part) {
+  $c_not=null;
+
+  for($i=0; $i<sizeof($part['operators']); $i++) {
+    $operator=$part['operators'][$i];
+    $values=$part['values'][$i];
+
+    // case-statement
+    $c_prevnot=$c_not;
+    $c_not=false;
+    switch($operator) {
+      case "!=":
+        $c_not=true;
+      case "=":
+	$c="\"$part[key]\"";
+	$c1="";
+	$ccount=0;
+        $c1.=($c_not?" not":"")." in (";
+	$c2=array();
+	foreach($values as $v) {
+	  if($v!="*") {
+	    $c2[]=postgre_escape($v);
+	    $ccount++;
+	  }
+	}
+	$c1.=implode(", ", $c2).")";
+
+	if($ccount>0) {
+	  $c.=$c1;
+	}
+
+	foreach($values as $v) {
+	  if($v=="*")
+	    $c.=" is ".($c_not?"":"not ")."null";
+	}
+	
+	if($c_prevnot===true) {
+          $case.=" or ";
+	}
+	elseif($c_prevnot===false) {
+          $case.=" and ";
+	}
+	$case.=$c;
+	break;
+      case ">":
+      case "<":
+      case ">=":
+      case "<=":
+        if(sizeof($values)>1)
+	  print "Operator $operator , more than one value supplied\n";
+
+	if($c_prevnot===true) {
+	  $case.=" or ";
+	}
+	elseif($c_prevnot===false) {
+	  $case.=" and ";
+	}
+
+	$c.="parse_number(\"$part[key]\")";
+	$c.="{$operator}parse_number(".postgre_escape($values[0]).")";
+
+	$case.=$c;
+
+        break;
+    }
+    $c="";
+    // where-statement
+  }
+
+  return array("case"=>$case, "where"=>$where);
 }
 
 function parse_explode($match) {
@@ -54,7 +137,9 @@ function parse_explode($match) {
 	}
 	elseif($c==" ") {
 	  $values[sizeof($values)-1][]=$value;
-	  $parser[]=array($key, $operators, $values);
+	  $parser[]=array("key"      =>$key,
+	                  "operators"=>$operators,
+			  "values"   =>$values);
 
 	  $key="";
 	  $operator="";
@@ -87,7 +172,9 @@ function parse_explode($match) {
   }
 
   $values[sizeof($operators)-1][]=$value;
-  $parser[]=array($key, $operators, $values);
+  $parser[]=array("key"      =>$key,
+		  "operators"=>$operators,
+		  "values"   =>$values);
 
   return $parser;
 }
