@@ -22,16 +22,11 @@ function process_element($node, $cat) {
   global $req;
   global $importance_levels;
 
-  $cur=$node->firstChild;
-  while($cur) {
-    if($cur->nodeName=="tag") {
-      $src[$cur->getAttribute("k")]=$cur->getAttribute("v");
-    }
-    $cur=$cur->nextSibling;
-  }
+  $tags=new tags();
+  $tags->readDOM($node->firstChild);
 
   $list_columns=array();
-  $l=parse_wholekey($src[tag], &$list_columns);
+  $l=parse_match($tags->get("match"));
 
   $r="'$src[description]||";
 //  if(eregi("^\[\[(.*)\.svg\]\]", $src[icon], $m))

@@ -190,6 +190,17 @@ function parse_tags_old($text) {
     }
   }
 
+  function readDOM($dom) {
+    $cur=$dom.firstChild;
+
+    while($cur) {
+      if($cur->nodeName=="tag") {
+	$this->set($cur.getAttribute("k"), $cur.getAttribute("v"));
+      }
+      $cur=$cur.nextSibling;
+    }
+  }
+
   if($tag_key)
     $tags[$tag_key]=$tag_value;
 
