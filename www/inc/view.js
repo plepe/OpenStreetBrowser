@@ -3,6 +3,8 @@ var click_override=null;
 function view_call_back(response) {
   var data=response.responseXML;
   list_reload_working=0;
+  var map_div=document.getElementById("map");
+  map_div.style.cursor=null;
 
   if(!data) {
     alert("no data\n"+response.responseText);
@@ -20,7 +22,6 @@ function view_call_back(response) {
   }
 
   var info_content=document.getElementById("details_content");
-  var map_div=document.getElementById("map");
   var info=document.getElementById("details");
 
   info.className="info";
@@ -59,6 +60,9 @@ function view_click(event) {
   if(list_reload_working) {
     return 0;
   }
+
+  var map_div=document.getElementById("map");
+  map_div.style.cursor="wait";
 
 //  if(get_hash()!="")
 //    return 0;
