@@ -21,28 +21,29 @@ function ext_wikipedia($object) {
 
     $url=strtr($url, array(" "=>"_"));
 
-    $f=fopen("http://$lang.wikipedia.org/w/index.php?title=$url&action=raw", "r");
-    $text=""; unset($img);
-    $enough=0;
-    while(($r=fgets($f))&&(!$enough)) {
-  //    if(!$img&&eregi("\[\[Bild:([^\|\]]*)[\|\]]", $r, $m)) {
-      $r=chop($r);
-      if($r=="");
-      elseif(!$img&&eregi("\[\[Bild:([^\|]*\.(png|jpg|gif))", $r, $m)) {
-	$img=$m[1];
-	$img="<img src='http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img' align='left'>\n";
+    if(@$f=fopen("http://$lang.wikipedia.org/w/index.php?title=$url&action=raw", "r")) {
+      $text=""; unset($img);
+      $enough=0;
+      while(($r=fgets($f))&&(!$enough)) {
+    //    if(!$img&&eregi("\[\[Bild:([^\|\]]*)[\|\]]", $r, $m)) {
+	$r=chop($r);
+	if($r=="");
+	elseif(!$img&&eregi("\[\[Bild:([^\|]*\.(png|jpg|gif))", $r, $m)) {
+	  $img=$m[1];
+	  $img="<img src='http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img' align='left'>\n";
+	}
+	elseif(!ereg("^[\|\}\{\[\!]", $r)) {
+	  $text.=wikipedia_parse($r);
+	  $enough=1;
+	}
       }
-      elseif(!ereg("^[\|\}\{\[\!]", $r)) {
-	$text.=wikipedia_parse($r);
-	$enough=1;
+
+      if($text) {
+	$ret.="<u>$lang.wikipedia.org:</u><br>\n$img$text<br/><a class='external' href='http://$lang.wikipedia.org/wiki/$url'>read more</a><br>";
       }
-    }
 
-    if($text) {
-      $ret.="<u>$lang.wikipedia.org:</u><br>\n$img$text<br/><a class='external' href='http://$lang.wikipedia.org/wiki/$url'>read more</a><br>";
+      fclose($f);
     }
-
-    fclose($f);
   }
 
   return $ret;
