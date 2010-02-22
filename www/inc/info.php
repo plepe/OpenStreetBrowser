@@ -30,7 +30,7 @@ function shop_info($ret, $object) {
   if($object->tags->get("amenity")=="marketplace")
     show_overlay("shop");
 
-  if($object->tags->get("amenity"))
+  if($object->tags->get("shop"))
     map_zoom(17);
 }
 
