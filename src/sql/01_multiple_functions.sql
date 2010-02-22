@@ -39,16 +39,32 @@ begin
       return null;
     end if;
 
-    if val_u in ('m', 'V', 'l') then
+    if val_u in ('m', 'm2', 'm^2', 'm²', 'V', 'l') then
       unit_fac:=1;
     elsif val_u in ('km', 'kV') then
       unit_fac:=1000;
-    elsif val_u in ('ha') then
+    elsif val_u in ('a') then
       unit_fac:=100;
+    elsif val_u in ('ha') then
+      unit_fac:=10000;
+    elsif val_u in ('km2', 'km^2', 'km²') then
+      unit_fac:=1000000;
     elsif val_u in ('cm') then
       unit_fac:=0.01;
     elsif val_u in ('mm') then
       unit_fac:=0.001;
+    elsif val_u in ('in') then
+      unit_fac:=0.0254;
+    elsif val_u in ('ft') then
+      unit_fac:=0.3048;
+    elsif val_u in ('yd') then
+      unit_fac:=0.9144;
+    elsif val_u in ('mile', 'miles') then
+      unit_fac:=1609.344;
+    elsif val_u in ('league', 'leagues') then
+      unit_fac:=4828.032;
+    elsif val_u in ('acre', 'acres') then
+      unit_fac:=4046.8564224;
     else
       unit_fac:=1;
     end if;
