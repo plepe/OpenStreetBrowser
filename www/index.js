@@ -88,16 +88,23 @@ function call_back(response) {
   var osm=data.getElementsByTagName("osm");
   load_objects_from_xml(osm);
 
+  var zoom=data.getElementsByTagName("zoom");
+  if(zoom.length>0)
+    zoom=zoom[0];
+  else
+    delete(zoom);
+
   var x=get_hash();
   x=get_loaded_object(x);
 
   if(x) {
     x.display();
+  }
 
-    if(first_load) {
-      setTimeout("zoom_to_feature(\""+x.long_id+"\")", 200);
-      first_load=0;
-    }
+  if(zoom) {
+    pan_to_highlight(zoom.getAttribute("lon"),
+                     zoom.getAttribute("lat"),
+		     zoom.getAttribute("zoom"));
   }
 
   check_overlays(data);

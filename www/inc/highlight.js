@@ -1,8 +1,13 @@
 var highlight_feature=[];
 var highlight_feature_timer;
 
-function pan_to_highlight(lon, lat) {
-  map.panTo(new OpenLayers.LonLat(lon, lat));
+function pan_to_highlight(lon, lat, zoom) {
+  if((zoom)&&((map.zoom>zoom+1)||(map.zoom<zoom-1))) {
+    map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+  }
+  else {
+    map.panTo(new OpenLayers.LonLat(lon, lat));
+  }
 }
 
 var last_highlight_request;

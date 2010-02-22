@@ -71,11 +71,16 @@ function ajax_details($param, $xml) {
   $ret->appendChild($value);
   $xml->appendChild($ret);
 
+  $value=$xml->createElement("zoom");
+  $ret->appendChild($value);
+
+  $center=load_object($param[obj])->place()->get_centre();
+  $value->setAttribute("lon", $center[lon]);
+  $value->setAttribute("lat", $center[lat]);
+
   if(sizeof($prefered_zoom_levels)) {
-    $value=$xml->createElement("zoom");
-    $ret->appendChild($value);
     sort($prefered_zoom_levels);
-    $value->nodeValue=$prefered_zoom_levels[0];
+    $value->setAttribute("zoom", $prefered_zoom_levels[0]);
   }
 
   $osm=$xml->createElement("osm");
