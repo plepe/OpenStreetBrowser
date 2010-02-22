@@ -213,6 +213,8 @@ function places_info($ret, $object) {
   $r.=$tags->compile_text("#tag/is_in#: %is_in%<br />\n");
   $r.=$tags->compile_text("#tag/population#: %population%<br />\n");
 
+  map_zoom(11);
+
   $ret[]=array("general_info", $r);
 }
 register_hook("info", places_info);

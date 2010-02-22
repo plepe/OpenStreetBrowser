@@ -49,8 +49,16 @@ function ajax_find_objects($param, $xml) {
 
 }
 
+$prefered_zoom_levels=array();
+function map_zoom($zoom) {
+  global $prefered_zoom_levels;
+
+  $prefered_zoom_levels[]=$zoom;
+}
+
 function ajax_details($param, $xml) {
   global $load_xml;
+  global $prefered_zoom_levels;
 
   $load_xml[]=$param[obj];
 
@@ -62,6 +70,13 @@ function ajax_details($param, $xml) {
   $value->appendChild($text);
   $ret->appendChild($value);
   $xml->appendChild($ret);
+
+  if(sizeof($prefered_zoom_levels)) {
+    $value=$xml->createElement("zoom");
+    $ret->appendChild($value);
+    sort($prefered_zoom_levels);
+    $value->nodeValue=$prefered_zoom_levels[0];
+  }
 
   $osm=$xml->createElement("osm");
   $osm->setAttribute("generator", "PublicTransport OSM");
