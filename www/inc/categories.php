@@ -46,7 +46,7 @@ function process_element($node, $cat) {
     if($postgis_tables[$table]) {
       $ret[$table]=parse_match($tags->get("tag"), $table);
 
-      $ret[$table]['id']=$id;
+      $ret[$table]['id']=array($id);
       if($kind=$tags->get("kind")) {
 	$kind=explode(";", $kind);
 	$kind_ret=parse_kind($kind, $table);
@@ -60,9 +60,9 @@ function process_element($node, $cat) {
   // for tables which include importance
   if($importance=="*") {
     foreach($importance_levels as $imp_lev) {
-      $r=$ret;
+      array_deep_copy($ret, $r); /// brrr php still gives a warning
       foreach($r as $table=>$rule) {
-	$r[$table]['case'].=" and \"importance\"='$imp_lev'";
+	$r[$table]['case'][0].=" and \"importance\"='$imp_lev'";
 	$r[$table]['where']['importance'][]=$imp_lev;
       }
       $iret[$imp_lev]=$r;
@@ -71,22 +71,28 @@ function process_element($node, $cat) {
   else
     $iret[$importance]=$ret;
 
-  print_r($iret);
+  return $iret;
 }
 
 function process_list($node, $cat) {
   $cur=$node->firstChild;
-  $data=array();
+  $ret=array();
 
   while($cur) {
-    if($cur->nodeName=="tag") {
-      $data[$cur->getAttribute("k")]=$cur->getAttribute("v");
-    }
-    elseif($cur->nodeName=="element") {
-      process_element($cur, $cat);
+    if($cur->nodeName=="element") {
+      $r=process_element($cur, $cat);
+      $ret=array_merge_recursive($ret, $r);
     }
     $cur=$cur->nextSibling;
   }
+
+  foreach($ret as $importance=>$x) {
+    foreach($x as $table=>$rules) {
+      $ret[$importance][$table][sql]=category_build_sql($rules, $table);
+    }
+  }
+
+  print_r($ret);
 }
 
 function postprocess() {

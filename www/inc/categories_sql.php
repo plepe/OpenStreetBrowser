@@ -25,9 +25,9 @@ function parse_match($match, $table="point") {
   $ret['where']=$where;
 
   if(sizeof($ret['case']))
-    $ret['case']=implode(" and ", $ret['case']);
+    $ret['case']=array(implode(" and ", $ret['case']));
   else
-    $ret['case']="1=1";
+    $ret['case']=array("1=1");
 
   return $ret;
 }
@@ -90,10 +90,10 @@ function build_match_part($part, $table) {
 	}
 	
 	if($c_prevnot===true) {
-          $case.=" and ";
+          $case.=" or ";
 	}
 	elseif($c_prevnot===false) {
-          $case.=" or ";
+          $case.=" and ";
 	}
 	$case.=$c;
 	break;
@@ -103,14 +103,14 @@ function build_match_part($part, $table) {
       case "<=":
         if(sizeof($values)>1)
 	  print "Operator $operator , more than one value supplied\n";
-	$c_not=true;
+	$c_not=false;
 	$where[$col_name][]="!null";
 
 	if($c_prevnot===true) {
-	  $case.=" and ";
+	  $case.=" or ";
 	}
 	elseif($c_prevnot===false) {
-	  $case.=" or ";
+	  $case.=" and ";
 	}
 
 	$c.="parse_number($col_name)";
@@ -254,6 +254,76 @@ function parse_kind($kind, $table) {
 	$ret[$part][]=$text;
     }
   }
+
+  return $ret;
+}
+
+function category_build_where($where_col, $where_vals) {
+  $ret=array();
+
+  $where_vals=array_unique($where_vals);
+  print "$where_col ";print_r($where_vals);
+  if(in_array("null", $where_vals, "null")&&(in_array("!null", $where_vals))) {
+    // nix
+  }
+  elseif(in_array("!null", $where_vals)) {
+    $vals=array();
+    foreach($where_vals as $v)
+      if(($v!="!null")&&(substr($v, 0, 1)=="!"))
+	$vals[]=$v;
+
+    $r="$where_col is not null";
+    if(sizeof($vals))
+      $r="($r and not to_tsvector($where_col) @@ ".
+          "to_tsquery(".implode("||'|'||", $vals)."))";
+    $ret[]=$r;
+  }
+  else {
+    $in_vals=array();
+    $notin_vals=array();
+    foreach($where_vals as $val) {
+      if($val=="null");
+      elseif(substr($val, 0, 1)=="!")
+	$notin_vals[]=substr($val, 1);
+      else
+	$in_vals[]=$val;
+    }
+
+    if(sizeof($in_vals))
+      $ret[]="to_tsvector($where_col) @@ to_tsquery(".implode("||'|'||", $in_vals).")";
+  }
+
+  return $ret;
+}
+
+function category_build_sql($rules, $table) {
+  global $postgis_tables;
+  $table_def=$postgis_tables[$table];
+
+  $ret ="select * from (select\n";
+  $ret.="  {$table_def['id_name']} as id,\n";
+  $ret.="  {$table_def['geo']} as geo,\n";
+  foreach(array_unique($rules['select']) as $s) {
+    $ret.="  $s,\n";
+  }
+  $ret.="  (CASE\n";
+  foreach($rules['case'] as $i=>$case) {
+    $ret.="    WHEN $case THEN '{$rules['id'][$i]}'\n";
+  }
+  $ret.="  END) as rule_id\n";
+  $ret.="from planet_osm_{$table}\n";
+  foreach(array_unique($rules['join']) as $join) {
+    $ret.="  $join\n";
+  }
+  $where=array();
+  foreach($rules['where'] as $where_col=>$where_vals) {
+    $where=array_merge($where, category_build_where($where_col, $where_vals));
+  }
+  if(sizeof($where)) {
+    $ret.="where\n  ";
+    $ret.=implode(" or\n  ", $where);
+  }
+  $ret.=") as qry where rule_id is not null";
 
   return $ret;
 }
