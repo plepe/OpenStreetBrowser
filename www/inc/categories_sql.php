@@ -16,6 +16,14 @@ function parse_match($match, $table="point") {
     }
   }
 
+  $where=array();
+  foreach($ret['where'] as $w) {
+    foreach($w as $k=>$vs) {
+      $where[$k]=$vs;
+    }
+  }
+  $ret['where']=$where;
+
   if(sizeof($ret['case']))
     $ret['case']=implode(" and ", $ret['case']);
   else
@@ -72,12 +80,12 @@ function build_match_part($part, $table) {
 
 	foreach($values as $v) {
 	  if(($v=="*")&&($c_not==false)) {
-	    $c.=" is null";
-	    $where[$col_name][]="null";
+	    $c.=" is not null";
+	    $where[$col_name][]="!null";
 	  }
 	  elseif(($v=="*")&&($c_not==true)) {
-	    $c.=" is not null";
-	    $where[$col_name][]="not null";
+	    $c.=" is null";
+	    $where[$col_name][]="null";
 	  }
 	}
 	
@@ -96,7 +104,7 @@ function build_match_part($part, $table) {
         if(sizeof($values)>1)
 	  print "Operator $operator , more than one value supplied\n";
 	$c_not=true;
-	$where[$col_name][]="null";
+	$where[$col_name][]="!null";
 
 	if($c_prevnot===true) {
 	  $case.=" and ";
