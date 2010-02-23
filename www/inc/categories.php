@@ -1,4 +1,6 @@
 <?
+$importance_levels=array("international", "national", "regional", "urban", "suburban", "local");
+
 function category_version() {
   global $lists_dir;
 
@@ -20,40 +22,56 @@ function process_element($node, $cat) {
   global $columns;
   global $columns_all;
   global $req;
+  global $iret;
   global $importance_levels;
   global $postgis_tables;
 
   $tags=new tags();
-  $tags->readDOM($node->firstChild);
+  $tags->readDOM($node);
   $id=$node->getAttribute("id");
 
   $tables=$tags->get("tables");
   if($tables)
     $tables=explode(";", $tables);
   else
-    $tables=array("polygon", "point");
+    $tables=array("point");
+
+  if(!$importance=$tags->get("importance"))
+    $importance="local";
+  $inc_importance=false;
+  if($importance=="*")
+    $inc_importance=true;
 
   foreach($tables as $table) {
     if($postgis_tables[$table]) {
-      $ret=parse_match($tags->get("match"), $table);
+      $ret[$table]=parse_match($tags->get("tag"), $table);
 
-      $ret['case']="WHEN {$ret['case']} THEN $id";
+      $ret[$table]['id']=$id;
       if($kind=$tags->get("kind")) {
 	$kind=explode(";", $kind);
 	$kind_ret=parse_kind($kind, $table);
-	$ret=array_merge_recursive($ret, $kind_ret);
+	$ret[$table]=array_merge_recursive($ret[$table], $kind_ret);
       }
     }
   }
 
   $prior=9;
 
-  if(!$importance=$tags->get("importance")) {
-    $ret['importance']="local";
+  // for tables which include importance
+  if($importance=="*") {
+    foreach($importance_levels as $imp_lev) {
+      $r=$ret;
+      foreach($r as $table=>$rule) {
+	$r[$table]['case'].=" and \"importance\"='$imp_lev'";
+	$r[$table]['where']['importance'][]=$imp_lev;
+      }
+      $iret[$imp_lev]=$r;
+    }
   }
-  else if($importance=="*") {
-    $ret['importance']=array_keys($importance_levels);
-  }
+  else
+    $iret[$importance]=$ret;
+
+  print_r($iret);
 }
 
 function process_list($node, $cat) {
@@ -146,7 +164,7 @@ function process_file($file) {
     $cur=$cur->nextSibling;
   }
 
-  $ret=postprocess();
+  //$ret=postprocess();
   $f=fopen("$file.save", "w");
   fwrite($f, serialize($ret));
   fclose($f);
