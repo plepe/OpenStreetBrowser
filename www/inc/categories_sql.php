@@ -8,7 +8,20 @@ function parse_match($match, $table="point") {
     $parts[]=build_match_part($part, $table);
   }
 
-  print_r($parts);
+  $ret=array();
+  foreach($parts as $def) {
+    foreach($def as $part=>$text) {
+      if($text)
+	$ret[$part][]=$text;
+    }
+  }
+
+  if(sizeof($ret['case']))
+    $ret['case']=implode(" and ", $ret['case']);
+  else
+    $ret['case']="1=1";
+
+  return $ret;
 }
 
 function postgre_escape($str) {
@@ -20,6 +33,7 @@ function build_match_part($part, $table) {
   global $postgis_tables;
   $table_def=$postgis_tables[$table];
   $allow_null=false;
+  $where=array();
 
   for($i=0; $i<sizeof($part['operators']); $i++) {
     $operator=$part['operators'][$i];
@@ -33,9 +47,11 @@ function build_match_part($part, $table) {
     // case-statement
     $c_prevnot=$c_not;
     $c_not=false;
+    $where_not="";
     switch($operator) {
       case "!=":
         $c_not=true;
+	$where_not="!";
       case "=":
 	$c=$col_name;
 	$c1="";
@@ -46,6 +62,7 @@ function build_match_part($part, $table) {
 	  if($v!="*") {
 	    $c2[]=postgre_escape($v);
 	    $ccount++;
+	    $where[]=$where_not.postgre_escape($v);
 	  }
 	}
 	$c1.=implode(", ", $c2).")";
@@ -57,10 +74,12 @@ function build_match_part($part, $table) {
 	foreach($values as $v) {
 	  if(($v=="*")&&($c_not==false)) {
 	    $c.=" is null";
+	    $where[]="null";
 	    $allow_null=true;
 	  }
 	  elseif(($v=="*")&&($c_not==true)) {
 	    $c.=" is not null";
+	    $where[]="not null";
 	  }
 	}
 	
@@ -79,6 +98,7 @@ function build_match_part($part, $table) {
         if(sizeof($values)>1)
 	  print "Operator $operator , more than one value supplied\n";
 	$c_not=true;
+	$where[]="null";
 
 	if($c_prevnot===true) {
 	  $case.=" and ";
@@ -108,8 +128,9 @@ function build_match_part($part, $table) {
     $select="\"{$part[key]}_table\".v as \"{$part['key']}\"";
   }
 
+  $case="($case)";
 
-  return array("case"=>$case, "where"=>$case, "join"=>$join, "columns"=>$part['key'], "select"=>$select);
+  return array("case"=>$case, "where"=>$where, "join"=>$join, "columns"=>$part['key'], "select"=>$select);
 }
 
 function parse_explode($match) {
