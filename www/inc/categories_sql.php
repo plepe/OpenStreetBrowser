@@ -32,7 +32,6 @@ function build_match_part($part, $table) {
   $c_not=null;
   global $postgis_tables;
   $table_def=$postgis_tables[$table];
-  $allow_null=false;
   $where=array();
 
   for($i=0; $i<sizeof($part['operators']); $i++) {
@@ -62,7 +61,7 @@ function build_match_part($part, $table) {
 	  if($v!="*") {
 	    $c2[]=postgre_escape($v);
 	    $ccount++;
-	    $where[]=$where_not.postgre_escape($v);
+	    $where[$col_name][]=$where_not.postgre_escape($v);
 	  }
 	}
 	$c1.=implode(", ", $c2).")";
@@ -74,12 +73,11 @@ function build_match_part($part, $table) {
 	foreach($values as $v) {
 	  if(($v=="*")&&($c_not==false)) {
 	    $c.=" is null";
-	    $where[]="null";
-	    $allow_null=true;
+	    $where[$col_name][]="null";
 	  }
 	  elseif(($v=="*")&&($c_not==true)) {
 	    $c.=" is not null";
-	    $where[]="not null";
+	    $where[$col_name][]="not null";
 	  }
 	}
 	
@@ -98,7 +96,7 @@ function build_match_part($part, $table) {
         if(sizeof($values)>1)
 	  print "Operator $operator , more than one value supplied\n";
 	$c_not=true;
-	$where[]="null";
+	$where[$col_name][]="null";
 
 	if($c_prevnot===true) {
 	  $case.=" and ";
@@ -122,9 +120,7 @@ function build_match_part($part, $table) {
   $join="";
   $select="\"{$part['key']}\"";
   if(!in_array($part['key'], $table_def[index])) {
-    if($allow_null)
-      $join.="left ";
-    $join.="join {$table_def[id_type]}_tags \"{$part[key]}_table\" on planet_osm_{$table}.osm_id=\"{$part[key]}_table\".{$table_def[id_type]}_id and \"{$part[key]}_table\".k='$part[key]'";
+    $join.="left join {$table_def[id_type]}_tags \"{$part[key]}_table\" on planet_osm_{$table}.osm_id=\"{$part[key]}_table\".{$table_def[id_type]}_id and \"{$part[key]}_table\".k='$part[key]'";
     $select="\"{$part[key]}_table\".v as \"{$part['key']}\"";
   }
 
@@ -225,3 +221,31 @@ function parse_explode($match) {
   return $parser;
 }
 
+function parse_kind($kind, $table) {
+  global $postgis_tables;
+  $table_def=$postgis_tables[$table];
+  $parts=array();
+
+  foreach($kind as $k) {
+    $join="";
+    $select="";
+    if(!in_array($k, $table_def[columns])) {
+      $join.="left join {$table_def[id_type]}_tags \"{$k}_table\" on planet_osm_{$table}.osm_id=\"{$k}_table\".{$table_def[id_type]}_id and \"{$k}_table\".k='$k'";
+      $select="\"{$k}_table\".v as \"{$k}\"";
+    }
+
+    $parts[]=array("columns"=>$k,
+		   "join"=>$join,
+		   "select"=>$select);
+  }
+
+  $ret=array();
+  foreach($parts as $def) {
+    foreach($def as $part=>$text) {
+      if($text)
+	$ret[$part][]=$text;
+    }
+  }
+
+  return $ret;
+}

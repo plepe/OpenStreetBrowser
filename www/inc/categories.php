@@ -21,56 +21,38 @@ function process_element($node, $cat) {
   global $columns_all;
   global $req;
   global $importance_levels;
+  global $postgis_tables;
 
   $tags=new tags();
   $tags->readDOM($node->firstChild);
+  $id=$node->getAttribute("id");
 
-  $list_columns=array();
-  $l=parse_match($tags->get("match"));
+  $tables=$tags->get("tables");
+  if($tables)
+    $tables=explode(";", $tables);
+  else
+    $tables=array("polygon", "point");
 
-  $r="'$src[description]||";
-//  if(eregi("^\[\[(.*)\.svg\]\]", $src[icon], $m))
-//    $src[icon]="[[$m[1].png]]";
-  $r.="$src[icon]";
-  $r1=array();
-  foreach($list_columns as $key=>$values) {
-    $r1[]="$key='||(CASE WHEN \"$key\" is null THEN '' ELSE \"$key\" END)||'";
+  foreach($tables as $table) {
+    if($postgis_tables[$table]) {
+      $ret=parse_match($tags->get("match"), $table);
+
+      $ret['case']="WHEN {$ret['case']} THEN $id";
+      if($kind=$tags->get("kind")) {
+	$kind=explode(";", $kind);
+	$kind_ret=parse_kind($kind, $table);
+	$ret=array_merge_recursive($ret, $kind_ret);
+      }
+    }
   }
-  $r.="||".implode(" ", $r1)."'";
 
   $prior=9;
 
-  if(!$src[importance]) {
-    $importance="local";
+  if(!$importance=$tags->get("importance")) {
+    $ret['importance']="local";
   }
-  else if($src[importance]=="*") {
-    $importance=array_keys($importance_levels);
-  }
-  else
-    $importance=array($src[importance]);
-
-  $tables=array("polygon", "point");
-  if($src[tables]) {
-    $tables=explode(";", $src[tables]);
-  }
-
-  foreach($tables as $t) {
-    foreach($importance as $imp)
-      if($l)
-	$req[$cat][$imp][$t]['case'][$prior][]="WHEN $l THEN $r";
-      else
-	$req[$cat][$imp][$t]['case'][$prior][]=1;
-
-    if($src[importance]=="*") {
-      if(!$columns_all[$cat][$t])
-	$columns_all[$cat][$t]=array();
-      $columns_all[$cat][$t]=array_merge_recursive($columns_all[$cat][$t], $list_columns);
-    }
-    else {
-      if(!$columns[$cat][$imp][$t])
-	$columns[$cat][$imp][$t]=array();
-      $columns[$cat][$imp][$t]=array_merge_recursive($columns[$cat][$imp][$t], $list_columns);
-    }
+  else if($importance=="*") {
+    $ret['importance']=array_keys($importance_levels);
   }
 }
 
