@@ -1,5 +1,7 @@
 <?
 $importance_levels=array("international", "national", "regional", "urban", "suburban", "local");
+include "postgis.php";
+include "inc/categories_sql.php";
 
 function category_version() {
   global $lists_dir;
@@ -16,7 +18,7 @@ function category_version() {
   return $m[1];
 }
 
-function process_element($node, $cat) {
+function process_rule($node, $cat) {
   $src=array();
   $ret=array();
   global $columns;
@@ -41,10 +43,11 @@ function process_element($node, $cat) {
   $inc_importance=false;
   if($importance=="*")
     $inc_importance=true;
+    ob_end_flush();
 
   foreach($tables as $table) {
     if($postgis_tables[$table]) {
-      $b=parse_match($tags->get("tag"), $table);
+      $b=parse_match($tags->get("match"), $table);
 
       $ret[$table]=$b;
 
@@ -81,8 +84,8 @@ function process_list($node, $cat) {
   $ret=array();
 
   while($cur) {
-    if($cur->nodeName=="element") {
-      $r=process_element($cur, $cat);
+    if($cur->nodeName=="rule") {
+      $r=process_rule($cur, $cat);
       
       $ret=array_merge_recursive($ret, $r);
     }
@@ -167,7 +170,7 @@ function process_file($file) {
   $cur=$dom->firstChild;
 
   while($cur) {
-    if($cur->nodeName=="list") {
+    if($cur->nodeName=="category") {
       $data=process_list($cur, "root");
     }
     $cur=$cur->nextSibling;
@@ -237,7 +240,7 @@ function category_save($id, $content, $param=array()) {
   }
 
   if($id=="new") {
-    $id=uniqid("list_");
+    $id=uniqid("cat_");
   }
   if(!$id) {
     print "No ID given!\n";
@@ -260,7 +263,7 @@ function category_save($id, $content, $param=array()) {
     return array("status"=>"Could not load data");
   }
 
-  $l=$file->getElementsByTagName("list");
+  $l=$file->getElementsByTagName("category");
   for($i=0; $i<$l->length; $i++) {
     $version=$l->item($i)->getAttribute("version");
     $l->item($i)->removeAttribute("version");
@@ -410,7 +413,7 @@ function category_load($id, $param=array()) {
   $file=new DOMDocument();
   $file->loadXML($content);
 
-  $l=$file->getElementsByTagName("list");
+  $l=$file->getElementsByTagName("category");
   for($i=0; $i<$l->length; $i++) {
     $l->item($i)->setAttribute("version", $version);
   }

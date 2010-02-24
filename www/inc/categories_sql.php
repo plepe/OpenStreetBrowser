@@ -22,7 +22,7 @@ function parse_match($match, $table="point") {
   $ret=array();
   foreach($parts as $def) {
     foreach($def as $part=>$text) {
-      if($text)
+      if(isset($text))
 	$ret[$part][]=$text;
     }
   }
@@ -145,7 +145,8 @@ function build_match_part($part, $table) {
 
   $case="($case)";
 
-  return array("case"=>$case, "where"=>$where, "join"=>$join, "columns"=>$part['key'], "select"=>$select);
+  $ret=array("case"=>$case, "where"=>$where, "join"=>$join, "columns"=>$part['key'], "select"=>$select);
+  return $ret;
 }
 
 function parse_explode($match) {
