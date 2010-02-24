@@ -95,7 +95,7 @@ function process_list($node, $cat) {
     }
   }
 
-  print_r($ret);
+  return $ret;
 }
 
 function postprocess() {
@@ -173,9 +173,8 @@ function process_file($file) {
     $cur=$cur->nextSibling;
   }
 
-  //$ret=postprocess();
   $f=fopen("$file.save", "w");
-  fwrite($f, serialize($ret));
+  fwrite($f, serialize($data));
   fclose($f);
 }
 
