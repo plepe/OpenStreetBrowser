@@ -44,7 +44,9 @@ function process_element($node, $cat) {
 
   foreach($tables as $table) {
     if($postgis_tables[$table]) {
-      $ret[$table]=parse_match($tags->get("tag"), $table);
+      $b=parse_match($tags->get("tag"), $table);
+
+      $ret[$table]=$b;
 
       $ret[$table]['id']=array($id);
       if($kind=$tags->get("kind")) {
@@ -81,6 +83,7 @@ function process_list($node, $cat) {
   while($cur) {
     if($cur->nodeName=="element") {
       $r=process_element($cur, $cat);
+      
       $ret=array_merge_recursive($ret, $r);
     }
     $cur=$cur->nextSibling;

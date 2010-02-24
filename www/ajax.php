@@ -7,6 +7,10 @@ require_once "inc/global.php";
 //$sql=new sql($mysql_data);
 include "xml.php";
 
+function error($msg) {
+  /// Do something with this error
+}
+
 function build_request($param, $prefix, $ret) {
   if(is_array($param)) {
     foreach($param as $k=>$v) {

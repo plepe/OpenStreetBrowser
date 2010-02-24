@@ -2,10 +2,21 @@
 // Parses a matching string as used in categories
 function parse_match($match, $table="point") {
   $match_parts=parse_explode($match);
+
+  if(is_string($match_parts)) {
+    error("Error: $match_parts");
+    return array("case"=>array());
+  }
+
   $parts=array();
 
   foreach($match_parts as $part) {
-    $parts[]=build_match_part($part, $table);
+    $b=build_match_part($part, $table);
+
+    if(is_string($b))
+      error("Error: $b");
+    else
+      $parts[]=$b;
   }
 
   $ret=array();
@@ -17,7 +28,7 @@ function parse_match($match, $table="point") {
   }
 
   $where=array();
-  foreach($ret['where'] as $w) {
+  if($ret['where']) foreach($ret['where'] as $w) {
     foreach($w as $k=>$vs) {
       $where[$k]=$vs;
     }
@@ -156,8 +167,12 @@ function parse_explode($match) {
 	  $m=1;
 	  $i--;
 	}
-	else
+	elseif(!in_array($c, array("\"", "'"))) {
 	  $key.=$c;
+	}
+	else {
+	  return "Error parsing match string: \"$match\"!";
+	}
 	break;
       case 1:
 	if(in_array($c, array("=", "!", ">", "<"))) {
@@ -221,7 +236,8 @@ function parse_explode($match) {
     }
   }
 
-  $values[sizeof($operators)-1][]=$value;
+  if($value)
+    $values[sizeof($operators)-1][]=$value;
   $parser[]=array("key"      =>$key,
 		  "operators"=>$operators,
 		  "values"   =>$values);
@@ -262,7 +278,6 @@ function category_build_where($where_col, $where_vals) {
   $ret=array();
 
   $where_vals=array_unique($where_vals);
-  print "$where_col ";print_r($where_vals);
   if(in_array("null", $where_vals, "null")&&(in_array("!null", $where_vals))) {
     // nix
   }
