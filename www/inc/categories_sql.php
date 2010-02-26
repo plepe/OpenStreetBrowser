@@ -317,7 +317,7 @@ function category_build_sql($rules, $table) {
   $table_def=$postgis_tables[$table];
 
   $ret ="select * from (select\n";
-  $ret.="  {$table_def['id_name']} as id,\n";
+  $ret.="  {$table_def['full_id']} as id,\n";
   $ret.="  {$table_def['geo']} as geo,\n";
   foreach(array_unique($rules['select']) as $s) {
     $ret.="  $s,\n";

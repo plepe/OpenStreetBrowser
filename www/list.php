@@ -21,68 +21,19 @@ include "inc/debug.php";
 include "inc/tags.php";
 include "inc/object.php";
 include "inc/lang.php";
-
-$request=unserialize(file_get_contents("/osm/skunkosm/request.save"));
-$cat_list=unserialize(file_get_contents("/osm/skunkosm/category_list.save"));
+include "postgis.php";
 
 $importance=array("international", "national", "regional", "urban", "suburban", "local");
-$types=array(
-  "point"=>array(
-    "id_type"=>"node",
-    "id_name"=>"osm_id",
-    "geo"=>"way",
-    "need_>0"=>1,
-  ),
-  "polygon"=>array(
-    "id_type"=>"way",
-    "id_name"=>"osm_id",
-    "geo"=>"way",
-    "need_>0"=>1,
-  ),
-  "line"=>array(
-    "id_type"=>"way",
-    "id_name"=>"osm_id",
-    "geo"=>"way",
-    "need_>0"=>1,
-  ),
-  "rels"=>array(
-    "id_type"=>"rel",
-    "id_name"=>"id",
-    //"geo"=>"(select (ST_Collect((CASE WHEN p.way is not null THEN p.way WHEN po.way is not null THEN po.way WHEN l.way is not null THEN l.way END)))) from relation_members rm left join planet_osm_point p on rm.member_id=p.osm_id and rm.member_type='N' left join planet_osm_polygon po on rm.member_id=po.osm_id and rm.member_type='W' left join planet_osm_line l on rm.member_id=l.osm_id and rm.member_type='W' where rm.relation_id=planet_osm_rels.id) as center",
-  ),
-  "place"=>array(
-    "id_type"=>"node",
-    "id_name"=>"id_place_node",
-    "geo"=>"guess_area"
-  ),
-  "route"=>array(
-    "id_type"=>"rel",
-    "id_name"=>"id",
-    "geo"=>"way"
-  ),
-  "stations"=>array(
-    "id_type"=>array("rel", "coll", "node"),
-    "id_name"=>array("rel_id", "coll_id", "stations[0]"),
-    "geo"=>"way",
-    ),
-  "streets"=>array(
-    "id_type"=>"coll",
-    "id_name"=>"osm_id",
-    "geo"=>"way",
-  ),
-);
 
 $ret=main();
 Header("content-type: text/xml; charset=utf-8");
 print $ret;
 
 function list_print($res) {
-  foreach($res as $k=>$v) {
-    if($v&&preg_match("/^(.*)_id$/", $k, $m))
-      $id="$m[1]_$v";
-  }
+  $id=$res[id];
+  print_r($res);
 
-  $ret="<place\n";
+  $ret="<match\n";
   $ob=load_object($id);
   $info=explode("||", $res[res]);
   $lang="en";
@@ -90,6 +41,7 @@ function list_print($res) {
   $make_valid=array("&"=>"&amp;", "\""=>"&quot;", "<"=>"&lt;", ">"=>"&gt;");
 
   $ret.="  id=\"$id\"\n";
+  $ret.="  rule_id=\"$res[rule_id]\"\n";
   $ret.="  center=\"$res[center]\"\n";
 
   if($x=$ob->long_name()) {
@@ -131,10 +83,17 @@ function list_print($res) {
   return $ret;
 }
 
-function get_list($param, $list_data=null) {
+function get_list($category, $param) {
   global $request;
   global $importance;
-  global $types;
+  global $postgis_tables;
+  global $lists_dir;
+
+  // load category configuration
+  if(!file_exists("$lists_dir/$category.xml.save"))
+    return null;
+
+  $list_data=unserialize(file_get_contents("$lists_dir/$category.xml.save"));
 
 //// process params ////
   // count
@@ -155,7 +114,7 @@ function get_list($param, $list_data=null) {
       $exclude_list[$type]="{$type}_id not in (".implode(", ", $excl_list).")";
     }
 
-    foreach($types as $type=>$type_conf) {
+    foreach($postgis_tables as $type=>$type_conf) {
       if(is_array($type_conf[id_type])) {
 	foreach($type_conf[id_type] as $id_type)
 	  if($exclude_list[$id_type])
@@ -171,21 +130,12 @@ function get_list($param, $list_data=null) {
   // viewbox
   if($param[viewbox]) {
     $coord=explode(",", $param[viewbox]);
-    $sql_where['*'][]="way&&PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913) and Intersects(SnapToGrid(way, 0.00001), PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913))";
+    $sql_where['*'][]="geo&&PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913) and Intersects(SnapToGrid(geo, 0.00001), PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913))";
   }
-
-  // category
-  if(!($cat=$param[category]))
-    return "";
 
 //// set some more vars
   $max_count=$count+1;
   $list=array();
-
-//// where do we get our request-config from?
-  if(!$list_data)
-    $list_data=$request;
-  $list_data=$list_data[$cat];
 
 //// now run, until we are finished
   foreach($importance as $imp) {
@@ -213,40 +163,13 @@ function get_list($param, $list_data=null) {
 	else
 	  $req_where="";
 
-	$qryc="select *, astext(ST_Centroid(way)) as center from (select ";
-	if(is_array($types[$t][id_name]))
-	  foreach($types[$t][id_name] as $i=>$id_name) {
-	    $qryc.="{$types[$t][id_name][$i]} as {$types[$t][id_type][$i]}_id, ";
-	  }
-	else
-	  $qryc.="{$types[$t][id_name]} as {$types[$t][id_type]}_id, ";
-        $qryc.="{$types[$t][geo]} as way";
-	if($req_data['case']!=1)
-	  $qryc.=", (CASE {$req_data['case']} END) as res ";
-	else
-	  $qryc.=", '' as res ";
-	$qryc.=" from planet_osm_$t $req_where) as t ";
+        $where=implode(" and ", $qry_where);
+
+	$qryc="select *, astext(ST_Centroid(geo)) as center from (";
+	$qryc.=$req_data[sql];
+	$qryc.=") as x where $where limit $max_count";
+	//print "==$qryc==";
 	
-	if($req_data!=1)
-	  $qry_where[]="res is not null";
-
-	if($types[$t]["need_>0"]) {
-	  if(is_array($types[$t][id_name])) {
-	    $q=array();
-	    foreach($types[$t][id_name] as $i=>$id_name)
-	      $q[]="{$types[$t][id_type][$i]}_id>0";
-	    $qry_where[]="(".implode(" or ", $q).") ";
-	  }
-	  else
-	    $qry_where[]="{$types[$t][id_type]}_id>0 ";
-	}
-
-	if(sizeof($qry_where))
-	  $qryc.="where ".implode(" and ", $qry_where)." ";
-
-	$qryc.="limit $max_count";
-	//print "$qryc\n";
-
 	$resc=sql_query($qryc);
 	$max_count-=pg_num_rows($resc);
 	while($elemc=pg_fetch_assoc($resc))
@@ -269,7 +192,7 @@ function get_list($param, $list_data=null) {
     $more=1;
   }
 
-  $ret ="<category id='$cat'";
+  $ret ="<category id='$category'";
   $ret.=" complete='".($more?"false":"true")."'";
   $ret.=">\n";
   foreach($list as $l) {
@@ -297,17 +220,8 @@ function main() {
     foreach($cs as $c) {
       unset($load_cat);
       // This is a custom list
-      if(preg_match("/^(list_[^\/]+)(\/*)$/", $c, $m)) {
-	$load_cat=unserialize(file_get_contents("$lists_dir/$m[1].xml.save"));
-	foreach($load_cat as $cat=>$data) {
-	  if(preg_match("/^root(.*)$/", $cat, $m)) {
-	    $load_cat["$c$m[1]"]=$data;
-	  }
-	}
-      }
 
-      $r[category]=$c;
-      $ret.=get_list($r, $load_cat);
+      $ret.=get_list($c, $r);
     }
   }
 
