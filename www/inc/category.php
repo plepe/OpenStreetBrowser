@@ -161,18 +161,16 @@ class category {
 
     $ret.="  <tag k=\"geo:center\" v=\"$res[center]\"/>\n";
 
-//    if(!($name_def=$rule->tag->get("display_name"))) {
-//      $name_def="ref - name;name;ref;operator";
-//    }
-//
-    if($x=$ob->long_name()) {
+    $name_def=$rule->tags->get("display_name");
+
+    if($x=$ob->long_name($name_def, $lang)) {
       $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"name\" v=\"$x\"/>\n";
+      $ret.="  <tag k=\"display_name:$lang\" v=\"$x\"/>\n";
     }
 
-    if($x=$ob->long_name($lang)) {
+    if($x=$ob->long_name($name_def)) {
       $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"name_trans\" v=\"$x\"/>\n";
+      $ret.="  <tag k=\"display_name\" v=\"$x\"/>\n";
     }
 
     if($x=$ob->tags->get("$info[0]")) {
