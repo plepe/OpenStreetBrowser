@@ -402,7 +402,7 @@ function category_load($id, $param=array()) {
   else {
     if(!file_exists("$lists_dir/$id.xml")) {
       unlock_dir($lists_dir);
-      print "File not found!\n";
+      print "File $id not found!\n";
       exit;
     }
 
