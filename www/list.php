@@ -28,6 +28,10 @@ include "postgis.php";
 
 $importance=array("international", "national", "regional", "urban", "suburban", "local");
 
+$lang="en";
+if($_REQUEST[lang])
+  $lang=$_REQUEST[lang];
+
 $ret=main();
 Header("content-type: text/xml; charset=utf-8");
 print $ret;
