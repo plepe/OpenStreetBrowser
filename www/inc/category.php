@@ -147,55 +147,59 @@ class category {
   }
 
   function print_match($res) {
+    global $lang;
     $id=$res[id];
     $rule=$this->rules[$res[rule_id]];
 
-    $ret="<match\n";
+    $ret="<match ";
     $ob=load_object($id);
     $info=explode("||", $res[res]);
-    $lang="en";
-    global $lang_str;
     $make_valid=array("&"=>"&amp;", "\""=>"&quot;", "<"=>"&lt;", ">"=>"&gt;");
 
-    $ret.="  id=\"$id\"\n";
-    $ret.="  rule_id=\"$res[rule_id]\"\n";
-    $ret.="  center=\"$res[center]\"\n";
+    $ret.="id=\"$id\" ";
+    $ret.="rule_id=\"$res[rule_id]\">\n";
 
+    $ret.="  <tag k=\"geo:center\" v=\"$res[center]\"/>\n";
+
+//    if(!($name_def=$rule->tag->get("display_name"))) {
+//      $name_def="ref - name;name;ref;operator";
+//    }
+//
     if($x=$ob->long_name()) {
       $x=strtr($x, $make_valid);
-      $ret.="  name=\"$x\"\n";
+      $ret.="  <tag k=\"name\" v=\"$x\"/>\n";
     }
 
     if($x=$ob->long_name($lang)) {
       $x=strtr($x, $make_valid);
-      $ret.="  name_trans=\"$x\"\n";
+      $ret.="  <tag k=\"name_trans\" v=\"$x\"/>\n";
     }
 
     if($x=$ob->tags->get("$info[0]")) {
       $x=strtr($x, $make_valid);
-      $ret.="  description=\"$x\"\n";
+      $ret.="  <tag k=\"description\" v=\"$x\"/>\n";
     }
 
     if($x=$ob->tags->get("$info[0]:$lang")) {
       $x=strtr($x, $make_valid);
-      $ret.="  description_trans=\"$x\"\n";
+      $ret.="  <tag k=\"description_trans\" v=\"$x\"/>\n";
     }
     elseif($x=$lang_str["$info[0]=".$ob->tags->get("$info[0]")]) {
       $x=strtr($x, $make_valid);
-      $ret.="  description_trans=\"$x\"\n";
+      $ret.="  <tag k=\"description_trans\" v=\"$x\"/>\n";
     }
 
     if($x=$info[1]) {
       $x=strtr($x, $make_valid);
-      $ret.="  icon=\"$x\"\n";
+      $ret.="  <tag k=\"icon\" v=\"$x\"/>\n";
     }
 
     if($x=$info[2]) {
       $x=strtr($x, $make_valid);
-      $ret.="  data=\"$x\"\n";
+      $ret.="  <tag k=\"data\" v=\"$x\"/>\n";
     }
 
-    $ret.="/>\n";
+    $ret.="</match>\n";
 
     return $ret;
   }
