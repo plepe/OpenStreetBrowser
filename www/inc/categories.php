@@ -43,7 +43,6 @@ function process_rule($node, $cat) {
   $inc_importance=false;
   if($importance=="*")
     $inc_importance=true;
-    ob_end_flush();
 
   foreach($tables as $table) {
     if($postgis_tables[$table]) {
@@ -330,10 +329,11 @@ function category_save($id, $content, $param=array()) {
 // lists all categories
 //
 // parameters:
+// $lang      language
 //
 // return:
 // array('category_id'=>'name', ...)
-function category_list() {
+function category_list($lang="en") {
   global $lists_dir;
 
   if($state=category_check_state()!==true) {
@@ -350,7 +350,7 @@ function category_list() {
       $x->loadXML(file_get_contents("$lists_dir/$f"));
       $tags=new tags();
       $tags->readDOM($x->firstChild);
-      $ret[$m[1]]=$tags->get("name");
+      $ret[$m[1]]=$tags->get("name:$lang");
     }
   }
   closedir($d);
@@ -455,4 +455,3 @@ function category_history($id, $param=array()) {
 
   return $ret;
 }
-

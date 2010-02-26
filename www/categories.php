@@ -14,6 +14,10 @@ function ob_receive($text) {
 
 ob_start(ob_receive);
 
+$lang="en";
+if($_GET[lang])
+  $lang=$_GET[lang];
+
 $id=$_GET[id];
 switch($_GET[todo]) {
   case "save":
@@ -41,7 +45,7 @@ switch($_GET[todo]) {
 
     break;
   case "list":
-    $list=category_list();
+    $list=category_list($lang);
 
     Header("Content-Type: text/xml; charset=UTF-8");
     ob_end_clean();
