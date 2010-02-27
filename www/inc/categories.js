@@ -1,22 +1,41 @@
 var categories={};
 
-function category_rule_match(dom) {
+function category_rule_match(dom, cat, rule) {
   this.tags=new tags();
   this.tags.readDOM(dom);
+  this.category=cat;
+  this.rule=rule;
+  this.id=dom.getAttribute("id");
 
   // text
-  this.text=function() {
+  this.list_entry=function() {
     var ret="";
     var x;
+    var name="";
+    var add="";
 
     x=this.tags.get("display_name");
     if(!x)
       x=t("unnamed");
-    ret+=x;
+    name=x;
 
     if(x=this.tags.get("display_type"))
-      ret+=" ("+x+")";
+      add=" ("+x+")";
 
+    var li_style="";
+    if(x=this.rule.tags.get("icon")) {
+      var icon=x;
+      var icon_data;
+
+      li_style+="list-style-image: url('"+x+"'); ";
+//      if(icon_data=icon.match(/^\[\[Image:(.*)\]\]$/)) {
+//	icon_data=icon_data[1].replace(/ /g, "_");
+//	li_style+="list-style-image: url('symbols/"+icon_data+"'); ";
+//      }
+    }
+    var title="";
+
+    ret="<li class='listitem' style=\""+li_style+"\" id='list_"+this.id+"' title='"+title+"'><element id='"+this.id+"' rule_id='"+this.rule.id+"'+><a href='#"+this.id+"' onMouseOver='set_highlight([\""+this.id+"\"])' onMouseOut='unset_highlight()'>"+name+"</a>"+add+"</element></li>\n";
     return ret;
   }
 }
@@ -63,33 +82,19 @@ function category_rule(category, id, _tags) {
     return ret;
   }
 
-  // list_entry
-  this.list_entry=function(dom) {
+  // load_entry
+  this.load_entry=function(dom) {
     var id=dom.getAttribute("id");
     if(!this.data[id]) {
-      this.data[id]=new category_rule_match(dom);
+      this.data[id]=new category_rule_match(dom, this.category, this);
     }
     var match=this.data[id];
     var time=new Date();
     this.data[id].access=time.getTime();
 
-    var text=match.text();
-    var li_style="";
-
-/*    if(x=tag.get("icon")) {
-      var icon=x;
-      var icon_data;
-
-      if(icon_data=icon.match(/^\[\[Image:(.*)\]\]$/)) {
-	icon_data=icon_data[1].replace(/ /g, "_");
-	li_style+="list-style-image: url('symbols/"+icon_data+"'); ";
-      }
-    } */
-    var title="";
-
-    var ret="<li class='listitem' style=\""+li_style+"\" id='list_"+id+"' title='"+title+"'><element id='"+id+"' rule_id='"+this.id+"'+><a href='#"+id+"' onMouseOver='set_highlight([\""+id+"\"])' onMouseOut='unset_highlight()'>"+text+"</a></element></li>\n";
-    return ret;
+    return this.data[id];
   }
+
 }
 
 function category(id) {
@@ -152,7 +157,8 @@ function category(id) {
       var match=matches[mi];
       var rule=this.get_rule(match.getAttribute("rule_id"));
       if(rule) {
-	ret+=rule.list_entry(match);
+	var m=rule.load_entry(match);
+	ret+=m.list_entry();
 	//dyn_overlay_show(cat_id, place);
       }
     }
