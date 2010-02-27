@@ -30,29 +30,6 @@ list_cache.search=function(viewbox, category) {
   return null;
 }
 
-function list_make_list(cat) {
-  var ret="";
-  var places=cat.getElementsByTagName("match");
-
-  if(places.length==0) {
-    ret+=t("nothing found")+"\n";
-  }
-
-  for(var placei=0; placei<places.length; placei++) {
-    var place=places[placei];
-    ret+=list_entry(place);
-    dyn_overlay_show(cat_id, place);
-  }
-
-  dyn_overlays_showall(cat_id);
-
-  if(cat.getAttribute("complete")!="true") {
-    ret+="<a id='more_"+cat_id+"' href='javascript:list_more(\""+cat_id+"\")'>"+t("more")+"</a>\n";
-  }
-
-  return ret;
-}
-
 function list_more_call_back(response) {
   var data=response.responseXML;
   list_reload_working=0;
@@ -75,7 +52,10 @@ function list_more_call_back(response) {
   for(var cati=0; cati<cats.length; cati++) {
     var cat=cats[cati];
     var cat_id=cat.getAttribute("id");
+    var cat_ob=categories[cat_id];
     if(!category_leaf[cat_id])
+      continue;
+    if(!cat_ob)
       continue;
     var div=document.getElementById("content_"+cat_id);
     var more=document.getElementById("more_"+cat_id);
@@ -85,7 +65,7 @@ function list_more_call_back(response) {
       var ul=div.getElementsByTagName("ul");
       ul=ul[0];
 
-      var text=list_make_list(cat);
+      var text=cat_ob.make_list(cat);
       ul.innerHTML+=text;
 
       var ob;

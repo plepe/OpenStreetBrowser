@@ -1,5 +1,26 @@
 var categories={};
 
+function category_rule_match(dom) {
+  this.tags=new tags();
+  this.tags.readDOM(dom);
+
+  // text
+  this.text=function() {
+    var ret="";
+    var x;
+
+    x=this.tags.get("display_name");
+    if(!x)
+      x=t("unnamed");
+    ret+=x;
+
+    if(x=this.tags.get("display_type"))
+      ret+=" ("+x+")";
+
+    return ret;
+  }
+}
+
 function category_rule(category, id, _tags) {
   // constructor
   if(!id) {
@@ -10,6 +31,8 @@ function category_rule(category, id, _tags) {
     this.id=id;
     this.tags=_tags;
   }
+  this.data=[];
+  this.category=category;
 
   // editor
   this.editor=function(visible) {
@@ -39,6 +62,34 @@ function category_rule(category, id, _tags) {
 
     return ret;
   }
+
+  // list_entry
+  this.list_entry=function(dom) {
+    var id=dom.getAttribute("id");
+    if(!this.data[id]) {
+      this.data[id]=new category_rule_match(dom);
+    }
+    var match=this.data[id];
+    var time=new Date();
+    this.data[id].access=time.getTime();
+
+    var text=match.text();
+    var li_style="";
+
+/*    if(x=tag.get("icon")) {
+      var icon=x;
+      var icon_data;
+
+      if(icon_data=icon.match(/^\[\[Image:(.*)\]\]$/)) {
+	icon_data=icon_data[1].replace(/ /g, "_");
+	li_style+="list-style-image: url('symbols/"+icon_data+"'); ";
+      }
+    } */
+    var title="";
+
+    var ret="<li class='listitem' style=\""+li_style+"\" id='list_"+id+"' title='"+title+"'><element id='"+id+"' rule_id='"+this.id+"'+><a href='#"+id+"' onMouseOver='set_highlight([\""+id+"\"])' onMouseOut='unset_highlight()'>"+text+"</a></element></li>\n";
+    return ret;
+  }
 }
 
 function category(id) {
@@ -56,7 +107,7 @@ function category(id) {
       if(cur.nodeName=="rule") {
         var t=new tags();
 	t.readDOM(cur);
-	this.list.push(new category_rule(this, cur.getAttribute("id"), t));
+	this.rules.push(new category_rule(this, cur.getAttribute("id"), t));
       }
       cur=cur.nextSibling;
     }
@@ -74,7 +125,7 @@ function category(id) {
   }
 
   // constructor
-  this.list=[];
+  this.rules=[];
   if(id) {
     this.id=id;
     this.loaded=false;
@@ -88,6 +139,32 @@ function category(id) {
   }
 
   categories[this.id]=this;
+
+  this.make_list=function(dom) {
+    var ret="";
+    var matches=dom.getElementsByTagName("match");
+
+    if(matches.length==0) {
+      ret+=t("nothing found")+"\n";
+    }
+
+    for(var mi=0; mi<matches.length; mi++) {
+      var match=matches[mi];
+      var rule=this.get_rule(match.getAttribute("rule_id"));
+      if(rule) {
+	ret+=rule.list_entry(match);
+	//dyn_overlay_show(cat_id, place);
+      }
+    }
+
+    //dyn_overlays_showall(cat_id);
+
+    if(dom.getAttribute("complete")!="true") {
+      ret+="<a id='more_"+this.id+"' href='javascript:list_more(\""+this.id+"\")'>"+t("more")+"</a>\n";
+    }
+
+    return ret;
+  }
 
   // editor
   this.editor=function() {
@@ -109,8 +186,8 @@ function category(id) {
 
     ret+="<hr>\n";
     ret+="<div id='el_list_"+this.id+"'></div>\n";
-    for(i=0; i<this.list.length; i++) {
-      ret+=this.list[i].editor();
+    for(i=0; i<this.rules.length; i++) {
+      ret+=this.rules[i].editor();
     }
     ret+="<a href='javascript: edit_list_new_rule(\""+this.id+"\")'>Add rule</a>\n";
     ret+="<br/>\n";
@@ -121,6 +198,16 @@ function category(id) {
     this.win.content.innerHTML=ret;
   }
 
+  // get_rule
+  this.get_rule=function(id) {
+    for(var i=0; i<this.rules.length; i++) {
+      if(this.rules[i].id==id)
+	return this.rules[i];
+    }
+
+    return null;
+  }
+
   // edit_list_new_rule
   this.edit_list_new_rule=function() {
     if(!this.loaded) {
@@ -129,7 +216,7 @@ function category(id) {
     }
 
     var el=new category_rule(this);
-    this.list.push(el);
+    this.rules.push(el);
 
     var ellist=document.getElementById("el_list_"+this.id);
     ellist.innerHTML+=el.editor(true);
@@ -150,9 +237,9 @@ function category(id) {
     ret+=this.tags.xml("  ");
 
     ret.list=[];
-    for(var i=0; i<this.list.length; i++) {
-      ret+="  <rule id=\""+this.list[i].id+"\">\n";
-      ret+=this.list[i].tags.xml("    ");
+    for(var i=0; i<this.rules.length; i++) {
+      ret+="  <rule id=\""+this.rules[i].id+"\">\n";
+      ret+=this.rules[i].tags.xml("    ");
       ret+="  </rule>\n";
     }
 
