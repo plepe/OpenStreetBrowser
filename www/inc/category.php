@@ -183,14 +183,14 @@ class category {
       $ret.="  <tag k=\"display_type\" v=\"$x\"/>\n";
     }
 
-    if($x=$info[1]) {
+    if($x=$rule->tags->get("icon")) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"icon\" v=\"$x\"/>\n";
     }
 
-    if($x=$info[2]) {
+    if($x=$rule->tags->get("importance")) {
       $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"data\" v=\"$x\"/>\n";
+      $ret.="  <tag k=\"importance\" v=\"$x\"/>\n";
     }
 
     $ret.="</match>\n";
