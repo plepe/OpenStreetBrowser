@@ -183,7 +183,7 @@ function init() {
 
   ob=document.getElementById("lang");
   if(!ob)
-    lang="";
+    lang="en";
   else
     lang=ob.value;
 

@@ -289,17 +289,24 @@ function list_check_overlays(path, state) {
 }
 
 function box_open(head, path, content, state) {
+  var cat=categories[path];
   var ret="";
   var level=path.split(/\//).length;
   if(!state)
     state="open";
+
+  var name;
+  if(!cat)
+    name="undefined";
+  else
+    name=cat.tags.get("name:"+lang);
 
   ret+="<div class='box_"+state+"_"+level+"' id='list_"+path+"'>\n";
   ret+="<h"+level+"><input type='checkbox' id='check_"+path+"' name='"+path+"' "+
        (content==null?"":" checked='checked'")+
        " onChange='new_box_change(this)' />"+
        "<a href='javascript:new_box_click(\""+path+"\")'>"+
-       t("cat:"+path)+"</a></h"+level+">\n";
+       name+"</a></h"+level+">\n";
 
   if(state=="open") {
     ret+="<div class='box_content_"+level+"_"+state+"' id='content_"+path+"'>\n";
