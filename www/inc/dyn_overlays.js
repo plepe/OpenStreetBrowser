@@ -1,12 +1,15 @@
 var dyn_overlay={};
 var dyn_overlay_imgs={};
 
-function dyn_overlay_show(category, place) {
-  var geo=place.getAttribute("center");
-  var icon=place.getAttribute("icon");
-  var id=place.getAttribute("id");
+function dyn_overlay_show(cat, match_ob) {
+  var geo=match_ob.tags.get("geo:center");
+  var icon=match_ob.tags.get("icon");
+  var id=match_ob.id;
+  var category=cat.id;
 
   if(!geo)
+    return;
+  if(match_ob.dyn_overlay_vector)
     return;
 
   var p=new postgis(geo).geo();
@@ -34,23 +37,25 @@ function dyn_overlay_show(category, place) {
     graphicYOffset: -(dyn_overlay_imgs[icon].height+1)/2,
     fill: "none"
   });
+  f.match_ob=match_ob;
+  match_ob.dyn_overlay_vector=f;
 
   dyn_overlay[category].vectors.push(f);
   dyn_overlay[category].ids[id]=true;
 }
 
 function dyn_overlays_show(cat) {
-  if(!dyn_overlay[cat])
-    dyn_overlay[cat]={ vectors: [], ids: {} };
+  if(!dyn_overlay[cat.id])
+    dyn_overlay[cat.id]={ vectors: [], ids: {} };
 
-  vector_layer.addFeatures(dyn_overlay[cat].vectors);
+  vector_layer.addFeatures(dyn_overlay[cat.id].vectors);
 }
 
 function dyn_overlays_showall(cat) {
-  if(!dyn_overlay[cat])
+  if(!dyn_overlay[cat.id])
     return;
 
-  vector_layer.addFeatures(dyn_overlay[cat].vectors);
+  vector_layer.addFeatures(dyn_overlay[cat.id].vectors);
 }
 
 function dyn_overlays_hide(cat) {
@@ -60,3 +65,5 @@ function dyn_overlays_hide(cat) {
 
 register_hook("show_category", dyn_overlays_show);
 register_hook("hide_category", dyn_overlays_hide);
+register_hook("category_show_match", dyn_overlay_show);
+register_hook("category_show_finished", dyn_overlays_showall);

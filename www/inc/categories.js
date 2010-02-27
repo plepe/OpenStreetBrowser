@@ -23,7 +23,7 @@ function category_rule_match(dom, cat, rule) {
       add=" ("+x+")";
 
     var li_style="";
-    if(x=this.rule.tags.get("icon")) {
+    if(x=this.tags.get("icon")) {
       var icon=x;
       var icon_data;
 
@@ -33,7 +33,7 @@ function category_rule_match(dom, cat, rule) {
 //	li_style+="list-style-image: url('symbols/"+icon_data+"'); ";
 //      }
     }
-    var title="";
+    var title=this.rule.tags.get("name:"+lang);
 
     ret="<li class='listitem' style=\""+li_style+"\" id='list_"+this.id+"' title='"+title+"'><element id='"+this.id+"' rule_id='"+this.rule.id+"'+><a href='#"+this.id+"' onMouseOver='set_highlight([\""+this.id+"\"])' onMouseOut='unset_highlight()'>"+name+"</a>"+add+"</element></li>\n";
     return ret;
@@ -153,17 +153,21 @@ function category(id) {
       ret+=t("nothing found")+"\n";
     }
 
+    var match_obs=[];
+
     for(var mi=0; mi<matches.length; mi++) {
       var match=matches[mi];
       var rule=this.get_rule(match.getAttribute("rule_id"));
       if(rule) {
-	var m=rule.load_entry(match);
-	ret+=m.list_entry();
-	//dyn_overlay_show(cat_id, place);
+	var match_ob=rule.load_entry(match);
+	ret+=match_ob.list_entry();
+
+	call_hooks("category_show_match", this, match_ob);
+	match_obs.push(match_ob);
       }
     }
 
-    //dyn_overlays_showall(cat_id);
+    call_hooks("category_show_finished", this);
 
     if(dom.getAttribute("complete")!="true") {
       ret+="<a id='more_"+this.id+"' href='javascript:list_more(\""+this.id+"\")'>"+t("more")+"</a>\n";
