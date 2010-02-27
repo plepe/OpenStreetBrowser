@@ -173,18 +173,14 @@ class category {
       $ret.="  <tag k=\"display_name\" v=\"$x\"/>\n";
     }
 
-    if($x=$ob->tags->get("$info[0]")) {
+    if($x=$ob->tags->parse($rule->tags->get("type"), $lang)) {
       $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"description\" v=\"$x\"/>\n";
+      $ret.="  <tag k=\"display_type:$lang\" v=\"$x\"/>\n";
     }
 
-    if($x=$ob->tags->get("$info[0]:$lang")) {
+    if($x=$ob->tags->parse($rule->tags->get("type"))) {
       $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"description_trans\" v=\"$x\"/>\n";
-    }
-    elseif($x=$lang_str["$info[0]=".$ob->tags->get("$info[0]")]) {
-      $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"description_trans\" v=\"$x\"/>\n";
+      $ret.="  <tag k=\"display_type\" v=\"$x\"/>\n";
     }
 
     if($x=$info[1]) {
