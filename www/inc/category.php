@@ -49,25 +49,27 @@ class category {
       $excl_list=explode(",", $param['exclude']);
       $exclude_list=array();
       foreach($excl_list as $e) {
-	if(ereg("(node|way|rel|coll)_([0-9]*)", $e, $m))
-	  $exclude_list[$m[1]][]=$m[2];
+	if(ereg("^(node|way|rel|coll)_([0-9]*)$", $e, $m))
+	  $exclude_list[]=$m[0];
       }
 
-      foreach($exclude_list as $type=>$excl_list) {
-	$exclude_list[$type]="{$type}_id not in (".implode(", ", $excl_list).")";
+      $sql_where['*'][]="id not in ('".implode("', '", $exclude_list)."')";
+
+/*      foreach($exclude_list as $type=>$excl_list) {
+	$exclude_list[$type]=" not in (".implode(", ", $excl_list).")";
       }
 
       foreach($postgis_tables as $type=>$type_conf) {
 	if(is_array($type_conf[id_type])) {
 	  foreach($type_conf[id_type] as $id_type)
 	    if($exclude_list[$id_type])
-	      $sql_where[$type][]=$exclude_list[$id_type];
+	      $excl_where[$type]=$type_conf[id_name]." ".$exclude_list[$id_type];
 	}
 	else {
 	  if($exclude_list[$type_conf[id_type]])
-	    $sql_where[$type][]=$exclude_list[$type_conf[id_type]];
+	    $excl_where[$type]=$type_conf[id_name]." ".$exclude_list[$type_conf[id_type]];
 	}
-      }
+      } */
     }
 
     // viewbox
