@@ -98,6 +98,34 @@ class tags {
       $cur=$cur->nextSibling;
     }
   }
+
+  function parse($str, $lang="") {
+    $str=explode(";", $str);
+    foreach($str as $def) {
+      $match_all=true;
+      $ret="";
+      while($def!="") {
+	if(preg_match("/^\[([A-Za-z0-9_:]+)\]/", $def, $m)) {
+          if(!($value=$this->get("$m[1]:$lang")))
+	    if(!($value=$this->get("$m[1]")))
+	      $match_all=false;
+
+	  $def=substr($def, strlen($m[0]));
+	  $ret.=$value;
+	}
+	else {
+	  $ret.=substr($def, 0, 1);
+	  $def=substr($def, 1);
+	}
+      }
+
+      if($match_all)
+	return $ret;
+    }
+
+    return null;
+  }
+
 }
 
 function parse_array($text, $prefix="") {

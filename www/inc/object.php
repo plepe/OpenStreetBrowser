@@ -55,30 +55,7 @@ class object {
     if(!$name_def)
       $name_def="[ref] - [name];[name];[ref];[operator]";
 
-    $name_def=explode(";", $name_def);
-    foreach($name_def as $def) {
-      $match_all=true;
-      $ret="";
-      while($def!="") {
-	if(preg_match("/^\[([A-Za-z0-9_:]+)\]/", $def, $m)) {
-          if(!($value=$this->tags->get("$m[1]:$lang")))
-	    if(!($value=$this->tags->get("$m[1]")))
-	      $match_all=false;
-
-	  $def=substr($def, strlen($m[0]));
-	  $ret.=$value;
-	}
-	else {
-	  $ret.=substr($def, 0, 1);
-	  $def=substr($def, 1);
-	}
-      }
-
-      if($match_all)
-	return $ret;
-    }
-
-    return null;
+    return $this->tags->parse($name_def, $lang);
   }
 
   function list_description($list) {
