@@ -22,12 +22,15 @@ function list_entry(ob) {
   var add="";
   var li_style="";
   var title="";
+  var x;
+  tag=new tags({});
+  tag.readDOM(ob);
 
-  if(ob.getAttribute("description"))
-    add=" ("+ob.getAttribute("description")+")";
+  if(x=tag.get("display_type"))
+    add=" ("+x+")";
 
-  if(ob.getAttribute("icon")) {
-    var icon=ob.getAttribute("icon");
+  if(x=tag.get("icon")) {
+    var icon=x;
     var icon_data;
 
     if(icon_data=icon.match(/^\[\[Image:(.*)\]\]$/)) {
@@ -49,9 +52,10 @@ function list_entry(ob) {
   else
     title="";
 
-  var name=ob.getAttribute("name");
+  var name=tag.get("display_name");
+  var id=ob.getAttribute("id");
   if(!name)
     name=t("unnamed");
 
-  return "<li class='listitem' style=\""+li_style+"\" id='list_"+ob.getAttribute("id")+"' title='"+title+"'><element id='"+ob.getAttribute("id")+"'><a href='#"+ob.getAttribute("id")+"' onMouseOver='set_highlight([\""+ob.getAttribute("id")+"\"])' onMouseOut='unset_highlight()'>"+name+"</a>"+add+"</element></li>\n";
+  return "<li class='listitem' style=\""+li_style+"\" id='list_"+id+"' title='"+title+"'><element id='"+id+"' rule_id='"+ob.getAttribute("rule_id")+"'+><a href='#"+id+"' onMouseOver='set_highlight([\""+id+"\"])' onMouseOut='unset_highlight()'>"+name+"</a>"+add+"</element></li>\n";
 }

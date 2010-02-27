@@ -32,8 +32,7 @@ list_cache.search=function(viewbox, category) {
 
 function list_make_list(cat) {
   var ret="";
-  var places=cat.getElementsByTagName("place");
-  var cat_id=cat.getAttribute("id");
+  var places=cat.getElementsByTagName("match");
 
   if(places.length==0) {
     ret+=t("nothing found")+"\n";
