@@ -24,7 +24,6 @@ function process_rule($node, $cat) {
   global $columns;
   global $columns_all;
   global $req;
-  global $iret;
   global $importance_levels;
   global $postgis_tables;
 
