@@ -220,6 +220,10 @@ function category(id) {
     return cur_cache;
   }
 
+  this.pushed_all_list=function(request) {
+    call_hooks("category_loaded_matches", this, request)
+  }
+
   this.write_list=function(request, offset, limit) {
     var ret="";
     if(!offset)

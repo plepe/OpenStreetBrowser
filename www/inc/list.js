@@ -35,6 +35,8 @@ function list_more_call_back(response) {
     cat_ob.push_list(cat, request);
   }
 
+  cat_ob.pushed_all_list(request);
+
   var div=document.getElementById("content_"+cat_id);
   var more=document.getElementById("more_"+cat_id);
   if(more)
