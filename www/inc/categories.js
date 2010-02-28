@@ -59,7 +59,7 @@ function category_rule(category, id, _tags) {
 
     ret+="<div class='edit_list_rule' id='edit_list_rule_"+this.id+"'>\n";
 
-    ret+="<a id='edit_rule_"+id+"_name' href='javascript:edit_list_explode(\""+this.id+"\")'>";
+    ret+="<a id='edit_rule_"+this.id+"_name' href='javascript:edit_list_explode(\""+this.id+"\")'>";
     if(!this.tags.get("name"))
       ret+="New rule";
     else
@@ -195,10 +195,11 @@ function category(id) {
     ret+=this.tags.editor();
 
     ret+="<hr>\n";
-    ret+="<div id='el_list_"+this.id+"'></div>\n";
+    ret+="<div id='el_list_"+this.id+"'>\n";
     for(i=0; i<this.rules.length; i++) {
       ret+=this.rules[i].editor();
     }
+    ret+="</div>\n";
     ret+="<a href='javascript: edit_list_new_rule(\""+this.id+"\")'>Add rule</a>\n";
     ret+="<br/>\n";
 
@@ -249,6 +250,7 @@ function category(id) {
     ret.list=[];
     for(var i=0; i<this.rules.length; i++) {
       ret+="  <rule id=\""+this.rules[i].id+"\">\n";
+      this.rules[i].tags.editor_update();
       ret+=this.rules[i].tags.xml("    ");
       ret+="  </rule>\n";
     }
