@@ -52,13 +52,18 @@ function dyn_overlays_show_all(cat, request) {
   if(!dyn_overlay[cat.id])
     dyn_overlay[cat.id]={};
 
+  dyn_overlays_hide(cat);
+
   var cur_cache=
     list_cache.search_element(request.getAttribute("viewbox"), cat.id);
   
   for(var i=0; i<importance.length; i++) {
-    if((cur_cache.complete_importance[importance[i]])&&
-       (dyn_overlay[cat.id][importance[i]])) {
-      vector_layer.addFeatures(dyn_overlay[cat.id][importance[i]].vectors);
+    if(cur_cache.complete_importance[importance[i]]) {
+      if(dyn_overlay[cat.id][importance[i]])
+	vector_layer.addFeatures(dyn_overlay[cat.id][importance[i]].vectors);
+    }
+    else {
+      return;
     }
   }
 }
@@ -71,8 +76,12 @@ function dyn_overlays_show_all(cat, request) {
 //}
 
 function dyn_overlays_hide(cat) {
-  if(dyn_overlay[cat])
-    vector_layer.removeFeatures(dyn_overlay[cat].vectors);
+  if(!dyn_overlay[cat.id])
+    return;
+
+  for(var i=0; i<importance.length; i++)
+    if(dyn_overlay[cat.id][importance[i]])
+      vector_layer.removeFeatures(dyn_overlay[cat.id][importance[i]].vectors);
 }
 
 //register_hook("show_category", dyn_overlays_show);
