@@ -92,6 +92,11 @@ function list_load_more(cat, viewbox, new_count) {
     return null;
   }
 
+  if(list_reload_working||list_reload_necessary) {
+    return;
+  }
+  list_reload_working=1;
+
   for(var i=0; i<cur_cache.data.length; i++) {
     there.push(cur_cache.data[i].id);
   }
