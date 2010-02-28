@@ -172,16 +172,30 @@ function category(id) {
 
   categories[this.id]=this;
 
-  this.push_list=function(dom, request) {
+  this.count_list=function(viewbox) {
+    var cur_cache;
+    if(!(cur_cache=list_cache.search_element(viewbox, this.id)))
+      return 0;
+    return cur_cache.data.length;
+  }
+
+  this.is_complete=function(viewbox) {
+    var cur_cache;
+    if(!(cur_cache=list_cache.search_element(viewbox, this.id)))
+      return 0;
+    return cur_cache.complete;
+  }
+
+  this.push_list=function(dom, viewbox) {
     var ret="";
     var matches=dom.getElementsByTagName("match");
     var last_importance="";
 
     var cur_cache;
-    if(!(cur_cache=list_cache.search_element(request.getAttribute("viewbox"), this.id))) {
+    if(!(cur_cache=list_cache.search_element(viewbox, this.id))) {
       cur_cache={
-	viewbox: request.getAttribute("viewbox"),
-	category: request.getAttribute("category"),
+	viewbox: viewbox,
+	category: this.id,
 	data: [],
 	complete: false,
 	complete_importance: {},
@@ -218,14 +232,12 @@ function category(id) {
       }
     }
 
+    call_hooks("category_loaded_matches", this, viewbox)
+
     return cur_cache;
   }
 
-  this.pushed_all_list=function(request) {
-    call_hooks("category_loaded_matches", this, request)
-  }
-
-  this.write_list=function(request, offset, limit) {
+  this.write_list=function(viewbox, offset, limit) {
     var ret="";
     if(!offset)
       offset=0;
@@ -233,7 +245,7 @@ function category(id) {
       limit=10;
 
     var cur_cache;
-    if(!(cur_cache=list_cache.search_element(request.getAttribute("viewbox"), this.id))) {
+    if(!(cur_cache=list_cache.search_element(viewbox, this.id))) {
       return null;
     }
 
@@ -252,10 +264,6 @@ function category(id) {
     }
 
     call_hooks("category_show_finished", this);
-
-    if(!cur_cache.complete) {
-      ret+="<a id='more_"+this.id+"' href='javascript:list_more(\""+this.id+"\")'>"+t("more")+"</a>\n";
-    }
 
     return ret;
   }

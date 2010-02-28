@@ -10,13 +10,15 @@ function dyn_overlay_show(cat, match_ob) {
 
   if(!geo)
     return;
-  if(match_ob.dyn_overlay_vector)
+  if(match_ob.dyn_overlay_vector) {
+    dyn_overlay[category][importance].vectors.push(match_ob.dyn_overlay_vector);
     return;
+  }
 
   var p=new postgis(geo).geo();
 
   if(!dyn_overlay[category])
-    dyn_overlay[category]={};
+    dyn_overlay[category]={ current_features: [] };
 
   if(!dyn_overlay[category][importance])
     dyn_overlay[category][importance]={ vectors: [], ids: {} };
@@ -48,24 +50,44 @@ function dyn_overlay_show(cat, match_ob) {
   dyn_overlay[category][importance].ids[id]=true;
 }
 
-function dyn_overlays_show_all(cat, request) {
+function dyn_overlays_reset(cat) {
+  if(!dyn_overlay[cat.id])
+    return;
+  for(var i=0; i<importance.length; i++) {
+    if(dyn_overlay[cat.id][importance[i]])
+      dyn_overlay[cat.id][importance[i]].vectors=[];
+  }
+}
+
+function dyn_overlays_show_all(cat, viewbox) {
+  var count=0;
   if(!dyn_overlay[cat.id])
     dyn_overlay[cat.id]={};
 
   dyn_overlays_hide(cat);
 
   var cur_cache=
-    list_cache.search_element(request.getAttribute("viewbox"), cat.id);
+    list_cache.search_element(viewbox, cat.id);
   
   for(var i=0; i<importance.length; i++) {
-    if(cur_cache.complete_importance[importance[i]]) {
-      if(dyn_overlay[cat.id][importance[i]])
+    if(dyn_overlay[cat.id][importance[i]]) {
+      count+=dyn_overlay[cat.id][importance[i]].vectors.length;
+      if(cur_cache.complete_importance[importance[i]]) {
 	vector_layer.addFeatures(dyn_overlay[cat.id][importance[i]].vectors);
-    }
-    else {
-      return;
+	dyn_overlay[cat.id].current_features=
+	  dyn_overlay[cat.id].current_features.concat(
+	    dyn_overlay[cat.id][importance[i]].vectors);
+      }
     }
   }
+
+  if(cur_cache.complete)
+    return;
+
+  var more=250;
+  more-=count;
+  if(more>0)
+    list_load_more(cat, viewbox, more);
 }
 
 //function dyn_overlays_showall(cat) {
@@ -79,12 +101,13 @@ function dyn_overlays_hide(cat) {
   if(!dyn_overlay[cat.id])
     return;
 
-  for(var i=0; i<importance.length; i++)
-    if(dyn_overlay[cat.id][importance[i]])
-      vector_layer.removeFeatures(dyn_overlay[cat.id][importance[i]].vectors);
+  vector_layer.removeFeatures(dyn_overlay[cat.id].current_features);
+  dyn_overlay[cat.id].current_features=[];
+
 }
 
 //register_hook("show_category", dyn_overlays_show);
 register_hook("hide_category", dyn_overlays_hide);
 register_hook("category_load_match", dyn_overlay_show);
 register_hook("category_loaded_matches", dyn_overlays_show_all);
+register_hook("category_show_reset", dyn_overlays_reset);

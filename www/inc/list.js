@@ -3,6 +3,7 @@ var list_open={};
 var list_reload_necessary=1;
 var list_reload_working=0;
 var category_leaf={};
+var category_more={};
 
 function list_more_call_back(response) {
   var data=response.responseXML;
@@ -22,31 +23,49 @@ function list_more_call_back(response) {
     return;
   }
 
+  viewbox=request.getAttribute("viewbox");
+
   var cats=data.getElementsByTagName("category");
   for(var cati=0; cati<cats.length; cati++) {
-    var cat=cats[cati];
-    var cat_id=cat.getAttribute("id");
+    var cat_dom=cats[cati];
+    var cat_id=cat_dom.getAttribute("id");
     var cat_ob=categories[cat_id];
     if(!category_leaf[cat_id])
       continue;
     if(!cat_ob)
       continue;
 
-    cat_ob.push_list(cat, request);
+    cat_ob.push_list(cat_dom, viewbox);
+
+    show_more(cat_ob, viewbox);
   }
 
-  cat_ob.pushed_all_list(request);
+  var osm=data.getElementsByTagName("osm");
+  load_objects_from_xml(osm);
+}
+
+function show_more(cat, viewbox, count) {
+  var cat_id=cat.id;
 
   var div=document.getElementById("content_"+cat_id);
-  var more=document.getElementById("more_"+cat_id);
-  if(more)
-    more.parentNode.removeChild(more);
   if(div) {
     var ul=div.getElementsByTagName("ul");
     ul=ul[0];
 
-    var text=cat_ob.write_list(request);
-    ul.innerHTML+=text;
+    var count=category_more[cat_id];
+    if(!count)
+      count=10;
+    category_more[cat_id]=count;
+
+    var text=cat.write_list(viewbox, 0, count);
+    ul.innerHTML=text;
+  }
+
+  if((cat.count_list(viewbox)>count)||(cat.is_complete())) {
+    div.lastChild.innerHTML="<a href='javascript:list_more(\""+cat.id+"\", 10)'>"+t("more")+"</a>\n";
+  }
+  else {
+    div.lastChild.innerHTML="";
   }
 //  map_div.className="map";
 //  var text_node=data.getElementsByTagName("text");
@@ -63,28 +82,53 @@ function list_more_call_back(response) {
     list_reload();
   }
 
-  var osm=data.getElementsByTagName("osm");
-  load_objects_from_xml(osm);
-
   return;
 }
 
-function list_more(cat) {
+function list_load_more(cat, viewbox, new_count) {
+  var there=[];
+  var cur_cache;
+  if(!(cur_cache=list_cache.search_element(viewbox, cat.id))) {
+    return null;
+  }
+
+  for(var i=0; i<cur_cache.data.length; i++) {
+    there.push(cur_cache.data[i].id);
+  }
+
+  ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "exclude": there.join(","), "category": cat.id, "lang": lang, "count": new_count }, list_more_call_back);
+}
+
+function list_more(cat_id, new_count) {
+  var cat=categories[cat_id];
+  if(!new_count)
+    new_count=10;
   var x=map.calculateBounds();
+  var viewbox=x.left +","+ x.top +","+ x.right +","+ x.bottom;
+
+  var cur_cache;
+  if(!(cur_cache=list_cache.search_element(viewbox, cat.id))) {
+    return;
+  }
+
+  var now_count=category_more[cat.id];
+  if(!now_count)
+    now_count=10;
+
+  var loaded=cat.count_list(viewbox);
+  shall_count=now_count+new_count;
+  category_more[cat.id]=shall_count;
+
+  if((loaded>=shall_count)||(cur_cache.complete)) {
+    show_more(cat, viewbox);
+    return;
+  }
 
   var div=document.getElementById("more_"+cat);
   if(div)
     div.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+t("loading");
 
-  var there=[];
-  div=document.getElementById("content_"+cat);
-  var obs=div.getElementsByTagName("element");
-  for(var i=0; i<obs.length; i++) {
-    var ob=obs[i];
-    there.push(ob.getAttribute("id"));
-  }
-
-  ajax_direct("list.php", { "viewbox": x.left +","+ x.top +","+ x.right +","+ x.bottom, "zoom": map.zoom, "exclude": there.join(","), "category": cat, "lang": lang }, list_more_call_back);
+  list_load_more(cat, shall_count-count);
 }
 
 function list_reload(info_lists) {
@@ -101,6 +145,7 @@ function list_reload(info_lists) {
       for(var i=0;i<form.elements.length;i++) {
 	if(category_leaf[form.elements[i].name]&&form.elements[i].checked)
 	  info_lists.push(form.elements[i].name);
+	category_more[info_lists[i]]=10;
       }
     }
     else
@@ -129,15 +174,16 @@ function list_reload(info_lists) {
     if(category_leaf[info_lists[i]]) {
       var div=document.getElementById("content_"+info_lists[i]);
       if(div)
-	div.innerHTML="<ul><span id='more_"+info_lists[i]+"'><img class='loading' src='img/ajax_loader.gif'> "+t("loading")+"</span></ul>";
+	div.innerHTML="<ul></ul><div id='more_"+info_lists[i]+"'><img class='loading' src='img/ajax_loader.gif'> "+t("loading")+"</div>";
     }
+
+    call_hooks("category_show_reset", categories[info_lists[i]]);
   }
 
   if(info_lists.length==0) {
     list_reload_working=0;
     return;
   }
-
 
   ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_more_call_back);
 }
