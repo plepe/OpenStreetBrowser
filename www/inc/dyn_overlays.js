@@ -61,10 +61,9 @@ function dyn_overlays_reset(cat) {
 
 function dyn_overlays_show_all(cat, viewbox) {
   var count=0;
+  var new_vec=[];
   if(!dyn_overlay[cat.id])
     dyn_overlay[cat.id]={};
-
-  dyn_overlays_hide(cat);
 
   var cur_cache=
     list_cache.search_element(viewbox, cat.id);
@@ -73,21 +72,23 @@ function dyn_overlays_show_all(cat, viewbox) {
     if(dyn_overlay[cat.id][importance[i]]) {
       count+=dyn_overlay[cat.id][importance[i]].vectors.length;
       if(cur_cache.complete_importance[importance[i]]) {
-	vector_layer.addFeatures(dyn_overlay[cat.id][importance[i]].vectors);
-	dyn_overlay[cat.id].current_features=
-	  dyn_overlay[cat.id].current_features.concat(
-	    dyn_overlay[cat.id][importance[i]].vectors);
+	new_vec=new_vec.concat(dyn_overlay[cat.id][importance[i]].vectors);
       }
     }
   }
 
-  if(cur_cache.complete)
-    return;
-
   var more=Math.ceil((map.size.h*map.size.w)/(32*32));
   more-=count;
-  if(more>0)
+  if(more>100)
+    more=100;
+  if((more>0)&&(!cur_cache.complete))
     list_load_more(cat, viewbox, more);
+  else {
+    dyn_overlays_hide(cat);
+    dyn_overlay[cat.id].current_features=new_vec;
+  }
+
+  vector_layer.addFeatures(new_vec);
 }
 
 //function dyn_overlays_showall(cat) {
