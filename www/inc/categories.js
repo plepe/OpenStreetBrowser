@@ -206,6 +206,7 @@ function category(id) {
 	      break;
 	    cur_cache.complete_importance[importance[i]]=true;
 	  }
+	  last_importance=mimp;
 	}
       }
     }
