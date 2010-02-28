@@ -84,7 +84,7 @@ function dyn_overlays_show_all(cat, viewbox) {
   if(cur_cache.complete)
     return;
 
-  var more=250;
+  var more=Math.ceil((map.size.h*map.size.w)/(32*32));
   more-=count;
   if(more>0)
     list_load_more(cat, viewbox, more);
