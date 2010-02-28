@@ -1,4 +1,30 @@
+var list_cache=[];
 var categories={};
+
+list_cache.clean_up=function() {
+  while(this.length>10) {
+    this.shift();
+  }
+}
+
+list_cache.search_element=function(viewbox, category) {
+  for(var i=0; i<this.length; i++) {
+    if((this[i].viewbox==viewbox)&&
+       (this[i].category==category))
+      return this[i];
+  }
+
+  return null;
+}
+
+list_cache.search=function(viewbox, category) {
+  var ret;
+
+  if(ret=list_cache.search_element(viewbox, category))
+    return ret.text;
+
+  return null;
+}
 
 function category_rule_match(dom, cat, rule) {
   this.tags=new tags();
@@ -145,31 +171,69 @@ function category(id) {
 
   categories[this.id]=this;
 
-  this.make_list=function(dom) {
+  this.push_list=function(dom, request) {
     var ret="";
     var matches=dom.getElementsByTagName("match");
 
-    if(matches.length==0) {
-      ret+=t("nothing found")+"\n";
+    var cur_cache;
+    if(!(cur_cache=list_cache.search_element(request.getAttribute("viewbox"), this.id))) {
+      cur_cache={
+	viewbox: request.getAttribute("viewbox"),
+	category: request.getAttribute("category"),
+	data: [],
+	complete: false
+      };
+      list_cache.push(cur_cache);
+      list_cache.clean_up();
     }
-
-    var match_obs=[];
 
     for(var mi=0; mi<matches.length; mi++) {
       var match=matches[mi];
       var rule=this.get_rule(match.getAttribute("rule_id"));
       if(rule) {
 	var match_ob=rule.load_entry(match);
-	ret+=match_ob.list_entry();
 
-	call_hooks("category_show_match", this, match_ob);
-	match_obs.push(match_ob);
+	cur_cache.data.push(match_ob);
+	call_hooks("category_load_match", this, match_ob)
       }
+    }
+
+    if(dom.getAttribute("complete")=="true") {
+      cur_cache.complete=true;
+    }
+
+    return cur_cache;
+  }
+
+  this.write_list=function(request, offset, limit) {
+    var ret="";
+    if(!offset)
+      offset=0;
+    if(!limit)
+      limit=10;
+
+    var cur_cache;
+    if(!(cur_cache=list_cache.search_element(request.getAttribute("viewbox"), this.id))) {
+      return null;
+    }
+
+    if(cur_cache.data.length==0) {
+      ret+=t("nothing found")+"\n";
+    }
+
+    var max=offset+limit;
+    if(max>cur_cache.data.length)
+      max=cur_cache.data.length;
+
+    for(var i=offset; i<max; i++) {
+      var match_ob=cur_cache.data[i];
+      call_hooks("category_show_match", this, match_ob);
+      ret+=match_ob.list_entry();
     }
 
     call_hooks("category_show_finished", this);
 
-    if(dom.getAttribute("complete")!="true") {
+    if(!cur_cache.complete) {
       ret+="<a id='more_"+this.id+"' href='javascript:list_more(\""+this.id+"\")'>"+t("more")+"</a>\n";
     }
 

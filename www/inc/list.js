@@ -1,34 +1,8 @@
-var list_cache=[];
 // entry in list_cache: [ viewbox, category, data ]
 var list_open={};
 var list_reload_necessary=1;
 var list_reload_working=0;
 var category_leaf={};
-
-list_cache.clean_up=function() {
-  while(this.length>10) {
-    this.shift();
-  }
-}
-
-list_cache.search_element=function(viewbox, category) {
-  for(var i=0; i<this.length; i++) {
-    if((this[i].viewbox==viewbox)&&
-       (this[i].category==category))
-      return this[i];
-  }
-
-  return null;
-}
-
-list_cache.search=function(viewbox, category) {
-  var ret;
-
-  if(ret=list_cache.search_element(viewbox, category))
-    return ret.text;
-
-  return null;
-}
 
 function list_more_call_back(response) {
   var data=response.responseXML;
@@ -57,30 +31,20 @@ function list_more_call_back(response) {
       continue;
     if(!cat_ob)
       continue;
-    var div=document.getElementById("content_"+cat_id);
-    var more=document.getElementById("more_"+cat_id);
-    if(more)
-      more.parentNode.removeChild(more);
-    if(div) {
-      var ul=div.getElementsByTagName("ul");
-      ul=ul[0];
 
-      var text=cat_ob.make_list(cat);
-      ul.innerHTML+=text;
+    cat_ob.push_list(cat, request);
+  }
 
-      var ob;
-      if(ob=list_cache.search_element(request.getAttribute("viewbox"), cat_id)) {
-	ob.text=div.innerHTML;
-      }
-      else {
-	list_cache.push({
-	  viewbox: request.getAttribute("viewbox"),
-	  category: request.getAttribute("category"),
-	  text: div.innerHTML
-	});
-	list_cache.clean_up();
-      }
-    }
+  var div=document.getElementById("content_"+cat_id);
+  var more=document.getElementById("more_"+cat_id);
+  if(more)
+    more.parentNode.removeChild(more);
+  if(div) {
+    var ul=div.getElementsByTagName("ul");
+    ul=ul[0];
+
+    var text=cat_ob.write_list(request);
+    ul.innerHTML+=text;
   }
 //  map_div.className="map";
 //  var text_node=data.getElementsByTagName("text");
