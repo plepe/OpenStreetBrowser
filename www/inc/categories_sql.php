@@ -306,7 +306,7 @@ function category_build_where($where_col, $where_vals) {
     }
 
     if(sizeof($in_vals))
-      $ret[]="to_tsvector($where_col) @@ to_tsquery(".implode("||'|'||", $in_vals).")";
+      $ret[]="to_tsvector('simple', $where_col) @@ to_tsquery('simple', ".implode("||'|'||", $in_vals).")";
   }
 
   return $ret;
