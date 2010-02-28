@@ -1,5 +1,6 @@
 var list_cache=[];
 var categories={};
+var importance=[ "international", "national", "regional", "urban", "suburban", "local" ];
 
 list_cache.clean_up=function() {
   while(this.length>10) {
@@ -174,6 +175,7 @@ function category(id) {
   this.push_list=function(dom, request) {
     var ret="";
     var matches=dom.getElementsByTagName("match");
+    var last_importance="";
 
     var cur_cache;
     if(!(cur_cache=list_cache.search_element(request.getAttribute("viewbox"), this.id))) {
@@ -181,7 +183,8 @@ function category(id) {
 	viewbox: request.getAttribute("viewbox"),
 	category: request.getAttribute("category"),
 	data: [],
-	complete: false
+	complete: false,
+	complete_importance: {},
       };
       list_cache.push(cur_cache);
       list_cache.clean_up();
@@ -195,11 +198,23 @@ function category(id) {
 
 	cur_cache.data.push(match_ob);
 	call_hooks("category_load_match", this, match_ob)
+
+	var mimp=match_ob.tags.get("importance");
+	if(mimp!=last_importance) {
+	  for(var i=0; i<importance.length; i++) {
+	    if(mimp==importance[i])
+	      break;
+	    cur_cache.complete_importance[importance[i]]=true;
+	  }
+	}
       }
     }
 
     if(dom.getAttribute("complete")=="true") {
       cur_cache.complete=true;
+      for(var i=0; i<importance.length; i++) {
+	cur_cache.complete_importance[importance[i]]=true;
+      }
     }
 
     return cur_cache;
