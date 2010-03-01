@@ -7,6 +7,7 @@ function options_set(key, value) {
   expiry.setTime(expiry.getTime()+365*86400000);
 
   document.cookie="option:"+key+"="+value+"; expires="+expiry.toGMTString()+"; path=/";
+  options_values[key]=value;
 }
 
 function options_get(key) {
@@ -32,6 +33,9 @@ function save_options() {
   var form=document.getElementById("options_form");
 
   options_set("autozoom", options_radio_get("autozoom"));
+
+  options_win.close();
+  delete(options_win);
 }
 
 function close_options() {
@@ -39,12 +43,13 @@ function close_options() {
   delete(options_win);
 }
 
-function options_radio(key, current_value, values) {
+function options_radio(key, values) {
   var ret="";
 
   ret+="<h4>"+t("options:"+key)+"</h4>\n";
   ret+="<p>\n";
 
+  var current_value=options_get(key);
   if(!current_value)
     current_value=values[0];
 
@@ -78,7 +83,7 @@ function show_options() {
 
   ret ="<form action='javascript:save_options()' id='options_form'>\n";
 
-  ret+=options_radio("autozoom", "move", [ "pan", "move", "stay" ]);
+  ret+=options_radio("autozoom", [ "pan", "move", "stay" ]);
 
   ret+="<p><input type='submit' value='"+t("save")+"'>\n";
   ret+="<input type='button' onClick='javascript:close_options()' value='"+t("cancel")+"></p>\n";
