@@ -281,7 +281,9 @@ function main() {
 
   $ret.="<request";
   foreach($_REQUEST as $rk=>$rv) {
-    $ret.=" $rk=\"".htmlentities(stripslashes($rv))."\"";
+    if(in_array($rk, array("viewbox", "zoom", "category", "lang"))) {
+      $ret.=" $rk=\"".htmlentities(stripslashes($rv))."\"";
+    }
   }
   $ret.="/>\n";
 
