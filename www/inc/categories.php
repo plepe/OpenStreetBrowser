@@ -50,11 +50,11 @@ function process_rule($node, $cat) {
       $ret[$table]=$b;
 
       $ret[$table]['id']=array($id);
-      if($kind=$tags->get("kind")) {
-	$kind=explode(";", $kind);
-	$kind_ret=parse_kind($kind, $table);
-	$ret[$table]=array_merge_recursive($ret[$table], $kind_ret);
-      }
+//      if($kind=$tags->get("kind")) {
+//	$kind=explode(";", $kind);
+//	$kind_ret=parse_kind($kind, $table);
+//	$ret[$table]=array_merge_recursive($ret[$table], $kind_ret);
+//      }
     }
   }
 
