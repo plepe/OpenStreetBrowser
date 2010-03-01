@@ -92,7 +92,7 @@ print list_template();
 </div>
 <div id='lang_select'>
 <a href='javascript:toggle_mapkey()'>Map Key</a> |
-<!-- <a href='javascript:show_options()'>Options</a> | -->
+<a href='javascript:show_options()'>Options</a> |
 <a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'>About</a> |
 <a href='javascript:time_count_do_beg()'>Donate</a>
 </div>
