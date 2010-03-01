@@ -3,6 +3,8 @@ lang_str["nothing found"]         =[ "nichts gefunden" ];
 lang_str["loading"]               =[ "lade" ];
 lang_str["unnamed"]               =[ "(unbenannt)" ];
 lang_str["list_info"]             =[ "Wähle eine Kategorie, um den Karteninhalt zu durchstöbern oder klicke auf ein Objekt auf der Karte für Details" ];
+lang_str["save"]		  =[ "Speichern" ];
+lang_str["cancel"]		  =[ "Abbrechen" ];
 
 lang_str["tag:amenity=restaurant"]=[ "Restaurant", "Restaurants" ];
 lang_str["tag:amenity=cafe"]      =[ "Kaffehaus", "Kaffeehäuser" ];
@@ -68,3 +70,8 @@ lang_str["cat:agri_ind/railway"]=[ "Eisenbahn" ];
 lang_str["cat:agri_ind/resources"]=[ "Ressourcengewinnung" ];
 lang_str["cat:agri_ind/landfill"]=[ "Entsorgung" ];
 lang_str["cat:agri_ind/military"]=[ "Militär" ];
+
+lang_str["options:autozoom"]=[ "Autozoom Verhalten" ];
+lang_str["options:autozoom:pan"]=[ "Auf das aktuelle Objekt schwenken (schöner)" ];
+lang_str["options:autozoom:move"]=[ "Zum aktuellen Objekt springen (schneller)" ];
+lang_str["options:autozoom:stay"]=[ "Den Kartenausschnitt nie verschieben" ];
