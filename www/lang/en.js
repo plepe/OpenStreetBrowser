@@ -72,10 +72,12 @@ lang_str["cat:agri_ind/landfill"]=[ "Disposal" ];
 lang_str["cat:agri_ind/military"]=[ "Military" ];
 
 lang_str["options:autozoom"]=[ "Autozoom behaviour" ];
+lang_str["help:autozoom"]=[ "When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes." ];
 lang_str["options:autozoom:pan"]=[ "Pan to current object (nicer)" ];
 lang_str["options:autozoom:move"]=[ "Move to current object (faster)" ];
 lang_str["options:autozoom:stay"]=[ "Never change viewport automatically" ];
 lang_str["options:language_support"]=[ "Language Support" ];
+lang_str["help:language_support"]=[ "You can choose your prefered languages with this options. The first option changes the language of the user interface. The second option changes the data language. Date of many geographic objects has been translated to several languages. If no translation is available or \"Local language\" was chosen, the main language of the object is displayed." ];
 lang_str["options:ui_lang"]=[ "Interface language" ];
 lang_str["options:data_lang"]=[ "Data language" ];
 lang_str["lang:"]=[ "Local language" ];
