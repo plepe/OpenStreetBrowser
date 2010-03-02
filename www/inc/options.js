@@ -33,6 +33,7 @@ function save_options() {
   var form=document.getElementById("options_form");
 
   options_set("autozoom", options_radio_get("autozoom"));
+  options_set("ui_lang", options_select_get("ui_lang"));
 
   options_win.close();
   delete(options_win);
@@ -79,7 +80,7 @@ function options_select(key, values) {
 
   ret+="  <select name='"+key+"'>\n";
   for(var i=0; i<values_keys.length; i++) {
-    ret+="  <option value='"+values[i]+"'";
+    ret+="  <option value='"+values_keys[i]+"'";
     if(current_value==values_keys[i])
       ret+=" selected='selected'";
     ret+=">"+t(values[values_keys[i]])+"</option>\n";
@@ -99,6 +100,12 @@ function options_radio_get(key) {
   }
 
   return null;
+}
+
+function options_select_get(key) {
+  var form=document.getElementById("options_form");
+
+  return form.elements[key].value;
 }
 
 function show_options() {
