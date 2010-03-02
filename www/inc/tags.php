@@ -22,10 +22,12 @@ class tags {
     return $this->data[$k];
   }
 
-  function get_lang($k) {
+  function get_lang($k, $l=null) {
     global $lang;
+    if($l===null)
+      $l=$lang;
 
-    if($ret=($this->data["$k:$lang"]))
+    if($ret=($this->data["$k:$l"]))
       return $ret;
 
     return $this->data[$k];
