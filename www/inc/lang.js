@@ -26,3 +26,14 @@ function t(str, count) {
 
   return str;
 }
+
+function lang_change(key, value) {
+  if(key=="ui_lang") {
+    if(value!=lang) {
+      var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+      location.href="http://www.openstreetbrowser.org/skunk/?zoom="+map.zoom+"&lat="+center.lat+"&lon="+center.lon;
+    }
+  }
+}
+
+register_hook("options_change", lang_change);

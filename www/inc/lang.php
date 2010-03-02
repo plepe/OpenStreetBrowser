@@ -71,7 +71,7 @@ if($_REQUEST[param][lang])
 require_once("lang/en.php");
 if(!$design_hidden) {
   print "<script type='text/javascript' src='inc/lang.js'></script>\n";
-  print "<script type='text/javascript' src='lang/en.js'></script>\n";
+  print "<script id='language_js' type='text/javascript' src='lang/en.js'></script>\n";
 }
 
 if($lang) {
