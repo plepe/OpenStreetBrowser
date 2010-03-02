@@ -653,3 +653,10 @@ $lang_str["tag_amenity/restaurant"]=array("Restaurant", "Restaurants");
 $lang_str["tag_amenity/pub"]=array("Pub", "Pubs");
 
 $lang_str["tag/highway"]=array("Highway", "Highways");
+
+$lang_str["main:map_key"]="Map Key";
+$lang_str["main:options"]="Options";
+$lang_str["main:about"]="About";
+$lang_str["main:donate"]="Donate";
+$lang_str["main:licence"]="Map Data: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributors | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">contributors</a>";
+$lang_str["main:permalink"]="Permalink";
