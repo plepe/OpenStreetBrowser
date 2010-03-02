@@ -31,8 +31,16 @@ function t(str, count) {
 function lang_change(key, value) {
   if(key=="ui_lang") {
     if(value!=ui_lang) {
-      location.href=permalink();
-      location.reload();
+      var old_href=location.search+location.hash;
+      var new_href=permalink();
+      location.href=new_href;
+
+      var old_path=old_href.substr(0, old_href.indexOf("#")||old_href.length);
+      var new_path=new_href.substr(0, new_href.indexOf("#")||new_href.length);
+      // Same URL ... reload
+      if(old_path==new_path) {
+	location.reload();
+      }
     }
   }
   if(key=="data_lang") {

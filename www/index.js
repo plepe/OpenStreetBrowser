@@ -189,7 +189,7 @@ function view_changed(event) {
 
 function permalink() {
   var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
-  return "http://www.openstreetbrowser.org/skunk/?zoom="+map.zoom+"&lat="+center.lat+"&lon="+center.lon+location.hash;
+  return "?zoom="+map.zoom+"&lat="+center.lat+"&lon="+center.lon+location.hash;
 }
 
 function init() {
