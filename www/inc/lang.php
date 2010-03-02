@@ -64,9 +64,9 @@ function show_lang_select() {
   print "</div>\n";
 }
 
-$lang=$_REQUEST["option:ui_lang"];
+$lang=$_REQUEST[lang];
 if(!$lang)
-  $lang=$_REQUEST[lang];
+  $lang=$_REQUEST["option:ui_lang"];
 if($_REQUEST[param][lang])
   $lang=$_REQUEST[param][lang];
 if(!$lang)

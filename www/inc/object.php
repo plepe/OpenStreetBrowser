@@ -51,10 +51,10 @@ class object {
     }
   }
 
-  function long_name() {
-    $ref=$this->tags->get("ref");
-    $name=$this->tags->get("name");
-    $operator=$this->tags->get("operator");
+  function long_name($lang="") {
+    $ref=$this->tags->get_lang("ref", $lang);
+    $name=$this->tags->get_lang("name", $lang);
+    $operator=$this->tags->get_lang("operator", $lang);
 
     if($ref&&($ref==$name))
       $titel="$ref";
