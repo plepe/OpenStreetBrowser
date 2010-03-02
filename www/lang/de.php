@@ -1,7 +1,36 @@
 <?
-$lang_str["head_general_info"]="Allgemeine Informationen";
+$lang_str["general_info"]="Allgemeine Informationen";
 $lang_str["search_field"]="Suchen ...";
 $lang_str["noname"]="(kein Name)";
+$lang_str["info_back"]="zur Übersicht";
+$lang_str["info_zoom"]="zoomen";
+$lang_str["result_no"]="nichts gefunden";
+$lang_str["search_process"]="suche ...";
+
+$lang_str["head_general_info"]="Allgemeine Informationen";
+$lang_str["head_stops"]="Haltestellen";
+$lang_str["head_routes"]="Routen";
+$lang_str["head_members"]="Mitglieder";
+$lang_str["head_address"]="Adresse";
+$lang_str["head_internal"]="Interne OSM-Daten";
+$lang_str["head_wikipedia"]="Wikipedia";
+$lang_str["head_housenumbers"]="Hausnummern";
+$lang_str["head_roads"]="Straßen";
+$lang_str["head_rails"]="Eisenbahnstrecken";
+$lang_str["head_places"]="Orte";
+$lang_str["head_borders"]="Grenzen";
+$lang_str["head_landuse"]="Landnutzung";
+$lang_str["head_buildings"]="Gebäude";
+$lang_str["head_pt"]="Öffentlicher Verkehr";
+$lang_str["head_services"]="Dienstleistungen";
+$lang_str["head_culture"]="Kultureinrichtungen";
+$lang_str["head_graves"]="Wichtige Gräber";
+$lang_str["head_routing"]="Routenplanung";
+$lang_str["head_search"]="Suche";
+$lang_str["head_actions"]="Aktionen";
+
+$lang_str["action_browse"]="In OSM ansehen";
+$lang_str["action_edit"]="Auf OSM editieren";
 
 $lang_str["place_continent"]="Kontinent";
 $lang_str["place_country"]="Staat";
