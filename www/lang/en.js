@@ -75,3 +75,5 @@ lang_str["options:autozoom"]=[ "Autozoom behaviour" ];
 lang_str["options:autozoom:pan"]=[ "Pan to current object (nicer)" ];
 lang_str["options:autozoom:move"]=[ "Move to current object (faster)" ];
 lang_str["options:autozoom:stay"]=[ "Never change viewport automatically" ];
+lang_str["options:language_support"]=[ "Language Support" ];
+lang_str["options:ui_lang"]=[ "Interface language" ];

@@ -75,3 +75,5 @@ lang_str["options:autozoom"]=[ "Autozoom Verhalten" ];
 lang_str["options:autozoom:pan"]=[ "Auf das aktuelle Objekt schwenken (schöner)" ];
 lang_str["options:autozoom:move"]=[ "Zum aktuellen Objekt springen (schneller)" ];
 lang_str["options:autozoom:stay"]=[ "Den Kartenausschnitt nie verschieben" ];
+lang_str["options:language_support"]=[ "Sprachunterstützung" ];
+lang_str["options:ui_lang"]=[ "Anwendungssprache" ];
