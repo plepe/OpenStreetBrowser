@@ -136,7 +136,7 @@ function list_more(cat) {
     there.push(ob.getAttribute("id"));
   }
 
-  ajax_direct("list.php", { "viewbox": x.left +","+ x.top +","+ x.right +","+ x.bottom, "zoom": map.zoom, "exclude": there.join(","), "category": cat, "lang": lang }, list_more_call_back);
+  ajax_direct("list.php", { "viewbox": x.left +","+ x.top +","+ x.right +","+ x.bottom, "zoom": map.zoom, "exclude": there.join(","), "category": cat }, list_more_call_back);
 }
 
 function list_reload(info_lists) {
@@ -191,7 +191,7 @@ function list_reload(info_lists) {
   }
 
 
-  ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_more_call_back);
+  ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "category": info_lists.join(",") }, list_more_call_back);
 }
 
 function get_sub_lists(cat) {

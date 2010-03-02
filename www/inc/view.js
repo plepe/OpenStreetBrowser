@@ -90,7 +90,7 @@ function view_click_delay(lon, lat) {
 
   var x=map.calculateBounds();
 
-  ajax("find_objects", { "left": x.left, "top": x.top, "right": x.right, "bottom": x.bottom, "zoom": map.zoom, "lon": lon, "lat": lat, "lang": lang, "overlays": list_overlays() }, view_call_back);
+  ajax("find_objects", { "left": x.left, "top": x.top, "right": x.right, "bottom": x.bottom, "zoom": map.zoom, "lon": lon, "lat": lat, "overlays": list_overlays() }, view_call_back);
 }
 
 

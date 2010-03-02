@@ -64,24 +64,34 @@ function show_lang_select() {
   print "</div>\n";
 }
 
-$lang=$_REQUEST[lang];
-if(!$lang)
-  $lang=$_REQUEST["option:ui_lang"];
-if($_REQUEST[param][lang])
-  $lang=$_REQUEST[param][lang];
-if(!$lang)
-  $lang="en";
+$ui_lang=$_REQUEST[ui_lang];
+if(!$ui_lang)
+  $lang=$_REQUEST[lang];
+if(!$ui_lang)
+  $ui_lang=$_REQUEST["option:ui_lang"];
+if($_REQUEST[param][ui_lang])
+  $ui_lang=$_REQUEST[param][ui_lang];
+if(!$ui_lang)
+  $ui_lang="en";
 
-require_once("lang/$lang.php");
+$data_lang=$_REQUEST[data_lang];
+if(!isset($data_lang))
+  $data_lang=$_REQUEST["option:data_lang"];
+if($_REQUEST[param][data_lang])
+  $data_lang=$_REQUEST[param][data_lang];
+if(!isset($data_lang))
+  $data_lang="";
+
+require_once("lang/$ui_lang.php");
 if(!$design_hidden) {
   print "<script type='text/javascript' src='inc/lang.js'></script>\n";
   print "<script id='language_js' type='text/javascript' src='lang/en.js'></script>\n";
 }
 
-if($lang) {
-  require_once("lang/$lang.php");
+if($ui_lang) {
+  require_once("lang/$ui_lang.php");
   if(!$design_hidden)
-    print "<script type='text/javascript' src='lang/$lang.js'></script>\n";
+    print "<script type='text/javascript' src='lang/$ui_lang.js'></script>\n";
 }
 
-html_export_var(array("lang"=>$lang));
+html_export_var(array("ui_lang"=>$ui_lang));

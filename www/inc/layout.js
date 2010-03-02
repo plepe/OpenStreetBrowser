@@ -22,8 +22,14 @@ function list_entry(ob) {
   var add="";
   var li_style="";
   var title="";
+  var trans="";
+  
+  if(data_lang!="")
+    trans="_trans";
 
-  if(ob.getAttribute("description"))
+  if(ob.getAttribute("description"+trans))
+    add=" ("+ob.getAttribute("description"+trans)+")";
+  else if(ob.getAttribute("description"))
     add=" ("+ob.getAttribute("description")+")";
 
   if(ob.getAttribute("icon")) {
@@ -49,7 +55,7 @@ function list_entry(ob) {
   else
     title="";
 
-  var name=ob.getAttribute("name");
+  var name=ob.getAttribute("name"+trans);
   if(!name)
     name=t("unnamed");
 

@@ -23,9 +23,9 @@ class tags {
   }
 
   function get_lang($k, $l=null) {
-    global $lang;
+    global $data_lang;
     if($l===null)
-      $l=$lang;
+      $l=$data_lang;
 
     if($ret=($this->data["$k:$l"]))
       return $ret;
