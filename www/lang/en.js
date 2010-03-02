@@ -77,3 +77,5 @@ lang_str["options:autozoom:move"]=[ "Move to current object (faster)" ];
 lang_str["options:autozoom:stay"]=[ "Never change viewport automatically" ];
 lang_str["options:language_support"]=[ "Language Support" ];
 lang_str["options:ui_lang"]=[ "Interface language" ];
+lang_str["options:data_lang"]=[ "Data language" ];
+lang_str["lang:"]=[ "Local language" ];

@@ -36,6 +36,7 @@ function save_options() {
 
   options_set("autozoom", options_radio_get("autozoom"));
   options_set("ui_lang", options_select_get("ui_lang"));
+  options_set("data_lang", options_select_get("data_lang"));
 
   options_win.close();
   delete(options_win);
@@ -78,7 +79,7 @@ function options_select(key, values) {
   if(!current_value)
     current_value=values[0];
 
-  ret+=t("options:ui_lang")+": ";
+  ret+=t("options:"+key)+": ";
   ret+="  <select name='"+key+"'>\n";
   for(var i=0; i<values_keys.length; i++) {
     ret+="  <option value='"+values_keys[i]+"'";
@@ -125,6 +126,12 @@ function show_options() {
   for(var i=0; i<ui_langs.length; i++)
     ui_langs_x[ui_langs[i]]=language_list[ui_langs[i]];
   ret+=options_select("ui_lang", ui_langs_x);
+  ret+="<br/>\n";
+
+  var ui_langs_x={};
+  l=language_list;
+  l[""]=t("lang:");
+  ret+=options_select("data_lang", l);
   ret+="</p>\n";
 
   ret+="<p><input type='submit' value='"+t("save")+"'>\n";
