@@ -10,3 +10,7 @@ div.options_win {
   overflow: auto;
   z-index: 10001;
 }
+div.options_help {
+  text-align: justify;
+  font-style: italic;
+}

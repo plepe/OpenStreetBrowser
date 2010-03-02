@@ -71,11 +71,13 @@ lang_str["cat:agri_ind/resources"]=[ "Ressourcengewinnung" ];
 lang_str["cat:agri_ind/landfill"]=[ "Entsorgung" ];
 lang_str["cat:agri_ind/military"]=[ "Militär" ];
 
-lang_str["options:autozoom"]=[ "Autozoom Verhalten" ];
+lang_str["options:autozoom"]=[ "Autozoomverhalten" ];
+lang_str["help:autozoom"]=[ "Wenn ein Objekt ausgewählt wird, schwenkt der Kartenausschnitt zu dem Objekt, auch der Zoomlevel wird angepasst. Mit dieser Option kann zwischen verschiedenen Modi gewählt werden." ];
 lang_str["options:autozoom:pan"]=[ "Auf das aktuelle Objekt schwenken (schöner)" ];
 lang_str["options:autozoom:move"]=[ "Zum aktuellen Objekt springen (schneller)" ];
 lang_str["options:autozoom:stay"]=[ "Den Kartenausschnitt nie verschieben" ];
 lang_str["options:language_support"]=[ "Sprachunterstützung" ];
+lang_str["help:language_support"]=[ "In diesen Optionen können die verwendeten Sprachen eingestellt werden. In der ersten Einstellung kann die Sprache der Anwendungsoberfläche gewählt werden. Mit der zweiten Einstellung kann die Datensprache eingestellt werden. Die Daten vieler geographischer Objekte sind in mehrere Sprachen übersetzt. Wenn keine Übersetzung vorhanden ist, oder \"Lokale Sprache\" ausgewählt wurde, wird die Hauptsprache des Objektes angezeigt." ];
 lang_str["options:ui_lang"]=[ "Anwendungssprache" ];
 lang_str["options:data_lang"]=[ "Datensprache" ];
 lang_str["lang:"]=[ "Lokale Sprache" ];
