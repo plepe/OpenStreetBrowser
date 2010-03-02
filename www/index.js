@@ -5,7 +5,6 @@ var showing="";
 var display_data;
 var redraw_timer;
 var view_changed_timer;
-var lang;
 var debug_msg;
 var shown_features=[];
 var showing_details=true;
@@ -139,7 +138,6 @@ function redraw() {
   }
   else {
     var param={"obj": x};
-    param["lang"]=lang;
     call_hooks("request_details", param);
     ajax("details", param, call_back);
 

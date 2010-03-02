@@ -87,7 +87,7 @@ function set_highlight(list, dont_load) {
   }
 
   if(load_list.length&&(!dont_load)) {
-    ajax("load_object", { "obj": load_list, "lang": lang}, set_highlight_after_loading);
+    ajax("load_object", { "obj": load_list }, set_highlight_after_loading);
   }
 
   real_set_highlight();

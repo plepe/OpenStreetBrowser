@@ -8,11 +8,12 @@ options:
   category=culture/religion,gastro
   srs=900913
   exclude=node_123456,way_12345,...
-  lang=en
+  ui_lang=en
+  data_lang=
   count=10
 
 example: 
-  http://.../list.php?viewbox=1820510.3841097,6140479.7509884,1821443.1547203,6139601.9194918&zoom=17&category=gastro&lang=en
+  http://.../list.php?viewbox=1820510.3841097,6140479.7509884,1821443.1547203,6139601.9194918&zoom=17&category=gastro&ui_lang=en
 */
 $design_hidden=1;
 include "code.php";
@@ -86,7 +87,8 @@ function list_print($res) {
   $ob=load_object($id);
   $info=explode("||", $res[res]);
   global $lang_str;
-  global $lang;
+  global $ui_lang;
+  global $data_lang;
   $make_valid=array("&"=>"&amp;", "\""=>"&quot;", "<"=>"&lt;", ">"=>"&gt;");
 
   $ret.="  id=\"$id\"\n";
@@ -97,7 +99,7 @@ function list_print($res) {
     $ret.="  name=\"$x\"\n";
   }
 
-  if($x=$ob->long_name($lang)) {
+  if($x=$ob->long_name($data_lang)) {
     $x=strtr($x, $make_valid);
     $ret.="  name_trans=\"$x\"\n";
   }
@@ -107,7 +109,7 @@ function list_print($res) {
     $ret.="  description=\"$x\"\n";
   }
 
-  if($x=$ob->tags->get("$info[0]:$lang")) {
+  if($x=$ob->tags->get_lang("$info[0]", $data_lang)) {
     $x=strtr($x, $make_valid);
     $ret.="  description_trans=\"$x\"\n";
   }
@@ -281,7 +283,7 @@ function main() {
 
   $ret.="<request";
   foreach($_REQUEST as $rk=>$rv) {
-    if(in_array($rk, array("viewbox", "zoom", "category", "lang"))) {
+    if(in_array($rk, array("viewbox", "zoom", "category", "ui_lang", "data_lang"))) {
       $ret.=" $rk=\"".htmlentities(stripslashes($rv))."\"";
     }
   }

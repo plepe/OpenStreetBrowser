@@ -1,4 +1,5 @@
 var lang_str={};
+var data_lang="";
 
 function change_language() {
   var ob=document.getElementById("lang_select_form");
@@ -29,11 +30,19 @@ function t(str, count) {
 
 function lang_change(key, value) {
   if(key=="ui_lang") {
-    if(value!=lang) {
+    if(value!=ui_lang) {
       location.href=permalink();
       location.reload();
     }
   }
+  if(key=="data_lang") {
+    data_lang=value;
+  }
+}
+
+function lang_init() {
+  data_lang=options_get("data_lang");
 }
 
 register_hook("options_change", lang_change);
+register_hook("init", lang_init);
