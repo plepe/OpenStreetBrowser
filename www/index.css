@@ -239,3 +239,11 @@ li.listitem_notfound {
   border: 2px solid black;
   z-index: 10001;
 }
+div.permalink {
+  right: 3px;
+  bottom: 1.5em;
+  display: block;
+  position: absolute;
+  font-size: smaller;
+  position: absolute;
+} 
