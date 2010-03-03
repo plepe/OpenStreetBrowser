@@ -6,6 +6,8 @@ lang_str["list_info"]             =[ "Choose a category to browse map content or
 lang_str["save"]		  =[ "Save" ];
 lang_str["cancel"]		  =[ "Cancel" ];
 
+lang_str["geo_click_pos"]         =[ "Click on your position on the map" ];
+
 lang_str["tag:amenity=restaurant"]=[ "restaurant", "restaurants" ];
 lang_str["tag:amenity=cafe"]      =[ "cafe", "cafes" ];
 lang_str["tag:amenity=pub"]       =[ "pub", "pubs" ];
