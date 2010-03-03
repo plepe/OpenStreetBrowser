@@ -62,7 +62,20 @@ function ajax_details($param, $xml) {
 
   $load_xml[]=$param[obj];
 
-  $ret=load_object($param[obj])->info($param);
+  if(!($ob=load_object($param[obj]))) {
+    $ret=$xml->createElement("result");
+    $xml->appendChild($ret);
+
+    $text=$xml->createElement("text");
+    $ret->appendChild($text);
+
+    $content=$xml->createTextNode(lang("help:no_object", $param[obj]));
+    $text->appendChild($content);
+
+    return;
+  }
+
+  $ret=$ob->info($param);
   $text=$xml->createTextNode($ret);
 
   $ret=$xml->createElement("result");
