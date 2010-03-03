@@ -32,6 +32,18 @@ $lang_str["head_actions"]="Aktionen";
 $lang_str["action_browse"]="In OSM ansehen";
 $lang_str["action_edit"]="Auf OSM editieren";
 
+$lang_str["geo_set_pos"]="Meine Position festlegen";
+$lang_str["geo_change_pos"]="Meine Position ändern";
+
+$lang_str["routing_type_car"]="Auto";
+$lang_str["routing_type_car_shortest"]="Auto (kürzeste)";
+$lang_str["routing_type_bicycle"]="Fahrrad";
+$lang_str["routing_type_foot"]="Zu Fuß";
+$lang_str["routing_type"]="Routentyp";
+$lang_str["routing_distance"]="Entfernung";
+$lang_str["routing_time"]="Zeit";
+$lang_str["routing_disclaimer"]="Routing: (c) von <a href='http://www.cloudmade.com'>Cloudmade</a>";
+
 $lang_str["place_continent"]="Kontinent";
 $lang_str["place_country"]="Staat";
 $lang_str["place_state"]="Land";
