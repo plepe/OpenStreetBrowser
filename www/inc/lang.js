@@ -33,10 +33,19 @@ function lang_change(key, value) {
     if(value!=ui_lang) {
       var old_href=location.search+location.hash;
       var new_href=permalink();
-      location.href=new_href;
 
-      var old_path=old_href.substr(0, old_href.indexOf("#")||old_href.length);
-      var new_path=new_href.substr(0, new_href.indexOf("#")||new_href.length);
+      var old_path=old_href;
+      var old_hash=old_href.indexOf("#");
+      if(old_hash!=-1)
+	old_path=old_href.substr(0, old_hash);
+
+      var new_path=new_href;
+      var new_hash=new_href.indexOf("#");
+      if(new_hash!=-1)
+	new_path=new_href.substr(0, new_hash);
+
+      // Set new path
+      location.href=new_href;
       // Same URL ... reload
       if(old_path==new_path) {
 	location.reload();
