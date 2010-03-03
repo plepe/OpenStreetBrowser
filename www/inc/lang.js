@@ -1,5 +1,4 @@
 var lang_str={};
-var data_lang="";
 
 function change_language() {
   var ob=document.getElementById("lang_select_form");
@@ -29,6 +28,7 @@ function t(str, count) {
 }
 
 function lang_change(key, value) {
+  // When the UI language changed, we have to reload
   if(key=="ui_lang") {
     if(value!=ui_lang) {
       var old_href=location.search+location.hash;
@@ -43,13 +43,19 @@ function lang_change(key, value) {
       }
     }
   }
+
+  // When the data language changed, we just remember
+  // TODO: reload data
   if(key=="data_lang") {
     data_lang=value;
   }
 }
 
 function lang_init() {
-  data_lang=options_get("data_lang");
+  if(!options_get("ui_lang"))
+    options_set("ui_lang", ui_lang);
+  if(!options_get("data_lang"))
+    options_set("data_lang", data_lang);
 }
 
 register_hook("options_change", lang_change);

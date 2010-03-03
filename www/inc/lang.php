@@ -1,4 +1,6 @@
 <?
+include "lang/list.php";
+
 function lang() {
   global $lang_str;
   $offset=1;
@@ -64,23 +66,52 @@ function show_lang_select() {
   print "</div>\n";
 }
 
+function lang_from_browser($avail_langs=null) {
+  $max_q=-1;
+  $chosen_lang="";
+  $acc_langs=explode(",", $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+
+  foreach($acc_langs as $acc_lang) {
+    $acc_lang=explode(";", $acc_lang);
+    
+    foreach($acc_lang as $acc_lang_part) {
+      if(preg_match("/^(.*)=(.*)$/", $acc_lang_part, $m)) {
+	$acc_lang[$m[1]]=$m[2];
+      }
+    }
+    if(!$acc_lang['q'])
+      $acc_lang['q']=1;
+
+    if(((!$avail_langs)||(in_array($acc_lang[0], $avail_langs)))
+       &&(!strpos($acc_lang[0], "-"))
+       &&($acc_lang['q']>$max_q)) {
+      $chosen_lang=$acc_lang[0];
+      $max_q=$acc_lang['q'];
+    }
+  }
+
+  return $chosen_lang;
+}
+
 $ui_lang=$_REQUEST[ui_lang];
 if(!$ui_lang)
   $lang=$_REQUEST[lang];
-if(!$ui_lang)
-  $ui_lang=$_REQUEST["option:ui_lang"];
 if($_REQUEST[param][ui_lang])
   $ui_lang=$_REQUEST[param][ui_lang];
+if(!$ui_lang)
+  $ui_lang=lang_from_browser($ui_langs);
 if(!$ui_lang)
   $ui_lang="en";
 
 $data_lang=$_REQUEST[data_lang];
-if(!isset($data_lang))
-  $data_lang=$_REQUEST["option:data_lang"];
 if($_REQUEST[param][data_lang])
   $data_lang=$_REQUEST[param][data_lang];
 if(!isset($data_lang))
+  $data_lang=lang_from_browser();
+if(!isset($data_lang))
   $data_lang="";
+
+html_export_var(array("ui_lang"=>$ui_lang, "data_lang"=>$data_lang, "ui_langs"=>$ui_langs));
 
 require_once("lang/$ui_lang.php");
 if(!$design_hidden) {
