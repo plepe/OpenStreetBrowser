@@ -58,8 +58,14 @@ function view_click(event) {
   }
 
   if(list_reload_working) {
-    return 0;
+    return;
   }
+
+  var now=new Date().getTime();
+  if(now<view_changed_last+500)
+    return;
+
+  view_changed_last=now;
 
   var map_div=document.getElementById("map");
   map_div.style.cursor="wait";
