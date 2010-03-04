@@ -85,7 +85,7 @@ else
 <input id='search' value='<?=lang("search_field")?>' onChange="search(this)" onFocus="search_focus(this)" />
 </div>
 <div id='details' class='info'>
-<form id='details_content' class='details'>
+<form id='details_content' class='details' action='javascript:details_content_submit()'>
 <?
 print list_template();
 ?>
