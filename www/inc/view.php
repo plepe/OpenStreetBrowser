@@ -7,7 +7,7 @@ function find_objects($param) {
   $dist_mul=(19-$param[zoom])*(19-$param[zoom]);
   $dist=5*$dist_mul;
 
-  $ret.="<a class='zoom' href='javascript:list_reload()'>".lang("info_back")."</a><br>\n";
+  $ret.="<a class='zoom' href='#'>".lang("info_back")."</a><br>\n";
   $ret.=lang("search_process")."<br/>";
   $poly="PolyFromText('POLYGON((".
     ($param[lon]-$dist)." ".($param[lat]-$dist).",".
@@ -55,7 +55,7 @@ function find_objects($param) {
   $ret.="<pre>".print_r($list, 1)."</pre>"; */
 
   if(!sizeof($list))
-    return "<a class='zoom' href='javascript:list_reload()'>".lang("info_back")."</a><br>\n".
+    return "<a class='zoom' href='#'>".lang("info_back")."</a><br>\n".
       lang("result_no");
 
   $matches=0;
