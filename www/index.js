@@ -11,6 +11,11 @@ var showing_details=true;
 var loaded_list={};
 var view_changed_last;
 
+function details_content_submit(event) {
+  // Sometimes it happens, that it want to submit to the form. 
+  // Just ignore event.
+}
+
 function show_msg(msg, debuginfo) {
   hide_msg();
   debug_msg=document.createElement("div");
