@@ -22,7 +22,7 @@ function search($param) {
   $resdom->loadXML($res);
 
   $ret.="<div class='box_opened'>\n";
-  $ret.="<a class='zoom' href='javascript:list_reload()'>".lang("info_back")."</a><br>\n";
+  $ret.="<a class='zoom' href='#'>".lang("info_back")."</a><br>\n";
 
   $ret.="<h1>Search results</h1>\n";
   if($param[shown])
