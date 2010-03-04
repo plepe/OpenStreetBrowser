@@ -8,6 +8,7 @@ include("code.php");
 <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
 <link rel="stylesheet" type="text/css" href="index.css" />
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" title="OpenStreetBrowser" href="osb_search.xml" />
 <script type="text/javascript" src="inc/hooks.js"></script>
 <?
 include "inc/global.php";
