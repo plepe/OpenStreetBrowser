@@ -28,9 +28,12 @@ function ext_wikipedia($object) {
       while(($r=fgets($f))&&(!$enough)) {
     //    if(!$img&&eregi("\[\[Bild:([^\|\]]*)[\|\]]", $r, $m)) {
 	$r=chop($r);
-	if($r=="");
-	elseif(!$img&&eregi("\[\[Bild:([^\|]*\.(png|jpg|gif))", $r, $m)) {
-	  $img=$m[1];
+	if(($r=="")||
+           (preg_match("/^<!--/", $r))
+	  ) {
+	}
+	elseif(!$img&&eregi("\[\[(Bild|Datei):([^\|]*\.(png|jpg|gif))", $r, $m)) {
+	  $img=$m[2];
 	  $img="<img src='http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img' align='left'>\n";
 	}
 	elseif(!ereg("^[\|\}\{\[\!]", $r)) {
