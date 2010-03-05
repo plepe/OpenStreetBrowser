@@ -247,3 +247,6 @@ div.permalink {
   font-size: smaller;
   position: absolute;
 } 
+a.external {
+  font-style: italic;
+}
