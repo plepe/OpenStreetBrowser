@@ -6,6 +6,7 @@ $lang_str["info_back"]="zur Übersicht";
 $lang_str["info_zoom"]="zoomen";
 $lang_str["result_no"]="nichts gefunden";
 $lang_str["search_process"]="suche ...";
+$lang_str["read_more"]="weiterlesen";
 
 $lang_str["head_general_info"]="Allgemeine Informationen";
 $lang_str["head_stops"]="Haltestellen";
