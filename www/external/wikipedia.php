@@ -16,8 +16,11 @@ function ext_wikipedia($object) {
 //  if(!$url=$object->tags->get("wikipedia:de"))
 //    $url=$object->tags->get("wikipedia");
 
-    if($url=="yes")
-      $url=$object->tags->get("name:$lang")||$object->tags->get("name");
+    if($url=="yes") {
+      $url=$object->tags->get("name:$lang");
+      if(!$url)
+	$url=$object->tags->get("name");
+    }
 
     $url=strtr($url, array(" "=>"_"));
 
