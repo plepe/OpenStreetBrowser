@@ -8,6 +8,8 @@ function options_set(key, value) {
 
   document.cookie="option:"+key+"="+value+"; expires="+expiry.toGMTString()+"; path=/";
   options_values[key]=value;
+
+  call_hooks("options_change", key, value);
 }
 
 function options_get(key) {
