@@ -10,6 +10,7 @@ var debug_msg;
 var shown_features=[];
 var showing_details=true;
 var loaded_list={};
+var view_changed_last;
 
 function show_msg(msg, debuginfo) {
   hide_msg();
@@ -179,6 +180,9 @@ function view_changed_delay() {
 function view_changed(event) {
   if(view_changed_timer)
     clearTimeout(view_changed_timer);
+
+  view_changed_last=new Date().getTime();
+
   view_changed_timer=setTimeout("view_changed_delay()", 300);
   check_mapkey();
 
