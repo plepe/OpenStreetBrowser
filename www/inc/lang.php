@@ -64,11 +64,15 @@ function show_lang_select() {
   print "</div>\n";
 }
 
-$lang=$_REQUEST[lang];
+$lang=$_REQUEST["option:ui_lang"];
+if(!$lang)
+  $lang=$_REQUEST[lang];
 if($_REQUEST[param][lang])
   $lang=$_REQUEST[param][lang];
+if(!$lang)
+  $lang="en";
 
-require_once("lang/en.php");
+require_once("lang/$lang.php");
 if(!$design_hidden) {
   print "<script type='text/javascript' src='inc/lang.js'></script>\n";
   print "<script id='language_js' type='text/javascript' src='lang/en.js'></script>\n";
@@ -79,3 +83,5 @@ if($lang) {
   if(!$design_hidden)
     print "<script type='text/javascript' src='lang/$lang.js'></script>\n";
 }
+
+html_export_var(array("lang"=>$lang));
