@@ -86,8 +86,6 @@ class way {
   }
 
   function format() {
-    global $lang;
-    
     $name=$this->tags->get_lang("name");
 
     if(!$name)
