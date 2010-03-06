@@ -24,7 +24,7 @@ function wikipedia_url($object, $page, $lang) {
 
   $page=strtr($page, array(" "=>"_"));
 
-  return "http://$lang.wikipedia.org/wiki/$page";
+  return "http://$lang.wikipedia.org/wiki/".urlencode($page);
 }
 
 function wikipedia_action_url($object, $page, $lang, $action) {
@@ -143,7 +143,7 @@ function ext_wikipedia($object) {
   $text=wikipedia_get_abstract($object, $page, $lang);
 
   if($text) {
-    $ret.="$text<a class='external' href='".urlencode($url)."'>".lang("read_more")."</a>";
+    $ret.="$text<a class='external' href='$url'>".lang("read_more")."</a>";
   }
 
   return $ret;
