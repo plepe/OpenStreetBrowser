@@ -2,11 +2,17 @@ var highlight_feature=[];
 var highlight_feature_timer;
 
 function pan_to_highlight(lon, lat, zoom) {
+  var autozoom=options_get("autozoom");
+
   if((zoom)&&((map.zoom>zoom+1)||(map.zoom<zoom-1))) {
-    map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+    if((!autozoom)||(autozoom=="pan")||(autozoom=="move"))
+      map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
   }
   else {
-    map.panTo(new OpenLayers.LonLat(lon, lat));
+    if((!autozoom)||(autozoom=="pan"))
+      map.panTo(new OpenLayers.LonLat(lon, lat));
+    else if(autozoom=="move")
+      map.setCenter(new OpenLayers.LonLat(lon, lat), map.zoom);
   }
 }
 
