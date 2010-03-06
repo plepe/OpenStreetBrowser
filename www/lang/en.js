@@ -3,6 +3,8 @@ lang_str["nothing found"]         =[ "nothing found" ];
 lang_str["loading"]               =[ "loading" ];
 lang_str["unnamed"]               =[ "(unnamed)" ];
 lang_str["list_info"]             =[ "Choose a category to browse map content or click on an object on the map for details" ];
+lang_str["save"]		  =[ "Save" ];
+lang_str["cancel"]		  =[ "Cancel" ];
 
 lang_str["tag:amenity=restaurant"]=[ "restaurant", "restaurants" ];
 lang_str["tag:amenity=cafe"]      =[ "cafe", "cafes" ];
@@ -68,3 +70,8 @@ lang_str["cat:agri_ind/railway"]=[ "Railway" ];
 lang_str["cat:agri_ind/resources"]=[ "Resource Extraction" ];
 lang_str["cat:agri_ind/landfill"]=[ "Disposal" ];
 lang_str["cat:agri_ind/military"]=[ "Military" ];
+
+lang_str["options:autozoom"]=[ "Autozoom behaviour" ];
+lang_str["options:autozoom:pan"]=[ "Pan to current object (nicer)" ];
+lang_str["options:autozoom:move"]=[ "Move to current object (faster)" ];
+lang_str["options:autozoom:stay"]=[ "Never change viewport automatically" ];
