@@ -59,3 +59,10 @@ $lang_str["christian"]="christlich";
 $lang_str["muslim"]="muslimisch";
 # denomination=
 $lang_str["catholic"]="katholisch";
+
+$lang_str["main:map_key"]="Legende";
+$lang_str["main:options"]="Optionen";
+$lang_str["main:about"]="Impressum";
+$lang_str["main:donate"]="Spende";
+$lang_str["main:licence"]="Kartendaten: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> Mitwirkende | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> und <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">Mitwirkende</a>";
+$lang_str["main:permalink"]="Beständiger Link";

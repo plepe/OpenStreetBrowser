@@ -92,10 +92,10 @@ print list_template();
 </form>
 </div>
 <div id='lang_select'>
-<a href='javascript:toggle_mapkey()'>Map Key</a> |
-<a href='javascript:show_options()'>Options</a> |
-<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'>About</a> |
-<a href='javascript:time_count_do_beg()'>Donate</a>
+<a href='javascript:toggle_mapkey()'><?=lang("main:map_key")?></a> |
+<a href='javascript:show_options()'><?=lang("main:options")?></a> |
+<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'><?=lang("main:about")?></a> |
+<a href='javascript:time_count_do_beg()'><?=lang("main:donate")?></a>
 </div>
 <?
 //show_lang_select();
@@ -103,9 +103,10 @@ print list_template();
 <div class="map" id="map"></div>
 <div class="shadow"></div>
 <div class="map_key_hidden" id="map_key"></div>
-<div class="licence">Map Data: <a href="http://creativecommons.org/licenses/by-sa/2.0/">cc-by-sa</a> <a href="http://www.openstreetmap.org">OpenStreetMap</a> contributors | OSB: <a href="http://wiki.openstreetmap.org/wiki/User:Skunk">Stephan Plepelits</a> and <a href="http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved">contributors</a></div>
+<div class="licence"><?=lang("main:licence")?></div>
 <?
 call_hooks("html_done", null);
 ?>
+<div class="permalink"><a href="" id="permalink"><?=lang("main:permalink")?></a></div>
 </body>
 </html>
