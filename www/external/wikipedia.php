@@ -99,6 +99,7 @@ function ext_wikipedia($object) {
   $page=0;
 
   if($page=$object->tags->get("wikipedia:$data_lang")) {
+    $lang=$data_lang;
   }
   elseif($page=$object->tags->get("wikipedia")) {
     if(preg_match("/^http:\/\/([a-z]*)\..*/", $page, $m)) {
