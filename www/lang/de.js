@@ -6,6 +6,8 @@ lang_str["list_info"]             =[ "Wähle eine Kategorie, um den Karteninhalt
 lang_str["save"]		  =[ "Speichern" ];
 lang_str["cancel"]		  =[ "Abbrechen" ];
 
+lang_str["geo_click_pos"]         =[ "Klicke auf Deine aktuelle Position auf der Karte" ];
+
 lang_str["tag:amenity=restaurant"]=[ "Restaurant", "Restaurants" ];
 lang_str["tag:amenity=cafe"]      =[ "Kaffehaus", "Kaffeehäuser" ];
 lang_str["tag:amenity=pub"]       =[ "Pub", "Pubs" ];

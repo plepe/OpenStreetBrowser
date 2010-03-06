@@ -22,6 +22,7 @@ function routing($ret, $object, $param) {
   global $key_cloudmade_api;
   global $routing_gpx;
   global $routing_end_pos;
+  global $ui_lang;
 
   if(in_array("routing", $param["info_noshow"])) {
     $ret[]=array("routing", "X");
@@ -67,7 +68,7 @@ function routing($ret, $object, $param) {
 
     $url="http://routes.cloudmade.com/$key_cloudmade_api/api/0.3/".
          "$poss[lat],$poss[lon],$routing_end_pos[lat],$routing_end_pos[lon]/".
-	 implode("/", explode("_", $param[route_type])).".gpx";
+	 implode("/", explode("_", $param[route_type])).".gpx?lang=$ui_lang";
 
     if(!(@$r=file_get_contents($url))) {
       $ret[]=array("routing", "Error: Could not download route");
