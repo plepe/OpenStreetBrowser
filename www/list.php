@@ -20,7 +20,7 @@ include "inc/sql.php";
 include "inc/debug.php";
 include "inc/tags.php";
 include "inc/object.php";
-include "inc/lang.php";
+include "inc/global.php";
 
 $request=unserialize(file_get_contents("/osm/skunkosm/request.save"));
 $cat_list=unserialize(file_get_contents("/osm/skunkosm/category_list.save"));
@@ -85,8 +85,8 @@ function list_print($res) {
   $ret="<place\n";
   $ob=load_object($id);
   $info=explode("||", $res[res]);
-  $lang="en";
   global $lang_str;
+  global $lang;
   $make_valid=array("&"=>"&amp;", "\""=>"&quot;", "<"=>"&lt;", ">"=>"&gt;");
 
   $ret.="  id=\"$id\"\n";
