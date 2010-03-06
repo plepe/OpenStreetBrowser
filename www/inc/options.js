@@ -11,6 +11,27 @@ function close_options() {
   delete(options_win);
 }
 
+function options_radio(key, current_value, values) {
+  var ret="";
+
+  ret+="<h4>"+t("options:"+key)+"</h4>\n";
+  ret+="<p>\n";
+
+  if(!current_value)
+    current_value=values[0];
+
+  for(var i=0; i<values.length; i++) {
+    ret+="  <input type='radio' name='"+key+"' value='"+values[i]+"'";
+    if(current_value==values[i])
+      ret+=" checked='checked'";
+    ret+="/>"+t("options:"+key+":"+values[i])+"<br/>\n";
+  }
+
+  ret+="</p>\n";
+  
+  return ret;
+}
+
 function show_options() {
   var ret;
 
@@ -18,10 +39,7 @@ function show_options() {
 
   ret ="<form action='javascript:set_options()' id='options_form'>\n";
 
-  ret+="<h4>"+t("options:autozoom")+"</h4>\n";
-  ret+="<p><input type='radio' name='autozoom' value='pan'>"+t("options:autozoom:pan")+"</input><br>\n";
-  ret+="<input type='radio' name='autozoom' value='move'>"+t("options:autozoom:move")+"</input><br>\n";
-  ret+="<input type='radio' name='autozoom' value='stay'>"+t("options:autozoom:stay")+"</input></p>\n";
+  ret+=options_radio("autozoom", "move", [ "pan", "move", "stay" ]);
 
   ret+="<p><input type='submit' value='"+t("save")+"'>\n";
   ret+="<input type='button' onClick='javascript:close_options()' value='"+t("cancel")+"></p>\n";
