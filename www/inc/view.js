@@ -76,7 +76,7 @@ function view_click(event) {
   if(view_changed_timer)
     clearTimeout(view_changed_timer);
 
-  view_changed_timer=setTimeout("view_click_delay("+pos.lon+", "+pos.lat+")", 500);
+  view_changed_timer=setTimeout("view_click_delay("+pos.lon+", "+pos.lat+")", 200);
 }
 
 function view_click_delay(lon, lat) {
