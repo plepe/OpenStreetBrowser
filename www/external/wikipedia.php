@@ -21,6 +21,7 @@ function ext_wikipedia($object) {
 
     $url=strtr($url, array(" "=>"_"));
 
+    ini_set("user_agent", "OpenStreetBrowser Wikipedia Parser");
     if(@$f=fopen("http://$lang.wikipedia.org/w/index.php?title=$url&action=raw", "r")) {
       $text=""; unset($img);
       $enough=0;
