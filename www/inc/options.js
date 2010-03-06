@@ -70,8 +70,6 @@ function options_radio(key, values) {
 function options_select(key, values) {
   var ret="";
 
-  ret+="<p>\n";
-
   var values_keys=[];
   for(var i in values)
     values_keys.push(i);
@@ -80,6 +78,7 @@ function options_select(key, values) {
   if(!current_value)
     current_value=values[0];
 
+  ret+=t("options:ui_lang")+": ";
   ret+="  <select name='"+key+"'>\n";
   for(var i=0; i<values_keys.length; i++) {
     ret+="  <option value='"+values_keys[i]+"'";
@@ -121,10 +120,12 @@ function show_options() {
   ret+=options_radio("autozoom", [ "pan", "move", "stay" ]);
 
   ret+="<h4>"+t("options:language_support")+"</h4>\n";
+  ret+="<p>\n";
   var ui_langs_x={};
   for(var i=0; i<ui_langs.length; i++)
     ui_langs_x[ui_langs[i]]=language_list[ui_langs[i]];
   ret+=options_select("ui_lang", ui_langs_x);
+  ret+="</p>\n";
 
   ret+="<p><input type='submit' value='"+t("save")+"'>\n";
   ret+="<input type='button' onClick='javascript:close_options()' value='"+t("cancel")+"></p>\n";
