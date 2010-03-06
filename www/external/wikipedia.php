@@ -105,14 +105,20 @@ function ext_wikipedia($object) {
       $lang=$m[1];
       $page=$m[0];
       if($lang!=$data_lang) {
-	$page=wikipedia_parse_lang($object, $page, $lang, $data_lang);
+	if($new_page=wikipedia_parse_lang($object, $page, $lang, $data_lang)) {
+	  $lang=$data_lang;
+	  $page=$new_page;
+	}
       }
     }
     elseif(preg_match("/^([a-z]*):(.*)/", $page, $m)) {
       $lang=$m[1];
       $page=$m[2];
       if($lang!=$data_lang) {
-	$page=wikipedia_parse_lang($object, $page, $lang, $data_lang);
+	if($new_page=wikipedia_parse_lang($object, $page, $lang, $data_lang)) {
+	  $lang=$data_lang;
+	  $page=$new_page;
+	}
       }
     }
   }
@@ -122,19 +128,22 @@ function ext_wikipedia($object) {
     $lang=$lang[0];
     $page=$list[$lang];
 
-    $page=wikipedia_parse_lang($object, $page, $lang, $data_lang);
+    if($new_page=wikipedia_parse_lang($object, $page, $lang, $data_lang)) {
+      $lang=$data_lang;
+      $page=$new_page;
+    }
   }
 
   if(!$page)
     return;
 
-  if(!($url=wikipedia_url($object, $page, $data_lang)))
+  if(!($url=wikipedia_url($object, $page, $lang)))
     return;
 
-  $text=wikipedia_get_abstract($object, $page, $data_lang);
+  $text=wikipedia_get_abstract($object, $page, $lang);
 
   if($text) {
-    $ret.="$text<a class='external' href='$url'>".lang("read_more")."</a>";
+    $ret.="$text<a class='external' href='".urlencode($url)."'>".lang("read_more")."</a>";
   }
 
   return $ret;
