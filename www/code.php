@@ -49,12 +49,33 @@ function ajax_find_objects($param, $xml) {
 
 }
 
+$prefered_zoom_levels=array();
+function map_zoom($zoom) {
+  global $prefered_zoom_levels;
+
+  $prefered_zoom_levels[]=$zoom;
+}
+
 function ajax_details($param, $xml) {
   global $load_xml;
+  global $prefered_zoom_levels;
 
   $load_xml[]=$param[obj];
 
-  $ret=load_object($param[obj])->info($param);
+  if(!($ob=load_object($param[obj]))) {
+    $ret=$xml->createElement("result");
+    $xml->appendChild($ret);
+
+    $text=$xml->createElement("text");
+    $ret->appendChild($text);
+
+    $content=$xml->createTextNode(lang("help:no_object", $param[obj]));
+    $text->appendChild($content);
+
+    return;
+  }
+
+  $ret=$ob->info($param);
   $text=$xml->createTextNode($ret);
 
   $ret=$xml->createElement("result");
@@ -62,6 +83,18 @@ function ajax_details($param, $xml) {
   $value->appendChild($text);
   $ret->appendChild($value);
   $xml->appendChild($ret);
+
+  $value=$xml->createElement("zoom");
+  $ret->appendChild($value);
+
+  $center=load_object($param[obj])->place()->get_centre();
+  $value->setAttribute("lon", $center[lon]);
+  $value->setAttribute("lat", $center[lat]);
+
+  if(sizeof($prefered_zoom_levels)) {
+    sort($prefered_zoom_levels);
+    $value->setAttribute("zoom", $prefered_zoom_levels[0]);
+  }
 
   $osm=$xml->createElement("osm");
   $osm->setAttribute("generator", "PublicTransport OSM");

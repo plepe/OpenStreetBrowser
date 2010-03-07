@@ -1,0 +1,16 @@
+div.options_win {
+  background: white;
+  position: absolute;
+  background: white;
+  left: 300px;
+  width: 500px;
+  border: 2px solid black;
+  top: 50px;
+  bottom: 50px;
+  overflow: auto;
+  z-index: 10001;
+}
+div.options_help {
+  text-align: justify;
+  font-style: italic;
+}

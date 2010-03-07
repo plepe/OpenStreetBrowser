@@ -51,7 +51,7 @@ class object {
     }
   }
 
-  function long_name($name_def=0, $lang="") {
+  function long_name($lang="", $name_def=0) {
     if(!$name_def)
       $name_def="[ref] - [name];[name];[ref];[operator]";
 

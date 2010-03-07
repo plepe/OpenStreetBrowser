@@ -16,7 +16,7 @@ function load_objects_from_xml(src) {
 }
 
 function load_objects(id) {
-  ajax("get_objects", { "obs": id, "all": 1, "lang": lang }, load_object);
+  ajax("get_objects", { "obs": id, "all": 1 }, load_object);
 }
 
 function load_object(data) {

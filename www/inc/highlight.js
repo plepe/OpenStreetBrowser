@@ -1,8 +1,19 @@
 var highlight_feature=[];
 var highlight_feature_timer;
 
-function pan_to_highlight(lon, lat) {
-  map.panTo(new OpenLayers.LonLat(lon, lat));
+function pan_to_highlight(lon, lat, zoom) {
+  var autozoom=options_get("autozoom");
+
+  if((zoom)&&((map.zoom>zoom+1)||(map.zoom<zoom-1))) {
+    if((!autozoom)||(autozoom=="pan")||(autozoom=="move"))
+      map.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+  }
+  else {
+    if((!autozoom)||(autozoom=="pan"))
+      map.panTo(new OpenLayers.LonLat(lon, lat));
+    else if(autozoom=="move")
+      map.setCenter(new OpenLayers.LonLat(lon, lat), map.zoom);
+  }
 }
 
 var last_highlight_request;
@@ -76,7 +87,7 @@ function set_highlight(list, dont_load) {
   }
 
   if(load_list.length&&(!dont_load)) {
-    ajax("load_object", { "obj": load_list, "lang": lang}, set_highlight_after_loading);
+    ajax("load_object", { "obj": load_list }, set_highlight_after_loading);
   }
 
   real_set_highlight();

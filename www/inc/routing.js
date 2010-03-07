@@ -16,7 +16,7 @@ function get_my_pos(event, pos) {
 }
 
 function set_my_pos() {
-  alert("Click on your position on the map");
+  alert(t("geo_click_pos"));
   click_override=get_my_pos;
 }
 

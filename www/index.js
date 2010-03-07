@@ -5,11 +5,16 @@ var showing="";
 var display_data;
 var redraw_timer;
 var view_changed_timer;
-var lang;
 var debug_msg;
 var shown_features=[];
 var showing_details=true;
 var loaded_list={};
+var view_changed_last;
+
+function details_content_submit(event) {
+  // Sometimes it happens, that it want to submit to the form. 
+  // Just ignore event.
+}
 
 function show_msg(msg, debuginfo) {
   hide_msg();
@@ -88,16 +93,23 @@ function call_back(response) {
   var osm=data.getElementsByTagName("osm");
   load_objects_from_xml(osm);
 
+  var zoom=data.getElementsByTagName("zoom");
+  if(zoom.length>0)
+    zoom=zoom[0];
+  else
+    delete(zoom);
+
   var x=get_hash();
   x=get_loaded_object(x);
 
   if(x) {
     x.display();
+  }
 
-    if(first_load) {
-      setTimeout("zoom_to_feature(\""+x.long_id+"\")", 200);
-      first_load=0;
-    }
+  if(zoom) {
+    pan_to_highlight(zoom.getAttribute("lon"),
+                     zoom.getAttribute("lat"),
+		     zoom.getAttribute("zoom"));
   }
 
   check_overlays(data);
@@ -131,7 +143,6 @@ function redraw() {
   }
   else {
     var param={"obj": x};
-    param["lang"]=lang;
     call_hooks("request_details", param);
     ajax("details", param, call_back);
 
@@ -172,20 +183,22 @@ function view_changed_delay() {
 function view_changed(event) {
   if(view_changed_timer)
     clearTimeout(view_changed_timer);
+
+  view_changed_last=new Date().getTime();
+
   view_changed_timer=setTimeout("view_changed_delay()", 300);
   check_mapkey();
 
   call_hooks("view_changed", event);
 }
 
+function permalink() {
+  var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+  return "?zoom="+map.zoom+"&lat="+center.lat+"&lon="+center.lon+location.hash;
+}
+
 function init() {
   show_list();
-
-  ob=document.getElementById("lang");
-  if(!ob)
-    lang="en";
-  else
-    lang=ob.value;
 
   if(!location.hash) {
     location.hash="#";
@@ -215,7 +228,8 @@ function init() {
   //map.addLayers([ layerpubtran, layerMapnik, layerTah, layercycle, layertest1, layertest2]);
   map.addLayers([ layerpubtran, layermarkers]);
 
-  map.addControl(new OpenLayers.Control.Permalink(null, "http://www.openstreetbrowser.org/"));
+  var permalink=document.getElementById("permalink");
+  map.addControl(new OpenLayers.Control.Permalink(permalink, "http://www.openstreetbrowser.org/"));
 
   if(start_lon&&(first_load)) {
     var lonlat = new OpenLayers.LonLat(start_lon, start_lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());

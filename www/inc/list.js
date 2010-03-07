@@ -190,7 +190,7 @@ function list_reload(info_lists) {
     return;
   }
 
-  ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "category": info_lists.join(","), "lang": lang }, list_more_call_back);
+  ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "category": info_lists.join(",") }, list_more_call_back);
 }
 
 function get_sub_lists(cat) {

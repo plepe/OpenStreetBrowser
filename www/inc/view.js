@@ -3,6 +3,8 @@ var click_override=null;
 function view_call_back(response) {
   var data=response.responseXML;
   list_reload_working=0;
+  var map_div=document.getElementById("map");
+  map_div.style.cursor=null;
 
   if(!data) {
     alert("no data\n"+response.responseText);
@@ -20,7 +22,6 @@ function view_call_back(response) {
   }
 
   var info_content=document.getElementById("details_content");
-  var map_div=document.getElementById("map");
   var info=document.getElementById("details");
 
   info.className="info";
@@ -57,8 +58,17 @@ function view_click(event) {
   }
 
   if(list_reload_working) {
-    return 0;
+    return;
   }
+
+  var now=new Date().getTime();
+  if(now<view_changed_last+500)
+    return;
+
+  view_changed_last=now;
+
+  var map_div=document.getElementById("map");
+  map_div.style.cursor="wait";
 
 //  if(get_hash()!="")
 //    return 0;
@@ -66,7 +76,7 @@ function view_click(event) {
   if(view_changed_timer)
     clearTimeout(view_changed_timer);
 
-  view_changed_timer=setTimeout("view_click_delay("+pos.lon+", "+pos.lat+")", 500);
+  view_changed_timer=setTimeout("view_click_delay("+pos.lon+", "+pos.lat+")", 200);
 }
 
 function view_click_delay(lon, lat) {
@@ -80,7 +90,7 @@ function view_click_delay(lon, lat) {
 
   var x=map.calculateBounds();
 
-  ajax("find_objects", { "left": x.left, "top": x.top, "right": x.right, "bottom": x.bottom, "zoom": map.zoom, "lon": lon, "lat": lat, "lang": lang, "overlays": list_overlays() }, view_call_back);
+  ajax("find_objects", { "left": x.left, "top": x.top, "right": x.right, "bottom": x.bottom, "zoom": map.zoom, "lon": lon, "lat": lat, "overlays": list_overlays() }, view_call_back);
 }
 
 

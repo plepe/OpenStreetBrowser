@@ -7,12 +7,15 @@ include("code.php");
 <title>OpenStreetBrowser</title>
 <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
 <link rel="stylesheet" type="text/css" href="index.css" />
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" title="OpenStreetBrowser" href="osb_search.xml" />
 <script type="text/javascript" src="inc/hooks.js"></script>
 <?
 include "inc/global.php";
 ?>
 <script type="text/javascript" src="index.js"></script>
 <script type="text/javascript" src="ajax.js"></script>
+<script type="text/javascript" src="lang/list.js"></script>
 <!-- <script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script> -->
 </head>
 <body>
@@ -84,17 +87,17 @@ else
 <input id='search' value='<?=lang("search_field")?>' onChange="search(this)" onFocus="search_focus(this)" />
 </div>
 <div id='details' class='info'>
-<form id='details_content' class='details'>
+<form id='details_content' class='details' action='javascript:details_content_submit()'>
 <?
 print list_template();
 ?>
 </form>
 </div>
 <div id='lang_select'>
-<a href='javascript:toggle_mapkey()'>Map Key</a> |
-<!-- <a href='javascript:show_options()'>Options</a> | -->
-<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'>About</a> |
-<a href='javascript:time_count_do_beg()'>Donate</a>
+<a href='javascript:toggle_mapkey()'><?=lang("main:map_key")?></a> |
+<a href='javascript:show_options()'><?=lang("main:options")?></a> |
+<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'><?=lang("main:about")?></a> |
+<a href='javascript:time_count_do_beg()'><?=lang("main:donate")?></a>
 </div>
 <?
 //show_lang_select();
@@ -102,9 +105,10 @@ print list_template();
 <div class="map" id="map"></div>
 <div class="shadow"></div>
 <div class="map_key_hidden" id="map_key"></div>
-<div class="licence">Map Data: <a href="http://creativecommons.org/licenses/by-sa/2.0/">cc-by-sa</a> <a href="http://www.openstreetmap.org">OpenStreetMap</a> contributors | OSB: <a href="http://wiki.openstreetmap.org/wiki/User:Skunk">Stephan Plepelits</a> and <a href="http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved">contributors</a></div>
+<div class="licence"><?=lang("main:licence")?></div>
 <?
 call_hooks("html_done", null);
 ?>
+<div class="permalink"><a href="" id="permalink"><?=lang("main:permalink")?></a></div>
 </body>
 </html>

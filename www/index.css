@@ -239,6 +239,13 @@ li.listitem_notfound {
   border: 2px solid black;
   z-index: 10001;
 }
+div.permalink {
+  right: 3px;
+  bottom: 1.5em;
+  display: block;
+  position: absolute;
+  font-size: smaller;
+}
 div.edit_list {
   position: absolute;
   background: white;
@@ -267,4 +274,9 @@ span.list_tools {
   float: right;
   margin-right: 2px;
   margin-top: 1px;
+  font-size: smaller;
+  position: absolute;
+} 
+a.external {
+  font-style: italic;
 }

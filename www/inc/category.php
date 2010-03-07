@@ -165,12 +165,12 @@ class category {
 
     $name_def=$rule->tags->get("display_name");
 
-    if($x=$ob->long_name($name_def, $lang)) {
+    if($x=$ob->long_name($lang, $name_def)) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"display_name:$lang\" v=\"$x\"/>\n";
     }
 
-    if($x=$ob->long_name($name_def)) {
+    if($x=$ob->long_name(null, $name_def)) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"display_name\" v=\"$x\"/>\n";
     }

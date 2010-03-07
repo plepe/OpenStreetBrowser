@@ -17,5 +17,3 @@ function box_click(boxname, subboxname) {
 
   box_change(ob);
 }
-
-

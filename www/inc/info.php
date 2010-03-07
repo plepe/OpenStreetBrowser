@@ -4,6 +4,9 @@ $hide_tags_preg="/(".implode("|", $hide_tags).")/";
 
 function amenity_info($ret, $object) {
   $ret[]=array("general_info", $object->tags->compile_text("#tag/amenity#: #tag_amenity/%amenity%#<br />\n"));
+
+  if($object->tags->get("amenity"))
+    map_zoom(17);
 }
 
 register_hook("info", amenity_info);
@@ -26,6 +29,9 @@ function shop_info($ret, $object) {
     show_overlay("shop");
   if($object->tags->get("amenity")=="marketplace")
     show_overlay("shop");
+
+  if($object->tags->get("shop"))
+    map_zoom(17);
 }
 
 register_hook("info", shop_info);
@@ -213,6 +219,48 @@ function places_info($ret, $object) {
   $r.=$tags->compile_text("#tag/is_in#: %is_in%<br />\n");
   $r.=$tags->compile_text("#tag/population#: %population%<br />\n");
 
+  switch($tags->get("place")) {
+    case "continent":
+      map_zoom(11);
+      break;
+    case "country":
+      map_zoom(7);
+      break;
+    case "state":
+      map_zoom(9);
+      break;
+    case "region":
+      map_zoom(11);
+      break;
+    case "county":
+      map_zoom(13);
+      break;
+    case "city":
+      map_zoom(11);
+      break;
+    case "town":
+      map_zoom(14);
+      break;
+    case "village":
+      map_zoom(15);
+      break;
+    case "hamlet":
+      map_zoom(16);
+      break;
+    case "suburb":
+      map_zoom(15);
+      break;
+    case "locality":
+      map_zoom(17);
+      break;
+    case "island":
+      map_zoom(12);
+      break;
+    case "islet":
+      map_zoom(17);
+      break;
+  }
+
   $ret[]=array("general_info", $r);
 }
 register_hook("info", places_info);
@@ -222,12 +270,12 @@ function comm_info($ret, $object) {
   $tags=$object->tags;
 
   if($v=$object->tags->get("website")) {
-    if(!eregi("^[a-z0-9]://", $v))
+    if(!eregi("^[a-z0-9]+://", $v))
       $v="http://$v";
     $r.=$tags->compile_text("#tag/website#: <a href='$v'>%website%</a><br />\n");
   }
   if($v=$object->tags->get("url")) {
-    if(!eregi("^[a-z0-9]://", $v))
+    if(!eregi("^[a-z0-9]+://", $v))
       $v="http://$v";
     $r.=$tags->compile_text("#tag/website#: <a href='$v'>%url%</a><br />\n");
   }
@@ -247,6 +295,11 @@ function culture_info($ret, $object) {
 
   if(in_array($object->tags->get("tourism"), array("museum", "artwork", "attraction", "viewpoint", "theme_park", "zoo", "yes")))
     show_overlay("culture");
+
+  if($object->tags->get("historic"))
+    map_zoom(17);
+  if($object->tags->get("tourism"))
+    map_zoom(17);
 }
 
 register_hook("info", culture_info);
@@ -268,6 +321,9 @@ function car_amenities_info($ret, $object) {
   if((in_array($object->tags->get("amenity"), array("parking", "car_rental", "car_sharing", "car_repair", "fuel")))
      or (in_array($object->tags->get("highway"), array("services", "emergency_access_point", "motorway_junction"))))
     show_overlay("car");
+
+  if($object->tags->get("highway"))
+    map_zoom(16);
 }
 register_hook("info", car_amenities_info);
 
@@ -395,6 +451,9 @@ function cemetery_info($ret, $object) {
     if($text)
       $ret[]=array("general_info", $text);
   }
+
+  if($object->tags->get("landuse"))
+    map_zoom(16);
 }
 
 register_hook("info", cemetery_info);
@@ -410,9 +469,12 @@ function power_info($ret, $object) {
         $text.=$object->tags->compile_text("#tag/voltage#: %voltage%<br />\n");
         $text.=$object->tags->compile_text("#tag/cables#: %cables%<br />\n");
         $text.=$object->tags->compile_text("#tag/wires#: %wires%<br />\n");
+	map_zoom(16);
         break;
       case "generator":
         $text.=$object->tags->compile_text("#tag/power_source#: #tag_power_source/%power_source%#<br />\n");
+      default:
+	map_zoom(17);
     }
 
     $ret[]=array("general_info", $text);
