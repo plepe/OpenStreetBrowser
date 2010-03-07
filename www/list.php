@@ -21,7 +21,6 @@ include "inc/sql.php";
 include "inc/debug.php";
 include "inc/tags.php";
 include "inc/object.php";
-include "inc/lang.php";
 include "inc/categories.php";
 include "inc/lock.php";
 include "inc/category.php";

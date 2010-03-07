@@ -101,7 +101,7 @@ function list_load_more(cat, viewbox, new_count) {
     there.push(cur_cache.data[i].id);
   }
 
-  ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "exclude": there.join(","), "category": cat.id, "lang": lang, "count": new_count }, list_more_call_back);
+  ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "exclude": there.join(","), "category": cat.id, "count": new_count }, list_more_call_back);
 }
 
 function list_more(cat_id, new_count) {
@@ -296,7 +296,7 @@ function box_open(head, path, content, state) {
   if(!cat)
     name="undefined";
   else
-    name=cat.tags.get("name:"+lang);
+    name=cat.tags.get_lang("name");
 
   ret+="<div class='box_"+state+"_"+level+"' id='list_"+path+"'>\n";
   ret+="<h"+level+"><input type='checkbox' id='check_"+path+"' name='"+path+"' "+

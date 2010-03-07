@@ -17,7 +17,7 @@ function tags(d) {
   this.get_lang=function(k) {
     var ret;
     
-    if(ret=data[k+":"+lang])
+    if(ret=data[k+":"+data_lang])
       return ret;
 
     return data[k];

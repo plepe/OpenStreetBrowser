@@ -60,7 +60,7 @@ function category_rule_match(dom, cat, rule) {
 //	li_style+="list-style-image: url('symbols/"+icon_data+"'); ";
 //      }
     }
-    var title=this.rule.tags.get("name:"+lang);
+    var title=this.rule.tags.get_lang("name");
 
     ret="<li class='listitem' style=\""+li_style+"\" id='list_"+this.id+"' title='"+title+"'><element id='"+this.id+"' rule_id='"+this.rule.id+"'+><a href='#"+this.id+"' onMouseOver='set_highlight([\""+this.id+"\"])' onMouseOut='unset_highlight()'>"+name+"</a>"+add+"</element></li>\n";
     return ret;
@@ -147,7 +147,7 @@ function category(id) {
     this.loaded=true;
 
     category_list[this.id]=[];
-    lang_str["cat:"+this.id]=[ this.tags.get("name") ];
+    lang_str["cat:"+this.id]=[ this.tags.get_lang("name") ];
     show_list();
   }
 
