@@ -13,7 +13,6 @@ function win(cl) {
   this.close=function() {
     this.win.parentNode.removeChild(this.win);
     delete windows[this.id];
-    delete(this);
   }
 }
 

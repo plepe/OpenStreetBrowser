@@ -12,6 +12,9 @@ function get_my_pos(event, pos) {
   click_override=null;
   update_lonlat(pos);
 
+  if(!navigator.geolocation)
+    return;
+
   navigator.geolocation.clearWatch(geo_watch);
 }
 

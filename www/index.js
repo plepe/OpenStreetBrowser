@@ -87,7 +87,12 @@ function call_back(response) {
   if(text_node) {
     if(!text_node[0])
       show_msg("Returned data invalid", response.responseText);
-    info_content.innerHTML=get_content(text_node[0]);
+    var div=document.createElement("div");
+    div.innerHTML=get_content(text_node[0]);
+
+    while(info_content.firstChild)
+      info_content.removeChild(info_content.firstChild);
+    info_content.appendChild(div);
   }
 
   var osm=data.getElementsByTagName("osm");
