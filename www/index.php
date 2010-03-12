@@ -84,7 +84,7 @@ else
 <div class='menu'>
 <div class='logo'><a href="http://wiki.openstreetmap.org/wiki/OpenStreetBrowser"><img src="img/osb_logo.png" alt="OpenStreetBrowser" name="OpenStreetBrowser" border="0"/></a><p>OpenStreet <span class="bigger">Browser</span></p></div>
 <div class='search'>
-<input id='search' value='<?=lang("search_field")?>' onChange="search(this)" onFocus="search_focus(this)" />
+<form id='osb_search_form' action='javascript:search()'><input name='osb_search' id='search' value='<?=lang("search_field")?>' onFocus="search_focus(this)" /></form>
 </div>
 <div id='details' class='info'>
 <form id='details_content' class='details' action='javascript:details_content_submit()'>
