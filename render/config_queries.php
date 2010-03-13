@@ -73,21 +73,21 @@ $query["landuse"]=<<<EOT
 	   OR "landuse" in ('village_green', 'recreation_ground', 'grass')
 	   THEN 'park'
 	 WHEN "leisure" in ('golf_course', 'playground', 'sports_centre', 'track',
-	                    'pitch', 'water_park')
+	                    'pitch', 'water_park', 'piste')
 	   THEN 'sport'
 	 WHEN "leisure" in ('nature_reserve')
 	   THEN 'nature_reserve'
 	 WHEN "natural" in ('wood', 'wetland', 'marsh', 'glacier', 'scree', 'scrub', 'heath')
 	   THEN 'natural0'
-	 WHEN "natural" in ('mud', 'beach', 'cliff')
+	 WHEN "natural" in ('mud', 'beach', 'cliff', 'rock')
 	   THEN 'natural1'
          WHEN "landuse" in ('cemetery')
 	   THEN 'cemetery'
-	 WHEN "landuse" in ('forest')
+	 WHEN "landuse" in ('forest', 'wood')
 	   THEN 'natural0'
 	 WHEN "leisure" in ('common', 'garden')
-	   OR "landuse" in ('meadow', 'farm', 'farmyard', 'farmland', 'vineyard', 'orchard')
-	   OR "natural" in ('fell')
+	   OR "landuse" in ('meadow', 'farm', 'greenhouse_horticulture', 'farmyard', 'farmland', 'vineyard', 'orchard')
+	   OR "natural" in ('fell', 'meadow')
 	   THEN 'garden'
 	 WHEN "landuse" in ('school')
 	   THEN 'education'
@@ -118,6 +118,12 @@ $query["landuse"]=<<<EOT
 	    END)
 	END) as landuse,
 	(CASE 
+	 WHEN "leisure" in ('golf_course', 'playground', 'sports_centre', 'track',
+	                    'pitch', 'water_park', 'piste') THEN
+	    (CASE
+	      WHEN "landuse" in ('piste') THEN 't1'
+	      ELSE 't0'
+	      END)
 	  WHEN "natural" in ('wood', 'wetland', 'marsh', 'glacier', 'scree', 'scrub', 'heath', 'mud', 'beach') THEN
 	    (CASE
 	      WHEN "natural" in ('wood', 'scrub') THEN 't0'
@@ -125,13 +131,13 @@ $query["landuse"]=<<<EOT
 	      WHEN "natural" in ('glacier') THEN 't2'
 	      WHEN "natural" in ('scree', 'heath') THEN 't3'
 	      END)
-	  WHEN "natural" in ('mud', 'beach', 'cliff') THEN
+	  WHEN "natural" in ('mud', 'beach', 'cliff', 'rock') THEN
 	    (CASE
 	      WHEN "natural" in ('mud') THEN 't0'
 	      WHEN "natural" in ('beach') THEN 't1'
-	      WHEN "natural" in ('cliff') THEN 't2'
+	      WHEN "natural" in ('cliff', 'rock') THEN 't2'
 	      END)
-	  WHEN "landuse" in ('forest') THEN 't0'
+	  WHEN "landuse" in ('forest', 'wood') THEN 't0'
  	  WHEN "landuse" in ('quarry', 'farmyard', 'farmland', 'landfill', 'brownfield', 
 	                    'railway', 'construction', 'military', 'industrial')
 	   OR "amenity" in ('bus_station')

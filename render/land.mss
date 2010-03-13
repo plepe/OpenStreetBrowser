@@ -35,9 +35,13 @@
 .landuse[landuse=industrial][sub_type=t1][zoom>=10] {
   polygon-fill: #93a65b;
 }
-.landuse_extract[landuse=sport][zoom>=5][zoom<10],
-.landuse[landuse=sport][zoom>=10] {
+.landuse_extract[landuse=sport][sub_type=t0][zoom>=5][zoom<10],
+.landuse[landuse=sport][sub_type=t0][zoom>=10] {
   polygon-fill: #8bccb3;
+}
+.landuse_extract[landuse=sport][sub_type=t1][zoom>=5][zoom<10],
+.landuse[landuse=sport][sub_type=t1][zoom>=10] {
+  polygon-fill: #faf7e0;
 }
 .landuse_extract[landuse=cemetery][zoom>=5][zoom<10],
 .landuse[landuse=cemetery][zoom>=10][zoom<14] {
