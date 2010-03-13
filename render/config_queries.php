@@ -77,12 +77,14 @@ $query["landuse"]=<<<EOT
 	   THEN 'sport'
 	 WHEN "leisure" in ('nature_reserve')
 	   THEN 'nature_reserve'
-	 WHEN "natural" in ('wood', 'wetland', 'marsh', 'glacier', 'scree', 'scrub', 'heath', 'mud', 'beach')
-	   THEN 'natural'
+	 WHEN "natural" in ('wood', 'wetland', 'marsh', 'glacier', 'scree', 'scrub', 'heath')
+	   THEN 'natural0'
+	 WHEN "natural" in ('mud', 'beach', 'cliff')
+	   THEN 'natural1'
          WHEN "landuse" in ('cemetery')
 	   THEN 'cemetery'
 	 WHEN "landuse" in ('forest')
-	   THEN 'natural'
+	   THEN 'natural0'
 	 WHEN "leisure" in ('common', 'garden')
 	   OR "landuse" in ('meadow', 'farm', 'farmyard', 'farmland', 'vineyard', 'orchard')
 	   OR "natural" in ('fell')
@@ -122,8 +124,12 @@ $query["landuse"]=<<<EOT
 	      WHEN "natural" in ('wetland', 'marsh') THEN 't1'
 	      WHEN "natural" in ('glacier') THEN 't2'
 	      WHEN "natural" in ('scree', 'heath') THEN 't3'
-	      WHEN "natural" in ('mud') THEN 't4'
-	      WHEN "natural" in ('beach') THEN 't5'
+	      END)
+	  WHEN "natural" in ('mud', 'beach', 'cliff') THEN
+	    (CASE
+	      WHEN "natural" in ('mud') THEN 't0'
+	      WHEN "natural" in ('beach') THEN 't1'
+	      WHEN "natural" in ('cliff') THEN 't2'
 	      END)
 	  WHEN "landuse" in ('forest') THEN 't0'
  	  WHEN "landuse" in ('quarry', 'farmyard', 'farmland', 'landfill', 'brownfield', 
