@@ -86,6 +86,36 @@ class tags {
 
     return $text;
   }
+
+  // match_desc:
+  // ( "or" => arr(arr("is", "key", "value")))
+  function match($match_desc) {
+    switch($match_desc[0]) {
+      case "or":
+	for($i=1; $i<sizeof($match_desc); $i++)
+	  if($this->match($match_desc[$i]))
+	    return true;
+        return false;
+      case "and":
+	for($i=1; $i<sizeof($match_desc); $i++)
+	  if(!$this->match($match_desc[$i]))
+	    return false;
+	return true;
+      case "is":
+	if($this->get($match_desc[1])==$match_desc[2])
+	  return true;
+        return false;
+      case "exist":
+	if($this->get($match_desc[1]))
+	  return true;
+        return false;
+      case "not":
+        return !$this->match($match_desc[1]);
+      default:
+        print "Invalid match desc '$match_desc[0]'\n";
+    }
+    return false;
+  }
 }
 
 function parse_array($text, $prefix="") {
