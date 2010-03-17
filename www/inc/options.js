@@ -38,13 +38,13 @@ function save_options() {
   options_set("ui_lang", options_select_get("ui_lang"));
   options_set("data_lang", options_select_get("data_lang"));
 
-  options_win.close();
-  delete(options_win);
+  close_options();
 }
 
 function close_options() {
   options_win.close();
-  delete(options_win);
+  options_win=null;
+  delete options_win;
 }
 
 function options_radio(key, values) {
@@ -113,6 +113,9 @@ function options_select_get(key) {
 function show_options() {
   var ret;
 
+  if(options_win)
+    return;
+
   options_win=new win("options_win");
 
   ret ="<form action='javascript:save_options()' id='options_form'>\n";
@@ -137,7 +140,7 @@ function show_options() {
   ret+="</p>\n";
 
   ret+="<p><input type='submit' value='"+t("save")+"'>\n";
-  ret+="<input type='button' onClick='javascript:close_options()' value='"+t("cancel")+"></p>\n";
+  ret+="<input type='button' onClick='javascript:close_options()' value='"+t("cancel")+"'></p>\n";
   ret+="</form>\n";
 
   options_win.content.innerHTML=ret;

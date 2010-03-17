@@ -4,7 +4,7 @@
 <ShortName>OpenStreetBrowser</ShortName>
 <Description>Search the OpenStreetBrowser</Description>
 <Image height="16" width="16" type="image/x-icon">http://www.openstreetbrowser.org/favicon.ico</Image>
-<Url type="text/html" method="GET" xmlns:referrer="http://a9.com/-/opensearch/extensions/referrer/" template="http://openstreetbrowser.org/#search_{searchTerms}"/>
+<Url type="text/html" method="GET" xmlns:referrer="http://a9.com/-/opensearch/extensions/referrer/" template="http://www.openstreetbrowser.org/#search_{searchTerms}"/>
 <Url type="application/opensearchdescription+xml" rel="self" template="http://openstreetbrowser.org/osb_search.xml"/>
 <InputEncoding>UTF-8</InputEncoding>
 

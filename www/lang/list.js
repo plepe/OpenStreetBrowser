@@ -33,7 +33,7 @@ var language_list={
   "sq": "shqip",
   "fi": "suomi",
   "sv": "svenska",
-  "uk": "украї́нська мо́ва",
+  "uk": "украї́нська мо́ва"
 }
 //for(var i in language_list)
 //  lang_str["lang:"+i]=[ language_list[i] ];
