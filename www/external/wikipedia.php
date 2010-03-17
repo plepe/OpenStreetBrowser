@@ -134,6 +134,26 @@ function ext_wikipedia($object) {
       $page=$new_page;
     }
   }
+  else {
+    $list=$object->tags->get_available_languages("wikipedia");
+    $lang=array_keys($list);
+    $lang=$lang[0];
+    $page=$list[$lang];
+
+    $page=wikipedia_parse_lang($object, $page, $lang, $data_lang);
+  }
+
+  if(!$page)
+    return;
+
+  if(!($url=wikipedia_url($object, $page, $data_lang)))
+    return;
+
+  $text=wikipedia_get_abstract($object, $page, $data_lang);
+
+  if($text) {
+    $ret.="$text<a class='external' href='$url'>".lang("read_more")."</a>";
+  }
 
   if(!$page)
     return;
