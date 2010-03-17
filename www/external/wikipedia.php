@@ -138,18 +138,6 @@ function ext_wikipedia($object) {
   if(!$page)
     return;
 
-  if(!($url=wikipedia_url($object, $page, $data_lang)))
-    return;
-
-  $text=wikipedia_get_abstract($object, $page, $data_lang);
-
-  if($text) {
-    $ret.="$text<a class='external' href='$url'>".lang("read_more")."</a>";
-  }
-
-  if(!$page)
-    return;
-
   if(!($url=wikipedia_url($object, $page, $lang)))
     return;
 
