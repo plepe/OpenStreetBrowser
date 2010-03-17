@@ -134,14 +134,6 @@ function ext_wikipedia($object) {
       $page=$new_page;
     }
   }
-  else {
-    $list=$object->tags->get_available_languages("wikipedia");
-    $lang=array_keys($list);
-    $lang=$lang[0];
-    $page=$list[$lang];
-
-    $page=wikipedia_parse_lang($object, $page, $lang, $data_lang);
-  }
 
   if(!$page)
     return;
