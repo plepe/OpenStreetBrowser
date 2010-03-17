@@ -140,7 +140,7 @@ function show_options() {
   ret+="</p>\n";
 
   ret+="<p><input type='submit' value='"+t("save")+"'>\n";
-  ret+="<input onClick='javascript:close_options()' value='"+t("cancel")+"></p>\n";
+  ret+="<input type='button' onClick='javascript:close_options()' value='"+t("cancel")+"'></p>\n";
   ret+="</form>\n";
 
   options_win.content.innerHTML=ret;
