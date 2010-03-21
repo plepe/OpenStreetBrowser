@@ -173,7 +173,9 @@ function check_redraw() {
 }
 
 function view_changed_start(event) {
-  first_load=0;
+  if((map.zoom)&&(start_zoom!=map.zoom))
+    first_load=0;
+
   if(view_changed_timer)
     clearTimeout(view_changed_timer);
 
