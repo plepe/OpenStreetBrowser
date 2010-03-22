@@ -4,7 +4,7 @@ function view_call_back(response) {
   var data=response.responseXML;
   list_reload_working=0;
   var map_div=document.getElementById("map");
-  map_div.style.cursor=null;
+  map_div.style.cursor="default";
 
   if(!data) {
     alert("no data\n"+response.responseText);
@@ -68,7 +68,7 @@ function view_click(event) {
   view_changed_last=now;
 
   var map_div=document.getElementById("map");
-  map_div.style.cursor="wait";
+  map_div.style.cursor="progress";
 
 //  if(get_hash()!="")
 //    return 0;

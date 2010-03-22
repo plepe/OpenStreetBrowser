@@ -174,6 +174,10 @@ function check_redraw() {
 
 function view_changed_start(event) {
   first_load=0;
+
+  var map_div=document.getElementById("map");
+  map_div.style.cursor="default";
+
   if(view_changed_timer)
     clearTimeout(view_changed_timer);
 
