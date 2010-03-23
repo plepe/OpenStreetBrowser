@@ -71,7 +71,7 @@ input#search {
   border-left:1px solid #999;
   height:100%;
 }
-.map_key_hidden {
+.map_key_hidden {
   display: none;
 }
 .map_key {
@@ -84,7 +84,7 @@ input#search {
   height:100%;
   overflow: auto;
 }
-.info {
+.info {
   position: absolute;
   width: 250px;
   overflow: auto;
@@ -112,7 +112,8 @@ select#lang {
   font-size: 14px;
 }
 h1 {
-  margin:0;  font-size: 13px;
+  margin:0;
+  font-size: 13px;
   font-weight: bold;
   padding:3px 5px;
 }
