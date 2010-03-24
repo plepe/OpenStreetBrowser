@@ -168,6 +168,11 @@ function parse_explode($match) {
 	  $m=1;
 	  $i--;
 	}
+	elseif($c==",") {
+	  $parser[]="OR";
+	}
+	elseif($c==" ") {
+	}
 	elseif(!in_array($c, array("\"", "'"))) {
 	  $key.=$c;
 	}
@@ -201,11 +206,15 @@ function parse_explode($match) {
 	  $m=1;
 	  $i--;
 	}
-	elseif($c==" ") {
+	elseif(($c==" ")||($c==",")) {
 	  $values[sizeof($values)-1][]=$value;
 	  $parser[]=array("key"      =>$key,
 	                  "operators"=>$operators,
 			  "values"   =>$values);
+
+	  if($c==",") {
+	    $parser[]="OR";
+	  }
 
 	  $key="";
 	  $operator="";
