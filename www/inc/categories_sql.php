@@ -143,10 +143,10 @@ function build_match_toarray_part($part) {
 
 	foreach($values as $v) {
 	  if(($v=="*")&&($c_not==false)) {
-	    $c[0]="is not null";
+	    $c[0]="exist";
 	  }
 	  elseif(($v=="*")&&($c_not==true)) {
-	    $c[0]="is null";
+	    $c[0]="exist not";
 	  }
 	}
 	
