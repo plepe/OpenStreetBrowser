@@ -101,6 +101,71 @@ class tags {
     }
   }
 
+  // match_desc:
+  // ( "or" => arr(arr("is", "key", "value")))
+
+  // valid operators:
+  // or  ... any of the following elements is true
+  // and ... all of the following elements is true
+  // not ... inverse element [1]
+  // is  ... tag with key [1] is one of the following elements
+  // is not ... tag with key [1] is none of the following elements
+  // exist  ... there's a tag with key [1]
+  // exist not    ... there's no tag with key [1]
+  // >, <, >=, <= ... key [1] matches value [2]
+  function match($match_desc) {
+    switch($match_desc[0]) {
+      case "or":
+	for($i=1; $i<sizeof($match_desc); $i++)
+	  if($this->match($match_desc[$i]))
+	    return true;
+        return false;
+      case "and":
+	for($i=1; $i<sizeof($match_desc); $i++)
+	  if(!$this->match($match_desc[$i]))
+	    return false;
+	return true;
+      case "is":
+	if($this->get($match_desc[1])==$match_desc[2])
+	  return true;
+        return false;
+      case "is not":
+	if($this->get($match_desc[1])!=$match_desc[2])
+	  return false;
+        return true;
+      case "exist":
+	if($this->get($match_desc[1]))
+	  return true;
+        return false;
+      case "exist not":
+	if($this->get($match_desc[1]))
+	  return false;
+        return true;
+      case ">":
+      case "<":
+      case ">=":
+      case "<=":
+        $comp1=parse_number($this->get($match_desc[1]));
+        $comp2=parse_number($match_desc[2]);
+	switch($match_desc[0]) {
+	  case ">":
+	    return $comp1>$comp2;
+	  case "<":
+	    return $comp1<$comp2;
+	  case ">=":
+	    return $comp1>=$comp2;
+	  case "<=":
+	    return $comp1<=$comp2;
+	}
+      case "not":
+        return !$this->match($match_desc[1]);
+      default:
+        print "Invalid match desc '$match_desc[0]'\n";
+    }
+
+    return false;
+  }
+
   function parse($str, $lang="") {
     $str=explode(";", $str);
     foreach($str as $def) {
@@ -127,7 +192,6 @@ class tags {
 
     return null;
   }
-
 }
 
 function parse_array($text, $prefix="") {
