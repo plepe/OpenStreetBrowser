@@ -22,6 +22,10 @@ class tags {
     return $this->data[$k];
   }
 
+  function get_multi($k) {
+    return split_semicolon($this->data[$k]);
+  }
+
   function get_lang($k, $l=null) {
     global $data_lang;
     if($l===null)
@@ -31,6 +35,17 @@ class tags {
       return $ret;
 
     return $this->data[$k];
+  }
+
+  function get_lang_multi($k, $l=null) {
+    global $data_lang;
+    if($l===null)
+      $l=$data_lang;
+
+    if($ret=($this->data["$k:$l"]))
+      return split_semicolon($ret);
+
+    return split_semicolon($this->data[$k]);
   }
 
   function get_available_languages($key) {
