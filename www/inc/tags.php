@@ -127,14 +127,18 @@ class tags {
 	    return false;
 	return true;
       case "is":
+	$values=$this->get_multi($match_desc[1]);
 	for($i=2; $i<sizeof($match_desc); $i++)
-	  if($this->get($match_desc[1])==$match_desc[$i])
-	    return true;
+	  for($j=0; $j<sizeof($values); $j++)
+	    if($values[$j]==$match_desc[$i])
+	      return true;
         return false;
       case "is not":
+	$values=$this->get_multi($match_desc[1]);
 	for($i=2; $i<sizeof($match_desc); $i++)
-	  if($this->get($match_desc[1])!=$match_desc[$i])
-	    return false;
+	  for($j=0; $j<sizeof($values); $j++)
+	    if($values[$j]!=$match_desc[$i])
+	      return false;
         return true;
       case "exist":
 	if($this->get($match_desc[1]))
@@ -148,19 +152,32 @@ class tags {
       case "<":
       case ">=":
       case "<=":
-        $comp1=parse_number($this->get($match_desc[1]));
-        $comp2=parse_number($match_desc[2]);
+	$values=$this->get_multi($match_desc[1]);
+	for($j=0; $j<sizeof($values); $j++) {
 
-	switch($match_desc[0]) {
-	  case ">":
-	    return $comp1>$comp2;
-	  case "<":
-	    return $comp1<$comp2;
-	  case ">=":
-	    return $comp1>=$comp2;
-	  case "<=":
-	    return $comp1<=$comp2;
+	  $comp1=parse_number($values[$j]);
+	  $comp2=parse_number($match_desc[2]);
+
+	  switch($match_desc[0]) {
+	    case ">":
+	      if($comp1>$comp2)
+		return true;
+	      break;
+	    case "<":
+	      if($comp1<$comp2)
+		return true;
+	      break;
+	    case ">=":
+	      if($comp1>=$comp2)
+		return true;
+	      break;
+	    case "<=":
+	      if($comp1<=$comp2)
+		return true;
+	      break;
+	  }
 	}
+	return false;
       case "not":
         return !$this->match($match_desc[1]);
       default:
