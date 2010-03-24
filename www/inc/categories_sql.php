@@ -43,8 +43,154 @@ function parse_match($match, $table="point") {
   return $ret;
 }
 
+// Parses a matching string as used in categories
+function parse_match_toarray($match, $table="point") {
+  $match_parts=parse_explode($match);
+
+  if(is_string($match_parts)) {
+    error("Error: $match_parts");
+    return array("case"=>array());
+  }
+
+  $or_parts=array("or");
+  $parts=array("and");
+
+  foreach($match_parts as $part) {
+    if($part=="OR") {
+      if(sizeof($parts)==2)
+	$or_parts[]=$parts[1];
+      else
+	$or_parts[]=$parts;
+      $parts=array("and");
+    }
+    else {
+      $b=build_match_toarray_part($part, $table);
+
+      if(is_string($b))
+	error("Error: $b");
+      else
+	$parts[]=$b;
+    }
+  }
+
+  if(sizeof($parts)==2)
+    $or_parts[]=$parts[1];
+  else
+    $or_parts[]=$parts;
+
+  if(sizeof($or_parts)==2)
+    return $or_parts[1];
+
+  return $or_parts;
+//  $ret=array();
+//  foreach($parts as $def) {
+//    foreach($def as $part=>$text) {
+//      if(isset($text))
+//	$ret[$part][]=$text;
+//    }
+//  }
+//
+//  $where=array();
+//  if($ret['where']) foreach($ret['where'] as $w) {
+//    foreach($w as $k=>$vs) {
+//      $where[$k]=$vs;
+//    }
+//  }
+//  $ret['where']=$where;
+//
+//  if(sizeof($ret['case']))
+//    $ret['case']=array(implode(" and ", $ret['case']));
+//  else
+//    $ret['case']=array("1=1");
+//
+//  return $ret;
+}
+
 function postgre_escape($str) {
   return "E'".strtr($str, array("'"=>"\\'"))."'";
+}
+
+function build_match_toarray_part($part) {
+  $c_not=null;
+  $where=array();
+  $case=array();
+
+  for($i=0; $i<sizeof($part['operators']); $i++) {
+    $operator=$part['operators'][$i];
+    $values=$part['values'][$i];
+
+    $c=array();
+    $c_prevnot=$c_not;
+    $c_not=false;
+    $where_not="";
+    switch($operator) {
+      case "!=":
+        $c_not=true;
+	$where_not="!";
+      case "=":
+	$c=array(
+	  ($c_not?"is not":"is"),
+	  $part['key'],
+	);
+	$c1=array();
+	$ccount=0;
+	foreach($values as $v) {
+	  if($v!="*") {
+	    $c[]=$v;
+	    $ccount++;
+	  }
+	}
+
+	foreach($values as $v) {
+	  if(($v=="*")&&($c_not==false)) {
+	    $c[0]="is not null";
+	  }
+	  elseif(($v=="*")&&($c_not==true)) {
+	    $c[0]="is null";
+	  }
+	}
+	
+	if($c_prevnot===true) {
+	  $case=array("or", $case, $c);
+	}
+	elseif($c_prevnot===false) {
+	  $case=array("and", $case, $c);
+	}
+	else
+	  $case=$c;
+	break;
+      case ">":
+      case "<":
+      case ">=":
+      case "<=":
+        if(sizeof($values)>1)
+	  print "Operator $operator , more than one value supplied\n";
+	$c_not=false;
+
+	$c=array(
+	  $operator,
+	  $part['key'],
+	);
+
+	$c[]=$values[0];
+
+	if($c_prevnot===true) {
+	  $case=array("or", $case, $c);
+	}
+	elseif($c_prevnot===false) {
+	  $case=array("and", $case, $c);
+	}
+	else
+	  $case=$c;
+
+        break;
+    }
+    // where-statement
+
+    //print_r($c);
+  }
+
+  return $case;
 }
 
 function build_match_part($part, $table) {
