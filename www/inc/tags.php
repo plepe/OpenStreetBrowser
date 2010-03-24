@@ -126,12 +126,14 @@ class tags {
 	    return false;
 	return true;
       case "is":
-	if($this->get($match_desc[1])==$match_desc[2])
-	  return true;
+	for($i=2; $i<sizeof($match_desc); $i++)
+	  if($this->get($match_desc[1])==$match_desc[$i])
+	    return true;
         return false;
       case "is not":
-	if($this->get($match_desc[1])!=$match_desc[2])
-	  return false;
+	for($i=2; $i<sizeof($match_desc); $i++)
+	  if($this->get($match_desc[1])!=$match_desc[$i])
+	    return false;
         return true;
       case "exist":
 	if($this->get($match_desc[1]))
