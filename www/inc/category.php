@@ -33,8 +33,12 @@ class category {
     global $lists_dir;
 
     // load category configuration
-    if(!file_exists("$lists_dir/$this->id.xml.save"))
-      return null;
+    if(!file_exists("$lists_dir/$this->id.xml.save")) {
+      if(file_exists("$lists_dir/$this->id.xml"))
+        $this->compile();
+      else
+	return null;
+    }
 
     $list_data=unserialize(file_get_contents("$lists_dir/$this->id.xml.save"));
 
@@ -109,6 +113,9 @@ class category {
 	    $req_where="";
 
 	  $where=implode(" and ", $qry_where);
+	  
+	  if(!$where)
+	    $where="true";
 
 	  $qryc="select *, astext(ST_Centroid(geo)) as center from (";
 	  $qryc.=$req_data[sql];
@@ -198,5 +205,10 @@ class category {
     $ret.="</match>\n";
 
     return $ret;
+  }
+
+  function compile() {
+    global $lists_dir;
+    return process_file("$lists_dir/$this->id.xml");
   }
 }

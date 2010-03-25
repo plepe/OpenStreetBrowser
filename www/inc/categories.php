@@ -45,36 +45,29 @@ function process_rule($node, $cat) {
 
   foreach($tables as $table) {
     if($postgis_tables[$table]) {
-      $b=parse_match($tags->get("match"), $table);
+      $match=parse_match($tags->get("match"));
 
-      $ret[$table]=$b;
-
-      $ret[$table]['id']=array($id);
 //      if($kind=$tags->get("kind")) {
 //	$kind=explode(";", $kind);
 //	$kind_ret=parse_kind($kind, $table);
 //	$ret[$table]=array_merge_recursive($ret[$table], $kind_ret);
 //      }
     }
-  }
 
-  $prior=9;
-
-  // for tables which include importance
-  if($importance=="*") {
-    foreach($importance_levels as $imp_lev) {
-      array_deep_copy($ret, $r); /// brrr php still gives a warning
-      foreach($r as $table=>$rule) {
-	$r[$table]['case'][0].=" and \"importance\"='$imp_lev'";
-	$r[$table]['where']['importance'][]=$imp_lev;
+    // for tables which include importance
+    if($importance=="*") {
+      foreach($importance_levels as $imp_lev) {
+	//array_deep_copy($ret, $r); /// brrr php still gives a warning
+	$ret[$imp_lev][$table]['match'][$id]=array("and",
+	  array("is", "importance", "$imp_lev"),
+	  $match);
       }
-      $iret[$imp_lev]=$r;
     }
+    else
+      $ret[$importance][$table]['match'][$id]=$match;
   }
-  else
-    $iret[$importance]=$ret;
 
-  return $iret;
+  return $ret;
 }
 
 function process_list($node, $cat) {
@@ -92,7 +85,7 @@ function process_list($node, $cat) {
 
   foreach($ret as $importance=>$x) {
     foreach($x as $table=>$rules) {
-      $ret[$importance][$table][sql]=category_build_sql($rules, $table);
+      $ret[$importance][$table]['sql']=build_sql_match_table($rules['match'], $table);
     }
   }
 

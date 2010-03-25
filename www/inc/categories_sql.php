@@ -24,9 +24,9 @@ function build_sql_match_table($match_list, $table="point") {
 
   $where.=match_to_sql(match_collect_values($match_list), $table_def, "index");
 
-  $select.="END) as match_id\n";
+  $select.="END) as rule_id\n";
 
-  return "select * from ({$select}{$join}{$where}) as t where match_id is not null";
+  return "select * from ({$select}{$join}{$where}) as t where rule_id is not null";
 }
 
 // Parses a matching string as used in categories
@@ -459,38 +459,6 @@ function category_build_where($where_col, $where_vals) {
     if(sizeof($in_vals))
       $ret[]="to_tsvector('simple', $where_col) @@ to_tsquery('simple', ".implode("||'|'||", $in_vals).")";
   }
-
-  return $ret;
-}
-
-function category_build_sql($rules, $table) {
-  global $postgis_tables;
-  $table_def=$postgis_tables[$table];
-
-  $ret ="select * from (select\n";
-  $ret.="  {$table_def['full_id']} as id,\n";
-  $ret.="  {$table_def['geo']} as geo,\n";
-  foreach(array_unique($rules['select']) as $s) {
-    $ret.="  $s,\n";
-  }
-  $ret.="  (CASE\n";
-  foreach($rules['case'] as $i=>$case) {
-    $ret.="    WHEN $case THEN '{$rules['id'][$i]}'\n";
-  }
-  $ret.="  END) as rule_id\n";
-  $ret.="from planet_osm_{$table}\n";
-  foreach(array_unique($rules['join']) as $join) {
-    $ret.="  $join\n";
-  }
-  $where=array();
-  foreach($rules['where'] as $where_col=>$where_vals) {
-    $where=array_merge($where, category_build_where($where_col, $where_vals));
-  }
-  if(sizeof($where)) {
-    $ret.="where\n  ";
-    $ret.=implode(" or\n  ", $where);
-  }
-  $ret.=") as qry where rule_id is not null";
 
   return $ret;
 }
