@@ -145,7 +145,7 @@ function match_to_sql($match) {
 	$ret[]=postgre_escape($match[$i]);
       }
 
-      return "\"$match[1]\" $not in (".implode(", ", $ret).")";
+      return "$not oneof_in(split_semicolon(\"$match[1]\"), ARRAY[".implode(", ", $ret)."]";
     case "exist":
       return "\"$match[1]\" is not null";
     case "exist not":
