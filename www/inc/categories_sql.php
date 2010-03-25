@@ -1,4 +1,34 @@
 <?
+function build_sql_match_table($match_list, $table="point") {
+  global $postgis_tables;
+  $table_def=$postgis_tables[$table];
+  $add_columns=array();
+  $join="from planet_osm_$table\n";
+  $select="select planet_osm_{$table}.{$table_def[id_name]} as id, {$table_def[geo]} as geo, (CASE\n";
+  $where="where";
+  
+  foreach($match_list as $id=>$match) {
+    $part=match_collect_values_part($match);
+
+    foreach($part as $key=>$values) {
+      if(!in_array($key, $table_def[index])&&!in_array($key, $add_columns)) {
+	$join.="  left join {$table_def[id_type]}_tags \"{$key}_table\" on planet_osm_{$table}.{$table_def[id_name]}=\"{$key}_table\".{$table_def[id_type]}_id and \"{$key}_table\".k='$key'\n";
+	$add_columns[]=$key;
+      }
+    }
+
+    $qry=match_to_sql($match, $table_def, "columns");
+
+    $select.="  WHEN $qry THEN '$id'\n";
+  }
+
+  $where.=match_to_sql(match_collect_values($match_list), $table_def, "index");
+
+  $select.="END) as match_id";
+
+  return "select * from ($select\n$join\n$where) as t where match_id is not null";
+}
+
 // Parses a matching string as used in categories
 function parse_match($match, $table="point") {
   $match_parts=parse_explode($match);
@@ -110,7 +140,13 @@ function postgre_escape($str) {
   return "E'".strtr($str, array("'"=>"\\'"))."'";
 }
 
-function match_to_sql($match) {
+function match_to_sql_colname($col, $table_def, $type="columns") {
+  if(in_array($col, $table_def[$type]))
+    return "\"{$col}\"";
+  return "\"{$col}_table\".v";
+}
+
+function match_to_sql($match, $table_def) {
   $not="";
   $same="false";
 
@@ -121,7 +157,7 @@ function match_to_sql($match) {
 
       $ret=array();
       for($i=1; $i<sizeof($match); $i++) {
-	$ret[]=match_to_sql($match[$i]);
+	$ret[]=match_to_sql($match[$i], $table_def);
       }
 
       return "(".implode(") or (", $ret).")";
@@ -131,19 +167,19 @@ function match_to_sql($match) {
 
       $ret=array();
       for($i=1; $i<sizeof($match); $i++) {
-	$ret[]=match_to_sql($match[$i]);
+	$ret[]=match_to_sql($match[$i], $table_def);
       }
 
       return "(".implode(") and (", $ret).")";
     case "not":
-      return "not ".match_to_sql($match[1]);
+      return "not ".match_to_sql($match[1], $table_def);
     case "fuzzy is":
       $ret=array();
       for($i=2; $i<sizeof($match); $i++) {
 	$ret[]=postgre_escape($match[$i]);
       }
 
-      return "to_tsvector('simple', \"$match[1]\") @@ to_tsquery('simple', ".implode("||' | '||", $ret).")";
+      return "to_tsvector('simple', ".match_to_sql_colname($match[1], $table_def, "index").") @@ to_tsquery('simple', ".implode("||' | '||", $ret).")";
     case "is not":
       $not="not";
     case "is":
@@ -152,19 +188,19 @@ function match_to_sql($match) {
 	$ret[]=postgre_escape($match[$i]);
       }
 
-      return "$not oneof_in(split_semicolon(\"$match[1]\"), ARRAY[".implode(", ", $ret)."]";
+      return "$not oneof_in(split_semicolon(".match_to_sql_colname($match[1], $table_def)."), ARRAY[".implode(", ", $ret)."])";
     case "exist":
-      return "\"$match[1]\" is not null";
+      return match_to_sql_colname($match[1], $table_def)." is not null";
     case "exist not":
-      return "\"$match[1]\" is null";
+      return match_to_sql_colname($match[1], $table_def)." is null";
     case ">=":
       $same="true";
     case ">":
-      return "oneof_between(\"$match[1]\", parse_number(".postgre_escape($match[2])."), $same, null, null)";
+      return "oneof_between(".match_to_sql_colname($match[1], $table_def).", parse_number(".postgre_escape($match[2])."), $same, null, null)";
     case "<=":
       $same="true";
     case "<":
-      return "oneof_between(\"$match[1]\", null, null, parse_number(".postgre_escape($match[2])."), $same)";
+      return "oneof_between(".match_to_sql_colname($match[1], $table_def).", null, null, parse_number(".postgre_escape($match[2])."), $same)";
     case "true":
       return "true";
     case "false":
