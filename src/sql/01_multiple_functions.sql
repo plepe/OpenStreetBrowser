@@ -138,7 +138,7 @@ begin
 end;
 $$ language 'plpgsql';
 
-create or replace function oneof_between(text[], int, bool, int, bool)
+create or replace function oneof_between(text[], float, bool, float, bool)
   returns bool
   as $$
 declare

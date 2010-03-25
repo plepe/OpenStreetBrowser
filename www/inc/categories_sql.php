@@ -4,7 +4,7 @@ function build_sql_match_table($match_list, $table="point") {
   $table_def=$postgis_tables[$table];
   $add_columns=array();
   $join="from planet_osm_$table\n";
-  $select="select planet_osm_{$table}.{$table_def[id_name]} as id, {$table_def[geo]} as geo, (CASE\n";
+  $select="select {$table_def[full_id]} as id, {$table_def[geo]} as geo, (CASE\n";
   $where="where";
   
   foreach($match_list as $id=>$match) {
@@ -24,9 +24,9 @@ function build_sql_match_table($match_list, $table="point") {
 
   $where.=match_to_sql(match_collect_values($match_list), $table_def, "index");
 
-  $select.="END) as match_id";
+  $select.="END) as match_id\n";
 
-  return "select * from ($select\n$join\n$where) as t where match_id is not null";
+  return "select * from ({$select}{$join}{$where}) as t where match_id is not null";
 }
 
 // Parses a matching string as used in categories
@@ -196,11 +196,11 @@ function match_to_sql($match, $table_def) {
     case ">=":
       $same="true";
     case ">":
-      return "oneof_between(".match_to_sql_colname($match[1], $table_def).", parse_number(".postgre_escape($match[2])."), $same, null, null)";
+      return "oneof_between(split_semicolon(".match_to_sql_colname($match[1], $table_def)."), ".parse_number($match[2]).", $same, null, null)";
     case "<=":
       $same="true";
     case "<":
-      return "oneof_between(".match_to_sql_colname($match[1], $table_def).", null, null, parse_number(".postgre_escape($match[2])."), $same)";
+      return "oneof_between(split_semicolon(".match_to_sql_colname($match[1], $table_def)."), null, null, ".parse_number($match[2]).", $same)";
     case "true":
       return "true";
     case "false":
