@@ -6,6 +6,10 @@ declare
   val alias for $2;
   i   int:=1;
 begin
+  if array_lower(arr, 1) is null then
+    return false;
+  end if;
+
   for i in array_lower(arr, 1)..array_upper(arr, 1) loop
     if arr[i]=val then
       return true;
@@ -141,6 +145,10 @@ declare
   arr alias for $1;
   i   int:=1;
 begin
+  if array_lower(arr, 1) is null then
+    return false;
+  end if;
+
   for i in array_lower(arr, 1)..array_upper(arr, 1) loop
     if is_between(arr[i], $2, $3, $4, $5) then
       return true;
@@ -158,6 +166,14 @@ declare
   needles  alias for $2;
   i   int:=1;
 begin
+  if array_lower(haystack, 1) is null then
+    return false;
+  end if;
+
+  if array_lower(needles, 1) is null then
+    return false;
+  end if;
+
   for i in array_lower(needles, 1)..array_upper(needles, 1) loop
     if oneof_is(haystack, needles[i]) then
       return true;
