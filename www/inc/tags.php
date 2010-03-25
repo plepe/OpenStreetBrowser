@@ -140,6 +140,7 @@ class tags {
 	  if(!$this->match($match_desc[$i]))
 	    return false;
 	return true;
+      case "fuzzy is":
       case "is":
 	$values=$this->get_multi($match_desc[1]);
 	for($i=2; $i<sizeof($match_desc); $i++)

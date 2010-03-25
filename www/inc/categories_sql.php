@@ -137,6 +137,13 @@ function match_to_sql($match) {
       return "(".implode(") and (", $ret).")";
     case "not":
       return "not ".match_to_sql($match[1]);
+    case "fuzzy is":
+      $ret=array();
+      for($i=2; $i<sizeof($match); $i++) {
+	$ret[]=postgre_escape($match[$i]);
+      }
+
+      return "to_tsvector('simple', \"$match[1]\") @@ to_tsquery('simple', ".implode("||' | '||", $ret).")";
     case "is not":
       $not="not";
     case "is":
@@ -171,6 +178,7 @@ function match_collect_values_part($el) {
   $ret=array();
 
   switch($el[0]) {
+    case "fuzzy is":
     case "is":
       for($i=2; $i<sizeof($el); $i++)
 	$ret[$el[1]][]=$el[$i];
@@ -215,7 +223,7 @@ function match_collect_values($arr) {
       $ret[]=array("exist", $key);
     }
     else {
-      $x=array("is", $key);
+      $x=array("fuzzy is", $key);
       foreach($values as $v)
         if($v!==false)
 	  $x[]=$v;
