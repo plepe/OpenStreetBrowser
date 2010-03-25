@@ -110,6 +110,63 @@ function postgre_escape($str) {
   return "E'".strtr($str, array("'"=>"\\'"))."'";
 }
 
+function match_to_sql($match) {
+  $not="";
+  $same="false";
+
+  switch($match[0]) {
+    case "or":
+      if(sizeof($match)==1)
+	return "true";
+
+      $ret=array();
+      for($i=1; $i<sizeof($match); $i++) {
+	$ret[]=match_to_sql($match[$i]);
+      }
+
+      return "(".implode(") or (", $ret).")";
+    case "and":
+      if(sizeof($match)==1)
+	return "true";
+
+      $ret=array();
+      for($i=1; $i<sizeof($match); $i++) {
+	$ret[]=match_to_sql($match[$i]);
+      }
+
+      return "(".implode(") and (", $ret).")";
+    case "not":
+      return "not ".match_to_sql($match[1]);
+    case "is not":
+      $not="not";
+    case "is":
+      $ret=array();
+      for($i=2; $i<sizeof($match); $i++) {
+	$ret[]=postgre_escape($match[$i]);
+      }
+
+      return "\"$match[1]\" $not in (".implode(", ", $ret).")";
+    case "exist":
+      return "\"$match[1]\" is not null";
+    case "exist not":
+      return "\"$match[1]\" is null";
+    case ">=":
+      $same="true";
+    case ">":
+      return "oneof_between(\"$match[1]\", parse_number(".postgre_escape($match[2])."), $same, null, null)";
+    case "<=":
+      $same="true";
+    case "<":
+      return "oneof_between(\"$match[1]\", null, null, parse_number(".postgre_escape($match[2])."), $same)";
+    case "true":
+      return "true";
+    case "false":
+      return "false";
+    default:
+      return "X";
+  }
+}
+
 function match_collect_values_part($el) {
   $ret=array();
 
