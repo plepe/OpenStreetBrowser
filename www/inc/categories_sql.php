@@ -110,6 +110,69 @@ function postgre_escape($str) {
   return "E'".strtr($str, array("'"=>"\\'"))."'";
 }
 
+function match_collect_values_part($el) {
+  $ret=array();
+
+  switch($el[0]) {
+    case "is":
+      for($i=2; $i<sizeof($el); $i++)
+	$ret[$el[1]][]=$el[$i];
+      break;
+    case "exist":
+    case "is not":
+    case ">":
+    case "<":
+    case ">=":
+    case "<=":
+      $ret[$el[1]][]=true;
+      break;
+    case "exist not":
+      $ret[$el[1]][]=false;
+      break;
+    case "and":
+    case "or":
+      for($i=1; $i<sizeof($el); $i++)
+	$ret=array_merge_recursive($ret, match_collect_values_part($el[$i]));
+  }
+
+  return $ret;
+}
+
+function match_collect_values($arr) {
+  $vals=array();
+  $ret=array("or");
+
+  foreach($arr as $el) {
+    $vals=array_merge_recursive($vals, match_collect_values_part($el));
+  }
+
+  foreach($vals as $key=>$values) {
+    $vals[$key]=array_unique($values);
+  }
+
+  foreach($vals as $key=>$values) {
+    if(in_array(true, $values, true)&&in_array(false, $values, true)) {
+      $ret[]=array("true");
+    }
+    elseif(in_array(true, $values, true)) {
+      $ret[]=array("exist", $key);
+    }
+    else {
+      $x=array("is", $key);
+      foreach($values as $v)
+        if($v!==false)
+	  $x[]=$v;
+
+      if((sizeof($values)>1)&&in_array(false, $values, true))
+	$ret[]=array("or", array("exist not", $key), $x);
+      else
+	$ret[]=$x;
+    }
+  }
+
+  return $ret;
+}
+
 function build_match_toarray_part($part) {
   $c_not=null;
   $where=array();
