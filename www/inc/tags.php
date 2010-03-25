@@ -180,6 +180,10 @@ class tags {
 	return false;
       case "not":
         return !$this->match($match_desc[1]);
+      case "true":
+	return true;
+      case "false":
+	return false;
       default:
         print "Invalid match desc '$match_desc[0]'\n";
     }
