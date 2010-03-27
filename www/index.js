@@ -287,3 +287,4 @@ function add_funs(arr) {
 
 //add_funs(info_lists);
 window.onload=init;
+
