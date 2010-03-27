@@ -227,7 +227,7 @@ function init() {
 			new OpenLayers.Control.Navigation() ]
 	  });
 
-  var layerpubtran = new OpenLayers.Layer.OSM("OpenStreetBrowser", "http://www.openstreetbrowser.org/skunk/tiles/base/", {numZoomLevels: 19});
+  var layerpubtran = new OpenLayers.Layer.OSM("OpenStreetBrowser", "tiles/base/", {numZoomLevels: 19});
   var layermarkers = new OpenLayers.Layer.Markers("Markers");
   var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
   var layerTah = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
