@@ -17,6 +17,7 @@ function view_call_back(response) {
     var t=get_content(text_node[0]);
     if(t.substr(0, 8)=="redirect") {
       location.hash="#"+t.substr(9);
+      highlight_next_no_zoom=true;
       return;
     }
   }

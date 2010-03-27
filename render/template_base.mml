@@ -98,7 +98,7 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
-      <Parameter name="table">(select name, way, (CASE WHEN "waterway" is not NULL THEN "waterway" WHEN "landuse" is not NULL THEN "landuse" WHEN "natural" is not NULL THEN "natural" END) as landuse from planet_osm_polygon where "natural" IN ('water', 'land', 'bay') OR "landuse" IN ('water', 'reservoir', 'lake') OR "waterway" IN ('dock', 'riverbank')) as water</Parameter>
+      <Parameter name="table">(select name, way, (CASE WHEN "waterway" is not NULL THEN "waterway" WHEN "landuse" is not NULL THEN "landuse" WHEN "natural" is not NULL THEN "natural" END) as landuse from planet_osm_polygon where "natural" IN ('water', 'land', 'bay') OR "landuse" IN ('water', 'reservoir', 'lake', 'basin') OR "waterway" IN ('dock', 'riverbank')) as water</Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>

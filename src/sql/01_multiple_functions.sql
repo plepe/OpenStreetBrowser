@@ -149,3 +149,20 @@ begin
   return false;
 end;
 $$ language 'plpgsql';
+
+create or replace function oneof_in(text[], text[])
+  returns bool
+  as $$
+declare
+  haystack alias for $1;
+  needles  alias for $2;
+  i   int:=1;
+begin
+  for i in array_lower(needles, 1)..array_upper(needles, 1) loop
+    if oneof_is(haystack, needles[i]) then
+      return true;
+    end if;
+  end loop;
+  return false;
+end;
+$$ language 'plpgsql';

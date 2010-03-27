@@ -4,10 +4,12 @@ function search_focus(ob) {
   ob.value="";
 }
 
-function search(ob) {
+function search() {
+  var search_form=document.getElementById("osb_search_form");
+
   var details_content=document.getElementById("details_content");
   var details=document.getElementById("details");
-  location.hash="#search_"+ob.value;
+  location.hash="#search_"+search_form.elements.osb_search.value;
 }
 
 function real_search(value, param) {
