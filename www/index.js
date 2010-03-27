@@ -235,6 +235,14 @@ function init() {
 
   map.addLayers([ layerpubtran, layerMapnik, layerTah, layercycle]);
 
+  var hill = new OpenLayers.Layer.OSM(
+                 "Hillshading (NASA SRTM3 v2)",
+		 "http://toolserver.org/~cmarqu/hill/",
+		{ type: 'png',
+		  displayOutsideMaxExtent: true, isBaseLayer: false,
+		  transparent: true, "visibility": false });
+  map.addLayers([ hill ]);
+
   var permalink=document.getElementById("permalink");
   map.addControl(new OpenLayers.Control.Permalink(permalink, "http://www.openstreetbrowser.org/"));
 
