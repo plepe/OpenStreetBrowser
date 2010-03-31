@@ -64,16 +64,21 @@ foreach($categories as $cat_id=>$rules) {
   $r=fgets($f);
   pclose($f);
 
-  preg_match("/lang_str\[\".*\"\]=\[ \"(.*)\" \];/", $r, $m);
-  $cat->set("name", $m[1]);
-  $cat->set("lang", "en");
+  if(preg_match("/lang_str\[\".*\"\]=\[ (\".*\", )?\"(.*)\" \];/", $r, $m)) {
+    $cat->set("name", $m[2]);
+    $cat->set("lang", "en");
+  }
+  else {
+    $cat->set("name", $cat_id);
+  }
 
   $f=popen("grep 'cat:$cat_id' /osm/skunkosm/www/lang/de.js", "r");
   $r=fgets($f);
   pclose($f);
 
-  preg_match("/lang_str\[\".*\"\]=\[ \"(.*)\" \];/", $r, $m);
-  $cat->set("name:de", $m[1]);
+  if(preg_match("/lang_str\[\".*\"\]=\[ (\".*\", )?\"(.*)\" \];/", $r, $m)) {
+    $cat->set("name:de", $m[2]);
+  }
 
   $ret.="<category>\n";
   $ret.=$cat->write_xml("  ");
