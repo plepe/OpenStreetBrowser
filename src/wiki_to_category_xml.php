@@ -38,11 +38,19 @@ function parse_src_more($str) {
 
 $categories=array();
 
+function parse_to_simple($keys) {
+  while(preg_match("/(.*)\{\{Tag\|([^\|]*)\|([^\}\|]*)\}\}(.*)/", $keys, $m)) {
+    $keys="$m[1]$m[2]=$m[3]$m[4]";
+  }
+
+  return $keys;
+}
+
 $imp_match=array();
 foreach($wiki_data["Values"] as $src) {
   $rule=new tags();
 
-  $rule->set("match", $src[keys]);
+  $rule->set("match", parse_to_simple($src[keys]));
   $rule->set("importance", $src[importance]);
   if($src[description])
     $rule->set("display_type", "[$src[desc]]");
