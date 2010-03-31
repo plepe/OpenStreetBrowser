@@ -3,6 +3,7 @@ require_once("conf.php");
 require_once("src/wiki_stuff.php");
 require_once("www/inc/tags.php");
 require_once("www/inc/functions.php");
+require_once("www/lang/en.php");
 
 $columns=array(
   "Categories"=>array("category", "bg-color", "fg-color", "overlay"),
@@ -61,6 +62,9 @@ foreach($wiki_data["Values"] as $src) {
   if($more[tables])
     $rule->set("type", implode(";", explode(",", $more[tables])));
 
+  if($x=$lang_str["tag_".strtr($rule->get("match"), array("="=>"/"))])
+    $rule->set("name", $x);
+
   $categories[$src[category]][]=$rule;
 }
 
@@ -73,9 +77,9 @@ foreach($categories as $cat_id=>$rules) {
   $r=fgets($f);
   pclose($f);
 
+  $cat->set("lang", "en");
   if(preg_match("/lang_str\[\".*\"\]=\[ (\".*\", )?\"(.*)\" \];/", $r, $m)) {
     $cat->set("name", $m[2]);
-    $cat->set("lang", "en");
   }
   else {
     $cat->set("name", $cat_id);
@@ -98,7 +102,7 @@ foreach($categories as $cat_id=>$rules) {
   }
   $ret.="</category>\n";
 
-  $f=do_post_request("http://www.openstreetbrowser.org/skunk/categories.php?todo=save&id=new", $ret);
+  do_post_request("http://www.openstreetbrowser.org/skunk/categories.php?todo=save&id=new", $ret);
 }
 exit;
 
