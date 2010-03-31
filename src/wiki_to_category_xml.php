@@ -2,6 +2,7 @@
 require_once("conf.php");
 require_once("src/wiki_stuff.php");
 require_once("www/inc/tags.php");
+require_once("www/inc/functions.php");
 
 $columns=array(
   "Categories"=>array("category", "bg-color", "fg-color", "overlay"),
@@ -89,7 +90,7 @@ foreach($categories as $cat_id=>$rules) {
   }
   $ret.="</category>\n";
 
-  print $ret;
+  $f=do_post_request("http://www.openstreetbrowser.org/skunk/categories.php?todo=save&id=new", $ret);
 }
 exit;
 
