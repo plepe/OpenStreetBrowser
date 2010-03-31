@@ -232,6 +232,16 @@ class tags {
 
     return null;
   }
+
+  function write_xml($indent="") {
+    $ret="";
+
+    foreach($this->data as $key=>$value) {
+      $ret.="$indent<tag k=\"$key\" v=\"$value\" />\n";
+    }
+
+    return $ret;
+  }
 }
 
 function parse_array($text, $prefix="") {
