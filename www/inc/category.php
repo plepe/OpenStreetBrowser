@@ -1,4 +1,6 @@
 <?
+$make_valid=array("&"=>"&amp;", "\""=>"&quot;", "<"=>"&lt;", ">"=>"&gt;");
+
 class rule {
   function __construct($dom) {
     $this->tags=new tags();
@@ -157,13 +159,13 @@ class category {
 
   function print_match($res) {
     global $lang;
+    global $make_valid;
     $id=$res[id];
     $rule=$this->rules[$res[rule_id]];
 
     $ret="<match ";
     $ob=load_object($id);
     $info=explode("||", $res[res]);
-    $make_valid=array("&"=>"&amp;", "\""=>"&quot;", "<"=>"&lt;", ">"=>"&gt;");
 
     $ret.="id=\"$id\" ";
     $ret.="rule_id=\"$res[rule_id]\">\n";

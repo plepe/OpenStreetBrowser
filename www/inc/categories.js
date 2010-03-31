@@ -414,7 +414,7 @@ function load_category(id) {
 
 function lists_list_callback(data) {
   var list=data.responseXML;
-  var obs=list.getElementsByTagName("list");
+  var obs=list.getElementsByTagName("category");
   var ret="";
 
   ret+="<p>Choose a category:<ul>\n";

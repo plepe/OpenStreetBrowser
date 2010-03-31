@@ -2,6 +2,7 @@
 include "../conf.php";
 include "inc/lock.php";
 include "inc/tags.php";
+include "inc/category.php";
 include "inc/categories.php";
 include "../src/wiki_stuff.php";
 
@@ -14,9 +15,9 @@ function ob_receive($text) {
 
 ob_start(ob_receive);
 
-$lang="en";
+$data_lang="en";
 if($_GET[lang])
-  $lang=$_GET[lang];
+  $data_lang=$_GET[lang];
 
 $id=$_GET[id];
 switch($_GET[todo]) {
@@ -53,7 +54,7 @@ switch($_GET[todo]) {
     print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
     print "<result>\n";
     foreach($list as $k=>$v) {
-	print "  <list id='$k'>$v</list>\n";
+      print "  <category id='$k'>".strtr($v->get_lang("name"), $make_valid)."</category>\n";
     }
     print "</result>\n";
 

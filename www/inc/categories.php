@@ -342,7 +342,7 @@ function category_list($lang="en") {
       $x->loadXML(file_get_contents("$lists_dir/$f"));
       $tags=new tags();
       $tags->readDOM($x->firstChild);
-      $ret[$m[1]]=$tags->get("name:$lang");
+      $ret[$m[1]]=$tags;
     }
   }
   closedir($d);
