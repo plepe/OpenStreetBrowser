@@ -61,10 +61,13 @@ function process_rule($node, $cat) {
 	$ret[$imp_lev][$table]['match'][$id]=array("and",
 	  array("is", "importance", "$imp_lev"),
 	  $match);
+	$ret[$imp_lev][$table]['rule'][$id]=$tags;
       }
     }
-    else
+    else {
       $ret[$importance][$table]['match'][$id]=$match;
+      $ret[$importance][$table]['rule'][$id]=$tags;
+    }
   }
 
   return $ret;
@@ -154,6 +157,9 @@ function postprocess() {
   return $res;
 }
 
+function build_mapnik_style($data) {
+}
+
 function process_file($file) {
   $dom=new DOMDocument();
 
@@ -170,6 +176,8 @@ function process_file($file) {
   $f=fopen("$file.save", "w");
   fwrite($f, serialize($data));
   fclose($f);
+
+  build_mapnik_style($data);
 }
 
 // category_check_state
