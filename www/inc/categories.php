@@ -85,11 +85,13 @@ function process_rule($node, $cat) {
 	  array("is", "importance", "$imp_lev"),
 	  $match);
 	$ret[$imp_lev][$table]['rule'][$id]=$tags;
+	$ret[$imp_lev][$table]['rule_id'][$id]=$id;
       }
     }
     else {
       $ret[$importance][$table]['match'][$id]=$match;
       $ret[$importance][$table]['rule'][$id]=$tags;
+      $ret[$importance][$table]['rule_id'][$id]=$id;
     }
   }
 
@@ -111,7 +113,7 @@ function process_list($node, $cat) {
 
   foreach($ret as $importance=>$x) {
     foreach($x as $table=>$rules) {
-      $ret[$importance][$table]['sql']=build_sql_match_table($rules['match'], $table);
+      $ret[$importance][$table]['sql']=build_sql_match_table($rules, $table);
     }
   }
 
@@ -282,6 +284,8 @@ function build_mapnik_style($file, $data) {
   global $importance_levels;
   $layers=array("icon"=>array("reverse"), "text"=>array("normal"));
 
+  sql_query("delete from categories_def where category_id='$file'");
+
   $dom=new DOMDocument();
   $map=$dom->createElement("Map");
   $dom->appendChild($map);
@@ -292,16 +296,32 @@ function build_mapnik_style($file, $data) {
       $style_icon->setAttribute("name", "{$file}_{$importance}_{$table}_icon");
       $style_text=$dom->createElement("Style");
       $style_text->setAttribute("name", "{$file}_{$importance}_{$table}_text");
-      foreach($data2['rule'] as $rule_id=>$tags) {
+      foreach($data2['rule'] as $i=>$tags) {
+	$rule_id=$data2['rule_id'][$i];
 	$rule=mapnik_style_icon($dom, $rule_id, $tags);
 	$style_icon->appendChild($rule);
 	$rule=mapnik_style_text($dom, $rule_id, $tags);
 	$style_text->appendChild($rule);
+
+	$display_name=$tags->get("display_name");
+	if(!$display_name)
+	  $display_name="[ref] - [name];[name];[ref];[operator]";
+	$display_name=postgre_escape($display_name);
+
+	$display_type=$tags->get("display_type");
+	if(!$display_type)
+	  $display_type="null";
+	else
+	  $display_type=postgre_escape($display_type);
+
+        sql_query("insert into categories_def values ('$file', '$rule_id', ".
+		  "$display_name, $display_type)");
       }
       $layer=mapnik_get_layer($dom, "{$file}_{$importance}_{$table}_icon", $data2['sql']);
       $map_layers['icon'][$importance]=array($style_icon, $layer);
       $layer=mapnik_get_layer($dom, "{$file}_{$importance}_{$table}_text", $data2['sql']);
       $map_layers['text'][$importance]=array($style_text, $layer);
+
     }
   }
 

@@ -1,13 +1,17 @@
 <?
-function build_sql_match_table($match_list, $table="point") {
+function build_sql_match_table($rules, $table="point") {
   global $postgis_tables;
+
+  $match_list=$rules['match'];
+
   $table_def=$postgis_tables[$table];
   $add_columns=array();
   $join="from planet_osm_$table\n";
   $select="select {$table_def[sql_id_type]} as osm_type, {$table_def[sql_id_name]} as osm_id, {$table_def[geo]} as geo, (CASE\n";
   $where="where";
   
-  foreach($match_list as $id=>$match) {
+  foreach($match_list as $i=>$match) {
+    $id=$rules['rule_id'][$i];
     $part=match_collect_values_part($match);
 
     foreach($part as $key=>$values) {
@@ -26,7 +30,7 @@ function build_sql_match_table($match_list, $table="point") {
 
   $select.="END) as rule_id\n";
 
-  return "select * from ({$select}{$join}{$where}) as t where rule_id is not null";
+  return "select t.*, cd.display_name_pattern, cd.display_type_pattern from ({$select}{$join}{$where}) as t join categories_def cd on cd.category_id='tmp' and cd.rule_id=t.rule_id";
 }
 
 // Parses a matching string as used in categories
