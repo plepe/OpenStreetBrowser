@@ -39,7 +39,6 @@ begin
 
     while(def!='') loop
       m:=substring(def from E'^\\[([A-Za-z0-9_:]+)\\]');
-	raise notice 'm = %', m;
       if(m is not null) then
 	value=tags_get(_osm_type, _osm_id, m);
 	if(value is null) then
@@ -47,7 +46,6 @@ begin
 	end if;
 	def:=substr(def, length(m)+3);
 	ret:=ret || value;
-	raise notice 'def = %', def;
       else
 	ret:=ret || substr(def, 1, 1);
 	def:=substr(def, 2);
@@ -60,5 +58,30 @@ begin
   end loop;
 
   return '';
+end;
+$$ language 'plpgsql';
+
+drop table if exists tags_parse_cache_table;
+create table tags_parse_cache_table (
+  osm_type	character(10)	not null,
+  osm_id	int4		not null,
+  pattern	text		not null,
+  result	text		null,
+  primary key(osm_type, osm_id, pattern)
+);
+
+create or replace function tags_parse_cache(text, int, text)
+returns text
+as $$
+declare
+  _osm_type alias for $1;
+  _osm_id   alias for $2;
+  _pattern  alias for $3;
+  ret       text;
+begin
+  ret=tags_parse(_osm_type, _osm_id, _pattern);
+  delete from tags_parse_cache_table where "osm_type"=_osm_type and "osm_id"=_osm_id and "pattern"=_pattern;
+  insert into tags_parse_cache_table values (_osm_type, _osm_id, _pattern, ret);
+  return ret;
 end;
 $$ language 'plpgsql';
