@@ -160,14 +160,13 @@ class category {
   function print_match($res) {
     global $lang;
     global $make_valid;
-    $id=$res[id];
     $rule=$this->rules[$res[rule_id]];
 
     $ret="<match ";
-    $ob=load_object($id);
+    $ob=load_object($res);
     $info=explode("||", $res[res]);
 
-    $ret.="id=\"$id\" ";
+    $ret.="id=\"{$res[osm_type]}_{$res[osm_id]}\" ";
     $ret.="rule_id=\"$res[rule_id]\">\n";
 
     $ret.="  <tag k=\"geo:center\" v=\"$res[center]\"/>\n";

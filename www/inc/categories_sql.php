@@ -4,7 +4,7 @@ function build_sql_match_table($match_list, $table="point") {
   $table_def=$postgis_tables[$table];
   $add_columns=array();
   $join="from planet_osm_$table\n";
-  $select="select {$table_def[full_id]} as id, {$table_def[geo]} as geo, (CASE\n";
+  $select="select {$table_def[sql_id_type]} as osm_type, {$table_def[sql_id_name]} as osm_id, {$table_def[geo]} as geo, (CASE\n";
   $where="where";
   
   foreach($match_list as $id=>$match) {

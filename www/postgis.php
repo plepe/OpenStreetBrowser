@@ -2,7 +2,9 @@
 $postgis_tables=array(
   "point"=>array(
     "id_type"=>"node",
+    "sql_id_type"=>"'node'",
     "id_name"=>"osm_id",
+    "sql_id_name"=>"osm_id",
     "full_id"=>"'node_'||osm_id",
     "geo"=>"way",
     "need_>0"=>1,
@@ -11,7 +13,9 @@ $postgis_tables=array(
   ),
   "polygon"=>array(
     "id_type"=>"way",
+    "sql_id_type"=>"'way'",
     "id_name"=>"osm_id",
+    "sql_id_name"=>"osm_id",
     "full_id"=>"'way_'||osm_id",
     "geo"=>"way",
     "need_>0"=>1,
@@ -20,7 +24,9 @@ $postgis_tables=array(
   ),
   "line"=>array(
     "id_type"=>"way",
+    "sql_id_type"=>"'way'",
     "id_name"=>"osm_id",
+    "sql_id_name"=>"osm_id",
     "full_id"=>"'way_'||osm_id",
     "geo"=>"way",
     "need_>0"=>1,
