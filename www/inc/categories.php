@@ -1,5 +1,28 @@
 <?
 $importance_levels=array("international", "national", "regional", "urban", "suburban", "local");
+$scales_levels=array(
+  0,
+  500000000,
+  200000000, 
+  100000000,
+  50000000,
+  25000000,
+  12500000,
+  6500000,
+  3000000,
+  1500000,
+  750000,
+  400000,
+  200000,
+  100000,
+  50000,
+  25000,
+  12500,
+  5000,
+  2500,
+  1000);
+$scale_icon=array("international"=>5, "national"=>8, "regional"=>11, "urban"=>13, "suburban"=>15, "local"=>17);
+$scale_text=array("international"=>8, "national"=>10, "regional"=>13, "urban"=>15, "suburban"=>16, "local"=>18);
 include "postgis.php";
 include "inc/categories_sql.php";
 
@@ -157,7 +180,145 @@ function postprocess() {
   return $res;
 }
 
-function build_mapnik_style($data) {
+function mapnik_style_icon($dom, $rule_id, $tags) {
+  global $scales_levels;
+  global $scale_icon;
+
+  $rule=$dom->createElement("Rule");
+  $filter=$dom->createElement("Filter");
+  $rule->appendChild($filter);
+  $filter->appendChild($dom->createTextNode("[rule_id] = '$rule_id'"));
+
+  $scale=$dom->createElement("MaxScaleDenominator");
+  $rule->appendChild($scale);
+  $scale->appendChild($dom->createTextNode(
+    $scales_levels[$scale_icon[$importance]]));
+
+  $sym=$dom->createElement("PointSymbolizer");
+  $rule->appendChild($sym);
+  $sym->setAttribute("file", $tags->get("icon"));
+  $sym->setAttribute("type", "png");
+  $sym->setAttribute("width", 10);
+  $sym->setAttribute("height", 10);
+  $sym->setAttribute("allow_overlap", "true");
+
+  return $rule;
+}
+
+function mapnik_style_text($dom, $rule_id, $tags) {
+  global $scales_levels;
+  global $scale_text;
+
+  $rule=$dom->createElement("Rule");
+  $filter=$dom->createElement("Filter");
+  $rule->appendChild($filter);
+  $filter->appendChild($dom->createTextNode("[rule_id] = '$rule_id'"));
+
+  $scale=$dom->createElement("MaxScaleDenominator");
+  $rule->appendChild($scale);
+  $scale->appendChild($dom->createTextNode(
+    $scales_levels[$scale_text[$importance]]));
+
+  $sym=$dom->createElement("TextSymbolizer");
+  $rule->appendChild($sym);
+
+  /* TODO: dy!
+  $sym->setAttribute("file", $tags->get("icon"));
+  $sym->setAttribute("type", "png");
+  */
+  $sym->setAttribute("dy", "10");
+  $sym->setAttribute("vertical_alignment", "middle");
+  $sym->setAttribute("face_name", "DejaVu Sans Book");
+  $sym->setAttribute("fill", "#000000");
+  $sym->setAttribute("name", "name");
+  $sym->setAttribute("placement", "point");
+  $sym->setAttribute("size", "10");
+  $sym->setAttribute("halo_fill", "#ff0000");
+  $sym->setAttribute("halo_radius", "1");
+
+  return $rule;
+}
+
+function mapnik_get_layer($dom, $name, $sql) {
+  global $db_name;
+
+  $layer=$dom->createElement("Layer");
+  $layer->setAttribute("name", "$name");
+  $layer->setAttribute("srs", "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over");
+  $layer->setAttribute("status", "on");
+  $style_name=$dom->createElement("StyleName");
+  $layer->appendChild($style_name);
+  $datasource=$dom->createElement("Datasource");
+  $layer->appendChild($datasource);
+  $parameter=$dom->createElement("Parameter");
+  $datasource->appendChild($parameter);
+  $parameter->setAttribute("name", "type");
+  $parameter->appendChild($dom->createTextNode("postgis"));
+  $parameter=$dom->createElement("Parameter");
+  $datasource->appendChild($parameter);
+  $parameter->setAttribute("name", "dbname");
+  $parameter->appendChild($dom->createTextNode("$db_name"));
+  $parameter=$dom->createElement("Parameter");
+  $datasource->appendChild($parameter);
+  $parameter->setAttribute("name", "table");
+  $parameter->appendChild($dom->createTextNode($sql));
+  $parameter=$dom->createElement("Parameter");
+  $datasource->appendChild($parameter);
+  $parameter->setAttribute("name", "extent");
+  $parameter->appendChild($dom->createTextNode("-20037508,-19929239,20037508,19929239"));
+  $parameter=$dom->createElement("Parameter");
+  $datasource->appendChild($parameter);
+  $parameter->setAttribute("name", "geometry_field");
+  $parameter->appendChild($dom->createTextNode("geo"));
+  $parameter=$dom->createElement("Parameter");
+  $datasource->appendChild($parameter);
+  $parameter->setAttribute("name", "srid");
+  $parameter->appendChild($dom->createTextNode("900913"));
+
+  return $layer;
+}
+
+function build_mapnik_style($file, $data) {
+  global $importance_levels;
+  $layers=array("icon"=>array("reverse"), "text"=>array("normal"));
+
+  $dom=new DOMDocument();
+  $map=$dom->createElement("Map");
+  $dom->appendChild($map);
+  $ret=array();
+  foreach($data as $importance=>$data1) {
+    foreach($data1 as $table=>$data2) {
+      $style_icon=$dom->createElement("Style");
+      $style_icon->setAttribute("name", "{$file}_{$importance}_{$table}_icon");
+      $style_text=$dom->createElement("Style");
+      $style_text->setAttribute("name", "{$file}_{$importance}_{$table}_text");
+      foreach($data2['rule'] as $rule_id=>$tags) {
+	$rule=mapnik_style_icon($dom, $rule_id, $tags);
+	$style_icon->appendChild($rule);
+	$rule=mapnik_style_text($dom, $rule_id, $tags);
+	$style_text->appendChild($rule);
+      }
+      $layer=mapnik_get_layer($dom, "{$file}_{$importance}_{$table}_icon", $data2['sql']);
+      $map_layers['icon'][$importance]=array($style_icon, $layer);
+      $layer=mapnik_get_layer($dom, "{$file}_{$importance}_{$table}_text", $data2['sql']);
+      $map_layers['text'][$importance]=array($style_text, $layer);
+    }
+  }
+
+  foreach($layers as $layer=>$direction) {
+    $importance_list=$importance_levels;
+    if($direction=="reverse")
+      $importance_list=array_reverse($importance_list);
+
+    for($i=0; $i<sizeof($importance_list); $i++) {
+      if($map_layers[$layer])
+	if($map_layers[$layer][$importance_list[$i]])
+	  foreach($map_layers[$layer][$importance_list[$i]] as $el)
+	    $map->appendChild($el);
+    }
+  }
+
+  return $dom->saveXML();
 }
 
 function process_file($file) {
@@ -177,7 +338,10 @@ function process_file($file) {
   fwrite($f, serialize($data));
   fclose($f);
 
-  build_mapnik_style($data);
+  $mapnik=build_mapnik_style("tmp", $data);
+  $f=fopen("$file.mapnik", "w");
+  fwrite($f, $mapnik);
+  fclose($f);
 }
 
 // category_check_state
