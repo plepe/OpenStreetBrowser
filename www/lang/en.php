@@ -1,6 +1,6 @@
 <?
 $lang_str["general_info"]="General Information"; // delete
-$lang_str["search_field"]="Search ...";
+$lang_str["search_field"]="Search...";
 $lang_str["noname"]="(noname)";
 $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";

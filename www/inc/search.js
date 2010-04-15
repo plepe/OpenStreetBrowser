@@ -1,7 +1,36 @@
 var search_last;
 
 function search_focus(ob) {
-  ob.value="";
+  if(ob.value==lang_str["search_field"]) {
+    ob.value='';
+  }
+  else if((ob.value!="")) {
+    document.getElementById("osb_search_form").brush.style.visibility = 'visible';
+  }
+  document.getElementById("osb_search_form").osb_search.style.borderColor = '#cc9900';
+}
+
+function search_clear(ob) {
+  ob.value='';
+  document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
+  ob.focus();
+}
+
+function search_brush(ob) {
+  if((ob.value!="")) {
+    document.getElementById("osb_search_form").brush.style.visibility = 'visible';
+  }
+  else {
+    document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
+  }
+}
+
+function search_onblur(ob) {
+  if((ob.value=='\0')||(ob.value=="")) {
+    ob.value=lang_str["search_field"];
+    document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
+  }
+  document.getElementById("osb_search_form").osb_search.style.borderColor = '#999999';
 }
 
 function search() {

@@ -241,6 +241,9 @@ function init() {
   var permalink=document.getElementById("permalink");
   map.addControl(new OpenLayers.Control.Permalink(permalink, "http://www.openstreetbrowser.org/"));
 
+  map.addControl(new OpenLayers.Control.MousePosition());
+  map.addControl(new OpenLayers.Control.ScaleLine());
+
   if(start_lon&&(first_load)) {
     var lonlat = new OpenLayers.LonLat(start_lon, start_lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
     map.setCenter(lonlat, start_zoom);
