@@ -1,3 +1,4 @@
+lang_str["search_field"]          =[ "Search..." ];
 lang_str["more"]                  =[ "more" ];
 lang_str["nothing found"]         =[ "nothing found" ];
 lang_str["loading"]               =[ "loading" ];
