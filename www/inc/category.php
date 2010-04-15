@@ -59,7 +59,7 @@ class category {
 	  $exclude_list[]=$m[0];
       }
 
-      $sql_where['*'][]="id not in ('".implode("', '", $exclude_list)."')";
+      $sql_where['*'][]="osm_type||'_'||osm_id not in ('".implode("', '", $exclude_list)."')";
 
 /*      foreach($exclude_list as $type=>$excl_list) {
 	$exclude_list[$type]=" not in (".implode(", ", $excl_list).")";
