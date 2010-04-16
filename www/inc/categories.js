@@ -87,10 +87,12 @@ function category_rule(category, id, _tags) {
     ret+="<div class='edit_list_rule' id='edit_list_rule_"+this.id+"'>\n";
 
     ret+="<a id='edit_rule_"+this.id+"_name' href='javascript:edit_list_explode(\""+this.id+"\")'>";
-    if(!this.tags.get("name"))
-      ret+="New rule";
+    if(this.tags.get_lang("name", ui_lang))
+      ret+=this.tags.get_lang("name", ui_lang);
+    else if(this.tags.get("match"))
+      ret+=this.tags.get("match");
     else
-      ret+=this.tags.get("name");
+      ret+="New rule";
     ret+="</a>\n";
 
     ret+="<div id='edit_rule_"+this.id+"_content'";
