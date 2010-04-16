@@ -452,7 +452,7 @@ function categories_show_list(div) {
   var inputs=div.getElementsByTagName("input");
 
   for(var i=0; i<inputs.length; i++) {
-    if(inputs[i].name.match(/^list_/)) {
+    if(inputs[i].name.match(/^cat_/)) {
       var l=document.createElement("span");
       l.className="list_tools";
       l.innerHTML="<a href='javascript:edit_list(\""+inputs[i].name+"\")'>edit</a>\n";
