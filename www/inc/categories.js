@@ -296,6 +296,7 @@ function category(id) {
     ret+="<br/>\n";
 
     ret+="<input type='submit' value='Save'/>\n";
+    ret+="<input type='button' value='Cancel' onClick='edit_list_cancel(\""+this.id+"\")'/>\n";
     ret+="</form>\n";
 
     this.win.content.innerHTML=ret;
@@ -372,6 +373,12 @@ function category(id) {
 	alert("Saved with status "+stat.getAttribute("status"));
     }
   }
+
+  // cancel
+  this.cancel=function() {
+    this.win.close();
+    this.win=null;
+  }
 }
 
 function edit_list_new_rule(id) {
@@ -401,6 +408,10 @@ function edit_list_explode(id) {
 
 function edit_list_set_list_data(id) {
   categories[id].set_list_data();
+}
+
+function edit_list_cancel(id) {
+  categories[id].cancel();
 }
 
 function load_category(id) {
