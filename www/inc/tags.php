@@ -207,7 +207,11 @@ class tags {
   }
 
   function parse($str, $lang="") {
-    $str=explode(";", $str);
+    global $data_lang;
+    if($l===null)
+      $l=$data_lang;
+
+    $str=split_semicolon($str);
     foreach($str as $def) {
       $match_all=true;
       $ret="";

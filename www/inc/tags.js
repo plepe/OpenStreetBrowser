@@ -14,13 +14,30 @@ function tags(d) {
     return data[k];
   }
 
-  this.get_lang=function(k) {
+  this.get_multi=function(k) {
+    return split_semicolon(data[k]);
+  }
+
+  this.get_lang=function(k, l) {
     var ret;
+    if(!l)
+      l=data_lang;
     
-    if(ret=data[k+":"+data_lang])
+    if(ret=data[k+":"+l])
       return ret;
 
     return data[k];
+  }
+
+  this.get_lang_multi=function(k, l) {
+    var ret;
+    if(!l)
+      l=data_lang;
+    
+    if(ret=data[k+":"+l])
+      return split_semicolon(ret);
+
+    return split_semicolon(data[k]);
   }
 
   this.get_available_languages=function(k) {
@@ -56,6 +73,40 @@ function tags(d) {
     }
 
     return ret;
+  }
+
+  this.parse=function(str, l) {
+    str=split_semicolon(str);
+    if(!l)
+      l=data_lang;
+
+    for(var i=0; i<str.length; i++) {
+      var match_all=true;
+      var ret="";
+      var def=str[i];
+
+      while(def!="") {
+	var m;
+	if(m=def.match(/^\[([A-Za-z0-9_:]+)\]/)) {
+	  var value;
+	  if(!(value=this.get(m[1]+":"+l)))
+	    if(!(value=this.get(m[1])))
+	      match_all=false;
+
+	  def=def.substr(m[0].length);
+	  ret+=value;
+	}
+	else {
+	  ret+=def.substr(0, 1);
+	  def=def.substr(1);
+	}
+      }
+
+      if(match_all)
+	return ret;
+    }
+
+    return null;
   }
 
   this.editor=function(div) {
