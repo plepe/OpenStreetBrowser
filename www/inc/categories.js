@@ -60,7 +60,10 @@ function category_rule_match(dom, cat, rule) {
 //	li_style+="list-style-image: url('symbols/"+icon_data+"'); ";
 //      }
     }
-    var title=this.rule.tags.get_lang("name");
+    if(this.rule.tags.get_lang("name", ui_lang))
+      var title=this.rule.tags.get_lang("name", ui_lang);
+    else
+      var title=this.rule.tags.get("match");
 
     ret="<li class='listitem' style=\""+li_style+"\" id='list_"+this.id+"' title='"+title+"'><element id='"+this.id+"' rule_id='"+this.rule.id+"'+><a href='#"+this.id+"' onMouseOver='set_highlight([\""+this.id+"\"])' onMouseOut='unset_highlight()'>"+name+"</a>"+add+"</element></li>\n";
     return ret;
