@@ -6,8 +6,8 @@ function build_sql_match_table($rules, $table="point") {
 
   $table_def=$postgis_tables[$table];
   $add_columns=array();
-  $join="from planet_osm_$table\n";
-  $select="select {$table_def[sql_id_type]} as osm_type, {$table_def[sql_id_name]} as osm_id, {$table_def[geo]} as geo, (CASE\n";
+  $select="select distinct {$table_def[sql_id_type]} as osm_type, {$table_def[sql_id_name]} as osm_id, {$table_def[geo]} as geo, ";
+  $rule_select="(CASE\n";
   $where="where";
   
   foreach($match_list as $i=>$match) {
@@ -16,21 +16,26 @@ function build_sql_match_table($rules, $table="point") {
 
     foreach($part as $key=>$values) {
       if(!in_array($key, $table_def[index])&&!in_array($key, $add_columns)) {
-	$join.="  left join {$table_def[id_type]}_tags \"{$key}_table\" on planet_osm_{$table}.{$table_def[id_name]}=\"{$key}_table\".{$table_def[id_type]}_id and \"{$key}_table\".k='$key'\n";
+	$subselect.="  (select v from {$table_def[id_type]}_tags where {$table_def[id_type]}_id=planet_osm_{$table}.osm_id and k='$key') as \"$key\",\n";
+      }
+      if(!in_array($key, $add_columns)) {
 	$add_columns[]=$key;
       }
     }
 
     $qry=match_to_sql($match, $table_def, "columns");
 
-    $select.="  WHEN $qry THEN '$id'\n";
+    $rule_select.="  WHEN $qry THEN '$id'\n";
   }
 
   $where.=match_to_sql(match_collect_values($match_list), $table_def, "index");
 
-  $select.="END) as rule_id\n";
+  $rule_select.="END) as rule_id\n";
 
-  return "select t.*, cd.display_name_pattern, cd.display_type_pattern from ({$select}{$join}{$where}) as t join categories_def cd on cd.category_id='tmp' and cd.rule_id=t.rule_id";
+  $from="from planet_osm_$table\n";
+  $from.="  join {$table_def[id_type]}_tags speedup on speedup.{$table_def[id_type]}_id=planet_osm_$table.osm_id and speedup.k in ('".implode("', '", $add_columns)."')\n";
+
+  return "select t.*, cd.display_name_pattern, cd.display_type_pattern from ({$select}{$subselect}{$rule_select}{$from}{$join}{$where}) as t join categories_def cd on cd.category_id='tmp' and cd.rule_id=t.rule_id";
 }
 
 // Parses a matching string as used in categories
@@ -79,9 +84,7 @@ function postgre_escape($str) {
 }
 
 function match_to_sql_colname($col, $table_def, $type="columns") {
-  if(in_array($col, $table_def[$type]))
-    return "\"{$col}\"";
-  return "\"{$col}_table\".v";
+  return "\"{$col}\"";
 }
 
 function match_to_sql($match, $table_def) {
