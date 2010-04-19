@@ -210,6 +210,6 @@ class category {
 
   function compile() {
     global $lists_dir;
-    return process_file("$lists_dir/$this->id.xml");
+    return process_file("$lists_dir/$this->id.xml", $this->id);
   }
 }

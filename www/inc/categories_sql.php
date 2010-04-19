@@ -1,41 +1,93 @@
 <?
-function build_sql_match_table($rules, $table="point") {
+function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   global $postgis_tables;
-
-  $match_list=$rules['match'];
-
+  $classify_function="";
+  $tag_list=array();
   $table_def=$postgis_tables[$table];
   $add_columns=array();
-  $select="select distinct {$table_def[sql_id_type]} as osm_type, {$table_def[sql_id_name]} as osm_id, {$table_def[geo]} as geo, ";
-  $rule_select="(CASE\n";
-  $where="where";
+
+  $match_list=$rules['match'];
+  $select=array();
+  $where=array();
+
+  $select[]="{$table_def[sql_id_type]} as osm_type";
+  $select[]="{$table_def[sql_id_name]} as osm_id";
+  $select[]="{$table_def[geo]} as geo";
   
+  $i=0;
   foreach($match_list as $i=>$match) {
-    $id=$rules['rule_id'][$i];
+    $rule_id=$rules['rule_id'][$i];
     $part=match_collect_values_part($match);
 
     foreach($part as $key=>$values) {
-      if(!in_array($key, $table_def[index])&&!in_array($key, $add_columns)) {
-	$subselect.="  (select v from {$table_def[id_type]}_tags where {$table_def[id_type]}_id=planet_osm_{$table}.osm_id and k='$key') as \"$key\",\n";
-      }
       if(!in_array($key, $add_columns)) {
+	$classify_function_declare.="  tag_{$i} text[];\n";
+	$classify_function_getdata.="  tag_{$i}:=split_semicolon(tags_get(osm_type, osm_id, ".postgre_escape($key)."));\n";
 	$add_columns[]=$key;
+	$tag_list[$key]=$i;
+
+	$i++;
       }
     }
 
-    $qry=match_to_sql($match, $table_def, "columns");
+    $qry=match_to_sql($match, $tag_list, "columns");
 
-    $rule_select.="  WHEN $qry THEN '$id'\n";
+    $classify_function_match.="  if $qry then return $rule_id; end if;\n";
   }
 
-  $where.=match_to_sql(match_collect_values($match_list), $table_def, "index");
+  $values=match_collect_values($match_list);
+  //$where.=match_to_sql(, $table_def, "index");
+
+  $w=array();
+  $c=array();
+  foreach($values as $key=>$values) {
+    $values_escape=array();
+    foreach($values as $v)
+      $values_escape[]=postgre_escape($v);
+    
+    if(in_array($key, $table_def[index])) {
+      $w[]="(to_tsvector('simple', planet_osm_$table.$key) @@ to_tsquery('simple', ".
+	   implode("||' | '||", $values_escape)."))";
+      $c[]=postgre_escape($key);
+    }
+    else {
+      $w[]="(speedup.k=".postgre_escape($key)." and to_tsvector('simple', speedup.v) @@ to_tsquery('simple', ".
+	   implode("||' | '||", $values_escape)."))";
+      $c[]=postgre_escape($key);
+    }
+  }
+  $where[]=implode(" or ", $w);
 
   $rule_select.="END) as rule_id\n";
 
   $from="from planet_osm_$table\n";
-  $from.="  join {$table_def[id_type]}_tags speedup on speedup.{$table_def[id_type]}_id=planet_osm_$table.osm_id and speedup.k in ('".implode("', '", $add_columns)."')\n";
+  if(sizeof($c)) {
+    $from.="  join {$table_def[id_type]}_tags speedup on speedup.{$table_def[id_type]}_id=planet_osm_$table.osm_id and speedup.k in (".implode(", ", $c).")\n";
+  }
+    
+  $funname="classify_{$id}_{$table}_{$importance}";
+  $classify_function.="create or replace function $funname(text, int)\n";
+  $classify_function.="returns int as $$\n";
+  $classify_function.="declare\n";
+  $classify_function.="  osm_type alias for $1;\n";
+  $classify_function.="  osm_id   alias for $2;\n";
+  $classify_function.=$classify_function_declare;
+  $classify_function.="begin\n";
+  $classify_function.=$classify_function_getdata;
+  $classify_function.=$classify_function_match;
+  $classify_function.="  return null;\n";
+  $classify_function.="end;\n";
+  $classify_function.="$$ language plpgsql;\n";
+  sql_query($classify_function);
+  $f=fopen("/tmp/functions.lst", "a");
+  fwrite($f, $classify_function);
+  fclose($f);
 
-  return "select t.*, cd.display_name_pattern, cd.display_type_pattern from ({$select}{$subselect}{$rule_select}{$from}{$join}{$where}) as t join categories_def cd on cd.category_id='tmp' and cd.rule_id=t.rule_id";
+  $select[]="$funname({$table_def[sql_id_type]}, {$table_def[sql_id_name]}) as rule_id";
+
+  $where=implode(" and\n  ", $where);
+  $select=implode(", ", $select);
+  return "select t2.*, cd.display_name_pattern, cd.display_type_pattern from (select {$select} {$from} where\n  {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.rule_id";
 }
 
 // Parses a matching string as used in categories
@@ -84,7 +136,7 @@ function postgre_escape($str) {
 }
 
 function match_to_sql_colname($col, $table_def, $type="columns") {
-  return "\"{$col}\"";
+  return "tag_{$table_def[$col]}";
 }
 
 function match_to_sql($match, $table_def) {
@@ -129,7 +181,7 @@ function match_to_sql($match, $table_def) {
 	$ret[]=postgre_escape($match[$i]);
       }
 
-      return "$not oneof_in(split_semicolon(".match_to_sql_colname($match[1], $table_def)."), ARRAY[".implode(", ", $ret)."])";
+      return "$not oneof_in(".match_to_sql_colname($match[1], $table_def).", ARRAY[".implode(", ", $ret)."])";
     case "exist":
       return match_to_sql_colname($match[1], $table_def)." is not null";
     case "exist not":
@@ -137,11 +189,11 @@ function match_to_sql($match, $table_def) {
     case ">=":
       $same="true";
     case ">":
-      return "oneof_between(split_semicolon(".match_to_sql_colname($match[1], $table_def)."), ".parse_number($match[2]).", $same, null, null)";
+      return "oneof_between(".match_to_sql_colname($match[1], $table_def).", ".parse_number($match[2]).", $same, null, null)";
     case "<=":
       $same="true";
     case "<":
-      return "oneof_between(split_semicolon(".match_to_sql_colname($match[1], $table_def)."), null, null, ".parse_number($match[2]).", $same)";
+      return "oneof_between(".match_to_sql_colname($match[1], $table_def).", null, null, ".parse_number($match[2]).", $same)";
     case "true":
       return "true";
     case "false":
@@ -192,6 +244,8 @@ function match_collect_values($arr) {
     $vals[$key]=array_unique($values);
   }
 
+  return $vals;
+/*
   foreach($vals as $key=>$values) {
     if(in_array(true, $values, true)&&in_array(false, $values, true)) {
       $ret[]=array("true");
@@ -212,7 +266,7 @@ function match_collect_values($arr) {
     }
   }
 
-  return $ret;
+  return $ret; */
 }
 
 function build_match_part($part) {
@@ -306,7 +360,7 @@ function parse_explode($match) {
   $operators=array();
   $operator="";
   $values=array();
-  $value="";
+  unset($value);
 
   for($i=0; $i<strlen($match); $i++) {
     $c=substr($match, $i, 1);
@@ -347,11 +401,11 @@ function parse_explode($match) {
 	}
 	elseif($c==";") {
 	  $values[sizeof($values)-1][]=$value;
-	  $value="";
+	  unset($value);
 	}
 	elseif(in_array($c, array("=", "!", ">", "<"))) {
 	  $values[sizeof($values)-1][]=$value;
-	  $value="";
+	  unset($value);
 	  $m=1;
 	  $i--;
 	}
@@ -369,7 +423,7 @@ function parse_explode($match) {
 	  $operator="";
 	  $operators=array();
 	  $values=array();
-	  $value="";
+	  unset($value);
 
 	  $m=0;
 	}
@@ -395,7 +449,7 @@ function parse_explode($match) {
     }
   }
 
-  if($value)
+  if(isset($value))
     $values[sizeof($operators)-1][]=$value;
   $parser[]=array("key"      =>$key,
 		  "operators"=>$operators,

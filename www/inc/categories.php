@@ -98,7 +98,7 @@ function process_rule($node, $cat) {
   return $ret;
 }
 
-function process_list($node, $cat) {
+function process_list($node, $cat, $id) {
   $cur=$node->firstChild;
   $ret=array();
 
@@ -113,7 +113,7 @@ function process_list($node, $cat) {
 
   foreach($ret as $importance=>$x) {
     foreach($x as $table=>$rules) {
-      $ret[$importance][$table]['sql']=build_sql_match_table($rules, $table);
+      $ret[$importance][$table]['sql']=build_sql_match_table($rules, $table, $id, $importance);
     }
   }
 
@@ -182,9 +182,67 @@ function postprocess() {
   return $res;
 }
 
+$got_icons=array();
+function get_icon($file) {
+  global $got_icons;
+  global $wiki_img;
+  global $lists_dir;
+
+  if(isset($got_icons[$file]))
+    return $got_icons[$file];
+
+  if(!file_exists("$lists_dir/icons"))
+    mkdir("$lists_dir/icons");
+
+  $save_path="$lists_dir/icons/".strtr($file, array());
+  if(preg_match("/^osmwiki:(.*\.(.*))$/", $file, $m)) {
+    $icon=strtr($m[1], array(" "=>"_"));
+    $ext=$m[2];
+
+    $img_data=gzfile("$wiki_img$icon");
+
+    if(!$img_data)
+      print "Can't open $wiki_img$icon\n";
+
+    unset($icon_path);
+    foreach($img_data as $r) {
+      if(eregi("<div class=\"fullImageLink\" .*<a href=\"([^\"]*)\">", $r, $m)) {
+	$img=file_get_contents("$wiki_imgsrc$m[1]");
+	if(!$img)
+	  print "Can't download $wiki_imgsrc$m[1]\n";
+	mkdir("$save_path/");
+	$img_d=fopen("$save_path/file.$ext", "w");
+	fwrite($img_d, $img);
+	fclose($img_d);
+
+	if(eregi("^(.*)\.svg$", $icon, $m)) {
+	  system("convert -background none '$save_path/file.$ext' 'PNG:$save_path/$file.png'");
+	  $icon_path="$save_path/file.png";
+	}
+	else
+	  $icon_path="$save_path/file.$ext";
+
+	$got_icons[$file]=$icon_path;
+	return $icon_path;
+      }
+    }
+  }
+
+  $got_icons[$file]=null;
+  return null;
+}
+
 function mapnik_style_icon($dom, $rule_id, $tags) {
   global $scales_levels;
   global $scale_icon;
+
+  $icon=$tags->get("icon");
+  if(!$icon)
+    return null;
+
+  $icon=get_icon($icon);
+  if(!$icon)
+    return null;
 
   $rule=$dom->createElement("Rule");
   $filter=$dom->createElement("Filter");
@@ -198,7 +256,7 @@ function mapnik_style_icon($dom, $rule_id, $tags) {
 
   $sym=$dom->createElement("PointSymbolizer");
   $rule->appendChild($sym);
-  $sym->setAttribute("file", $tags->get("icon"));
+  $sym->setAttribute("file", $icon);
   $sym->setAttribute("type", "png");
   $sym->setAttribute("width", 10);
   $sym->setAttribute("height", 10);
@@ -280,11 +338,11 @@ function mapnik_get_layer($dom, $name, $sql) {
   return $layer;
 }
 
-function build_mapnik_style($file, $data) {
+function build_mapnik_style($id, $data) {
   global $importance_levels;
   $layers=array("icon"=>array("reverse"), "text"=>array("normal"));
 
-  sql_query("delete from categories_def where category_id='$file'");
+  sql_query("delete from categories_def where category_id='$id'");
 
   $dom=new DOMDocument();
   $map=$dom->createElement("Map");
@@ -293,13 +351,14 @@ function build_mapnik_style($file, $data) {
   foreach($data as $importance=>$data1) {
     foreach($data1 as $table=>$data2) {
       $style_icon=$dom->createElement("Style");
-      $style_icon->setAttribute("name", "{$file}_{$importance}_{$table}_icon");
+      $style_icon->setAttribute("name", "{$id}_{$importance}_{$table}_icon");
       $style_text=$dom->createElement("Style");
-      $style_text->setAttribute("name", "{$file}_{$importance}_{$table}_text");
+      $style_text->setAttribute("name", "{$id}_{$importance}_{$table}_text");
       foreach($data2['rule'] as $i=>$tags) {
 	$rule_id=$data2['rule_id'][$i];
 	$rule=mapnik_style_icon($dom, $rule_id, $tags);
-	$style_icon->appendChild($rule);
+	if($rule)
+	  $style_icon->appendChild($rule);
 	$rule=mapnik_style_text($dom, $rule_id, $tags);
 	$style_text->appendChild($rule);
 
@@ -314,12 +373,12 @@ function build_mapnik_style($file, $data) {
 	else
 	  $display_type=postgre_escape($display_type);
 
-        sql_query("insert into categories_def values ('$file', '$rule_id', ".
+        sql_query("insert into categories_def values ('$id', $rule_id, ".
 		  "$display_name, $display_type)");
       }
-      $layer=mapnik_get_layer($dom, "{$file}_{$importance}_{$table}_icon", $data2['sql']);
+      $layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $data2['sql']);
       $map_layers['icon'][$importance]=array($style_icon, $layer);
-      $layer=mapnik_get_layer($dom, "{$file}_{$importance}_{$table}_text", $data2['sql']);
+      $layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $data2['sql']);
       $map_layers['text'][$importance]=array($style_text, $layer);
 
     }
@@ -341,7 +400,7 @@ function build_mapnik_style($file, $data) {
   return $dom->saveXML();
 }
 
-function process_file($file) {
+function process_file($file, $id) {
   $dom=new DOMDocument();
 
   $dom->loadXML(file_get_contents($file));
@@ -349,7 +408,7 @@ function process_file($file) {
 
   while($cur) {
     if($cur->nodeName=="category") {
-      $data=process_list($cur, "root");
+      $data=process_list($cur, "root", $id);
     }
     $cur=$cur->nextSibling;
   }
@@ -358,7 +417,7 @@ function process_file($file) {
   fwrite($f, serialize($data));
   fclose($f);
 
-  $mapnik=build_mapnik_style("tmp", $data);
+  $mapnik=build_mapnik_style($id, $data);
   $f=fopen("$file.mapnik", "w");
   fwrite($f, $mapnik);
   fclose($f);
@@ -499,7 +558,7 @@ function category_save($id, $content, $param=array()) {
 
   unlock_dir("$lists_dir");
 
-  process_file("$lists_dir/$id.xml");
+  process_file("$lists_dir/$id.xml", $id);
 
   if($error) {
     return array("status"=>"merge failed", "branch"=>$branch, "id"=>$id);
