@@ -186,6 +186,7 @@ $got_icons=array();
 function get_icon($file) {
   global $got_icons;
   global $wiki_img;
+  global $wiki_imgsrc;
   global $lists_dir;
 
   if(isset($got_icons[$file]))
@@ -194,8 +195,11 @@ function get_icon($file) {
   if(!file_exists("$lists_dir/icons"))
     mkdir("$lists_dir/icons");
 
-  $save_path="$lists_dir/icons/".strtr($file, array());
-  if(preg_match("/^osmwiki:(.*\.(.*))$/", $file, $m)) {
+  $save_path="icons/".strtr($file, array());
+  if(file_exists("$lists_dir/$save_path/file.png"))
+    return "$save_path/file.png";
+
+  if(preg_match("/^osm_wiki:(.*\.(.*))$/", $file, $m)) {
     $icon=strtr($m[1], array(" "=>"_"));
     $ext=$m[2];
 
@@ -210,13 +214,16 @@ function get_icon($file) {
 	$img=file_get_contents("$wiki_imgsrc$m[1]");
 	if(!$img)
 	  print "Can't download $wiki_imgsrc$m[1]\n";
-	mkdir("$save_path/");
-	$img_d=fopen("$save_path/file.$ext", "w");
+
+	if(!file_exists("$lists_dir/$save_path/"))
+	  mkdir("$lists_dir/$save_path/");
+
+	$img_d=fopen("$lists_dir/$save_path/file.$ext", "w");
 	fwrite($img_d, $img);
 	fclose($img_d);
 
-	if(eregi("^(.*)\.svg$", $icon, $m)) {
-	  system("convert -background none '$save_path/file.$ext' 'PNG:$save_path/$file.png'");
+	if(!eregi("^(.*)\.png", $icon, $m)) {
+	  system("convert -background none '$lists_dir/$save_path/file.$ext' 'PNG:$lists_dir/$save_path/$file.png'");
 	  $icon_path="$save_path/file.png";
 	}
 	else

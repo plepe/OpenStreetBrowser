@@ -195,7 +195,7 @@ class category {
 
     if($x=$rule->tags->get("icon")) {
       $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"icon\" v=\"$x\"/>\n";
+      $ret.="  <tag k=\"icon\" v=\"".get_icon($x)."\"/>\n";
     }
 
     if($x=$rule->tags->get("importance")) {
