@@ -31,6 +31,10 @@ declare
   m         text;
   value     text;
 begin
+  if pattern is null or pattern='' then
+    return '';
+  end if;
+
   patternex:=string_to_array(pattern, ';');
   for i in array_lower(patternex, 1)..array_upper(patternex, 1) loop
     match_all:=true;
@@ -79,7 +83,12 @@ declare
   _pattern  alias for $3;
   ret       text;
 begin
+  if _pattern is null then
+    return '';
+  end if;
+
   ret=tags_parse(_osm_type, _osm_id, _pattern);
+
   delete from tags_parse_cache_table where "osm_type"=_osm_type and "osm_id"=_osm_id and "pattern"=_pattern;
   insert into tags_parse_cache_table values (_osm_type, _osm_id, _pattern, ret);
   return ret;
