@@ -39,7 +39,8 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   //$where.=match_to_sql(, $table_def, "index");
 
   $w=array();
-  $c=array();
+  $c_fix=array();
+  $c_add=array();
   foreach($values as $key=>$values) {
     $values_escape=array();
     foreach($values as $v)
@@ -48,12 +49,12 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
     if(in_array($key, $table_def[index])) {
       $w[]="(to_tsvector('simple', planet_osm_$table.$key) @@ to_tsquery('simple', ".
 	   implode("||' | '||", $values_escape)."))";
-      $c[]=postgre_escape($key);
+      $c_fix[]=postgre_escape($key);
     }
     else {
       $w[]="(speedup.k=".postgre_escape($key)." and to_tsvector('simple', speedup.v) @@ to_tsquery('simple', ".
 	   implode("||' | '||", $values_escape)."))";
-      $c[]=postgre_escape($key);
+      $c_add[]=postgre_escape($key);
     }
   }
   $where[]=implode(" or ", $w);
@@ -61,8 +62,8 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   $rule_select.="END) as rule_id\n";
 
   $from="from planet_osm_$table\n";
-  if(sizeof($c)) {
-    $from.="  join {$table_def[id_type]}_tags speedup on speedup.{$table_def[id_type]}_id=planet_osm_$table.osm_id and speedup.k in (".implode(", ", $c).")\n";
+  if(sizeof($c_add)) {
+    $from.="  join {$table_def[id_type]}_tags speedup on speedup.{$table_def[id_type]}_id=planet_osm_$table.osm_id and speedup.k in (".implode(", ", array_merge($c_fix, $c_add)).")\n";
   }
     
   $funname="classify_{$id}_{$table}_{$importance}";
