@@ -260,7 +260,7 @@ function mapnik_style_icon($dom, $rule_id, $tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_icon[$importance]]));
+    $scales_levels[$scale_icon[$tags->get("importance")]]));
 
   $sym=$dom->createElement("PointSymbolizer");
   $rule->appendChild($sym);
@@ -288,7 +288,7 @@ function mapnik_style_text($dom, $rule_id, $tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_text[$importance]]));
+    $scales_levels[$scale_text[$tags->get("importance")]]));
 
   $sym=$dom->createElement("TextSymbolizer");
   $rule->appendChild($sym);
