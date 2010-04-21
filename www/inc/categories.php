@@ -255,7 +255,7 @@ function mapnik_style_icon($dom, $rule_id, $tags) {
   $rule=$dom->createElement("Rule");
   $filter=$dom->createElement("Filter");
   $rule->appendChild($filter);
-  $filter->appendChild($dom->createTextNode("[rule_id] = '$rule_id'"));
+  $filter->appendChild($dom->createTextNode("[rule_id] = $rule_id"));
 
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
@@ -279,11 +279,12 @@ function mapnik_style_icon($dom, $rule_id, $tags) {
 function mapnik_style_text($dom, $rule_id, $tags) {
   global $scales_levels;
   global $scale_text;
+  global $lists_dir;
 
   $rule=$dom->createElement("Rule");
   $filter=$dom->createElement("Filter");
   $rule->appendChild($filter);
-  $filter->appendChild($dom->createTextNode("[rule_id] = '$rule_id'"));
+  $filter->appendChild($dom->createTextNode("[rule_id] = $rule_id"));
 
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
@@ -293,17 +294,35 @@ function mapnik_style_text($dom, $rule_id, $tags) {
   $sym=$dom->createElement("TextSymbolizer");
   $rule->appendChild($sym);
 
-  /* TODO: dy!
-  $sym->setAttribute("file", $tags->get("icon"));
-  $sym->setAttribute("type", "png");
-  */
-  $sym->setAttribute("dy", "10");
-  $sym->setAttribute("vertical_alignment", "middle");
+  $icon=$tags->get("icon");
+  if($icon)
+    if($icon=get_icon($icon)) {
+      $size=getimagesize("$lists_dir/$icon");
+      $sym->setAttribute("dy", $size[1]+1);
+      $sym->setAttribute("vertical_alignment", "middle");
+    }
+
   $sym->setAttribute("face_name", "DejaVu Sans Book");
   $sym->setAttribute("fill", "#000000");
-  $sym->setAttribute("name", "name");
+  $sym->setAttribute("name", "display_name");
   $sym->setAttribute("placement", "point");
   $sym->setAttribute("size", "10");
+  $sym->setAttribute("halo_fill", "#ff0000");
+  $sym->setAttribute("halo_radius", "1");
+
+  $sym=$dom->createElement("TextSymbolizer");
+  $rule->appendChild($sym);
+
+  if($icon) {
+    $sym->setAttribute("dy", $size[1]+10+1);
+    $sym->setAttribute("vertical_alignment", "middle");
+  }
+
+  $sym->setAttribute("face_name", "DejaVu Sans Book");
+  $sym->setAttribute("fill", "#000000");
+  $sym->setAttribute("name", "display_type");
+  $sym->setAttribute("placement", "point");
+  $sym->setAttribute("size", "8");
   $sym->setAttribute("halo_fill", "#ff0000");
   $sym->setAttribute("halo_radius", "1");
 
@@ -318,6 +337,7 @@ function mapnik_get_layer($dom, $name, $sql) {
   $layer->setAttribute("srs", "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over");
   $layer->setAttribute("status", "on");
   $style_name=$dom->createElement("StyleName");
+  $style_name->appendChild($dom->createTextNode("$name"));
   $layer->appendChild($style_name);
   $datasource=$dom->createElement("Datasource");
   $layer->appendChild($datasource);
@@ -357,6 +377,7 @@ function build_mapnik_style($id, $data) {
 
   $dom=new DOMDocument();
   $map=$dom->createElement("Map");
+  $map->setAttribute("srs", "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over");
   $dom->appendChild($map);
   $ret=array();
   foreach($data as $importance=>$data1) {
@@ -388,9 +409,26 @@ function build_mapnik_style($id, $data) {
         sql_query("insert into categories_def values ('$id', $rule_id, ".
 		  "$display_name, $display_type)");
       }
-      $layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $data2['sql']);
+
+      $sql=$data2['sql'];
+      $sql_select=array();
+      $sql_join=array();
+      $sql_select[]="*";
+      $sql_select[]="(CASE WHEN cache_name.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.display_name_pattern) ELSE cache_name.result END) as display_name";
+      $sql_join[]="left join tags_parse_cache_table cache_name on t.osm_type=cache_name.osm_type and t.osm_id=cache_name.osm_id and t.display_name_pattern=cache_name.pattern";
+      $sql_select[]="(CASE WHEN cache_type.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.display_type_pattern) ELSE cache_type.result END) as display_type";
+      $sql_join[]="left join tags_parse_cache_table cache_type on t.osm_type=cache_type.osm_type and t.osm_id=cache_type.osm_id and t.display_type_pattern=cache_type.pattern";
+//      $sql_select[]="tags_parse(t.osm_type, t.osm_id, t.display_name_pattern) as display_name";
+//      $sql_select[]="tags_parse(t.osm_type, t.osm_id, t.display_type_pattern) as display_type";
+
+      $sql_select="\n  ".implode(",\n  ", $sql_select);
+      $sql_join="\n  ".implode("\n  ", $sql_join);
+
+      $sql="(select{$sql_select} from ($sql) as t{$sql_join}) as u";
+
+      $layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
       $map_layers['icon'][$importance]=array($style_icon, $layer);
-      $layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $data2['sql']);
+      $layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql);
       $map_layers['text'][$importance]=array($style_text, $layer);
 
     }
