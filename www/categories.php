@@ -1,10 +1,14 @@
 <?
 include "../conf.php";
+include "inc/hooks.php";
 include "inc/lock.php";
 include "inc/tags.php";
+include "inc/sql.php";
+include "inc/debug.php";
 include "inc/category.php";
 include "inc/categories.php";
 include "../src/wiki_stuff.php";
+$sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
 
 $output=fopen("/tmp/git.log", "a");
 function ob_receive($text) {
