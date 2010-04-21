@@ -9,7 +9,7 @@ $postgis_tables=array(
     "geo"=>"way",
     "need_>0"=>1,
     "columns"=>array("amenity", "highway", "cuisine", "landuse", "leisure"),
-    "index"=>array("amenity", "highway", "landuse", "leisure"),
+    "index"=>array("amenity", "landuse", "leisure", "tourism", "heritage"),
   ),
   "polygon"=>array(
     "id_type"=>"way",

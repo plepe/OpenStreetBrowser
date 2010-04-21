@@ -108,7 +108,7 @@ function dyn_overlays_hide(cat) {
 }
 
 //register_hook("show_category", dyn_overlays_show);
-register_hook("hide_category", dyn_overlays_hide);
-register_hook("category_load_match", dyn_overlay_show);
-register_hook("category_loaded_matches", dyn_overlays_show_all);
-register_hook("category_show_reset", dyn_overlays_reset);
+//register_hook("hide_category", dyn_overlays_hide);
+//register_hook("category_load_match", dyn_overlay_show);
+//register_hook("category_loaded_matches", dyn_overlays_show_all);
+//register_hook("category_show_reset", dyn_overlays_reset);
