@@ -223,7 +223,7 @@ function get_icon($file) {
 	fclose($img_d);
 
 	if(!eregi("^(.*)\.png", $icon, $m)) {
-	  system("convert -background none '$lists_dir/$save_path/file.$ext' 'PNG:$lists_dir/$save_path/$file.png'");
+	  system("convert -background none '$lists_dir/$save_path/file.$ext' 'PNG:$lists_dir/$save_path/file.png'");
 	  $icon_path="$save_path/file.png";
 	}
 	else
@@ -242,6 +242,7 @@ function get_icon($file) {
 function mapnik_style_icon($dom, $rule_id, $tags) {
   global $scales_levels;
   global $scale_icon;
+  global $lists_dir;
 
   $icon=$tags->get("icon");
   if(!$icon)
@@ -263,10 +264,13 @@ function mapnik_style_icon($dom, $rule_id, $tags) {
 
   $sym=$dom->createElement("PointSymbolizer");
   $rule->appendChild($sym);
-  $sym->setAttribute("file", $icon);
+  $sym->setAttribute("file", "$lists_dir/$icon");
   $sym->setAttribute("type", "png");
-  $sym->setAttribute("width", 10);
-  $sym->setAttribute("height", 10);
+
+  $size=getimagesize("$lists_dir/$icon");
+
+  $sym->setAttribute("width", $size[0]);
+  $sym->setAttribute("height", $size[1]);
   $sym->setAttribute("allow_overlap", "true");
 
   return $rule;
@@ -364,10 +368,11 @@ function build_mapnik_style($id, $data) {
       foreach($data2['rule'] as $i=>$tags) {
 	$rule_id=$data2['rule_id'][$i];
 	$rule=mapnik_style_icon($dom, $rule_id, $tags);
-	if($rule)
+	if(isset($rule))
 	  $style_icon->appendChild($rule);
 	$rule=mapnik_style_text($dom, $rule_id, $tags);
-	$style_text->appendChild($rule);
+	if(isset($rule))
+	  $style_text->appendChild($rule);
 
 	$display_name=$tags->get("display_name");
 	if(!$display_name)
