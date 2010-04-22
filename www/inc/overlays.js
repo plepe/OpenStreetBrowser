@@ -1,6 +1,57 @@
 var overlays_layers;
 var drag_feature;
 var drag_layer;
+var overlays_list={};
+
+function overlay(id, _tags) {
+  // constructor
+  this.id=id;
+  if(!_tags)
+    _tags=new tags();
+  this.tags=_tags;
+  this.category_list={};
+
+  var name=this.tags.get_lang("name", ui_lang);
+  if(!name)
+    name=this.id;
+
+  this.layer=new OpenLayers.Layer.OSM(name, "tiles/"+this.id+"/", {numZoomLevels: 19, isBaseLayer: false, visibility: false });
+  map.addLayer(this.layer);
+  overlays_list[this.id]=this;
+
+  // show
+  this.show=function() {
+    this.layer.setVisibility(true);
+  }
+
+  // hide
+  this.hide=function() {
+    this.layer.setVisibility(false);
+  }
+
+  // register category
+  this.register_category=function(category) {
+    this.category_list[category.id]=category;
+  }
+
+  // unregister category
+  this.unregister_category=function(category) {
+    delete(this.category_list[category.id]);
+
+    if(keys(this.category_list).length==0)
+      this.destroy();
+  }
+
+  /// destroy (destructor)
+  this.destroy=function() {
+    map.removeLayer(this.layer);
+    delete(overlays_list[this.id]);
+  }
+}
+
+function get_overlay(id) {
+  return overlays_list[id];
+}
 
 function finish_drag(feature, pos) {
   call_hooks("finish_drag", feature, pos);

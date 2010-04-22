@@ -2,6 +2,10 @@ var list_cache=[];
 var categories={};
 var importance=[ "international", "national", "regional", "urban", "suburban", "local" ];
 
+function get_category(id) {
+  return categories[id];
+}
+
 list_cache.clean_up=function() {
   while(this.length>10) {
     this.shift();
@@ -151,9 +155,15 @@ function category(id) {
 
     this.loaded=true;
 
+    // register category
     category_list[this.id]=[];
     lang_str["cat:"+this.id]=[ this.tags.get_lang("name") ];
     show_list();
+
+    // register overlay
+    if(!(this.overlay=get_overlay(this.id)))
+      this.overlay=new overlay(this.id);
+    this.overlay.register_category(this);
   }
 
   // load
@@ -384,6 +394,18 @@ function category(id) {
     this.win.close();
     this.win=null;
   }
+
+  // destroy
+  this.destroy=function() {
+    // register category
+    delete(category_list[this.id]);
+    delete(categories[this.id]);
+    show_list();
+
+    // register overlay
+    if(this.overlay)
+      this.overlay.unregister_category(this);
+  }
 }
 
 function edit_list_new_rule(id) {
@@ -461,11 +483,16 @@ function categories_show_list(div) {
       var l=document.createElement("span");
       l.className="list_tools";
       l.innerHTML="<a href='javascript:edit_list(\""+inputs[i].name+"\")'>edit</a>\n";
+      l.innerHTML+="<a href='javascript:destroy_category(\""+inputs[i].name+"\")'>X</a>\n";
       inputs[i].parentNode.parentNode.insertBefore(l, inputs[i].parentNode.parentNode.firstChild);
     }
   }
 
   div.innerHTML+="<a href='javascript:list_categories()'>"+t("more_categories")+"</a>\n";
+}
+
+function destroy_category(id) {
+  get_category(id).destroy();
 }
 
 register_hook("show_list", categories_show_list);
