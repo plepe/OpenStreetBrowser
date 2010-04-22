@@ -43,16 +43,6 @@ function display_mapkey(response) {
   check_mapkey();
 }
 
-function keys(ob) {
-  var ret=[];
-
-  for(var i in ob) {
-    ret.push(i);
-  }
-
-  return ret;
-}
-
 function check_mapkey() {
   var map_key=document.getElementById("map_key");
   var new_mapkey_overlays=[];

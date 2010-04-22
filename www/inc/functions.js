@@ -1,3 +1,13 @@
+function keys(ob) {
+  var ret=[];
+
+  for(var i in ob) {
+    ret.push(i);
+  }
+
+  return ret;
+}
+
 function split_semicolon(str) {
   var x=str.split(/;/);
   var ret=new Array();
