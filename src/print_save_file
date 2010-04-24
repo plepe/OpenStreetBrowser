@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "<?print_r(unserialize(file_get_contents(\"$1\")));" | php
