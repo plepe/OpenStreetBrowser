@@ -135,11 +135,15 @@ function category_rule(category, id, _tags) {
 
 function category(id) {
   // show
-  this.show=function() {
+  this.show=function(id) {
+    if((this.id==id)&&(this.overlay))
+      this.overlay.show();
   }
 
   // hide
-  this.hide=function() {
+  this.hide=function(id) {
+    if((this.id==id)&&(this.overlay))
+      this.overlay.hide();
   }
 
   // load_callback
@@ -175,6 +179,7 @@ function category(id) {
 
     // register hooks
     register_hook("show_category", this.show.bind(this), this);
+    register_hook("hide_category", this.hide.bind(this), this);
   }
 
   // load

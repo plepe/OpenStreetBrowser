@@ -47,7 +47,7 @@ function unregister_object_hooks(ob) {
     for(var j=0; j<intern_hooks[why].length; j++) {
       var fun2=intern_hooks[why][j];
       if(fun1==fun2) {
-	delete(intern_hooks[why][j]);
+	intern_hooks[why].splice(j, 1);
 	j--;
       }
     }
