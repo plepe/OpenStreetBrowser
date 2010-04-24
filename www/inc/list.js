@@ -244,6 +244,11 @@ function new_box_change(ob) {
       }
       list_reload(sub_lists);
     }
+
+    call_hooks("show_category", ob.name);
+  }
+  else {
+    call_hooks("hide_category", ob.name);
   }
 
   list_check_overlays(ob.name, ob.checked);

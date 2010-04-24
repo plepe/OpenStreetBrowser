@@ -134,6 +134,14 @@ function category_rule(category, id, _tags) {
 }
 
 function category(id) {
+  // show
+  this.show=function() {
+  }
+
+  // hide
+  this.hide=function() {
+  }
+
   // load_callback
   this.load_callback=function(data) {
     var xml=data.responseXML;
@@ -164,6 +172,9 @@ function category(id) {
     if(!(this.overlay=get_overlay(this.id)))
       this.overlay=new overlay(this.id);
     this.overlay.register_category(this);
+
+    // register hooks
+    register_hook("show_category", this.show.bind(this), this);
   }
 
   // load
@@ -405,7 +416,11 @@ function category(id) {
     // register overlay
     if(this.overlay)
       this.overlay.unregister_category(this);
+
+    // unregister hooks
+    unregister_object_hooks(this);
   }
+
 }
 
 function edit_list_new_rule(id) {
