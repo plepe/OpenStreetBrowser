@@ -7,6 +7,8 @@ include "inc/sql.php";
 include "inc/debug.php";
 include "inc/category.php";
 include "inc/categories.php";
+include "inc/functions.php";
+include "inc/css.php";
 include "../src/wiki_stuff.php";
 $sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
 

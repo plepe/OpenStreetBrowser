@@ -239,7 +239,7 @@ function get_icon($file) {
   return null;
 }
 
-function mapnik_style_icon($dom, $rule_id, $tags) {
+function mapnik_style_icon($dom, $rule_id, $tags, $global_tags) {
   global $scales_levels;
   global $scale_icon;
   global $lists_dir;
@@ -276,7 +276,7 @@ function mapnik_style_icon($dom, $rule_id, $tags) {
   return $rule;
 }
 
-function mapnik_style_text($dom, $rule_id, $tags) {
+function mapnik_style_text($dom, $rule_id, $tags, $global_tags) {
   global $scales_levels;
   global $scale_text;
   global $lists_dir;
@@ -302,29 +302,26 @@ function mapnik_style_text($dom, $rule_id, $tags) {
       $sym->setAttribute("vertical_alignment", "middle");
     }
 
-  $sym->setAttribute("face_name", "DejaVu Sans Book");
-  $sym->setAttribute("fill", "#000000");
   $sym->setAttribute("name", "display_name");
   $sym->setAttribute("placement", "point");
-  $sym->setAttribute("size", "10");
-  $sym->setAttribute("halo_fill", "#ff0000");
-  $sym->setAttribute("halo_radius", "1");
+
+  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ff0000; halo_radius: 1");
+  $style->apply($global_tags->get("icon_style"));
+  $style->apply($tags->get("icon_style"));
+  $style->dom_set_attributes($sym);
 
   $sym=$dom->createElement("TextSymbolizer");
   $rule->appendChild($sym);
 
   if($icon) {
-    $sym->setAttribute("dy", $size[1]+10+1);
+    $sym->setAttribute("dy", $size[1]+$style->style['size']+1);
     $sym->setAttribute("vertical_alignment", "middle");
   }
 
-  $sym->setAttribute("face_name", "DejaVu Sans Book");
-  $sym->setAttribute("fill", "#000000");
-  $sym->setAttribute("name", "display_type");
-  $sym->setAttribute("placement", "point");
-  $sym->setAttribute("size", "8");
-  $sym->setAttribute("halo_fill", "#ff0000");
-  $sym->setAttribute("halo_radius", "1");
+  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 8; halo_fill: #ff0000; halo_radius: 1");
+  $style->apply($global_tags->get("icon_style"));
+  $style->apply($tags->get("icon_style"));
+  $style->dom_set_attributes($sym);
 
   return $rule;
 }
@@ -369,7 +366,7 @@ function mapnik_get_layer($dom, $name, $sql) {
   return $layer;
 }
 
-function build_mapnik_style($id, $data) {
+function build_mapnik_style($id, $data, $global_tags) {
   global $importance_levels;
   $layers=array("icon"=>array("reverse"), "text"=>array("normal"));
 
@@ -388,10 +385,10 @@ function build_mapnik_style($id, $data) {
       $style_text->setAttribute("name", "{$id}_{$importance}_{$table}_text");
       foreach($data2['rule'] as $i=>$tags) {
 	$rule_id=$data2['rule_id'][$i];
-	$rule=mapnik_style_icon($dom, $rule_id, $tags);
+	$rule=mapnik_style_icon($dom, $rule_id, $tags, $global_tags);
 	if(isset($rule))
 	  $style_icon->appendChild($rule);
-	$rule=mapnik_style_text($dom, $rule_id, $tags);
+	$rule=mapnik_style_text($dom, $rule_id, $tags, $global_tags);
 	if(isset($rule))
 	  $style_text->appendChild($rule);
 
@@ -459,6 +456,8 @@ function process_file($file, $id) {
   while($cur) {
     if($cur->nodeName=="category") {
       $data=process_list($cur, "root", $id);
+      $global_tags=new tags();
+      $global_tags->readDOM($cur);
     }
     $cur=$cur->nextSibling;
   }
@@ -467,7 +466,10 @@ function process_file($file, $id) {
   fwrite($f, serialize($data));
   fclose($f);
 
-  $mapnik=build_mapnik_style($id, $data);
+  ob_end_clean();
+  print_r($global_tags->data());
+
+  $mapnik=build_mapnik_style($id, $data, $global_tags);
   $f=fopen("$file.mapnik", "w");
   fwrite($f, $mapnik);
   fclose($f);
