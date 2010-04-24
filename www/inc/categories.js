@@ -369,6 +369,7 @@ function category(id) {
     ret="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
     ret+="<category id=\""+this.id+"\" version=\""+this.version+"\">\n";
+    this.tags.editor_update();
     ret+=this.tags.xml("  ");
 
     ret.list=[];
