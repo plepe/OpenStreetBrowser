@@ -98,28 +98,6 @@ function process_rule($node, $cat) {
   return $ret;
 }
 
-function process_list($node, $cat, $id) {
-  $cur=$node->firstChild;
-  $ret=array();
-
-  while($cur) {
-    if($cur->nodeName=="rule") {
-      $r=process_rule($cur, $cat);
-      
-      $ret=array_merge_recursive($ret, $r);
-    }
-    $cur=$cur->nextSibling;
-  }
-
-  foreach($ret as $importance=>$x) {
-    foreach($x as $table=>$rules) {
-      $ret[$importance][$table]['sql']=build_sql_match_table($rules, $table, $id, $importance);
-    }
-  }
-
-  return $ret;
-}
-
 function postprocess() {
   global $req;
   global $columns;
@@ -450,29 +428,6 @@ function build_mapnik_style($id, $data) {
   return $dom->saveXML();
 }
 
-function process_file($file, $id) {
-  $dom=new DOMDocument();
-
-  $dom->loadXML(file_get_contents($file));
-  $cur=$dom->firstChild;
-
-  while($cur) {
-    if($cur->nodeName=="category") {
-      $data=process_list($cur, "root", $id);
-    }
-    $cur=$cur->nextSibling;
-  }
-
-  $f=fopen("$file.save", "w");
-  fwrite($f, serialize($data));
-  fclose($f);
-
-  $mapnik=build_mapnik_style($id, $data);
-  $f=fopen("$file.mapnik", "w");
-  fwrite($f, $mapnik);
-  fclose($f);
-}
-
 // category_check_state
 // checks whether category-database is in sane state
 //
@@ -608,7 +563,8 @@ function category_save($id, $content, $param=array()) {
 
   unlock_dir("$lists_dir");
 
-  process_file("$lists_dir/$id.xml", $id);
+  $cat=new category($id);
+  $cat->compile();
 
   if($error) {
     return array("status"=>"merge failed", "branch"=>$branch, "id"=>$id);

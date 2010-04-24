@@ -13,19 +13,60 @@ class category {
     global $lists_dir;
     $this->id=$id;
     $this->rules=array();
+    $this->file="$lists_dir/$this->id.xml";
 
-    if(!file_exists("$lists_dir/$this->id.xml"))
+    if(!file_exists($this->file))
       return null;
 
     $this->text=category_load($id);
-    $this->data=new DOMDocument();
-    $this->data->loadXML($this->text);
+    $this->dom=new DOMDocument();
+    $this->dom->loadXML($this->text);
 
-    $rules=$this->data->getElementsByTagName("rule");
+    $rules=$this->dom->getElementsByTagName("rule");
     for($i=0; $i<$rules->length; $i++) {
       $this->rules[$rules->item($i)->getAttribute("id")]=
         new rule($rules->item($i));
     }
+  }
+
+  function get_data() {
+    // load category configuration
+    if(file_exists("$this->file.save")) {
+      $this->data=unserialize(file_get_contents("$lists_dir/$this->id.xml.save"));
+      return $this->data;
+    }
+
+    if(file_exists("$lists_dir/$this->id.xml")) {
+      $this->data=$this->compile();
+      return $this->data;
+    }
+    else
+      return null;
+  }
+
+  function compile() {
+    global $lists_dir;
+
+    $cur=$dom->firstChild;
+
+    while($cur) {
+      if($cur->nodeName=="category") {
+	$cat=new process_category($this, $cur);
+	$data=$cat->process();
+      }
+      $cur=$cur->nextSibling;
+    }
+
+    $f=fopen("$file.save", "w");
+    fwrite($f, serialize($data));
+    fclose($f);
+
+    $mapnik=build_mapnik_style($this->id, $data);
+    $f=fopen("$file.mapnik", "w");
+    fwrite($f, $mapnik);
+    fclose($f);
+
+    return $data;
   }
 
   function get_list($param) {
@@ -34,15 +75,7 @@ class category {
     global $postgis_tables;
     global $lists_dir;
 
-    // load category configuration
-    if(!file_exists("$lists_dir/$this->id.xml.save")) {
-      if(file_exists("$lists_dir/$this->id.xml"))
-        $this->compile();
-      else
-	return null;
-    }
-
-    $list_data=unserialize(file_get_contents("$lists_dir/$this->id.xml.save"));
+    $list_data=$this->get_data();
 
   //// process params ////
     // count
@@ -206,10 +239,5 @@ class category {
     $ret.="</match>\n";
 
     return $ret;
-  }
-
-  function compile() {
-    global $lists_dir;
-    return process_file("$lists_dir/$this->id.xml", $this->id);
   }
 }
