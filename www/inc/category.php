@@ -158,7 +158,9 @@ class category {
   }
 
   function print_match($res) {
-    global $lang;
+    global $data_lang;
+    $lang=$data_lang;
+
     global $make_valid;
     $rule=$this->rules[$res[rule_id]];
 
@@ -183,12 +185,12 @@ class category {
       $ret.="  <tag k=\"display_name\" v=\"$x\"/>\n";
     }
 
-    if($x=$ob->tags->parse($rule->tags->get("type"), $lang)) {
+    if($x=$ob->tags->parse($rule->tags->get("display_type"), $lang)) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"display_type:$lang\" v=\"$x\"/>\n";
     }
 
-    if($x=$ob->tags->parse($rule->tags->get("type"))) {
+    if($x=$ob->tags->parse($rule->tags->get("display_type"))) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"display_type\" v=\"$x\"/>\n";
     }
