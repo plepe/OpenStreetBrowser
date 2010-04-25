@@ -271,7 +271,13 @@ function mapnik_style_icon($dom, $rule_id, $tags, $global_tags) {
 
   $sym->setAttribute("width", $size[0]);
   $sym->setAttribute("height", $size[1]);
-  $sym->setAttribute("allow_overlap", "true");
+
+  $style=new css("allow_overlap: true;");
+  $style->apply($global_tags->get("icon_point_style"));
+  $style->apply($tags->get("icon_point_style"));
+  foreach(array("file", "width", "height", "type") as $a)
+    unset($style->style[$a]);
+  $style->dom_set_attributes($sym);
 
   return $rule;
 }
@@ -298,7 +304,7 @@ function mapnik_style_text($dom, $rule_id, $tags, $global_tags) {
   if($icon)
     if($icon=get_icon($icon)) {
       $size=getimagesize("$lists_dir/$icon");
-      $sym->setAttribute("dy", $size[1]+1);
+      $sym->setAttribute("dy", $size[1]);
       $sym->setAttribute("vertical_alignment", "middle");
     }
 
@@ -306,21 +312,29 @@ function mapnik_style_text($dom, $rule_id, $tags, $global_tags) {
   $sym->setAttribute("placement", "point");
 
   $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ff0000; halo_radius: 1");
-  $style->apply($global_tags->get("icon_style"));
-  $style->apply($tags->get("icon_style"));
+  $style->apply($global_tags->get("icon_text_style"));
+  $style->apply($tags->get("icon_text_style"));
+  foreach(array("vertical_alignment", "name", "dy") as $a)
+    unset($style->style[$a]);
   $style->dom_set_attributes($sym);
 
   $sym=$dom->createElement("TextSymbolizer");
   $rule->appendChild($sym);
 
   if($icon) {
-    $sym->setAttribute("dy", $size[1]+$style->style['size']+1);
+    $sym->setAttribute("dy", $size[1]+$style->style['size']);
     $sym->setAttribute("vertical_alignment", "middle");
   }
 
-  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 8; halo_fill: #ff0000; halo_radius: 1");
-  $style->apply($global_tags->get("icon_style"));
-  $style->apply($tags->get("icon_style"));
+  $sym->setAttribute("name", "display_type");
+  $sym->setAttribute("placement", "point");
+
+  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ff0000; halo_radius: 1");
+  $style->apply($global_tags->get("icon_text_style"));
+  $style->apply($tags->get("icon_text_style"));
+  $style->style['size']-=2;
+  foreach(array("vertical_alignment", "name", "dy") as $a)
+    unset($style->style[$a]);
   $style->dom_set_attributes($sym);
 
   return $rule;
