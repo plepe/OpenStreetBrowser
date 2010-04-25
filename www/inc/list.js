@@ -61,7 +61,7 @@ function show_more(cat, viewbox, count) {
     ul.innerHTML=text;
   }
 
-  if((cat.count_list(viewbox)>count)||(cat.is_complete())) {
+  if((cat.count_list(viewbox)>count)||(!cat.is_complete())) {
     div.lastChild.innerHTML="<a href='javascript:list_more(\""+cat.id+"\", 10)'>"+t("more")+"</a>\n";
   }
   else {
@@ -97,9 +97,10 @@ function list_load_more(cat, viewbox, new_count) {
   }
   list_reload_working=1;
 
-  for(var i=0; i<cur_cache.data.length; i++) {
-    there.push(cur_cache.data[i].id);
-  }
+  if(cur_cache)
+    for(var i=0; i<cur_cache.data.length; i++) {
+      there.push(cur_cache.data[i].id);
+    }
 
   ajax_direct("list.php", { "viewbox": viewbox, "zoom": map.zoom, "exclude": there.join(","), "category": cat.id, "count": new_count }, list_more_call_back);
 }
@@ -129,11 +130,11 @@ function list_more(cat_id, new_count) {
     return;
   }
 
-  var div=document.getElementById("more_"+cat);
+  var div=document.getElementById("more_"+cat.id);
   if(div)
     div.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+t("loading");
 
-  list_load_more(cat, shall_count-count);
+  list_load_more(cat, viewbox, shall_count-loaded);
 }
 
 function list_reload(info_lists) {
