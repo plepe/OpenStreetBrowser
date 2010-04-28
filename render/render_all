@@ -42,7 +42,7 @@ do {
           "MAPNIK_TILE_DIR"=>"{$dir_www_tiles}/{$list_layer[$index_layer][1]}/",
 	  "MAPNIK_SYMBOLS_DIR"=>"/scratch/osm/software/mapnik/symbols",
 	  "MAPNIK_WORLD_BOUNDARIES_DIR"=>"/scratch/osm/osm/data/world_boundaries",
-	  "MAPNIK_DBNAME"=>"gis",
+	  "MAPNIK_DBNAME"=>"gisold",
 	  "MAPNIK_DBUSER"=>"skunkosm"
 	);
 

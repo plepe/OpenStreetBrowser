@@ -60,11 +60,11 @@ function process_rule($node, $cat) {
   else
     $tables=array("point");
 
-  if(!$importance=$tags->get("importance"))
+  $importance=$tags->get("importance");
+  if(!$importance)
     $importance="local";
-  $inc_importance=false;
-  if($importance=="*")
-    $inc_importance=true;
+  elseif(!in_array($importance, $importance_levels))
+    $importance="*";
 
   foreach($tables as $table) {
     if($postgis_tables[$table]) {
@@ -77,13 +77,9 @@ function process_rule($node, $cat) {
 //      }
     }
 
-    // for tables which include importance
     if($importance=="*") {
       foreach($importance_levels as $imp_lev) {
-	//array_deep_copy($ret, $r); /// brrr php still gives a warning
-	$ret[$imp_lev][$table]['match'][$id]=array("and",
-	  array("is", "importance", "$imp_lev"),
-	  $match);
+	$ret[$imp_lev][$table]['match'][$id]=$match;
 	$ret[$imp_lev][$table]['rule'][$id]=$tags;
 	$ret[$imp_lev][$table]['rule_id'][$id]=$id;
       }
@@ -101,7 +97,6 @@ function process_rule($node, $cat) {
 function process_list($node, $cat, $id) {
   $cur=$node->firstChild;
   $ret=array();
-  $table_done=array();
 
   while($cur) {
     if($cur->nodeName=="rule") {
@@ -112,18 +107,30 @@ function process_list($node, $cat, $id) {
     $cur=$cur->nextSibling;
   }
 
-  foreach($ret as $importance=>$x) {
-    foreach($x as $table=>$rules) {
-      if(!$table_done[$table]) {
-        sql_query("alter table planet_osm_$table drop column \"rule_$id\";");
-        sql_query("alter table planet_osm_$table add column \"rule_$id\" text default null;");
-        sql_query("create index planet_osm_{$table}_importance_{$id} on planet_osm_{$table}(\"rule_$id\");");
-        sql_query("create index planet_osm_{$table}_notchecked_{$id} on planet_osm_{$table}(\"rule_$id\") where \"rule_$id\" is null;");
-	$table_done[$table]=true;
-      }
+  $ret1=array();
+  foreach($ret as $importance=>$x)
+    foreach($x as $table=>$rules)
+      $ret1[$table][$importance]=$rules;
 
+  foreach($ret1 as $table=>$x) {
+    sql_query("alter table planet_osm_$table drop column \"rule_$id\";");
+    sql_query("alter table planet_osm_$table add column \"rule_$id\" text default null;");
+    sql_query("create index planet_osm_{$table}_importance_{$id} on planet_osm_{$table}(\"rule_$id\");");
+    sql_query("create index planet_osm_{$table}_notchecked_{$id} on planet_osm_{$table}(\"rule_$id\") where \"rule_$id\" is null;");
+
+    $ret2=array();
+    foreach($x as $importance=>$rules) {
       $ret[$importance][$table]['sql']=build_sql_match_table($rules, $table, $id, $importance);
+
+      foreach($rules['rule_id'] as $i=>$d) {
+	$rule_id=$rules['rule_id'][$i];
+	$ret2['match'][$rule_id]=$rules['match'][$i];
+	$ret2['rule_id'][$rule_id]=$rules['rule_id'][$i];
+	$ret2['rule'][$rule_id]=$rules['rule'][$i];
+      }
     }
+
+    create_sql_classify_fun($ret2, $table, $id);
   }
 
   return $ret;
@@ -264,7 +271,7 @@ function mapnik_style_icon($dom, $rule_id, $tags, $global_tags) {
   $rule=$dom->createElement("Rule");
   $filter=$dom->createElement("Filter");
   $rule->appendChild($filter);
-  $filter->appendChild($dom->createTextNode("[rule_id] = $rule_id"));
+  $filter->appendChild($dom->createTextNode("[rule_id] = '$rule_id'"));
 
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
@@ -299,7 +306,7 @@ function mapnik_style_text($dom, $rule_id, $tags, $global_tags) {
   $rule=$dom->createElement("Rule");
   $filter=$dom->createElement("Filter");
   $rule->appendChild($filter);
-  $filter->appendChild($dom->createTextNode("[rule_id] = $rule_id"));
+  $filter->appendChild($dom->createTextNode("[rule_id] = '$rule_id'"));
 
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
@@ -489,7 +496,6 @@ function process_file($file, $id) {
   fwrite($f, serialize($data));
   fclose($f);
 
-  ob_end_clean();
   print_r($global_tags->data());
 
   $mapnik=build_mapnik_style($id, $data, $global_tags);
