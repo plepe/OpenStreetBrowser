@@ -101,6 +101,7 @@ function process_rule($node, $cat) {
 function process_list($node, $cat, $id) {
   $cur=$node->firstChild;
   $ret=array();
+  $table_done=array();
 
   while($cur) {
     if($cur->nodeName=="rule") {
@@ -113,6 +114,14 @@ function process_list($node, $cat, $id) {
 
   foreach($ret as $importance=>$x) {
     foreach($x as $table=>$rules) {
+      if(!$table_done[$table]) {
+        sql_query("alter table planet_osm_$table drop column \"rule_$id\";");
+        sql_query("alter table planet_osm_$table add column \"rule_$id\" text default null;");
+        sql_query("create index planet_osm_{$table}_importance_{$id} on planet_osm_{$table}(\"rule_$id\");");
+        sql_query("create index planet_osm_{$table}_notchecked_{$id} on planet_osm_{$table}(\"rule_$id\") where \"rule_$id\" is null;");
+	$table_done[$table]=true;
+      }
+
       $ret[$importance][$table]['sql']=build_sql_match_table($rules, $table, $id, $importance);
     }
   }

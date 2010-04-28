@@ -22,7 +22,7 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
     foreach($part as $key=>$values) {
       if(!in_array($key, $add_columns)) {
 	$classify_function_declare.="  tag_{$i} text[];\n";
-	$classify_function_getdata.="  tag_{$i}:=split_semicolon(tags_get(osm_type, osm_id, ".postgre_escape($key)."));\n";
+	$classify_function_getdata.="  tag_{$i}:=split_semicolon(tags_get(_osm_type, _osm_id, ".postgre_escape($key)."));\n";
 	$add_columns[]=$key;
 	$tag_list[$key]=$i;
 
@@ -32,8 +32,18 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
 
     $qry=match_to_sql($match, $tag_list, "columns");
 
-    $classify_function_match.="  if $qry then return $rule_id; end if;\n";
+    $classify_function_match[]="if $qry then\n    rule_id=$rule_id;";
   }
+
+  $classify_function_declare.="  rule_id int;\n";
+  $classify_function_match=implode("\n  else", $classify_function_match);
+  $classify_function_match="  $classify_function_match\n  end if;\n";
+  $classify_function_match.="\n";
+  $classify_function_match.="  if rule_id is not null then\n";
+  $classify_function_match.="    update planet_osm_$table set \"rule_$id\"='$importance' where planet_osm_$table.osm_id=_osm_id and \"rule_$id\" is null;\n";
+  $classify_function_match.="  else\n";
+  $classify_function_match.="    update planet_osm_$table set \"rule_$id\"='' where planet_osm_$table.osm_id=_osm_id and \"rule_$id\" is null;\n";
+  $classify_function_match.="  end if;\n";
 
   $values=match_collect_values($match_list);
   //$where.=match_to_sql(, $table_def, "index");
@@ -70,13 +80,13 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   $classify_function.="create or replace function $funname(text, int)\n";
   $classify_function.="returns int as $$\n";
   $classify_function.="declare\n";
-  $classify_function.="  osm_type alias for $1;\n";
-  $classify_function.="  osm_id   alias for $2;\n";
+  $classify_function.="  _osm_type alias for $1;\n";
+  $classify_function.="  _osm_id   alias for $2;\n";
   $classify_function.=$classify_function_declare;
   $classify_function.="begin\n";
   $classify_function.=$classify_function_getdata;
   $classify_function.=$classify_function_match;
-  $classify_function.="  return null;\n";
+  $classify_function.="  return rule_id;\n";
   $classify_function.="end;\n";
   $classify_function.="$$ language plpgsql;\n";
   sql_query($classify_function);
