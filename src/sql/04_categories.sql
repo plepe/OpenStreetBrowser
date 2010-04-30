@@ -4,5 +4,6 @@ create table categories_def (
   rule_id		text	not null,
   display_name_pattern	text,
   display_type_pattern	text,
+  icon_text_pattern	text,
   primary key(category_id, rule_id)
 );

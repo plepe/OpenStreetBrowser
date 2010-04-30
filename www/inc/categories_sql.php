@@ -66,7 +66,7 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
     $where="";
 
   $select=implode(", ", $select);
-  return "select t2.osm_type, t2.osm_id, t2.geo, t2.result[1] as rule_id, t2.result[2] as importance, cd.display_name_pattern, cd.display_type_pattern from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance'";
+  return "select t2.osm_type, t2.osm_id, t2.geo, t2.result[1] as rule_id, t2.result[2] as importance, cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance'";
 }
 
 function create_sql_classify_fun($rules, $table="point", $id="tmp") {
