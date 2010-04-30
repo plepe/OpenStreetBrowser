@@ -433,7 +433,8 @@ function build_mapnik_style($id, $data, $global_tags) {
 	else
 	  $display_type=postgre_escape($display_type);
 
-        sql_query("insert into categories_def values ('$id', $rule_id, ".
+        sql_query("insert into categories_def values (".
+		  postgre_escape($id).", ".postgre_escape($rule_id).", ".
 		  "$display_name, $display_type)");
       }
 
