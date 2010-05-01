@@ -36,6 +36,7 @@ function start_show() {
 
   } else {
     document.getElementById("start").style.display = "none";
+    lastview=cookie_read("_osb_location");
     start_start(cookie_read("start_value"));
   }
 }
