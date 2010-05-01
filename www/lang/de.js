@@ -15,7 +15,7 @@ lang_str["start:lastview"]        =[ "letzter Kartenausschnitt" ];
 lang_str["start:savedview"]       =[ "letzter Permalink" ];
 lang_str["start:startnormal"]     =[ "behalte Standardansicht" ];
 lang_str["start:remember"]        =[ "Auswahl merken" ];
-lang_str["start:forget"]          =[ "vergesse meine Auswahl" ];
+lang_str["start:edit"]            =[ "editiere..." ];
 
 lang_str["tag:amenity=restaurant"]=[ "Restaurant", "Restaurants" ];
 lang_str["tag:amenity=cafe"]      =[ "Kaffehaus", "Kaffeehäuser" ];

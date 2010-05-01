@@ -15,7 +15,7 @@ lang_str["start:lastview"]        =[ "last view" ];
 lang_str["start:savedview"]       =[ "last permalink" ];
 lang_str["start:startnormal"]     =[ "keep default view" ];
 lang_str["start:remember"]        =[ "remember decision" ];
-lang_str["start:forget"]          =[ "forget my decision" ];
+lang_str["start:edit"]            =[ "edit..." ];
 
 lang_str["tag:amenity=restaurant"]=[ "restaurant", "restaurants" ];
 lang_str["tag:amenity=cafe"]      =[ "cafe", "cafes" ];

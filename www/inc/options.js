@@ -126,9 +126,7 @@ function show_options() {
 
   ret+="<h4>"+t("options:start")+"</h4>\n";
   ret+="<div class='options_help'>"+t("help:start")+"</div>\n";
-  if(cookie_read("start_value")) {
-    ret+="<input type='button' onClick='javascript:cookie_delete(\"start_value\");start_show();close_options();' value="+t("start:forget")+">\n";
-  }
+  ret+="<input type='button' onClick='javascript:cookie_delete(\"start_value\");start_show();close_options();' value="+t("start:edit")+">\n";
 
   ret+="<h4>"+t("options:language_support")+"</h4>\n";
   ret+="<div class='options_help'>"+t("help:language_support")+"</div>\n";
