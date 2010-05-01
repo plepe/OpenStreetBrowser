@@ -94,48 +94,6 @@ function process_rule($node, $cat) {
   return $ret;
 }
 
-function process_list($node, $cat, $id) {
-  $cur=$node->firstChild;
-  $ret=array();
-
-  while($cur) {
-    if($cur->nodeName=="rule") {
-      $r=process_rule($cur, $cat);
-      
-      $ret=array_merge_recursive($ret, $r);
-    }
-    $cur=$cur->nextSibling;
-  }
-
-  $ret1=array();
-  foreach($ret as $importance=>$x)
-    foreach($x as $table=>$rules)
-      $ret1[$table][$importance]=$rules;
-
-  foreach($ret1 as $table=>$x) {
-    sql_query("alter table planet_osm_$table drop column \"rule_$id\";");
-    sql_query("alter table planet_osm_$table add column \"rule_$id\" text default null;");
-    sql_query("create index planet_osm_{$table}_importance_{$id} on planet_osm_{$table}(\"rule_$id\");");
-    sql_query("create index planet_osm_{$table}_notchecked_{$id} on planet_osm_{$table}(\"rule_$id\") where \"rule_$id\" is null;");
-
-    $ret2=array();
-    foreach($x as $importance=>$rules) {
-      $ret[$importance][$table]['sql']=build_sql_match_table($rules, $table, $id, $importance);
-
-      foreach($rules['rule_id'] as $i=>$d) {
-	$rule_id=$rules['rule_id'][$i];
-	$ret2['match'][$rule_id]=$rules['match'][$i];
-	$ret2['rule_id'][$rule_id]=$rules['rule_id'][$i];
-	$ret2['rule'][$rule_id]=$rules['rule'][$i];
-      }
-    }
-
-    create_sql_classify_fun($ret2, $table, $id);
-  }
-
-  return $ret;
-}
-
 function postprocess() {
   global $req;
   global $columns;
@@ -503,33 +461,6 @@ function build_mapnik_style($id, $data, $global_tags) {
   return $dom->saveXML();
 }
 
-function process_file($file, $id) {
-  $dom=new DOMDocument();
-
-  $dom->loadXML(file_get_contents($file));
-  $cur=$dom->firstChild;
-
-  while($cur) {
-    if($cur->nodeName=="category") {
-      $data=process_list($cur, "root", $id);
-      $global_tags=new tags();
-      $global_tags->readDOM($cur);
-    }
-    $cur=$cur->nextSibling;
-  }
-
-  $f=fopen("$file.save", "w");
-  fwrite($f, serialize($data));
-  fclose($f);
-
-  print_r($global_tags->data());
-
-  $mapnik=build_mapnik_style($id, $data, $global_tags);
-  $f=fopen("$file.mapnik", "w");
-  fwrite($f, $mapnik);
-  fclose($f);
-}
-
 // category_check_state
 // checks whether category-database is in sane state
 //
@@ -665,7 +596,8 @@ function category_save($id, $content, $param=array()) {
 
   unlock_dir("$lists_dir");
 
-  process_file("$lists_dir/$id.xml", $id);
+  $cat=new category($id);
+  $cat->compile();
 
   if($error) {
     return array("status"=>"merge failed", "branch"=>$branch, "id"=>$id);
