@@ -57,10 +57,10 @@ function options_radio(key, values) {
     current_value=values[0];
 
   for(var i=0; i<values.length; i++) {
-    ret+="  <input type='radio' name='"+key+"' value='"+values[i]+"'";
+    ret+="  <input type='radio' name='"+key+"' id='"+values[i]+"' value='"+values[i]+"'";
     if(current_value==values[i])
       ret+=" checked='checked'";
-    ret+="/>"+t("options:"+key+":"+values[i])+"<br/>\n";
+    ret+="/><label for='"+values[i]+"'>"+t("options:"+key+":"+values[i])+"</label><br/>\n";
   }
 
   ret+="</p>\n";
@@ -123,6 +123,12 @@ function show_options() {
   ret+="<h4>"+t("options:autozoom")+"</h4>\n";
   ret+="<div class='options_help'>"+t("help:autozoom")+"</div>\n";
   ret+=options_radio("autozoom", [ "pan", "move", "stay" ]);
+
+  ret+="<h4>"+t("options:start")+"</h4>\n";
+  ret+="<div class='options_help'>"+t("help:start")+"</div>\n";
+  if(cookie_read("start_value")) {
+    ret+="<input type='button' onClick='javascript:cookie_delete(\"start_value\");start_show();close_options();' value="+t("start:forget")+">\n";
+  }
 
   ret+="<h4>"+t("options:language_support")+"</h4>\n";
   ret+="<div class='options_help'>"+t("help:language_support")+"</div>\n";

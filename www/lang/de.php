@@ -1,6 +1,8 @@
 <?
 $lang_str["general_info"]="Allgemeine Informationen";
 $lang_str["search_field"]="Suchen...";
+$lang_str["search_tip"]="z.B. 'Berlin', 'Goethestraße', 'post box near Hauptstraße',...";
+$lang_str["search_clear"]="Suchfeld löschen";
 $lang_str["noname"]="(kein Name)";
 $lang_str["info_back"]="zur Übersicht";
 $lang_str["info_zoom"]="zoomen";

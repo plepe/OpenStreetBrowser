@@ -1,6 +1,8 @@
 <?
 $lang_str["general_info"]="General Information"; // delete
 $lang_str["search_field"]="Search...";
+$lang_str["search_tip"]="e.g. 'London', 'Cromwell Road', 'post box near Hyde Park',...";
+$lang_str["search_clear"]="Clear search field";
 $lang_str["noname"]="(noname)";
 $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";

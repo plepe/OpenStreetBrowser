@@ -90,7 +90,6 @@ input#search {
   overflow: auto;
   overflow-x:hidden;
   bottom: 38px;
-  top: 180px;
 }
 div#lang_select {
   position: absolute;
@@ -259,3 +258,18 @@ a.external:hover {
   text-decoration: underline;
 }
 
+.start {
+  background-color:#EFEFEF;
+  border:1px solid #999999;
+  color:#333333;
+  display:block;
+  padding:3px 3px 0;
+  top:0px;
+  width:242px;
+  position:relative;
+  line-height:0.8;
+}
+
+label:hover {
+  text-decoration:underline;
+}

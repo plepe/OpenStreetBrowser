@@ -84,12 +84,13 @@ else
 <div class='menu'>
 <div class='logo'><a href="http://wiki.openstreetmap.org/wiki/OpenStreetBrowser"><img src="img/osb_logo.png" alt="OpenStreetBrowser" name="OpenStreetBrowser" border="0"/></a><p>OpenStreet <span class="bigger">Browser</span></p></div>
 <div class='search'>
-<form name='osb_search_form_name' id='osb_search_form' action='javascript:search()'>
-<input name='osb_search' id='search' style="border-color:#999999;" value='<?=lang("search_field")?>' onFocus="search_focus(this)" ondblclick="search_clear(this)" onkeyup="search_brush(this)" onblur="search_onblur(this)" />
-<img name='brush' src="besen.png" border="0" alt="" title="Suchfeld löschen..." style="position:relative; top:-18px; left:230px; visibility:hidden; cursor:pointer;" onclick="search_clear(document.osb_search_form_name.osb_search)" onmousedown="if (event.preventDefault) event.preventDefault()">
+<form name='osb_search_form_name' id='osb_search_form' action='javascript:search()' style="position:relative; margin-bottom:3px;">
+<input name='osb_search' id='search' style="border-color:#999999;" value='<?=lang("search_field")?>' onFocus="search_focus(this)" ondblclick="search_clear(this)" onkeyup="search_brush(this)" onblur="search_onblur(this)" "title="<?=lang("search_tip")?>"/>
+<img name='brush' src="besen.png" border="0" alt="" title="<?=lang("search_clear")?>" style="position:absolute; right:3px; bottom:3px; visibility:hidden; cursor:pointer;" onclick="search_clear(document.osb_search_form_name.osb_search)" onmousedown="if (event.preventDefault) event.preventDefault()">
 </form>
 </div>
-<div id='details' class='info'>
+<div id='start' class='start' style="display:block;"></div>
+<div id='details' class='info' style="top:180px">
 <form id='details_content' class='details' action='javascript:details_content_submit()'>
 <?
 print list_template();
@@ -112,6 +113,7 @@ print list_template();
 <?
 call_hooks("html_done", null);
 ?>
-<div class="permalink"><a href="" id="permalink"><?=lang("main:permalink")?></a></div>
+<div class="permalink"><a href="" id="permalink" onclick="var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));cookie_write('_osb_permalink', center.lon + '|' + center.lat + '|' + map.zoom + '|' + location.hash);"><?=lang("main:permalink")?></a></div>
+<script type="text/javascript">start_show();</script>
 </body>
 </html>
