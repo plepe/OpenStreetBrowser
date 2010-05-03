@@ -27,9 +27,14 @@ class category {
       $this->rules[$rules->item($i)->getAttribute("id")]=
         new rule($rules->item($i));
     }
+
+    $this->tags=new tags();
+    $this->tags->readDOM($this->dom->firstChild);
   }
 
   function get_data() {
+    global $lists_dir;
+
     // load category configuration
     if(file_exists("$this->file.save")) {
       $this->data=unserialize(file_get_contents("$lists_dir/$this->id.xml.save"));
@@ -47,7 +52,7 @@ class category {
   function compile() {
     global $lists_dir;
 
-    $cur=$dom->firstChild;
+    $cur=$this->dom->firstChild;
 
     while($cur) {
       if($cur->nodeName=="category") {
@@ -57,12 +62,12 @@ class category {
       $cur=$cur->nextSibling;
     }
 
-    $f=fopen("$file.save", "w");
+    $f=fopen("$this->file.save", "w");
     fwrite($f, serialize($data));
     fclose($f);
 
-    $mapnik=build_mapnik_style($this->id, $data);
-    $f=fopen("$file.mapnik", "w");
+    $mapnik=build_mapnik_style($this->id, $data, $this->tags);
+    $f=fopen("$this->file.mapnik", "w");
     fwrite($f, $mapnik);
     fclose($f);
 

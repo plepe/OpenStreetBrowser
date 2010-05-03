@@ -4,9 +4,49 @@ class process_match {
 
 class process_rule {
   function __construct($process_category, $node) {
+    $this->tags=new tags();
+    $this->tags->readDOM($node);
+    $this->id=$node->getAttribute("id");
   }
 
   function process() {
+    global $importance_levels;
+    global $postgis_tables;
+
+    $ret=array();
+
+    $tables=$this->tags->get("tables");
+    if($tables)
+      $tables=explode(";", $tables);
+    else
+      $tables=array("point");
+
+    $importance=$this->tags->get("importance");
+    if(!$importance)
+      $importance="local";
+    elseif(!in_array($importance, $importance_levels))
+      $importance="*";
+
+    foreach($tables as $table) {
+      if($postgis_tables[$table]) {
+	$match=parse_match($this->tags->get("match"));
+      }
+
+      if($importance=="*") {
+	foreach($importance_levels as $imp_lev) {
+	  $ret[$imp_lev][$table]['match'][$this->id]=$match;
+	  $ret[$imp_lev][$table]['rule'][$this->id]=$this->tags;
+	  $ret[$imp_lev][$table]['rule_id'][$this->id]=$this->id;
+	}
+      }
+      else {
+	$ret[$importance][$table]['match'][$this->id]=$match;
+	$ret[$importance][$table]['rule'][$this->id]=$this->tags;
+	$ret[$importance][$table]['rule_id'][$this->id]=$this->id;
+      }
+    }
+
+    return $ret;
   }
 }
 

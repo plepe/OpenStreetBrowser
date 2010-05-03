@@ -7,6 +7,7 @@ include "inc/sql.php";
 include "inc/debug.php";
 include "inc/category.php";
 include "inc/categories.php";
+include "inc/process_category.php";
 include "inc/functions.php";
 include "inc/css.php";
 include "../src/wiki_stuff.php";

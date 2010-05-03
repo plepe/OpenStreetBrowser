@@ -41,59 +41,6 @@ function category_version() {
   return $m[1];
 }
 
-function process_rule($node, $cat) {
-  $src=array();
-  $ret=array();
-  global $columns;
-  global $columns_all;
-  global $req;
-  global $importance_levels;
-  global $postgis_tables;
-
-  $tags=new tags();
-  $tags->readDOM($node);
-  $id=$node->getAttribute("id");
-
-  $tables=$tags->get("tables");
-  if($tables)
-    $tables=explode(";", $tables);
-  else
-    $tables=array("point");
-
-  $importance=$tags->get("importance");
-  if(!$importance)
-    $importance="local";
-  elseif(!in_array($importance, $importance_levels))
-    $importance="*";
-
-  foreach($tables as $table) {
-    if($postgis_tables[$table]) {
-      $match=parse_match($tags->get("match"));
-
-//      if($kind=$tags->get("kind")) {
-//	$kind=explode(";", $kind);
-//	$kind_ret=parse_kind($kind, $table);
-//	$ret[$table]=array_merge_recursive($ret[$table], $kind_ret);
-//      }
-    }
-
-    if($importance=="*") {
-      foreach($importance_levels as $imp_lev) {
-	$ret[$imp_lev][$table]['match'][$id]=$match;
-	$ret[$imp_lev][$table]['rule'][$id]=$tags;
-	$ret[$imp_lev][$table]['rule_id'][$id]=$id;
-      }
-    }
-    else {
-      $ret[$importance][$table]['match'][$id]=$match;
-      $ret[$importance][$table]['rule'][$id]=$tags;
-      $ret[$importance][$table]['rule_id'][$id]=$id;
-    }
-  }
-
-  return $ret;
-}
-
 function postprocess() {
   global $req;
   global $columns;
