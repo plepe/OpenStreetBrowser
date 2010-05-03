@@ -24,7 +24,7 @@ function search_brush(ob,e) {
     document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
   }
   if(e.which==27) {
-    ob.value='';
+    search_clear(ob);
   }
 }
 
