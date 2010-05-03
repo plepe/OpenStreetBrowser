@@ -16,12 +16,15 @@ function search_clear(ob) {
   ob.focus();
 }
 
-function search_brush(ob) {
+function search_brush(ob,e) {
   if((ob.value!="")) {
     document.getElementById("osb_search_form").brush.style.visibility = 'visible';
   }
   else {
     document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
+  }
+  if(e.which==27) {
+    ob.value='';
   }
 }
 
