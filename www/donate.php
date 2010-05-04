@@ -81,7 +81,7 @@ Hi! You like this service, don't you?
 </p><p>
 The OpenStreetBrowser is my hobby, I'm developing it in my free time. It takes a lot of time to continously improve it.
 </p><p>
-If you appriciate this service and want to show your gratitude, you could donate some money. It would encourage me to continue working on it.
+If you appreciate this service and want to show your gratitude, you could donate some money. It would encourage me to continue working on it.
 </p><p>
 I myself promise to donate 5% of this income to the <a href='http://www.osmfoundation.org/'>OpenStreetMap-Foundation</a>.
 </p>
