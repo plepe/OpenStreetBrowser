@@ -39,7 +39,7 @@ CREATE TABLE nodes (
     changeset_id bigint NOT NULL
 );
 -- Add a postgis point column holding the location of the node.
---SELECT AddGeometryColumn('nodes', 'geom', 4326, 'POINT', 2);
+SELECT AddGeometryColumn('nodes', 'geom', 4326, 'POINT', 2);
 
 
 -- Create a table for node tags.

@@ -500,13 +500,11 @@ function categories_show_list(div) {
   var inputs=div.getElementsByTagName("input");
 
   for(var i=0; i<inputs.length; i++) {
-    if(inputs[i].name.match(/^cat_/)) {
-      var l=document.createElement("span");
-      l.className="list_tools";
-      l.innerHTML="<a href='javascript:edit_list(\""+inputs[i].name+"\")'>edit</a>\n";
-      l.innerHTML+="<a href='javascript:destroy_category(\""+inputs[i].name+"\")'>X</a>\n";
-      inputs[i].parentNode.parentNode.insertBefore(l, inputs[i].parentNode.parentNode.firstChild);
-    }
+    var l=document.createElement("span");
+    l.className="list_tools";
+    l.innerHTML="<a href='javascript:edit_list(\""+inputs[i].name+"\")'>edit</a>\n";
+    l.innerHTML+="<a href='javascript:destroy_category(\""+inputs[i].name+"\")'>X</a>\n";
+    inputs[i].parentNode.parentNode.insertBefore(l, inputs[i].parentNode.parentNode.firstChild);
   }
 
   div.innerHTML+="<a href='javascript:list_categories()'>"+t("more_categories")+"</a>\n";

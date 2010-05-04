@@ -1,7 +1,7 @@
 <?
 require_once("inc/hooks.php");
 
-$category_list=unserialize(file_get_contents("/osm/skunkosm/category_list.save"));
+$category_list=array(); //unserialize(file_get_contents("/osm/skunkosm/category_list.save"));
 $overlays=unserialize(file_get_contents("/osm/skunkosm/overlays.save"));
 
 function list_template() {
