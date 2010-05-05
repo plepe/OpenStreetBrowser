@@ -22,5 +22,9 @@ $overlays=array("culture"=>"overlay_culture", "gastro"=>"overlay_food", "service
 
 //$key_cloudmade_api="";
 
-// $lists_dir saves available lists
-$lists_dir="/home/osm/data/lists";
+// $root_dir - where is all stuff
+$root_dir="/home/osm";
+
+// $lists_dir - saves available categories (has to be writeable for www)
+$lists_dir="$root_dir/data/lists";
+

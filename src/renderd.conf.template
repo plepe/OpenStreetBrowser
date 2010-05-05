@@ -1,0 +1,11 @@
+[renderd]
+;socketname=/var/run/renderd/renderd.sock
+num_threads=4
+tile_dir=/tiles ; DOES NOT WORK YET
+stats_file=/tiles/renderd.stats
+
+[mapnik]
+plugins_dir=/usr/local/lib/mapnik/input
+font_dir=/usr/local/lib/mapnik/fonts
+font_dir_recurse=1
+

@@ -71,6 +71,11 @@ class category {
     fwrite($f, $mapnik);
     fclose($f);
 
+    $renderd=build_renderd_config($this->id, $data, $this->tags);
+    $f=fopen("$this->file.renderd", "w");
+    fwrite($f, $renderd);
+    fclose($f);
+
     return $data;
   }
 

@@ -408,6 +408,20 @@ function build_mapnik_style($id, $data, $global_tags) {
   return $dom->saveXML();
 }
 
+function build_renderd_config($id, $data, $global_tags) {
+  global $lists_dir;
+  global $www_host;
+  $ret="";
+
+  $ret.="[$id]\n";
+  $ret.="URI=/tiles/$id/\n";
+  $ret.="XML=$lists_dir/$id.xml.mapnik\n";
+  $ret.="HOST=$www_host\n";
+  $ret.="\n";
+
+  return $ret;
+}
+
 // category_check_state
 // checks whether category-database is in sane state
 //

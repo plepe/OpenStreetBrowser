@@ -1,0 +1,19 @@
+#!/usr/bin/php
+<?
+include "conf.php";
+
+$conf=fopen("$root_path/data/renderd.conf", "w");
+
+$template=file_get_contents("$root_path/src/renderd.conf.template");
+fwrite($conf, $template);
+
+$d=opendir("$lists_dir");
+while($f=readdir($d)) {
+  if(preg_match("/\.renderd$/", $f)) {
+    $conf_part=file_get_contents("$lists_dir/$f");
+    fwrite($conf, $conf_part);
+  }
+}
+closedir($d);
+
+fclose($conf);
