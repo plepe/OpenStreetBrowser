@@ -15,11 +15,11 @@ class process_rule {
 
     $ret=array();
 
-    $tables=$this->tags->get("tables");
+    $tables=$this->tags->get("type");
     if($tables)
       $tables=explode(";", $tables);
     else
-      $tables=array("point");
+      $tables=array("polygon", "point");
 
     $importance=$this->tags->get("importance");
     if(!$importance)
