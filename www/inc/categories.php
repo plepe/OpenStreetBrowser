@@ -160,7 +160,7 @@ function get_icon($file) {
   return null;
 }
 
-function mapnik_style_icon($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
   global $scales_levels;
   global $scale_icon;
   global $lists_dir;
@@ -218,7 +218,7 @@ function mapnik_style_icon($dom, $rule_id, $tags, $global_tags) {
   return $rule;
 }
 
-function mapnik_style_text($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
   global $scales_levels;
   global $scale_text;
   global $lists_dir;
@@ -276,6 +276,96 @@ function mapnik_style_text($dom, $rule_id, $tags, $global_tags) {
   return $rule;
 }
 
+function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
+  global $scales_levels;
+  global $scale_icon;
+  global $lists_dir;
+
+  $icon=$tags->get("icon");
+  if(!$icon)
+    return null;
+
+  $icon=get_icon($icon);
+  if(!$icon)
+    return null;
+
+  $rule=$dom->createElement("Rule");
+  $filter=$dom->createElement("Filter");
+  $rule->appendChild($filter);
+  $filter->appendChild($dom->createTextNode("[rule_id] = '$rule_id'"));
+
+  $scale=$dom->createElement("MaxScaleDenominator");
+  $rule->appendChild($scale);
+  $scale->appendChild($dom->createTextNode(
+    $scales_levels[$scale_icon[$tags->get("importance")]]));
+
+  $sym=$dom->createElement("ShieldSymbolizer");
+  $rule->appendChild($sym);
+  $sym->setAttribute("file", "$lists_dir/$icon");
+  $sym->setAttribute("type", "png");
+
+  $size=getimagesize("$lists_dir/$icon");
+
+  $sym->setAttribute("width", $size[0]);
+  $sym->setAttribute("height", $size[1]);
+
+  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; spacing: 200; unlock_image: true;");
+  $sym->setAttribute("name", "icon_text");
+
+  $style->apply($global_tags->get("icon_point_style"));
+  $style->apply($tags->get("icon_point_style"));
+  foreach(array("file", "width", "height", "type") as $a)
+    unset($style->style[$a]);
+  $style->dom_set_attributes($sym);
+
+  return $rule;
+}
+
+function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags) {
+  global $scales_levels;
+  global $scale_text;
+  global $lists_dir;
+
+  $rule=$dom->createElement("Rule");
+  $filter=$dom->createElement("Filter");
+  $rule->appendChild($filter);
+  $filter->appendChild($dom->createTextNode("[rule_id] = '$rule_id'"));
+
+  $scale=$dom->createElement("MaxScaleDenominator");
+  $rule->appendChild($scale);
+  $scale->appendChild($dom->createTextNode(
+    $scales_levels[$scale_text[$tags->get("importance")]]));
+
+  $sym=$dom->createElement("TextSymbolizer");
+  $rule->appendChild($sym);
+
+  $sym->setAttribute("name", "display_name");
+  $sym->setAttribute("placement", "line");
+
+  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ff0000; halo_radius: 1; spacing: 300;");
+  $style->apply($global_tags->get("display_style"));
+  $style->apply($tags->get("display_style"));
+  foreach(array("name") as $a)
+    unset($style->style[$a]);
+  $style->dom_set_attributes($sym);
+
+  $sym=$dom->createElement("TextSymbolizer");
+  $rule->appendChild($sym);
+
+  $sym->setAttribute("name", "display_type");
+  $sym->setAttribute("placement", "line");
+
+  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ff0000; halo_radius: 1; spacing: 300;");
+  $style->apply($global_tags->get("display_style"));
+  $style->apply($tags->get("display_style"));
+  $style->style['size']-=2;
+  foreach(array("name") as $a)
+    unset($style->style[$a]);
+  $style->dom_set_attributes($sym);
+
+  return $rule;
+}
+
 function mapnik_get_layer($dom, $name, $sql) {
   global $db_name;
 
@@ -318,7 +408,10 @@ function mapnik_get_layer($dom, $name, $sql) {
 
 function build_mapnik_style($id, $data, $global_tags) {
   global $importance_levels;
-  $layers=array("icon"=>array("reverse"), "text"=>array("normal"));
+  $layers=array("point_icon"=>array("reverse"),
+		"point_text"=>array("normal"),
+		"line_text" =>array("normal"),
+                "line_icon"=>array("normal"));
 
   sql_query("delete from categories_def where category_id='$id'");
 
@@ -335,12 +428,22 @@ function build_mapnik_style($id, $data, $global_tags) {
       $style_text->setAttribute("name", "{$id}_{$importance}_{$table}_text");
       foreach($data2['rule'] as $i=>$tags) {
 	$rule_id=$data2['rule_id'][$i];
-	$rule=mapnik_style_icon($dom, $rule_id, $tags, $global_tags);
-	if(isset($rule))
-	  $style_icon->appendChild($rule);
-	$rule=mapnik_style_text($dom, $rule_id, $tags, $global_tags);
-	if(isset($rule))
-	  $style_text->appendChild($rule);
+	if(in_array($table, array("point", "polygon"))) {
+	  $rule=mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags);
+	  if(isset($rule))
+	    $style_icon->appendChild($rule);
+	  $rule=mapnik_style_point_text($dom, $rule_id, $tags, $global_tags);
+	  if(isset($rule))
+	    $style_text->appendChild($rule);
+	}
+	elseif(in_array($table, array("line"))) {
+	  $rule=mapnik_style_line_text($dom, $rule_id, $tags, $global_tags);
+	  if(isset($rule))
+	    $style_text->appendChild($rule);
+	  $rule=mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags);
+	  if(isset($rule))
+	    $style_icon->appendChild($rule);
+	}
 
 	$display_name=$tags->get("display_name");
 	if(!$display_name)
@@ -384,10 +487,18 @@ function build_mapnik_style($id, $data, $global_tags) {
 
       $sql="(select{$sql_select} from ($sql) as t{$sql_join}) as u";
 
-      $layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
-      $map_layers['icon'][$importance]=array($style_icon, $layer);
-      $layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql);
-      $map_layers['text'][$importance]=array($style_text, $layer);
+      if(in_array($table, array("point", "polygon"))) {
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
+	$map_layers['point_icon'][$importance]=array($style_icon, $layer);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql);
+	$map_layers['point_text'][$importance]=array($style_text, $layer);
+      }
+      else {
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql);
+	$map_layers['line_text'][$importance]=array($style_text, $layer);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
+	$map_layers['line_icon'][$importance]=array($style_icon, $layer);
+      }
 
     }
   }
