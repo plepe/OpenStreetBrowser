@@ -1,6 +1,11 @@
 var list_cache=[];
 var categories={};
 var importance=[ "international", "national", "regional", "urban", "suburban", "local" ];
+var category_tags_default=
+  { "name": "", "descprition": "", "lang": "en", "sub_categories": "" };
+var category_rule_tags_default=
+  { "name": "", "match": "", "description": "", "icon": "", 
+    "importance": "urban", "type": "polygon;point" };
 
 function get_category(id) {
   return categories[id];
@@ -78,7 +83,7 @@ function category_rule(category, id, _tags) {
   // constructor
   if(!id) {
     this.id=uniqid();
-    this.tags=new tags({ "name:en": "", match: "", kind: "", "description:en": "", icon: "", importance: "local" });
+    this.tags=new tags(category_rule_tags_default);
   }
   else {
     this.id=id;
@@ -198,7 +203,7 @@ function category(id) {
   else {
     this.id="list_"+uniqid();
     this.loaded=true;
-    this.tags=new tags({ "name:en": "", "descprition:en": "", "lang": "en" });
+    this.tags=new tags(category_tags_default);
   }
 
   categories[this.id]=this;
