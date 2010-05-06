@@ -269,6 +269,7 @@ function init() {
     var icon = new OpenLayers.Icon('http://www.openstreetmap.org/openlayers/img/marker.png',size,offset);
     layermarkers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(marker_pos.lon,marker_pos.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),icon));
     //layermarkers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(0,0),icon.clone()));
+    map.addLayer(layermarkers);
   }
 }
 
