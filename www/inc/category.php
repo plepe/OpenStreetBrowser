@@ -124,7 +124,7 @@ class category {
     // viewbox
     if($param[viewbox]) {
       $coord=explode(",", $param[viewbox]);
-      $sql_where['*'][]="geo&&PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913) and Intersects(SnapToGrid(geo, 0.00001), PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913))";
+      $sql_where['*'][]="Intersects(SnapToGrid(geo, 0.00001), PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913))";
     }
 
   //// set some more vars
@@ -162,8 +162,12 @@ class category {
 	  if(!$where)
 	    $where="true";
 
+          $sql=strtr($req_data[sql], array(
+	    "!bbox!"=>"PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913)",
+	  ));
+
 	  $qryc="select *, astext(ST_Centroid(geo)) as center from (";
-	  $qryc.=$req_data[sql];
+	  $qryc.=$sql;
 	  $qryc.=") as x where $where limit $max_count";
 	  //print "==$qryc==";
 	  

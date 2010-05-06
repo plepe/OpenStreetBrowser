@@ -60,6 +60,9 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   $select[]="$funname({$table_def[sql_id_type]}, {$table_def[sql_id_name]}) as result";
 
   $where[]="(\"rule_$id\"='$importance' or \"rule_$id\" is null)";
+
+  $where[]="$table_def[geo]&&!bbox!";
+
   if(sizeof($where))
     $where="where\n  ".implode(" and\n  ", $where);
   else
