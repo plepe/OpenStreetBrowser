@@ -16,6 +16,24 @@ begin
 end;
 $$ language 'plpgsql';
 
+create or replace function tags_get(text[], int[], text)
+returns text[]
+as $$
+declare
+  _osm_type alias for $1;
+  _osm_id   alias for $2;
+  _key	    alias for $3;
+  _ret      text[];
+  i         int;
+begin
+  for i in array_lower($1, 1)..array_upper($1, 1) loop
+    _ret[i]=tags_get(_osm_type[i], _osm_id[i], _key);
+  end loop;
+
+  return array_unique(_ret);
+end;
+$$ language 'plpgsql';
+
 create or replace function tags_parse(text, int, text)
 returns text
 as $$
@@ -45,6 +63,55 @@ begin
       m:=substring(def from E'^\\[([A-Za-z0-9_:]+)\\]');
       if(m is not null) then
 	value=tags_get(_osm_type, _osm_id, m);
+	if(value is null) then
+	  match_all:=false;
+	end if;
+	def:=substr(def, length(m)+3);
+	ret:=ret || value;
+      else
+	ret:=ret || substr(def, 1, 1);
+	def:=substr(def, 2);
+      end if;
+    end loop;
+
+    if (match_all=true) then
+      return ret;
+    end if;
+  end loop;
+
+  return '';
+end;
+$$ language 'plpgsql';
+
+create or replace function tags_parse(text[], int[], text)
+returns text
+as $$
+declare
+  _osm_type alias for $1;
+  _osm_id   alias for $2;
+  pattern   alias for $3;
+  patternex text[];
+  patterni  int:=1;
+  match_all boolean;
+  ret       text;
+  def       text;
+  m         text;
+  value     text;
+begin
+  if pattern is null or pattern='' then
+    return '';
+  end if;
+
+  patternex:=string_to_array(pattern, ';');
+  for i in array_lower(patternex, 1)..array_upper(patternex, 1) loop
+    match_all:=true;
+    ret:='';
+    def:=patternex[i];
+
+    while(def!='') loop
+      m:=substring(def from E'^\\[([A-Za-z0-9_:]+)\\]');
+      if(m is not null) then
+	value=array_to_string(tags_get(_osm_type, _osm_id, m), ';'::text);
 	if(value is null) then
 	  match_all:=false;
 	end if;

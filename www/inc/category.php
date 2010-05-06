@@ -209,6 +209,10 @@ class category {
     $lang=$data_lang;
 
     global $make_valid;
+    $res['osm_type']=parse_array($res['osm_type']);
+    $res['osm_id']=parse_array($res['osm_id']);
+    $res['osm_type']=$res['osm_type'][0];
+    $res['osm_id']=$res['osm_id'][0];
     $rule=$this->rules[$res[rule_id]];
 
     $ret="<match ";

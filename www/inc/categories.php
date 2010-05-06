@@ -471,13 +471,16 @@ function build_mapnik_style($id, $data, $global_tags) {
       $sql_select=array();
       $sql_join=array();
       $sql_select[]="t.*";
-      $sql_select[]="(CASE WHEN cache_name.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.display_name_pattern) ELSE cache_name.result END) as display_name";
-      $sql_join[]="left join tags_parse_cache_table cache_name on t.osm_type=cache_name.osm_type and t.osm_id=cache_name.osm_id and t.display_name_pattern=cache_name.pattern";
-      $sql_select[]="(CASE WHEN cache_type.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.display_type_pattern) ELSE cache_type.result END) as display_type";
-      $sql_join[]="left join tags_parse_cache_table cache_type on t.osm_type=cache_type.osm_type and t.osm_id=cache_type.osm_id and t.display_type_pattern=cache_type.pattern";
+      $sql_select[]="tags_parse(t.osm_type, t.osm_id, t.display_name_pattern) as display_name";
+      $sql_select[]="tags_parse(t.osm_type, t.osm_id, t.display_type_pattern) as display_type";
+//      $sql_select[]="(CASE WHEN cache_name.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.display_name_pattern) ELSE cache_name.result END) as display_name";
+//      $sql_join[]="left join tags_parse_cache_table cache_name on t.osm_type=cache_name.osm_type and t.osm_id=cache_name.osm_id and t.display_name_pattern=cache_name.pattern";
+//      $sql_select[]="(CASE WHEN cache_type.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.display_type_pattern) ELSE cache_type.result END) as display_type";
+//      $sql_join[]="left join tags_parse_cache_table cache_type on t.osm_type=cache_type.osm_type and t.osm_id=cache_type.osm_id and t.display_type_pattern=cache_type.pattern";
       if($tags->get("icon_text")) {
-	$sql_select[]="(CASE WHEN cache_icon.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.icon_text_pattern) ELSE cache_icon.result END) as icon_text";
-	$sql_join[]="left join tags_parse_cache_table cache_icon on t.osm_type=cache_icon.osm_type and t.osm_id=cache_icon.osm_id and t.icon_text_pattern=cache_icon.pattern";
+	$sql_select[]="tags_parse(t.osm_type, t.osm_id, t.icon_text_pattern) as icon_text";
+//	$sql_select[]="(CASE WHEN cache_icon.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.icon_text_pattern) ELSE cache_icon.result END) as icon_text";
+//	$sql_join[]="left join tags_parse_cache_table cache_icon on t.osm_type=cache_icon.osm_type and t.osm_id=cache_icon.osm_id and t.icon_text_pattern=cache_icon.pattern";
       }
 //      $sql_select[]="tags_parse(t.osm_type, t.osm_id, t.display_name_pattern) as display_name";
 //      $sql_select[]="tags_parse(t.osm_type, t.osm_id, t.display_type_pattern) as display_type";

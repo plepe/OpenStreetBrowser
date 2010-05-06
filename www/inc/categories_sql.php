@@ -69,7 +69,7 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
     $where="";
 
   $select=implode(", ", $select);
-  return "select t2.osm_type, t2.osm_id, t2.geo, t2.result[1] as rule_id, t2.result[2] as importance, cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance'";
+  return "select to_textarray(t2.osm_type) as osm_type, to_intarray(t2.osm_id) as osm_id, ST_Collect(t2.geo) as geo, t2.result[1] as rule_id, t2.result[2] as importance, cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3], cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern";
 }
 
 function create_sql_classify_fun($rules, $table="point", $id="tmp") {
@@ -110,7 +110,15 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
     else
       $imp="'$imp'";
 
-    $classify_function_match[]="if $qry then\n    result=Array['$rule_id',$imp];";
+    if($x=$tags->get("group")) {
+      $x=postgre_escape($x);
+      $group_id="tags_parse(_osm_type, _osm_id, $x)";
+    }
+    else {
+      $group_id="_osm_type||'_'||_osm_id";
+    }
+
+    $classify_function_match[]="if $qry then\n    result=Array['$rule_id',$imp, $group_id];";
   }
 
   $classify_function_declare.="  result text[];\n";
