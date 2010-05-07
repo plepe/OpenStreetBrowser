@@ -118,8 +118,8 @@ function tags(d) {
     ret+="<table id='"+this.editor_id+"'>\n";
     for(var key in data) {
       ret+="  <tr>\n";
-      ret+="    <td><input name='key' value=\""+key+"\")'></td>\n";
-      ret+="    <td><input name='val' value=\""+data[key]+"\")'></td>\n";
+      ret+="    <td><input name='key' value=\""+key+"\"></td>\n";
+      ret+="    <td><input name='val' value=\""+data[key]+"\"></td>\n";
       ret+="    <td><a href='javascript:editor_remove_row(\""+this.editor_id+"\", "+i+")'>X</a></td>\n";
       ret+="  </tr>\n";
       i++;
@@ -171,7 +171,6 @@ function tags(d) {
     }
 
     this.editor_update();
-    alert(print_r(data));
   }
 
   this.readDOM=function(dom) {

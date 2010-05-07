@@ -360,7 +360,9 @@ function category(id) {
     this.rules.push(el);
 
     var ellist=document.getElementById("el_list_"+this.id);
-    ellist.innerHTML+=el.editor(true);
+    var x=document.createElement("div");
+    x.innerHTML=el.editor(true);
+    ellist.appendChild(x);
   }
 
   // set_list_data
