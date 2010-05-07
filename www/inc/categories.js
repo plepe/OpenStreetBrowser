@@ -42,6 +42,7 @@ function category_rule_match(dom, cat, rule) {
   this.category=cat;
   this.rule=rule;
   this.id=dom.getAttribute("id");
+  this.id_split=split_semicolon(dom.getAttribute("id"));
 
   // text
   this.list_entry=function() {
@@ -74,7 +75,7 @@ function category_rule_match(dom, cat, rule) {
     else
       var title=this.rule.tags.get("match");
 
-    ret="<li class='listitem' style=\""+li_style+"\" id='list_"+this.id+"' title='"+title+"'><element id='"+this.id+"' rule_id='"+this.rule.id+"'+><a href='#"+this.id+"' onMouseOver='set_highlight([\""+this.id+"\"])' onMouseOut='unset_highlight()'>"+name+"</a>"+add+"</element></li>\n";
+    ret="<li class='listitem' style=\""+li_style+"\" id='list_"+this.id+"' title='"+title+"'><element id='"+this.id+"' rule_id='"+this.rule.id+"'+><a href='#"+this.id+"' onMouseOver='set_highlight([\""+this.id_split.join("\", \"")+"\"])' onMouseOut='unset_highlight()'>"+name+"</a>"+add+"</element></li>\n";
     return ret;
   }
 }

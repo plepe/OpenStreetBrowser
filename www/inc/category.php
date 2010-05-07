@@ -207,10 +207,16 @@ class category {
   function print_match($res) {
     global $data_lang;
     $lang=$data_lang;
+    $id=array();
 
     global $make_valid;
     $res['osm_type']=parse_array($res['osm_type']);
     $res['osm_id']=parse_array($res['osm_id']);
+    foreach($res['osm_type'] as $i=>$res_part) {
+      $id[]="{$res['osm_type'][$i]}_{$res['osm_id'][$i]}";
+    }
+
+    // TODO: Load an object which is a merge of ID-list
     $res['osm_type']=$res['osm_type'][0];
     $res['osm_id']=$res['osm_id'][0];
     $rule=$this->rules[$res[rule_id]];
@@ -219,7 +225,7 @@ class category {
     $ob=load_object($res);
     $info=explode("||", $res[res]);
 
-    $ret.="id=\"{$res[osm_type]}_{$res[osm_id]}\" ";
+    $ret.="id=\"".implode(";", $id)."\" ";
     $ret.="rule_id=\"$res[rule_id]\">\n";
 
     $ret.="  <tag k=\"geo:center\" v=\"$res[center]\"/>\n";
