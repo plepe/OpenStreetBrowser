@@ -1,7 +1,7 @@
-lang_str["search_field"]             =[ "Suchen..." ];
+lang_str["search_field"]          =[ "Suchen..." ];
 lang_str["more"]                  =[ "mehr" ];
 lang_str["nothing found"]         =[ "nichts gefunden" ];
-lang_str["loading"]               =[ "lade" ];
+lang_str["loading"]               =[ "Lade..." ];
 lang_str["unnamed"]               =[ "(unbenannt)" ];
 lang_str["list_info"]             =[ "Wähle eine Kategorie, um den Karteninhalt zu durchstöbern oder klicke auf ein Objekt auf der Karte für Details" ];
 lang_str["save"]		  =[ "Speichern" ];

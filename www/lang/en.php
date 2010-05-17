@@ -9,6 +9,9 @@ $lang_str["info_zoom"]="zoom";
 $lang_str["result_no"]="nothing found";
 $lang_str["search_process"]="searching";
 $lang_str["read_more"]="read more";
+$lang_str["search_more"]="more results";
+$lang_str["search_results"]="Search results";
+$lang_str["search_nominatim"]="search provided by";
 
 $lang_str["head_general_info"]="General Information";
 $lang_str["head_stops"]="Stops";

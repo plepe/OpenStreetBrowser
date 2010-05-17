@@ -1,7 +1,7 @@
 lang_str["search_field"]          =[ "Search..." ];
 lang_str["more"]                  =[ "more" ];
 lang_str["nothing found"]         =[ "nothing found" ];
-lang_str["loading"]               =[ "loading" ];
+lang_str["loading"]               =[ "Loading..." ];
 lang_str["unnamed"]               =[ "(unnamed)" ];
 lang_str["list_info"]             =[ "Choose a category to browse map content or click on an object on the map for details" ];
 lang_str["save"]		  =[ "Save" ];
@@ -89,6 +89,8 @@ lang_str["options:autozoom:move"]=[ "Move to current object (faster)" ];
 lang_str["options:autozoom:stay"]=[ "Never change viewport automatically" ];
 lang_str["options:language_support"]=[ "Language Support" ];
 lang_str["help:language_support"]=[ "You can choose your prefered languages with this options. The first option changes the language of the user interface. The second option changes the data language. Date of many geographic objects has been translated to several languages. If no translation is available or \"Local language\" was chosen, the main language of the object is displayed." ];
+lang_str["options:start"]=[ "Start settings" ];
+lang_str["help:start"]=[ "You can set, how the OpenStreetBrowser behaves on starting." ];
 lang_str["options:ui_lang"]=[ "Interface language" ];
 lang_str["options:data_lang"]=[ "Data language" ];
 lang_str["lang:"]=[ "Local language" ];

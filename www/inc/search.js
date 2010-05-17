@@ -57,7 +57,7 @@ function real_search(value, param) {
   ajax("search", param, search_result);
 
   search_last=value;
-  details_content.innerHTML="Loading ...";
+  details_content.innerHTML=lang_str["loading"];
   details.className="info_loading";
 }
 
