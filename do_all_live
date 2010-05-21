@@ -32,26 +32,23 @@ rmdir coastlines
 tar xjf shoreline_300.tar.bz2 -C world_boundaries
 
 echo "- prepare osm2pgsql"
-cd $SOFTWARE_PATH/osm2pgsql
 psql -d gis -c "drop database gisold"
 psql -d gis -c "drop database gisnew"
 psql -d gis -c "create database gisnew"
 psql -d gisnew -c "create language plpgsql"
-psql -d gisnew -f /usr/share/postgresql-8.3-postgis/lwpostgis.sql
-psql -d gisnew -f /usr/share/postgresql/8.3/contrib/_int.sql
-echo "= osm2pgsql"
-./osm2pgsql -c -s -m -d $DB_NAME -S $ROOT_PATH/render/osm2pgsql.style ~/data/europe.osm.bz2
+psql -d gisnew -f /usr/share/postgresql/8.4/contrib/postgis.sql
+psql -d gisnew -f /usr/share/postgresql/8.4/contrib/_int.sql
+psql -d gisnew -f /usr/share/postgresql/8.4/contrib/hstore.sql
+psql -d gisnew -f /usr/share/postgresql/8.4/contrib/spatial_ref_sys.sql
+
 echo "= osmosis"
 echo "- init db for osmosis"
-psql $DB_NAME < ~/src/pgsql_simple_schema.sql
+psql $DB_NAME < $ROOT_PATH/src/pgsql_simple_schema.sql
 cd $ROOT_PATH/data/
-~skunkosm/software/osmosis-current/bin/osmosis --read-xml ~/data/europe.osm.bz2 --write-pgsql-dump
+osmosis --read-xml $ROOT_PATH/data/europe.osm.bz2 --write-pgsql-dump
 cd pgimport
-echo "- drop unneeded geometry"
-cut -f1-3 nodes.txt > nodes1.txt
-mv nodes1.txt nodes.txt
 echo "- load db from osmosis"
-psql $DB_NAME < ~/src/pgsql_simple_load.sql
+psql $DB_NAME < $ROOT_PATH/src/pgsql_simple_load.sql
 
 echo "finished import - next preprocess"
 # read
