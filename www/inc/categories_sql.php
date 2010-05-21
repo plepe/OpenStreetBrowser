@@ -1,17 +1,15 @@
 <?
-function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
-  global $postgis_tables;
+function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
   $tag_list=array();
-  $table_def=$postgis_tables[$table];
   $add_columns=array();
 
   $match_list=$rules['match'];
   $select=array();
   $where=array();
 
-  $select[]="{$table_def[sql_id_type]} as osm_type";
-  $select[]="{$table_def[sql_id_name]} as osm_id";
-  $select[]="{$table_def[geo]} as geo";
+  $select[]="osm_type";
+  $select[]="osm_id";
+  $select[]="osm_way as geo";
   
   $i=0;
   foreach($match_list as $i=>$match) {
@@ -37,15 +35,10 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
     $values_escape=array();
     foreach($values as $v)
       $values_escape[]=postgre_escape($v);
-    
-    if(in_array($key, $table_def[index])) {
-      $w[]="(to_tsvector('simple', planet_osm_$table.$key) @@ to_tsquery('simple', ".
-	   implode("||' | '||", $values_escape)."))";
-      $c_fix[]=postgre_escape($key);
-    }
-    else {
-      $no_match=true;
-    }
+    $key=postgre_escape($key);
+    //register_index($table, $key);
+    $w[]="(to_tsvector('simple', osm_$table->'$key') @@ to_tsquery('simple', ".
+	 implode("||' | '||", $values_escape)."))";
   }
 
   if(!$no_match)
@@ -53,11 +46,11 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
 
   $rule_select.="END) as result\n";
 
-  $from="from planet_osm_$table\n";
+  $from="from osm_$table\n";
 
   $funname="classify_{$id}_{$table}";
 
-  $select[]="$funname({$table_def[sql_id_type]}, {$table_def[sql_id_name]}) as result";
+  $select[]="$funname(osm_type, osm_id, osm_tags) as result";
 
   $where[]="(\"rule_$id\"='$importance' or \"rule_$id\" is null)";
 
@@ -72,7 +65,7 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   return "select to_textarray(t2.osm_type) as osm_type, to_intarray(t2.osm_id) as osm_id, ST_Collect(t2.geo) as geo, t2.result[1] as rule_id, t2.result[2] as importance, cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3], cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern";
 }
 
-function create_sql_classify_fun($rules, $table="point", $id="tmp") {
+function create_sql_classify_fun($rules, $table="node", $id="tmp") {
   global $postgis_tables;
   $classify_function="";
   $tag_list=array();
@@ -92,7 +85,7 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
     foreach($part as $key=>$values) {
       if(!in_array($key, $add_columns)) {
 	$classify_function_declare.="  tag_{$i} text[];\n";
-	$classify_function_getdata.="  tag_{$i}:=split_semicolon(tags_get(_osm_type, _osm_id, ".postgre_escape($key)."));\n";
+	$classify_function_getdata.="  tag_{$i}:=split_semicolon(osm_tags->".postgre_escape($key).");\n";
 	$add_columns[]=$key;
 	$tag_list[$key]=$i;
 
@@ -105,8 +98,10 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
     $imp=$tags->get("importance");
     if(!$imp)
       $imp="'local'";
-    elseif(strpos($imp, "["))
-      $imp="tags_parse(_osm_type, _osm_id, '$imp')";
+    elseif(strpos($imp, "[")) {
+      $imp=postgre_escape($imp);
+      $imp="tags_parse(_osm_type, _osm_id, $imp)";
+    }
     else
       $imp="'$imp'";
 
@@ -125,25 +120,26 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
   $classify_function_match=implode("\n  else", $classify_function_match);
   $classify_function_match="  $classify_function_match\n  end if;\n";
   $classify_function_match.="\n";
-  $classify_function_match.="  if result is not null then\n";
-  $classify_function_match.="    update planet_osm_$table set \"rule_$id\"=result[2] where planet_osm_$table.osm_id=_osm_id and \"rule_$id\" is null;\n";
-  $classify_function_match.="  else\n";
-  $classify_function_match.="    update planet_osm_$table set \"rule_$id\"='' where planet_osm_$table.osm_id=_osm_id and \"rule_$id\" is null;\n";
-  $classify_function_match.="  end if;\n";
+//  $classify_function_match.="  if result is not null then\n";
+//  $classify_function_match.="    update planet_osm_$table set \"rule_$id\"=result[2] where planet_osm_$table.osm_id=_osm_id and \"rule_$id\" is null;\n";
+//  $classify_function_match.="  else\n";
+//  $classify_function_match.="    update planet_osm_$table set \"rule_$id\"='' where planet_osm_$table.osm_id=_osm_id and \"rule_$id\" is null;\n";
+//  $classify_function_match.="  end if;\n";
 
   $funname="classify_{$id}_{$table}";
-  $classify_function.="create or replace function $funname(text, int)\n";
+  $classify_function.="create or replace function $funname(text, bigint, hstore)\n";
   $classify_function.="returns text[] as $$\n";
   $classify_function.="declare\n";
   $classify_function.="  _osm_type alias for $1;\n";
   $classify_function.="  _osm_id   alias for $2;\n";
+  $classify_function.="  osm_tags  alias for $3;\n";
   $classify_function.=$classify_function_declare;
   $classify_function.="begin\n";
   $classify_function.=$classify_function_getdata;
   $classify_function.=$classify_function_match;
   $classify_function.="  return result;\n";
   $classify_function.="end;\n";
-  $classify_function.="$$ language plpgsql;\n";
+  $classify_function.="$$ language plpgsql immutable;\n";
   sql_query($classify_function);
 
   $f=fopen("/tmp/functions.lst", "a");
@@ -152,7 +148,7 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
 }
 
 // Parses a matching string as used in categories
-function parse_match($match, $table="point") {
+function parse_match($match, $table="node") {
   $match_parts=parse_explode($match);
 
   if(is_string($match_parts)) {
