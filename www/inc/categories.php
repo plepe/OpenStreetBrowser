@@ -24,7 +24,7 @@ $scales_levels=array(
 $scale_icon=array("international"=>5, "national"=>8, "regional"=>11, "urban"=>13, "suburban"=>15, "local"=>17);
 $scale_text=array("international"=>8, "national"=>10, "regional"=>13, "urban"=>15, "suburban"=>16, "local"=>18);
 include "postgis.php";
-include "inc/categories_sql.php";
+include "categories_sql.php";
 
 function category_version() {
   global $lists_dir;

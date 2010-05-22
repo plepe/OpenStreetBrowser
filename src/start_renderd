@@ -3,4 +3,4 @@
 killall renderd
 src/gen_renderd_conf
 src/ap2restart
-software/mod_tile/renderd
+software/mod_tile/renderd -f
