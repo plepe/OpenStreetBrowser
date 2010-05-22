@@ -1,4 +1,4 @@
-create or replace function tags_get(text, int, text)
+create or replace function tags_get(text, bigint, text)
 returns text
 as $$
 declare
@@ -16,7 +16,7 @@ begin
 end;
 $$ language 'plpgsql';
 
-create or replace function tags_get(text[], int[], text)
+create or replace function tags_get(text[], bigint[], text)
 returns text[]
 as $$
 declare
@@ -34,7 +34,7 @@ begin
 end;
 $$ language 'plpgsql';
 
-create or replace function tags_parse(text, int, text)
+create or replace function tags_parse(text, bigint, text)
 returns text
 as $$
 declare
@@ -83,7 +83,7 @@ begin
 end;
 $$ language 'plpgsql';
 
-create or replace function tags_parse(text[], int[], text)
+create or replace function tags_parse(text[], bigint[], text)
 returns text
 as $$
 declare
@@ -135,13 +135,13 @@ $$ language 'plpgsql';
 drop table if exists tags_parse_cache_table;
 create table tags_parse_cache_table (
   osm_type	character(10)	not null,
-  osm_id	int4		not null,
+  osm_id	bigint		not null,
   pattern	text		not null,
   result	text		null,
   primary key(osm_type, osm_id, pattern)
 );
 
-create or replace function tags_parse_cache(text, int, text)
+create or replace function tags_parse_cache(text, bigint, text)
 returns text
 as $$
 declare
