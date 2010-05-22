@@ -19,6 +19,13 @@ SFUNC = array_append,
 STYPE = bigint[],
 INITCOND = '{}'); 
 
+drop aggregate if exists to_array(hstore);
+CREATE AGGREGATE to_array (
+BASETYPE = hstore,
+SFUNC = array_append,
+STYPE = hstore[],
+INITCOND = '{}'); 
+
 drop aggregate if exists to_intarray(int[]);
 CREATE AGGREGATE to_intarray (
 BASETYPE = int4[],
