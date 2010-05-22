@@ -428,7 +428,7 @@ function build_mapnik_style($id, $data, $global_tags) {
       $style_text->setAttribute("name", "{$id}_{$importance}_{$table}_text");
       foreach($data2['rule'] as $i=>$tags) {
 	$rule_id=$data2['rule_id'][$i];
-	if(in_array($table, array("point", "polygon"))) {
+	if(in_array($table, array("nodes", "polygons"))) {
 	  $rule=mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags);
 	  if(isset($rule))
 	    $style_icon->appendChild($rule);
@@ -436,7 +436,7 @@ function build_mapnik_style($id, $data, $global_tags) {
 	  if(isset($rule))
 	    $style_text->appendChild($rule);
 	}
-	elseif(in_array($table, array("line"))) {
+	elseif(in_array($table, array("ways"))) {
 	  $rule=mapnik_style_line_text($dom, $rule_id, $tags, $global_tags);
 	  if(isset($rule))
 	    $style_text->appendChild($rule);
@@ -490,7 +490,7 @@ function build_mapnik_style($id, $data, $global_tags) {
 
       $sql="(select{$sql_select} from ($sql) as t{$sql_join}) as u";
 
-      if(in_array($table, array("point", "polygon"))) {
+      if(in_array($table, array("nodes", "polygons"))) {
 	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
 	$map_layers['point_icon'][$importance]=array($style_icon, $layer);
 	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql);
