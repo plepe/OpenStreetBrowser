@@ -37,11 +37,11 @@ function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
       $values_escape[]=postgre_escape($v);
     $key=postgre_escape($key);
     //register_index($table, $key);
-    $w[]="(to_tsvector('simple', osm_$table->'$key') @@ to_tsquery('simple', ".
+    $w[]="(to_tsvector('simple', osm_tags->$key) @@ to_tsquery('simple', ".
 	 implode("||' | '||", $values_escape)."))";
   }
 
-  if(!$no_match)
+  if((!$no_match)&&(sizeof($w)))
     $where[]=implode(" or ", $w);
 
   $rule_select.="END) as result\n";
@@ -52,9 +52,9 @@ function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
 
   $select[]="$funname(osm_type, osm_id, osm_tags) as result";
 
-  $where[]="(\"rule_$id\"='$importance' or \"rule_$id\" is null)";
+  //$where[]="(\"rule_$id\"='$importance' or \"rule_$id\" is null)";
 
-  $where[]="$table_def[geo]&&!bbox!";
+  $where[]="osm_way&&!bbox!";
 
   if(sizeof($where))
     $where="where\n  ".implode(" and\n  ", $where);
@@ -256,6 +256,7 @@ function match_to_sql($match, $table_def) {
     case "false":
       return "false";
     default:
+      print "invalid match! "; print_r($match);
       return "X";
   }
 }
@@ -513,35 +514,6 @@ function parse_explode($match) {
 		  "values"   =>$values);
 
   return $parser;
-}
-
-function parse_kind($kind, $table) {
-  global $postgis_tables;
-  $table_def=$postgis_tables[$table];
-  $parts=array();
-
-  foreach($kind as $k) {
-    $join="";
-    $select="";
-    if(!in_array($k, $table_def[columns])) {
-      $join.="left join {$table_def[id_type]}_tags \"{$k}_table\" on planet_osm_{$table}.osm_id=\"{$k}_table\".{$table_def[id_type]}_id and \"{$k}_table\".k='$k'";
-      $select="\"{$k}_table\".v as \"{$k}\"";
-    }
-
-    $parts[]=array("columns"=>$k,
-		   "join"=>$join,
-		   "select"=>$select);
-  }
-
-  $ret=array();
-  foreach($parts as $def) {
-    foreach($def as $part=>$text) {
-      if($text)
-	$ret[$part][]=$text;
-    }
-  }
-
-  return $ret;
 }
 
 function category_build_where($where_col, $where_vals) {

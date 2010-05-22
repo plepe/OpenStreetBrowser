@@ -19,7 +19,7 @@ class process_rule {
     if($tables)
       $tables=explode(";", $tables);
     else
-      $tables=array("polygon", "point");
+      $tables=array("nodes");
 
     $importance=$this->tags->get("importance");
     if(!$importance)
@@ -28,9 +28,7 @@ class process_rule {
       $importance="*";
 
     foreach($tables as $table) {
-      if($postgis_tables[$table]) {
-	$match=parse_match($this->tags->get("match"));
-      }
+      $match=parse_match($this->tags->get("match"));
 
       if($importance=="*") {
 	foreach($importance_levels as $imp_lev) {
@@ -77,10 +75,10 @@ class process_category {
 	$ret1[$table][$importance]=$rules;
 
     foreach($ret1 as $table=>$x) {
-      sql_query("alter table planet_osm_$table drop column \"rule_$id\";");
-      sql_query("alter table planet_osm_$table add column \"rule_$id\" text default null;");
-      sql_query("create index planet_osm_{$table}_importance_{$id} on planet_osm_{$table}(\"rule_$id\");");
-      sql_query("create index planet_osm_{$table}_notchecked_{$id} on planet_osm_{$table}(\"rule_$id\") where \"rule_$id\" is null;");
+//      sql_query("alter table planet_osm_$table drop column \"rule_$id\";");
+//      sql_query("alter table planet_osm_$table add column \"rule_$id\" text default null;");
+//      sql_query("create index planet_osm_{$table}_importance_{$id} on planet_osm_{$table}(\"rule_$id\");");
+//      sql_query("create index planet_osm_{$table}_notchecked_{$id} on planet_osm_{$table}(\"rule_$id\") where \"rule_$id\" is null;");
 
       $ret2=array();
       foreach($x as $importance=>$rules) {
