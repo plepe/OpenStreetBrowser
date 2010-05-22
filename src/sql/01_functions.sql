@@ -12,6 +12,13 @@ SFUNC = array_append,
 STYPE = int4[],
 INITCOND = '{}'); 
 
+drop aggregate if exists to_intarray(bigint);
+CREATE AGGREGATE to_intarray (
+BASETYPE = bigint,
+SFUNC = array_append,
+STYPE = bigint[],
+INITCOND = '{}'); 
+
 drop aggregate if exists to_intarray(int[]);
 CREATE AGGREGATE to_intarray (
 BASETYPE = int4[],
