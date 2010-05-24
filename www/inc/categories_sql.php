@@ -3,7 +3,7 @@ $maybe_delete_indexes=array();
 
 function register_index($table, $key, $type, $id) {
   $res=sql_query("select * from indexes where _table='$table' and _key=$key and _type='$type'");
-  if(!mysql_num_rows($res)) {
+  if(!pg_num_rows($res)) {
     switch($type) {
       case "tsvector":
         sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gin(to_tsvector('simple', osm_tags->$key))");
@@ -99,8 +99,6 @@ function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
   if((!$no_match)&&(sizeof($w)))
     $where[]=implode(" or ", $w);
 
-  $rule_select.="END) as result\n";
-
   $from="from osm_$table\n";
 
   $funname="classify_{$id}_{$table}";
@@ -122,6 +120,8 @@ function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
 
 function create_sql_classify_fun($rules, $table="node", $id="tmp") {
   global $postgis_tables;
+  $classify_function_declare="";
+  $classify_function_getdata="";
   $classify_function="";
   $tag_list=array();
   $table_def=$postgis_tables[$table];
