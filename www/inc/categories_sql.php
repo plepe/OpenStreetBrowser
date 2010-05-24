@@ -1,4 +1,58 @@
 <?
+$maybe_delete_indexes=array();
+
+function register_index($table, $key, $type, $id) {
+  $res=sql_query("select * from indexes where _table='$table' and _key=$key and _type='$type'");
+  if(!mysql_num_rows($res)) {
+    switch($type) {
+      case "tsvector":
+        sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gin(to_tsvector('simple', osm_tags->$key))");
+	break;
+    }
+  }
+
+  sql_query("insert into indexes values ('$table', $key, '$type', '$id')");
+}
+
+function tmp_delete_indexes($id) {
+  global $maybe_delete_indexes;
+
+  $res=sql_query("select *, (select count(*) from indexes it where i._table=it._table and i._key=it._key and i._type=it._type and id!='$id') as count from indexes i where id='$id'");
+  while($elem=pg_fetch_assoc($res)) {
+    if($elem[count]==0)
+      $maybe_delete_indexes[]=$elem;
+  }
+
+  print_r($maybe_delete_indexes);
+
+  sql_query("delete from indexes where id='$id'");
+}
+
+function delete_indexes($id) {
+  global $maybe_delete_indexes;
+
+  $res=sql_query("select * from indexes where id='$id'");
+  while($elem=pg_fetch_assoc($res)) {
+    $list[]=$elem;
+  }
+
+  print_r($list);
+
+  for($i=0; $i<sizeof($maybe_delete_indexes); $i++) {
+    $found=false;
+    for($j=0; $j<sizeof($list); $j++) {
+      if(($list['table']==$maybe_delete_indexes['table'])&&
+         ($list['key']==$maybe_delete_indexes['key'])&&
+         ($list['type']==$maybe_delete_indexes['type']))
+	$found=true;
+    }
+
+    if(!$found) {
+      sql_query("drop index \"osm_{$maybe_delete_indexes['table']}_{$maybe_delete_indexes['type']}_{$maybe_delete_indexes['key']}\"");
+    }
+  }
+}
+
 function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
   $tag_list=array();
   $add_columns=array();

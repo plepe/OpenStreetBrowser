@@ -61,3 +61,11 @@ create index planet_osm_polygon_man_made on planet_osm_polygon("man_made");
 create index planet_osm_polygon_name	 on planet_osm_polygon("name");
 create index planet_osm_polygon_sport    on planet_osm_polygon("sport");
 create index planet_osm_polygon_leisure  on planet_osm_polygon("leisure");
+
+create table indexes (
+  _table		text	not null,
+  _key		text	not null,
+  _type		text	not null,
+  id		text	not null,
+  primary key(_table, _key, _type, id)
+);

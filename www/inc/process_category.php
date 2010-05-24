@@ -74,6 +74,8 @@ class process_category {
       foreach($x as $table=>$rules)
 	$ret1[$table][$importance]=$rules;
 
+    tmp_delete_indexes($id);
+
     foreach($ret1 as $table=>$x) {
 //      sql_query("alter table planet_osm_$table drop column \"rule_$id\";");
 //      sql_query("alter table planet_osm_$table add column \"rule_$id\" text default null;");
@@ -94,6 +96,8 @@ class process_category {
 
       create_sql_classify_fun($ret2, $table, $id);
     }
+
+    delete_indexes($id);
 
     return $ret;
   }
