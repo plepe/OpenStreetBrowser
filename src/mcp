@@ -1,7 +1,5 @@
 #!/usr/bin/php
 <?
-$fifo_path="/tmp/mcp.fifo";
-
 include "conf.php";
 include "inc/hooks.php";
 include "inc/lock.php";
@@ -26,13 +24,24 @@ function restart_renderd() {
   system("software/mod_tile/renderd");
 }
 
+function compile($cat_id) {
+  $x=new category($cat_id);
+  $x->compile();
+  restart_renderd();
+}
+
 function mcp_process($todo) {
-  switch($todo) {
+  $todo=explode(" ", $todo);
+
+  switch($todo[0]) {
     case "restart":
       restart_renderd();
       break;
+    case "compile":
+      compile($todo[1]);
+      break;
     default:
-      print "didn't understand $todo\n";
+      print "didn't understand ".implode(" ", $todo)."\n";
   }
   return 1;
 }
@@ -52,6 +61,7 @@ function mcp_sig_handler($signo) {
   }
 }
 
+umask(0);
 posix_mkfifo($fifo_path, 0666);
 $fifo=fopen($fifo_path, "r+");
 

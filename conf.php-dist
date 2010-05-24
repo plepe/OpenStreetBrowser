@@ -28,3 +28,5 @@ $root_dir="/home/osm";
 // $lists_dir - saves available categories (has to be writeable for www)
 $lists_dir="$root_dir/data/lists";
 
+// $fifo_path - the pipe to the mcp-process
+$fifo_path="/tmp/mcp.fifo";

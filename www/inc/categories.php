@@ -671,8 +671,14 @@ function category_save($id, $content, $param=array()) {
 
   unlock_dir("$lists_dir");
 
-  $cat=new category($id);
-  $cat->compile();
+//  $cat=new category($id);
+//  $cat->compile();
+  global $fifo_path;
+  if(file_exists($fifo_path)) {
+    $f=fopen($fifo_path, "w");
+    fputs($f, "compile $id\n");
+    fclose($f);
+  }
 
   if($error) {
     return array("status"=>"merge failed", "branch"=>$branch, "id"=>$id);
