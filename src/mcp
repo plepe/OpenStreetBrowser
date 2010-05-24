@@ -1,0 +1,25 @@
+#!/usr/bin/php
+<?
+$fifo_path="/tmp/mcp.fifo";
+
+function mcp_process($todo) {
+  print "$todo\n";
+  return 1;
+}
+
+posix_mkfifo($fifo_path, 0666);
+$fifo=fopen($fifo_path, "r+");
+
+while(1) {
+  $stream_read=array($fifo);
+  $stream_write=array();
+  $stream_except=array();
+  stream_select($stream_read, $stream_write, $stream_except, 1);
+
+  foreach($stream_read as $str) {
+    if($str==$fifo) {
+      $todo=trim(fgets($fifo));
+      mcp_process($todo);
+    }
+  }
+}
