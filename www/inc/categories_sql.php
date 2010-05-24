@@ -10,6 +10,7 @@ function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
   $select[]="osm_type";
   $select[]="osm_id";
   $select[]="osm_way as geo";
+  $select[]="osm_tags";
   
   $i=0;
   foreach($match_list as $i=>$match) {
@@ -36,7 +37,7 @@ function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
     foreach($values as $v)
       $values_escape[]=postgre_escape($v);
     $key=postgre_escape($key);
-    //register_index($table, $key);
+    register_index($table, $key, "tsvector", $id);
     $w[]="(to_tsvector('simple', osm_tags->$key) @@ to_tsquery('simple', ".
 	 implode("||' | '||", $values_escape)."))";
   }
@@ -62,7 +63,7 @@ function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
     $where="";
 
   $select=implode(", ", $select);
-  return "select to_textarray(t2.osm_type) as osm_type, to_intarray(t2.osm_id) as osm_id, ST_Collect(t2.geo) as geo, t2.result[1] as rule_id, t2.result[2] as importance, cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3], cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern";
+  return "select to_textarray(t2.osm_type) as osm_type, to_intarray(t2.osm_id) as osm_id, ST_Collect(t2.geo) as geo, tags_merge(to_array(t2.osm_tags)) as osm_tags, t2.result[1] as rule_id, t2.result[2] as importance, cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3], cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern";
 }
 
 function create_sql_classify_fun($rules, $table="node", $id="tmp") {
