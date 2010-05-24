@@ -7,8 +7,26 @@ function mcp_process($todo) {
   return 1;
 }
 
+declare(ticks=1);
+function mcp_sig_handler($signo) {
+  global $fifo;
+  global $fifo_path;
+
+  switch($signo) {
+    case SIGTERM:
+    case SIGINT:
+      print "exiting\n";
+      fclose($fifo);
+      unlink($fifo_path);
+      exit;
+  }
+}
+
 posix_mkfifo($fifo_path, 0666);
 $fifo=fopen($fifo_path, "r+");
+
+pcntl_signal(SIGTERM, "mcp_sig_handler");
+pcntl_signal(SIGINT,  "mcp_sig_handler");
 
 while(1) {
   $stream_read=array($fifo);
