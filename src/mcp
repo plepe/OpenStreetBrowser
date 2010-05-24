@@ -2,8 +2,38 @@
 <?
 $fifo_path="/tmp/mcp.fifo";
 
+include "conf.php";
+include "inc/hooks.php";
+include "inc/lock.php";
+include "inc/tags.php";
+include "inc/sql.php";
+include "inc/debug.php";
+include "inc/category.php";
+include "inc/categories.php";
+include "inc/process_category.php";
+include "inc/functions.php";
+include "inc/css.php";
+include "gen_renderd_conf.php";
+$sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
+
+function restart_renderd() {
+  global $root_path;
+
+  system("killall renderd");
+  gen_renderd_conf();
+  chdir($root_path);
+  system("src/ap2restart");
+  system("software/mod_tile/renderd");
+}
+
 function mcp_process($todo) {
-  print "$todo\n";
+  switch($todo) {
+    case "restart":
+      restart_renderd();
+      break;
+    default:
+      print "didn't understand $todo\n";
+  }
   return 1;
 }
 
@@ -27,6 +57,8 @@ $fifo=fopen($fifo_path, "r+");
 
 pcntl_signal(SIGTERM, "mcp_sig_handler");
 pcntl_signal(SIGINT,  "mcp_sig_handler");
+
+restart_renderd();
 
 while(1) {
   $stream_read=array($fifo);

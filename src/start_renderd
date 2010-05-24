@@ -1,6 +1,0 @@
-#!/bin/bash
-
-killall renderd
-src/gen_renderd_conf
-src/ap2restart
-software/mod_tile/renderd -f
