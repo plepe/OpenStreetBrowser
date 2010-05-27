@@ -1,7 +1,39 @@
 var search_last;
 
 function search_focus(ob) {
-  ob.value="";
+  if(ob.value==lang_str["search_field"]) {
+    ob.value='';
+  }
+  else if((ob.value!="")) {
+    document.getElementById("osb_search_form").brush.style.visibility = 'visible';
+  }
+  document.getElementById("osb_search_form").osb_search.style.borderColor = '#cc9900';
+}
+
+function search_clear(ob) {
+  ob.value='';
+  document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
+  ob.focus();
+}
+
+function search_brush(ob,e) {
+  if((ob.value!="")) {
+    document.getElementById("osb_search_form").brush.style.visibility = 'visible';
+  }
+  else {
+    document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
+  }
+  if(e.which==27) {
+    search_clear(ob);
+  }
+}
+
+function search_onblur(ob) {
+  if((ob.value=='\0')||(ob.value=="")) {
+    ob.value=lang_str["search_field"];
+    document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
+  }
+  document.getElementById("osb_search_form").osb_search.style.borderColor = '#999999';
 }
 
 function search() {
@@ -25,7 +57,7 @@ function real_search(value, param) {
   ajax("search", param, search_result);
 
   search_last=value;
-  details_content.innerHTML="Loading ...";
+  details_content.innerHTML=lang_str["loading"];
   details.className="info_loading";
 }
 

@@ -70,4 +70,4 @@ function geo_init() {
 
 
 register_hook("finish_drag", move_pos);
-register_hook("post_init", geo_init);
+//register_hook("post_init", geo_init);
