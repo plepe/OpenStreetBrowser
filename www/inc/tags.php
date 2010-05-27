@@ -355,4 +355,115 @@ function parse_tags_old($text) {
   return $tags;
 }
 
+function match_simplify($match, $method) {
+  switch($match[0]) {
+    case "or":
+      for($i=1; $i<sizeof($match); $i++) {
+	// or aufloesen
+	$match[$i]=match_simplify($match[$i], $method);
+	if($match[$i][0]=="or") {
+	  array_shift($match[$i]);
+	  $match=array_merge($match, $match[$i]);
+	  unset($match[$i]);
+	  $match=array_values($match);
+	  $i--;
+	}
+      }
+
+      for($i=1; $i<sizeof($match); $i++) {
+	for($j=1; $j<$i; $j++) {
+	  if(($match[$i][0]=="is")&&($match[$j][0]=="is")&&
+	     ($match[$i][1]==$match[$j][1])) {
+	    unset($match[$j][0]);
+	    unset($match[$j][1]);
+	    $match[$i]=array_merge($match[$i], $match[$j]);
+	    unset($match[$j]);
+	    $match=array_values($match);
+	    $j--; $i--;
+	  }
+
+	  elseif(($match[$i][0]=="and")&&($match[$j][0]=="and")) {
+	    $eq=array(); $not_eq=array();
+	    for($ii=1; $ii<sizeof($match[$i]); $ii++) {
+	      $found_eq=false;
+	      for($ji=1; $ji<sizeof($match[$j]); $ji++) {
+		if(!sizeof(array_diff($match[$i][$ii], $match[$j][$ji]))) {
+		  $found_eq=true;
+		  $eq[]=$match[$i][$ii];
+		  unset($match[$j][$ji]);
+		  $match[$j]=array_values($match[$j]);
+		}
+		elseif(((($match[$i][$ii][0]==">")&&($match[$j][$ji][0]=="<="))||
+		        (($match[$i][$ii][0]==">=")&&($match[$j][$ji][0]=="<"))||
+		        (($match[$i][$ii][0]==">=")&&($match[$j][$ji][0]=="<=")))&&
+		       ($match[$i][$ii][1]==$match[$j][$ji][1])&&
+		       ($match[$i][$ii][2]<=$match[$j][$ji][2])) {
+		  $found_eq=true;
+		  unset($match[$j][$ji]);
+		  $match[$j]=array_values($match[$j]);
+		}
+		elseif((($match[$i][$ii][0]=="exist")&&
+		        (in_array($match[$j][$ji][0], array(">", ">=", "<=", "<", "is"))))&&
+		       ($match[$i][$ii][1]<=$match[$j][$ji][1])) {
+		  $found_eq=true;
+		  $eq[]=$match[$i][$ii];
+		  unset($match[$j][$ji]);
+		  $match[$j]=array_values($match[$j]);
+		}
+	      }
+
+	      if(!$found_eq) {
+		$not_eq[]=$match[$i][$ii];
+	      }
+	    }
+
+	    if(sizeof($eq)) {
+	      if((!sizeof($not_eq))||(!sizeof($match[$j]))) {
+		$match[$i]=$eq;
+		unset($match[$j]);
+		$match=array_values($match);
+		$i--;
+	      }
+	      else {
+                $not_eq=array(array_merge(array("or"), $not_eq, array($match[$j])));
+		$match[$i]=array_merge(array("and"), $eq, $not_eq);
+		$il=sizeof($match[$i])-1;
+		$match[$i][$il]=match_simplify($match[$i][$il], $method);
+		unset($match[$j]);
+		$match=array_values($match);
+		$i--;
+	      }
+	    }
+	  }
+	}
+      }
+
+      if(($match[0]=="or")&&(sizeof($match)==2)) {
+	$match=$match[1];
+      }
+
+      break;
+    case "and":
+      for($i=1; $i<sizeof($match); $i++) {
+	// or aufloesen
+	$match[$i]=match_simplify($match[$i], $method);
+	if($match[$i][0]=="and") {
+	  array_shift($match[$i]);
+	  $match=array_merge($match, $match[$i]);
+	  unset($match[$i]);
+	  $match=array_values($match);
+	  $i--;
+	}
+      }
+
+      if(($match[0]=="and")&&(sizeof($match)==2)) {
+	$match=$match[1];
+      }
+
+      break;
+  }
+
+  return $match;
+}
+
 
