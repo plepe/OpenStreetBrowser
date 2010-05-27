@@ -34,7 +34,7 @@ create table osm_ways (
 select AddGeometryColumn('osm_ways', 'osm_way', 900913, 'LINESTRING', 2);
 
 insert into osm_ways
-  SELECT 
+  SELECT
     'way'::text as osm_type,
     id as osm_id,
     (select
@@ -84,3 +84,4 @@ insert into osm_rels
 create index osm_rels_id   on osm_rels(osm_id);
 create index osm_rels_tags on osm_rels using gin(osm_tags);
 create index osm_rels_way  on osm_rels using gist(osm_way);
+
