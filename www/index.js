@@ -198,6 +198,11 @@ function view_changed(event) {
 
   view_changed_timer=setTimeout("view_changed_delay()", 300);
   check_mapkey();
+  
+  
+  var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+  cookie_write("_osb_location", center.lon + "|" + center.lat + "|" + map.zoom + "|" + location.hash);
+
 
   call_hooks("view_changed", event);
 }
@@ -240,6 +245,9 @@ function init() {
   var permalink=document.getElementById("permalink");
   map.addControl(new OpenLayers.Control.Permalink(permalink, "http://www.openstreetbrowser.org/"));
 
+  map.addControl(new OpenLayers.Control.MousePosition());
+  map.addControl(new OpenLayers.Control.ScaleLine());
+
   if(start_lon&&(first_load)) {
     var lonlat = new OpenLayers.LonLat(start_lon, start_lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
     map.setCenter(lonlat, start_zoom);
@@ -255,7 +263,7 @@ function init() {
   map_key_init();
 
   call_hooks("init");
-  setTimeout("call_hooks(\"post_init\")", 2000);
+  //setTimeout("call_hooks(\"post_init\")", 2000);
 
   if(marker_pos) {
     var size = new OpenLayers.Size(21,25);

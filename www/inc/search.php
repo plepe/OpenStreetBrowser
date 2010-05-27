@@ -24,7 +24,7 @@ function search($param) {
   $ret.="<div class='box_opened'>\n";
   $ret.="<a class='zoom' href='#'>".lang("info_back")."</a><br>\n";
 
-  $ret.="<h1>Search results</h1>\n";
+  $ret.="<h1>".lang("search_results")."</h1>\n";
   if($param[shown])
     $ret.="<a nominatim_id='$param[shown]'></a>";
   $ret.="<ul>\n";
@@ -46,8 +46,8 @@ function search($param) {
   }
   $ret.="</ul>\n";
 
-  $ret.="<a href='javascript:search_more()'>more results</a><br>\n";
-  $ret.="(search provided by <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>)<br>\n";
+  $ret.="<i><a href='javascript:search_more()'>".lang("search_more")."</a></i><br>\n";
+  $ret.="(".lang("search_nominatim")." <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>)<br>\n";
 
   $ret.="</div>\n";
 
