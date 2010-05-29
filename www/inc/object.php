@@ -201,6 +201,8 @@ function load_object($elem=0, $tags=null) {
       $id="{$elem[element]}_{$elem[id]}";
     elseif($elem[osm_type])
       $id="{$elem[osm_type]}_{$elem[osm_id]}";
+    elseif($elem[osm_id])
+      $id="{$elem[osm_id]}";
     else
       $id=$elem[id];
 

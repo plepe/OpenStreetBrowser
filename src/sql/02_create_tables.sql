@@ -1,16 +1,14 @@
 drop table if exists osm_nodes;
 create table osm_nodes (
-  osm_type		text		not null,
-  osm_id		bigint		not null,
+  osm_id		text		not null,
   osm_tags		hstore		null,
-  primary key(osm_type, osm_id)
+  primary key(osm_id)
 );
 select AddGeometryColumn('osm_nodes', 'osm_way', 900913, 'POINT', 2);
 
 insert into osm_nodes
   select * from (select
-    'node'::text as osm_type,
-    id as osm_id,
+    'node_'||id as osm_id,
     (select
 	array_to_hstore(to_textarray(k), to_textarray(v))
       from node_tags
@@ -20,23 +18,20 @@ insert into osm_nodes
     from nodes) as x
   where (array_dims(akeys(osm_tags)))!='[1:0]';
 
-create index osm_nodes_id   on osm_nodes(osm_id);
 create index osm_nodes_tags on osm_nodes using gin(osm_tags);
 create index osm_nodes_way  on osm_nodes using gist(osm_way);
 
 drop table if exists osm_ways;
 create table osm_ways (
-  osm_type		text		not null,
-  osm_id		bigint		not null,
+  osm_id		text		not null,
   osm_tags		hstore		null,
-  primary key(osm_type, osm_id)
+  primary key(osm_id)
 );
 select AddGeometryColumn('osm_ways', 'osm_way', 900913, 'LINESTRING', 2);
 
 insert into osm_ways
   SELECT
-    'way'::text as osm_type,
-    id as osm_id,
+    'way_'||id as osm_id,
     (select
 	array_to_hstore(to_textarray(k), to_textarray(v))
       from way_tags
@@ -49,23 +44,20 @@ insert into osm_ways
       ) c) as osm_way
   from ways group by id;
 
-create index osm_ways_id   on osm_ways(osm_id);
 create index osm_ways_tags on osm_ways using gin(osm_tags);
 create index osm_ways_way  on osm_ways using gist(osm_way);
 
 drop table if exists osm_rels;
 create table osm_rels (
-  osm_type		text		not null,
-  osm_id		bigint		not null,
+  osm_id		text		not null,
   osm_tags		hstore		null,
-  primary key(osm_type, osm_id)
+  primary key(osm_id)
 );
 select AddGeometryColumn('osm_rels', 'osm_way', 900913, 'GEOMETRY', 2);
 
 insert into osm_rels
   select
-      'rel'::text as osm_type,
-      id as osm_id,
+      'rel_'||id as osm_id,
       (select
 	  array_to_hstore(to_textarray(k), to_textarray(v))
 	from relation_tags
@@ -77,11 +69,9 @@ insert into osm_rels
 	    where rm.relation_id=relations.id) c),
 	(select ST_Collect(geom) from (
 	  select w.osm_way as geom
-	    from osm_ways w inner join relation_members rm on w.osm_id=rm.member_id and rm.member_type='W'
+	    from osm_ways w inner join relation_members rm on w.osm_id='way_'||rm.member_id and rm.member_type='W'
 	    where rm.relation_id=relations.id) c)) as osm_way
     from relations;
 
-create index osm_rels_id   on osm_rels(osm_id);
 create index osm_rels_tags on osm_rels using gin(osm_tags);
 create index osm_rels_way  on osm_rels using gist(osm_way);
-

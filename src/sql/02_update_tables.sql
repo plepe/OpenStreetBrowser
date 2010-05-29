@@ -2,13 +2,12 @@ CREATE OR REPLACE FUNCTION osmosisUpdate() RETURNS void AS $$
 DECLARE
 BEGIN
   -- delete changed/deleted nodes
-  delete from osm_nodes using actions where osm_id=id and data_type='N' and action in ('M', 'D');
+  delete from osm_nodes using actions where osm_id='node_'||id and data_type='N' and action in ('M', 'D');
 
   -- insert changed/created nodes
   insert into osm_nodes
     select * from (select
-      'node'::text as osm_type,
-      nodes.id as osm_id,
+      'node_'||nodes.id as osm_id,
       (select
 	  array_to_hstore(to_textarray(k), to_textarray(v))
 	from node_tags
@@ -26,13 +25,12 @@ BEGIN
     (select way_id as id from way_nodes join actions on way_nodes.node_id=actions.id and actions.data_type='N' and actions.action='M' group by way_id
      union
      select id from actions where data_type='W' and action in ('M', 'D'))actions 
-  where osm_id=id;
+  where osm_id='way_'||id;
 
   -- insert changed/created ways
 insert into osm_ways
   SELECT
-    'way'::text as osm_type,
-    ways.id as osm_id,
+    'way_'||ways.id as osm_id,
     (select
 	array_to_hstore(to_textarray(k), to_textarray(v))
       from way_tags
@@ -53,13 +51,12 @@ insert into osm_ways
     (select relation_id as id from relation_members join actions on relation_members.member_id=actions.id and actions.data_type=relation_members.member_type and actions.action='M' group by relation_id
      union
      select id from actions where data_type='R' and action in ('M', 'D')) actions
-  where osm_id=id;
+  where osm_id='rel_'||id;
 
   -- insert changed/created relations
   insert into osm_rels
     select
-	'rel'::text as osm_type,
-	relations.id as osm_id,
+	'rel_'||relations.id as osm_id,
 	(select
 	    array_to_hstore(to_textarray(k), to_textarray(v))
 	  from relation_tags

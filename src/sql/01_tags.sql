@@ -1,11 +1,76 @@
-create or replace function tags_get(text, bigint, text)
+create or replace function _tags_data(text)
+returns hstore
+as $$
+declare
+  x           text[];
+  _osm_type   text;
+  _osm_id     bigint;
+  _osm_typeid alias for $1;
+begin
+  x:=string_to_array(_osm_typeid, '_');
+  _osm_type:=x[1];
+  _osm_id:=x[2];
+
+  if (_osm_type='node') then
+    return (select array_to_hstore(to_textarray(k), to_textarray(v)) from node_tags where "node_id"=_osm_id);
+  elsif (_osm_type='way') then
+    return (select array_to_hstore(to_textarray(k), to_textarray(v)) from way_tags where "way_id"=_osm_id);
+  elsif (_osm_type='rel') then
+    return (select array_to_hstore(to_textarray(k), to_textarray(v)) from relation_tags where "relation_id"=_osm_id);
+  end if;
+end;
+$$ language 'plpgsql';
+
+create or replace function tags_data(text)
+returns hstore
+as $$
+declare
+  _osm_id     alias for $1;
+  ret         hstore[];
+  x           text[];
+begin
+  x:=split_semicolon(_osm_id);
+  for i in array_lower(x, 1)..array_upper(x, 1) loop
+    ret[i]:=_tags_data(x[i]);
+  end loop;
+
+  return tags_merge(ret);
+end;
+$$ language 'plpgsql';
+
+create or replace function tags_get(text, text)
 returns text
 as $$
 declare
-  _osm_type alias for $1;
-  _osm_id   alias for $2;
-  _key	   alias for $3;
+  _osm_id     alias for $1;
+  _key	      alias for $2;
+  ret         text[];
+  x           text[];
 begin
+  x:=split_semicolon(_osm_id);
+  for i in array_lower(x, 1)..array_upper(x, 1) loop
+    ret[i]:=_tags_get(x[i], _key);
+  end loop;
+
+  ret:=array_unique(string_to_array(array_to_string(ret, ';'), ';'));
+  return array_to_string(ret, ';');
+end;
+$$ language 'plpgsql';
+
+create or replace function _tags_get(text, text)
+returns text
+as $$
+declare
+  x           text[];
+  _osm_type   text;
+  _osm_id     bigint;
+  _osm_typeid alias for $1;
+  _key	      alias for $2;
+begin
+  x:=string_to_array(_osm_typeid, '_');
+  _osm_type:=x[1];
+  _osm_id:=x[2];
+
   if (_osm_type='node') then
     return (select v from node_tags where "node_id"=_osm_id and "k"=_key);
   elsif (_osm_type='way') then
@@ -16,31 +81,63 @@ begin
 end;
 $$ language 'plpgsql';
 
-create or replace function tags_get(text[], bigint[], text)
-returns text[]
+create or replace function tags_get(text, text)
+returns text
 as $$
 declare
-  _osm_type alias for $1;
-  _osm_id   alias for $2;
-  _key	    alias for $3;
-  _ret      text[];
+  _osm_id     alias for $1;
+  _key	      alias for $2;
+  ret         text[];
+  x           text[];
+begin
+  x:=split_semicolon(_osm_id);
+  for i in array_lower(x, 1)..array_upper(x, 1) loop
+    ret[i]:=_tags_get(x[i], _key);
+  end loop;
+
+  ret:=array_unique(string_to_array(array_to_string(ret, ';'), ';'));
+  return array_to_string(ret, ';');
+end;
+$$ language 'plpgsql';
+
+
+create or replace function tags_get(hstore, text)
+returns text
+as $$
+declare
+  osm_tags alias for $1;
+  _key	   alias for $2;
+begin
+  return osm_tags->_key;
+end;
+$$ language 'plpgsql';
+
+create or replace function tags_get(text[], text)
+returns text
+as $$
+declare
+  _osm_id   alias for $1;
+  _key	    alias for $2;
+  ret      text[];
   i         int;
 begin
   for i in array_lower($1, 1)..array_upper($1, 1) loop
-    _ret[i]=tags_get(_osm_type[i], _osm_id[i], _key);
+    ret[i]=tags_get(_osm_id[i], _key);
   end loop;
 
-  return array_unique(_ret);
+  ret:=array_unique(string_to_array(array_to_string(ret, ';'), ';'));
+  return array_to_string(ret, ';');
 end;
 $$ language 'plpgsql';
 
-create or replace function tags_parse(text, bigint, text)
+create or replace function tags_parse(text, hstore, geometry, text)
 returns text
 as $$
 declare
-  _osm_type alias for $1;
-  _osm_id   alias for $2;
-  pattern   alias for $3;
+  _osm_id   alias for $1;
+  _osm_tags alias for $2;
+  _osm_way  alias for $3;
+  pattern   alias for $4;
   patternex text[];
   patterni  int:=1;
   match_all boolean;
@@ -62,7 +159,7 @@ begin
     while(def!='') loop
       m:=substring(def from E'^\\[([A-Za-z0-9_:]+)\\]');
       if(m is not null) then
-	value=tags_get(_osm_type, _osm_id, m);
+	value=tags_get(_osm_tags, m);
 	if(value is null) then
 	  match_all:=false;
 	end if;
@@ -83,52 +180,16 @@ begin
 end;
 $$ language 'plpgsql';
 
-create or replace function tags_parse(text[], bigint[], text)
+create or replace function tags_parse(text, text)
 returns text
 as $$
 declare
-  _osm_type alias for $1;
-  _osm_id   alias for $2;
-  pattern   alias for $3;
-  patternex text[];
-  patterni  int:=1;
-  match_all boolean;
-  ret       text;
-  def       text;
-  m         text;
-  value     text;
+  _osm_id   alias for $1;
+  pattern   alias for $2;
+  tags      hstore;
 begin
-  if pattern is null or pattern='' then
-    return '';
-  end if;
-
-  patternex:=string_to_array(pattern, ';');
-  for i in array_lower(patternex, 1)..array_upper(patternex, 1) loop
-    match_all:=true;
-    ret:='';
-    def:=patternex[i];
-
-    while(def!='') loop
-      m:=substring(def from E'^\\[([A-Za-z0-9_:]+)\\]');
-      if(m is not null) then
-	value=array_to_string(tags_get(_osm_type, _osm_id, m), ';'::text);
-	if(value is null) then
-	  match_all:=false;
-	end if;
-	def:=substr(def, length(m)+3);
-	ret:=ret || value;
-      else
-	ret:=ret || substr(def, 1, 1);
-	def:=substr(def, 2);
-      end if;
-    end loop;
-
-    if (match_all=true) then
-      return ret;
-    end if;
-  end loop;
-
-  return '';
+  tags=tags_data(_osm_id);
+  return tags_parse(_osm_id, tags, null, pattern);
 end;
 $$ language 'plpgsql';
 

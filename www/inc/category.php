@@ -102,7 +102,7 @@ class category {
 	  $exclude_list[]=$m[0];
       }
 
-      $sql_where['*'][]="osm_type||'_'||osm_id not in ('".implode("', '", $exclude_list)."')";
+      $sql_where['*'][]="osm_id not in ('".implode("', '", $exclude_list)."')";
 
 /*      foreach($exclude_list as $type=>$excl_list) {
 	$exclude_list[$type]=" not in (".implode(", ", $excl_list).")";
@@ -210,14 +210,10 @@ class category {
     $id=array();
 
     global $make_valid;
-    $res['osm_type']=parse_array($res['osm_type']);
-    $res['osm_id']=parse_array($res['osm_id']);
-    foreach($res['osm_type'] as $i=>$res_part) {
-      $id[]="{$res['osm_type'][$i]}_{$res['osm_id'][$i]}";
-    }
+    $res['osm_id']=split_semicolon($res['osm_id']);
+    $id=$res['osm_id'];
 
     // TODO: Load an object which is a merge of ID-list
-    $res['osm_type']=$res['osm_type'][0];
     $res['osm_id']=$res['osm_id'][0];
     $rule=$this->rules[$res[rule_id]];
 

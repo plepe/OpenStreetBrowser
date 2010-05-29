@@ -61,7 +61,6 @@ function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
   $select=array();
   $where=array();
 
-  $select[]="osm_type";
   $select[]="osm_id";
   $select[]="osm_way as geo";
   $select[]="osm_tags";
@@ -103,7 +102,7 @@ function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
 
   $funname="classify_{$id}_{$table}";
 
-  $select[]="$funname(osm_type, osm_id, osm_tags) as result";
+  $select[]="$funname(osm_id, osm_tags, osm_way) as result";
 
   //$where[]="(\"rule_$id\"='$importance' or \"rule_$id\" is null)";
 
@@ -115,7 +114,7 @@ function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
     $where="";
 
   $select=implode(", ", $select);
-  return "select to_textarray(t2.osm_type) as osm_type, to_intarray(t2.osm_id) as osm_id, ST_Collect(t2.geo) as geo, tags_merge(to_array(t2.osm_tags)) as osm_tags, t2.result[1] as rule_id, t2.result[2] as importance, cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3], cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern";
+  return "select array_to_string(to_textarray(t2.osm_id), ';') as osm_id, ST_Collect(t2.geo) as geo, tags_merge(to_array(t2.osm_tags)) as osm_tags, t2.result[1] as rule_id, t2.result[2] as importance, cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3], cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern";
 }
 
 function create_sql_classify_fun($rules, $table="node", $id="tmp") {
@@ -155,17 +154,17 @@ function create_sql_classify_fun($rules, $table="node", $id="tmp") {
       $imp="'local'";
     elseif(strpos($imp, "[")) {
       $imp=postgre_escape($imp);
-      $imp="tags_parse(_osm_type, _osm_id, $imp)";
+      $imp="tags_parse(_osm_id, osm_tags, osm_way, $imp)";
     }
     else
       $imp="'$imp'";
 
     if($x=$tags->get("group")) {
       $x=postgre_escape($x);
-      $group_id="tags_parse(_osm_type, _osm_id, $x)";
+      $group_id="tags_parse(_osm_id, osm_tags, osm_way, $x)";
     }
     else {
-      $group_id="_osm_type||'_'||_osm_id";
+      $group_id="_osm_id";
     }
 
     $classify_function_match[]="if $qry then\n    result=Array['$rule_id',$imp, $group_id];";
@@ -182,12 +181,12 @@ function create_sql_classify_fun($rules, $table="node", $id="tmp") {
 //  $classify_function_match.="  end if;\n";
 
   $funname="classify_{$id}_{$table}";
-  $classify_function.="create or replace function $funname(text, bigint, hstore)\n";
+  $classify_function.="create or replace function $funname(text, hstore, geometry)\n";
   $classify_function.="returns text[] as $$\n";
   $classify_function.="declare\n";
-  $classify_function.="  _osm_type alias for $1;\n";
-  $classify_function.="  _osm_id   alias for $2;\n";
-  $classify_function.="  osm_tags  alias for $3;\n";
+  $classify_function.="  _osm_id   alias for $1;\n";
+  $classify_function.="  osm_tags  alias for $2;\n";
+  $classify_function.="  osm_way   alias for $3;\n";
   $classify_function.=$classify_function_declare;
   $classify_function.="begin\n";
   $classify_function.=$classify_function_getdata;
