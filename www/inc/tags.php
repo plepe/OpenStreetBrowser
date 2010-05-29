@@ -248,6 +248,19 @@ class tags {
   }
 }
 
+function parse_hstore($text) {
+  return eval("return array($text);");
+}
+
+function array_to_hstore($arr) {
+  $ret=array();
+  foreach($arr as $k=>$v) {
+    $ret[]="(".postgre_escape($k)."=>".postgre_escape($v).")::hstore";
+  }
+
+  return implode("|| ", $ret);
+}
+
 function parse_array($text, $prefix="") {
   if((substr($text, 0, 1)!="{")||(substr($text, -1)!="}"))
     return array();

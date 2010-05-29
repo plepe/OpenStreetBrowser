@@ -217,8 +217,10 @@ class category {
     $res['osm_id']=$res['osm_id'][0];
     $rule=$this->rules[$res[rule_id]];
 
+    $tags=parse_hstore($res['osm_tags']);
+
     $ret="<match ";
-    $ob=load_object($res);
+    $ob=load_object($res, $tags);
     $info=explode("||", $res[res]);
 
     $ret.="id=\"".implode(";", $id)."\" ";
