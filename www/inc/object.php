@@ -247,9 +247,10 @@ function load_object($elem=0, $tags=null) {
 
   // load data if necessary
   if(!$elem) {
-    switch($object_place_type) {
+    $qry="select astext(load_geo('$id')) as way";
+/*    switch($object_place_type) {
       case "node":
-        $qry="select lon, lat, astext(way) as way from planet_osm_nodes left join planet_osm_point on id=osm_id where id='$object_id'";
+        $qry="select astext(osm_way) as way from osm_nodes where osm_id='$id'";
 	break;
       case "way":
         $qry="select nodes, astext(CASE WHEN l.way is not null THEN l.way WHEN p.way is not null THEN p.way WHEN r.way is not null THEN r.way END) as way from planet_osm_ways left join planet_osm_line l on id=l.osm_id left join planet_osm_polygon p on id=p.osm_id left join relation_members r1 on r1.member_id=id and r1.member_role='outer' left join planet_osm_polygon r on r.osm_id=-r1.relation_id where id='$object_id'";
@@ -260,7 +261,7 @@ function load_object($elem=0, $tags=null) {
       case "coll":
 	$qry="select (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from coll_members where coll_id=id) as member_ids, (select to_textarray(member_role) from coll_members where coll_id=id) as member_roles from planet_osm_colls where id='$object_id'";
 	break;
-    }
+    } */
 
     $res=sql_query($qry);
     $elem=pg_fetch_assoc($res);

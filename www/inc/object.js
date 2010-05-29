@@ -1,6 +1,12 @@
 var objects=[];
 var tag_to_place_type={ "relation": "rel", "way": "way", "node": "node", "coll": "coll" };
 
+function set_feature_style(highlights, style) {
+  for(var i=0; i<highlights.length; i++) {
+    highlights[i].style=style;
+  }
+}
+
 function load_objects_from_xml(src) {
   if(!src)
     return;
@@ -75,26 +81,6 @@ function place(data, obj) {
 
     return null;
   }
-}
-
-function place_way(data, obj) {
-  this.inheritFrom=place;
-  this.inheritFrom(data, obj);
-
-  this.load_members=function() {
-    if(this.members)
-      return;
-
-//    this.members=[];
-//    var mems=this.data.getElementsByTagName("nd");
-//    for(var i=0; i<mems.length; i++) {
-//      var el=get_loaded_object("node_"+mems[i].getAttribute("ref"));
-//      if(el) {
-//	this.members.push(el);
-//	el.load_members();
-//      }
-//    }
-  }
 
   this.get_geo=function() {
     if(this.geo)
@@ -110,23 +96,18 @@ function place_way(data, obj) {
     if(this.highlight)
       return this.highlight;
 
-    this.highlight=[];
-
-    var linestring=this.get_geo();
-
-    for(var i=0; i<linestring.length; i++) {
-      var vector=new OpenLayers.Feature.Vector(linestring[i].clone(), 0, {
+    this.highlight=this.get_geo();
+    set_feature_style(this.highlight, 
+      {
+	strokeWidth: 4,
+	strokeColor: "black",
 	externalGraphic: "img/hi_node.png",
 	graphicWidth: 25,
 	graphicHeight: 25,
 	graphicXOffset: -13,
 	graphicYOffset: -13,
-	fill: "none",
-	strokeWidth: 4,
-	strokeColor: "black"
+	fill: "none"
       });
-      this.highlight.push(vector);
-    }
 
     return this.highlight;
   }
@@ -135,12 +116,9 @@ function place_way(data, obj) {
     if(this.display_features)
       return this.display_features;
 
-    this.display_features=[];
-
-    var linestring=this.get_geo();
-
-    for(var i=0; i<linestring.length; i++) {
-      var vector=new OpenLayers.Feature.Vector(linestring[i].clone(), 0, {
+    this.display_features=this.get_geo();
+    set_feature_style(this.display_features,
+      {
 	strokeWidth: 2,
 	strokeColor: "black",
 	externalGraphic: "img/big_node.png",
@@ -150,234 +128,8 @@ function place_way(data, obj) {
 	graphicYOffset: -6,
 	fill: "none"
       });
-      this.display_features.push(vector);
-    }
 
     return this.display_features;
-  }
-
-}
-
-function place_node(data, obj) {
-  this.inheritFrom=place;
-  this.inheritFrom(data, obj);
-
-  this.get_geo=function() {
-    if(this.geo)
-      return this.geo;
-
-    this.way=new postgis(this.data.getAttribute("way"));
-    this.geo=this.way.geo();
-
-    return this.geo;
-  }
-
-  this.get_highlight=function() {
-    if(this.highlight)
-      return this.highlight;
-
-    var p=this.get_geo();
-
-    this.highlight=[];
-    for(var i=0; i<p.length; i++) {
-      this.highlight.push(new OpenLayers.Feature.Vector(p[i].clone(), 0, {
-	strokeWidth: 4,
-	strokeColor: "black",
-	externalGraphic: "img/hi_node.png",
-	graphicWidth: 25,
-	graphicHeight: 25,
-	graphicXOffset: -13,
-	graphicYOffset: -13,
-	fill: "none"
-      }));
-    }
-
-    return this.highlight;
-  }
-
-  this.get_display_features=function() {
-    if(this.display_features)
-      return this.display_features;
-
-    var p=this.get_geo();
-
-    this.display_features=[];
-    for(var i=0; i<p.length; i++) {
-      this.display_features.push(new OpenLayers.Feature.Vector(p[i].clone(), 0, {
-	strokeWidth: 2,
-	strokeColor: "black",
-	externalGraphic: "img/big_node.png",
-	graphicWidth: 11,
-	graphicHeight: 11,
-	graphicXOffset: -6,
-	graphicYOffset: -6,
-	fill: "none"
-      }));
-    }
-
-    return this.display_features;
-  }
-}
-
-function place_rel(data, obj) {
-  this.inheritFrom=place;
-  this.inheritFrom(data, obj);
-
-  this.get_highlight=function() {
-    this.load_members();
-    this.highlight=[];
-
-    for(var i=0; i<this.members.length; i++) {
-      var el=this.members[i];
-      var role=this.members_roles[i];
-
-      if(el) {
-	var p=el.place.get_geo();
-	if(p)
-	  for(var j=0; j<p.length; j++) {
-	    var vector=new OpenLayers.Feature.Vector(p[j].clone(), 0, {
-	      strokeWidth: 4,
-	      strokeColor: "black",
-	      externalGraphic: "img/big_node.png",
-	      graphicWidth: 11,
-	      graphicHeight: 11,
-	      graphicXOffset: -6,
-	      graphicYOffset: -6,
-	      fill: "none"
-	    });
-	    this.highlight.push(vector);
-	  }
-      }
-    }
-
-    return this.highlight;
-  }
-
-  this.get_display_features=function() {
-    this.load_members();
-    this.display_features=[];
-
-    for(var i=0; i<this.members.length; i++) {
-      var el=this.members[i];
-      var role=this.members_roles[i];
-
-      if(el) {
-	var p=el.place.get_geo();
-	if(p)
-	  for(var j=0; j<p.length; j++) {
-	    var vector=new OpenLayers.Feature.Vector(p[j].clone(), 0, {
-	      strokeWidth: 2,
-	      strokeColor: "black",
-	      externalGraphic: "img/node.png",
-	      graphicWidth: 7,
-	      graphicHeight: 7,
-	      graphicXOffset: -4,
-	      graphicYOffset: -4,
-	      fill: "none"
-	    });
-	    this.display_features.push(vector);
-	  }
-      }
-    }
-
-    return this.display_features;
-  }
-
-  this.load_members=function() {
-    if(!this.members) {
-      this.members=[];
-      this.members_roles=[];
-    }
-
-    var mems=this.data.getElementsByTagName("member");
-    for(var i=0; i<mems.length; i++) {
-      if(!this.members[i]) {
-	var el=get_loaded_object(mems[i].getAttribute("type")+"_"+mems[i].getAttribute("ref"));
-	this.members[i]=el;
-	if(el) {
-	  el.load_members();
-	}
-      }
-    }
-  }
-}
-
-function place_coll(data, obj) {
-  this.inheritFrom=place;
-  this.inheritFrom(data, obj);
-
-  this.get_highlight=function() {
-    this.load_members();
-    this.highlight=[];
-
-    for(var i=0; i<this.members.length; i++) {
-      var el=this.members[i];
-      //var role=this.members_roles[i];
-
-      if(el) {
-	var p=el.place.get_geo();
-	if(p)
-	  for(var j=0; j<p.length; j++) {
-	    var vector=new OpenLayers.Feature.Vector(p[j].clone(), 0, {
-	      strokeWidth: 4,
-	      strokeColor: "black",
-	      externalGraphic: "img/big_node.png",
-	      graphicWidth: 11,
-	      graphicHeight: 11,
-	      graphicXOffset: -6,
-	      graphicYOffset: -6,
-	      fill: "none"
-	    });
-	    this.highlight.push(vector);
-	  }
-      }
-    }
-
-    return this.highlight;
-  }
-
-  this.get_display_features=function() {
-    this.load_members();
-    this.display_features=[];
-
-    for(var i=0; i<this.members.length; i++) {
-      var el=this.members[i];
-//      var role=this.members_roles[i];
-
-      if(el) {
-	var p=el.place.get_geo();
-	if(p)
-	  for(var j=0; j<p.length; j++) {
-	    var vector=new OpenLayers.Feature.Vector(p[j].clone(), 0, {
-	      strokeWidth: 2,
-	      strokeColor: "black",
-	      externalGraphic: "img/node.png",
-	      graphicWidth: 7,
-	      graphicHeight: 7,
-	      graphicXOffset: -4,
-	      graphicYOffset: -4,
-	      fill: "none"
-	    });
-	    this.display_features.push(vector);
-	  }
-      }
-    }
-
-    return this.display_features;
-  }
-
-  this.load_members=function() {
-    this.members=[];
-    var mems=this.data.getElementsByTagName("member");
-    for(var i=0; i<mems.length; i++) {
-      if(!this.members[i]) {
-	var el=get_loaded_object(mems[i].getAttribute("type")+"_"+mems[i].getAttribute("ref"));
-	this.members[i]=el;
-	if(el) {
-	  el.load_members();
-	}
-      }
-    }
   }
 }
 
@@ -387,8 +139,7 @@ function obj(data) {
   this.data=data;
   this.id=tag_to_place_type[data.tagName]+"_"+data.getAttribute("id");
 
-  var tmp=new Function("data", "return new place_"+tag_to_place_type[data.tagName]+"(data);");
-  this.place=tmp(data, this);
+  this.place=new place(data, this);
 
   this.type=function() {
     return "default";
