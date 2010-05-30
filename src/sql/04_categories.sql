@@ -1,9 +1,8 @@
 drop table if exists categories_def;
 create table categories_def (
-  category_id		text	not null,
   rule_id		text	not null,
-  display_name_pattern	text,
-  display_type_pattern	text,
-  icon_text_pattern	text,
-  primary key(category_id, rule_id)
+  category_id		text	not null,
+  rule_tags		hstore,
+  primary key(rule_id, category_id)
 );
+create index categories_def_category_id on categories_def(category_id);

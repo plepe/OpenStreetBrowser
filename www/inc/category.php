@@ -210,12 +210,9 @@ class category {
     $id=array();
 
     global $make_valid;
-    $res['osm_id']=split_semicolon($res['osm_id']);
     $id=$res['osm_id'];
 
-    // TODO: Load an object which is a merge of ID-list
-    $res['osm_id']=$res['osm_id'][0];
-    $rule=$this->rules[$res[rule_id]];
+    $rule_tags=new tags(parse_hstore($res['rule_tags']));
 
     $tags=parse_hstore($res['osm_tags']);
 
@@ -223,39 +220,37 @@ class category {
     $ob=load_object($res, $tags);
     $info=explode("||", $res[res]);
 
-    $ret.="id=\"".implode(";", $id)."\" ";
+    $ret.="id=\"$id\" ";
     $ret.="rule_id=\"$res[rule_id]\">\n";
 
     $ret.="  <tag k=\"geo:center\" v=\"$res[center]\"/>\n";
 
-    $name_def=$rule->tags->get("display_name");
-
-    if($x=$ob->long_name($lang, $name_def)) {
+    if($x=$ob->tags->parse($rule_tags->get("display_name"), $lang)) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"display_name:$lang\" v=\"$x\"/>\n";
     }
 
-    if($x=$ob->long_name(null, $name_def)) {
+    if($x=$ob->tags->parse($rule_tags->get("display_name"))) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"display_name\" v=\"$x\"/>\n";
     }
 
-    if($x=$ob->tags->parse($rule->tags->get("display_type"), $lang)) {
+    if($x=$ob->tags->parse($rule_tags->get("display_type"), $lang)) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"display_type:$lang\" v=\"$x\"/>\n";
     }
 
-    if($x=$ob->tags->parse($rule->tags->get("display_type"))) {
+    if($x=$ob->tags->parse($rule_tags->get("display_type"))) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"display_type\" v=\"$x\"/>\n";
     }
 
-    if($x=$rule->tags->get("icon")) {
+    if($x=$rule_tags->get("icon")) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"icon\" v=\"".get_icon($x)."\"/>\n";
     }
 
-    if($x=$rule->tags->get("importance")) {
+    if($x=$rule_tags->get("importance")) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"importance\" v=\"$x\"/>\n";
     }

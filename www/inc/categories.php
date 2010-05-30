@@ -447,38 +447,27 @@ function build_mapnik_style($id, $data, $global_tags) {
 
 	$display_name=$tags->get("display_name");
 	if(!$display_name)
-	  $display_name="[ref] - [name];[name];[ref];[operator]";
-	$display_name=postgre_escape($display_name);
-
-	$display_type=$tags->get("display_type");
-	if(!$display_type)
-	  $display_type="null";
-	else
-	  $display_type=postgre_escape($display_type);
-
-	$icon_text=$tags->get("icon_text");
-	if(!$icon_text)
-	  $icon_text="null";
-	else
-	  $icon_text=postgre_escape($icon_text);
+	  $tags->set("display_name", "[ref] - [name];[name];[ref];[operator]");
+	elseif($display_name=="no")
+	  $tags->delete("display_name");
 
         sql_query("insert into categories_def values (".
-		  postgre_escape($id).", ".postgre_escape($rule_id).", ".
-		  "$display_name, $display_type, $icon_text)");
+		  postgre_escape($rule_id).", ".postgre_escape($id).", ".
+		  array_to_hstore($tags->data()).");");
       }
 
       $sql=$data2['sql'];
       $sql_select=array();
       $sql_join=array();
       $sql_select[]="t.*";
-      $sql_select[]="tags_parse(t.osm_id, t.osm_tags, t.geo, t.display_name_pattern) as display_name";
-      $sql_select[]="tags_parse(t.osm_id, t.osm_tags, t.geo, t.display_type_pattern) as display_type";
+      $sql_select[]="tags_parse(t.osm_id, t.osm_tags, t.geo, t.rule_tags->'display_name') as display_name";
+      $sql_select[]="tags_parse(t.osm_id, t.osm_tags, t.geo, t.rule_tags->'display_type') as display_type";
 //      $sql_select[]="(CASE WHEN cache_name.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.display_name_pattern) ELSE cache_name.result END) as display_name";
 //      $sql_join[]="left join tags_parse_cache_table cache_name on t.osm_type=cache_name.osm_type and t.osm_id=cache_name.osm_id and t.display_name_pattern=cache_name.pattern";
 //      $sql_select[]="(CASE WHEN cache_type.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.display_type_pattern) ELSE cache_type.result END) as display_type";
 //      $sql_join[]="left join tags_parse_cache_table cache_type on t.osm_type=cache_type.osm_type and t.osm_id=cache_type.osm_id and t.display_type_pattern=cache_type.pattern";
       if($tags->get("icon_text")) {
-	$sql_select[]="tags_parse(t.osm_id, t.osm_tags, t.geo, t.icon_text_pattern) as icon_text";
+	$sql_select[]="tags_parse(t.osm_id, t.osm_tags, t.geo, t.rule_tags->'icon_text') as icon_text";
 //	$sql_select[]="(CASE WHEN cache_icon.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.icon_text_pattern) ELSE cache_icon.result END) as icon_text";
 //	$sql_join[]="left join tags_parse_cache_table cache_icon on t.osm_type=cache_icon.osm_type and t.osm_id=cache_icon.osm_id and t.icon_text_pattern=cache_icon.pattern";
       }

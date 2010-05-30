@@ -114,7 +114,8 @@ function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
     $where="";
 
   $select=implode(", ", $select);
-  return "select array_to_string(to_textarray(t2.osm_id), ';') as osm_id, ST_Collect(t2.geo) as geo, tags_merge(to_array(t2.osm_tags)) as osm_tags, t2.result[1] as rule_id, t2.result[2] as importance, cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3], cd.display_name_pattern, cd.display_type_pattern, cd.icon_text_pattern";
+  return "select array_to_string(to_textarray(t2.osm_id), ';') as osm_id, ST_Collect(t2.geo) as geo, tags_merge(to_array(t2.osm_tags)) as osm_tags, t2.result[1] as rule_id, t2.result[2] as importance, tags_merge(to_array(cd.rule_tags)) as rule_tags from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3]";
+//select *, rule_tags->'display_name_pattern' as display_name_pattern, rule_tags->'display_type_pattern' as display_type_pattern, rule_tags->'icon_text_pattern' as icon_text_pattern from (
 }
 
 function create_sql_classify_fun($rules, $table="node", $id="tmp") {
@@ -167,7 +168,7 @@ function create_sql_classify_fun($rules, $table="node", $id="tmp") {
       $group_id="_osm_id";
     }
 
-    $classify_function_match[]="if $qry then\n    result=Array['$rule_id',$imp, $group_id];";
+    $classify_function_match[]="if $qry then\n    result=Array[".postgre_escape($rule_id).",$imp, $group_id];";
   }
 
   $classify_function_declare.="  result text[];\n";

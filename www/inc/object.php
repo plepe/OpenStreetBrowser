@@ -240,6 +240,9 @@ function load_object($elem=0, $tags=null) {
     $object_id=$m[2];
     $object_subid=substr($m[3], 1);
   }
+  // if it's not a single id, we can receive data from tags if we supplied them
+  elseif($tags) {
+  }
   else {
     // id can't be identified
     return null;
