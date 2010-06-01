@@ -1,36 +1,40 @@
 <?
 $make_valid=array("&"=>"&amp;", "\""=>"&quot;", "<"=>"&lt;", ">"=>"&gt;");
 
-class rule {
-  function __construct($dom) {
-    $this->tags=new tags();
-    $this->tags->readDOM($dom);
-  }
-}
-
 class category {
   function __construct($id) {
     global $lists_dir;
     $this->id=$id;
-    $this->rules=array();
     $this->file="$lists_dir/$this->id.xml";
 
     if(!file_exists($this->file))
       return null;
 
-    $this->text=category_load($id);
-    $this->dom=new DOMDocument();
-    $this->dom->loadXML($this->text);
-
-    $rules=$this->dom->getElementsByTagName("rule");
-    for($i=0; $i<$rules->length; $i++) {
-      $this->rules[$rules->item($i)->getAttribute("id")]=
-        new rule($rules->item($i));
-    }
-
-    $this->tags=new tags();
-    $this->tags->readDOM($this->dom->firstChild);
+    $this->get_tags();
   }
+
+  function get_tags() {
+    if(file_exists("$this->file.save")) {
+      // if category has been compiled get tags from data
+      $this->get_data();
+      $this->tags=$this->data['_']->tags;
+    }
+    else {
+      // if category has not been compiled yet, than read the tags at least
+      $this->text=category_load($this->id);
+      $this->dom=new DOMDocument();
+      $this->dom->loadXML($this->text);
+
+      $this->tags=new tags();
+      $this->tags->readDOM($this->dom);
+
+      $this->data=array('_'=>array(
+	"id"=>$this->id,
+	"tags"=>$this->tags,
+	"version"=>0,
+      ));
+    }
+}
 
   function get_newest_version() {
     global $lists_dir;
@@ -43,7 +47,7 @@ class category {
       return $m[1];
     }
 
-    print "Get read git-log! $r";
+    print "Error parsing git-log: $r\n";
     return null;
   }
 
@@ -66,6 +70,14 @@ class category {
 
   function compile() {
     global $lists_dir;
+
+    // Load content
+    $this->text=category_load($this->id);
+    $this->dom=new DOMDocument();
+    $this->dom->loadXML($this->text);
+
+    $this->tags=new tags();
+    $this->tags->readDOM($this->dom);
 
     // First, create all file content
     $cur=$this->dom->firstChild;
@@ -109,7 +121,18 @@ class category {
     global $postgis_tables;
     global $lists_dir;
 
-    $list_data=$this->get_data();
+    $list_data=$this->data;
+    if(!$this->data['_']['version']) {
+      $ret ="<category id='$this->id'";
+      $ret.=" status='not_compiled'";
+      $ret.=">\n";
+      foreach($list as $l) {
+	$ret.=$this->print_match($l);
+      }
+      $ret.="</category>\n";
+
+      return $ret;
+    }
 
   //// process params ////
     // count
@@ -218,6 +241,12 @@ class category {
     }
 
     $ret ="<category id='$this->id'";
+    $ret.=" version='{$this->data['_']['version']}'";
+    
+    if($this->get_newest_version()!=$this->data['_']['version']) {
+      $ret.=" status='old_version'";
+    }
+
     $ret.=" complete='".($more?"false":"true")."'";
     $ret.=">\n";
     foreach($list as $l) {
