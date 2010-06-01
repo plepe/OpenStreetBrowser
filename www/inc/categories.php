@@ -420,7 +420,7 @@ function build_mapnik_style($id, $data, $global_tags) {
   $map->setAttribute("srs", "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over");
   $dom->appendChild($map);
   $ret=array();
-  foreach($data as $importance=>$data1) {
+  foreach($data as $importance=>$data1) if($importance!="_") {
     foreach($data1 as $table=>$data2) {
       $style_icon=$dom->createElement("Style");
       $style_icon->setAttribute("name", "{$id}_{$importance}_{$table}_icon");

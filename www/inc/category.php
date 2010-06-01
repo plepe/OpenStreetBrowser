@@ -32,6 +32,21 @@ class category {
     $this->tags->readDOM($this->dom->firstChild);
   }
 
+  function get_newest_version() {
+    global $lists_dir;
+
+    $f=popen("cd $lists_dir ; git log $this->id.xml", "r");
+    $r=fgets($f);
+    pclose($f);
+
+    if(preg_match("/commit (.*)$/", $r, $m)) {
+      return $m[1];
+    }
+
+    print "Get read git-log! $r";
+    return null;
+  }
+
   function get_data() {
     global $lists_dir;
 
@@ -52,6 +67,7 @@ class category {
   function compile() {
     global $lists_dir;
 
+    // First, create all file content
     $cur=$this->dom->firstChild;
 
     while($cur) {
@@ -62,19 +78,27 @@ class category {
       $cur=$cur->nextSibling;
     }
 
-    $f=fopen("$this->file.save", "w");
-    fwrite($f, serialize($data));
-    fclose($f);
+    $data['_']=array(
+      "id"=>$this->id,
+      "tags"=>$this->tags,
+      "version"=>$this->get_newest_version(),
+    );
 
     $mapnik=build_mapnik_style($this->id, $data, $this->tags);
-    $f=fopen("$this->file.mapnik", "w");
-    fwrite($f, $mapnik);
-    fclose($f);
-
     $renderd=build_renderd_config($this->id, $data, $this->tags);
-    $f=fopen("$this->file.renderd", "w");
-    fwrite($f, $renderd);
-    fclose($f);
+
+    // ... then write all files at once
+    $f1=fopen("$this->file.save", "w");
+    fwrite($f1, serialize($data));
+    fclose($f1);
+
+    $f2=fopen("$this->file.mapnik", "w");
+    fwrite($f2, $mapnik);
+    fclose($f2);
+
+    $f3=fopen("$this->file.renderd", "w");
+    fwrite($f3, $renderd);
+    fclose($f3);
 
     return $data;
   }
