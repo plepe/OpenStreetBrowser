@@ -161,6 +161,7 @@ function category(id) {
 
     this.version=list.getAttribute("version");
 
+    this.rules=[];
     var cur=list.firstChild;
     while(cur) {
       if(cur.nodeName=="rule") {
@@ -189,8 +190,15 @@ function category(id) {
   }
 
   // load
-  this.load=function() {
-    ajax_direct("categories.php", { todo: "load", id: this.id }, this.load_callback.bind(this));
+  this.load=function(version) {
+    var param={ todo: "load" };
+
+    param.id=this.id;
+
+    if(version)
+      param.version=version;
+
+    ajax_direct("categories.php", param, this.load_callback.bind(this));
   }
 
   // constructor
@@ -227,6 +235,10 @@ function category(id) {
     var ret="";
     var matches=dom.getElementsByTagName("match");
     var last_importance="";
+
+    if(this.version!=dom.getAttribute("version")) {
+      this.load(dom.getAttribute("version"));
+    }
 
     var cur_cache;
     if(!(cur_cache=list_cache.search_element(viewbox, this.id))) {
