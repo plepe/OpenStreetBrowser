@@ -4,21 +4,6 @@ var drag_layer;
 var overlays_list={};
 
 function overlay(id, _tags) {
-  // constructor
-  this.id=id;
-  if(!_tags)
-    _tags=new tags();
-  this.tags=_tags;
-  this.category_list={};
-
-  var name=this.tags.get_lang("name", ui_lang);
-  if(!name)
-    name=this.id;
-
-  this.layer=new OpenLayers.Layer.OSM(name, "tiles/"+this.id+"/", {numZoomLevels: 19, isBaseLayer: false, visibility: false });
-  map.addLayer(this.layer);
-  overlays_list[this.id]=this;
-
   // show
   this.show=function() {
     this.layer.setVisibility(true);
@@ -27,6 +12,28 @@ function overlay(id, _tags) {
   // hide
   this.hide=function() {
     this.layer.setVisibility(false);
+  }
+
+  // set_version
+  this.set_version=function(version) {
+    this.version=version;
+
+    if(this.layer.visibility) {
+      this.hide();
+      this.show();
+    }
+  }
+
+  // build_url
+  this.build_url=function(bounds) {
+    var res = map.getResolution();
+    var x = Math.round ((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
+    var y = Math.round ((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+    var z = map.getZoom();
+
+    var path = "tiles/"+ this.id + "/" + z + "/" + x + "/" + y + ".png?"+ this.version;
+    
+    return path;
   }
 
   // register category
@@ -47,6 +54,24 @@ function overlay(id, _tags) {
     map.removeLayer(this.layer);
     delete(overlays_list[this.id]);
   }
+
+  // constructor
+  this.id=id;
+  if(!_tags)
+    _tags=new tags();
+  this.tags=_tags;
+  this.category_list={};
+
+  var name=this.tags.get_lang("name", ui_lang);
+  if(!name)
+    name=this.id;
+
+  this.layer=new OpenLayers.Layer.OSM(name, "tiles/"+this.id, {numZoomLevels: 19, isBaseLayer: false, visibility: false, getURL: this.build_url.bind(this) });
+  map.addLayer(this.layer);
+  overlays_list[this.id]=this;
+
+  this.maxExtent=new OpenLayers.Bounds(-20037508.3427892,-20037508.3427892,20037508.3427892,20037508.3427892);
+  this.tileSize={w: 256, h: 256};
 }
 
 function get_overlay(id) {

@@ -138,6 +138,9 @@ function list_more(cat_id, new_count) {
 }
 
 function list_reload(info_lists) {
+  if(!map)
+    return;
+
   var x=map.calculateBounds();
   var form=document.getElementById("details_content");
 
@@ -347,6 +350,7 @@ function show_list() {
   ob.innerHTML=ret;
 
   call_hooks("show_list", ob);
+  list_reload();
 
   return ret;
 }

@@ -177,12 +177,15 @@ function category(id) {
     // register category
     category_list[this.id]=[];
     lang_str["cat:"+this.id]=[ this.tags.get_lang("name") ];
-    show_list();
 
     // register overlay
     if(!(this.overlay=get_overlay(this.id)))
       this.overlay=new overlay(this.id);
     this.overlay.register_category(this);
+    this.overlay.set_version(this.version);
+
+    // if open request a reload
+    show_list();
 
     // register hooks
     register_hook("show_category", this.show.bind(this), this);
