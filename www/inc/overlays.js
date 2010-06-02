@@ -7,6 +7,16 @@ function overlay(id, _tags) {
   // show
   this.show=function() {
     this.layer.setVisibility(true);
+
+    if(vector_layer) {
+      var tindex=map.getLayerIndex(this.layer);
+      var index=map.getLayerIndex(vector_layer);
+
+      if(tindex>index)
+	map.setLayerIndex(this.layer, index);
+      else
+	map.setLayerIndex(this.layer, index-1);
+    }
   }
 
   // hide
