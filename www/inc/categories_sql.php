@@ -477,23 +477,24 @@ function parse_explode($match) {
 
   for($i=0; $i<strlen($match); $i++) {
     $c=substr($match, $i, 1);
+    //print "parse $m $i: \"$c\"\n";
 
     switch($m) {
       case 0:
-	if(in_array($c, array("=", "!", ">", "<"))) {
-	  $m=1;
-	  $i--;
+        if($c=="\"") {
+	  $m=4;
 	}
 	elseif($c==",") {
 	  $parser[]="OR";
 	}
 	elseif($c==" ") {
 	}
-	elseif(!in_array($c, array("\"", "'"))) {
+	elseif(!in_array($c, array("\"", "'", "=", "!", ">", "<"))) {
 	  $key.=$c;
+	  $m=6;
 	}
 	else {
-	  return "Error parsing match string: \"$match\"!";
+	  return "Syntax error parsing match string: \"$match\" at position $i!";
 	}
 	break;
       case 1:
@@ -542,10 +543,15 @@ function parse_explode($match) {
 	}
 	elseif($c=="\\") {
 	  $i++;
+	  if(!isset($value))
+	    $value="";
 	  $value.=substr($match, $i, 1);
 	}
-	else
+	else {
+	  if(!isset($value))
+	    $value="";
 	  $value.=$c;
+	}
 	break;
       case 3:
 	if($c=="\"") {
@@ -553,13 +559,60 @@ function parse_explode($match) {
 	}
 	elseif($c=="\\") {
 	  $i++;
+	  if(!isset($value))
+	    $value="";
 	  $value.=substr($match, $i, 1);
 	}
-	else
+	else {
+	  if(!isset($value))
+	    $value="";
 	  $value.=$c;
+	}
+	break;
+      case 4:
+	if($c=="\"") {
+	  $m=5;
+	}
+	elseif($c=="\\") {
+	  $i++;
+	  if(!isset($value))
+	    $value="";
+	  $value.=substr($match, $i, 1);
+	}
+	else {
+	  if(!isset($value))
+	    $value="";
+	  $value.=$c;
+	}
+	break;
+      case 5:
+	if(in_array($c, array("=", "!", ">", "<"))) {
+	  $m=1;
+	  $i--;
+	}
+	else {
+	  return "Syntax error parsing match string: \"$match\" at position $i!";
+	}
+	break;
+      case 6:
+	if(in_array($c, array("=", "!", ">", "<"))) {
+	  $m=1;
+	  $i--;
+	}
+	elseif(!in_array($c, array("\"", "'", " ", ","))) {
+	  $key.=$c;
+	}
+	else {
+	  return "Syntax error parsing match string: \"$match\" at position $i!";
+	}
+	break;
       default:
 	break;
     }
+  }
+
+  if($m==3) {
+    return "Syntax error parsing match string: \"$match\": string not closed!";
   }
 
   if(isset($value))
