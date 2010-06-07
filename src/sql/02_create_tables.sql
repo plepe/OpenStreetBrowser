@@ -75,3 +75,77 @@ insert into osm_rels
 
 create index osm_rels_tags on osm_rels using gin(osm_tags);
 create index osm_rels_way  on osm_rels using gist(osm_way);
+
+drop table if exists osm_polygons;
+create table osm_polygons (
+  osm_id		text		not null,
+  rel_id		text		null,
+  osm_tags		hstore		null,
+  primary key(osm_id)
+);
+select AddGeometryColumn('osm_polygons', 'osm_way', 900913, 'GEOMETRY', 2);
+
+insert into osm_polygons
+  select
+    osm_ways.osm_id,
+    null,
+    osm_ways.osm_tags,
+    MakePolygon(osm_ways.osm_way) as osm_way
+  from
+    osm_ways
+  where
+    IsClosed(osm_ways.osm_way) and
+    (select
+       to_textarray(osm_rels.osm_id)
+     from
+       osm_rels
+       join relation_members on
+         osm_rels.osm_id='rel_'||relation_members.relation_id
+     where
+       osm_rels.osm_tags @> 'type=>multipolygon' and
+       'way_'||relation_members.member_id=osm_ways.osm_id and
+       relation_members.member_type='W' and
+       relation_members.member_role!='inner'
+    ) is null;
+
+insert into osm_polygons
+  select
+    osm_rels.osm_id||';'||array_to_string(ways_outer.osm_id, ';'),
+    osm_rels.osm_id,
+    tags_merge(Array[osm_rels.osm_tags, ways_outer.osm_tags]),
+    build_multipolygon(ways_outer.osm_way, ways_inner.osm_way) as osm_way
+  from
+    osm_rels
+    left join
+    (select
+       'rel_'||relation_members.relation_id as rel_id,
+       to_textarray(osm_id) as osm_id,
+       tags_merge(to_array(osm_tags)) as osm_tags,
+       to_array(osm_way) as osm_way
+     from
+       relation_members
+       join osm_ways on
+         'way_'||member_id=osm_ways.osm_id and
+	 member_type='W' and member_role in ('outer', '')
+     group by relation_members.relation_id
+    ) ways_outer on
+      osm_rels.osm_id=ways_outer.rel_id
+    left join
+    (select
+       'rel_'||relation_members.relation_id as rel_id,
+       to_array(osm_way) as osm_way
+     from
+       relation_members
+       join osm_ways on
+         'way_'||member_id=osm_ways.osm_id and
+	 member_type='W' and member_role='inner'
+     group by relation_members.relation_id
+    ) ways_inner on
+      osm_rels.osm_id=ways_inner.rel_id
+  where
+    osm_rels.osm_tags @> 'type=>multipolygon' and
+    ways_outer.osm_id is not null;
+
+create index osm_polygons_rel_id on osm_polygons(rel_id);
+create index osm_polygons_tags on osm_polygons using gin(osm_tags);
+create index osm_polygons_way  on osm_polygons using gist(osm_way);
