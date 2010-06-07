@@ -282,16 +282,18 @@ begin
 
   for i in array_lower(src, 1)..array_upper(src, 1) loop
     keys:=akeys(src[i]);
-    for j in array_lower(keys, 1)..array_upper(keys, 1) loop
-      t:=collect->keys[j];
-      if(t is null) then
-	t:=src[i]->keys[j];
-      else
-	t:=t||';'||(src[i]->keys[j]);
-      end if;
+    if keys is not null then
+      for j in array_lower(keys, 1)..array_upper(keys, 1) loop
+	t:=collect->keys[j];
+	if(t is null) then
+	  t:=src[i]->keys[j];
+	else
+	  t:=t||';'||(src[i]->keys[j]);
+	end if;
 
-      collect:=collect|| (keys[j]=>t);
-    end loop;
+	collect:=collect|| (keys[j]=>t);
+      end loop;
+    end if;
   end loop;
 
   keys:=akeys(collect);
