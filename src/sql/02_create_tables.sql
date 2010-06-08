@@ -95,18 +95,21 @@ insert into osm_polygons
     osm_ways
   where
     IsClosed(osm_ways.osm_way) and
-    (select
-       to_textarray(osm_rels.osm_id)
-     from
-       osm_rels
-       join relation_members on
-         osm_rels.osm_id='rel_'||relation_members.relation_id
-     where
-       osm_rels.osm_tags @> 'type=>multipolygon' and
-       'way_'||relation_members.member_id=osm_ways.osm_id and
-       relation_members.member_type='W' and
-       relation_members.member_role!='inner'
-    ) is null;
+    NPoints(osm_ways.osm_way)>3 and
+
+    array_upper((
+      select
+        to_textarray(osm_rels.osm_id)
+      from
+        relation_members
+	join osm_rels on
+	  'rel_'||relation_id=osm_rels.osm_id and
+	  osm_rels.osm_tags @> 'type=>multipolygon'
+      where
+	member_type='W' and
+	member_role in ('outer', '') and
+        member_id=cast((string_to_array(osm_ways.osm_id, '_'))[2] as bigint)
+    ), 1) is null;
 
 insert into osm_polygons
   select
