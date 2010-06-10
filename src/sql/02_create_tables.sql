@@ -1,12 +1,12 @@
-drop table if exists osm_nodes;
-create table osm_nodes (
+drop table if exists osm_point;
+create table osm_point (
   osm_id		text		not null,
   osm_tags		hstore		null,
   primary key(osm_id)
 );
-select AddGeometryColumn('osm_nodes', 'osm_way', 900913, 'POINT', 2);
+select AddGeometryColumn('osm_point', 'osm_way', 900913, 'POINT', 2);
 
-insert into osm_nodes
+insert into osm_point
   select * from (select
     'node_'||id as osm_id,
     (select
@@ -18,18 +18,18 @@ insert into osm_nodes
     from nodes) as x
   where (array_dims(akeys(osm_tags)))!='[1:0]';
 
-create index osm_nodes_tags on osm_nodes using gin(osm_tags);
-create index osm_nodes_way  on osm_nodes using gist(osm_way);
+create index osm_point_tags on osm_point using gin(osm_tags);
+create index osm_point_way  on osm_point using gist(osm_way);
 
-drop table if exists osm_ways;
-create table osm_ways (
+drop table if exists osm_line;
+create table osm_line (
   osm_id		text		not null,
   osm_tags		hstore		null,
   primary key(osm_id)
 );
-select AddGeometryColumn('osm_ways', 'osm_way', 900913, 'LINESTRING', 2);
+select AddGeometryColumn('osm_line', 'osm_way', 900913, 'LINESTRING', 2);
 
-insert into osm_ways
+insert into osm_line
   SELECT
     'way_'||id as osm_id,
     (select
@@ -44,18 +44,18 @@ insert into osm_ways
       ) c) as osm_way
   from ways group by id;
 
-create index osm_ways_tags on osm_ways using gin(osm_tags);
-create index osm_ways_way  on osm_ways using gist(osm_way);
+create index osm_line_tags on osm_line using gin(osm_tags);
+create index osm_line_way  on osm_line using gist(osm_way);
 
-drop table if exists osm_rels;
-create table osm_rels (
+drop table if exists osm_rel;
+create table osm_rel (
   osm_id		text		not null,
   osm_tags		hstore		null,
   primary key(osm_id)
 );
-select AddGeometryColumn('osm_rels', 'osm_way', 900913, 'GEOMETRY', 2);
+select AddGeometryColumn('osm_rel', 'osm_way', 900913, 'GEOMETRY', 2);
 
-insert into osm_rels
+insert into osm_rel
   select
       'rel_'||id as osm_id,
       (select
@@ -69,62 +69,62 @@ insert into osm_rels
 	    where rm.relation_id=relations.id) c),
 	(select ST_Collect(geom) from (
 	  select w.osm_way as geom
-	    from osm_ways w inner join relation_members rm on w.osm_id='way_'||rm.member_id and rm.member_type='W'
+	    from osm_line w inner join relation_members rm on w.osm_id='way_'||rm.member_id and rm.member_type='W'
 	    where rm.relation_id=relations.id) c)) as osm_way
     from relations;
 
-create index osm_rels_tags on osm_rels using gin(osm_tags);
-create index osm_rels_way  on osm_rels using gist(osm_way);
+create index osm_rel_tags on osm_rel using gin(osm_tags);
+create index osm_rel_way  on osm_rel using gist(osm_way);
 
-drop table if exists osm_polygons;
-create table osm_polygons (
+drop table if exists osm_polygon;
+create table osm_polygon (
   osm_id		text		not null,
   rel_id		text		null,
   osm_tags		hstore		null,
   primary key(osm_id)
 );
-select AddGeometryColumn('osm_polygons', 'osm_way', 900913, 'GEOMETRY', 2);
+select AddGeometryColumn('osm_polygon', 'osm_way', 900913, 'GEOMETRY', 2);
 
-insert into osm_polygons
+insert into osm_polygon
   select
-    osm_ways.osm_id,
+    osm_line.osm_id,
     null,
-    osm_ways.osm_tags,
-    MakePolygon(osm_ways.osm_way) as osm_way
+    osm_line.osm_tags,
+    MakePolygon(osm_line.osm_way) as osm_way
   from
-    osm_ways
+    osm_line
   where
-    IsClosed(osm_ways.osm_way) and
-    NPoints(osm_ways.osm_way)>3 and
+    IsClosed(osm_line.osm_way) and
+    NPoints(osm_line.osm_way)>3 and
 
     array_upper((
       select
-        to_textarray(osm_rels.osm_id)
+        to_textarray(osm_rel.osm_id)
       from
         relation_members
-	join osm_rels on
-	  'rel_'||relation_id=osm_rels.osm_id and
-	  osm_rels.osm_tags @> 'type=>multipolygon'
+	join osm_rel on
+	  'rel_'||relation_id=osm_rel.osm_id and
+	  osm_rel.osm_tags @> 'type=>multipolygon'
       where
 	member_type='W' and
 	member_role in ('outer', '') and
-        member_id=cast((string_to_array(osm_ways.osm_id, '_'))[2] as bigint)
+        member_id=cast((string_to_array(osm_line.osm_id, '_'))[2] as bigint)
     ), 1) is null;
 
-insert into osm_polygons
+insert into osm_polygon
   select
     (CASE 
-      WHEN ways_outer.count=1 THEN osm_rels.osm_id||';'||array_to_string(ways_outer.osm_id, ';')
-      ELSE osm_rels.osm_id
+      WHEN ways_outer.count=1 THEN osm_rel.osm_id||';'||array_to_string(ways_outer.osm_id, ';')
+      ELSE osm_rel.osm_id
     END) as osm_id,
-    osm_rels.osm_id as rel_id,
+    osm_rel.osm_id as rel_id,
     (CASE 
-      WHEN ways_outer.count=1 THEN tags_merge(Array[osm_rels.osm_tags, ways_outer.osm_tags])
-      ELSE osm_rels.osm_tags
+      WHEN ways_outer.count=1 THEN tags_merge(Array[osm_rel.osm_tags, ways_outer.osm_tags])
+      ELSE osm_rel.osm_tags
     END) as osm_tags,
     build_multipolygon(ways_outer.osm_way, ways_inner.osm_way) as osm_way
   from
-    osm_rels
+    osm_rel
     left join
     (select
        'rel_'||relation_members.relation_id as rel_id,
@@ -134,28 +134,28 @@ insert into osm_polygons
        count(*) as count
      from
        relation_members
-       join osm_ways on
-         'way_'||member_id=osm_ways.osm_id and
+       join osm_line on
+         'way_'||member_id=osm_line.osm_id and
 	 member_type='W' and member_role in ('outer', '')
      group by relation_members.relation_id
     ) ways_outer on
-      osm_rels.osm_id=ways_outer.rel_id
+      osm_rel.osm_id=ways_outer.rel_id
     left join
     (select
        'rel_'||relation_members.relation_id as rel_id,
        to_array(osm_way) as osm_way
      from
        relation_members
-       join osm_ways on
-         'way_'||member_id=osm_ways.osm_id and
+       join osm_line on
+         'way_'||member_id=osm_line.osm_id and
 	 member_type='W' and member_role='inner'
      group by relation_members.relation_id
     ) ways_inner on
-      osm_rels.osm_id=ways_inner.rel_id
+      osm_rel.osm_id=ways_inner.rel_id
   where
-    osm_rels.osm_tags @> 'type=>multipolygon' and
+    osm_rel.osm_tags @> 'type=>multipolygon' and
     ways_outer.osm_id is not null;
 
-create index osm_polygons_rel_id on osm_polygons(rel_id);
-create index osm_polygons_tags on osm_polygons using gin(osm_tags);
-create index osm_polygons_way  on osm_polygons using gist(osm_way);
+create index osm_polygon_rel_id on osm_polygon(rel_id);
+create index osm_polygon_tags on osm_polygon using gin(osm_tags);
+create index osm_polygon_way  on osm_polygon using gist(osm_way);

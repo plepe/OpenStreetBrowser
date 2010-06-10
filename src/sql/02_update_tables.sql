@@ -2,10 +2,10 @@ CREATE OR REPLACE FUNCTION osmosisUpdate() RETURNS void AS $$
 DECLARE
 BEGIN
   -- delete changed/deleted nodes
-  delete from osm_nodes using actions where osm_id='node_'||id and data_type='N' and action in ('M', 'D');
+  delete from osm_point using actions where osm_id='node_'||id and data_type='N' and action in ('M', 'D');
 
   -- insert changed/created nodes
-  insert into osm_nodes
+  insert into osm_point
     select * from (select
       'node_'||nodes.id as osm_id,
       (select
@@ -21,14 +21,14 @@ BEGIN
     where (array_dims(akeys(osm_tags)))!='[1:0]';
 
   -- delete changed/deleted ways
-  delete from osm_ways using
+  delete from osm_line using
     (select way_id as id from way_nodes join actions on way_nodes.node_id=actions.id and actions.data_type='N' and actions.action='M' group by way_id
      union
      select id from actions where data_type='W' and action in ('M', 'D'))actions 
   where osm_id='way_'||id;
 
   -- insert changed/created ways
-insert into osm_ways
+insert into osm_line
   SELECT
     'way_'||ways.id as osm_id,
     (select
@@ -47,14 +47,14 @@ insert into osm_ways
   group by ways.id;
 
   -- delete changed/deleted rels
-  delete from osm_rels using
+  delete from osm_rel using
     (select relation_id as id from relation_members join actions on relation_members.member_id=actions.id and actions.data_type=relation_members.member_type and actions.action='M' group by relation_id
      union
      select id from actions where data_type='R' and action in ('M', 'D')) actions
   where osm_id='rel_'||id;
 
   -- insert changed/created relations
-  insert into osm_rels
+  insert into osm_rel
     select
 	'rel_'||relations.id as osm_id,
 	(select
@@ -68,7 +68,7 @@ insert into osm_ways
 	      where rm.relation_id=relations.id) c),
 	  (select ST_Collect(geom) from (
 	    select w.osm_way as geom
-	      from osm_ways w inner join relation_members rm on w.osm_id=rm.member_id and rm.member_type='W'
+	      from osm_line w inner join relation_members rm on w.osm_id=rm.member_id and rm.member_type='W'
 	      where rm.relation_id=relations.id) c)) as osm_way
       from relations join
     (select relation_id as id from relation_members join actions on relation_members.member_id=actions.id and actions.data_type=relation_members.member_type and actions.action='M' group by relation_id
