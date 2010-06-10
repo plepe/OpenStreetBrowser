@@ -113,10 +113,7 @@ insert into osm_polygon
 
 insert into osm_polygon
   select
-    (CASE 
-      WHEN ways_outer.count=1 THEN osm_rel.osm_id||';'||array_to_string(ways_outer.osm_id, ';')
-      ELSE osm_rel.osm_id
-    END) as osm_id,
+    osm_rel.osm_id as osm_id,
     osm_rel.osm_id as rel_id,
     (CASE 
       WHEN ways_outer.count=1 THEN tags_merge(Array[osm_rel.osm_tags, ways_outer.osm_tags])
