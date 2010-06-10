@@ -113,9 +113,15 @@ insert into osm_polygons
 
 insert into osm_polygons
   select
-    osm_rels.osm_id||';'||array_to_string(ways_outer.osm_id, ';'),
-    osm_rels.osm_id,
-    tags_merge(Array[osm_rels.osm_tags, ways_outer.osm_tags]),
+    (CASE 
+      WHEN ways_outer.count=1 THEN osm_rels.osm_id||';'||array_to_string(ways_outer.osm_id, ';')
+      ELSE osm_rels.osm_id
+    END) as osm_id,
+    osm_rels.osm_id as rel_id,
+    (CASE 
+      WHEN ways_outer.count=1 THEN tags_merge(Array[osm_rels.osm_tags, ways_outer.osm_tags])
+      ELSE osm_rels.osm_tags
+    END) as osm_tags,
     build_multipolygon(ways_outer.osm_way, ways_inner.osm_way) as osm_way
   from
     osm_rels
@@ -124,7 +130,8 @@ insert into osm_polygons
        'rel_'||relation_members.relation_id as rel_id,
        to_textarray(osm_id) as osm_id,
        tags_merge(to_array(osm_tags)) as osm_tags,
-       to_array(osm_way) as osm_way
+       to_array(osm_way) as osm_way,
+       count(*) as count
      from
        relation_members
        join osm_ways on
