@@ -19,7 +19,11 @@ class process_rule {
     if($tables)
       $tables=explode(";", $tables);
     else
-      $tables=array("nodes");
+      $tables=array("polygon", "point");
+    $tables=array_intersect($tables, array_keys($postgis_tables));
+    if(!sizeof($tables)) {
+      return "No valid types";
+    }
 
     $importance=$this->tags->get("importance");
     if(!$importance)
@@ -27,8 +31,14 @@ class process_rule {
     elseif(!in_array($importance, $importance_levels))
       $importance="*";
 
+    $match=parse_match($this->tags->get("match"));
+
+    if(is_string($match))
+      return $match;
+
     foreach($tables as $table) {
-      $match=parse_match($this->tags->get("match"));
+      if($table=='_')
+	continue;
 
       if($importance=="*") {
 	foreach($importance_levels as $imp_lev) {
@@ -57,12 +67,16 @@ class process_category {
   function process() {
     $cur=$this->node->firstChild;
     $id=$this->category->id;
-    $ret=array();
+    $ret=array('_'=>array("errors"=>array()));
 
     while($cur) {
       if($cur->nodeName=="rule") {
 	$r=new process_rule($this, $cur);
 	$data=$r->process();
+
+	if(is_string($data)) {
+	  $ret['_']['errors'][]="Error in rule $r->id: $data";
+	}
 	
 	$ret=array_merge_recursive($ret, $data);
       }

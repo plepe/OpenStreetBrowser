@@ -12,11 +12,11 @@ begin
   _osm_id:=x[2];
 
   if(_osm_type='node') then
-    return (select osm_way from osm_nodes where osm_id=_osm_typeid);
+    return (select osm_way from osm_point where osm_id=_osm_typeid);
   elsif(_osm_type='way') then
-    return (select osm_way from osm_ways where osm_id=_osm_typeid);
+    return (select osm_way from osm_line where osm_id=_osm_typeid);
   elsif(_osm_type='rel') then
-    return (select osm_way from osm_rels where osm_id=_osm_typeid);
+    return (select osm_way from osm_rel where osm_id=_osm_typeid);
   end if;
 
   return null;

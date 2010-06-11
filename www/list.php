@@ -24,7 +24,7 @@ include "inc/object.php";
 include "inc/categories.php";
 include "inc/lock.php";
 include "inc/category.php";
-include "postgis.php";
+include "inc/postgis.php";
 include "inc/global.php";
 
 $importance=array("international", "national", "regional", "urban", "suburban", "local");

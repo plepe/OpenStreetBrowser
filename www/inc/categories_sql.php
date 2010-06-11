@@ -53,7 +53,7 @@ function delete_indexes($id) {
   }
 }
 
-function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
+function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   $tag_list=array();
   $add_columns=array();
 
@@ -118,7 +118,7 @@ function build_sql_match_table($rules, $table="node", $id="tmp", $importance) {
 //select *, rule_tags->'display_name_pattern' as display_name_pattern, rule_tags->'display_type_pattern' as display_type_pattern, rule_tags->'icon_text_pattern' as icon_text_pattern from (
 }
 
-function create_sql_classify_fun($rules, $table="node", $id="tmp") {
+function create_sql_classify_fun($rules, $table="point", $id="tmp") {
   global $postgis_tables;
   $classify_function_declare="";
   $classify_function_getdata="";
@@ -173,7 +173,8 @@ function create_sql_classify_fun($rules, $table="node", $id="tmp") {
 
   $classify_function_declare.="  result text[];\n";
   $classify_function_match=implode("\n  else", $classify_function_match);
-  $classify_function_match="  $classify_function_match\n  end if;\n";
+  if($classify_function_match)
+    $classify_function_match="  $classify_function_match\n  end if;\n";
   $classify_function_match.="\n";
 //  $classify_function_match.="  if result is not null then\n";
 //  $classify_function_match.="    update planet_osm_$table set \"rule_$id\"=result[2] where planet_osm_$table.osm_id=_osm_id and \"rule_$id\" is null;\n";
@@ -203,12 +204,15 @@ function create_sql_classify_fun($rules, $table="node", $id="tmp") {
 }
 
 // Parses a matching string as used in categories
-function parse_match($match, $table="node") {
+function parse_match($match, $table="point") {
+  if(!$match) {
+    return "Error: match-string is empty!";
+  }
+
   $match_parts=parse_explode($match);
 
   if(is_string($match_parts)) {
-    error("Error: $match_parts");
-    return array("case"=>array());
+    return $match_parts;
   }
 
   $or_parts=array("or");

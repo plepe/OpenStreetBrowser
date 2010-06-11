@@ -17,7 +17,7 @@ class category {
     if(file_exists("$this->file.save")) {
       // if category has been compiled get tags from data
       $this->get_data();
-      $this->tags=$this->data['_']->tags;
+      $this->tags=$this->data['_']['tags'];
     }
     else {
       // if category has not been compiled yet, than read the tags at least
@@ -90,11 +90,13 @@ class category {
       $cur=$cur->nextSibling;
     }
 
-    $data['_']=array(
+    if(!$data['_'])
+      $data['_']=array();
+    $data['_']=array_merge($data['_'], array(
       "id"=>$this->id,
       "tags"=>$this->tags,
       "version"=>$this->get_newest_version(),
-    );
+    ));
 
     $mapnik=build_mapnik_style($this->id, $data, $this->tags);
     $renderd=build_renderd_config($this->id, $data, $this->tags);

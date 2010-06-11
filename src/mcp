@@ -11,6 +11,7 @@ include "inc/categories.php";
 include "inc/process_category.php";
 include "inc/functions.php";
 include "inc/css.php";
+include "inc/postgis.php";
 include "gen_renderd_conf.php";
 $sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
 
@@ -21,7 +22,7 @@ function restart_renderd() {
   gen_renderd_conf();
   chdir($root_path);
   system("src/ap2restart");
-  system("software/mod_tile/renderd");
+  system("software/mod_tile/renderd -f");
 }
 
 function compile($cat_id) {
