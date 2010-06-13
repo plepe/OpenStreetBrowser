@@ -480,15 +480,21 @@ function build_mapnik_style($id, $data, $global_tags) {
 
       if(in_array($table, array("point", "polygon"))) {
 	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
-	$map_layers['point_icon'][$importance]=array($style_icon, $layer);
+	$map_layers['point_icon'][$importance][]=$style_icon;
+	$map_layers['point_icon'][$importance][]=$layer;
+
 	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql);
-	$map_layers['point_text'][$importance]=array($style_text, $layer);
+	$map_layers['point_text'][$importance][]=$style_text;
+	$map_layers['point_text'][$importance][]=$layer;
       }
       else {
 	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql);
-	$map_layers['line_text'][$importance]=array($style_text, $layer);
+	$map_layers['line_text'][$importance][]=$style_text;
+	$map_layers['line_text'][$importance][]=$layer;
+
 	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
-	$map_layers['line_icon'][$importance]=array($style_icon, $layer);
+	$map_layers['line_icon'][$importance][]=$style_icon;
+	$map_layers['line_icon'][$importance][]=$layer;
       }
 
     }
