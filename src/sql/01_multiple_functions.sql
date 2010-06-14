@@ -136,7 +136,7 @@ begin
 
   return true;
 end;
-$$ language 'plpgsql';
+$$ language 'plpgsql' immutable;
 
 create or replace function oneof_between(text[], float, bool, float, bool)
   returns bool
@@ -156,7 +156,7 @@ begin
   end loop;
   return false;
 end;
-$$ language 'plpgsql';
+$$ language 'plpgsql' immutable;
 
 create or replace function oneof_in(text[], text[])
   returns bool
@@ -191,4 +191,4 @@ declare
 begin
   return string_to_array(str, ';');
 end;
-$$ language 'plpgsql';
+$$ language 'plpgsql' immutable;

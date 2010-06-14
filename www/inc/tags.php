@@ -368,7 +368,7 @@ function parse_tags_old($text) {
   return $tags;
 }
 
-function match_simplify($match, $method) {
+function match_simplify($match, $method=0) {
   switch($match[0]) {
     case "or":
       for($i=1; $i<sizeof($match); $i++) {

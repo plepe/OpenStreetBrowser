@@ -3,6 +3,7 @@
 include "conf.php";
 include "inc/hooks.php";
 include "inc/lock.php";
+include "inc/number.php";
 include "inc/tags.php";
 include "inc/sql.php";
 include "inc/debug.php";
@@ -22,7 +23,7 @@ function restart_renderd() {
   gen_renderd_conf();
   chdir($root_path);
   system("src/ap2restart");
-  system("software/mod_tile/renderd -f");
+  system("software/mod_tile/renderd");
 }
 
 function compile($cat_id) {

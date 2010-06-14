@@ -1,17 +1,27 @@
 <?
 $maybe_delete_indexes=array();
 
-function register_index($table, $key, $type, $id) {
-  $res=sql_query("select * from indexes where _table='$table' and _key=$key and _type='$type'");
+function register_index($table, $key, $type, $id, $val=null) {
+  $key=postgre_escape($key);
+  $val=postgre_escape($val);
+  print "register index called: {$id} {$table} {$type} {$key} {$val}\n";
+
+  $res=sql_query("select * from indexes where _table='$table' and _key=$key and _type='$type' and _val=$val");
   if(!pg_num_rows($res)) {
     switch($type) {
       case "tsvector":
         sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gin(to_tsvector('simple', osm_tags->$key))");
 	break;
+      case "gteq":
+        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_tags) where oneof_between(split_semicolon(osm_tags->$key), $val, true, null, null)");
+	break;
+      case "lteq":
+        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_tags) where oneof_between(split_semicolon(osm_tags->$key), null, null, $val, true)");
+	break;
     }
   }
 
-  sql_query("insert into indexes values ('$table', $key, '$type', '$id')");
+  sql_query("insert into indexes values ('$table', $key, '$type', $val, '$id')");
 }
 
 function tmp_delete_indexes($id) {
@@ -57,6 +67,9 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   $tag_list=array();
   $add_columns=array();
 
+  if(!sizeof($rules))
+    return null;
+
   $match_list=$rules['match'];
   $select=array();
   $where=array();
@@ -65,38 +78,14 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   $select[]="osm_way as geo";
   $select[]="osm_tags";
   
+  $or_list=array("or");
   $i=0;
   foreach($match_list as $i=>$match) {
-    $part=match_collect_values_part($match);
-
-    foreach($part as $key=>$values) {
-      if(!in_array($key, $add_columns)) {
-	$add_columns[]=$key;
-	$tag_list[$key]=$i;
-
-	$i++;
-      }
-    }
+    $or_list[]=$match;
   }
 
-  $values=match_collect_values($match_list);
-  //$where.=match_to_sql(, $table_def, "index");
-
-  $w=array();
-  $no_match=false;
-  $c_fix=array();
-  foreach($values as $key=>$values) {
-    $values_escape=array();
-    foreach($values as $v)
-      $values_escape[]=postgre_escape($v);
-    $key=postgre_escape($key);
-    register_index($table, $key, "tsvector", $id);
-    $w[]="(to_tsvector('simple', osm_tags->$key) @@ to_tsquery('simple', ".
-	 implode("||' | '||", $values_escape)."))";
-  }
-
-  if((!$no_match)&&(sizeof($w)))
-    $where[]=implode(" or ", $w);
+  $w=match_to_sql(match_simplify($or_list), array("table"=>$table, "id"=>$id), "index");
+  $where[]="($w)";
 
   $from="from osm_$table\n";
 
@@ -107,6 +96,9 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   //$where[]="(\"rule_$id\"='$importance' or \"rule_$id\" is null)";
 
   $where[]="osm_way&&!bbox!";
+
+  print "WHERE";
+  print_r($where);
 
   if(sizeof($where))
     $where="where\n  ".implode(" and\n  ", $where);
@@ -148,7 +140,7 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
       }
     }
 
-    $qry=match_to_sql($match, $tag_list, "columns");
+    $qry=match_to_sql($match, $tag_list, "exact");
 
     $imp=$tags->get("importance");
     if(!$imp)
@@ -251,11 +243,17 @@ function postgre_escape($str) {
   return "E'".strtr($str, array("'"=>"\\'"))."'";
 }
 
-function match_to_sql_colname($col, $table_def, $type="columns") {
-  return "tag_{$table_def[$col]}";
+function match_to_sql_colname($col, $table_def, $type="exact") {
+  if($type=="exact")
+    return "tag_{$table_def[$col]}";
+  elseif($type=="index")
+    return "osm_tags->".postgre_escape($col);
 }
 
-function match_to_sql($match, $table_def) {
+// valid types:
+/// 'exact' ... Match via oneof_in and similar
+/// 'index' ... Use tsvector or other types of indices
+function match_to_sql($match, $table_def, $type="exact") {
   $not="";
   $same="false";
 
@@ -266,7 +264,7 @@ function match_to_sql($match, $table_def) {
 
       $ret=array();
       for($i=1; $i<sizeof($match); $i++) {
-	$ret[]=match_to_sql($match[$i], $table_def);
+	$ret[]=match_to_sql($match[$i], $table_def, $type);
       }
 
       return "(".implode(") or (", $ret).")";
@@ -276,40 +274,68 @@ function match_to_sql($match, $table_def) {
 
       $ret=array();
       for($i=1; $i<sizeof($match); $i++) {
-	$ret[]=match_to_sql($match[$i], $table_def);
+	$ret[]=match_to_sql($match[$i], $table_def, $type);
       }
 
       return "(".implode(") and (", $ret).")";
     case "not":
-      return "not ".match_to_sql($match[1], $table_def);
-    case "fuzzy is":
-      $ret=array();
-      for($i=2; $i<sizeof($match); $i++) {
-	$ret[]=postgre_escape($match[$i]);
-      }
-
-      return "to_tsvector('simple', ".match_to_sql_colname($match[1], $table_def, "index").") @@ to_tsquery('simple', ".implode("||' | '||", $ret).")";
+      return "not ".match_to_sql($match[1], $table_def, $type);
     case "is not":
       $not="not";
     case "is":
-      $ret=array();
-      for($i=2; $i<sizeof($match); $i++) {
-	$ret[]=postgre_escape($match[$i]);
-      }
+      switch($type) {
+	case "index":
+	  $ret=array();
+	  for($i=2; $i<sizeof($match); $i++) {
+	    $ret[]=postgre_escape($match[$i]);
+	  }
 
-      return "$not oneof_in(".match_to_sql_colname($match[1], $table_def).", ARRAY[".implode(", ", $ret)."])";
+	  register_index($table_def['table'], $match[1], "tsvector", 
+	                 $table_def['id']);
+	  return "$not to_tsvector('simple', ".match_to_sql_colname($match[1], $table_def, $type).") @@ to_tsquery('simple', ".implode("||' | '||", $ret).")";
+	default:
+	  $ret=array();
+	  for($i=2; $i<sizeof($match); $i++) {
+	    $ret[]=postgre_escape($match[$i]);
+	  }
+
+	  return "$not oneof_in(".match_to_sql_colname($match[1], $table_def, $type).", ARRAY[".implode(", ", $ret)."])";
+	}
     case "exist":
-      return match_to_sql_colname($match[1], $table_def)." is not null";
+      switch($type) {
+	case "index":
+	  return "osm_tags ? ".postgre_escape($match[1]);
+	default:
+	  return match_to_sql_colname($match[1], $table_def, $type)." is not null";
+      }
     case "exist not":
-      return match_to_sql_colname($match[1], $table_def)." is null";
+      return match_to_sql_colname($match[1], $table_def, $type)." is null";
     case ">=":
       $same="true";
     case ">":
-      return "oneof_between(".match_to_sql_colname($match[1], $table_def).", ".parse_number($match[2]).", $same, null, null)";
+      $number=parse_number($match[2]);
+
+      if($type=="index") {
+	// for index-search we make an index every 100 
+	// units and change the select-statement accordingly
+	$same="true";
+	$number=pow(100, floor(log($number, 100)));
+	register_index($table_def['table'], $match[1], "gteq", 
+		       $table_def['id'], $number);
+      }
+
+      return "oneof_between(split_semicolon(".match_to_sql_colname($match[1], $table_def, $type)."), $number, $same, null, null)";
     case "<=":
       $same="true";
     case "<":
-      return "oneof_between(".match_to_sql_colname($match[1], $table_def).", null, null, ".parse_number($match[2]).", $same)";
+      if($type=="index") {
+	$same="true";
+	$number=pow(100, ceil(log($number, 100)));
+	register_index($table_def['table'], $match[1], "lteq", 
+		       $table_def['id'], $number);
+      }
+
+      return "oneof_between(split_semicolon(".match_to_sql_colname($match[1], $table_def, $type)."), null, null, $number, $same)";
     case "true":
       return "true";
     case "false":
@@ -324,7 +350,6 @@ function match_collect_values_part($el) {
   $ret=array();
 
   switch($el[0]) {
-    case "fuzzy is":
     case "is":
       for($i=2; $i<sizeof($el); $i++)
 	$ret[$el[1]][]=$el[$i];
@@ -491,7 +516,7 @@ function parse_explode($match) {
 	elseif($c==",") {
 	  $parser[]="OR";
 	}
-	elseif($c==" ") {
+        elseif($c==" ") {
 	}
 	elseif(!in_array($c, array("\"", "'", "=", "!", ">", "<"))) {
 	  $key.=$c;
