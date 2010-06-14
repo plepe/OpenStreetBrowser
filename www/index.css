@@ -23,14 +23,17 @@ body, li, td {
   height:100%;
 }
 .search {
+  z-index:11;
   width: 250px;
   margin-top: 3px;
 }
+
 input#search {
   border: 1px solid;
   background-color:#efefef;
   width: 250px;
   padding:3px;
+  margin-top:2px;
   font-size:1em;
   color:#333;
 }
@@ -258,18 +261,68 @@ a.external:hover {
   text-decoration: underline;
 }
 
-.start {
+.toolbox {
   background-color:#EFEFEF;
   border:1px solid #999999;
   color:#333333;
   display:block;
-  padding:3px 3px 0;
+  padding:5px 3px 0;
   top:0px;
   width:242px;
   position:relative;
   line-height:0.8;
+  margin-bottom:-2px;
+  z-index:2;
+}
+
+#toolboxbuttons {
+  display:block;
+  position:absolute;
+  top:121px;
+  left:175px;
+  z-index:3;
+}
+
+.toolboxbutton {
+  padding:1px;
+  border:1px solid transparent;
+}
+
+td.toolboxbutton:hover {
+  background-color:#FEFEFE;
+  border:1px solid #CCCCCC;
+}
+
+.toolboxbutton_active {
+  padding:1px;
+  border:1px solid;
+  border-color:#999999 #999999 #EFEFEF;
+  background-color:#EFEFEF;
 }
 
 label:hover {
   text-decoration:underline;
+}
+
+
+/**************************/
+/* css hacks and so on... */
+/**************************/
+
+/* to remove dotted lines around links in mozilla */
+a:active {
+  outline:none;
+}
+a:focus{
+  -moz-outline-style: none;
+}
+
+/* fix IE box problems */
+* html .toolbox {
+  width:250px;
+  w\idth:242px;
+}
+
+* html .toolboxbutton {
+  border:none;
 }
