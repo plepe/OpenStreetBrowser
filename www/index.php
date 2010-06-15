@@ -96,7 +96,7 @@ else
 </table>
 </div>
 
-<div id='toolbox' class='toolbox' style="display:block; position:absolute; top:140px;"></div>
+<div id='toolbox' class='toolbox' style="display:block; position:absolute; top:140px; clip:rect(0px, 250px, 30px, 0px);"></div>
 <div id='search' class='search' style="position:absolute; top:143px;">
 <form name='osb_search_form_name' id='osb_search_form' action='javascript:search()'">
 <input name='osb_search' id='search' style="border-color:#999999;" value='<?=lang("search_field")?>' onFocus="search_focus(this)" onkeyup="search_brush(this,event)" onblur="search_onblur(this)" "title="<?=lang("search_tip")?>"/>

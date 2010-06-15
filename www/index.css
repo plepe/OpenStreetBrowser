@@ -314,13 +314,13 @@ a:active {
   outline:none;
 }
 a:focus{
+  outline:none;
   -moz-outline-style: none;
 }
 
 /* fix IE box problems */
 * html .toolbox {
   width:250px;
-  w\idth:242px;
 }
 
 * html .toolboxbutton {
