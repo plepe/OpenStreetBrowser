@@ -120,6 +120,11 @@ print list_template();
 //show_lang_select();
 ?>
 <div class="map" id="map"></div>
+<div id="contextmenu" class="contextmenu" onmouseout="contextmenu_mouseout(event)" style="top:20px; left:500px; display:none;"><table>
+<tr><td class="contextmenu_entry"><a href="#">set home</a></td></tr>
+<tr><td class="contextmenu_entry"><a href="#">set destination</a></td></tr>
+<tr><td class="contextmenu_entry"><a href="#">set favorite</a></td></tr>
+<tr><td class="contextmenu_entry"><a href="#">show coordinates</a></td></tr></table></div>
 <div class="shadow"></div>
 <div class="map_key_hidden" id="map_key"></div>
 <div class="licence"><?=lang("main:licence")?></div>

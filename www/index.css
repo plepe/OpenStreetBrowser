@@ -304,6 +304,16 @@ label:hover {
   text-decoration:underline;
 }
 
+.contextmenu {
+  position:absolute;
+  background:#EFEFEF;
+  border:1px solid #999999;  
+}
+
+td.contextmenu_entry:hover {
+  background:#FEFEFE;
+  border:1px solid #CCCCCC;
+}
 
 /**************************/
 /* css hacks and so on... */

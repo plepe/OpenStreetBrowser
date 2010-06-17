@@ -13,7 +13,7 @@ lang_str["start:choose"]          =[ "Choose map view" ];
 lang_str["start:geolocation"]     =[ "get geolocation" ];
 lang_str["start:lastview"]        =[ "last view" ];
 lang_str["start:savedview"]       =[ "last permalink" ];
-lang_str["start:startnormal"]     =[ "keep default view" ];
+lang_str["start:startnormal"]     =[ "keep view" ];
 lang_str["start:remember"]        =[ "remember decision" ];
 lang_str["start:edit"]            =[ "edit..." ];
 

@@ -13,7 +13,7 @@ lang_str["start:choose"]          =[ "Wähle einen Kartenausschnitt" ];
 lang_str["start:geolocation"]     =[ "automatische Geolokalisierung" ];
 lang_str["start:lastview"]        =[ "letzter Kartenausschnitt" ];
 lang_str["start:savedview"]       =[ "letzter Permalink" ];
-lang_str["start:startnormal"]     =[ "behalte Standardansicht" ];
+lang_str["start:startnormal"]     =[ "behalte Ansicht" ];
 lang_str["start:remember"]        =[ "Auswahl merken" ];
 lang_str["start:edit"]            =[ "editiere..." ];
 
