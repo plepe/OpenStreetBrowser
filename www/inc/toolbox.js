@@ -1,6 +1,6 @@
 //Karte, Haus, Zielflagge, Marker, Lineal, (Hilfe)
 
-var timer, i=0, details_style, search_style, toolbox_style, details_top, oldtop=180, lastview, toolbox_active;
+var timer, i=0, details_style, search_style, toolbox_style, details_top, oldtop=180, lastview, toolbox_active, toolbox_locked=0;
 
 function toolbox_init() {
   if(((location.hash=="") || (location.hash=="#")) && (cookie_read("start_value")==null)) {
@@ -13,7 +13,7 @@ function toolbox_init() {
 }
 
 function toolbox_map() {
-  if(toolbox_active=="map"){
+  if((toolbox_active=="map")||(toolbox_locked==1)) {
     toolbox_hide();
     return;
   }
@@ -40,7 +40,7 @@ function toolbox_map() {
 }
 
 function toolbox_home() {
-  if(toolbox_active=="home"){
+  if((toolbox_active=="home")||(toolbox_locked==1)){
     toolbox_hide();
     return;
   }
@@ -55,7 +55,7 @@ function toolbox_home() {
 }
 
 function toolbox_favorites() {
-  if(toolbox_active=="favorites"){
+  if((toolbox_active=="favorites")||(toolbox_locked==1)){
     toolbox_hide();
     return;
   }
@@ -70,7 +70,7 @@ function toolbox_favorites() {
 }
 
 function toolbox_measure() {
-  if(toolbox_active=="measure"){
+  if((toolbox_active=="measure")||(toolbox_locked==1)){
     toolbox_hide();
     return;
   }
@@ -85,32 +85,37 @@ function toolbox_measure() {
 }
 
 function toolbox_fillwithtext(text) {
-  document.getElementById("toolbox").innerHTML=text;
-  details_style=document.getElementById("details").style;
-  document.getElementById("toolbox").style.display="block"
-  details_top=document.getElementById("toolbox").offsetHeight + 180;
-  details_style.top=details_top+"px";
+  if(toolbox_locked==0){
+    toolbox_locked=1;
+    document.getElementById("toolbox").innerHTML=text;
+    details_style=document.getElementById("details").style;
+    document.getElementById("toolbox").style.display="block"
+    details_top=document.getElementById("toolbox").offsetHeight + 180;
+    details_style.top=details_top+"px";
 
-  toolbox_style=document.getElementById("toolbox").style;
-  search_style=document.getElementById("search").style;
-  //search_style.top=details_top-37+"px";
-  if(oldtop<details_top) {
-    timer = window.setInterval("toolbox_slide(oldtop,details_top,1)",10);
-  } else {
-    timer = window.setInterval("toolbox_slide(oldtop,details_top,-1)",10);
+    toolbox_style=document.getElementById("toolbox").style;
+    search_style=document.getElementById("search").style;
+    if(oldtop<details_top) {
+      timer = window.setInterval("toolbox_slide(oldtop,details_top,1)",10);
+    } else {
+      timer = window.setInterval("toolbox_slide(oldtop,details_top,-1)",10);
+    }
   }
 }
 
 function toolbox_hide() {
-  details_style=document.getElementById("details").style;
-  search_style=document.getElementById("search").style;
-  //document.getElementById("toolbox").style.display = "none";
-  timer = window.setInterval("toolbox_slide(details_top,180,-1)",10);
-  document.getElementById("toolbox1").className="toolboxbutton";
-  document.getElementById("toolbox2").className="toolboxbutton";
-  document.getElementById("toolbox3").className="toolboxbutton";
-  document.getElementById("toolbox4").className="toolboxbutton";
-  toolbox_active="";
+  if(toolbox_locked==0){
+    toolbox_locked=1;
+    details_style=document.getElementById("details").style;
+    search_style=document.getElementById("search").style;
+    //document.getElementById("toolbox").style.display = "none";
+    timer = window.setInterval("toolbox_slide(details_top,180,-1)",10);
+    document.getElementById("toolbox1").className="toolboxbutton";
+    document.getElementById("toolbox2").className="toolboxbutton";
+    document.getElementById("toolbox3").className="toolboxbutton";
+    document.getElementById("toolbox4").className="toolboxbutton";
+    toolbox_active="";
+  }
 }
 
 function toolbox_slide(from, to, direction) {
@@ -127,6 +132,7 @@ function toolbox_slide(from, to, direction) {
       search_style.top=to-37+"px";
       toolbox_style.clip="rect(0px, 250px, "+(to-from+oldtop-180)+"px, 0px)";
       oldtop=to;
+      toolbox_locked=0;
     }
   } else if(direction==-1) {
     toolbox_style.clip="rect(0px, 250px, "+(top-180)+"px, 0px)";
@@ -137,6 +143,7 @@ function toolbox_slide(from, to, direction) {
       search_style.top=to-37+"px";
       toolbox_style.clip="rect(0px, 250px, "+(to-180)+"px, 0px)";
       oldtop=to;
+      toolbox_locked=0;
     }
   } else {
     window.clearInterval(timer); //just to prevent running timers on wrong direction-input
