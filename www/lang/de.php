@@ -12,6 +12,7 @@ $lang_str["read_more"]="weiterlesen";
 $lang_str["search_more"]="mehr Ergebnisse";
 $lang_str["search_results"]="Suchergebnisse";
 $lang_str["search_nominatim"]="Suche bereitgestellt von";
+$lang_str["loading"]="lade";
 
 $lang_str["head_general_info"]="Allgemeine Informationen";
 $lang_str["head_stops"]="Haltestellen";

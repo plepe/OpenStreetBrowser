@@ -306,13 +306,12 @@ label:hover {
 
 .contextmenu {
   position:absolute;
-  background:#EFEFEF;
+  background:#FEFEFE;
   border:1px solid #999999;  
 }
 
 td.contextmenu_entry:hover {
-  background:#FEFEFE;
-  border:1px solid #CCCCCC;
+  background:#EFEFEF;
 }
 
 /**************************/

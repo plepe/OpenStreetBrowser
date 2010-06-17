@@ -120,11 +120,13 @@ print list_template();
 //show_lang_select();
 ?>
 <div class="map" id="map"></div>
-<div id="contextmenu" class="contextmenu" onmouseout="contextmenu_mouseout(event)" style="top:20px; left:500px; display:none;"><table>
-<tr><td class="contextmenu_entry"><a href="#">set home</a></td></tr>
-<tr><td class="contextmenu_entry"><a href="#">set destination</a></td></tr>
-<tr><td class="contextmenu_entry"><a href="#">set favorite</a></td></tr>
-<tr><td class="contextmenu_entry"><a href="#">show coordinates</a></td></tr></table></div>
+<div id="contextmenu" class="contextmenu" onmouseout="contextmenu_mouseout(event)" onmouseover="javascript:clearTimeout(contexttimer)" style="top:20px; left:500px; display:none;">
+<span style="position:absolute; width:10px; height:10px; border-top:2px solid black; border-left:2px solid black; top:-2px; left:-2px;"></span>
+<table cellspacing="0">
+<tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_home.png" border="0" title=""/> set home</a></td></tr>
+<tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_map.png" border="0" title=""/> set destination</a></td></tr>
+<tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_favorites.png" border="0" title=""/> set favorite</a></td></tr>
+<tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_measure.png" border="0" title=""/> show coordinates</a></td></tr></table></div>
 <div class="shadow"></div>
 <div class="map_key_hidden" id="map_key"></div>
 <div class="licence"><?=lang("main:licence")?></div>
