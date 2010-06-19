@@ -175,15 +175,7 @@ function toolbox_start(start_value) {
       geo_init();
       break;
     case "lastview":
-      var params=string_to_hash(lastview);
-      if(map) {
-        var coords = new OpenLayers.LonLat(params.lon, params.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-        map.setCenter(coords, params.zoom);
-      } else { 
-        start_lon=params.lon;
-        start_lat=params.lat;
-        start_zoom=params.zoom;
-      }
+      set_location(lastview);
       break;
     case "savedview":
       var lonlat=cookie_read("_osb_permalink").split("|");

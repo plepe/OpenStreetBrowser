@@ -175,6 +175,30 @@ function redraw() {
   }
 }
 
+// set_location ... resolve a link with all parts, moves accordingly 
+//                    and maybe loads additional data
+// PARAMETERS:
+//   params     ... a hash (or its string-representation) describing the 
+//                  current view (as you can get from the function 
+//                  get_permalink() )
+// RETURN:
+//   nothing
+function set_location(params) {
+  if(typeof(params)=="string")
+    params=string_to_hash(params);
+
+  location_params=params;
+
+  if(map) {
+    redraw();
+  }
+  else {
+    start_lon=params.lon;
+    start_lat=params.lat;
+    start_zoom=params.zoom;
+  }
+}
+
 var last_location_hash;
 function check_redraw() {
   location_params={};
@@ -229,6 +253,11 @@ function view_changed(event) {
   call_hooks("view_changed", event);
 }
 
+// get_permalink ... returns current view as hash array
+// PARAMETERS:
+//   none
+// RETURNS:
+//   a hash array describing the current view
 function get_permalink() {
   var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
   var permalink = { zoom: map.zoom, lat: center.lat, lon: center.lon };
