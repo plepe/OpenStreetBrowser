@@ -88,10 +88,10 @@ else
 <div id='toolboxbuttons'">
 <table cellspacing="0" style="border:0px; margin:0px; padding:0px;">
 	<tr>
-		<td id="toolbox1" class="toolboxbutton"><a href='javascript:toolbox_map()'><img src="img/toolbox_map.png" border="0" title="set map position"/></a></td>
-		<td id="toolbox2" class="toolboxbutton"><a href='javascript:toolbox_home()'><img src="img/toolbox_home.png" border="0" title="set home position"/></a></td>
-		<td id="toolbox3" class="toolboxbutton"><a href='javascript:toolbox_favorites()'><img src="img/toolbox_favorites.png" border="0" title="set markers"/></a></td>
-		<td id="toolbox4" class="toolboxbutton"><a href='javascript:toolbox_measure()'><img src="img/toolbox_measure.png" border="0" title="select measure tool"/></a></td>
+		<td id="toolbox1" class="toolboxbutton"><a href='javascript:toolbox_map()'><img src="img/toolbox_map.png" border="0" title="map position"/></a></td>
+		<td id="toolbox2" class="toolboxbutton"><a href='javascript:toolbox_navigation()'><img src="img/toolbox_navigation.png" border="0" title="navigation"/></a></td>
+		<td id="toolbox3" class="toolboxbutton"><a href='javascript:toolbox_favorites()'><img src="img/toolbox_favorites.png" border="0" title="favorites"/></a></td>
+		<td id="toolbox4" class="toolboxbutton"><a href='javascript:toolbox_measure()'><img src="img/toolbox_measure.png" border="0" title="measurements"/></a></td>
 	</tr>
 </table>
 </div>
@@ -124,9 +124,12 @@ print list_template();
 <span style="position:absolute; width:10px; height:10px; border-top:2px solid black; border-left:2px solid black; top:-2px; left:-2px;"></span>
 <table cellspacing="0">
 <tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_home.png" border="0" title=""/> set home</a></td></tr>
-<tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_map.png" border="0" title=""/> set destination</a></td></tr>
+<tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_destination.png" border="0" title=""/> set destination</a></td></tr>
 <tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_favorites.png" border="0" title=""/> set favorite</a></td></tr>
-<tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_measure.png" border="0" title=""/> show coordinates</a></td></tr></table></div>
+<tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_measure.png" border="0" title=""/> set measure point</a></td></tr></table></div>
+
+<!--<div id="debugging" style="top:20px; left:300px; position:absolute; display:block; background:#FEFEFE; border:1px solid #999999;"><i>Die Super-Debugging-Box 3000</i><br/></div>-->
+
 <div class="shadow"></div>
 <div class="map_key_hidden" id="map_key"></div>
 <div class="licence"><?=lang("main:licence")?></div>
