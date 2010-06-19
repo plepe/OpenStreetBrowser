@@ -33,24 +33,31 @@ function toolbox_map() {
   if(cookie_read("_osb_permalink")) {
     text += "<input type=\"radio\" name=\"start_value\" id=\"savedview\" value=\"savedview\"><label for=\"savedview\">"+t("start:savedview")+"</label></br>";
   }
-  text += "<input type=\"radio\" name=\"start_value\" id=\"startnormal\" value=\"startnormal\" checked><label for=\"startnormal\">"+t("start:startnormal")+"</label></br>";
+  text += "<input type=\"radio\" name=\"start_value\" id=\"startnormal\" value=\"startnormal\"><label for=\"startnormal\">"+t("start:startnormal")+"</label></br>";
   text += "</br><input type=\"button\" name=\"start\" value=\"ok\" onclick=\"toolbox_options()\"><input type=\"checkbox\" name=\"start_save\" id=\"save\" value=\"save\"><label for=\"save\">"+t("start:remember")+"</label></br></form>";
 
   toolbox_fillwithtext(text);
+  var c=cookie_read('start_value');
+  if(c) {
+    document.getElementById(c).checked=true;
+    document.getElementById('save').checked=true;
+  } else {
+    document.getElementById('startnormal').checked=true;
+  }
 }
 
-function toolbox_home() {
-  if((toolbox_active=="home")||(toolbox_locked==1)){
+function toolbox_navigation() {
+  if((toolbox_active=="navigation")||(toolbox_locked==1)){
     toolbox_hide();
     return;
   }
-  toolbox_active="home";
+  toolbox_active="navigation";
   document.getElementById("toolbox1").className="toolboxbutton";
   document.getElementById("toolbox2").className="toolboxbutton_active";
   document.getElementById("toolbox3").className="toolboxbutton";
   document.getElementById("toolbox4").className="toolboxbutton";
 
-  var text = "<i>Home</i><br/><br/>select your home<br/>blablabla<br/><br/>";
+  var text = "<i>Navigation</i><br/><br/>At first select your home and your destination on the map.<br/><br/><img src='img/toolbox_home.png'> home<br/><img src='img/toolbox_destination.png'> destination<br/><br/>";
   toolbox_fillwithtext(text);
 }
 
@@ -65,7 +72,7 @@ function toolbox_favorites() {
   document.getElementById("toolbox3").className="toolboxbutton_active";
   document.getElementById("toolbox4").className="toolboxbutton";
 
-  var text = "Favorites";
+  var text = "<i>Favorites</i><br/><br/>coordinates, comment<br/><br/>";
   toolbox_fillwithtext(text);
 }
 
@@ -80,7 +87,7 @@ function toolbox_measure() {
   document.getElementById("toolbox3").className="toolboxbutton";
   document.getElementById("toolbox4").className="toolboxbutton_active";
 
-  var text = "Measure";
+  var text = "<i>Measurements</i><br/><br/>At first set measure points on the map.<br/><br/>distance: 0m<br/>area: 0m²<br/><br/>";
   toolbox_fillwithtext(text);
 }
 
