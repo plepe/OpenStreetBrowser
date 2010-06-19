@@ -10,6 +10,7 @@ var shown_features=[];
 var showing_details=true;
 var loaded_list={};
 var view_changed_last;
+var location_params={};
 
 function details_content_submit(event) {
   // Sometimes it happens, that it want to submit to the form. 
@@ -65,7 +66,9 @@ function hide_features() {
 }
 
 function get_hash() {
-  return location.hash.substr(1);
+  if(location_params.obj)
+    return location_params.obj;
+  return "";
 }
 
 function call_back(response) {
@@ -163,10 +166,24 @@ function redraw() {
 
 var last_location_hash;
 function check_redraw() {
+  location_params={};
+
   if(location.hash!=last_location_hash) {
-    call_hooks("hash_changed");
+    if(location.hash.substr(0, 2)=="#?") {
+      var ar=location.hash.substr(2).split(/&/);
+      for(var i=0; i<ar.length; i++) {
+	var x=ar[i].split(/=/);
+	var k=x[0];
+	x.shift();
+	location_params[k]=x.join("=");
+      }
+    }
+    else if(location.hash.substr(0, 1)=="#") {
+      location_params.obj=location.hash.substr(1);
+    }
+
+    call_hooks("hash_changed", location_params);
     last_location_hash=location.hash;
-    redraw();
   }
 
   redraw_timer=setTimeout("check_redraw()", 300);
@@ -265,6 +282,7 @@ function init() {
   }
 
   redraw_timer=setTimeout("check_redraw()", 300);
+  register_hook("hash_changed", redraw);
 
   map.events.register("moveend", map, view_changed);
   map.events.register("movestart", map, view_changed_start);
