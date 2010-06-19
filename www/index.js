@@ -207,9 +207,13 @@ function view_changed(event) {
   call_hooks("view_changed", event);
 }
 
-function permalink() {
+function get_permalink() {
   var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
-  return "?zoom="+map.zoom+"&lat="+center.lat+"&lon="+center.lon+location.hash;
+  var permalink = { zoom: map.zoom, lat: center.lat, lon: center.lon };
+
+  call_hooks("get_permalink", permalink);
+
+  return permalink;
 }
 
 function init() {
@@ -249,7 +253,8 @@ function init() {
   };
 
   var permalink=document.getElementById("permalink");
-  map.addControl(new OpenLayers.Control.Permalink(permalink, "http://www.openstreetbrowser.org/"));
+  map.addControl(perma_control=new OpenLayers.Control.Permalink(permalink, location.protocol+"//"+location.hostname+location.pathname+"#"));
+  perma_control.createParams=get_permalink;
 
   map.addControl(new OpenLayers.Control.MousePosition());
   map.addControl(new OpenLayers.Control.ScaleLine());
