@@ -140,10 +140,10 @@ function redraw() {
   else if(x=="mapkey") {
     hide();
     //var info=document.getElementById("map_key");
-    var map=document.getElementById("map");
+    var map_div=document.getElementById("map");
 
     info.className="info";
-//    map.className="map";
+//    map_div.className="map";
   }
   else if(x.substr(0, 7)=="search_") {
     first_load=0;
@@ -156,11 +156,22 @@ function redraw() {
 
     var details_content=document.getElementById("details_content");
     var details=document.getElementById("details");
-//    var map=document.getElementById("map");
+//    var map_div=document.getElementById("map");
 
     details_content.innerHTML="<div class=\"loading\"><img src=\"img/ajax_loader.gif\" /> "+t("loading")+"</div>";
     //map_key.className="info_hidden";
     details.className="info_loading";
+  }
+
+  if(location_params.lat&&location_params.lon) {
+    var lonlat = new OpenLayers.LonLat(location_params.lon, location_params.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+    if(location_params.zoom)
+      map.setCenter(lonlat, location_params.zoom);
+    else
+      map.setCenter(lonlat);
+  }
+  else if(location_params.zoom) {
+    map.zoomTo(location_params.zoom);
   }
 }
 
