@@ -57,7 +57,7 @@ function toolbox_navigation() {
   document.getElementById("toolbox3").className="toolboxbutton";
   document.getElementById("toolbox4").className="toolboxbutton";
 
-  var text = "<i>Navigation</i><br/><br/>At first select your home and your destination on the map.<br/><br/>";
+  var text = "<i>Navigation</i><br/><br/>At first select your home and your destination on the map.<br/><br/><img src='img/toolbox_home.png'> home<br/><img src='img/toolbox_destination.png'> destination<br/><br/>";
   toolbox_fillwithtext(text);
 }
 
