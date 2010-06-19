@@ -175,14 +175,14 @@ function toolbox_start(start_value) {
       geo_init();
       break;
     case "lastview":
-      var lonlat=lastview.split("|");
+      var params=string_to_hash(lastview);
       if(map) {
-        var coords = new OpenLayers.LonLat(lonlat[0], lonlat[1]).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-        map.setCenter(coords,lonlat[2]);
+        var coords = new OpenLayers.LonLat(params.lon, params.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+        map.setCenter(coords, params.zoom);
       } else { 
-        start_lon=lonlat[0];
-        start_lat=lonlat[1];
-        start_zoom=lonlat[2];
+        start_lon=params.lon;
+        start_lat=params.lat;
+        start_zoom=params.zoom;
       }
       break;
     case "savedview":

@@ -181,13 +181,7 @@ function check_redraw() {
 
   if(location.hash!=last_location_hash) {
     if(location.hash.substr(0, 2)=="#?") {
-      var ar=location.hash.substr(2).split(/&/);
-      for(var i=0; i<ar.length; i++) {
-	var x=ar[i].split(/=/);
-	var k=x[0];
-	x.shift();
-	location_params[k]=x.join("=");
-      }
+      location_params=string_to_hash(location.hash.substr(2));
     }
     else if(location.hash.substr(0, 1)=="#") {
       location_params.obj=location.hash.substr(1);
@@ -229,7 +223,7 @@ function view_changed(event) {
   
   
   var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
-  cookie_write("_osb_location", center.lon + "|" + center.lat + "|" + map.zoom + "|" + location.hash);
+  cookie_write("_osb_location", hash_to_string(get_permalink()));
 
 
   call_hooks("view_changed", event);

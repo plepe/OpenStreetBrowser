@@ -5,7 +5,8 @@ function cookie_read(cookiename) {
   for(var i=0;i<cookies.length;i++) {
     var a=cookies[i].split("=");
     if(a[0] == cookiename) {
-      return a[1];
+      a.shift();
+      return a.join("=");
     }
   }
   return null;
