@@ -1,5 +1,5 @@
 var marker_list={};
-var marker_overlay;
+var marker_drag_control;
 
 function marker_update(new_hash) {
   // no mlat / mlon in new_hash
@@ -48,12 +48,6 @@ function marker(lon, lat) {
   this.lon=lon;
   this.lat=lat;
 
-  // if we don't have an overlay for markers yet, create it
-  if(!marker_overlay) {
-    marker_overlay = new OpenLayers.Layer.Vector(t("overlay:marker"));
-    map.addLayer(marker_overlay);
-  }
-
   // create the new marker
   var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
   var geo = new OpenLayers.Geometry.Point(pos.lon, pos.lat);
@@ -64,7 +58,8 @@ function marker(lon, lat) {
     graphicXOffset: -11,
     graphicYOffset: -25
   });
-  marker_overlay.addFeatures([this.feature]);
+  drag_layer.addFeatures([this.feature]);
+  this.feature.ob=this;
 
   // save marker in marker_list
   marker_list[lon+"|"+lat]=this;
