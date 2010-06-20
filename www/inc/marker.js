@@ -44,6 +44,21 @@ function marker_permalink(permalink) {
 }
 
 function marker(lon, lat) {
+  // finish_drag
+  this.finish_drag=function(pos) {
+    // calculate lonlat of new position
+    var lonlat=map.getLonLatFromPixel(pos).transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+
+    // save new position to marker_list
+    delete marker_list[this.lon+"|"+this.lat];
+    this.lon=lonlat.lon;
+    this.lat=lonlat.lat;
+    marker_list[this.lon+"|"+this.lat]=this;
+
+    // update permalink
+    update_permalink();
+  }
+
   // constructor
   this.lon=lon;
   this.lat=lat;
