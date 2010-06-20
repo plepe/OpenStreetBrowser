@@ -3,6 +3,9 @@ var drag_feature;
 var drag_layer;
 
 function finish_drag(feature, pos) {
+  if(feature.ob&&feature.ob.finish_drag)
+    feature.ob.finish_drag(pos);
+
   call_hooks("finish_drag", feature, pos);
 }
 
