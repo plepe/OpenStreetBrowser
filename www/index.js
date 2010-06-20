@@ -290,7 +290,6 @@ function init() {
 	  });
 
   var layerpubtran = new OpenLayers.Layer.OSM("OpenStreetBrowser", "http://www.openstreetbrowser.org/tiles/base/", {numZoomLevels: 19});
-  var layermarkers = new OpenLayers.Layer.Markers("Markers");
 //  var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
 //  var layerTah = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
 //  var layercycle = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
@@ -298,7 +297,7 @@ function init() {
 //  var layertest2    = new OpenLayers.Layer.OSM("Test (Lesewesen)", "/lesewesen/tiles/base/", {numZoomLevels: 17});
 
   //map.addLayers([ layerpubtran, layerMapnik, layerTah, layercycle, layertest1, layertest2]);
-  map.addLayers([ layerpubtran, layermarkers]);
+  map.addLayers([ layerpubtran ]);
 
   map.div.oncontextmenu = function noContextMenu(e) {
     rightclick(e);
@@ -329,14 +328,6 @@ function init() {
 
   call_hooks("init");
   //setTimeout("call_hooks(\"post_init\")", 2000);
-
-  if(marker_pos) {
-    var size = new OpenLayers.Size(21,25);
-    var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-    var icon = new OpenLayers.Icon('http://www.openstreetmap.org/openlayers/img/marker.png',size,offset);
-    layermarkers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(marker_pos.lon,marker_pos.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),icon));
-    //layermarkers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(0,0),icon.clone()));
-  }
 }
 
 function add_funs(arr) {

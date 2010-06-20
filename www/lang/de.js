@@ -92,3 +92,5 @@ lang_str["help:language_support"]=[ "In diesen Optionen können die verwendeten 
 lang_str["options:ui_lang"]=[ "Anwendungssprache" ];
 lang_str["options:data_lang"]=[ "Datensprache" ];
 lang_str["lang:"]=[ "Lokale Sprache" ];
+
+lang_str["overlay:marker"]=[ "Markierungen" ];
