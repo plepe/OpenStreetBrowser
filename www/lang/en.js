@@ -93,4 +93,5 @@ lang_str["options:ui_lang"]=[ "Interface language" ];
 lang_str["options:data_lang"]=[ "Data language" ];
 lang_str["lang:"]=[ "Local language" ];
 
-lang_str["overlay:marker"]=[ "Markers" ];
+lang_str["overlay:data"]=[ "Data" ];
+lang_str["overlay:draggable"]=[ "Markers" ];
