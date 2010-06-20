@@ -12,6 +12,8 @@ var loaded_list={};
 var view_changed_last;
 var location_params={};
 
+var permalink_control;
+
 function details_content_submit(event) {
   // Sometimes it happens, that it want to submit to the form. 
   // Just ignore event.
@@ -269,6 +271,11 @@ function get_permalink() {
   return permalink;
 }
 
+// update_permalink ... forces an update of the permalink
+function update_permalink() {
+  permalink_control.updateLink();
+}
+
 function init() {
   show_list();
 
@@ -305,8 +312,9 @@ function init() {
   };
 
   var permalink=document.getElementById("permalink");
-  map.addControl(perma_control=new OpenLayers.Control.Permalink(permalink, location.protocol+"//"+location.hostname+location.pathname+"#"));
-  perma_control.createParams=get_permalink;
+  permalink_control=new OpenLayers.Control.Permalink(permalink, location.protocol+"//"+location.hostname+location.pathname+"#");
+  map.addControl(permalink_control);
+  permalink_control.createParams=get_permalink;
 
   map.addControl(new OpenLayers.Control.MousePosition());
   map.addControl(new OpenLayers.Control.ScaleLine());
