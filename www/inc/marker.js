@@ -59,6 +59,9 @@ function marker_add(lon, lat) {
 
   // save marker in marker_list
   marker_list[lon+"|"+lat]=marker;
+
+  // force an update of the permalink
+  update_permalink();
 }
 
 function marker_add_context(pos) {
