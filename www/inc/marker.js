@@ -46,16 +46,21 @@ function marker_permalink(permalink) {
 function marker_add(lon, lat) {
   // if we don't have an overlay for markers yet, create it
   if(!marker_overlay) {
-    marker_overlay = new OpenLayers.Layer.Markers(t("overlay:marker"));
+    marker_overlay = new OpenLayers.Layer.Vector(t("overlay:marker"));
     map.addLayer(marker_overlay);
   }
 
   // create the new marker
-  var size = new OpenLayers.Size(21,25);
-  var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-  var icon = new OpenLayers.Icon('http://www.openstreetmap.org/openlayers/img/marker.png', size, offset);
-  var marker = new OpenLayers.Marker(new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()), icon);
-  marker_overlay.addMarker(marker);
+  var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
+  var geo = new OpenLayers.Geometry.Point(pos.lon, pos.lat);
+  var marker = new OpenLayers.Feature.Vector(geo, 0, {
+    externalGraphic: 'http://www.openstreetmap.org/openlayers/img/marker.png',
+    graphicWidth: 21,
+    graphicHeight: 25,
+    graphicXOffset: -11,
+    graphicYOffset: -25
+  });
+  marker_overlay.addFeatures([marker]);
 
   // save marker in marker_list
   marker_list[lon+"|"+lat]=marker;
