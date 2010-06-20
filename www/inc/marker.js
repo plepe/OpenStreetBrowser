@@ -43,7 +43,11 @@ function marker_permalink(permalink) {
   permalink.mlon=mlons.join(",");
 }
 
-function marker_add(lon, lat) {
+function marker(lon, lat) {
+  // constructor
+  this.lon=lon;
+  this.lat=lat;
+
   // if we don't have an overlay for markers yet, create it
   if(!marker_overlay) {
     marker_overlay = new OpenLayers.Layer.Vector(t("overlay:marker"));
@@ -53,20 +57,24 @@ function marker_add(lon, lat) {
   // create the new marker
   var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
   var geo = new OpenLayers.Geometry.Point(pos.lon, pos.lat);
-  var marker = new OpenLayers.Feature.Vector(geo, 0, {
+  this.feature = new OpenLayers.Feature.Vector(geo, 0, {
     externalGraphic: 'http://www.openstreetmap.org/openlayers/img/marker.png',
     graphicWidth: 21,
     graphicHeight: 25,
     graphicXOffset: -11,
     graphicYOffset: -25
   });
-  marker_overlay.addFeatures([marker]);
+  marker_overlay.addFeatures([this.feature]);
 
   // save marker in marker_list
-  marker_list[lon+"|"+lat]=marker;
+  marker_list[lon+"|"+lat]=this;
 
   // force an update of the permalink
   update_permalink();
+}
+
+function marker_add(lon, lat) {
+  return new marker(lon, lat);
 }
 
 function marker_add_context(pos) {
