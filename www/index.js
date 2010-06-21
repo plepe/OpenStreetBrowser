@@ -276,6 +276,10 @@ function update_permalink() {
   permalink_control.updateLink();
 }
 
+function get_baseurl() {
+  return location.protocol+"//"+location.hostname+location.pathname;
+}
+
 function init() {
   show_list();
 
@@ -312,7 +316,7 @@ function init() {
   };
 
   var permalink=document.getElementById("permalink");
-  permalink_control=new OpenLayers.Control.Permalink(permalink, location.protocol+"//"+location.hostname+location.pathname+"#");
+  permalink_control=new OpenLayers.Control.Permalink(permalink, get_baseurl()+"#");
   map.addControl(permalink_control);
   permalink_control.createParams=get_permalink;
 

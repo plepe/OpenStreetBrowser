@@ -1,5 +1,5 @@
 var marker_list={};
-var marker_overlay;
+var marker_drag_control;
 
 function marker_update(new_hash) {
   // no mlat / mlon in new_hash
@@ -43,25 +43,48 @@ function marker_permalink(permalink) {
   permalink.mlon=mlons.join(",");
 }
 
-function marker_add(lon, lat) {
-  // if we don't have an overlay for markers yet, create it
-  if(!marker_overlay) {
-    marker_overlay = new OpenLayers.Layer.Markers(t("overlay:marker"));
-    map.addLayer(marker_overlay);
+function marker(lon, lat) {
+  // finish_drag
+  this.finish_drag=function(pos) {
+    // calculate lonlat of new position
+    var lonlat=map.getLonLatFromPixel(pos).transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+
+    // save new position to marker_list
+    delete marker_list[this.lon+"|"+this.lat];
+    this.lon=lonlat.lon;
+    this.lat=lonlat.lat;
+    marker_list[this.lon+"|"+this.lat]=this;
+
+    // update permalink
+    update_permalink();
   }
 
+  // constructor
+  this.lon=lon;
+  this.lat=lat;
+
   // create the new marker
-  var size = new OpenLayers.Size(21,25);
-  var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-  var icon = new OpenLayers.Icon('http://www.openstreetmap.org/openlayers/img/marker.png', size, offset);
-  var marker = new OpenLayers.Marker(new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()), icon);
-  marker_overlay.addMarker(marker);
+  var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
+  var geo = new OpenLayers.Geometry.Point(pos.lon, pos.lat);
+  this.feature = new OpenLayers.Feature.Vector(geo, 0, {
+    externalGraphic: 'http://www.openstreetmap.org/openlayers/img/marker.png',
+    graphicWidth: 21,
+    graphicHeight: 25,
+    graphicXOffset: -11,
+    graphicYOffset: -25
+  });
+  drag_layer.addFeatures([this.feature]);
+  this.feature.ob=this;
 
   // save marker in marker_list
-  marker_list[lon+"|"+lat]=marker;
+  marker_list[lon+"|"+lat]=this;
 
   // force an update of the permalink
   update_permalink();
+}
+
+function marker_add(lon, lat) {
+  return new marker(lon, lat);
 }
 
 function marker_add_context(pos) {
