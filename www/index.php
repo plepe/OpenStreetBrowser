@@ -125,7 +125,6 @@ print list_template();
 <table id="contextmenu_table" cellspacing="0">
 <tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_home.png" border="0" title=""/> set home</a></td></tr>
 <tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_destination.png" border="0" title=""/> set destination</a></td></tr>
-<tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_favorites.png" border="0" title=""/> set favorite</a></td></tr>
 <tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_measure.png" border="0" title=""/> set measure point</a></td></tr></table></div>
 
 <!--<div id="debugging" style="top:20px; left:300px; position:absolute; display:block; background:#FEFEFE; border:1px solid #999999;"><i>Die Super-Debugging-Box 3000</i><br/></div>-->

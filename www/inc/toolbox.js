@@ -61,8 +61,8 @@ function toolbox_navigation() {
   toolbox_fillwithtext(text);
 }
 
-function toolbox_favorites() {
-  if((toolbox_active=="favorites")||(toolbox_locked==1)){
+function toolbox_favorites(update) {
+  if(!update && ((toolbox_active=="favorites")||(toolbox_locked==1))){
     toolbox_hide();
     return;
   }
@@ -72,7 +72,16 @@ function toolbox_favorites() {
   document.getElementById("toolbox3").className="toolboxbutton_active";
   document.getElementById("toolbox4").className="toolboxbutton";
 
-  var text = "<i>Favorites</i><br/><br/>coordinates, comment<br/><br/>";
+  var text="<i>Favorites</i><br/><br/>";
+  var nbrfav=0;
+  for(var i in favorites_list) {
+    text+="favorite "+(nbrfav+1)+": "+favorites_list[i].lon +", "+favorites_list[i].lon+"<br/>";
+    nbrfav++;
+  }
+  if (nbrfav==0) {
+    text += "Set favorites by clicking on the map...";
+  }
+  text += "<br/><br/>";
   toolbox_fillwithtext(text);
 }
 
