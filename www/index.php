@@ -121,7 +121,7 @@ print list_template();
 ?>
 <div class="map" id="map"></div>
 <div id="contextmenu" class="contextmenu" onmouseout="contextmenu_mouseout(event)" onmouseover="javascript:clearTimeout(contexttimer)" style="top:20px; left:500px; display:none;">
-<span style="position:absolute; width:10px; height:10px; border-top:2px solid black; border-left:2px solid black; top:-2px; left:-2px;"></span>
+<span id="contextmenu_pointer" style="position:absolute; width:10px; height:10px;"></span>
 <table id="contextmenu_table" cellspacing="0">
 <tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_home.png" border="0" title=""/> set home</a></td></tr>
 <tr><td class="contextmenu_entry"><a href="#"><img src="img/toolbox_destination.png" border="0" title=""/> set destination</a></td></tr>

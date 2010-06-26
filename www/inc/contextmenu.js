@@ -18,10 +18,38 @@ function rightclick(e) {
   var offsetx = map_div.offsetLeft;
   var offsety = map_div.offsetTop;
 
-  contextmenu_style=document.getElementById("contextmenu").style;
-  contextmenu_style.display="block";
-  contextmenu_style.top=posy+"px";
-  contextmenu_style.left=posx+"px";
+  var contextmenu=document.getElementById("contextmenu");
+  contextmenu.style.display="block";
+  var contextWidth = contextmenu.offsetWidth;
+  var contextHeight = contextmenu.offsetHeight;
+  var contextmenu_pointer = document.getElementById("contextmenu_pointer");
+  if(posx >= (window.innerWidth-contextWidth)) {
+    posx-=contextWidth;
+    contextmenu_pointer.style.borderLeft="none";
+    contextmenu_pointer.style.borderRight="2px solid black";
+    contextmenu_pointer.style.left="";
+    contextmenu_pointer.style.right="-2px";
+  } else {
+    contextmenu_pointer.style.borderLeft="2px solid black";
+    contextmenu_pointer.style.borderRight="none";
+    contextmenu_pointer.style.left="-2px";
+    contextmenu_pointer.style.right="";
+
+  }
+  if(posy >= (window.innerHeight-contextHeight)) {
+    posy-=contextHeight;
+    contextmenu_pointer.style.borderTop="none";
+    contextmenu_pointer.style.borderBottom="2px solid black";
+    contextmenu_pointer.style.top="";
+    contextmenu_pointer.style.bottom="-2px";
+  } else {
+    contextmenu_pointer.style.borderTop="2px solid black";
+    contextmenu_pointer.style.borderBottom="none";
+    contextmenu_pointer.style.top="-2px";
+    contextmenu_pointer.style.bottom="";
+  }
+  contextmenu.style.top=posy+"px";
+  contextmenu.style.left=posx+"px";
 
   contextmenu_pos=map.getLonLatFromPixel(new OpenLayers.Pixel(posx-offsetx, posy-offsety)).transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
 }
@@ -29,11 +57,12 @@ function rightclick(e) {
 function contextmenu_mouseout(e) {
   var e = (e) ? e : ((window.event) ? window.event : "");
   var reltar = (e.relatedTarget) ? e.relatedTarget : e.toElement;
+  var contextmenu=document.getElementById("contextmenu");
 
-  if (typeof(document.getElementById('contextmenu').contains)=="object") {
-    var nu = !(document.getElementById('contextmenu').contains(reltar));
+  if (typeof(contextmenu.contains)=="object") {
+    var nu = !(contextmenu.contains(reltar));
   } else {
-    var nu = !!(document.getElementById('contextmenu').compareDocumentPosition(reltar)&2);
+    var nu = !!(contextmenu.compareDocumentPosition(reltar)&2);
   }
 
   if (nu) {
