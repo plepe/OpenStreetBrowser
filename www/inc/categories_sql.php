@@ -95,7 +95,7 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
 
   //$where[]="(\"rule_$id\"='$importance' or \"rule_$id\" is null)";
 
-  if(in_array($importance, array("international", "national")))
+  if(in_array($importance, array("global", "international", "national")))
     $where[]="Intersects(osm_way, !bbox!)";
   else
     $where[]="osm_way&&!bbox!";

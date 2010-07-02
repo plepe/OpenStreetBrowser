@@ -1,6 +1,6 @@
 var list_cache=[];
 var categories={};
-var importance=[ "international", "national", "regional", "urban", "suburban", "local" ];
+var importance=[ "global", "international", "national", "regional", "urban", "suburban", "local" ];
 var category_tags_default=
   { "name": "", "descprition": "", "lang": "en", "sub_categories": "" };
 var category_rule_tags_default=
