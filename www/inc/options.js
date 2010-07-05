@@ -120,9 +120,16 @@ function show_options() {
 
   ret ="<form action='javascript:save_options()' id='options_form'>\n";
 
+  ret+="<h4>"+t("options:mapstyle")+"</h4>\n";
+  ret+="<div class='options_help'>"+t("help:mapstyle")+"</div>\n";
+  ret+="<table><tr><td><a href='javascript:layerOSB.setVisibility(true)'>OSB</a></td><td><a href='javascript:layerMapnik.setVisibility(true)'>Mapnik</a></td><td>Osmarender</td><td>cycle map</td></tr></table>";
+
   ret+="<h4>"+t("options:autozoom")+"</h4>\n";
   ret+="<div class='options_help'>"+t("help:autozoom")+"</div>\n";
   ret+=options_radio("autozoom", [ "pan", "move", "stay" ]);
+
+// How do I change the visibility of a layer????????????
+//  ret+="<span onclick='hill.setVisibility(true)'>schraffur</span><br/>"
 
   ret+="<h4>"+t("options:language_support")+"</h4>\n";
   ret+="<div class='options_help'>"+t("help:language_support")+"</div>\n";

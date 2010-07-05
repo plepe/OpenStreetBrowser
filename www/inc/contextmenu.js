@@ -18,6 +18,8 @@ function rightclick(e) {
   var offsetx = map_div.offsetLeft;
   var offsety = map_div.offsetTop;
 
+  contextmenu_pos=map.getLonLatFromPixel(new OpenLayers.Pixel(posx-offsetx, posy-offsety)).transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+
   var contextmenu=document.getElementById("contextmenu");
   contextmenu.style.display="block";
   var contextWidth = contextmenu.offsetWidth;
@@ -50,8 +52,6 @@ function rightclick(e) {
   }
   contextmenu.style.top=posy+"px";
   contextmenu.style.left=posx+"px";
-
-  contextmenu_pos=map.getLonLatFromPixel(new OpenLayers.Pixel(posx-offsetx, posy-offsety)).transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
 }
 
 function contextmenu_mouseout(e) {

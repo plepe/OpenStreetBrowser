@@ -75,7 +75,7 @@ function toolbox_favorites(update) {
   var text="<i>Favorites</i><br/><br/>";
   var nbrfav=0;
   for(var i in favorites_list) {
-    text+="favorite "+(nbrfav+1)+": "+favorites_list[i].lon +", "+favorites_list[i].lon+"<br/>";
+    text+="favorite "+(nbrfav+1)+": "+favorites_list[i].lon +", "+favorites_list[i].lat+"<br/>";
     nbrfav++;
   }
   if (nbrfav==0) {

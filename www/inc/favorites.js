@@ -12,6 +12,7 @@ function favorites(lon, lat) {
     this.lon=lonlat.lon;
     this.lat=lonlat.lat;
     favorites_list[this.lon+"|"+this.lat]=this;
+    toolbox_favorites(1);
   }
   // constructor
   this.lon=lon;

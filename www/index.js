@@ -300,15 +300,23 @@ function init() {
 			new OpenLayers.Control.Navigation() ]
 	  });
 
-  var layerpubtran = new OpenLayers.Layer.OSM("OpenStreetBrowser", "http://www.openstreetbrowser.org/tiles/base/", {numZoomLevels: 19});
-//  var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
-//  var layerTah = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
-//  var layercycle = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
+  layerOSB = new OpenLayers.Layer.OSM("OpenStreetBrowser", "http://www.openstreetbrowser.org/tiles/base/", {numZoomLevels: 19});
+  layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
+  layerTah = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
+  layerCycle = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
 //  var layertest1    = new OpenLayers.Layer.OSM("Test (Skunk)", "/tiles/base/", {numZoomLevels: 19});
 //  var layertest2    = new OpenLayers.Layer.OSM("Test (Lesewesen)", "/lesewesen/tiles/base/", {numZoomLevels: 17});
 
-  //map.addLayers([ layerpubtran, layerMapnik, layerTah, layercycle, layertest1, layertest2]);
-  map.addLayers([ layerpubtran ]);
+  map.addLayers([ layerOSB, layerMapnik, layerTah, layerCycle ]);
+//  map.addLayers([ layerpubtran ]);
+
+  hill = new OpenLayers.Layer.OSM(
+    "Hillshading (NASA SRTM3 v2)",
+    "http://toolserver.org/~cmarqu/hill/",
+    { type: 'png',
+    displayOutsideMaxExtent: true, isBaseLayer: false,
+    transparent: true, "visibility": false });
+  map.addLayers([ hill ]);
 
   map.div.oncontextmenu = function noContextMenu(e) {
     rightclick(e);
