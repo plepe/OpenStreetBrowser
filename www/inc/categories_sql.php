@@ -192,11 +192,8 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
   $classify_function.="  return result;\n";
   $classify_function.="end;\n";
   $classify_function.="$$ language plpgsql immutable;\n";
-  sql_query($classify_function);
 
-  $f=fopen("/tmp/functions.lst", "a");
-  fwrite($f, $classify_function);
-  fclose($f);
+  return $classify_function;
 }
 
 // Parses a matching string as used in categories
