@@ -288,7 +288,7 @@ begin
 	if(t is null) then
 	  t:=src[i]->keys[j];
 	else
-	  t:=t||';'||(src[i]->keys[j]);
+	  t:=substring(t||';'||(src[i]->keys[j]), 0, 32767);
 	end if;
 
 	collect:=collect|| (keys[j]=>t);
