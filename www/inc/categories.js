@@ -93,35 +93,73 @@ function category_rule(category, id, _tags) {
   this.data=[];
   this.category=category;
 
-  // editor
-  this.editor=function(visible) {
+  // editor_toggle
+  this.editor_toggle=function() {
+    if(this.content.style.display!="none")
+      this.content.style.display="none";
+    else
+      this.content.style.display="block";
+  }
+
+  //remove
+  this.remove=function() {
+    this.category.remove_rule(this);
+  }
+
+  // rule_title
+  this.rule_title=function() {
     var ret="";
-
-    ret+="<div class='edit_list_rule' id='edit_list_rule_"+this.id+"'>\n";
-
-    ret+="<a id='edit_rule_"+this.id+"_name' href='javascript:edit_list_explode(\""+this.id+"\")'>";
     if(this.tags.get_lang("name", ui_lang))
       ret+=this.tags.get_lang("name", ui_lang);
     else if(this.tags.get("match"))
       ret+=this.tags.get("match");
     else
       ret+="New rule";
-    ret+="</a>\n";
-
-    ret+="<div id='edit_rule_"+this.id+"_content'";
-    if(!visible)
-      ret+=" style='display: none;'";
-    ret+">\n";
-    ret+="<p>Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Edit_List'>Help</a>):\n";
-    ret+="<div>\n";
-    ret+=this.tags.editor();
-    ret+="</div>\n";
-    ret+="<input type='button' value='Ok' onClick='edit_list_rule_set(\""+this.id+"\")'>\n";
-    ret+="</div>\n";
-
-    ret+="</div>\n";
 
     return ret;
+  }
+
+  // editor
+  this.editor=function(div, visible) {
+    if(!div) {
+      alert("categories::editor: no valid div supplied");
+      return;
+    }
+
+    this.div=div;
+
+    ret=this.rule_title();
+
+    this.header=document.createElement("div");
+    this.header.innerHTML=ret;
+    this.div.appendChild(this.header);
+    this.header.onclick=this.editor_toggle.bind(this);
+
+    this.content=document.createElement("div");
+    if(!visible)
+      this.content.style.display="none";
+    this.div.appendChild(this.content);
+
+    this.tags_editor=document.createElement("div");
+    this.content.appendChild(this.tags_editor);
+
+    var txt=document.createElement("div");
+    txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Edit_List'>Help</a>):\n";
+    this.tags_editor.appendChild(txt);
+
+    this.tags.editor(this.tags_editor);
+
+    var input=document.createElement("input");
+    input.type="button";
+    input.value="Ok";
+    input.onclick=this.editor_toggle.bind(this);
+    this.content.appendChild(input);
+
+    var input=document.createElement("input");
+    input.type="button";
+    input.value="Remove Rule";
+    input.onclick=this.remove.bind(this);
+    this.content.appendChild(input);
   }
 
   // load_entry
@@ -334,24 +372,48 @@ function category(id) {
 
     this.win=new win("edit_list");
 
-    var ret="";
-    ret ="<form id='edit_"+this.id+"' action='javascript: edit_list_set_list_data(\""+this.id+"\")'>\n";
-    ret+=this.tags.editor();
+    this.form=document.createElement("div");
+    this.win.win.appendChild(this.form);
 
-    ret+="<hr>\n";
-    ret+="<div id='el_list_"+this.id+"'>\n";
+    var div=document.createElement("div");
+    this.tags.editor(div);
+    this.form.appendChild(div);
+
+    var sep=document.createElement("hr");
+    this.form.appendChild(sep);
+
+    this.div_rule_list=document.createElement("div");
+    this.div_rule_list.className="editor_category_rule_list";
+    this.form.appendChild(this.div_rule_list);
+
     for(i=0; i<this.rules.length; i++) {
-      ret+=this.rules[i].editor();
+      var div=document.createElement("div");
+      this.div_rule_list.appendChild(div);
+      div.className="editor_category_rule";
+
+      this.rules[i].editor(div);
     }
-    ret+="</div>\n";
-    ret+="<a href='javascript: edit_list_new_rule(\""+this.id+"\")'>Add rule</a>\n";
-    ret+="<br/>\n";
 
-    ret+="<input type='submit' value='Save'/>\n";
-    ret+="<input type='button' value='Cancel' onClick='edit_list_cancel(\""+this.id+"\")'/>\n";
-    ret+="</form>\n";
+    var input=document.createElement("input");
+    input.type="button";
+    input.value="New Rule";
+    input.onclick=this.new_rule.bind(this);
+    this.form.appendChild(input);
 
-    this.win.content.innerHTML=ret;
+    var sep=document.createElement("br");
+    this.form.appendChild(sep);
+
+    var input=document.createElement("input");
+    input.type="button";
+    input.value="Save";
+    input.onclick=this.save.bind(this);
+    this.form.appendChild(input);
+
+    var input=document.createElement("input");
+    input.type="button";
+    input.value="Cancel";
+    input.onclick=this.cancel.bind(this);
+    this.form.appendChild(input);
   }
 
   // get_rule
@@ -364,8 +426,8 @@ function category(id) {
     return null;
   }
 
-  // edit_list_new_rule
-  this.edit_list_new_rule=function() {
+  // new_rule
+  this.new_rule=function() {
     if(!this.loaded) {
       alert("Not loaded yet!");
       return;
@@ -374,14 +436,32 @@ function category(id) {
     var el=new category_rule(this);
     this.rules.push(el);
 
-    var ellist=document.getElementById("el_list_"+this.id);
-    var x=document.createElement("div");
-    x.innerHTML=el.editor(true);
-    ellist.appendChild(x);
+    var div=document.createElement("div");
+    this.div_rule_list.appendChild(div);
+    div.className="editor_category_rule";
+
+    el.editor(div, true);
   }
 
-  // set_list_data
-  this.set_list_data=function() {
+  // remove_rule
+  this.remove_rule=function(rule) {
+    if(!rule) {
+      alert("category::remove_rule: no rule supplied");
+      return null;
+    }
+
+    for(var i=0; i<this.rules.length; i++) {
+      if(this.rules[i]==rule) {
+        array_remove(this.rules, i);
+      }
+    }
+
+    if(rule.div)
+      rule.div.parentNode.removeChild(rule.div);
+  }
+
+  // save
+  this.save=function() {
     if(!this.loaded) {
       alert("Not loaded yet!");
       return;
@@ -465,20 +545,6 @@ function edit_list(id) {
     var l=categories[id];
     l.editor();
   }
-}
-
-function edit_list_rule_set(id) {
-  var tdiv=document.getElementById("edit_rule_"+id+"_content");
-  tdiv.style.display="none";
-}
-
-function edit_list_explode(id) {
-  var tdiv=document.getElementById("edit_rule_"+id+"_content");
-  tdiv.style.display="block";
-}
-
-function edit_list_set_list_data(id) {
-  categories[id].set_list_data();
 }
 
 function edit_list_cancel(id) {

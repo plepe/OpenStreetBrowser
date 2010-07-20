@@ -109,46 +109,84 @@ function tags(d) {
     return null;
   }
 
+  function editor_tag(tags_editor, tr, key, value) {
+    this.tags_editor=tags_editor;
+
+    this.remove=function() {
+      this.tags_editor.table.removeChild(this.tr); //deleteRow(row);
+      this.tags_editor.editor_update();
+    }
+
+    this.tr=tr;
+
+    var td=document.createElement("td");
+    this.tr.appendChild(td);
+
+    this.key_input=document.createElement("input");
+    this.key_input.name="key";
+    this.key_input.value=key;
+    td.appendChild(this.key_input);
+
+    var td=document.createElement("td");
+    this.tr.appendChild(td);
+
+    this.val_input=document.createElement("input");
+    this.val_input.name="value";
+    this.val_input.value=value;
+    td.appendChild(this.val_input);
+
+    var td=document.createElement("td");
+    this.tr.appendChild(td);
+
+    var input=document.createElement("input");
+    input.type="button";
+    input.onclick=this.remove.bind(this);
+    input.value="X";
+    td.appendChild(input);
+  }
+
   this.editor=function(div) {
+    if(!div) {
+      alert("tags::editor: no valid div supplied");
+      return;
+    }
+
     var ret="";
-    var i=0;
     this.editor_id=uniqid("editor_");
     tag_editors[this.editor_id]=this;
 
-    ret+="<table id='"+this.editor_id+"'>\n";
+    this.table=document.createElement("table");
+    this.table.id=this.editor_id;
+
     for(var key in data) {
-      ret+="  <tr>\n";
-      ret+="    <td><input name='key' value=\""+key+"\"></td>\n";
-      ret+="    <td><input name='val' value=\""+data[key]+"\"></td>\n";
-      ret+="    <td><a href='javascript:editor_remove_row(\""+this.editor_id+"\", "+i+")'>X</a></td>\n";
-      ret+="  </tr>\n";
-      i++;
+      var tr=document.createElement("tr");
+      this.table.appendChild(tr);
+
+      new editor_tag(this, tr, key, data[key]);
     }
-    ret+="</table>";
-    ret+="<a href='javascript:editor_add_tag(\""+this.editor_id+"\")'>Add Tag</a>\n";
 
-    if(div)
-      div.innerHTML=ret;
+    div.appendChild(this.table);
 
-    return ret;
+    var input=document.createElement("input");
+    input.type="button";
+    input.onclick=this.editor_add_tag.bind(this);
+    input.value="Add Tag";
+    div.appendChild(input);
   }
 
   this.editor_add_tag=function() {
-    var table=document.getElementById(this.editor_id);
-    var l=table.rows.length;
-    var tr=table.insertRow(l);
-    var ret="";
+    var l=this.table.rows.length;
+    var tr=this.table.insertRow(l);
 
-    ret+="    <td><input name='key'></td>\n";
-    ret+="    <td><input name='val'></td>\n";
-    ret+="    <td><a href='javascript:editor_remove_row(\""+this.editor_id+"\", "+l+")'>X</a></td>\n";
-
-    tr.innerHTML=ret;
+    new editor_tag(this, tr, '', '');
   }
 
   this.editor_update=function() {
     var table=document.getElementById(this.editor_id);
     var d={};
+    
+    if(!table)
+      return null;
     
     for(var i=0; i<table.rows.length; i++) {
       var tr=table.rows[i];
@@ -158,19 +196,6 @@ function tags(d) {
     }
 
     data=d;
-  }
-
-  this.editor_remove_row=function(row) {
-    var table=document.getElementById(this.editor_id);
-
-    table.deleteRow(row);
-    for(var i=0; i<table.rows.length; i++) {
-      var tr=table.rows[i];
-
-      tr.cells[2].innerHTML="<a href='javascript:editor_remove_row(\""+this.editor_id+"\", "+i+")'>X</a>";
-    }
-
-    this.editor_update();
   }
 
   this.readDOM=function(dom) {
