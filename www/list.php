@@ -27,7 +27,7 @@ include "inc/category.php";
 include "inc/postgis.php";
 include "inc/global.php";
 
-$importance=array("international", "national", "regional", "urban", "suburban", "local");
+$importance=array("global", "international", "national", "regional", "urban", "suburban", "local");
 
 $lang="en";
 if($_REQUEST[lang])

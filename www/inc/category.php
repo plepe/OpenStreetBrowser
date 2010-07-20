@@ -102,6 +102,8 @@ class category {
     $renderd=build_renderd_config($this->id, $data, $this->tags);
 
     // ... then write all files at once
+    sql_query($data['_']['classify_fun']);
+
     $f1=fopen("$this->file.save", "w");
     fwrite($f1, serialize($data));
     fclose($f1);
@@ -218,7 +220,7 @@ class category {
 	  $qryc="select *, astext(ST_Centroid(geo)) as center from (";
 	  $qryc.=$sql;
 	  $qryc.=") as x where $where limit $max_count";
-	  //print "==$qryc==";
+	  //print "==\n$qryc\n==";
 	  
 	  $resc=sql_query($qryc);
 	  $max_count-=pg_num_rows($resc);

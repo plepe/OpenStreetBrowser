@@ -1,5 +1,5 @@
 <?
-$importance_levels=array("international", "national", "regional", "urban", "suburban", "local");
+$importance_levels=array("global", "international", "national", "regional", "urban", "suburban", "local");
 $scales_levels=array(
   0,
   500000000,
@@ -21,8 +21,8 @@ $scales_levels=array(
   5000,
   2500,
   1000);
-$scale_icon=array("international"=>5, "national"=>8, "regional"=>11, "urban"=>13, "suburban"=>15, "local"=>17);
-$scale_text=array("international"=>8, "national"=>10, "regional"=>13, "urban"=>15, "suburban"=>16, "local"=>18);
+$scale_icon=array("global"=>2, "international"=>5, "national"=>8, "regional"=>11, "urban"=>13, "suburban"=>15, "local"=>17);
+$scale_text=array("global"=>4, "international"=>8, "national"=>10, "regional"=>13, "urban"=>15, "suburban"=>16, "local"=>18);
 include "categories_sql.php";
 
 function category_version() {

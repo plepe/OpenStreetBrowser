@@ -95,7 +95,10 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
 
   //$where[]="(\"rule_$id\"='$importance' or \"rule_$id\" is null)";
 
-  $where[]="osm_way&&!bbox!";
+  if(in_array($importance, array("global", "international", "national")))
+    $where[]="Intersects(osm_way, !bbox!)";
+  else
+    $where[]="osm_way&&!bbox!";
 
   print "WHERE";
   print_r($where);
@@ -106,7 +109,8 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
     $where="";
 
   $select=implode(", ", $select);
-  return "select array_to_string(to_textarray(t2.osm_id), ';') as osm_id, ST_Collect(t2.geo) as geo, tags_merge(to_array(t2.osm_tags)) as osm_tags, t2.result[1] as rule_id, t2.result[2] as importance, tags_merge(to_array(cd.rule_tags)) as rule_tags from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3]";
+  return "select t2.osm_id as osm_id, t2.geo, t2.osm_tags as osm_tags, t2.result[1] as rule_id, t2.result[2] as importance, cd.rule_tags as rule_tags from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance'";// group by t2.result[1], t2.result[2], t2.result[3]";
+  //return "select array_to_string(to_textarray(t2.osm_id), ';') as osm_id, ST_Collect(t2.geo) as geo, tags_merge(to_array(t2.osm_tags)) as osm_tags, t2.result[1] as rule_id, t2.result[2] as importance, tags_merge(to_array(cd.rule_tags)) as rule_tags from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3]";
 //select *, rule_tags->'display_name_pattern' as display_name_pattern, rule_tags->'display_type_pattern' as display_type_pattern, rule_tags->'icon_text_pattern' as icon_text_pattern from (
 }
 
@@ -188,11 +192,8 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
   $classify_function.="  return result;\n";
   $classify_function.="end;\n";
   $classify_function.="$$ language plpgsql immutable;\n";
-  sql_query($classify_function);
 
-  $f=fopen("/tmp/functions.lst", "a");
-  fwrite($f, $classify_function);
-  fclose($f);
+  return $classify_function;
 }
 
 // Parses a matching string as used in categories
@@ -319,12 +320,16 @@ function match_to_sql($match, $table_def, $type="exact") {
 	// for index-search we make an index every 100 
 	// units and change the select-statement accordingly
 	$same="true";
-	$number=pow(100, floor(log($number, 100)));
+	$number=pow(100, floor(log($number, 100)+0.000001));
 	register_index($table_def['table'], $match[1], "gteq", 
 		       $table_def['id'], $number);
+	$var="split_semicolon(".match_to_sql_colname($match[1], $table_def, $type).")";
+      }
+      else {
+	$var=match_to_sql_colname($match[1], $table_def, $type);
       }
 
-      return "oneof_between(split_semicolon(".match_to_sql_colname($match[1], $table_def, $type)."), $number, $same, null, null)";
+      return "oneof_between($var, $number, $same, null, null)";
     case "<=":
       $same="true";
     case "<":
@@ -333,9 +338,13 @@ function match_to_sql($match, $table_def, $type="exact") {
 	$number=pow(100, ceil(log($number, 100)));
 	register_index($table_def['table'], $match[1], "lteq", 
 		       $table_def['id'], $number);
+	$var="split_semicolon(".match_to_sql_colname($match[1], $table_def, $type).")";
+      }
+      else {
+	$var=match_to_sql_colname($match[1], $table_def, $type);
       }
 
-      return "oneof_between(split_semicolon(".match_to_sql_colname($match[1], $table_def, $type)."), null, null, $number, $same)";
+      return "oneof_between($var, null, null, $number, $same)";
     case "true":
       return "true";
     case "false":

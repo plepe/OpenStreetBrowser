@@ -108,7 +108,7 @@ class process_category {
 	}
       }
 
-      create_sql_classify_fun($ret2, $table, $id);
+      $ret['_']['classify_fun']=create_sql_classify_fun($ret2, $table, $id);
     }
 
     delete_indexes($id);
