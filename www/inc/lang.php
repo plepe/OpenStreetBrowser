@@ -49,23 +49,6 @@ $available_languages=array(
   "bg"=>"Български"
 );
 
-function show_lang_select() {
-  global  $available_languages;
-
-  print "<div id='lang_select'>\n";;
-  print "<form id='lang_select_form' action='' method='get'>\n";
-  print "<select id='lang' name='lang' onChange='change_language()'>\n";
-  foreach($available_languages as $k=>$name) {
-     print "<option value='$k'";
-     if($_REQUEST[lang]==$k)
-       print " selected='selected'";
-     print ">$name</option>\n";
-  }
-  print "</select>\n";
-  print "</form>\n";
-  print "</div>\n";
-}
-
 function lang_from_browser($avail_langs=null) {
   $max_q=-1;
   $chosen_lang="";

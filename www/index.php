@@ -93,7 +93,8 @@ print list_template();
 ?>
 </form>
 </div>
-<div id='lang_select'>
+<div id='options'>
+<span id='user_info'><a href='javascript:login()'><?=lang("main:login")?></a></span><br/>
 <a href='javascript:toggle_mapkey()'><?=lang("main:map_key")?></a> |
 <a href='javascript:show_options()'><?=lang("main:options")?></a> |
 <a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'><?=lang("main:about")?></a> |
