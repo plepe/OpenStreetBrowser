@@ -202,6 +202,11 @@ function permalink() {
   return "?zoom="+map.zoom+"&lat="+center.lat+"&lon="+center.lon+location.hash;
 }
 
+function get_permalink() {
+  // in devel-tree this functions builds a nice permalink
+  return "http://dev.openstreetbrowser.org/#";
+}
+
 function init() {
   show_list();
 
