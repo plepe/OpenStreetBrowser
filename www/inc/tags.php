@@ -75,6 +75,10 @@ class tags {
     return $this->data;
   }
 
+  function set_data($_data) {
+    $this->data=$_data;
+  }
+
   function get_xml($obj, $root) {
     foreach($this->data as $key=>$value) {
       $subnode=$root->createElement("tag");

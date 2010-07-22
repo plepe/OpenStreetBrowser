@@ -44,6 +44,24 @@ function ajax_login($param, $xml) {
   }
 }
 
+function ajax_user_savedata($param, $xml) {
+  global $current_user;
+  
+  user_check_auth();
+
+  $current_user->tags->set_data($param);
+  $current_user->save();
+
+  // create top level xml object "result"
+  $ret=$xml->createElement("result");
+  $xml->appendChild($ret);
+
+  // create xml object "status"
+  $status=$xml->createElement("status");
+  $ret->appendChild($status);
+  $status->setAttribute("saved", "true");
+}
+
 class User {
   var $username;
   var $authenticated=false;
@@ -140,6 +158,15 @@ class User {
     print "<script type='text/javascript'>\n";
     print "var current_user=new user(\"{$this->username}\", ".html_var_to_js($this->tags->data()).");\n";
     print "</script>\n";
+  }
+
+  function save() {
+    if(!$this->authenticated)
+      return;
+
+    sql_query("update user_list set osm_tags=".
+              array_to_hstore($this->tags->data()).
+              " where username=$this->pg_username");
   }
 };
 

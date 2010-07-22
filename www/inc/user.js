@@ -1,4 +1,19 @@
 function user(username, _tags) {
+  // save - call to save tags to database
+  this.save=function() {
+    ajax("user_savedata", this.tags.data(), this.save_callback.bind(this));
+  }
+
+  // save_call_back - after saving
+  this.save_callback=function(response) {
+    // parse XML response
+    var data=response.responseXML;
+    if(!data) {
+      alert("Error parsing save result:<br>\n"+response.responseText);
+      return;
+    }
+  }
+
   // constructor
   this.username=username;
   this.tags=new tags(_tags);
