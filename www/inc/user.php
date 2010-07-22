@@ -49,6 +49,7 @@ class User {
   var $authenticated=false;
   var $auth_id=null;
   var $pass;
+  var $tags=null;
 
   function __construct($param=0, $force_auth=0) {
     $this->authenticated=false;
@@ -101,6 +102,7 @@ class User {
     }
 
     $this->authenticated=true;
+    $this->tags=new tags(parse_hstore($elem['osm_tags']));
     $this->create_auth();
   }
 
@@ -113,7 +115,10 @@ class User {
   }
 
   function load_anonymous() {
+    global $default_anon_tags;
+
     $this->authenticated=false;
+    $this->tags=new tags($default_user_tags);
     unset($this->username);
     unset($this->pg_username);
   }
@@ -129,6 +134,12 @@ class User {
     else {
       return lang("user:logged_in_as").$this->username." (<a href='javascript:logout()'>".lang("user:logout")."</a>)";
     }
+  }
+
+  function transfer_user_info() {
+    print "<script type='text/javascript'>\n";
+    print "var current_user=new user(\"{$this->username}\", ".html_var_to_js($this->tags->data()).");\n";
+    print "</script>\n";
   }
 };
 
@@ -166,4 +177,11 @@ function user_check_auth() {
   }
 }
 
+function user_transfer_data() {
+  global $current_user;
+
+  $current_user->transfer_user_info();
+}
+
 register_hook("html_start", user_check_auth);
+register_hook("html_done", user_transfer_data);

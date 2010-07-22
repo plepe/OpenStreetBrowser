@@ -30,3 +30,9 @@ $lists_dir="$root_dir/data/lists";
 
 // $fifo_path - the pipe to the mcp-process
 $fifo_path="/tmp/mcp.fifo";
+
+// $default_user_tags - the default tags for new users
+$default_user_tags=array();
+
+// $default_anon_tags - the default tags for anonymous 
+$default_anon_tags=array();

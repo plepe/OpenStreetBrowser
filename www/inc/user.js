@@ -1,3 +1,9 @@
+function user(username, _tags) {
+  // constructor
+  this.username=username;
+  this.tags=new tags(_tags);
+}
+
 function login() {
   this.auth_callback=function(response) {
     // parse XML response
