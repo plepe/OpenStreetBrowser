@@ -3,6 +3,7 @@ lang_str["nothing found"]         =[ "nothing found" ];
 lang_str["loading"]               =[ "loading" ];
 lang_str["unnamed"]               =[ "(unnamed)" ];
 lang_str["list_info"]             =[ "Choose a category to browse map content or click on an object on the map for details" ];
+lang_str["ok"]		    	  =[ "Ok" ];
 lang_str["save"]		  =[ "Save" ];
 lang_str["cancel"]		  =[ "Cancel" ];
 
@@ -86,3 +87,14 @@ lang_str["options:data_lang"]=[ "Data language" ];
 lang_str["lang:"]=[ "Local language" ];
 
 lang_str["user:no_auth"]=[ "Username or password wrong!" ];
+lang_str["user:login_text"]=[ "Log in to OpenStreetBrowser:" ];
+lang_str["user:create_user"]=[ "Create a new user:" ];
+lang_str["user:username"]=[ "Username" ];
+lang_str["user:email"]=[ "E-mail address" ];
+lang_str["user:password"]=[ "Password" ];
+lang_str["user:password_verify"]=[ "Verify password" ];
+lang_str["user:old_password"]=[ "Old password" ];
+lang_str["user:no_username"]=[ "Please supply a username!" ];
+lang_str["user:password_no_match"]=[ "Passwords do not match!" ];
+lang_str["user:full_name"]=[ "Full name" ];
+lang_str["user:user_exists"]=[ "Username already exists" ];

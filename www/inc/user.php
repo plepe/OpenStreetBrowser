@@ -62,6 +62,35 @@ function ajax_user_savedata($param, $xml) {
   $status->setAttribute("saved", "true");
 }
 
+function ajax_user_create($param, $xml) {
+  global $current_user;
+  
+  // create top level xml object "result"
+  $ret=$xml->createElement("result");
+  $xml->appendChild($ret);
+
+  // create xml object "status"
+  $status=$xml->createElement("status");
+  $ret->appendChild($status);
+
+  $pg_username=postgre_escape($param['username']);
+
+  $res=sql_query("select * from user_list where username=$pg_username");
+  if($elem=pg_fetch_assoc($res)) {
+    $status->setAttribute("created", "false");
+    $status->setAttribute("error", "user_exists");
+  }
+  else {
+    $md5_password=postgre_escape($param['md5_password']);
+    sql_query("insert into user_list values ($pg_username, $md5_password, ".array_to_hstore($param['tags']).")");
+    $status->setAttribute("created", "true");
+
+    $user=new user($param, 1);
+    $user->create_auth();
+    $status->setAttribute("auth_id", $user->auth_id);
+  }
+}
+
 class User {
   var $username;
   var $authenticated=false;

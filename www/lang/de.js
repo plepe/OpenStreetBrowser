@@ -86,3 +86,14 @@ lang_str["options:data_lang"]=[ "Datensprache" ];
 lang_str["lang:"]=[ "Lokale Sprache" ];
 
 lang_str["user:no_auth"]=[ "Name oder Password falsch!" ];
+lang_str["user:login_text"]=[ "Mit existierendem Konto anmelden:" ];
+lang_str["user:create_user"]=[ "Ein neues Konto anlegen:" ];
+lang_str["user:username"]=[ "Kurzname" ];
+lang_str["user:email"]=[ "E-Mail Addresse" ];
+lang_str["user:password"]=[ "Passwort" ];
+lang_str["user:password_verify"]=[ "Passwort kontrollieren" ];
+lang_str["user:old_password"]=[ "Altes Passwort" ];
+lang_str["user:no_username"]=[ "Bitte einen Kurznamen angeben!" ];
+lang_str["user:password_no_match"]=[ "Passwörter sind nicht gleich!" ];
+lang_str["user:full_name"]=[ "Voller Name" ];
+lang_str["user:user_exists"]=[ "Kurzname existiert bereits" ];
