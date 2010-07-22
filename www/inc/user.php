@@ -55,34 +55,47 @@ class User {
 
     // anonymous user
     if(!$param) {
+      $this->load_anonymous();
       return;
     }
 
+    // forced authentication (e.g. we found a valid auth_id)
     if($force_auth) {
       $this->username=$param['username'];
       $this->pg_username=postgre_escape($this->username);
       $this->auth_id=$param['auth_id'];
       $this->authenticated=true;
+    }
+    else {
+      // Other methods for auth, e.g. OpenID
+      $other_auth=null;
+      call_hooks("user_is_valid", &$other_auth, $param);
+      if($other_auth) {
+	$this->username=$other_auth['username'];
+	$this->pg_username=postgre_escape($other_auth['username']);
+	$this->authenticated=true;
+      }
+      // also other auth methods did not work
+      else {
+	$this->username=$param['username'];
+	$this->pg_username=postgre_escape($param['username']);
+      }
+    }
+
+    // get user from database
+    $res=sql_query("select * from user_list where username={$this->pg_username}");
+    // user does not exist -> anonymous
+    if(!($elem=pg_fetch_assoc($res))) {
+      $this->load_anonymous();
       return;
     }
 
-    // Other methods for auth, e.g. OpenID
-    $other_auth=null;
-    call_hooks("user_is_valid", &$other_auth, $param);
-    if($other_auth) {
-      $this->username=$other_auth['username'];
-      $this->pg_username=postgre_escape($param['username']);
-    }
-    else {
-      $this->username=$param['username'];
-      $this->pg_username=postgre_escape($param['username']);
-
-      $res=sql_query("select * from user_list where username={$this->pg_username}");
-      if(!($elem=pg_fetch_assoc($res))) {
-	return;
-      }
-
+    // not authenticated yet, check password
+    if(!$this->authenticated) {
       if($elem['md5_password']!=$param['md5_password']) {
+	unset($this->username);
+	unset($this->pg_username);
+	$this->load_anonymous();
 	return;
       }
     }
@@ -92,12 +105,21 @@ class User {
   }
 
   function create_auth() {
+    if($this->auth_id)
+      return;
+
     $this->auth_id=uniqid();
     sql_query("insert into auth values ('{$this->auth_id}', {$this->pg_username}, now())");
   }
 
+  function load_anonymous() {
+    $this->authenticated=false;
+    unset($this->username);
+    unset($this->pg_username);
+  }
+
   function valid_user() {
-    return ($this->auth);
+    return $this->auth_id;
   }
 
   function login_info() {
@@ -124,10 +146,11 @@ function user_list() {
 }
 
 function user_check_auth() {
-  global $user;
+  global $current_user;
 
   if(!$_COOKIE['auth_id']) {
-    $user=new user();
+    $current_user=new user();
+    return;
   }
   
   $auth_id=$_COOKIE['auth_id'];
@@ -135,8 +158,11 @@ function user_check_auth() {
 
   $res=sql_query("select * from auth where auth_id=$pg_auth_id");
   if($elem=pg_fetch_assoc($res)) {
-    $user=new user(array("username"=>$elem['username'], "auth_id"=>$auth_id), 1);
+    $current_user=new user(array("username"=>$elem['username'], "auth_id"=>$auth_id), 1);
     sql_query("update auth set last_login=now() where auth_id=$pg_auth_id");
+  }
+  else {
+    $current_user=new user();
   }
 }
 
