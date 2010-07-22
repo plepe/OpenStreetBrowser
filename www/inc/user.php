@@ -99,6 +99,15 @@ class User {
   function valid_user() {
     return ($this->auth);
   }
+
+  function login_info() {
+    if(!$this->authenticated) {
+      return "<a href='javascript:login()'>".lang("user:login")."</a>";
+    }
+    else {
+      return lang("user:logged_in_as").$this->username." (<a href='javascript:logout()'>".lang("user:logout")."</a>)";
+    }
+  }
 };
 
 function user_list() {

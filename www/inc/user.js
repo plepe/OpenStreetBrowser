@@ -101,3 +101,9 @@ function login() {
   input.value="Ok";
   td.appendChild(input);
 }
+
+function logout() {
+  cookie_delete("auth_id");
+  location.href=get_permalink();
+  location.reload();
+}
