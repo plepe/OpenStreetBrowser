@@ -46,44 +46,45 @@ function ajax_login($param, $xml) {
 
 class User {
   var $username;
-  var $auth;
+  var $authenticated=false;
+  var $auth_id=null;
   var $pass;
 
-  function User($username=0, $open_id_response=0) {
-    global $passwd_file;
+  function __construct($param=0) {
+    $this->authenticated=false;
 
-    if(!$username)
-      return;
-
-    if($username=="anonymous") {
-      $this->username="anonymous";
-      $this->auth=1;
-      //$this->default_rights=array();
+    if(!$param) {
       return;
     }
 
-    call_hooks("user_is_valid", &$this->auth, $username);
-    if($this->auth) {
-      $this->username=$username;
-      return;
+    // Other methods for auth, e.g. OpenID
+    $other_auth=null;
+    call_hooks("user_is_valid", &$other_auth, $param);
+    if($other_auth) {
+      $this->username=$other_auth['username'];
+      $this->pg_username=postgre_escape($param['username']);
     }
+    else {
+      $this->username=$param['username'];
+      $this->pg_username=postgre_escape($param['username']);
 
-    $this->auth=0;
-    $f=fopen($passwd_file, "r");
-    while($r=fgets($f)) {
-      $r=chop($r);
-      if(($r!="")&&(substr($r, 0, 1)!="#")) {
-        $r=explode(":", $r);
-        if($username==$r[0]) {
-          $this->pass=$r[1];
-          $this->username=$r[0];
-//          if(sizeof($r)>2)
-//            $this->default_rights=explode(",", $r[2]);
-//          else
-//            $this->default_rights=array();
-        }
+      $res=sql_query("select * from user_list where username={$this->pg_username}");
+      if(!($elem=pg_fetch_assoc($res))) {
+	return;
+      }
+
+      if($elem['md5_password']!=$param['md5_password']) {
+	return;
       }
     }
+
+    $this->authenticated=true;
+    $this->create_auth();
+  }
+
+  function create_auth() {
+    $this->auth_id=uniqid();
+    sql_query("insert into auth values ('{$this->auth_id}', {$this->pg_username}, now())");
   }
 
   function valid_user() {
