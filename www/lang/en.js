@@ -84,3 +84,5 @@ lang_str["help:language_support"]=[ "You can choose your prefered languages with
 lang_str["options:ui_lang"]=[ "Interface language" ];
 lang_str["options:data_lang"]=[ "Data language" ];
 lang_str["lang:"]=[ "Local language" ];
+
+lang_str["user:no_auth"]=[ "Username or password wrong!" ];

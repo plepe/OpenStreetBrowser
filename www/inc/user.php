@@ -2,10 +2,8 @@
 /* user.php
  * - User Administration
  *
- * Copyright (c) 1998-2006 Stephan Plepelits <skunk@xover.mud.at>
- *
- * This file is part of Skunks' Photosscripts 
- * - http://xover.mud.at/~skunk/proj/photo
+ * Copyright (c) 2010 Stephan Plepelits <skunk@xover.mud.at>
+ * as part of OpenStreetBrowser - http://gitorious.org/openstreetbrowser
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,7 +20,29 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
- // http://xover.mud.at/~florian/testbed/p1/svg-map.js
+
+// ajax_login - called from webapp when authenticating user
+function ajax_login($param, $xml) {
+  // create top level xml object "result"
+  $ret=$xml->createElement("result");
+  $xml->appendChild($ret);
+
+  // create xml object "status"
+  $status=$xml->createElement("status");
+  $ret->appendChild($status);
+
+  // create user object, authenticate
+  $user=new user($param);
+
+  // according to authentication level, set attributes
+  if(!$user->authenticated) {
+    $status->setAttribute("auth_check", "false");
+  }
+  else {
+    $status->setAttribute("auth_check", "true");
+    $status->setAttribute("auth_id", $user->auth_id);
+  }
+}
 
 class User {
   var $username;
