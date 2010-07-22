@@ -12,6 +12,7 @@ include("code.php");
 <script type="text/javascript" src="inc/hooks.js"></script>
 <?
 include "inc/global.php";
+call_hooks("html_start", null);
 ?>
 <script type="text/javascript" src="index.js"></script>
 <script type="text/javascript" src="ajax.js"></script>

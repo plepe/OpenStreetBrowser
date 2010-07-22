@@ -50,10 +50,19 @@ class User {
   var $auth_id=null;
   var $pass;
 
-  function __construct($param=0) {
+  function __construct($param=0, $force_auth=0) {
     $this->authenticated=false;
 
+    // anonymous user
     if(!$param) {
+      return;
+    }
+
+    if($force_auth) {
+      $this->username=$param['username'];
+      $this->pg_username=postgre_escape($this->username);
+      $this->auth_id=$param['auth_id'];
+      $this->authenticated=true;
       return;
     }
 
@@ -104,3 +113,22 @@ function user_list() {
 
   return $user_list;
 }
+
+function user_check_auth() {
+  global $user;
+
+  if(!$_COOKIE['auth_id']) {
+    $user=new user();
+  }
+  
+  $auth_id=$_COOKIE['auth_id'];
+  $pg_auth_id=postgre_escape($auth_id);
+
+  $res=sql_query("select * from auth where auth_id=$pg_auth_id");
+  if($elem=pg_fetch_assoc($res)) {
+    $user=new user(array("username"=>$elem['username'], "auth_id"=>$auth_id), 1);
+    sql_query("update auth set last_login=now() where auth_id=$pg_auth_id");
+  }
+}
+
+register_hook("html_start", user_check_auth);
