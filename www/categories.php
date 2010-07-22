@@ -11,7 +11,9 @@ include "inc/process_category.php";
 include "inc/functions.php";
 include "inc/css.php";
 include "../src/wiki_stuff.php";
+include "inc/user.php";
 $sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
+user_check_auth();
 
 $output=fopen("/tmp/git.log", "a");
 function ob_receive($text) {

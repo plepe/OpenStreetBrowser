@@ -197,6 +197,19 @@ class User {
               array_to_hstore($this->tags->data()).
               " where username=$this->pg_username");
   }
+
+  function get_author() {
+    $ret="";
+
+    if($x=$this->tags->get("full_name"))
+      $ret.=$x;
+    else
+      $ret.=$this->username;
+
+    $ret.=" <{$this->username}@openstreetbrowser.org>";
+
+    return $ret;
+  }
 };
 
 function user_list() {

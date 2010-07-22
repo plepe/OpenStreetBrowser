@@ -583,6 +583,7 @@ function category_check_state() {
 //   )
 function category_save($id, $content, $param=array()) {
   global $lists_dir;
+  global $current_user;
 
   if(($state=category_check_state())!==true) {
     return array('status'=>$state);
@@ -628,7 +629,8 @@ function category_save($id, $content, $param=array()) {
     fclose($f);
 
     system("git add $id.xml");
-    system("git commit -m 'Fix merge' --author='webuser <web@user>'");
+    $author=$current_user->get_author();
+    system("git commit -m 'Fix merge' --author='$author'");
   }
   else {
     $branch=uniqid();
@@ -641,7 +643,9 @@ function category_save($id, $content, $param=array()) {
     fclose($f);
 
     system("git add $id.xml");
-    system("git commit -m 'Change category $id' --author='webuser <web@user>'");
+    $author=$current_user->get_author();
+    print("git commit -m 'Change category $id' --author='$author'");
+    system("git commit -m 'Change category $id' --author='$author'");
   }
 
   $p=popen("git rebase master", "r");
