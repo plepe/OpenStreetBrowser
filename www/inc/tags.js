@@ -120,6 +120,12 @@ function tags(d) {
       this.tags_editor.editor_change(this);
     }
 
+    this.set_value_object=function(ob) {
+      this.val=ob;
+      this.val.name="value";
+      this.val.onchange=this.change.bind(this);
+    }
+
     this.remove=function() {
       this.tags_editor.table.removeChild(this.tr); //deleteRow(row);
       this.tags_editor.editor_update();
@@ -137,14 +143,14 @@ function tags(d) {
     this.key.onchange=this.change_key.bind(this);
     td.appendChild(this.key);
 
-    var td=document.createElement("td");
-    this.tr.appendChild(td);
+    this.val_td=document.createElement("td");
+    this.tr.appendChild(this.val_td);
 
     this.val=document.createElement("input");
     this.val.name="value";
     this.val.value=value;
     this.val.onchange=this.change.bind(this);
-    td.appendChild(this.val);
+    this.val_td.appendChild(this.val);
 
     var td=document.createElement("td");
     this.tr.appendChild(td);
