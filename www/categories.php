@@ -31,6 +31,17 @@ if($_GET[lang])
 $id=$_GET[id];
 switch($_GET[todo]) {
   case "save":
+    if(!$current_user->authenticated) {
+      Header("Content-Type: text/xml; charset=UTF-8");
+      ob_end_clean();
+
+      print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
+      print "<result>\n";
+      print "  <status status='error' error='not_logged_in' />\n";
+      print "</result>\n";
+      return;
+    }
+
     $status=category_save($id, file_get_contents("php://input"), $_GET);
 
     Header("Content-Type: text/xml; charset=UTF-8");

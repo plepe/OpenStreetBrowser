@@ -98,3 +98,6 @@ lang_str["user:no_username"]=[ "Please supply a username!" ];
 lang_str["user:password_no_match"]=[ "Passwords do not match!" ];
 lang_str["user:full_name"]=[ "Full name" ];
 lang_str["user:user_exists"]=[ "Username already exists" ];
+
+lang_str["error"]=[ "An error occured: "];
+lang_str["error:not_logged_in"]=[ "you are not logged in" ];

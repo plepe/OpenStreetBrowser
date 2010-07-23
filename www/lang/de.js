@@ -97,3 +97,6 @@ lang_str["user:no_username"]=[ "Bitte einen Kurznamen angeben!" ];
 lang_str["user:password_no_match"]=[ "Passwörter sind nicht gleich!" ];
 lang_str["user:full_name"]=[ "Voller Name" ];
 lang_str["user:user_exists"]=[ "Kurzname existiert bereits" ];
+
+lang_str["error"]=[ "Ein Fehler ist aufgetreten: "];
+lang_str["error:not_logged_in"]=[ "Du bist nicht eingeloggt" ];

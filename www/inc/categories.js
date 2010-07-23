@@ -504,8 +504,11 @@ function category(id) {
       case "merge failed":
         this.resolve_conflict(stat.getAttribute("branch"), stat.getAttribute("version"));
 	break;
+      case "error":
+	alert(t("error")+t("error:"+stat.getAttribute("error")));
+        break;
       default:
-	alert("Saved with status "+stat.getAttribute("status"));
+	alert("Result of save: status "+stat.getAttribute("status"));
     }
   }
 
