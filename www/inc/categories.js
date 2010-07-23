@@ -119,6 +119,14 @@ function category_rule(category, id, _tags) {
     return ret;
   }
 
+  this.editor_change_key=function(tags, tag) {
+  }
+
+  this.editor_change=function(tags, tag) {
+    var ret=this.rule_title();
+    this.header.innerHTML=ret;
+  }
+
   // editor
   this.editor=function(div, visible) {
     if(!div) {
@@ -148,6 +156,8 @@ function category_rule(category, id, _tags) {
     this.tags_editor.appendChild(txt);
 
     this.tags.editor(this.tags_editor);
+    this.tags.editor_on_change_key=this.editor_change_key.bind(this);
+    this.tags.editor_on_change=this.editor_change.bind(this);
 
     var input=document.createElement("input");
     input.type="button";
