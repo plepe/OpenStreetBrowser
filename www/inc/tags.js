@@ -167,6 +167,8 @@ function tags(d) {
       this.editor_on_change_key(this, tag);
 
     this.editor_change(tag);
+
+    tag.key.old_value=tag.key.value;
   }
 
   this.editor_change=function(tag) {
@@ -192,8 +194,10 @@ function tags(d) {
       var tr=document.createElement("tr");
       this.table.appendChild(tr);
 
-      new editor_tag(this, tr, key, data[key]);
+      var tag=new editor_tag(this, tr, key, data[key]);
+      this.editor_change_key(tag);
     }
+    this.editor_change();
 
     div.appendChild(this.table);
 
