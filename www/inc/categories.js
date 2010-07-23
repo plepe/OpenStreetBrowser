@@ -120,6 +120,29 @@ function category_rule(category, id, _tags) {
   }
 
   this.editor_change_key=function(tags, tag) {
+    var value=tag.val.value;
+
+    if(tag.key.value=="icon") {
+      var td=tag.val_td;
+      while(td.firstChild)
+	td.removeChild(td.firstChild);
+
+      var input=document.createElement("input");
+      input.type='hidden';
+      td.appendChild(input);
+      input.value=value;
+      tag.set_value_object(input);
+    }
+    else if(tag.key.old_value=="icon") {
+      var td=tag.val_td;
+      while(td.firstChild)
+	td.removeChild(td.firstChild);
+
+      var input=document.createElement("input");
+      td.appendChild(input);
+      input.value=value;
+      tag.set_value_object(input);
+    }
   }
 
   this.editor_change=function(tags, tag) {
@@ -155,9 +178,9 @@ function category_rule(category, id, _tags) {
     txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Edit_List'>Help</a>):\n";
     this.tags_editor.appendChild(txt);
 
-    this.tags.editor(this.tags_editor);
     this.tags.editor_on_change_key=this.editor_change_key.bind(this);
     this.tags.editor_on_change=this.editor_change.bind(this);
+    this.tags.editor(this.tags_editor);
 
     var input=document.createElement("input");
     input.type="button";
