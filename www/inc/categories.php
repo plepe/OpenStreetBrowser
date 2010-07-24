@@ -644,7 +644,6 @@ function category_save($id, $content, $param=array()) {
 
     system("git add $id.xml");
     $author=$current_user->get_author();
-    print("git commit -m 'Change category $id' --author='$author'");
     system("git commit -m 'Change category $id' --author='$author'");
   }
 
