@@ -8,3 +8,7 @@ function sql_query($qry) {
 
   return pg_query($qry);
 }
+
+function postgre_escape($str) {
+  return "E'".strtr($str, array("'"=>"\\'"))."'";
+}
