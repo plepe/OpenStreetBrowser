@@ -41,8 +41,9 @@ if($return&&(!$xml->firstChild)) {
   $ret=dom_create_append($xml, "return", $xml);
   dom_create_append_text($ret, html_var_to_js($return), $xml);
 }
-else
+else if($xml->firstChild) {
   call_hooks("xml_done", $xml);
+}
 print $xml->saveXML();
 
 //print $ret;
