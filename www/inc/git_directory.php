@@ -1,4 +1,46 @@
 <?
+// workflow
+// 
+// A git directory applies this method of version control to a database.
+// You have a directory "database/". For every file you have a directory,
+// e.g. "a/" and "b/". This can for example be icons. In every directory
+// you might have the source image, and xml-file with tags and derived images
+// (png-files, files with changed color, smaller/larger icons, ...). The first
+// two files are subject to version control, the other don't.
+
+// (1) when the user requests a file for editing, call
+//   $directory=new git_directory("path/to/repository");
+//   $commit_id=$directory->commit_start();
+//   $file_a=$directory->get_file("a");
+//   $icon=$file_a->load("file.svg");
+// if you just want the file for displaying skip the commit_start()-line.
+//
+// (2) you can further save a changed version of the file:
+//   $directory=new git_directory("path/to/repository");
+//   $directory->set_commit($commit_id);
+//   $file_a=$directory->get_file("a");
+//   $file_a->save("file.svg", $content);
+//
+// (3) if you are finished editing, do:
+//   $directory=new git_directory("path/to/repository");
+//   $directory->set_commit($commit_id);
+//   $error=$directory->commit_end("message what you changed");
+//
+// if error is !=0 we had an error merging that commit (which was created 
+// on a branch) to the master. The error contains the id of the current master
+// version:
+//   $error=('status'=>"merge failed",
+//           'files'=>array("file.svg"), 'version'=>'1a2b3c4...', 
+//           'branch'=>$commit_id, 'branch_head'=>'2a3b4c5...' );
+//
+// (4) You have to create a resolve commit:
+//   $commit_id=$directory->commit_start($error);
+//   $file_a=$directory->get_file("a");
+//   $file_a->load("file.svg", $error['branch']) <- the file with conflicts
+//   $file_a1->load("file.svg", $error['version']) <- the file on master head
+//   $file_a2->load("file.svg", $error['branch_head']) <- the file on branch 
+//                                                   head before the conflict
+// Resolve the error and save as in (2) and (3)
 class git_file {
   var $directory;
   var $id;
@@ -9,6 +51,71 @@ class git_file {
     $this->id=$id;
     $this->files=$files;
   }
+
+  function load($file, $version_branch=0) {
+    $this->directory->lock();
+    $this->directory->chdir();
+
+    if($version_branch) {
+      $content=$this->directory->exec("git show $version_branch:$this->id/$file");
+      $version=$this->directory->version($version_branch);
+    }
+    else {
+      $content=file_get_contents("$this->id/$file");
+      $version=$this->directory->version();
+    }
+
+    $this->directory->chback();
+    $this->directory->unlock();
+
+    return array(
+      "content"=>$content,
+      "version"=>$version,
+    );
+  }
+
+  function save($file, $content) {
+    if(!$this->directory->commit_data) {
+      return array("status"=>"No commit started.");
+    }
+
+    $this->directory->commit_open();
+
+    $f=fopen("{$this->id}/$file", "w");
+    fwrite($f, $content);
+    fclose($f);
+
+    $this->directory->exec("git add {$this->id}/$file");
+
+    $this->directory->commit_close();
+
+    if(!in_array($file, $this->files))
+      $this->files[]=$file;
+
+    $this->directory->chback();
+
+    return 0;
+  }
+
+  function save_untracked($file, $content) {
+    if(!$this->directory->is_sane) {
+      return array("status"=>"Git directory is not in sane state");
+    }
+
+    $this->directory->chdir();
+
+    if(in_array($file, $this->files)) {
+      return array("status"=>"File is under version management");
+    }
+
+    $f=fopen("{$this->id}/$file", "w");
+    fwrite($f, $content);
+    fclose($f);
+
+    $this->directory->chback();
+
+    return 0;
+  }
 }
 
 // a git_directory is a database which is handled by git. Every object
@@ -17,6 +124,9 @@ class git_file {
 class git_directory {
   var $path;
   var $file_proto;
+  var $commit_data=null;
+  var $is_sane=false;
+  var $log="";
 
   // __construct(path, prototype)
   // path       ... the path which is handled by git_directory
@@ -29,12 +139,64 @@ class git_directory {
     $this->check_state();
   }
 
+  function exec($command, $stdin=0) {
+    $ret="";
+    $this->log.="> $command\n";
+
+    $descriptors=array(
+      0=>array("pipe", "r"),
+      1=>array("pipe", "w"),
+      2=>array("pipe", "w"));
+
+    $p=proc_open($command, $descriptors, $pipes, $this->path);
+    if($stdin)
+      fwrite($pipes[0], $stdin);
+    $ret=stream_get_contents($pipes[1]);
+    $error=stream_get_contents($pipes[2]);
+    
+    fclose($pipes[0]);
+    fclose($pipes[1]);
+    fclose($pipes[2]);
+    proc_close($p);
+
+    $this->log.=$ret;
+    $this->log.="stderr>$error";
+
+    return $ret;
+  }
+
   function lock() {
+    if(!$this->is_sane) {
+      return array("status"=>"Git directory is not in sane state");
+    }
+
     lock_dir($this->path);
   }
 
   function unlock() {
+    if(!$this->is_sane) {
+      return array("status"=>"Git directory is not in sane state");
+    }
+
     unlock_dir($this->path);
+  }
+
+  function chdir() {
+    if(!$this->is_sane) {
+      return array("status"=>"Git directory is not in sane state");
+    }
+
+    $this->last_cwd=getcwd();
+    chdir($this->path);
+  }
+
+  function chback() {
+    if(!$this->is_sane) {
+      return array("status"=>"Git directory is not in sane state");
+    }
+
+    if($this->last_cwd)
+      chdir($this->last_cwd);
   }
 
   // check_state
@@ -56,16 +218,21 @@ class git_directory {
       return "path '$this->path' does not exist!";
     }
 
+    $this->is_sane=true;
+    $this->chdir();
+
     // Check if git repository is ready
     if(!file_exists("$this->path/.git")) {
-      chdir($this->path);
-      system("git init");
-      system("git commit -m 'Init' --allow-empty");
+      $this->exec("git init");
+      $this->exec("git commit -m 'Init' --allow-empty");
 
       if(!file_exists("$this->path/.git")) {
 	return "Could not create git repository!";
+	$this->is_sane=false;
       }
     }
+
+    $this->chback();
 
     return true;
   }
@@ -79,22 +246,24 @@ class git_directory {
   //     id2 => git_file ....
   //   )
   function file_list() {
-    if($state=$this->check_state()!==true) {
-      return array('status'=>$state);
+    if(!$this->is_sane) {
+      return array("status"=>"Git directory is not in sane state");
     }
 
     $ret=array();
     $this->lock();
 
-    chdir($this->path);
-    $d=popen("git ls-files", "r");
-    while($f=fgets($d)) {
-      $f=trim($f);
+    $this->chdir();
+
+    $d=$this->exec("git ls-files");
+    $d=explode("\n", $d);
+    foreach($d as $f) {
       if(preg_match("/^(.*)\/(.*)$/", $f, $m)) {
 	$list[$m[1]][]=$m[2];
       }
     }
-    pclose($d);
+
+    $this->chback();
 
     foreach($list as $id=>$files) {
       $ret[$id]=new $this->file_proto($this, $id, $files);
@@ -102,5 +271,205 @@ class git_directory {
 
     $this->unlock();
     return $ret;
+  }
+
+  // version()
+  // Returns the current version
+  function version($branch="") {
+    if(!$this->is_sane) {
+      return array("status"=>"Git directory is not in sane state");
+    }
+
+    $this->lock();
+    $this->chdir();
+
+    $r=$this->exec("git log -n1 $branch");
+
+    $this->chback();
+    $this->unlock();
+
+    if(!preg_match("/^commit ([a-z0-9]+)/", $r, $m)) {
+      return "Couldn't get file version.";
+    }
+
+    return $m[1];
+  }
+
+  function set_commit($commit_id) {
+    $this->commit_data=$commit_id;
+  }
+
+  // commit_start()
+  // Call this function before changing anything in the database
+  // Parameters:
+  //   version ... the version of the file(s) before the change, e.g. when 
+  //               they were requested by the editor
+  //   branch  ... if we had conflicts when changing that file, supply 
+  //               the branch id
+  // Alternative Parameters:
+  //   array('version'=>see above, 'branch'=>see above, ...)
+  //
+  // Return:
+  //   branch  ... the branch we created to apply changes
+  // Notes:
+  //   - The database is locked, make sure to call commit_end() when finished!
+  function commit_start($version=null, $branch=null) {
+    global $current_user;
+
+    if(!$this->is_sane) {
+      return array("status"=>"Git directory is not in sane state");
+    }
+
+    $this->lock();
+    $this->chdir();
+
+    if(is_array($version)) {
+      $branch=$version['branch'];
+      $version=$version['version'];
+    }
+
+    if($branch) {
+      $this->exec("git checkout $branch");
+      $this->exec("git rebase $version");
+    }
+    else {
+      $branch=uniqid();
+
+      $this->exec("git branch $branch $version");
+      $this->exec("git checkout $branch");
+    }
+
+    $author=$current_user->get_author();
+    $this->exec("git commit --allow-empty -m 'temporary message' --author='$author'");
+    $this->exec("git checkout master");
+
+    $this->commit_data=$branch;
+    $this->chback();
+    $this->unlock();
+
+    return $branch;
+  }
+
+  function commit_continue($branch) {
+    $this->commit_data=$branch;
+  }
+
+  // commit_end()
+  // call when finished changing all files
+  // Parameters:
+  //   message  ... The commit message
+  // Return:
+  //   0        ... on success
+  //   branch   ... on failure
+  function commit_end($message) {
+    global $current_user;
+
+    if(!$this->is_sane) {
+      return array("status"=>"Git directory is not in sane state");
+    }
+
+    if(!$this->commit_data) {
+      return array("status"=>"No commit started");
+    }
+
+    $author=$current_user->get_author();
+    $branch=$this->commit_data;
+    $this->chdir();
+
+    $this->exec("git checkout $branch");
+    $this->exec("git commit --allow-empty --amend -m '$message' --author='$author'");
+
+    $branch_head=$this->version();
+
+    $p=$this->exec("git rebase master");
+    $p=explode("\n", $p);
+    $error=0;
+    $conflict_files=array();
+    foreach($p as $r) {
+      if(preg_match("/^CONFLICT.*conflict in (.*)/", $r, $m)) {
+	$error=1;
+	$conflict_files[]=$m[1];
+      }
+    }
+
+    if($error) {
+      $this->exec("git rebase --abort");
+      $this->exec("git checkout master");
+      $error=array('status'=>"Merge failed",
+                   'files'=>$conflict_files,
+		   'version'=>$this->version("master"),
+		   'branch'=>$this->commit_data,
+		   'branch_head'=>$branch_head,
+		  );
+    }
+    else {
+      $this->exec("git checkout master");
+      $this->exec("git merge $branch");
+      $this->exec("git branch -d $branch");
+    }
+
+    $this->unlock();
+    unset($this->commit_data);
+    $this->chback();
+
+    return $error;
+  }
+
+  function commit_open() {
+    $this->lock();
+    $this->chdir();
+
+    $this->exec("git checkout {$this->commit_data}");
+  }
+
+  function commit_close() {
+    $this->exec("git commit --allow-empty -m 'temporary message' --amend");
+    $this->exec("git checkout master");
+
+    $this->unlock();
+    $this->chback();
+  }
+
+  function create_file($id) {
+    if(!$this->commit_data) {
+      return array("status"=>"No commit started.");
+    }
+
+    if(!$id)
+      $id=uniqid();
+
+    $this->chdir();
+    mkdir("$id/");
+
+    $this->directory->commit_open();
+
+    $this->exec("git add $id/");
+
+    $this->directory->commit_close();
+
+    $file=new $this->file_proto($this, $id, array());
+
+    $this->chback();
+    return $file;
+  }
+
+  function get_file($id) {
+    $this->lock();
+    $this->chdir();
+
+    $r=$this->exec("git ls-files $id/");
+    $r=explode("\n", $r);
+    $list=array();
+    foreach($r as $f) {
+      if(preg_match("/^$id\/(.*)$/", $f, $m))
+	$list[]=$m[1];
+    }
+
+    $file=new $this->file_proto($this, $id, $list);
+
+    $this->chback();
+    $this->unlock();
+
+    return $file;
   }
 }
