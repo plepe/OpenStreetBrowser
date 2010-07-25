@@ -52,17 +52,34 @@ class git_file {
     $this->files=$files;
   }
 
+  function url($file, $version_branch=0) {
+    var $p=array();
+    $p[]="directory=".$this->directory->path;
+    $p[]="git_file=".$this->id;
+    $p[]="file=".$file;
+    if($version)
+      $p[]="version=".$version_branch;
+
+    return "git_download.php?"+implode("&", $p);
+  }
+
   function load($file, $version_branch=0) {
     $this->directory->lock();
     $this->directory->chdir();
 
     if($version_branch) {
-      $content=$this->directory->exec("git show $version_branch:$this->id/$file");
-      $version=$this->directory->version($version_branch);
+      $this->directory->exec("git checkout $version_branch");
     }
-    else {
-      $content=file_get_contents("$this->id/$file");
-      $version=$this->directory->version();
+
+    $content=file_get_contents("$this->id/$file");
+    $version=$this->directory->version(null, 1);
+
+    $finfo=finfo_open(FILEINFO_MIME_TYPE);
+    $mime=finfo_file($finfo, "$this->id/$file");
+    finfo_close($finfo);
+
+    if($version_branch) {
+      $this->directory->exec("git checkout master");
     }
 
     $this->directory->chback();
@@ -71,6 +88,7 @@ class git_file {
     return array(
       "content"=>$content,
       "version"=>$version,
+      "mime"=>$mime,
     );
   }
 
@@ -285,18 +303,22 @@ class git_directory {
 
   // version()
   // Returns the current version
-  function version($branch="") {
+  function version($branch="", $nolock=0) {
     if(!$this->is_sane) {
       return array("status"=>"Git directory is not in sane state");
     }
 
-    $this->lock();
-    $this->chdir();
+    if(!$nolock) {
+      $this->lock();
+      $this->chdir();
+    }
 
     $r=$this->exec("git log -n1 $branch");
 
-    $this->chback();
-    $this->unlock();
+    if(!$nolock) {
+      $this->chback();
+      $this->unlock();
+    }
 
     if(!preg_match("/^commit ([a-z0-9]+)/", $r, $m)) {
       return "Couldn't get file version.";

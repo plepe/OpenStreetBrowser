@@ -7,7 +7,9 @@ function git_file(dir, xml) {
     if(version)
       param.version=version;
 
+    var p=[];
     ajax_build_request(param, null, p);
+
     return "git_download.php?"+p.join("&");
   }
 
