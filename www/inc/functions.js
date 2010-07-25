@@ -37,3 +37,21 @@ function array_remove(arr, pos) {
   var part2=part1.splice(pos+1);
   return part1.splice(0, pos).concat(part2);
 }
+
+function dom_create_append(parent, type, xml) {
+  if(!xml)
+    xml=document;
+
+  var x=xml.createElement(type);
+  parent.appendChild(x);
+  return x;
+}
+
+function dom_create_append_text(parent, text, xml) {
+  if(!xml)
+    xml=document;
+
+  var x=xml.createTextNode(text);
+  parent.appendChild(x);
+  return x;
+}
