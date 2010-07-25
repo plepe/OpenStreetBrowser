@@ -71,6 +71,58 @@ function ajax(funcname, param, _callback) {
   }
 }
 
+function ajax_call(funcname, param) {
+  // private
+  this.xmldata;
+  // public
+  var req=false;
+  var callback;
+
+  // branch for native XMLHttpRequest object
+  if(window.XMLHttpRequest) {
+    try {
+      req = new XMLHttpRequest();
+    }
+    catch(e) {
+      req = false;
+    }
+    // branch for IE/Windows ActiveX version
+  } else if(window.ActiveXObject) {
+    try {
+      req = new ActiveXObject("Msxml2.XMLHTTP");
+    }
+    catch(e) {
+      try {
+        req = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      catch(e) {
+        req = false;
+      }
+    }
+  }
+
+  if(req) {
+    var p=new Array();
+    ajax_build_request(param, "param", p);
+    p=p.join("&");
+
+    req.open("GET", "ajax.php?func="+funcname+"&"+p, false);
+    last_params=p;
+    req.send("");
+
+    var xml=req.responseXML;
+    if(!xml)
+      return req;
+
+    if(xml.firstChild.nodeName!="return") {
+      return req;
+    }
+
+    var ret=eval(xml.firstChild.firstChild.nodeValue);
+    return ret;
+  }
+}
+
 function ajax_direct(url, param, _callback) {
   // private
   this.xmldata;
