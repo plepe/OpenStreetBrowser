@@ -499,8 +499,7 @@ class git_directory {
   }
 
   function get_file($id) {
-    $this->lock();
-    $this->chdir();
+    $this->commit_open();
 
     $r=$this->exec("git ls-files $id/");
     $r=explode("\n", $r);
@@ -512,8 +511,7 @@ class git_directory {
 
     $file=new $this->file_proto($this, $id, $list);
 
-    $this->chback();
-    $this->unlock();
+    $this->commit_close();
 
     return $file;
   }

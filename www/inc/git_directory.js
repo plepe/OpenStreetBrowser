@@ -11,6 +11,20 @@ function git_file(dir, xml) {
     return "git_download.php?"+p.join("&");
   }
 
+  this.upload_form=function(file) {
+    var iframe=document.createElement("iframe");
+
+    var param=this.ajax_param;
+    param.file=file;
+    param.commit_data=this.directory.commit_data;
+
+    var p=[];
+    ajax_build_request(param, null, p);
+
+    iframe.src="git_upload.php?"+p.join("&");
+    return iframe;
+  }
+
   this.save=function(file, content) {
     var param=this.ajax_param;
     param.file=file;
