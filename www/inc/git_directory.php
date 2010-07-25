@@ -460,6 +460,24 @@ class git_directory {
     return $error;
   }
 
+  function commit_cancel() {
+    if(!$this->is_sane) {
+      return array("status"=>"Git directory is not in sane state");
+    }
+
+    if(!$this->commit_data) {
+      return array("status"=>"No commit started");
+    }
+
+    $this->lock();
+
+    $this->exec("git branch -D {$this->commit_data}");
+
+    $this->unlock();
+
+    return 0;
+  }
+
   function commit_open() {
     $this->lock();
     $this->chdir();
@@ -554,6 +572,13 @@ function ajax_git_commit_end($param, $xml) {
   $dir=new git_directory($param['path']);
   $dir->commit_continue($param['commit_data']);
   $result=$dir->commit_end($param['message']);
+  return $result;
+}
+
+function ajax_git_commit_cancel($param, $xml) {
+  $dir=new git_directory($param['path']);
+  $dir->commit_continue($param['commit_data']);
+  $result=$dir->commit_cancel();
   return $result;
 }
 

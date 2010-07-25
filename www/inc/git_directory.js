@@ -62,7 +62,7 @@ function git_directory(path, callback, file_proto) {
     return ret;
   }
 
-  // commit_start
+  // commit_end
   this.commit_end=function(message) {
     var p=this.ajax_param;
     p.commit_data=this.commit_data;
@@ -86,12 +86,12 @@ function git_directory(path, callback, file_proto) {
     return new file_proto(this, result);
   }
 
-  // commit_start
-  this.commit_start=function(param) {
-    var p=array_merge(this.ajax_param, param);
+  // commit_cancel
+  this.commit_cancel=function(param) {
+    var p=this.ajax_param;
+    p.commit_data=this.commit_data;
 
-    var ret=ajax_call("git_commit_start", p);
-    this.commit_data=ret;
+    var ret=ajax_call("git_commit_cancel", p);
     return ret;
   }
 
