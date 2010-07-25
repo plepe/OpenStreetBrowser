@@ -36,3 +36,6 @@ $default_user_tags=array();
 
 // $default_anon_tags - the default tags for anonymous 
 $default_anon_tags=array();
+
+// $data_dir - The root of all web server writeable data
+$data_dir="$root_dir/data/";

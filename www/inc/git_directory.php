@@ -9,20 +9,20 @@
 // two files are subject to version control, the other don't.
 
 // (1) when the user requests a file for editing, call
-//   $directory=new git_directory("path/to/repository");
+//   $directory=new git_directory("path/in/data_dir");
 //   $commit_id=$directory->commit_start();
 //   $file_a=$directory->get_file("a");
 //   $icon=$file_a->load("file.svg");
 // if you just want the file for displaying skip the commit_start()-line.
 //
 // (2) you can further save a changed version of the file:
-//   $directory=new git_directory("path/to/repository");
+//   $directory=new git_directory("path/in/data_dir");
 //   $directory->set_commit($commit_id);
 //   $file_a=$directory->get_file("a");
 //   $file_a->save("file.svg", $content);
 //
 // (3) if you are finished editing, do:
-//   $directory=new git_directory("path/to/repository");
+//   $directory=new git_directory("path/in/data_dir");
 //   $directory->set_commit($commit_id);
 //   $error=$directory->commit_end("message what you changed");
 //
@@ -53,7 +53,7 @@ class git_file {
   }
 
   function url($file, $version_branch=0) {
-    var $p=array();
+    $p=array();
     $p[]="directory=".$this->directory->path;
     $p[]="git_file=".$this->id;
     $p[]="file=".$file;
@@ -168,6 +168,7 @@ class git_directory {
   }
 
   function exec($command, $stdin=0) {
+    global $data_dir;
     $ret="";
     $this->log.="> $command\n";
 
@@ -176,7 +177,7 @@ class git_directory {
       1=>array("pipe", "w"),
       2=>array("pipe", "w"));
 
-    $p=proc_open($command, $descriptors, $pipes, $this->path);
+    $p=proc_open($command, $descriptors, $pipes, "{$data_dir}/{$this->path}");
     if($stdin)
       fwrite($pipes[0], $stdin);
     $ret=stream_get_contents($pipes[1]);
@@ -194,28 +195,34 @@ class git_directory {
   }
 
   function lock() {
+    global $data_dir;
+
     if(!$this->is_sane) {
       return array("status"=>"Git directory is not in sane state");
     }
 
-    lock_dir($this->path);
+    lock_dir("{$data_dir}/{$this->path}");
   }
 
   function unlock() {
+    global $data_dir;
+
     if(!$this->is_sane) {
       return array("status"=>"Git directory is not in sane state");
     }
 
-    unlock_dir($this->path);
+    unlock_dir("{$data_dir}/{$this->path}");
   }
 
   function chdir() {
+    global $data_dir;
+
     if(!$this->is_sane) {
       return array("status"=>"Git directory is not in sane state");
     }
 
     $this->last_cwd=getcwd();
-    chdir($this->path);
+    chdir("{$data_dir}/{$this->path}");
   }
 
   function chback() {
@@ -236,13 +243,15 @@ class git_directory {
   // true        oh yeah, everything alright
   // message     no, contains statement
   function check_state() {
+    global $data_dir;
+
     // $lists_dir set?
     if(!$this->path) {
       return "No path set!";
     }
 
     // No directory to change into ...
-    if(!file_exists($this->path)) {
+    if(!file_exists("{$data_dir}/{$this->path}")) {
       return "path '$this->path' does not exist!";
     }
 
@@ -250,7 +259,7 @@ class git_directory {
     $this->chdir();
 
     // Check if git repository is ready
-    if(!file_exists("$this->path/.git")) {
+    if(!file_exists(".git")) {
       $this->exec("git init");
       $this->exec("git commit -m 'Init' --allow-empty");
 
@@ -516,6 +525,6 @@ class git_directory {
 }
 
 function ajax_git_directory_load($param, $xml) {
-  $dir=new git_directory("/home/osm/data/{$param['path']}");
+  $dir=new git_directory("{$param['path']}");
   $dir->xml($xml);
 }
