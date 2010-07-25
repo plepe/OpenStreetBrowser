@@ -116,6 +116,16 @@ class git_file {
 
     return 0;
   }
+
+  function xml($parent, $xml) {
+    $r=dom_create_append($parent, "git_file", $xml);
+    $r->setAttribute("id", $this->id);
+
+    foreach($this->files as $file) {
+      $f=dom_create_append($r, "file", $xml);
+      $x=dom_create_append_text($f, $file, $xml);
+    }
+  }
 }
 
 // a git_directory is a database which is handled by git. Every object
@@ -472,4 +482,18 @@ class git_directory {
 
     return $file;
   }
+
+  function xml($xml) {
+    $res=dom_create_append($xml, "result", $xml);
+
+    $list=$this->file_list();
+    foreach($list as $l) {
+      $l->xml($res, $xml);
+    }
+  }
+}
+
+function ajax_git_directory_load($param, $xml) {
+  $dir=new git_directory("/home/osm/data/{$param['path']}");
+  $dir->xml($xml);
 }
