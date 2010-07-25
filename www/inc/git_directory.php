@@ -93,11 +93,14 @@ class git_file {
   }
 
   function save($file, $content) {
+    global $data_dir;
+
     if(!$this->directory->commit_data) {
       return array("status"=>"No commit started.");
     }
 
     $this->directory->commit_open();
+    $this->directory->chdir();
 
     $f=fopen("{$this->id}/$file", "w");
     fwrite($f, $content);
@@ -105,6 +108,7 @@ class git_file {
 
     $this->directory->exec("git add {$this->id}/$file");
 
+    $this->directory->chback();
     $this->directory->commit_close();
 
     if(!in_array($file, $this->files))
@@ -482,11 +486,11 @@ class git_directory {
     $this->chdir();
     mkdir("$id/");
 
-    $this->directory->commit_open();
+    $this->commit_open();
 
     $this->exec("git add $id/");
 
-    $this->directory->commit_close();
+    $this->commit_close();
 
     $file=new $this->file_proto($this, $id, array());
 
@@ -527,4 +531,38 @@ class git_directory {
 function ajax_git_directory_load($param, $xml) {
   $dir=new git_directory("{$param['path']}");
   $dir->xml($xml);
+}
+
+function ajax_git_commit_start($param, $xml) {
+  $dir=new git_directory($param['path']);
+  $result=$dir->commit_start($param);
+  return $result;
+}
+
+function ajax_git_create_file($param, $xml) {
+  $dir=new git_directory($param['path']);
+  $dir->commit_continue($param['commit_data']);
+  $result=$dir->create_file($param['id']);
+
+  $ret=dom_create_append($xml, "result", $xml);
+  $ret->setAttribute("id", $result->id);
+  foreach($result->files as $f) {
+    $ret1=dom_create_append($ret, "file", $xml);
+    dom_create_append_text($ret1, $f, $xml);
+  }
+}
+
+function ajax_git_commit_end($param, $xml) {
+  $dir=new git_directory($param['path']);
+  $dir->commit_continue($param['commit_data']);
+  $result=$dir->commit_end($param['message']);
+  return $result;
+}
+
+function ajax_git_file_save($param) {
+  $dir=new git_directory($param['path']);
+  $dir->commit_continue($param['commit_data']);
+  $git_file=$dir->get_file($param['git_file']);
+  $result=$git_file->save($param['file'], $param['content']);
+  return $result;
 }
