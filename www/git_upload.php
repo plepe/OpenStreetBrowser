@@ -18,6 +18,6 @@ if(!$_FILES['data']) {
 $dir=new git_directory($_REQUEST['path']);
 $dir->commit_continue($_REQUEST['commit_data']);
 $git_file=$dir->get_file($_REQUEST['git_file']);
-$git_file->save($_REQUEST['file'], $_FILES['data']['tmp_name']);
+$git_file->save($_REQUEST['file'], file_get_contents($_FILES['data']['tmp_name']));
 
 print "File successfully uploaded";
