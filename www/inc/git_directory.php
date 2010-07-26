@@ -65,6 +65,11 @@ class git_file {
     return "git_download.php?"+implode("&", $p);
   }
 
+  function get_file_path($file) {
+    global $data_dir;
+    return "{$data_dir}/{$this->directory->path}/{$this->id}/{$file}";
+  }
+
   function load($file, $version_branch=0) {
     $this->directory->lock();
     $this->directory->chdir();
@@ -469,19 +474,7 @@ class git_directory {
     $this->chback();
 
     if(!$error) {
-      $changed_files=explode("\n", $changed_files);
-      $changed_list=array();
-      foreach($changed_files as $f) {
-	if(preg_match("/^([^\/]*)\/(.*)$/", $f, $m)) {
-	  $changed_list[$m[1]][]=$m[2];
-	}
-      }
-
-      foreach($changed_list as $id=>$files) {
-	$files=array_unique($files);
-	$git_file=$this->get_file($id);
-	$git_file->preprocess($files);
-      }
+      $this->preprocess($changed_files);
     }
 
     return $error;
@@ -518,6 +511,32 @@ class git_directory {
 
     $this->unlock();
     $this->chback();
+  }
+
+  // accepts a string as returned by
+  // git log --name-only --pretty='format:#%H' since..until
+  function preprocess($changed_files) {
+    $changed_files=explode("\n", $changed_files);
+    $changed_list=array();
+    foreach($changed_files as $f) {
+      if(preg_match("/^([^\/]*)\/(.*)$/", $f, $m)) {
+	$changed_list[$m[1]][]=$m[2];
+      }
+    }
+
+    foreach($changed_list as $id=>$files) {
+      $files=array_unique($files);
+      $git_file=$this->get_file($id);
+      $git_file->preprocess($files);
+    }
+  }
+
+  function preprocess_all() {
+    $list=$this->file_list();
+
+    foreach($list as $id=>$git_file) {
+      $git_file->preprocess();
+    }
   }
 
   function create_file($id) {
