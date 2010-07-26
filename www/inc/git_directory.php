@@ -121,7 +121,48 @@ class git_file {
     if(!in_array($file, $this->files))
       $this->files[]=$file;
 
+    return 0;
+  }
+
+  function remove() {
+    global $data_dir;
+
+    if(!$this->directory->commit_data) {
+      return array("status"=>"No commit started.");
+    }
+
+    $this->directory->commit_open();
+    $this->directory->chdir();
+
+    $this->directory->exec("git rm -r -f {$this->id}/");
+    $this->directory->exec("rm -r -f {$this->id}/");
+
     $this->directory->chback();
+    $this->directory->commit_close();
+
+    $this->directory->chback();
+
+    return 0;
+  }
+
+  function remove_file($file) {
+    global $data_dir;
+
+    if(!$this->directory->commit_data) {
+      return array("status"=>"No commit started.");
+    }
+
+    $this->directory->commit_open();
+    $this->directory->chdir();
+
+    $this->directory->exec("git rm -f {$this->id}/$file");
+
+    $this->directory->chback();
+    $this->directory->commit_close();
+
+    $p=array_search($file, $this->files);
+    unset($this->files[$p]);
+    print_r($this->files);
 
     return 0;
   }
@@ -140,6 +181,24 @@ class git_file {
     $f=fopen("{$this->id}/$file", "w");
     fwrite($f, $content);
     fclose($f);
+
+    $this->directory->chback();
+
+    return 0;
+  }
+
+  function remove_untracked($file) {
+    if(!$this->directory->is_sane) {
+      return array("status"=>"Git directory is not in sane state");
+    }
+
+    $this->directory->chdir();
+
+    if(in_array($file, $this->files)) {
+      return array("status"=>"File is under version management");
+    }
+
+    unlink("{$this->id}/$file");
 
     $this->directory->chback();
 
@@ -434,11 +493,13 @@ class git_directory {
     $author=$current_user->get_author();
     $branch=$this->commit_data;
     $this->chdir();
+    $this->lock();
 
     $this->exec("git checkout $branch");
     $this->exec("git commit --allow-empty --amend -m '$message' --author='$author'");
 
-    $branch_head=$this->version();
+    $this->exec("git checkout $branch");
+    $branch_head=$this->version(null, 1);
     
     $changed_files=$this->exec("git log --name-only --pretty='format:#%H' master..HEAD");
 
