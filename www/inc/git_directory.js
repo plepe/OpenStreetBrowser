@@ -32,6 +32,8 @@ function git_file(dir, xml) {
     param.commit_data=this.directory.commit_data;
 
     var ret=ajax_call("git_file_save", param);
+
+    return ret;
   }
 
   this.directory=dir;

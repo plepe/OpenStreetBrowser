@@ -7,6 +7,7 @@ require_once "inc/global.php";
 //$sql=new sql($mysql_data);
 include "xml.php";
 user_check_auth();
+call_hooks("ajax_start", null);
 
 function error($msg) {
   /// Do something with this error

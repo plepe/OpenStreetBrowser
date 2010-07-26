@@ -41,6 +41,8 @@
 //   $file_a2->load("file.svg", $error['branch_head']) <- the file on branch 
 //                                                   head before the conflict
 // Resolve the error and save as in (2) and (3)
+$git_directories=array();
+
 class git_file {
   var $directory;
   var $id;
@@ -116,6 +118,8 @@ class git_file {
 
     $this->directory->chback();
 
+    $this->save_done($file);
+
     return 0;
   }
 
@@ -165,8 +169,10 @@ class git_directory {
   // file_proto ... the prototype for all "files" in the repository, 
   //                defaults to git_file
   function __construct($path, $file_proto="git_file") {
+    global $git_directories;
     $this->path=$path;
     $this->file_proto=$file_proto;
+    $git_directories[$path]=$this;
 
     $this->check_state();
   }
@@ -545,18 +551,18 @@ class git_directory {
 }
 
 function ajax_git_directory_load($param, $xml) {
-  $dir=new git_directory("{$param['path']}");
+  $dir=get_git_directory($param['path']);
   $dir->xml($xml);
 }
 
 function ajax_git_commit_start($param, $xml) {
-  $dir=new git_directory($param['path']);
+  $dir=get_git_directory($param['path']);
   $result=$dir->commit_start($param);
   return $result;
 }
 
 function ajax_git_create_file($param, $xml) {
-  $dir=new git_directory($param['path']);
+  $dir=get_git_directory($param['path']);
   $dir->commit_continue($param['commit_data']);
   $result=$dir->create_file($param['id']);
 
@@ -569,23 +575,28 @@ function ajax_git_create_file($param, $xml) {
 }
 
 function ajax_git_commit_end($param, $xml) {
-  $dir=new git_directory($param['path']);
+  $dir=get_git_directory($param['path']);
   $dir->commit_continue($param['commit_data']);
   $result=$dir->commit_end($param['message']);
   return $result;
 }
 
 function ajax_git_commit_cancel($param, $xml) {
-  $dir=new git_directory($param['path']);
+  $dir=get_git_directory($param['path']);
   $dir->commit_continue($param['commit_data']);
   $result=$dir->commit_cancel();
   return $result;
 }
 
 function ajax_git_file_save($param) {
-  $dir=new git_directory($param['path']);
+  $dir=get_git_directory($param['path']);
   $dir->commit_continue($param['commit_data']);
   $git_file=$dir->get_file($param['git_file']);
   $result=$git_file->save($param['file'], $param['content']);
   return $result;
+}
+
+function get_git_directory($id) {
+  global $git_directories;
+  return $git_directories[$id];
 }
