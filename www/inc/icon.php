@@ -3,6 +3,8 @@ require_once("inc/git_directory.php");
 $icon_dir;
 
 class icon_file extends git_file {
+  function preprocess($files) {
+  }
 }
 
 function icon_init() {

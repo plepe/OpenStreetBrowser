@@ -118,8 +118,6 @@ class git_file {
 
     $this->directory->chback();
 
-    $this->save_done($file);
-
     return 0;
   }
 
@@ -151,6 +149,11 @@ class git_file {
       $f=dom_create_append($r, "file", $xml);
       $x=dom_create_append_text($f, $file, $xml);
     }
+  }
+
+  function preprocess($files) {
+    // you can overwrite this file. Will be called after a successful commit
+    // for every changed git_file with the list of changed files
   }
 }
 
@@ -431,6 +434,8 @@ class git_directory {
     $this->exec("git commit --allow-empty --amend -m '$message' --author='$author'");
 
     $branch_head=$this->version();
+    
+    $changed_files=$this->exec("git log --name-only --pretty='format:#%H' master..HEAD");
 
     $p=$this->exec("git rebase master");
     $p=explode("\n", $p);
@@ -462,6 +467,22 @@ class git_directory {
     $this->unlock();
     unset($this->commit_data);
     $this->chback();
+
+    if(!$error) {
+      $changed_files=explode("\n", $changed_files);
+      $changed_list=array();
+      foreach($changed_files as $f) {
+	if(preg_match("/^([^\/]*)\/(.*)$/", $f, $m)) {
+	  $changed_list[$m[1]][]=$m[2];
+	}
+      }
+
+      foreach($changed_list as $id=>$files) {
+	$files=array_unique($files);
+	$git_file=$this->get_file($id);
+	$git_file->preprocess($files);
+      }
+    }
 
     return $error;
   }
