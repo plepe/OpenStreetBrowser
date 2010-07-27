@@ -110,3 +110,16 @@ function dom_create_append_text(parent, text, xml) {
   parent.appendChild(x);
   return x;
 }
+
+// Source: http://www.hardcode.nl/subcategory_1/article_414-copy-or-clone-javascript-array-object
+// use as: var b=new clone(a);
+function clone(source) {
+    for (i in source) {
+        if (typeof source[i] == 'source') {
+            this[i] = new clone_object(source[i]);
+        }
+        else{
+            this[i] = source[i];
+	}
+    }
+}
