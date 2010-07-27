@@ -54,8 +54,8 @@ function ajax_git_commit_cancel($param, $xml) {
 function ajax_git_obj_save($param) {
   global $data_dir;
   $dir=get_git_directory($param['dir']);
-  $obj=$dir->get_obj($param['obj']);
   $data_dir->commit_continue($param['commit_id']);
+  $obj=$dir->get_obj($param['obj']);
   $result=$obj->save($param['file'], $param['content']);
   return $result;
 }

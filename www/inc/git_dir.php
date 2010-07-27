@@ -156,8 +156,6 @@ class git_dir {
   }
 
   function get_obj($id) {
-    $this->master->commit_open();
-
     $r=$this->exec("git ls-files $id/");
     $r=explode("\n", $r);
     $list=array();
@@ -167,8 +165,6 @@ class git_dir {
     }
 
     $obj=new $this->obj_proto($this, $id, $list);
-
-    $this->master->commit_close();
 
     return $obj;
   }

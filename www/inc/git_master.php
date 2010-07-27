@@ -49,7 +49,7 @@ class git_master {
 
   function exec($command, $stdin=0, $path="") {
     $ret="";
-    $this->log.="> $command\n";
+    $this->log.="{$path}> {$command}\n";
 
     $descriptors=array(
       0=>array("pipe", "r"),
@@ -311,7 +311,7 @@ class git_master {
     global $current_user;
 
     $author=$current_user->get_author();
-    $this->exec("git commit --allow-empty -m 'temporary message' --author='$author'");
+    $this->exec("git commit --amend --allow-empty -m 'temporary message' --author='$author'");
     $this->exec("git checkout master");
 
     $this->unlock();
@@ -362,10 +362,6 @@ class git_master {
 
     $this->chback();
     return $file;
-  }
-
-  function foo() {
-    return "bar";
   }
 
   function get_file($id) {

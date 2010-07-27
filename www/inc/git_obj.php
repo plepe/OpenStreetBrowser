@@ -107,11 +107,11 @@ class git_obj {
     $this->commit_open();
     $this->chdir();
 
-    $f=fopen("$file", "w");
+    $f=fopen($file, "w");
     fwrite($f, $content);
     fclose($f);
 
-    $this->exec("git add $file");
+    $this->exec("git add {$file}");
 
     $this->chback();
     $this->commit_close();
