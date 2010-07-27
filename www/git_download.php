@@ -1,10 +1,12 @@
 <?
-include "../conf.php";
-include "inc/lock.php";
-include "inc/git_directory.php";
+$design_hidden=1;
+include_once "../conf.php";
+include_once "inc/global.php";
+user_check_auth();
+call_hooks("ajax_start");
 
-$git_dir=new git_directory("{$_REQUEST['path']}");
-$git_file=$git_dir->get_file($_REQUEST['git_file']);
-$file=$git_file->load($_REQUEST['file'], $_REQUEST['version']);
+$dir=$data_dir->get_dir($_REQUEST['dir']);
+$obj=$dir->get_obj($_REQUEST['obj']);
+$file=$obj->load($_REQUEST['file'], $_REQUEST['version']);
 Header("content-type: {$file['mime']}");
 print $file['content'];
