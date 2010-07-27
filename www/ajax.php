@@ -38,13 +38,12 @@ $xml=new DOMDocument();
 //$ret=export_formated_text("value", html_var_to_js($fun($_REQUEST["param"], $xml)));
 $return=$fun($_REQUEST["param"], $xml);
 
-if($return&&(!$xml->firstChild)) {
-  $ret=dom_create_append($xml, "return", $xml);
-  dom_create_append_text($ret, html_var_to_js($return), $xml);
+if(!$xml->firstChild) {
+  $res=dom_create_append($xml, "result", $xml);
+  $ret=dom_create_append($res, "return", $xml);
+  dom_create_append_text($ret, json_encode($return), $xml);
 }
-else if($xml->firstChild) {
-  call_hooks("xml_done", $xml);
-}
+call_hooks("xml_done", $xml);
 print $xml->saveXML();
 
 //print $ret;

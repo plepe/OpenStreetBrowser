@@ -114,12 +114,13 @@ function ajax_call(funcname, param) {
     if(!xml)
       return req;
 
-    if(xml.firstChild.nodeName!="return") {
-      return req;
+    var ret=xml.getElementsByTagName("return");
+    if(ret.length) {
+      var ret=json_parse(ret[0].firstChild.nodeValue);
+      return ret;
     }
 
-    var ret=eval(xml.firstChild.firstChild.nodeValue);
-    return ret;
+    return req;
   }
 }
 
