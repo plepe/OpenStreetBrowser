@@ -123,3 +123,18 @@ function clone(source) {
 	}
     }
 }
+
+// Source: http://der-albert.com/archive/2006/01/05/mit-javascript-dom-events-manuell-ausloesen.aspx
+function raise_event (eventType, element)
+{ 
+    if (document.createEvent) { 
+        var evt = document.createEvent("Events"); 
+        evt.initEvent(eventType, true, true); 
+        element.dispatchEvent(evt); 
+    } 
+    else if (document.createEventObject) 
+    {
+        var evt = document.createEventObject(); 
+        element.fireEvent('on' + eventType, evt); 
+    } 
+}
