@@ -10,6 +10,7 @@ var shown_features=[];
 var showing_details=true;
 var loaded_list={};
 var view_changed_last;
+var data_dir;
 
 function details_content_submit(event) {
   // Sometimes it happens, that it want to submit to the form. 
@@ -254,6 +255,8 @@ function init() {
 
   overlays_init();
   map_key_init();
+
+  data_dir=new git_master();
 
   call_hooks("init");
   setTimeout("call_hooks(\"post_init\")", 2000);
