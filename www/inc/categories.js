@@ -107,16 +107,26 @@ function category_rule(category, id, _tags) {
   }
 
   // rule_title
-  this.rule_title=function() {
-    var ret="";
-    if(this.tags.get_lang("name", ui_lang))
-      ret+=this.tags.get_lang("name", ui_lang);
-    else if(this.tags.get("match"))
-      ret+=this.tags.get("match");
-    else
-      ret+="New rule";
+  this.rule_title=function(header) {
+    while(header.firstChild) {
+      header.removeChild(header.firstChild);
+    }
 
-    return ret;
+    var icon_ob=icon_git.get_obj(this.tags.get("icon"));
+    if(icon_ob) {
+      var img=dom_create_append(header, "img");
+      img.src=icon_ob.icon_url();
+    }
+
+    var txt;
+    if(this.tags.get_lang("name", ui_lang))
+      txt=this.tags.get_lang("name", ui_lang);
+    else if(this.tags.get("match"))
+      txt=this.tags.get("match");
+    else
+      txt="New rule";
+
+    dom_create_append_text(header, txt);
   }
 
   this.choose_icon=function() {
@@ -124,8 +134,10 @@ function category_rule(category, id, _tags) {
   }
 
   this.choose_icon_callback=function(new_icon) {
-    if(this.input)
+    if(this.input) {
       this.input.value=new_icon;
+      raise_event("change", this.input);
+    }
   }
 
   this.editor_change_key=function(tags, tag) {
@@ -136,33 +148,50 @@ function category_rule(category, id, _tags) {
       while(td.firstChild)
 	td.removeChild(td.firstChild);
 
-      this.input=document.createElement("input");
-      //input.type='hidden';
-      td.appendChild(this.input);
-      this.value=value;
+      this.input=dom_create_append(td, "input");
+      //this.input.type='hidden';
+      this.input.value=value;
       tag.set_value_object(this.input);
 
-      var input=document.createElement("input");
-      td.appendChild(input);
+      dom_create_append(td, "br");
+
+      var input=dom_create_append(td, "input");
       input.type="button";
       input.value=t("choose");
       input.onclick=this.choose_icon.bind(this);
+
+      this.preview=dom_create_append(td, "span");
+
+      tag.change(tag);
     }
     else if(tag.key.old_value=="icon") {
       var td=tag.val_td;
       while(td.firstChild)
 	td.removeChild(td.firstChild);
 
-      var input=document.createElement("input");
-      td.appendChild(input);
+      var input=dom_create_append(td, "input");
       input.value=value;
       tag.set_value_object(input);
+
+      delete(this.preview);
+
+      tag.change(tag);
     }
   }
 
   this.editor_change=function(tags, tag) {
-    var ret=this.rule_title();
-    this.header.innerHTML=ret;
+    this.rule_title(this.header);
+
+    if((tag)&&(tag.key.value=="icon")&&(this.preview)) {
+      while(this.preview.firstChild)
+	this.preview.removeChild(this.preview.firstChild);
+
+      var icon_ob=icon_git.get_obj(tag.val.value);
+      if(icon_ob) {
+	var img=dom_create_append(this.preview, "img");
+	img.src=icon_ob.icon_url();
+      }
+    }
   }
 
   // editor
@@ -174,11 +203,10 @@ function category_rule(category, id, _tags) {
 
     this.div=div;
 
-    ret=this.rule_title();
 
     this.header=document.createElement("div");
-    this.header.innerHTML=ret;
     this.div.appendChild(this.header);
+    this.rule_title(this.header);
     this.header.onclick=this.editor_toggle.bind(this);
 
     this.content=document.createElement("div");

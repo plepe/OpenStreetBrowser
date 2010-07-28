@@ -16,6 +16,10 @@ function icon_obj(dir, id, files) {
     this.save_callback=callback;
     img.onclick=this.callback.bind(this);
   }
+
+  this.icon_url=function() {
+    return this.url("preview.png");
+  }
 }
 
 function icon_editor(icon, callback) {
