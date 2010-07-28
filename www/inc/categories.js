@@ -119,6 +119,15 @@ function category_rule(category, id, _tags) {
     return ret;
   }
 
+  this.choose_icon=function() {
+    this.icon_chooser=new icon_chooser(this.tags.get("icon"), this.choose_icon_callback.bind(this));
+  }
+
+  this.choose_icon_callback=function(new_icon) {
+    if(this.input)
+      this.input.value=new_icon;
+  }
+
   this.editor_change_key=function(tags, tag) {
     var value=tag.val.value;
 
@@ -127,11 +136,17 @@ function category_rule(category, id, _tags) {
       while(td.firstChild)
 	td.removeChild(td.firstChild);
 
+      this.input=document.createElement("input");
+      //input.type='hidden';
+      td.appendChild(this.input);
+      this.value=value;
+      tag.set_value_object(this.input);
+
       var input=document.createElement("input");
-      input.type='hidden';
       td.appendChild(input);
-      input.value=value;
-      tag.set_value_object(input);
+      input.type="button";
+      input.value=t("choose");
+      input.onclick=this.choose_icon.bind(this);
     }
     else if(tag.key.old_value=="icon") {
       var td=tag.val_td;

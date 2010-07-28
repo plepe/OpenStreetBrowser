@@ -6,6 +6,7 @@ lang_str["list_info"]             =[ "Choose a category to browse map content or
 lang_str["ok"]		    	  =[ "Ok" ];
 lang_str["save"]		  =[ "Save" ];
 lang_str["cancel"]		  =[ "Cancel" ];
+lang_str["choose"]		  =[ "Choose" ];
 
 lang_str["geo_click_pos"]         =[ "Click on your position on the map" ];
 

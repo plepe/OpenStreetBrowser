@@ -5,6 +5,7 @@ lang_str["unnamed"]               =[ "(unbenannt)" ];
 lang_str["list_info"]             =[ "Wähle eine Kategorie, um den Karteninhalt zu durchstöbern oder klicke auf ein Objekt auf der Karte für Details" ];
 lang_str["save"]		  =[ "Speichern" ];
 lang_str["cancel"]		  =[ "Abbrechen" ];
+lang_str["choose"]		  =[ "Wählen" ];
 
 lang_str["geo_click_pos"]         =[ "Klicke auf Deine aktuelle Position auf der Karte" ];
 
