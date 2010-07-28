@@ -303,8 +303,15 @@ class category {
     }
 
     if($x=$rule_tags->get("icon")) {
-      $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"icon\" v=\"".get_icon($x)."\"/>\n";
+      $icon=get_icon($x);
+
+      if($icon)
+	$icon=$icon->icon_url();
+
+      if($icon) {
+	$icon=strtr($icon, $make_valid);
+	$ret.="  <tag k=\"icon\" v=\"{$icon}\"/>\n";
+      }
     }
 
     if($x=$rule_tags->get("importance")) {

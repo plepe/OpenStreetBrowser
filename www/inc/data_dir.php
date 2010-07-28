@@ -1,6 +1,6 @@
 <?
-include "inc/git_master.php";
-include "inc/user.php";
+include_once "git_master.php";
+include_once "user.php";
 
 $data_dir=new git_master($data_path);
 

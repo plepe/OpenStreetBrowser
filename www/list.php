@@ -26,6 +26,7 @@ include "inc/lock.php";
 include "inc/category.php";
 include "inc/postgis.php";
 include "inc/global.php";
+call_hooks("list_start");
 
 $importance=array("global", "international", "national", "regional", "urban", "suburban", "local");
 

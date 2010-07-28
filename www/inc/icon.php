@@ -1,5 +1,5 @@
 <?
-require_once("inc/data_dir.php");
+include_once "data_dir.php";
 $icon_dir;
 
 class icon_obj extends git_obj {
@@ -20,6 +20,14 @@ class icon_obj extends git_obj {
 	$this->exec("convert {$srcfile} png:{$dstfile}");
     }
   }
+
+  function icon_file() {
+    return $this->path("preview.png");
+  }
+
+  function icon_url() {
+    return $this->url("preview.png");
+  }
 }
 
 function icon_init() {
@@ -31,3 +39,5 @@ function icon_init() {
 
 register_hook("html_start", "icon_init");
 register_hook("ajax_start", "icon_init");
+register_hook("mcp_start", "icon_init");
+register_hook("list_start", "icon_init");

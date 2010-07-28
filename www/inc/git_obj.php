@@ -1,6 +1,6 @@
 <?
 // see file of git_master for some documentation about this git-thingy
-include_once "inc/git_dir.php";
+include_once "git_dir.php";
 
 // A git_obj is an object in a directory of a git master. It can contain
 // several files, some of them might not be subject to version control.
@@ -55,7 +55,7 @@ class git_obj {
     if($version)
       $p[]="version=".$version_branch;
 
-    return "git_download.php?"+implode("&", $p);
+    return "git_download.php?".implode("&", $p);
   }
 
   function path($path="") {

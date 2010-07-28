@@ -102,61 +102,15 @@ function postprocess() {
   return $res;
 }
 
-$got_icons=array();
 function get_icon($file) {
-  global $got_icons;
-  global $wiki_img;
-  global $wiki_imgsrc;
-  global $lists_dir;
+  global $icon_dir;
 
-  if(isset($got_icons[$file]))
-    return $got_icons[$file];
+  $icon_obj=$icon_dir->get_obj($file);
 
-  if(!file_exists("$lists_dir/icons"))
-    mkdir("$lists_dir/icons");
+  if($icon_obj)
+    return $icon_obj;
 
-  $save_path="icons/".strtr($file, array());
-  if(file_exists("$lists_dir/$save_path/file.png"))
-    return "$save_path/file.png";
-
-  if(preg_match("/^osm_wiki:(.*\.(.*))$/", $file, $m)) {
-    $icon=strtr($m[1], array(" "=>"_"));
-    $ext=$m[2];
-
-    $img_data=gzfile("$wiki_img$icon");
-
-    if(!$img_data)
-      print "Can't open $wiki_img$icon\n";
-
-    unset($icon_path);
-    foreach($img_data as $r) {
-      if(eregi("<div class=\"fullImageLink\" .*<a href=\"([^\"]*)\">", $r, $m)) {
-	$img=file_get_contents("$wiki_imgsrc$m[1]");
-	if(!$img)
-	  print "Can't download $wiki_imgsrc$m[1]\n";
-
-	if(!file_exists("$lists_dir/$save_path/"))
-	  mkdir("$lists_dir/$save_path/");
-
-	$img_d=fopen("$lists_dir/$save_path/file.$ext", "w");
-	fwrite($img_d, $img);
-	fclose($img_d);
-
-	if(!eregi("^(.*)\.png", $icon, $m)) {
-	  system("convert -background none '$lists_dir/$save_path/file.$ext' 'PNG:$lists_dir/$save_path/file.png'");
-	  $icon_path="$save_path/file.png";
-	}
-	else
-	  $icon_path="$save_path/file.$ext";
-
-	$got_icons[$file]=$icon_path;
-	return $icon_path;
-      }
-    }
-  }
-
-  $got_icons[$file]=null;
-  return null;
+  return false;
 }
 
 function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
@@ -172,6 +126,10 @@ function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
   if(!$icon)
     return null;
 
+  $icon=$icon->icon_file();
+  if(!$icon)
+    return null;
+
   $rule=$dom->createElement("Rule");
   $filter=$dom->createElement("Filter");
   $rule->appendChild($filter);
@@ -184,10 +142,10 @@ function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
 
   $sym=$dom->createElement("PointSymbolizer");
   $rule->appendChild($sym);
-  $sym->setAttribute("file", "$lists_dir/$icon");
+  $sym->setAttribute("file", "$icon");
   $sym->setAttribute("type", "png");
 
-  $size=getimagesize("$lists_dir/$icon");
+  $size=getimagesize("$icon");
 
   $sym->setAttribute("width", $size[0]);
   $sym->setAttribute("height", $size[1]);
@@ -237,11 +195,13 @@ function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
 
   $icon=$tags->get("icon");
   if($icon)
-    if($icon=get_icon($icon)) {
-      $size=getimagesize("$lists_dir/$icon");
-      $sym->setAttribute("dy", $size[1]);
-      $sym->setAttribute("vertical_alignment", "middle");
-    }
+    if($icon=get_icon($icon))
+      if($icon=$icon->icon_file()) {
+
+	$size=getimagesize("$icon");
+	$sym->setAttribute("dy", $size[1]);
+	$sym->setAttribute("vertical_alignment", "middle");
+      }
 
   $sym->setAttribute("name", "display_name");
   $sym->setAttribute("placement", "point");
@@ -288,6 +248,10 @@ function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
   if(!$icon)
     return null;
 
+  $icon=$icon->icon_file();
+  if(!$icon)
+    return null;
+
   $rule=$dom->createElement("Rule");
   $filter=$dom->createElement("Filter");
   $rule->appendChild($filter);
@@ -300,10 +264,10 @@ function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
 
   $sym=$dom->createElement("ShieldSymbolizer");
   $rule->appendChild($sym);
-  $sym->setAttribute("file", "$lists_dir/$icon");
+  $sym->setAttribute("file", "$icon");
   $sym->setAttribute("type", "png");
 
-  $size=getimagesize("$lists_dir/$icon");
+  $size=getimagesize("$icon");
 
   $sym->setAttribute("width", $size[0]);
   $sym->setAttribute("height", $size[1]);

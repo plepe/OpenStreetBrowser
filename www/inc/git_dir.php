@@ -1,6 +1,6 @@
 <?
 // see file of git_master for some documentation about this git-thingy
-include_once "inc/git_master.php";
+include_once "git_master.php";
 
 // A git_dir is a directory of objects in a git master
 class git_dir {
