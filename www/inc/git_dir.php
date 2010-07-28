@@ -164,6 +164,10 @@ class git_dir {
 	$list[]=$m[1];
     }
 
+    if(!sizeof($list)) {
+      return null;
+    }
+
     $obj=new $this->obj_proto($this, $id, $list);
 
     return $obj;

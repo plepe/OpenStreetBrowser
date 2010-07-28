@@ -71,6 +71,19 @@ function ajax_git_obj_list($param) {
   return $ret;
 }
 
+function ajax_git_get_obj($param) {
+  global $data_dir;
+  $dir=get_git_directory($param['dir']);
+  $data_dir->commit_continue($param['commit_id']);
+  $obj=$dir->get_obj($param['obj']);
+
+  if($obj) {
+    return $obj->files;
+  }
+
+  return false;
+}
+
 function git_write_log($xml) {
   global $data_dir;
 
