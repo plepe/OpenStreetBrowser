@@ -43,6 +43,16 @@ function git_obj(dir, id, files) {
     return ret;
   }
 
+  this.load=function(file, version_branch) {
+    var param=new clone(this.ajax_param);
+    param.file=file;
+    param.version_branch=version_branch;
+
+    var ret=ajax_call("git_obj_load", param);
+
+    return ret;
+  }
+
   this.dir=dir;
   this.id=id;
   this.files=files;

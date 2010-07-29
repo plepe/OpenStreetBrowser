@@ -60,6 +60,14 @@ function ajax_git_obj_save($param) {
   return $result;
 }
 
+function ajax_git_obj_load($param) {
+  global $data_dir;
+  $dir=get_git_directory($param['dir']);
+  $obj=$dir->get_obj($param['obj']);
+  $result=$obj->load($param['file'], $param['version_branch']);
+  return $result;
+}
+
 function ajax_git_obj_list($param) {
   $ret=array();
   $dir=get_git_directory($param['dir']);
