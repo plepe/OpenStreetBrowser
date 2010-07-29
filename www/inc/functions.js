@@ -138,3 +138,18 @@ function raise_event (eventType, element)
         element.fireEvent('on' + eventType, evt); 
     } 
 }
+
+// Source: http://www.w3schools.com/Xml/xml_parser.asp
+function parse_xml(txt) {
+  if (window.DOMParser) {
+    parser=new DOMParser();
+    xmlDoc=parser.parseFromString(txt,"text/xml");
+  }
+  else { // Internet Explorer
+    xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+    xmlDoc.async="false";
+    xmlDoc.loadXML(txt);
+  }  
+
+  return xmlDoc;
+}
