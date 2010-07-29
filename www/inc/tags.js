@@ -63,6 +63,10 @@ function tags(d) {
     return data;
   }
 
+  this.set_data=function(d) {
+    data=d;
+  }
+
   this.xml=function(indent) {
     var ret="";
     if(!indent)
