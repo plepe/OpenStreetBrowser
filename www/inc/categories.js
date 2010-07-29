@@ -82,6 +82,7 @@ function category_rule_match(dom, cat, rule) {
 
 function category_rule(category, id, _tags) {
   // constructor
+  this.icon=null;
   if(!id) {
     this.id=uniqid();
     this.tags=new tags(category_rule_tags_default);
@@ -89,6 +90,8 @@ function category_rule(category, id, _tags) {
   else {
     this.id=id;
     this.tags=_tags;
+    if(this.tags.get("icon"))
+      this.icon=icon_git.get_obj(this.tags.get("icon"));
   }
   this.data=[];
   this.category=category;
@@ -112,10 +115,9 @@ function category_rule(category, id, _tags) {
       header.removeChild(header.firstChild);
     }
 
-    var icon_ob=icon_git.get_obj(this.tags.get("icon"));
-    if(icon_ob) {
+    if(this.icon) {
       var img=dom_create_append(header, "img");
-      img.src=icon_ob.icon_url();
+      img.src=this.icon.icon_url();
     }
 
     var txt;
@@ -148,8 +150,7 @@ function category_rule(category, id, _tags) {
   }
 
   this.edit_icon=function() {
-    var icon_ob=icon_git.get_obj(this.tags.get("icon"));
-    new icon_editor(icon_ob, this.edit_icon_finish.bind(this));
+    new icon_editor(this.icon, this.edit_icon_finish.bind(this));
   }
 
   this.editor_change_key=function(tags, tag) {
@@ -203,10 +204,10 @@ function category_rule(category, id, _tags) {
       while(this.preview.firstChild)
 	this.preview.removeChild(this.preview.firstChild);
 
-      var icon_ob=icon_git.get_obj(tag.val.value);
-      if(icon_ob) {
+      this.icon=icon_git.get_obj(tag.val.value);
+      if(this.icon) {
 	var img=dom_create_append(this.preview, "img");
-	img.src=icon_ob.icon_url();
+	img.src=this.icon.icon_url();
       }
     }
   }
