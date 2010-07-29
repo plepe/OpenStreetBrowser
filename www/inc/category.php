@@ -115,14 +115,6 @@ class category {
 
     $f3=fopen("$this->file.renderd", "w");
     fwrite($f3, $renderd);
-
-    // generate dummy entry in renderd.conf to avoid renderd-bug
-    global $data_path;
-    fwrite($f3, "[dummy]\n");
-    fwrite($f3, "URI=/tiles/dummy/\n");
-    fwrite($f3, "XML=/home/osm/data/render_dummy.xml\n");
-    fwrite($f3, "HOST=dummy.host\n");
-
     fclose($f3);
 
     return $data;

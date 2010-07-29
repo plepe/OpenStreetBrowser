@@ -23,5 +23,12 @@ function gen_renderd_conf() {
   }
   closedir($d);
 
+  // generate dummy entry in renderd.conf to avoid renderd-bug
+  global $data_path;
+  fwrite($conf, "[dummy]\n");
+  fwrite($conf, "URI=/tiles/dummy/\n");
+  fwrite($conf, "XML=/home/osm/data/render_dummy.xml\n");
+  fwrite($conf, "HOST=dummy.host\n");
+
   fclose($conf);
 }
