@@ -2,6 +2,7 @@
 $design_hidden=1;
 include_once "../conf.php";
 include_once "inc/global.php";
+$sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
 user_check_auth();
 call_hooks("ajax_start");
 
@@ -18,8 +19,8 @@ if(!$_FILES['data']) {
 }
 
 $dir=$data_dir->get_dir($_REQUEST['dir']);
-$obj=$dir->get_obj($_REQUEST['obj']);
 $data_dir->commit_continue($_REQUEST['commit_id']);
+$obj=$dir->get_obj($_REQUEST['obj']);
 $obj->save($_REQUEST['file'], file_get_contents($_FILES['data']['tmp_name']));
 
 print "File successfully uploaded";

@@ -140,10 +140,11 @@ class git_dir {
     //else
       // check if not used yet
 
+    $this->master->commit_open();
+
     $this->chdir();
     mkdir("$id/");
-
-    $this->master->commit_open();
+    touch("{$id}/.dummy");
 
     $this->exec("git add $id/");
 
@@ -156,7 +157,14 @@ class git_dir {
   }
 
   function get_obj($id) {
+    if($this->commit_id())
+      $this->master->commit_open();
+
     $r=$this->exec("git ls-files $id/");
+
+    if($this->commit_id())
+      $this->master->commit_close();
+
     $r=explode("\n", $r);
     $list=array();
     foreach($r as $f) {
