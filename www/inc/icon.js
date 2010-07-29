@@ -21,6 +21,24 @@ function icon_obj(dir, id, files) {
   this.icon_url=function() {
     return this.url("preview.png");
   }
+
+  this.update=function() {
+    var tags_file=this.load("tags.xml");
+    if(tags_file&&tags_file.content) {
+      var xml=parse_xml(tags_file.content);
+      this.tags.set_data({});
+
+      var el=xml.getElementsByTagName("tags");
+      if(el.length)
+	this.tags.readDOM(el[0]);
+    }
+    else {
+      this.tags.set_data({});
+    }
+  }
+
+  this.tags=new tags();
+  this.update();
 }
 
 function icon_editor(icon, callback) {
@@ -64,7 +82,10 @@ function icon_editor(icon, callback) {
   this.win=new win("icon_editor");
 
   data_dir.commit_start();
-  this.obj=icon_git.create_obj();
+  if(icon)
+    this.obj=icon;
+  else
+    this.obj=icon_git.create_obj();
 
   var comment=dom_create_append(this.win.content, "div");
   dom_create_append_text(comment, "Upload Icon:");
@@ -83,7 +104,10 @@ function icon_editor(icon, callback) {
   dom_create_append_text(comment, ":");
 
   this.div_tags=dom_create_append(this.win.content, "div");
-  this.tags=new tags(icon_tags_default);
+  if(icon)
+    this.tags=new tags(icon.tags.data());
+  else
+    this.tags=new tags(icon_tags_default);
   this.tags.editor(this.div_tags);
 
   dom_create_append_text(this.win.content, "Edit summary:");

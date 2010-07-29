@@ -140,6 +140,18 @@ function category_rule(category, id, _tags) {
     }
   }
 
+  this.edit_icon_finish=function(id) {
+    if(this.input) {
+      this.input.value=new_icon;
+      raise_event("change", this.input);
+    }
+  }
+
+  this.edit_icon=function() {
+    var icon_ob=icon_git.get_obj(this.tags.get("icon"));
+    new icon_editor(icon_ob, this.edit_icon_finish.bind(this));
+  }
+
   this.editor_change_key=function(tags, tag) {
     var value=tag.val.value;
 
@@ -161,6 +173,11 @@ function category_rule(category, id, _tags) {
       input.onclick=this.choose_icon.bind(this);
 
       this.preview=dom_create_append(td, "span");
+
+      var input=dom_create_append(td, "input");
+      input.type="button";
+      input.value=t("edit");
+      input.onclick=this.edit_icon.bind(this);
 
       tag.change(tag);
     }
