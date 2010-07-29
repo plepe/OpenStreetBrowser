@@ -23,9 +23,11 @@ function gen_renderd_conf() {
   }
   closedir($d);
 
-  $file="/home/osm/data/inc_renderd.conf";
-  if(file_exists($file)) {
-    fwrite($conf, file_get_contents($file));
+  global $renderd_files;
+  if($renderd_files) foreach($renderd_files as $file) {
+    if(file_exists($file)) {
+      fwrite($conf, file_get_contents($file));
+    }
   }
 
   // generate dummy entry in renderd.conf to avoid renderd-bug
