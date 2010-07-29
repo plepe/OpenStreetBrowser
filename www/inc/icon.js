@@ -13,7 +13,10 @@ function icon_obj(dir, id, files) {
     var li=dom_create_append(ul, "li");
     var img=dom_create_append(li, "img");
     img.src=this.url("preview.png");
-    //var txt=dom_create_append_text(li, this.files[0]);
+    var name=this.tags.get("name")
+    if(name)
+      var txt=dom_create_append_text(li, name);
+
     this.save_callback=callback;
     img.onclick=this.callback.bind(this);
   }

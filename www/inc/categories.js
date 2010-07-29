@@ -144,7 +144,7 @@ function category_rule(category, id, _tags) {
 
   this.edit_icon_finish=function(id) {
     if(this.input) {
-      this.input.value=new_icon;
+      this.input.value=id;
       raise_event("change", this.input);
     }
   }
