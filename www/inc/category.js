@@ -10,8 +10,10 @@ function category(id) {
     div.open=!div.open;
     div.className="category_"+(div.open?"open":"closed");
 
-    if(div.open)
+    if(div.open) {
+      this.write_div();
       this.request_data();
+    }
   }
 
   // request_data - load new data from server
@@ -59,14 +61,15 @@ function category(id) {
 
     if(div.open) {
       dom_clean(div.status);
-      dom_create_append_text(div.status, t("category:"+result.status));
+      if(this.result&&this.result.status)
+	dom_create_append_text(div.status, t("category:"+this.result.status));
 
       if(!this.sub_categories) {
 	this.sub_categories=[];
 	this.load_sub_categories();
       }
 
-      if((this.sub_categories.length)&&(!div.sub.init)) {
+      if(!div.sub.init) {
 	div.sub.init=true;
 
 	for(var i=0; i<this.sub_categories.length; i++) {
@@ -79,12 +82,10 @@ function category(id) {
 
   // attach_div - show category in a div
   this.attach_div=function(div) {
-    if(this.loaded) {
-    }
-
     this.divs.push(div);
     div.open=false;
     div.className="category_closed";
+    div.category=this;
 
     div.header=dom_create_append(div, "div");
     div.header.className="header";

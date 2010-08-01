@@ -18,8 +18,8 @@ function category_osm(id) {
     var data=response.responseXML;
     var cat_data=data.firstChild;
 
-    if(cat_data.firstChild)
-      this.tags.readDOM(cat_data.firstChild);
+    if(cat_data)
+      this.tags.readDOM(cat_data);
 
     this.version=cat_data.getAttribute("version");
     this.rules=[];
