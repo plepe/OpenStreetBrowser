@@ -111,6 +111,11 @@ function dom_create_append_text(parent, text, xml) {
   return x;
 }
 
+function dom_clean(parent) {
+  while(parent.firstChild)
+    parent.removeChild(parent.firstChild);
+}
+
 // Source: http://www.hardcode.nl/subcategory_1/article_414-copy-or-clone-javascript-array-object
 // use as: var b=new clone(a);
 function clone(source) {
