@@ -11,21 +11,8 @@ function _category_list() {
 
   // choose_category_callback
   this.choose_category_callback=function(id) {
-    var ob=categories[id];
-    if(!ob)
-      ob=new category_osm(id);
-
-    this.sub_categories.push(ob);
-
-    for(var i=0; i<this.divs.length; i++) {
-      if(!this.divs[i].sub.init)
-	continue;
-
-      var d=dom_create_append(this.divs[i].sub, "div");
-      ob.attach_div(d);
-    }
-
-    ob.write_div();
+    this.sub_categories.push(id);
+    this.write_div();
   }
   
   // write_div
@@ -59,10 +46,11 @@ function _category_list() {
 
 function category_list_init() {
   category_root=new _category_list();
-  var div=document.getElementById("details_content");
+  var x=document.getElementById("details_content");
+  var div=dom_create_append(x, "div");
 
   category_root.attach_div(div);
-  category_root.toggle_open(div);
+  category_root.open_category(div);
 }
 
 register_hook("init", category_list_init);

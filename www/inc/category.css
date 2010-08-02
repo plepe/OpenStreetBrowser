@@ -1,0 +1,17 @@
+div.category_open {
+  background: #efefef;
+  border-bottom: 1px dotted #999;
+}
+div.category_closed {
+  background: #ffffff;
+  border-bottom: 1px dotted #999;
+}
+div.category_open .header {
+  border-bottom: 1px dotted #ddd;
+  margin-bottom: 5px;
+}
+div.category_closed .status,
+div.category_closed .data,
+div.category_closed .more {
+  display: none;
+}

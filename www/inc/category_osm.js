@@ -32,6 +32,14 @@ function category_osm(id) {
       cur=cur.nextSibling;
     }
 
+    var list=this.tags.get("sub_categories")
+    if(list) {
+      list=split_semicolon(list);
+
+      for(var i=0; i<list.length; i++)
+	this.sub_categories.push("osm:"+list[i]);
+    }
+
     this.write_div();
 
     if(this.open) {
@@ -45,26 +53,14 @@ function category_osm(id) {
     this.overlay.set_version(this.version);
   }
 
-  // load_sub_categories
-  this.load_sub_categories=function() {
-    var list=this.tags.get("sub_categories")
-    if(!list)
-      return;
-
-    list=split_semicolon(list);
-
-    for(var i=0; i<list.length; i++) {
-      var ob=categories[list[i]];
-
-      if(!list)
-	ob=new category_osm(list[i]);
-
-      this.sub_categories.push(ob);
-    }
-  }
-
   // constructor
   this.rules=[];
   this.load_def();
   this.result={ state: "no" };
 }
+
+function category_osm_init() {
+  category_types["osm"]=category_osm;
+}
+
+register_hook("init", category_osm_init);

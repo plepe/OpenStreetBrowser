@@ -6,7 +6,7 @@ function category_chooser(callback) {
 
   // choose
   this.choose=function(id) {
-    callback(id);
+    callback("osm:"+id);
     this.win.close();
   }
 

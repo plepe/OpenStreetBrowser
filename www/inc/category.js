@@ -1,4 +1,16 @@
 var categories={};
+var category_types={};
+
+function get_category(id) {
+  var x=id.split(/:/);
+
+  if(!category_types[x[0]]) {
+    alert("category type "+x[0]+" unknown!");
+    return;
+  }
+
+  return new category_types[x[0]](x[1]);
+}
 
 function category(id) {
   // request_data - request data in current view box
@@ -7,13 +19,26 @@ function category(id) {
 
   // toggle_open - after clicking on category open category
   this.toggle_open=function(div) {
-    div.open=!div.open;
-    div.className="category_"+(div.open?"open":"closed");
-
     if(div.open) {
-      this.write_div();
-      this.request_data();
+      this.close_category(div);
     }
+    else {
+      this.open_category(div);
+    }
+  }
+
+  // open_category - call to open category
+  this.open_category=function(div) {
+    div.className="category_open";
+    div.open=true;
+
+    this.write_div();
+  }
+
+  // close_category - call to close category
+  this.close_category=function(div) {
+    div.className="category_closed";
+    div.open=false;
   }
 
   // request_data - load new data from server
@@ -64,15 +89,10 @@ function category(id) {
       if(this.result&&this.result.status)
 	dom_create_append_text(div.status, t("category:"+this.result.status));
 
-      if(!this.sub_categories) {
-	this.sub_categories=[];
-	this.load_sub_categories();
-      }
+      for(var i=0; i<this.sub_categories.length; i++) {
+	if(typeof this.sub_categories[i]=="string") {
+	  this.sub_categories[i]=get_category(this.sub_categories[i]);
 
-      if(!div.sub.init) {
-	div.sub.init=true;
-
-	for(var i=0; i<this.sub_categories.length; i++) {
 	  var d=dom_create_append(div.sub, "div");
 	  this.sub_categories[i].attach_div(d);
 	}
@@ -107,14 +127,10 @@ function category(id) {
     this.write_div(div);
   }
 
-  // load_sub_categories
-  this.load_sub_categories=function() {
-  }
-
   // constructor
   this.id=id;
   this.tags=new tags({ name: this.id });
-  this.sub_categories=0;
+  this.sub_categories=[];
   this.version=0;
   this.divs=[];
   this.loaded=false;
