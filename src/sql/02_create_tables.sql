@@ -15,7 +15,9 @@ insert into osm_point
       where id=node_id and k!='created_by'
       group by node_id) as osm_tags,
     ST_Transform(geom, 900913) as osm_way
-    from nodes) as x
+    from nodes
+    where abs(Y(geom))!=90
+    ) as x
   where (array_dims(akeys(osm_tags)))!='[1:0]';
 
 create index osm_point_tags on osm_point using gin(osm_tags);
