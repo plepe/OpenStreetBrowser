@@ -29,8 +29,8 @@ function category_osm(id) {
       limit=10;
 
     var max=this.result.data.length;
-    if(limit<max)
-      max=limit;
+//    if(limit<max)
+//      max=limit;
 
     dom_clean(div.data);
     var ul=dom_create_append(div.data, "ul");
@@ -44,20 +44,39 @@ function category_osm(id) {
     dom_clean(div.more);
     if(!this.result.complete) {
       var a=dom_create_append(div.more, "a");
-      a.onclick=this.show_more();
+      a.onclick=this.show_more.bind(this);
       dom_create_append_text(a, t("more"));
     }
   }
 
   // show_more - load more data from server
   this.show_more=function() {
+    this.request_data(true);
   }
 
   // request_data - load new data from server
-  this.request_data=function() {
-    var viewbox=get_viewbox();
-    var zoom=get_zoom();
-    // , "exclude": there.join(",")
+  this.request_data=function(more) {
+    var param={};
+    param.viewbox=get_viewbox();
+    param.zoom=get_zoom();
+    param.category=this.id;
+    param.count=10;
+
+    if((this.result)&&(this.result.viewbox==param.viewbox)&&(!more)) {
+      this.write_div();
+      return;
+    }
+    if(!more) {
+      this.result=new this.result_ob(this);
+    }
+
+    this.result.status="loading";
+    this.write_div();
+
+    var there=this.result.get_ids();
+    if(there.length) {
+      param.exclude=there.join(",");
+    }
 
 //    if(list_reload_working) {
 //      list_reload_necessary=1;
@@ -65,7 +84,7 @@ function category_osm(id) {
 //    }
 
     //list_reload_working=1;
-    ajax_direct("list.php", { "viewbox": viewbox, "zoom": zoom, "category": this.id, "count": 10 }, this.request_data_callback.bind(this));
+    ajax_direct("list.php", param, this.request_data_callback.bind(this));
   }
 
   // request_data_callback - called after loading new data from server
@@ -94,6 +113,7 @@ function category_osm(id) {
     this.recv=function(dom, viewbox) {
       this.version=dom.getAttribute("version");
       this.viewbox=viewbox;
+      this.complete=dom.getAttribute("complete")=="true";
 
       var matches=dom.getElementsByTagName("match");
       var last_importance="";
@@ -118,6 +138,19 @@ function category_osm(id) {
 	  }
 	}
       }
+
+      this.status="recv";
+    }
+
+    // get_ids - get the ids of all objects
+    this.get_ids=function() {
+      var ret=[];
+
+      for(var i=0; i<this.data.length; i++) {
+	ret.push(this.data[i].id);
+      }
+
+      return ret;
     }
 
     // constructor
@@ -137,7 +170,6 @@ function category_osm(id) {
       return;
     }
 
-    this.result=new this.result_ob(this);
     this.result.recv(dom, viewbox);
 
     call_hooks("category_loaded_matches", this, viewbox)
