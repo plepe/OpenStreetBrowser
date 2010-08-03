@@ -104,20 +104,29 @@ function category(id) {
       if(this.result&&this.result.status)
 	dom_create_append_text(div.status, t("category:"+this.result.status));
 
+      dom_clean(div.sub);
       for(var i=0; i<this.sub_categories.length; i++) {
-	if(typeof this.sub_categories[i]=="string") {
+	if(typeof this.sub_categories[i]=="string")
 	  this.sub_categories[i]=get_category(this.sub_categories[i]);
 
-	  var d=dom_create_append(div.sub, "div");
-	  this.sub_categories[i].attach_div(d);
-	}
+	this.sub_categories[i].attach_div(div.sub);
       }
     }
   }
 
   // attach_div - show category in a div
-  this.attach_div=function(div) {
+  this.attach_div=function(parent_div) {
+    for(var i=0; i<this.divs.length; i++)
+      if(this.divs[i].parent_div==parent_div) {
+	parent_div.appendChild(this.divs[i]);
+	this.write_div(this.divs[i]);
+	return;
+      }
+
+    var div=dom_create_append(parent_div, "div");
     this.divs.push(div);
+    div.parent_div=parent_div;
+
     div.open=false;
     div.className="category_closed";
     div.category=this;
