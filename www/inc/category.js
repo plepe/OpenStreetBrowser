@@ -9,7 +9,12 @@ function get_category(id) {
     return;
   }
 
-  return new category_types[x[0]](x[1]);
+  if(categories[id])
+    return categories[id];
+
+  var ob=new category_types[x[0]](x[1]);
+  categories[id]=ob;
+  return ob;
 }
 
 function category(id) {
@@ -40,6 +45,15 @@ function category(id) {
   this.close_category=function(div) {
     div.className="category_closed";
     div.open=false;
+  }
+
+  // visible - is at least one instance of this category opened?
+  this.visible=function() {
+    for(var i=0; i<this.divs.length; i++)
+      if(this.divs[i].open)
+	return true;
+
+    return false;
   }
 
   // request_data - load new data from server

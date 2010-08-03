@@ -9,6 +9,27 @@ function category_osm(id) {
   this.inheritFrom=category;
   this.inheritFrom(id);
 
+  // shall_reload
+  this.shall_reload=function(list, viewbox) {
+    if(this.result&&this.result.viewbox==viewbox)
+      return;
+    
+    if(!this.visible())
+      return;
+
+    if(list[this.id])
+      return;
+    list[this.id]=true;
+
+    this.result=new this.result_ob(this);
+    this.result.status="loading";
+    this.write_div();
+
+    for(var i=0; i<this.sub_categories.length; i++) {
+      this.sub_categories[i].shall_reload(list, viewbox);
+    }
+  }
+
   // write_div
   this.inherit_write_div=this.write_div;
   this.write_div=function(div) {

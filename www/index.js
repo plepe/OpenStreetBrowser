@@ -182,8 +182,7 @@ function view_changed_start(event) {
 }
 
 function view_changed_delay() {
-  if(get_hash()=="")
-    list_reload();
+  call_hooks("view_changed_delay");
 }
 
 function view_changed(event) {
