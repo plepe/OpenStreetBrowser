@@ -132,8 +132,6 @@ function redraw() {
   showing_details=false;
 
   if(x=="") {
-    //show_list();
-    //list_reload();
   }
   else if(x=="mapkey") {
     hide();
@@ -165,7 +163,7 @@ function redraw() {
 var last_location_hash;
 function check_redraw() {
   if(location.hash!=last_location_hash) {
-    call_hooks("hash_changed");
+    call_hooks("hash_changed", get_hash(), last_location_hash);
     last_location_hash=location.hash;
     redraw();
   }

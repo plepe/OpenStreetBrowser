@@ -10,23 +10,24 @@ function category_osm(id) {
   this.inheritFrom(id);
 
   // shall_reload
-  this.shall_reload=function(list, viewbox) {
+  this.shall_reload=function(list, parent_div, viewbox) {
+    var div=parent_div.child_divs[this.id];
+
     if(this.result&&this.result.viewbox==viewbox)
       return;
     
-    if(!this.visible())
+    if(!div.open)
       return;
 
-    if(list[this.id])
-      return;
-    list[this.id]=true;
-
-    this.result=new this.result_ob(this);
-    this.result.status="loading";
-    this.write_div();
+    if((this.rules.length)&&(!list[this.id])) {
+      list[this.id]=true;
+      this.result=new this.result_ob(this);
+      this.result.status="loading";
+      this.write_div();
+    }
 
     for(var i=0; i<this.sub_categories.length; i++) {
-      this.sub_categories[i].shall_reload(list, viewbox);
+      this.sub_categories[i].shall_reload(list, div.sub, viewbox);
     }
   }
 

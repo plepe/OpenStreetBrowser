@@ -69,7 +69,7 @@ function category(id) {
   }
 
   // shall_reload - shall we load data combined from server?
-  this.shall_reload=function() {
+  this.shall_reload=function(list, parent_div, viewbox) {
   }
 
   // load_def - load definition
@@ -120,12 +120,15 @@ function category(id) {
       if(this.divs[i].parent_div==parent_div) {
 	parent_div.appendChild(this.divs[i]);
 	this.write_div(this.divs[i]);
-	return;
+	return this.divs[i];
       }
 
     var div=dom_create_append(parent_div, "div");
     this.divs.push(div);
     div.parent_div=parent_div;
+    if(!parent_div.child_divs)
+      parent_div.child_divs={};
+    parent_div.child_divs[this.id]=div;
 
     div.open=false;
     div.className="category_closed";
