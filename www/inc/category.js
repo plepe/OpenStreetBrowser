@@ -141,15 +141,15 @@ function category(id) {
     div.status=dom_create_append(div, "div");
     div.status.className="status";
 
-    div.sub=dom_create_append(div, "div");
-    div.sub.className="sub";
-    div.sub.init=false;
-
     div.data=dom_create_append(div, "div");
     div.data.className="data";
 
     div.more=dom_create_append(div, "div");
     div.more.className="more";
+
+    div.sub=dom_create_append(div, "div");
+    div.sub.className="sub";
+    div.sub.init=false;
 
     this.write_div(div);
 

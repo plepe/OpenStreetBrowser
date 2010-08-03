@@ -16,6 +16,16 @@ function _category_list() {
     this.write_div();
   }
   
+  // attach_div
+  this.inherit_attach_div=this.attach_div;
+  this.attach_div=function(parent_div) {
+    var div=this.inherit_attach_div(parent_div);
+
+    div.appendChild(div.more);
+
+    return div;
+  }
+
   // write_div
   this.inherit_write_div=this.write_div;
   this.write_div=function(div) {
