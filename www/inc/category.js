@@ -33,6 +33,7 @@ function category(id) {
     div.open=true;
 
     this.write_div();
+    this.request_data();
   }
 
   // close_category - call to close category

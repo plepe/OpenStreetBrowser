@@ -7,38 +7,37 @@ function category_rule_match(dom, cat, rule) {
   this.id_split=split_semicolon(dom.getAttribute("id"));
 
   // text
-  this.list_entry=function() {
-    var ret="";
+  this.write_list=function(ul) {
     var x;
     var name="";
     var add="";
 
+    var li=dom_create_append(ul, "li");
+    li.id=this.id;
+    li.rule_id=this.rule.id;
+    if(x=this.tags.get("icon")) {
+      li.style.listStyleImage="url('"+x+"');";
+    }
+    
+    if(this.rule.tags.get_lang("name", ui_lang))
+      li.title=this.rule.tags.get_lang("name", ui_lang);
+    else
+      li.title=this.rule.tags.get("match");
+
+    var a=dom_create_append(li, "a");
+    a.href="#"+this.id;
+    a.onmouseover="set_highlight([\""+this.id_split.join("\", \"")+"\"])";
+    a.onmouseout='unset_highlight()'
+
     x=this.tags.get("display_name");
     if(!x)
       x=t("unnamed");
-    name=x;
-
-    if(x=this.tags.get("display_type"))
-      add=" ("+x+")";
-
-    var li_style="";
-    if(x=this.tags.get("icon")) {
-      var icon=x;
-      var icon_data;
-
-      li_style+="list-style-image: url('"+x+"'); ";
-//      if(icon_data=icon.match(/^\[\[Image:(.*)\]\]$/)) {
-//	icon_data=icon_data[1].replace(/ /g, "_");
-//	li_style+="list-style-image: url('symbols/"+icon_data+"'); ";
-//      }
+    dom_create_append_text(a, x);
+    
+    if(x=this.tags.get("display_type")) {
+      x=" ("+x+")";
+      dom_create_append_text(li, x);
     }
-    if(this.rule.tags.get_lang("name", ui_lang))
-      var title=this.rule.tags.get_lang("name", ui_lang);
-    else
-      var title=this.rule.tags.get("match");
-
-    ret="<li class='listitem' style=\""+li_style+"\" id='list_"+this.id+"' title='"+title+"'><element id='"+this.id+"' rule_id='"+this.rule.id+"'+><a href='#"+this.id+"' onMouseOver='set_highlight([\""+this.id_split.join("\", \"")+"\"])' onMouseOut='unset_highlight()'>"+name+"</a>"+add+"</element></li>\n";
-    return ret;
   }
 }
 
