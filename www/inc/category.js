@@ -37,7 +37,7 @@ function category(id) {
     div.className="category_open";
     div.open=true;
 
-    this.write_div();
+    this.write_div(div);
     this.request_data();
   }
 
@@ -149,6 +149,8 @@ function category(id) {
     div.more.className="more";
 
     this.write_div(div);
+
+    return div;
   }
 
   // constructor

@@ -82,17 +82,17 @@ function _category_list() {
 
   // constructor
   register_hook("view_changed_delay", this.shall_reload.bind(this));
+  this.tags.set("name", t("list_info"));
 }
 
 function category_list_init() {
   category_root=new _category_list();
-  var div=document.getElementById("details_content");
 
-  category_root.tags.set("name", t("list_info"));
+  var div=document.getElementById("details_content");
   dom_clean(div);
 
-  category_root.attach_div(div);
-  category_root.open_category(div);
+  var d=category_root.attach_div(div);
+  category_root.open_category(d);
 }
 
 register_hook("init", category_list_init);
