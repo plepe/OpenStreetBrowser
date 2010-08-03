@@ -47,6 +47,9 @@ function _category_list() {
 function category_list_init() {
   category_root=new _category_list();
   var x=document.getElementById("details_content");
+
+  category_root.tags.set("name", t("list_info"));
+  dom_clean(x);
   var div=dom_create_append(x, "div");
 
   category_root.attach_div(div);

@@ -16,7 +16,7 @@ function category_rule_match(dom, cat, rule) {
     li.id=this.id;
     li.rule_id=this.rule.id;
     if(x=this.tags.get("icon")) {
-      li.style.listStyleImage="url('"+x+"');";
+      li.style.listStyleImage="url('"+x+"')";
     }
     
     if(this.rule.tags.get_lang("name", ui_lang))
