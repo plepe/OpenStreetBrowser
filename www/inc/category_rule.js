@@ -39,6 +39,36 @@ function category_rule_match(dom, cat, rule) {
       dom_create_append_text(li, x);
     }
   }
+  
+  // load_more_data
+  this.load_more_tags=function(tags, callback) {
+    var param={};
+    param.id=this.id;
+    param.tags=tags.join(",");
+
+    ajax("object_load_more_tags", param, this.load_more_tags_callback.bind(this, callback));
+  }
+
+  // load_more_tags_callback
+  this.load_more_tags_callback=function(callback, response) {
+    if(!response.return) {
+      alert("response not valid: "+response.responseText);
+      return;
+    }
+
+    for(var i in response.return)
+      this.tags.set(i, response.return[i]);
+
+    callback(response.return);
+  }
+
+  // highlight_geo
+  this.highlight_geo=function(param) {
+    if(this.highlight) {
+      if(this.tags.get("geo"))
+	this.highlight.add_geo([this.tags.get("geo")]);
+    }
+  }
 
   // set_highlight
   this.set_highlight=function() {
@@ -50,7 +80,7 @@ function category_rule_match(dom, cat, rule) {
 
       if(!geo) {
 	// request from server
-	geos.push(geo_center);
+	this.load_more_tags(["geo"], this.highlight_geo.bind(this));
       }
       else {
 	geos.push(geo);
