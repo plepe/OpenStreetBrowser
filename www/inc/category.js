@@ -97,7 +97,10 @@ function category(id) {
     }
 
     dom_clean(div.header);
-    dom_create_append_text(div.header, this.tags.get_lang("name", ui_lang));
+    div.header_name=dom_create_append(div.header, "a");
+    div.header_name.className="header";
+    div.header_name.onclick=this.toggle_open.bind(this, div);
+    dom_create_append_text(div.header_name, this.tags.get_lang("name", ui_lang));
 
     if(div.open) {
       dom_clean(div.status);
@@ -136,7 +139,6 @@ function category(id) {
 
     div.header=dom_create_append(div, "div");
     div.header.className="header";
-    div.header.onclick=this.toggle_open.bind(this, div);
 
     div.status=dom_create_append(div, "div");
     div.status.className="status";

@@ -39,6 +39,14 @@ function category_osm(id) {
     if(!div)
       return;
 
+    var span=dom_create_append(div.header, "span");
+    span.className="category_tools";
+    div.header.insertBefore(span, div.header.firstChild);
+    var a=dom_create_append(span, "a");
+    a.className="category_tools";
+    a.onclick=this.start_editor.bind(this);
+    dom_create_append_text(a, "edit");
+
     if(!this.result||!this.result.data)
       return;
 

@@ -2,11 +2,15 @@ div.category_closed {
 }
 div.category_open {
 }
-div.category_closed .header,
-div.category_open .header {
+div.category_closed .header a.header,
+div.category_open .header a.header {
   text-align: center;
   font-weight: normal;
   font-style: italic;
+  border-bottom: none;
+}
+div.category_closed .header,
+div.category_open .header {
   border-bottom: 1px dotted #999;
 }
 
@@ -30,13 +34,18 @@ div.category_open
   border-bottom: 1px dotted #999;
 }
 div.category_open
-  div.category_closed .header,
+  div.category_closed .header a.header,
 div.category_open
-  div.category_open .header {
+  div.category_open .header a.header {
   font-size: 13px;
   font-weight: bold;
   font-family: Tahoma, Arial, Verdana;
   font-style: normal;
+}
+div.category_open
+  div.category_closed .header,
+div.category_open
+  div.category_open .header {
   text-align: left;
   padding-top: 3px;
   margin-bottom: 3px;
@@ -66,14 +75,32 @@ div.category_open
 div.category_open
   div.category_open
     div.category_open .header {
-  font-size: 11px;
-  font-weight: bold;
   padding-top: 1px;
   margin-bottom: 2px;
-  text-align: left;
   border-bottom: 0px;
+}
+div.category_open
+  div.category_open
+    div.category_closed .header a.header,
+div.category_open
+  div.category_open
+    div.category_open .header a.header {
+  font-size: 11px;
+  font-weight: bold;
+  text-align: left;
 }
 
 div.category_open .data ul {
   margin-bottom: 0px;
+}
+
+span.category_tools {
+  float: right;
+  margin-right: 2px;
+  margin-top: 1px;
+}
+span.category_tools,
+a.category_tools {
+  font-size: 8pt;
+  font-weight: normal;
 }
