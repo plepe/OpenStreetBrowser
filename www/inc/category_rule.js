@@ -42,8 +42,25 @@ function category_rule_match(dom, cat, rule) {
 
   // set_highlight
   this.set_highlight=function() {
-    if(!this.highlight)
-      this.highlight=new highlight([this.tags.get("geo:center")]);
+    var geos=[];
+
+    if(!this.highlight) {
+      var geo=this.tags.get("geo");
+      var geo_center=this.tags.get("geo:center");
+
+      if(!geo) {
+	// request from server
+	geos.push(geo_center);
+      }
+      else {
+	geos.push(geo);
+      }
+      if(!geo_center) {
+	geo_center=geo;
+      }
+
+      this.highlight=new highlight(geos, geo_center);
+    }
 
     this.highlight.show();
   }

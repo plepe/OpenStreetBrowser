@@ -114,15 +114,18 @@ function unset_highlight() {
   last_highlight_request=[];
 }
 
-function highlight(geos) {
+function highlight(geos, center) {
   this.features=[];
+  this.center_feature=0;
 
   this.show=function() {
     vector_layer.addFeatures(this.features);
+    vector_layer.addFeatures([this.center_feature]);
   }
 
   this.hide=function() {
     vector_layer.removeFeatures(this.features);
+    vector_layer.removeFeatures([this.center_feature]);
   }
 
   // constructor
@@ -141,7 +144,19 @@ function highlight(geos) {
 	graphicHeight: 25,
 	graphicXOffset: -13,
 	graphicYOffset: -13,
-	fill: "none"
+	fill: "#e0e0e0"
       });
   }
+
+  var way=new postgis(center);
+  this.center_feature=way.geo();
+
+  set_feature_style(this.center_feature, 
+    {
+      externalGraphic: "img/hi_node.png",
+      graphicWidth: 25,
+      graphicHeight: 25,
+      graphicXOffset: -13,
+      graphicYOffset: -13,
+    });
 }
