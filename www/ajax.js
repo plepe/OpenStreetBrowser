@@ -30,6 +30,15 @@ function ajax(funcname, param, _callback) {
     if(req.readyState==4) {
       this.xmldata=req.responseXML;
 
+      if(!this.xmldata)
+	return req;
+
+      var ret=this.xmldata.getElementsByTagName("return");
+      if(ret.length) {
+	var ret=json_parse(ret[0].firstChild.nodeValue);
+	req.return=ret;
+      }
+
       if(callback)
         callback(req);
     }
