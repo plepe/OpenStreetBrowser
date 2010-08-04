@@ -113,3 +113,35 @@ function unset_highlight() {
   highlight_feature=[];
   last_highlight_request=[];
 }
+
+function highlight(geos) {
+  this.features=[];
+
+  this.show=function() {
+    vector_layer.addFeatures(this.features);
+  }
+
+  this.hide=function() {
+    vector_layer.removeFeatures(this.features);
+  }
+
+  // constructor
+  for(var i=0; i<geos.length; i++) {
+    var geo=geos[i];
+
+    var way=new postgis(geo);
+    this.features=way.geo();
+
+    set_feature_style(this.features, 
+      {
+	strokeWidth: 4,
+	strokeColor: "black",
+	externalGraphic: "img/hi_node.png",
+	graphicWidth: 25,
+	graphicHeight: 25,
+	graphicXOffset: -13,
+	graphicYOffset: -13,
+	fill: "none"
+      });
+  }
+}

@@ -26,8 +26,8 @@ function category_rule_match(dom, cat, rule) {
 
     var a=dom_create_append(li, "a");
     a.href="#"+this.id;
-    a.onmouseover="set_highlight([\""+this.id_split.join("\", \"")+"\"])";
-    a.onmouseout='unset_highlight()'
+    a.onmouseover=this.set_highlight.bind(this);
+    a.onmouseout=this.unset_highlight.bind(this);
 
     x=this.tags.get("display_name");
     if(!x)
@@ -38,6 +38,22 @@ function category_rule_match(dom, cat, rule) {
       x=" ("+x+")";
       dom_create_append_text(li, x);
     }
+  }
+
+  // set_highlight
+  this.set_highlight=function() {
+    if(!this.highlight)
+      this.highlight=new highlight([this.tags.get("geo:center")]);
+
+    this.highlight.show();
+  }
+
+  // unset_highlight
+  this.unset_highlight=function() {
+    if(!this.highlight)
+      return;
+
+    this.highlight.hide();
   }
 }
 
