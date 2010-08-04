@@ -19,25 +19,43 @@
  */
 var last_params;
 
-function ajax(funcname, param, _callback) {
+// ajax - calls a php_function with params
+// parameter:
+// funcname       the name of the php-function. the php-function has to 
+//                be called "ajax_"+funcname
+// param          an associative array of parameters
+// callback       a function which will be called when the request ist 
+//                finished. if empty the call will be syncronous and the
+//                result will be returned
+//
+// return value/parameter to callback
+// response       the status of the request
+//  .responseText the response as plain text
+//  .responseXML  the response as DOMDocument (if valid XML)
+//  .return       the return value of the function
+function ajax(funcname, param, callback) {
   // private
   this.xmldata;
   // public
   var req=false;
-  var callback;
+  var sync;
+
+  function get_return() {
+    this.xmldata=req.responseXML;
+
+    if(!this.xmldata)
+      return req;
+
+    var ret=this.xmldata.getElementsByTagName("return");
+    if(ret.length) {
+      var ret=json_parse(ret[0].firstChild.nodeValue);
+      req.return=ret;
+    }
+  }
 
   function req_change() {
     if(req.readyState==4) {
-      this.xmldata=req.responseXML;
-
-      if(!this.xmldata)
-	return req;
-
-      var ret=this.xmldata.getElementsByTagName("return");
-      if(ret.length) {
-	var ret=json_parse(ret[0].firstChild.nodeValue);
-	req.return=ret;
-      }
+      get_return();
 
       if(callback)
         callback(req);
@@ -72,65 +90,18 @@ function ajax(funcname, param, _callback) {
     ajax_build_request(param, "param", p);
     p=p.join("&");
 
-    callback=_callback;
     req.onreadystatechange = req_change;
-    req.open("GET", "ajax.php?func="+funcname+"&"+p, 1);
-    last_params=p;
-    req.send("");
-  }
-}
-
-function ajax_call(funcname, param) {
-  // private
-  this.xmldata;
-  // public
-  var req=false;
-  var callback;
-
-  // branch for native XMLHttpRequest object
-  if(window.XMLHttpRequest) {
-    try {
-      req = new XMLHttpRequest();
-    }
-    catch(e) {
-      req = false;
-    }
-    // branch for IE/Windows ActiveX version
-  } else if(window.ActiveXObject) {
-    try {
-      req = new ActiveXObject("Msxml2.XMLHTTP");
-    }
-    catch(e) {
-      try {
-        req = new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      catch(e) {
-        req = false;
-      }
-    }
-  }
-
-  if(req) {
-    var p=new Array();
-    ajax_build_request(param, "param", p);
-    p=p.join("&");
-
-    req.open("GET", "ajax.php?func="+funcname+"&"+p, false);
+    sync=callback!=null;
+    req.open("GET", "ajax.php?func="+funcname+"&"+p, sync);
     last_params=p;
     req.send("");
 
-    var xml=req.responseXML;
-    if(!xml)
-      return req;
-
-    var ret=xml.getElementsByTagName("return");
-    if(ret.length) {
-      var ret=json_parse(ret[0].firstChild.nodeValue);
-      return ret;
+    if(!sync) {
+      get_return();
     }
-
-    return req;
   }
+
+  return req;
 }
 
 function ajax_direct(url, param, _callback) {
