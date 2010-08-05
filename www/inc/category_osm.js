@@ -205,6 +205,15 @@ function category_osm(id) {
       return;
     }
 
+    // Got a wrong version - reload definition (which requests new data later)
+    var recv_version=dom.getAttribute("version");
+    if((recv_version)&&(recv_version!=this.version)) {
+      this.result=0;
+
+      this.load_def(recv_version);
+      return;
+    }
+
     this.result.recv(dom, viewbox);
 
     call_hooks("category_loaded_matches", this, viewbox)
@@ -252,9 +261,8 @@ function category_osm(id) {
 
     this.write_div();
 
-    if(this.open) {
-      this.request_data();
-    }
+    if(category_root)
+      category_root.shall_reload();
 
     // register overlay
     if(!(this.overlay=get_overlay(this.id)))
