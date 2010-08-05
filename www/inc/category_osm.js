@@ -31,6 +31,11 @@ function category_osm(id) {
     }
   }
 
+  // start_editor
+  this.start_editor=function() {
+    new category_editor(this.id);
+  }
+
   // write_div
   this.inherit_write_div=this.write_div;
   this.write_div=function(div) {

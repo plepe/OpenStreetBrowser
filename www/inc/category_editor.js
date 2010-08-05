@@ -1,8 +1,9 @@
 function category_editor(id) {
   // editor
   this.init=function() {
+    dom_clean(this.win.content);
     this.form=document.createElement("div");
-    this.win.win.appendChild(this.form);
+    this.win.content.appendChild(this.form);
 
     var div=document.createElement("div");
     this.tags.editor(div);
@@ -15,7 +16,7 @@ function category_editor(id) {
     this.div_rule_list.className="editor_category_rule_list";
     this.form.appendChild(this.div_rule_list);
 
-    for(i=0; i<this.rules.length; i++) {
+    for(var i=0; i<this.rules.length; i++) {
       var div=document.createElement("div");
       this.div_rule_list.appendChild(div);
       div.className="editor_category_rule";
@@ -165,7 +166,6 @@ function category_editor(id) {
     while(cur) {
       if(cur.nodeName=="rule") {
         var t=new category_edit_rule(this, cur);
-	t.id=cur.getAttribute("id");
 	this.rules.push(t);
       }
       cur=cur.nextSibling;
