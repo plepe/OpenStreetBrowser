@@ -35,6 +35,22 @@ function category_osm(id) {
   this.start_editor=function() {
     new category_editor(this.id);
   }
+  
+  // open_category
+  this.inherit_open_category=this.open_category;
+  this.open_category=function(div) {
+    this.inherit_open_category(div);
+    if(this.overlay)
+      this.overlay.show();
+  }
+
+  // close_category
+  this.inherit_close_category=this.close_category;
+  this.close_category=function(div) {
+    this.inherit_close_category(div);
+    if(this.overlay)
+      this.overlay.hide();
+  }
 
   // write_div
   this.inherit_write_div=this.write_div;
