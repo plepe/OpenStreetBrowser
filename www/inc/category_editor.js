@@ -77,7 +77,7 @@ function category_editor(id) {
 
     for(var i=0; i<this.rules.length; i++) {
       if(this.rules[i]==rule) {
-        array_remove(this.rules, i);
+        this.rules=array_remove(this.rules, i);
       }
     }
 
