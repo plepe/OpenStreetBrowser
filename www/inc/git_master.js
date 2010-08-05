@@ -5,7 +5,8 @@ function git_master() {
   this.commit_start=function(param) {
     var p=array_merge(new clone(this.ajax_param), param);
 
-    var ret=ajax_call("git_commit_start", p);
+    var response=ajax("git_commit_start", p);
+    var ret=response.return;
     if(typeof ret=="string")
       commit_id=ret;
     else
@@ -24,7 +25,8 @@ function git_master() {
     p.commit_id=this.commit_id();
     p.message=message;
 
-    var ret=ajax_call("git_commit_end", p);
+    var response=ajax("git_commit_end", p);
+    var ret=response.return;
     commit_id=null;
     return ret;
   }
@@ -34,7 +36,8 @@ function git_master() {
     var p=new clone(this.ajax_param);
     p.commit_id=this.commit_id();
 
-    var ret=ajax_call("git_commit_cancel", p);
+    var response=ajax("git_commit_cancel", p);
+    var ret=response.return;
     commit_id=null;
     return ret;
   }

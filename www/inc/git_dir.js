@@ -3,7 +3,8 @@ function git_dir(master, id, obj_proto) {
   this.obj_list=function() {
     var p=new clone(this.ajax_param);
 
-    var list=ajax_call("git_obj_list", p);
+    var response=ajax("git_obj_list", p);
+    var list=response.return;
 
     var ret=[];
     for(var id in list) {
@@ -24,7 +25,7 @@ function git_dir(master, id, obj_proto) {
       p.obj=id;
     p.commit_id=this.commit_id();
 
-    var ret=ajax_call("git_create_obj", p);
+    var ret=ajax("git_create_obj", p);
     var result=ret.responseXML.getElementsByTagName("result");
     result=result[0];
 
@@ -36,7 +37,8 @@ function git_dir(master, id, obj_proto) {
     var p=new clone(this.ajax_param);
     p.obj=id;
 
-    var ret=ajax_call("git_get_obj", p);
+    var response=ajax("git_get_obj", p);
+    var ret=response.return;
 
     if(!ret)
       return;
