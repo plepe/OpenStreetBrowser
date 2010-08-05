@@ -1,4 +1,6 @@
 function git_dir(master, id, obj_proto) {
+  var obj_cache={};
+
   // file_list
   this.obj_list=function() {
     var p=new clone(this.ajax_param);
@@ -8,7 +10,16 @@ function git_dir(master, id, obj_proto) {
 
     var ret=[];
     for(var id in list) {
-      ret.push(new obj_proto(this, id, list[id]));
+      var obj;
+
+      if(obj_cache[id])
+        obj=obj_cache[id];
+      else {
+	obj=new obj_proto(this, id, list[id])
+	obj_cache[id]=obj;
+      }
+
+      ret.push(obj);
     }
 
     return ret;
@@ -34,6 +45,9 @@ function git_dir(master, id, obj_proto) {
 
   // get obj
   this.get_obj=function(id) {
+    if(obj_cache[id])
+      return obj_cache[id];
+
     var p=new clone(this.ajax_param);
     p.obj=id;
 
@@ -43,7 +57,9 @@ function git_dir(master, id, obj_proto) {
     if(!ret)
       return;
 
-    return new obj_proto(this, id, ret);
+    var obj=new obj_proto(this, id, ret);
+    obj_cache[id]=obj;
+    return obj;
   }
 
   // constructor
