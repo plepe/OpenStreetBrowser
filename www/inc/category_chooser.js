@@ -10,6 +10,12 @@ function category_chooser(callback) {
     this.win.close();
   }
 
+  // create category
+  this.create_category=function() {
+    this.win.close();
+    new category_editor();
+  }
+
   // load_callback
   this.load_callback=function(data) {
     var list=data.responseXML;
@@ -30,7 +36,13 @@ function category_chooser(callback) {
       dom_create_append_text(a, ob.firstChild.nodeValue);
     }
 
-    //ret+="<p><a href='javascript:edit_list()'>New category</a><br>\n";
+    var input=dom_create_append(this.win.content, "input");
+    input.type="button";
+    input.value=t("New Category");
+    input.onclick=this.create_category.bind(this);
+
+    dom_create_append(this.win.content, "br");
+
     var input=dom_create_append(this.win.content, "input");
     input.type="button";
     input.value=t("cancel");

@@ -179,7 +179,13 @@ function category_editor(id) {
   this.win=new win("category_editor");
   this.win.content.innerHTML="loading";
 
-  this.load_def();
+  if(this.id)
+    this.load_def();
+  else {
+    this.tags=new tags(category_tags_default);
+    this.rules=[];
+    this.init();
+  }
 }
 
 function category_edit_rule(category, dom) {
