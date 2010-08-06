@@ -104,3 +104,6 @@ lang_str["error"]=[ "An error occured: "];
 lang_str["error:not_logged_in"]=[ "you are not logged in" ];
 
 lang_str["category:status"]=["Status"];
+lang_str["category:data_status"]=["Status"];
+lang_str["category:old_version"]=["A new version of this category is being prepared."];
+lang_str["category:not_compiled"]=["New category is being prepared."];

@@ -159,12 +159,38 @@ function category_osm(id) {
     }
   }
 
+  // write_status - write the status information of the category
+  this.inherit_write_status=this.write_status;
+  this.write_status=function(div) {
+    this.inherit_write_status(div);
+
+    if((!this.result)||(!this.result.data_status))
+      return;
+
+    if(div.status.firstChild)
+      dom_create_append(div.status, "br");
+
+    switch(this.result.data_status) {
+      case "old_version":
+      case "not_compiled":
+	var span=dom_create_append(div.status, "span");
+	span.className="category_old_version";
+	dom_create_append_text(span, t("category:"+this.result.data_status));
+        break;
+      default:
+	dom_create_append_text(div.status, t("category:data_status")+": "+this.result.data_status);
+        break;
+    }
+  }
+
+  // result_ob - an object in category_osm for the current result
   this.result_ob=function(category) {
     // recv
     this.recv=function(dom, viewbox) {
       this.version=dom.getAttribute("version");
       this.viewbox=viewbox;
       this.complete=dom.getAttribute("complete")=="true";
+      this.data_status=dom.getAttribute("status");
 
       var matches=dom.getElementsByTagName("match");
       var last_importance="";

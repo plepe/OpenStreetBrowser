@@ -103,3 +103,6 @@ lang_str["error"]=[ "Ein Fehler ist aufgetreten: "];
 lang_str["error:not_logged_in"]=[ "Du bist nicht eingeloggt" ];
 
 lang_str["category:status"]=["Status"];
+lang_str["category:data_status"]=["Status"];
+lang_str["category:old_version"]=["Eine neue Version der Kategorie ist in Bearbeitung."];
+lang_str["category:not_compiled"]=["Neue Kategorie ist in Bearbeitung."];
