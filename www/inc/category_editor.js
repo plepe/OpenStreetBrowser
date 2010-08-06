@@ -176,6 +176,8 @@ function category_editor(id) {
 
   // constructor
   this.id=id;
+  if(!this.id)
+    this.id="new";
   this.win=new win("category_editor");
   this.win.content.innerHTML="loading";
 

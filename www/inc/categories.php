@@ -557,7 +557,7 @@ function category_save($id, $content, $param=array()) {
     $id=uniqid("cat_");
   }
   if(!$id) {
-    print "No ID given!\n";
+    return array("status"=>"No ID given");
     exit;
   }
 
