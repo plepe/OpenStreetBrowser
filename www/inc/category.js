@@ -87,6 +87,24 @@ function category(id) {
     }
   }
 
+  // write_status - write the status information of the category
+  this.write_status=function(div) {
+    dom_clean(div.status);
+
+    if((!this.result)||(!this.result.status))
+      return;
+
+    switch(this.result.status) {
+      case "loading":
+	div.status.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+t("loading");
+	break;
+      case "recv":
+        break;
+      default:
+        dom_create_append_text(div.status, t("category:status")+": "+this.result.status);
+    }
+  }
+
   // write_div - fill information of an attached div (or all) with data
   this.write_div=function(div) {
     if(!div) {
@@ -103,9 +121,7 @@ function category(id) {
     dom_create_append_text(div.header_name, this.tags.get_lang("name", ui_lang));
 
     if(div.open) {
-      dom_clean(div.status);
-      if(this.result&&this.result.status)
-	dom_create_append_text(div.status, t("category:"+this.result.status));
+      this.write_status(div);
 
       dom_clean(div.sub);
       for(var i=0; i<this.sub_categories.length; i++) {

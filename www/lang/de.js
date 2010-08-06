@@ -101,3 +101,5 @@ lang_str["user:user_exists"]=[ "Kurzname existiert bereits" ];
 
 lang_str["error"]=[ "Ein Fehler ist aufgetreten: "];
 lang_str["error:not_logged_in"]=[ "Du bist nicht eingeloggt" ];
+
+lang_str["category:status"]=["Status"];

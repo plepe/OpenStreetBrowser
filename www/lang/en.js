@@ -102,3 +102,5 @@ lang_str["user:user_exists"]=[ "Username already exists" ];
 
 lang_str["error"]=[ "An error occured: "];
 lang_str["error:not_logged_in"]=[ "you are not logged in" ];
+
+lang_str["category:status"]=["Status"];
