@@ -181,7 +181,7 @@ function category_editor(id) {
   this.win=new win("category_editor");
   this.win.content.innerHTML="loading";
 
-  if(this.id)
+  if(this.id!="new")
     this.load_def();
   else {
     this.tags=new tags(category_tags_default);
