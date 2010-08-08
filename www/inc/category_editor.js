@@ -213,6 +213,8 @@ function category_edit_rule(category, dom) {
       this.content.style.display="none";
     else
       this.content.style.display="block";
+
+    this.rule_title(this.header);
   }
 
   //remove
@@ -240,6 +242,21 @@ function category_edit_rule(category, dom) {
       txt="New rule";
 
     dom_create_append_text(header, txt);
+
+    if((this.content)&&(this.content.style.display=="block"))
+      return;
+
+    if(this.tags.get_lang("description", ui_lang)) {
+      dom_create_append(header, "br");
+
+      dom_create_append_text(header, t("category_rule_tag:description")+": "+this.tags.get_lang("description", ui_lang));
+    }
+
+    if(this.tags.get("match")) {
+      dom_create_append(header, "br");
+
+      dom_create_append_text(header, t("category_rule_tag:match")+": "+this.tags.get("match"));
+    }
   }
 
   this.choose_icon=function() {

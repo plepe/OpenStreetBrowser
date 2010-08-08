@@ -225,14 +225,14 @@ function init() {
 
   var layerpubtran = new OpenLayers.Layer.OSM("OpenStreetBrowser", "http://www.openstreetbrowser.org/skunk/tiles/base/", {numZoomLevels: 19});
   var layermarkers = new OpenLayers.Layer.Markers("Markers");
-//  var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
+  var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
 //  var layerTah = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
 //  var layercycle = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
 //  var layertest1    = new OpenLayers.Layer.OSM("Test (Skunk)", "/tiles/base/", {numZoomLevels: 19});
 //  var layertest2    = new OpenLayers.Layer.OSM("Test (Lesewesen)", "/lesewesen/tiles/base/", {numZoomLevels: 17});
 
   //map.addLayers([ layerpubtran, layerMapnik, layerTah, layercycle, layertest1, layertest2]);
-  map.addLayers([ layerpubtran, layermarkers]);
+  map.addLayers([ layerpubtran, layerMapnik, layermarkers]);
 
   var permalink=document.getElementById("permalink");
   map.addControl(new OpenLayers.Control.Permalink(permalink, "http://www.openstreetbrowser.org/"));

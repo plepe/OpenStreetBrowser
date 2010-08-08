@@ -106,3 +106,6 @@ lang_str["category:status"]=["Status"];
 lang_str["category:data_status"]=["Status"];
 lang_str["category:old_version"]=["Eine neue Version der Kategorie ist in Bearbeitung."];
 lang_str["category:not_compiled"]=["Neue Kategorie ist in Bearbeitung."];
+
+lang_str["category_rule_tag:match"]=["Tag Vergleich"];
+lang_str["category_rule_tag:description"]=["Beschreibung"];
