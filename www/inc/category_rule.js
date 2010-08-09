@@ -51,15 +51,15 @@ function category_rule_match(dom, cat, rule) {
 
   // load_more_tags_callback
   this.load_more_tags_callback=function(callback, response) {
-    if(!response.return) {
+    if(!response.return_value) {
       alert("response not valid: "+response.responseText);
       return;
     }
 
-    for(var i in response.return)
-      this.tags.set(i, response.return[i]);
+    for(var i in response.return_value)
+      this.tags.set(i, response.return_value[i]);
 
-    callback(response.return);
+    callback(response.return_value);
   }
 
   // highlight_geo

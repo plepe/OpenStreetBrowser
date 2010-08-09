@@ -36,7 +36,7 @@ function git_obj(dir, id, files) {
     param.commit_id=this.commit_id();
 
     var response=ajax("git_obj_save", param);
-    var ret=response.return;
+    var ret=response.return_value;
 
     if(this.save_done)
       this.save_done(file, ret);
@@ -50,7 +50,7 @@ function git_obj(dir, id, files) {
     param.version_branch=version_branch;
 
     var response=ajax("git_obj_load", param);
-    var ret=response.return;
+    var ret=response.return_value;
 
     return ret;
   }

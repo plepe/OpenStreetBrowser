@@ -32,7 +32,7 @@ var last_params;
 // response       the status of the request
 //  .responseText the response as plain text
 //  .responseXML  the response as DOMDocument (if valid XML)
-//  .return       the return value of the function
+//  .return_value the return value of the function
 function ajax(funcname, param, callback) {
   // private
   this.xmldata;
@@ -49,7 +49,7 @@ function ajax(funcname, param, callback) {
     var ret=this.xmldata.getElementsByTagName("return");
     if(ret.length) {
       var ret=json_parse(ret[0].firstChild.nodeValue);
-      req.return=ret;
+      req.return_value=ret;
     }
   }
 

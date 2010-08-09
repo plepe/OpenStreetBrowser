@@ -6,7 +6,7 @@ function git_dir(master, id, obj_proto) {
     var p=new clone(this.ajax_param);
 
     var response=ajax("git_obj_list", p);
-    var list=response.return;
+    var list=response.return_value;
 
     var ret=[];
     for(var id in list) {
@@ -52,7 +52,7 @@ function git_dir(master, id, obj_proto) {
     p.obj=id;
 
     var response=ajax("git_get_obj", p);
-    var ret=response.return;
+    var ret=response.return_value;
 
     if(!ret)
       return;
