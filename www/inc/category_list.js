@@ -1,5 +1,6 @@
 var category_root;
 var root_div;
+var category_request;
 
 function _category_list() {
   this.inheritFrom=category;
@@ -68,20 +69,18 @@ function _category_list() {
     param.category=keys(list).join(",");
     param.count=10;
 
-//    if(list_reload_working) {
-//      list_reload_necessary=1;
-//      return;
-//    }
+    if(category_request) {
+      category_request.abort();
+    }
 
-    //list_reload_working=1;
-    ajax_direct("list.php", param, this.request_data_callback.bind(this));
+    category_request=ajax_direct("list.php", param, this.request_data_callback.bind(this));
   }
 
   // request_data_callback - called after loading new data from server
   // TODO: OSM-specific, this might not be the correct place
   this.request_data_callback=function(response) {
     var data=response.responseXML;
-    //list_reload_working=0;
+    category_request=null;
 
     if(!data) {
       alert("no data\n"+response.responseText);

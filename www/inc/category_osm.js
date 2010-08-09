@@ -129,19 +129,12 @@ function category_osm(id) {
       param.exclude=there.join(",");
     }
 
-//    if(list_reload_working) {
-//      list_reload_necessary=1;
-//      return;
-//    }
-
-    //list_reload_working=1;
     ajax_direct("list.php", param, this.request_data_callback.bind(this));
   }
 
   // request_data_callback - called after loading new data from server
   this.request_data_callback=function(response) {
     var data=response.responseXML;
-    //list_reload_working=0;
 
     if(!data) {
       alert("no data\n"+response.responseText);
@@ -188,9 +181,14 @@ function category_osm(id) {
     // recv
     this.recv=function(dom, viewbox) {
       this.version=dom.getAttribute("version");
-      this.viewbox=viewbox;
       this.complete=dom.getAttribute("complete")=="true";
       this.data_status=dom.getAttribute("status");
+
+      // maybe we can save it to the cache if the viewbox changed?
+      if((this.viewbox)&&(this.viewbox!=viewbox)) {
+	return;
+      }
+      this.viewbox=viewbox;
 
       var matches=dom.getElementsByTagName("match");
       var last_importance="";
