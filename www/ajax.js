@@ -55,6 +55,9 @@ function ajax(funcname, param, callback) {
 
   function req_change() {
     if(req.readyState==4) {
+      if(req.status==0)
+	return;
+
       get_return();
 
       if(callback)
@@ -113,6 +116,9 @@ function ajax_direct(url, param, _callback) {
 
   function req_change() {
     if(req.readyState==4) {
+      if(req.status==0)
+	return;
+
       this.xmldata=req.responseXML;
 
       if(callback)
@@ -154,6 +160,8 @@ function ajax_direct(url, param, _callback) {
     last_params=p;
     req.send("");
   }
+
+  return req;
 }
 
 function ajax_read_formated_text(xmldata, key) {
@@ -236,6 +244,9 @@ function ajax_post(url, getparam, postdata, _callback) {
 
   function req_change() {
     if(req.readyState==4) {
+      if(req.status==0)
+	return;
+
       this.xmldata=req.responseXML;
 
       if(callback)
@@ -281,6 +292,8 @@ function ajax_post(url, getparam, postdata, _callback) {
 
     req.send(postdata);
   }
+  
+  return req;
 }
 
 
