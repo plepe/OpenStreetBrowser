@@ -6,6 +6,7 @@ lang_str["list_info"]             =[ "Choose a category to browse map content or
 lang_str["ok"]		    	  =[ "Ok" ];
 lang_str["save"]		  =[ "Save" ];
 lang_str["cancel"]		  =[ "Cancel" ];
+lang_str["choose"]		  =[ "Choose" ];
 
 lang_str["geo_click_pos"]         =[ "Click on your position on the map" ];
 
@@ -98,3 +99,11 @@ lang_str["user:no_username"]=[ "Please supply a username!" ];
 lang_str["user:password_no_match"]=[ "Passwords do not match!" ];
 lang_str["user:full_name"]=[ "Full name" ];
 lang_str["user:user_exists"]=[ "Username already exists" ];
+
+lang_str["error"]=[ "An error occured: "];
+lang_str["error:not_logged_in"]=[ "you are not logged in" ];
+
+lang_str["category:status"]=["Status"];
+lang_str["category:data_status"]=["Status"];
+lang_str["category:old_version"]=["A new version of this category is being prepared."];
+lang_str["category:not_compiled"]=["New category is being prepared."];

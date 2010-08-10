@@ -113,3 +113,64 @@ function unset_highlight() {
   highlight_feature=[];
   last_highlight_request=[];
 }
+
+function highlight(geos, center) {
+  this.features=[];
+  this.center_feature=[];
+  this.shown=false;
+
+  // show
+  this.show=function() {
+    vector_layer.addFeatures(this.features);
+    vector_layer.addFeatures(this.center_feature);
+    this.shown=true;
+  }
+
+  // hide
+  this.hide=function() {
+    vector_layer.removeFeatures(this.features);
+    vector_layer.removeFeatures(this.center_feature);
+    this.shown=false;
+  }
+
+  // add_geo
+  this.add_geo=function(geos) {
+    for(var i=0; i<geos.length; i++) {
+      var geo=geos[i];
+
+      var way=new postgis(geo);
+      var new_features=way.geo();
+      this.features=this.features.concat(new_features);
+
+      set_feature_style(this.features, 
+	{
+	  strokeWidth: 4,
+	  strokeColor: "black",
+	  externalGraphic: "img/big_node.png",
+	  graphicWidth: 11,
+	  graphicHeight: 11,
+	  graphicXOffset: -6,
+	  graphicYOffset: -6,
+	  fill: "none"
+	});
+    }
+
+    if(this.shown)
+      this.show();
+  }
+
+  // constructor
+  this.add_geo(geos);
+
+  var way=new postgis(center);
+  this.center_feature=way.geo();
+
+  set_feature_style(this.center_feature, 
+    {
+      externalGraphic: "img/hi_node.png",
+      graphicWidth: 25,
+      graphicHeight: 25,
+      graphicXOffset: -13,
+      graphicYOffset: -13,
+    });
+}

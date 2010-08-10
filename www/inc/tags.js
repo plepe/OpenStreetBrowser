@@ -63,6 +63,10 @@ function tags(d) {
     return data;
   }
 
+  this.set_data=function(d) {
+    data=d;
+  }
+
   this.xml=function(indent) {
     var ret="";
     if(!indent)
@@ -112,28 +116,45 @@ function tags(d) {
   function editor_tag(tags_editor, tr, key, value) {
     this.tags_editor=tags_editor;
 
+    this.change_key=function(ev) {
+      this.tags_editor.editor_change_key(this);
+    }
+
+    this.change=function(ev) {
+      this.tags_editor.editor_change(this);
+    }
+
+    this.set_value_object=function(ob) {
+      this.val=ob;
+      this.val.name="value";
+      this.val.onchange=this.change.bind(this);
+    }
+
     this.remove=function() {
       this.tags_editor.table.removeChild(this.tr); //deleteRow(row);
       this.tags_editor.editor_update();
     }
 
     this.tr=tr;
+    this.tr.tag=this;
 
     var td=document.createElement("td");
     this.tr.appendChild(td);
 
-    this.key_input=document.createElement("input");
-    this.key_input.name="key";
-    this.key_input.value=key;
-    td.appendChild(this.key_input);
+    this.key=document.createElement("input");
+    this.key.name="key";
+    this.key.value=key;
+    this.key.onchange=this.change_key.bind(this);
+    td.appendChild(this.key);
 
-    var td=document.createElement("td");
-    this.tr.appendChild(td);
+    this.val_td=document.createElement("td");
+    this.tr.appendChild(this.val_td);
 
-    this.val_input=document.createElement("input");
-    this.val_input.name="value";
-    this.val_input.value=value;
-    td.appendChild(this.val_input);
+    this.val=document.createElement("input");
+    this.val.name="value";
+    this.val.value=value;
+    this.val.onchange=this.change.bind(this);
+    this.val_td.appendChild(this.val);
 
     var td=document.createElement("td");
     this.tr.appendChild(td);
@@ -143,6 +164,21 @@ function tags(d) {
     input.onclick=this.remove.bind(this);
     input.value="X";
     td.appendChild(input);
+  }
+
+  this.editor_change_key=function(tag) {
+    if(this.editor_on_change_key)
+      this.editor_on_change_key(this, tag);
+
+    this.editor_change(tag);
+
+    tag.key.old_value=tag.key.value;
+  }
+
+  this.editor_change=function(tag) {
+    this.editor_update();
+    if(this.editor_on_change)
+      this.editor_on_change(this, tag);
   }
 
   this.editor=function(div) {
@@ -162,8 +198,10 @@ function tags(d) {
       var tr=document.createElement("tr");
       this.table.appendChild(tr);
 
-      new editor_tag(this, tr, key, data[key]);
+      var tag=new editor_tag(this, tr, key, data[key]);
+      this.editor_change_key(tag);
     }
+    this.editor_change();
 
     div.appendChild(this.table);
 
@@ -189,10 +227,12 @@ function tags(d) {
       return null;
     
     for(var i=0; i<table.rows.length; i++) {
-      var tr=table.rows[i];
-      var k=tr.cells[0].firstChild.value;
-      var v=tr.cells[1].firstChild.value;
-      d[k]=v;
+      var tag=table.rows[i].tag;
+      if(tag) {
+	var k=tag.key.value;
+	var v=tag.val.value;
+	d[k]=v;
+      }
     }
 
     data=d;
@@ -208,16 +248,4 @@ function tags(d) {
       cur=cur.nextSibling;
     }
   }
-}
-
-function editor_add_tag(editor_id) {
-  return tag_editors[editor_id].editor_add_tag();
-}
-
-function editor_update() {
-  return tag_editors[editor_id].editor_update();
-}
-
-function editor_remove_row(editor_id, row) {
-  return tag_editors[editor_id].editor_remove_row(row);
 }

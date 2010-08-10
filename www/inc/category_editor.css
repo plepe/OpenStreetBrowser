@@ -1,0 +1,11 @@
+div.category_editor {
+  position: absolute;
+  background: white;
+  left: 300px;
+  width: 500px;
+  border: 2px solid black;
+  top: 70px;
+  bottom: 50px;
+  overflow: auto;
+  z-index: 10002;
+}

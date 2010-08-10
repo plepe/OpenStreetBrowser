@@ -102,7 +102,8 @@ class category {
     $renderd=build_renderd_config($this->id, $data, $this->tags);
 
     // ... then write all files at once
-    sql_query($data['_']['classify_fun']);
+    foreach($data['_']['classify_fun'] as $table=>$fun)
+      sql_query($fun);
 
     $f1=fopen("$this->file.save", "w");
     fwrite($f1, serialize($data));
@@ -303,8 +304,15 @@ class category {
     }
 
     if($x=$rule_tags->get("icon")) {
-      $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"icon\" v=\"".get_icon($x)."\"/>\n";
+      $icon=get_icon($x);
+
+      if($icon)
+	$icon=$icon->icon_url();
+
+      if($icon) {
+	$icon=strtr($icon, $make_valid);
+	$ret.="  <tag k=\"icon\" v=\"{$icon}\"/>\n";
+      }
     }
 
     if($x=$rule_tags->get("importance")) {

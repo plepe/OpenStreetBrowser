@@ -10,7 +10,7 @@ function lock_dir($dir) {
     print "Couldn't lock directory!<br>\n";
   }
 
-  touch("$dir/.lock", "w");
+  touch("$dir/.lock");
 }
 
 function unlock_dir($dir) {

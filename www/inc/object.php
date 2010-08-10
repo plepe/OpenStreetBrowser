@@ -410,3 +410,15 @@ function load_objects($list) {
 
   return $ret;
 }
+
+function ajax_object_load_more_tags($param) {
+  $ob=load_object($param['id']);
+  $tags=explode(",", $param['tags']);
+  $ret=array();
+
+  if(in_array("geo", $tags)) {
+    $ret['geo']=$ob->data['way'];
+  }
+
+  return $ret;
+}

@@ -6,6 +6,8 @@ include "code.php";
 require_once "inc/global.php";
 //$sql=new sql($mysql_data);
 include "xml.php";
+user_check_auth();
+call_hooks("ajax_start", null);
 
 function error($msg) {
   /// Do something with this error
@@ -34,7 +36,13 @@ $fun="ajax_$_REQUEST[func]";
 //print "<data>\n";
 $xml=new DOMDocument();
 //$ret=export_formated_text("value", html_var_to_js($fun($_REQUEST["param"], $xml)));
-$fun($_REQUEST["param"], $xml);
+$return=$fun($_REQUEST["param"], $xml);
+
+if(!$xml->firstChild) {
+  $res=dom_create_append($xml, "result", $xml);
+  $ret=dom_create_append($res, "return", $xml);
+  dom_create_append_text($ret, json_encode($return), $xml);
+}
 call_hooks("xml_done", $xml);
 print $xml->saveXML();
 

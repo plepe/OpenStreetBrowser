@@ -240,10 +240,6 @@ function parse_match($match, $table="point") {
   return $or_parts;
 }
 
-function postgre_escape($str) {
-  return "E'".strtr($str, array("'"=>"\\'"))."'";
-}
-
 function match_to_sql_colname($col, $table_def, $type="exact") {
   if($type=="exact")
     return "tag_{$table_def[$col]}";

@@ -246,16 +246,27 @@ div.permalink {
   position: absolute;
   font-size: smaller;
 }
-div.edit_list {
+div.edit_icon {
   position: absolute;
   background: white;
-  left: 300px;
-  width: 500px;
+  left: 600px;
+  width: 300px;
   border: 2px solid black;
-  top: 50px;
+  top: 70px;
   bottom: 50px;
   overflow: auto;
-  z-index: 10001;
+  z-index: 10002;
+}
+div.icon_editor {
+  position: absolute;
+  background: white;
+  left: 700px;
+  width: 300px;
+  border: 2px solid black;
+  top: 70px;
+  bottom: 50px;
+  overflow: auto;
+  z-index: 10002;
 }
 td.help {
   font-size: 8pt;
@@ -270,14 +281,7 @@ div.editor_category_rule {
 }
 div.editor_category_rule_list{
 }
-span.list_tools {
-  font-size: 8pt;
-  font-weight: normal;
-  float: right;
-  margin-right: 2px;
-  margin-top: 1px;
-  font-size: smaller;
-} 
+
 a.external {
   font-style: italic;
 }

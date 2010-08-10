@@ -10,6 +10,7 @@ var shown_features=[];
 var showing_details=true;
 var loaded_list={};
 var view_changed_last;
+var data_dir;
 
 function details_content_submit(event) {
   // Sometimes it happens, that it want to submit to the form. 
@@ -131,8 +132,6 @@ function redraw() {
   showing_details=false;
 
   if(x=="") {
-    show_list();
-    list_reload();
   }
   else if(x=="mapkey") {
     hide();
@@ -164,7 +163,7 @@ function redraw() {
 var last_location_hash;
 function check_redraw() {
   if(location.hash!=last_location_hash) {
-    call_hooks("hash_changed");
+    call_hooks("hash_changed", get_hash(), last_location_hash);
     last_location_hash=location.hash;
     redraw();
   }
@@ -181,8 +180,7 @@ function view_changed_start(event) {
 }
 
 function view_changed_delay() {
-  if(get_hash()=="")
-    list_reload();
+  call_hooks("view_changed_delay");
 }
 
 function view_changed(event) {
@@ -208,8 +206,6 @@ function get_permalink() {
 }
 
 function init() {
-  show_list();
-
   if(!location.hash) {
     location.hash="#";
   }
@@ -254,6 +250,8 @@ function init() {
 
   overlays_init();
   map_key_init();
+
+  data_dir=new git_master();
 
   call_hooks("init");
   setTimeout("call_hooks(\"post_init\")", 2000);

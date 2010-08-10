@@ -36,147 +36,6 @@ list_cache.search=function(viewbox, category) {
   return null;
 }
 
-function category_rule_match(dom, cat, rule) {
-  this.tags=new tags();
-  this.tags.readDOM(dom);
-  this.category=cat;
-  this.rule=rule;
-  this.id=dom.getAttribute("id");
-  this.id_split=split_semicolon(dom.getAttribute("id"));
-
-  // text
-  this.list_entry=function() {
-    var ret="";
-    var x;
-    var name="";
-    var add="";
-
-    x=this.tags.get("display_name");
-    if(!x)
-      x=t("unnamed");
-    name=x;
-
-    if(x=this.tags.get("display_type"))
-      add=" ("+x+")";
-
-    var li_style="";
-    if(x=this.tags.get("icon")) {
-      var icon=x;
-      var icon_data;
-
-      li_style+="list-style-image: url('"+x+"'); ";
-//      if(icon_data=icon.match(/^\[\[Image:(.*)\]\]$/)) {
-//	icon_data=icon_data[1].replace(/ /g, "_");
-//	li_style+="list-style-image: url('symbols/"+icon_data+"'); ";
-//      }
-    }
-    if(this.rule.tags.get_lang("name", ui_lang))
-      var title=this.rule.tags.get_lang("name", ui_lang);
-    else
-      var title=this.rule.tags.get("match");
-
-    ret="<li class='listitem' style=\""+li_style+"\" id='list_"+this.id+"' title='"+title+"'><element id='"+this.id+"' rule_id='"+this.rule.id+"'+><a href='#"+this.id+"' onMouseOver='set_highlight([\""+this.id_split.join("\", \"")+"\"])' onMouseOut='unset_highlight()'>"+name+"</a>"+add+"</element></li>\n";
-    return ret;
-  }
-}
-
-function category_rule(category, id, _tags) {
-  // constructor
-  if(!id) {
-    this.id=uniqid();
-    this.tags=new tags(category_rule_tags_default);
-  }
-  else {
-    this.id=id;
-    this.tags=_tags;
-  }
-  this.data=[];
-  this.category=category;
-
-  // editor_toggle
-  this.editor_toggle=function() {
-    if(this.content.style.display!="none")
-      this.content.style.display="none";
-    else
-      this.content.style.display="block";
-  }
-
-  //remove
-  this.remove=function() {
-    this.category.remove_rule(this);
-  }
-
-  // rule_title
-  this.rule_title=function() {
-    var ret="";
-    if(this.tags.get_lang("name", ui_lang))
-      ret+=this.tags.get_lang("name", ui_lang);
-    else if(this.tags.get("match"))
-      ret+=this.tags.get("match");
-    else
-      ret+="New rule";
-
-    return ret;
-  }
-
-  // editor
-  this.editor=function(div, visible) {
-    if(!div) {
-      alert("categories::editor: no valid div supplied");
-      return;
-    }
-
-    this.div=div;
-
-    ret=this.rule_title();
-
-    this.header=document.createElement("div");
-    this.header.innerHTML=ret;
-    this.div.appendChild(this.header);
-    this.header.onclick=this.editor_toggle.bind(this);
-
-    this.content=document.createElement("div");
-    if(!visible)
-      this.content.style.display="none";
-    this.div.appendChild(this.content);
-
-    this.tags_editor=document.createElement("div");
-    this.content.appendChild(this.tags_editor);
-
-    var txt=document.createElement("div");
-    txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Edit_List'>Help</a>):\n";
-    this.tags_editor.appendChild(txt);
-
-    this.tags.editor(this.tags_editor);
-
-    var input=document.createElement("input");
-    input.type="button";
-    input.value="Ok";
-    input.onclick=this.editor_toggle.bind(this);
-    this.content.appendChild(input);
-
-    var input=document.createElement("input");
-    input.type="button";
-    input.value="Remove Rule";
-    input.onclick=this.remove.bind(this);
-    this.content.appendChild(input);
-  }
-
-  // load_entry
-  this.load_entry=function(dom) {
-    var id=dom.getAttribute("id");
-    if(!this.data[id]) {
-      this.data[id]=new category_rule_match(dom, this.category, this);
-    }
-    var match=this.data[id];
-    var time=new Date();
-    this.data[id].access=time.getTime();
-
-    return this.data[id];
-  }
-
-}
-
 function category(id) {
   // show
   this.show=function(id) {
@@ -504,8 +363,11 @@ function category(id) {
       case "merge failed":
         this.resolve_conflict(stat.getAttribute("branch"), stat.getAttribute("version"));
 	break;
+      case "error":
+	alert(t("error")+t("error:"+stat.getAttribute("error")));
+        break;
       default:
-	alert("Saved with status "+stat.getAttribute("status"));
+	alert("Result of save: status "+stat.getAttribute("status"));
     }
   }
 
