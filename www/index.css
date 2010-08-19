@@ -49,7 +49,7 @@ input#search {
   line-height:130%;
   margin-top:5px;
 }
-.logo p { padding-top:45px; margin:0; }
+.logo p { padding-top:35px; margin:0; }
 .logo .bigger { font-size:28px; }
 .logo .smaller { font-size:14px; }
 .logo img { 
@@ -313,6 +313,12 @@ label:hover {
 td.contextmenu_entry:hover {
   background:#CECECE;
   cursor:pointer;
+}
+
+select.icon-menu option {
+  background-repeat: no-repeat;
+  background-position: 3px top;
+  text-indent: 18px;
 }
 
 /**************************/

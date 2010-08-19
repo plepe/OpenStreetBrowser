@@ -80,9 +80,9 @@ function options_select(key, values) {
     current_value=values[0];
 
   ret+=t("options:"+key)+": ";
-  ret+="  <select name='"+key+"'>\n";
+  ret+="  <select name='"+key+"' class='icon-menu'>\n";
   for(var i=0; i<values_keys.length; i++) {
-    ret+="  <option value='"+values_keys[i]+"'";
+    ret+="  <option style=\"background-image: url('img/lang/"+values_keys[i]+".png');\" value='"+values_keys[i]+"'";
     if(current_value==values_keys[i])
       ret+=" selected='selected'";
     ret+=">"+t(values[values_keys[i]])+"</option>\n";

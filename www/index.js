@@ -335,6 +335,8 @@ function init() {
   polygon_control=new OpenLayers.Control.DrawFeature(layerPolygon,OpenLayers.Handler.Polygon);
   map.addControl(polygon_control);
 
+  map.events.register("dblclick", polygon_control, testtt);
+
   if(start_lon&&(first_load)) {
     var lonlat = new OpenLayers.LonLat(start_lon, start_lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
     map.setCenter(lonlat, start_zoom);
@@ -352,6 +354,10 @@ function init() {
 
   call_hooks("init");
   //setTimeout("call_hooks(\"post_init\")", 2000);
+}
+
+function testtt() {
+  alert("hallo");
 }
 
 function add_funs(arr) {
