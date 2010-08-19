@@ -88,6 +88,8 @@ function toolbox_favorites(update) {
 function toolbox_measure() {
   if((toolbox_active=="measure")||(toolbox_locked==1)){
     toolbox_hide();
+    polygon_control.deactivate();
+    map.div.style.cursor="";
     return;
   }
   toolbox_active="measure";
@@ -97,6 +99,8 @@ function toolbox_measure() {
   document.getElementById("toolbox4").className="toolboxbutton_active";
 
   var text = "<i>Measurements</i><br/><br/>At first set measure points on the map.<br/><br/>distance: 0m<br/>area: 0m²<br/><br/>";
+  var control = polygon_control.activate();
+  map.div.style.cursor="crosshair";
   toolbox_fillwithtext(text);
 }
 

@@ -311,7 +311,8 @@ label:hover {
 }
 
 td.contextmenu_entry:hover {
-  background:#EFEFEF;
+  background:#CECECE;
+  cursor:pointer;
 }
 
 /**************************/
