@@ -222,7 +222,13 @@ img.loading { padding-left: 13px; border-width: 0px; }
   color: #333333;
   font-family: Tahoma,Arial,Verdana;
   font-size: smaller;
-  text-shadow: 0.1em 0.1em 0.1em #ffffff
+  text-shadow: 0.1em 0.1em 0.1em #ffffff;
+}
+.olControlScaleLine {
+  text-shadow: 0.1em 0.1em 0.1em #ffffff;
+}
+.olControlMousePosition {
+  text-shadow: 0.1em 0.1em 0.1em #ffffff;
 }
 li.listitem {
 }
