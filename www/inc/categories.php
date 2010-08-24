@@ -155,7 +155,7 @@ function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
   $style->apply($tags->get("icon_point_style"));
   foreach(array("file", "width", "height", "type") as $a)
     unset($style->style[$a]);
-  $style->dom_set_attributes($sym);
+  $style->dom_set_attributes($sym, $dom);
 
   if($tags->get("icon_text")) {
     $sym=$dom->createElement("TextSymbolizer");
@@ -169,7 +169,7 @@ function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
     $style->apply($tags->get("icon_text_style"));
     foreach(array("vertical_alignment", "name", "dy") as $a)
       unset($style->style[$a]);
-    $style->dom_set_attributes($sym);
+    $style->dom_set_attributes($sym, $dom);
   }
 
   return $rule;
@@ -211,7 +211,7 @@ function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
   $style->apply($tags->get("display_style"));
   foreach(array("vertical_alignment", "name", "dy") as $a)
     unset($style->style[$a]);
-  $style->dom_set_attributes($sym);
+  $style->dom_set_attributes($sym, $dom);
 
   $sym=$dom->createElement("TextSymbolizer");
   $rule->appendChild($sym);
@@ -230,7 +230,63 @@ function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
   $style->style['size']-=2;
   foreach(array("vertical_alignment", "name", "dy") as $a)
     unset($style->style[$a]);
-  $style->dom_set_attributes($sym);
+  $style->dom_set_attributes($sym, $dom);
+
+  return $rule;
+}
+
+function mapnik_style_polyon_polygon($dom, $rule_id, $tags, $global_tags) {
+  global $scales_levels;
+  global $scale_icon;
+  global $lists_dir;
+
+  $rule=$dom->createElement("Rule");
+  $filter=$dom->createElement("Filter");
+  $rule->appendChild($filter);
+  $filter->appendChild($dom->createTextNode("[rule_id] = '$rule_id'"));
+
+  $scale=$dom->createElement("MaxScaleDenominator");
+  $rule->appendChild($scale);
+  $scale->appendChild($dom->createTextNode(
+    $scales_levels[$scale_icon[$tags->get("importance")]]));
+
+  $sym=$dom->createElement("PolygonSymbolizer");
+  $rule->appendChild($sym);
+
+  $style=new css("");
+
+  $style->apply($global_tags->get("polygon_style"));
+  $style->apply($tags->get("polygon_style"));
+
+  $style->dom_set_css_parameters($sym, $dom);
+
+  return $rule;
+}
+
+function mapnik_style_line_line($dom, $rule_id, $tags, $global_tags) {
+  global $scales_levels;
+  global $scale_icon;
+  global $lists_dir;
+
+  $rule=$dom->createElement("Rule");
+  $filter=$dom->createElement("Filter");
+  $rule->appendChild($filter);
+  $filter->appendChild($dom->createTextNode("[rule_id] = '$rule_id'"));
+
+  $scale=$dom->createElement("MaxScaleDenominator");
+  $rule->appendChild($scale);
+  $scale->appendChild($dom->createTextNode(
+    $scales_levels[$scale_icon[$tags->get("importance")]]));
+
+  $sym=$dom->createElement("LineSymbolizer");
+  $rule->appendChild($sym);
+
+  $style=new css("");
+
+  $style->apply($global_tags->get("line_style"));
+  $style->apply($tags->get("line_style"));
+
+  $style->dom_set_css_parameters($sym, $dom);
 
   return $rule;
 }
@@ -279,7 +335,7 @@ function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
   $style->apply($tags->get("icon_point_style"));
   foreach(array("file", "width", "height", "type") as $a)
     unset($style->style[$a]);
-  $style->dom_set_attributes($sym);
+  $style->dom_set_attributes($sym, $dom);
 
   return $rule;
 }
@@ -310,7 +366,7 @@ function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags) {
   $style->apply($tags->get("display_style"));
   foreach(array("name") as $a)
     unset($style->style[$a]);
-  $style->dom_set_attributes($sym);
+  $style->dom_set_attributes($sym, $dom);
 
   $sym=$dom->createElement("TextSymbolizer");
   $rule->appendChild($sym);
@@ -324,7 +380,7 @@ function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags) {
   $style->style['size']-=2;
   foreach(array("name") as $a)
     unset($style->style[$a]);
-  $style->dom_set_attributes($sym);
+  $style->dom_set_attributes($sym, $dom);
 
   return $rule;
 }
@@ -371,7 +427,9 @@ function mapnik_get_layer($dom, $name, $sql) {
 
 function build_mapnik_style($id, $data, $global_tags) {
   global $importance_levels;
-  $layers=array("point_icon"=>array("reverse"),
+  $layers=array("polygon_shape"=>array("normal"),
+		"line_shape" =>array("normal"),
+ 		"point_icon"=>array("reverse"),
 		"point_text"=>array("normal"),
 		"line_text" =>array("normal"),
                 "line_icon"=>array("normal"));
@@ -389,8 +447,15 @@ function build_mapnik_style($id, $data, $global_tags) {
       $style_icon->setAttribute("name", "{$id}_{$importance}_{$table}_icon");
       $style_text=$dom->createElement("Style");
       $style_text->setAttribute("name", "{$id}_{$importance}_{$table}_text");
+      $style_shape=$dom->createElement("Style");
+      $style_shape->setAttribute("name", "{$id}_{$importance}_{$table}_shape");
       foreach($data2['rule'] as $i=>$tags) {
 	$rule_id=$data2['rule_id'][$i];
+	if(in_array($table, array("polygon"))) {
+	  $rule=mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags);
+	  if(isset($rule))
+	    $style_shape->appendChild($rule);
+	}
 	if(in_array($table, array("point", "polygon"))) {
 	  $rule=mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags);
 	  if(isset($rule))
@@ -400,6 +465,9 @@ function build_mapnik_style($id, $data, $global_tags) {
 	    $style_text->appendChild($rule);
 	}
 	elseif(in_array($table, array("line"))) {
+	  $rule=mapnik_style_line_line($dom, $rule_id, $tags, $global_tags);
+	  if(isset($rule))
+	    $style_shape->appendChild($rule);
 	  $rule=mapnik_style_line_text($dom, $rule_id, $tags, $global_tags);
 	  if(isset($rule))
 	    $style_text->appendChild($rule);
@@ -442,6 +510,11 @@ function build_mapnik_style($id, $data, $global_tags) {
 
       $sql="(select{$sql_select} from ($sql) as t{$sql_join}) as u";
 
+      if(in_array($table, array("polygon"))) {
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_shape", $sql);
+	$map_layers['polygon_shape'][$importance][]=$style_shape;
+	$map_layers['polygon_shape'][$importance][]=$layer;
+      }
       if(in_array($table, array("point", "polygon"))) {
 	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
 	$map_layers['point_icon'][$importance][]=$style_icon;
@@ -452,6 +525,10 @@ function build_mapnik_style($id, $data, $global_tags) {
 	$map_layers['point_text'][$importance][]=$layer;
       }
       else {
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_shape", $sql);
+	$map_layers['line_shape'][$importance][]=$style_shape;
+	$map_layers['line_shape'][$importance][]=$layer;
+
 	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql);
 	$map_layers['line_text'][$importance][]=$style_text;
 	$map_layers['line_text'][$importance][]=$layer;
