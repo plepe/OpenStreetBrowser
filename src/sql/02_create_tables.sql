@@ -20,6 +20,7 @@ insert into osm_point
 
 create index osm_point_tags on osm_point using gin(osm_tags);
 create index osm_point_way  on osm_point using gist(osm_way);
+create index osm_point_way_tags on osm_point using gist(osm_way, osm_tags);
 
 drop table if exists osm_line;
 create table osm_line (
@@ -46,6 +47,8 @@ insert into osm_line
 
 create index osm_line_tags on osm_line using gin(osm_tags);
 create index osm_line_way  on osm_line using gist(osm_way);
+create index osm_line_way_tags on osm_line using gist(osm_way, osm_tags);
+
 
 drop table if exists osm_rel;
 create table osm_rel (
@@ -75,6 +78,7 @@ insert into osm_rel
 
 create index osm_rel_tags on osm_rel using gin(osm_tags);
 create index osm_rel_way  on osm_rel using gist(osm_way);
+create index osm_rel_way_tags on osm_rel using gist(osm_way, osm_tags);
 
 drop table if exists osm_polygon;
 create table osm_polygon (
@@ -156,3 +160,4 @@ insert into osm_polygon
 create index osm_polygon_rel_id on osm_polygon(rel_id);
 create index osm_polygon_tags on osm_polygon using gin(osm_tags);
 create index osm_polygon_way  on osm_polygon using gist(osm_way);
+create index osm_polygon_way_tags on osm_polygon using gist(osm_way, osm_tags);
