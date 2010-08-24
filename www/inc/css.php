@@ -22,9 +22,17 @@ class css {
     return $this->style;
   }
 
-  function dom_set_attributes($dom) {
+  function dom_set_attributes($dom, $xml) {
     foreach($this->style as $key=>$value) {
       $dom->setAttribute($key, $value);
+    }
+  }
+
+  function dom_set_css_parameters($dom, $xml) {
+    foreach($this->style as $key=>$value) {
+      $el=dom_create_append($dom, "CssParameter", $xml);
+      $el->setAttribute("name", $key);
+      dom_create_append_text($el, $value, $xml);
     }
   }
 }
