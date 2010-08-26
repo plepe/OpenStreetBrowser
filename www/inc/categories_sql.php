@@ -10,13 +10,16 @@ function register_index($table, $key, $type, $id, $val=null) {
   if(!pg_num_rows($res)) {
     switch($type) {
       case "tsvector":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gin(to_tsvector('simple', osm_tags->$key))");
+        sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gist(osm_way, to_tsvector('simple', osm_tags->$key))");
+	break;
+      case "highest_number":
+        sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gist(osm_way, parse_highest_number(osm_tags->$key))");
 	break;
       case "gteq":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_tags) where oneof_between(split_semicolon(osm_tags->$key), $val, true, null, null)");
+        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), $val, true, null, null)");
 	break;
       case "lteq":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_tags) where oneof_between(split_semicolon(osm_tags->$key), null, null, $val, true)");
+        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), null, null, $val, true)");
 	break;
     }
   }
@@ -284,6 +287,25 @@ function match_to_sql($match, $table_def, $type="exact") {
 	case "index":
 	  $ret=array();
 	  for($i=2; $i<sizeof($match); $i++) {
+	    $ret[]="osm_tags @> ".array_to_hstore(array($match[1]=>$match[$i]));
+	  }
+
+	  return "$not (".implode(") or (", $ret).")";
+	default:
+	  $ret=array();
+	  for($i=2; $i<sizeof($match); $i++) {
+	    $ret[]=postgre_escape($match[$i]);
+	  }
+
+	  return "$not osm_tags->".postgre_escape($match[1])." in (".implode(", ", $ret).")";
+	}
+    case "~is not":
+      $not="not";
+    case "~is":
+      switch($type) {
+	case "index":
+	  $ret=array();
+	  for($i=2; $i<sizeof($match); $i++) {
 	    $ret[]=postgre_escape($match[$i]);
 	  }
 
@@ -430,9 +452,11 @@ function build_match_part($part) {
     $c_not=false;
     $where_not="";
     switch($operator) {
+      case "~!=":
       case "!=":
         $c_not=true;
 	$where_not="!";
+      case "~=":
       case "=":
 	$c=array(
 	  ($c_not?"is not":"is"),
@@ -455,6 +479,10 @@ function build_match_part($part) {
 	    $c[0]="exist not";
 	  }
 	}
+
+	if(substr($operator, 0, 1)=="~") {
+	  $c[0]="~{$c[0]}";
+	}
 	
 	if($c_prevnot===true) {
 	  $case=array("or", $case, $c);
@@ -465,6 +493,10 @@ function build_match_part($part) {
 	else
 	  $case=$c;
 	break;
+      case "~>":
+      case "~<":
+      case "~>=":
+      case "~<=":
       case ">":
       case "<":
       case ">=":
@@ -523,7 +555,7 @@ function parse_explode($match) {
 	}
         elseif($c==" ") {
 	}
-	elseif(!in_array($c, array("\"", "'", "=", "!", ">", "<"))) {
+	elseif(!in_array($c, array("\"", "'", "=", "!", ">", "<", "~"))) {
 	  $key.=$c;
 	  $m=6;
 	}
@@ -532,7 +564,7 @@ function parse_explode($match) {
 	}
 	break;
       case 1:
-	if(in_array($c, array("=", "!", ">", "<"))) {
+	if(in_array($c, array("=", "!", ">", "<", "~"))) {
 	  $operator.=$c;
 	}
 	else {
@@ -551,7 +583,7 @@ function parse_explode($match) {
 	  $values[sizeof($values)-1][]=$value;
 	  unset($value);
 	}
-	elseif(in_array($c, array("=", "!", ">", "<"))) {
+	elseif(in_array($c, array("=", "!", ">", "<", "~"))) {
 	  $values[sizeof($values)-1][]=$value;
 	  unset($value);
 	  $m=1;
@@ -620,7 +652,7 @@ function parse_explode($match) {
 	}
 	break;
       case 5:
-	if(in_array($c, array("=", "!", ">", "<"))) {
+	if(in_array($c, array("=", "!", ">", "<", "~"))) {
 	  $m=1;
 	  $i--;
 	}
@@ -629,7 +661,7 @@ function parse_explode($match) {
 	}
 	break;
       case 6:
-	if(in_array($c, array("=", "!", ">", "<"))) {
+	if(in_array($c, array("=", "!", ">", "<", "~"))) {
 	  $m=1;
 	  $i--;
 	}

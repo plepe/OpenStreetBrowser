@@ -10,5 +10,21 @@ function sql_query($qry) {
 }
 
 function postgre_escape($str) {
-  return "E'".strtr($str, array("'"=>"\\'"))."'";
+  return "E'".strtr($str, array("'"=>"\\'", "\\"=>"\\\\"))."'";
 }
+
+function array_to_hstore($array) {
+  $replace=array("'"=>"\\'", "\""=>"\\\\\"", "\\"=>"\\\\\\\\");
+  $ret=array();
+  foreach($array as $k=>$v) {
+    $ret[]="\"".strtr($k, $replace)."\"=>\"".strtr($v, $replace)."\"";
+  }
+
+  return "E'".implode(", ", $ret)."'::hstore";
+}
+
+function parse_hstore($text) {
+  return eval("return array($text);");
+}
+
+
