@@ -1,0 +1,29 @@
+#!/usr/bin/php
+<?
+while(1) {
+  $timestamp_down=new DateTime(file_get_contents("updates/timestamp_down"));
+
+  $new_down=clone($timestamp_down);
+  $new_down->add(new DateInterval("P1D"));
+
+  $file=$timestamp_down->format("Ymd")."-".$new_down->format("Ymd").".osc.gz";
+  
+  @$f=fopen("http://planet.openstreetmap.org/daily/$file", "r");
+  if($f) {
+    print "Downloading $file\n";
+    $d=fopen("updates/$file", "w");
+    
+    while($r=fread($f, 1024*1024)) {
+      fwrite($d, $r);
+    }
+
+    fclose($d);
+    
+    print "Done.\n";
+    file_put_contents("updates/timestamp_down", $new_down->format("Ymd"));
+  }
+  else {
+    print "No new file there, let's wait an hour\n";
+    sleep(3600);
+  }
+}
