@@ -1,16 +1,33 @@
 #!/usr/bin/php
 <?
-while(1) {
-  $timestamp_down=new DateTime(file_get_contents("updates/timestamp_down"));
+include "conf.php";
+include "inc/sql.php";
+$sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
+
+function download_next() {
+  $res=sql_query("select * from osm_update where end_download is not null order by update_date desc");
+
+  if(!($elem=pg_fetch_assoc($res))) {
+    print "Don't know about newest downloaded change file. Please prepare table 'osm_update' with information about date of used planet file:\ninsert into osm_update values ( 'YYYY-MM-DD', now(), now(), '', 0, now(), now(), '', 0 );\n";
+    exit;
+  }
+
+  $timestamp_down=new DateTime($elem['update_date']);
 
   $new_down=clone($timestamp_down);
   $new_down->add(new DateInterval("P1D"));
 
+  $res=sql_query("select * from osm_update where update_date='{$new_down->format("Y-m-d")}'");
+  if(!pg_num_rows($res))
+    sql_query("insert into osm_update values ('{$new_down->format("Y-m-d")}')");
+  
   $file=$timestamp_down->format("Ymd")."-".$new_down->format("Ymd").".osc.gz";
   
   @$f=fopen("http://planet.openstreetmap.org/daily/$file", "r");
   if($f) {
     print "Downloading $file\n";
+    sql_query("update osm_update set begin_download=now()");
+
     $d=fopen("updates/$file", "w");
     
     while($r=fread($f, 1024*1024)) {
@@ -18,12 +35,24 @@ while(1) {
     }
 
     fclose($d);
-    
+
     print "Done.\n";
     file_put_contents("updates/timestamp_down", $new_down->format("Ymd"));
+
+    sql_query("update osm_update set end_download=now()");
+
+    return 1;
   }
-  else {
+
+  return 0;
+}
+
+while(1) {
+  $ret=download_next();
+
+  if($ret==0) {
     print "No new file there, let's wait an hour\n";
     sleep(3600);
   }
+
 }
