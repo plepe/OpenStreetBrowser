@@ -427,8 +427,8 @@ function mapnik_get_layer($dom, $name, $sql) {
 
 function build_mapnik_style($id, $data, $global_tags) {
   global $importance_levels;
-  $layers=array("polygon_shape"=>array("normal"),
-		"line_shape" =>array("normal"),
+  $layers=array("polygon_shape"=>array("reverse"),
+		"line_shape" =>array("reverse"),
  		"point_icon"=>array("reverse"),
 		"point_text"=>array("normal"),
 		"line_text" =>array("normal"),
@@ -541,9 +541,9 @@ function build_mapnik_style($id, $data, $global_tags) {
     }
   }
 
-  foreach($layers as $layer=>$direction) {
-    $importance_list=$importance_levels;
-    if($direction=="reverse")
+  foreach($layers as $layer=>$layer_desc) {
+    array_deep_copy($importance_levels, $importance_list);
+    if($layer_desc[0]=="reverse")
       $importance_list=array_reverse($importance_list);
 
     for($i=0; $i<sizeof($importance_list); $i++) {
