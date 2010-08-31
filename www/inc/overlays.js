@@ -34,11 +34,16 @@ function overlay(id, _tags) {
     }
   }
 
+  // set_name
+  this.set_name=function(name) {
+    this.layer.setName(name);
+  }
+
   // build_url
   this.build_url=function(bounds) {
     var res = map.getResolution();
-    var x = Math.round ((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
-    var y = Math.round ((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+    var x = Math.round ((bounds.left - this.layer.maxExtent.left) / (res * this.layer.tileSize.w));
+    var y = Math.round ((this.layer.maxExtent.top - bounds.top) / (res * this.layer.tileSize.h));
     var z = map.getZoom();
 
     var path = "tiles/"+ this.id + "/" + z + "/" + x + "/" + y + ".png?"+ this.version;
