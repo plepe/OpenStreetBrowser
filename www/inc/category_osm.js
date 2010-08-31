@@ -98,6 +98,8 @@ function category_osm(id) {
       a.onclick=this.show_more.bind(this);
       dom_create_append_text(a, t("more"));
     }
+
+    this.write_status(div);
   }
 
   // show_more - load more data from server
