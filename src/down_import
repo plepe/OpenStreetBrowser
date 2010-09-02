@@ -4,90 +4,25 @@ include "conf.php";
 include "inc/sql.php";
 $sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
 
-function download_next() {
-  $res=sql_query("select * from osm_update where end_download is not null order by update_date desc");
-
-  if(!($elem=pg_fetch_assoc($res))) {
-    print "Don't know about newest downloaded change file. Please prepare table 'osm_update' with information about date of used planet file:\ninsert into osm_update values ( 'YYYY-MM-DD', now(), now(), '', 0, now(), now(), '', 0 );\n";
-    exit;
-  }
-
-  $timestamp_down=new DateTime($elem['update_date']);
-
-  $new_down=clone($timestamp_down);
-  $new_down->add(new DateInterval("P1D"));
-  $update_date=$new_down->format("Y-m-d");
-
-  $res=sql_query("select * from osm_update where update_date='$update_date'");
-  if(!pg_num_rows($res))
-    sql_query("insert into osm_update values ('$update_date')");
-  
-  $file=$timestamp_down->format("Ymd")."-".$new_down->format("Ymd").".osc.gz";
-  
-  @$f=fopen("http://planet.openstreetmap.org/daily/$file", "r");
-  if($f) {
-    print "Downloading $file\n";
-    sql_query("update osm_update set begin_download=now() where update_date='$update_date'");
-
-    $d=fopen("updates/$file", "w");
-    
-    while($r=fread($f, 1024*1024)) {
-      fwrite($d, $r);
-    }
-
-    fclose($d);
-
-    print "Done.\n";
-    file_put_contents("updates/timestamp_down", $new_down->format("Ymd"));
-
-    sql_query("update osm_update set end_download=now() where update_date='$update_date'");
-
-    return 1;
-  }
-
-  return 0;
-}
-
 function change_next() {
   global $db_name;
   global $db_passwd;
   global $root_path;
+  $working_dir="$root_path/data/updates";
 
-  $res=sql_query("select * from osm_update where end_change is not null order by update_date desc");
-
-  if(!($elem=pg_fetch_assoc($res))) {
-    print "Don't know about newest downloaded change file. Please prepare table 'osm_update' with information about date of used planet file:\ninsert into osm_update values ( 'YYYY-MM-DD', now(), now(), '', 0, now(), now(), '', 0 );\n";
+  if(!file_exists("$working_dir/state.txt")) {
+    print "ERROR: state_file does not exist. Please create the working directory data/updates/. See http://wiki.openstreetmap.org/wiki/Minutely_Mapnik for details.\n";
     exit;
   }
-
-  $timestamp_down=new DateTime($elem['update_date']);
-
-  $new_change=clone($timestamp_down);
-  $new_change->add(new DateInterval("P1D"));
-  $update_date=$new_change->format("Y-m-d");
-
-  $res=sql_query("select * from osm_update where update_date='$update_date'");
-  $elem=pg_fetch_assoc($res);
-  if(!$elem['end_download']) {
-    print "Not finished download, wait";
-    return 0;
-  }
-
-  $file=$timestamp_down->format("Ymd")."-".$new_change->format("Ymd").".osc";
-  print "Reading changes from $file\n";
-
-  sql_query("update osm_update set begin_change=now()");
-
-  $log="";
 
   $descriptors=array(
     0=>array("pipe", "r"),
     1=>array("pipe", "w"),
     2=>array("pipe", "w"));
 
-  $command="osmosis --read-xml-change $root_path/updates/$file --write-pgsql-change database=$db_name password=$db_passwd";
+  $command="osmosis --read-replication-interval workingDirectory=$working_dir --simplify-change --write-pgsql-change database=$db_name password=$db_passwd";
 
-  $p=proc_open($command, $descriptors, $pipes, null, array("JAVACMD_OPTIONS"=>"-Xmx2048M"));
+  $p=proc_open($command, $descriptors, $pipes, null, array("JAVACMD_OPTIONS"=>"-Xmx512M"));
 //  if($stdin)
 //    fwrite($pipes[0], $stdin);
   $ret=stream_get_contents($pipes[1]);
@@ -98,24 +33,20 @@ function change_next() {
   fclose($pipes[2]);
   $exit=proc_close($p);
 
-  if($exit==0)
-    sql_query("update osm_update set end_change=now(), log_change='$ret<stderr>$error', exit_change='$exit' where update_date='$update_date'");
-  else {
-    print "An error occured\n";
-    sql_query("update osm_update set log_change='$ret<stderr>$error', exit_change='$exit' where update_date='$update_date'");
-    exit;
-  }
+  print "$ret<stderror>$error\n";
 
-  return 1;
+  if($exit==0)
+    return 1;
+  
+  return 0;
 }
 
 while(1) {
-//  $ret1=download_next();
   $ret2=change_next();
 
-  if(($ret1==0)&&($ret2==0)) {
-    print "No new file there, let's wait an hour\n";
-    sleep(3600);
+  if(($ret2==0)) {
+    print "Error? Let's wait a little ...\n";
+    sleep(30);
   }
 
 }
