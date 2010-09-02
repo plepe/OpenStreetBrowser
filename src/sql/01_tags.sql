@@ -305,3 +305,14 @@ begin
   return collect;
 end;
 $$ language 'plpgsql';
+
+create or replace function tags_merge(hstore, hstore)
+returns hstore
+as $$
+declare
+  src1      alias for $1;
+  src2      alias for $2;
+begin
+  return tags_merge(Array[src1, src2]);
+end;
+$$ language 'plpgsql';
