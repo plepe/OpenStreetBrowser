@@ -90,11 +90,8 @@ function contextmenu_entry(cell, img, text, fun) {
   this.cell=cell;
 
   // create entry in menu
-  var link=document.createElement("a");
-  link.href="#";
-  link.onclick=this.contextmenu_fire.bind(this);
-  link.innerHTML="<img src=\""+img+"\" border=\"0\" title=\"\"> "+text;
-  cell.appendChild(link);
+  cell.onclick=this.contextmenu_fire.bind(this);
+  cell.innerHTML="<img src=\""+img+"\" border=\"0\" title=\"\"> "+text;
 }
 
 function contextmenu_add(img, text, fun) {

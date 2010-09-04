@@ -14,7 +14,8 @@ var language_list={
   "fr": "français",
   "ga": "Gaeilge",
   "is": "íslenska",
-  "it": "italiano",
+  "it": "Italiano",
+  "ja": "日本語",
   "lv": "latviešu valoda",
   "lt": "lietuvių kalba",
   "hu": "magyar",
@@ -35,23 +36,6 @@ var language_list={
   "sv": "svenska",
   "uk": "украї́нська мо́ва"
 }
-
-
-function cssflags() {
-  var csstext="";
-  for(var i in language_list) {
-    if(i) {
-      csstext += "option[value="+i+"]:before { content:url('img/lang/"+i+".png'); }\n";
-    }
-  }
-  var headID = document.getElementsByTagName("head")[0];         
-  var cssNode = document.createElement('style');
-  cssNode.type = 'text/css';
-  cssNode.rel = 'stylesheet';
-  cssNode.innerHTML = csstext;
-  headID.appendChild(cssNode);
-}
-cssflags();
 
 //for(var i in language_list)
 //  lang_str["lang:"+i]=[ language_list[i] ];

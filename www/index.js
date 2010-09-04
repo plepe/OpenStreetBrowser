@@ -12,6 +12,7 @@ var loaded_list={};
 var view_changed_last;
 var location_params={};
 
+var polygon_control;
 var permalink_control;
 
 function details_content_submit(event) {
@@ -304,10 +305,11 @@ function init() {
   layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
   layerOsmarender = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
   layerCycle = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
+  layerPolygon = new OpenLayers.Layer.Vector("Polygon Layer");
 //  var layertest1    = new OpenLayers.Layer.OSM("Test (Skunk)", "/tiles/base/", {numZoomLevels: 19});
 //  var layertest2    = new OpenLayers.Layer.OSM("Test (Lesewesen)", "/lesewesen/tiles/base/", {numZoomLevels: 17});
 
-  map.addLayers([ layerOSB, layerMapnik, layerOsmarender, layerCycle ]);
+  map.addLayers([ layerOSB, layerMapnik, layerOsmarender, layerCycle, layerPolygon ]);
 
   layerHill = new OpenLayers.Layer.OSM(
     "Hillshading (NASA SRTM3 v2)",
@@ -330,6 +332,11 @@ function init() {
   map.addControl(new OpenLayers.Control.MousePosition());
   map.addControl(new OpenLayers.Control.ScaleLine());
 
+  polygon_control=new OpenLayers.Control.DrawFeature(layerPolygon,OpenLayers.Handler.Polygon);
+  map.addControl(polygon_control);
+
+  map.events.register("dblclick", polygon_control, testtt);
+
   if(start_lon&&(first_load)) {
     var lonlat = new OpenLayers.LonLat(start_lon, start_lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
     map.setCenter(lonlat, start_zoom);
@@ -347,6 +354,10 @@ function init() {
 
   call_hooks("init");
   //setTimeout("call_hooks(\"post_init\")", 2000);
+}
+
+function testtt() {
+  alert("hallo");
 }
 
 function add_funs(arr) {
