@@ -11,6 +11,8 @@ BEGIN
   insert into save_actions (select * from actions);
 
   raise notice 'saved actions';
+
+  raise notice E'statistics:\n%', (select array_to_string(to_textarray(stat.text), E'\n') from (select data_type || E'\t' || action || E'\t' || count(id) as text from actions group by data_type, action order by data_type, action) stat);
   
   -- delete changed/deleted points
   delete from osm_point using actions where osm_id='node_'||actions.id and data_type='N';
@@ -27,13 +29,15 @@ BEGIN
   raise notice 'deleted from osm_line';
 
   -- delete changed/deleted rels
+  delete from osm_rel using actions where osm_id='rel_'||actions.id and data_type='R';
+
+  raise notice 'deleted from osm_rel 1';
+
   delete from osm_rel using
-    (select relation_id as id from relation_members join actions on relation_members.member_id=actions.id and actions.data_type=relation_members.member_type and actions.action='M' group by relation_id
-     union
-     select id from actions where data_type='R') actions
+     (select relation_id as id from actions join relation_members on relation_members.member_id=actions.id and actions.data_type=relation_members.member_type and actions.action='M' group by relation_id) actions
   where osm_id='rel_'||id;
 
-  raise notice 'deleted from osm_rel';
+  raise notice 'deleted from osm_rel 2';
 
   -- delete changed/deleted polygons
   delete from osm_polygon using
