@@ -5,6 +5,7 @@
 //   icon: 'file.png'
 //   icon_title: tooltip for icon
 //   callback_activate: function to be called when activating
+//   callback_deactivate: function to be called when deactivating
 //   weight: order of icons (-10 left ... +10 right)
 function toolbox(options) {
   // activate
