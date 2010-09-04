@@ -209,3 +209,5 @@ function toolbox_start(start_value) {
       break;
   }
 }
+
+register_hook("init", toolbox_init);

@@ -85,7 +85,7 @@ else
 <div class='logo'><a href="http://wiki.openstreetmap.org/wiki/OpenStreetBrowser"><img src="img/osb_logo.png" alt="OpenStreetBrowser" name="OpenStreetBrowser" border="0"/></a><p>OpenStreet <span class="bigger">Browser</span></p></div>
 
 
-<div id='toolboxbuttons'">
+<div id='toolboxbuttons'>
 <table cellspacing="0" style="border:0px; margin:0px; padding:0px;">
 	<tr>
 		<td id="toolbox1" class="toolboxbutton"><a href='javascript:toolbox_map()'><img src="img/toolbox_map.png" border="0" title="map position"/></a></td>
@@ -136,6 +136,5 @@ print list_template();
 call_hooks("html_done", null);
 ?>
 <div class="permalink"><a href="" id="permalink" onclick="var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));cookie_write('_osb_permalink', center.lon + '|' + center.lat + '|' + map.zoom + '|' + location.hash);"><?=lang("main:permalink")?></a></div>
-<script type="text/javascript">toolbox_init();</script>
 </body>
 </html>
