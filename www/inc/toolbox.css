@@ -38,6 +38,7 @@
 td.toolboxbutton:hover {
   background-color:#FEFEFE;
   border:1px solid #CCCCCC;
+  cursor:pointer;
 }
 
 .toolboxbutton_active {
@@ -45,6 +46,10 @@ td.toolboxbutton:hover {
   border:1px solid;
   border-color:#999999 #999999 #EFEFEF;
   background-color:#EFEFEF;
+}
+
+td.toolboxbutton_active:hover {
+  cursor:pointer;
 }
 
 
