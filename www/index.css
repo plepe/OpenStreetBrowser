@@ -194,8 +194,8 @@ a { color:#333; text-decoration:none; }
 ul { padding:0; margin:0 0 7px 15px; list-style-type:square; line-height:120%; padding-left: 20px; }
 li { padding-bottom:2px; }
 li a:hover { background-color:#ccc; }
-div.loading { padding-top:16px; }
-img.loading { padding-left: 13px; border-width: 0px; }
+/* div.loading { padding-top:40px; } */
+img.loading { padding-left: 7px; border-width: 0px; }
 
 .object { background-color:#efefef; }
 .object h2 { 
@@ -323,8 +323,16 @@ td.contextmenu_entry:hover {
 
 select.icon-menu option {
   background-repeat: no-repeat;
-  background-position: 3px top;
+  background-position: 3px center;
   text-indent: 18px;
+}
+
+.layerImg {
+  width:50px;
+}
+
+.layerImg:hover {
+  width:100px;
 }
 
 /**************************/

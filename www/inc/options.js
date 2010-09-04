@@ -119,7 +119,7 @@ function options_toggle_hill() {
 }
 
 function option_layers() {
-  return "<table><tr><td><a href='javascript:layerOSB.map.setBaseLayer(layerOSB);close_options();'><div style='clip:rect(0px, 20px, 20px, 0px);'><img src='img/layerOSB.png'></div><br>OSB</a></td><td><a href='javascript:layerMapnik.map.setBaseLayer(layerMapnik);close_options();'><img src='img/layerMapnik.png'><br>Mapnik</a></td><td><a href='javascript:layerOsmarender.map.setBaseLayer(layerOsmarender);close_options();'><img src='img/layerOsmarender.png'><br>Osmarender</td><td><a href='javascript:layerCycle.map.setBaseLayer(layerCycle);close_options();'><img src='img/layerCycle.png'><br>Cycle Map</td></tr><tr><td><a href='javascript:options_toggle_hill();close_options();'><img src='img/layerHill.png'><br>Schraffur umschalten</a></td></tr></table>";
+  return "<table><tr><td><a href='javascript:layerOSB.map.setBaseLayer(layerOSB);close_options();'><img class='layerImg' src='img/layerOSB.png'><br>OSB</a></td><td><a href='javascript:layerMapnik.map.setBaseLayer(layerMapnik);close_options();'><img class='layerImg' src='img/layerMapnik.png'><br>Mapnik</a></td><td><a href='javascript:layerOsmarender.map.setBaseLayer(layerOsmarender);close_options();'><img class='layerImg' src='img/layerOsmarender.png'><br>Osmarender</td><td><a href='javascript:layerCycle.map.setBaseLayer(layerCycle);close_options();'><img class='layerImg' src='img/layerCycle.png'><br>Cycle Map</td><td><a href='javascript:options_toggle_hill();close_options();'><img class='layerImg' src='img/layerHill.png'><br>Schraffur</a></td></tr></table>";
 }
 
 function show_options() {
