@@ -1,4 +1,4 @@
-.toolbox {
+.toolbox_active {
   background-color:#EFEFEF;
   border:1px solid #999999;
   color:#333333;
@@ -10,6 +10,12 @@
   line-height:0.8;
   margin-bottom:-2px;
   z-index:2;
+}
+.toolbox {
+  display: none;
+}
+#toolbox_container {
+  display:block;
 }
 
 #toolboxbuttons {

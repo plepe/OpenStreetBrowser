@@ -3,6 +3,7 @@
 var timer, i=0, details_style, search_style, toolbox_style, details_top, oldtop=180, lastview, toolbox_active, toolbox_locked=0;
 
 function toolbox_map() {
+  return;
   if((toolbox_active=="map")||(toolbox_locked==1)) {
     toolbox_hide();
     return;
@@ -91,6 +92,7 @@ function toolbox_measure() {
 }
 
 function toolbox_fillwithtext(text) {
+  return;
   if(toolbox_locked==0){
     toolbox_locked=1;
     document.getElementById("toolbox").innerHTML=text;
