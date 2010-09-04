@@ -119,9 +119,7 @@ print list_template();
 <div id="contextmenu" class="contextmenu" onmouseout="contextmenu_mouseout(event)" onmouseover="javascript:clearTimeout(contexttimer)" style="top:20px; left:500px; display:none;">
 <span id="contextmenu_pointer" style="position:absolute; width:10px; height:10px;"></span>
 <table id="contextmenu_table" cellspacing="0">
-<tr><td class="contextmenu_entry"><img src="img/toolbox_home.png" border="0" title=""/> set home</td></tr>
-<tr><td class="contextmenu_entry"><img src="img/toolbox_destination.png" border="0" title=""/> set destination</td></tr>
-<tr><td class="contextmenu_entry" onclick="javascript:measurements();"><img src="img/toolbox_measure.png" border="0" title=""/> measurement tool</td></tr></table></div>
+</table></div>
 
 <!--<div id="debugging" style="top:20px; left:300px; position:absolute; display:block; background:#FEFEFE; border:1px solid #999999;"><i>Die Super-Debugging-Box 3000</i><br/></div>-->
 
