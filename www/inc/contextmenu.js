@@ -75,7 +75,7 @@ function contextmenu_hide() {
   document.getElementById('contextmenu').style.display='none';
 }
 
-function contextmenu_entry(cell, img, text, fun) {
+function contextmenu_entry(cell, options, fun) {
   // contextmenu_fire is called, when entry is selected in list
   this.contextmenu_fire=function() {
     // called saved function
@@ -88,13 +88,14 @@ function contextmenu_entry(cell, img, text, fun) {
   // constructor
   this.fun=fun;
   this.cell=cell;
+  this.options=options;
 
   // create entry in menu
   cell.onclick=this.contextmenu_fire.bind(this);
-  cell.innerHTML="<img src=\""+img+"\" border=\"0\" title=\"\"> "+text;
+  cell.innerHTML="<img src=\""+this.options.img+"\" border=\"0\" title=\"\"> "+this.options.text;
 }
 
-function contextmenu_add(img, text, fun) {
+function contextmenu_add(img, text, fun, options) {
   // add a row to the table of the contextmenu
   var tab=document.getElementById("contextmenu_table");
   var row=tab.insertRow(tab.rows.length);
@@ -102,8 +103,13 @@ function contextmenu_add(img, text, fun) {
   cell.className="contextmenu_entry";
   row.appendChild(cell);
 
+  if(!options)
+    options={};
+  options.img=img;
+  options.text=text;
+
   // create the entry as a contextmenu_entry
-  var entry=new contextmenu_entry(cell, img, text, fun);
+  var entry=new contextmenu_entry(cell, options, fun);
 
   // return entry
   return entry;
