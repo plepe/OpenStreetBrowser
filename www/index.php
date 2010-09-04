@@ -86,7 +86,7 @@ else
 
 
 <div id='toolboxbuttons'>
-<table cellspacing="0" style="border:0px; margin:0px; padding:0px;">
+<table id='toolboxbuttons_table' cellspacing="0" style="border:0px; margin:0px; padding:0px;">
 	<tr>
 		<td id="toolbox1" class="toolboxbutton"><a href='javascript:toolbox_map()'><img src="img/toolbox_map.png" border="0" title="map position"/></a></td>
 		<td id="toolbox2" class="toolboxbutton"><a href='javascript:toolbox_navigation()'><img src="img/toolbox_navigation.png" border="0" title="navigation"/></a></td>
