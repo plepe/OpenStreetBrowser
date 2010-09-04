@@ -1,5 +1,16 @@
 <?
 $maybe_delete_indexes=array();
+$default_tags=array(
+  'point'=>array(
+    'display_name'=>"[ref] - [name];[name];[ref];[operator]",
+  ),
+  'line'=>array(
+    'display_name'=>"[ref] - [name];[name];[ref];[operator]",
+  ),
+  'polygon'=>array(
+    'display_name'=>"[ref] - [name];[name];[ref];[operator]",
+  ),
+);
 
 function register_index($table, $key, $type, $id, $val=null) {
   $key=postgre_escape($key);
@@ -119,6 +130,9 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
 
 function create_sql_classify_fun($rules, $table="point", $id="tmp") {
   global $postgis_tables;
+  global $default_tags;
+
+  $def_tags=$default_tags[$table];
   $classify_function_declare="";
   $classify_function_getdata="";
   $classify_function="";
@@ -171,7 +185,7 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
     $arr=$tags->data();
     $arr['rule_id']=$rule_id;
     $classify_function_match[]="if $qry then\n".
-      "    result:=".array_to_hstore($arr).";";
+      "    result:=".array_to_hstore(array_merge($def_tags, $arr)).";";
   }
 
   $classify_function_declare.="  result hstore;\n";
