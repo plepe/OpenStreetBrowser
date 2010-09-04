@@ -22,8 +22,12 @@
   display:block;
   position:absolute;
   top:121px;
-  left:175px;
+  left:10px;
+  width:250px;
   z-index:3;
+}
+#toolboxbuttons_table {
+  float: right;
 }
 
 .toolboxbutton {
