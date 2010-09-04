@@ -306,8 +306,6 @@ function init() {
   layerOsmarender = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
   layerCycle = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
   layerPolygon = new OpenLayers.Layer.Vector("Polygon Layer");
-//  var layertest1    = new OpenLayers.Layer.OSM("Test (Skunk)", "/tiles/base/", {numZoomLevels: 19});
-//  var layertest2    = new OpenLayers.Layer.OSM("Test (Lesewesen)", "/lesewesen/tiles/base/", {numZoomLevels: 17});
 
   map.addLayers([ layerOSB, layerMapnik, layerOsmarender, layerCycle, layerPolygon ]);
 
