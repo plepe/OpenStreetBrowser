@@ -1,4 +1,5 @@
 var favorites_list={};
+var favorites_toolbox;
 var favorites_drag_control;
 
 function favorites(lon, lat) {
@@ -36,6 +37,21 @@ function favorites(lon, lat) {
 
 }
 
+function favorites_toolbox_text() {
+  var text="<i>Favorites</i><br/><br/>";
+  var nbrfav=0;
+  for(var i in favorites_list) {
+    text+="favorite "+(nbrfav+1)+": "+favorites_list[i].lon +", "+favorites_list[i].lat+"<br/>";
+    nbrfav++;
+  }
+  if (nbrfav==0) {
+    text += "Set favorites by clicking on the map...";
+  }
+  text += "<br/><br/>";
+
+  favorites_toolbox.content.innerHTML=text;
+}
+
 function favorites_add(lon, lat) {
   return new favorites(lon, lat);
 }
@@ -43,11 +59,19 @@ function favorites_add(lon, lat) {
 function favorites_add_context(pos) {
   // add a marker on the pos
   favorites_add(pos.lon, pos.lat);
-  toolbox_favorites(1);
+  
 }
 
 function favorites_init() {
   contextmenu_add("img/toolbox_favorites.png", "add favorite", favorites_add_context);
+
+  favorites_toolbox=new toolbox({
+    icon: "img/toolbox_favorites.png",
+    icon_title: "favorites",
+    callback_activate: favorites_toolbox_text
+  });
+
+  register_toolbox(favorites_toolbox);
 }
 
 register_hook("init", favorites_init);

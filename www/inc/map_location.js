@@ -71,9 +71,9 @@ function map_location_init() {
   map_location_toolbox=new toolbox({
     icon: "img/toolbox_map.png",
     icon_title: "map position",
+    weight: -5,
     callback_activate: map_location_activate
   });
-
   register_toolbox(map_location_toolbox);
 
   if(((location.hash=="") || (location.hash=="#")) && (cookie_read("start_value")==null)) {

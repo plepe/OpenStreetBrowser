@@ -88,9 +88,6 @@ else
 <div id='toolboxbuttons'>
 <table id='toolboxbuttons_table' cellspacing="0" style="border:0px; margin:0px; padding:0px;">
 	<tr>
-		<td id="toolbox2" class="toolboxbutton"><a href='javascript:toolbox_navigation()'><img src="img/toolbox_navigation.png" border="0" title="navigation"/></a></td>
-		<td id="toolbox3" class="toolboxbutton"><a href='javascript:toolbox_favorites()'><img src="img/toolbox_favorites.png" border="0" title="favorites"/></a></td>
-		<td id="toolbox4" class="toolboxbutton"><a href='javascript:toolbox_measure()'><img src="img/toolbox_measure.png" border="0" title="measurements"/></a></td>
 	</tr>
 </table>
 </div>
