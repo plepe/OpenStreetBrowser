@@ -22,6 +22,7 @@ function change_next() {
 
   $command="osmosis --read-replication-interval workingDirectory=$working_dir --simplify-change --write-pgsql-change database=$db_name password=$db_passwd";
 
+  print "starting osmosis\n";
   $p=proc_open($command, $descriptors, $pipes, null, array("JAVACMD_OPTIONS"=>"-Xmx512M"));
 //  if($stdin)
 //    fwrite($pipes[0], $stdin);
@@ -48,5 +49,4 @@ while(1) {
     print "Error? Let's wait a little ...\n";
     sleep(30);
   }
-
 }
