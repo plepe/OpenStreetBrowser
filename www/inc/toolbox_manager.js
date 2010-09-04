@@ -54,20 +54,20 @@ function _toolbox_manager() {
       var tb=this.toolboxes[i];
       tb.button.onclick=this.activate_toolbox.bind(this, i);
       tb.button.className="toolboxbutton";
-      tb.button.className="toolbox";
+      tb.content.className="toolbox";
       toolbox_divs.appendChild(tb.content);
     }
 
     var newtds=[];
-    var min_wgt=100;
+    var max_done=-100;
     while(newtds.length!=this.toolboxes.length) {
       var min_tds=[];
+      var min_wgt=100;
 
       for(var i=0; i<this.toolboxes.length; i++) {
 	var tb=this.toolboxes[i];
-	var wgt=tb.options.weight;
 
-	if(tb.options.weight<min_wgt) {
+	if((tb.options.weight<min_wgt)&&(tb.options.weight>max_done)) {
 	  min_wgt=tb.options.weight;
 	  min_tds=[];
 	}
@@ -77,7 +77,7 @@ function _toolbox_manager() {
       }
 
       newtds=newtds.concat(min_tds);
-      min_tds=tb.options.weight-1;
+      max_done=min_wgt;
     }
 
     for(var i=0; i<newtds.length; i++) {

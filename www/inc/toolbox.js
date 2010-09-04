@@ -49,7 +49,9 @@ function toolbox(options) {
   // constructor
   this.options=options;
   this.content=document.createElement("div");
+  this.content.className="toolbox";
   this.button=document.createElement("td");
+  this.button.className="toolboxbutton";
   this.show_icon();
   this.manager=null;
 
