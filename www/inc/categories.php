@@ -113,6 +113,22 @@ function get_icon($file) {
   return false;
 }
 
+// the mapnik_style_* functions return
+// array(
+//   'rule'=>DOM                           // DOM of the rule
+//   'columns'=>"function|param1|param2" or
+//   'columns'=>array("function|param1|param2", ...) 
+//                                         // list of pgsql-functions to be
+//                                         // called, parameters for those 
+//                                         // functions are:
+//                                         // osb_function(
+//                                         //   osm_id as text,
+//                                         //   osm_tags as hstore,
+//                                         //   osm_way as geometry, 
+//                                         //   rule_tags as hstore,
+//                                         //   param1 as text
+//                                         //   param2 as text
+//                                         // ) returns text as param1;
 function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
   global $scales_levels;
   global $scale_icon;
@@ -172,7 +188,7 @@ function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
     $style->dom_set_attributes($sym, $dom);
   }
 
-  return $rule;
+  return array('rule'=>$rule, 'columns'=>"tags_parse|icon_text");
 }
 
 function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
@@ -232,7 +248,9 @@ function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
     unset($style->style[$a]);
   $style->dom_set_attributes($sym, $dom);
 
-  return $rule;
+  return array('rule'=>$rule, 
+               'columns'=>array("tags_parse|display_name",
+	                        "tags_parse|display_type"));
 }
 
 function mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags) {
@@ -260,7 +278,7 @@ function mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags) {
 
   $style->dom_set_css_parameters($sym, $dom);
 
-  return $rule;
+  return array('rule'=>$rule);
 }
 
 function mapnik_style_line_line($dom, $rule_id, $tags, $global_tags) {
@@ -288,7 +306,7 @@ function mapnik_style_line_line($dom, $rule_id, $tags, $global_tags) {
 
   $style->dom_set_css_parameters($sym, $dom);
 
-  return $rule;
+  return array('rule'=>$rule);
 }
 
 function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
@@ -337,7 +355,7 @@ function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
     unset($style->style[$a]);
   $style->dom_set_attributes($sym, $dom);
 
-  return $rule;
+  return array('rule'=>$rule);
 }
 
 function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags) {
@@ -382,7 +400,9 @@ function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags) {
     unset($style->style[$a]);
   $style->dom_set_attributes($sym, $dom);
 
-  return $rule;
+  return array('rule'=>$rule, 
+               'columns'=>array("tags_parse|display_name",
+	                        "tags_parse|display_type"));
 }
 
 function mapnik_get_layer($dom, $name, $sql) {
@@ -427,6 +447,7 @@ function mapnik_get_layer($dom, $name, $sql) {
 
 function build_mapnik_style($id, $data, $global_tags) {
   global $importance_levels;
+
   $layers=array("polygon_shape"=>array("reverse"),
 		"line_shape" =>array("reverse"),
  		"point_icon"=>array("reverse"),
@@ -441,6 +462,7 @@ function build_mapnik_style($id, $data, $global_tags) {
   $map->setAttribute("srs", "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over");
   $dom->appendChild($map);
   $ret=array();
+  $columns=array();
   foreach($data as $importance=>$data1) if($importance!="_") {
     foreach($data1 as $table=>$data2) {
       $style_icon=$dom->createElement("Style");
@@ -452,58 +474,76 @@ function build_mapnik_style($id, $data, $global_tags) {
       foreach($data2['rule'] as $i=>$tags) {
 	$rule_id=$data2['rule_id'][$i];
 	if(in_array($table, array("polygon"))) {
-	  $rule=mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags);
-	  if(isset($rule))
-	    $style_shape->appendChild($rule);
+	  $def=mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags);
+	  if(isset($def)) {
+	    $style_shape->appendChild($def['rule']);
+	    $columns[]=$def['columns'];
+	  }
 	}
 	if(in_array($table, array("point", "polygon"))) {
-	  $rule=mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags);
-	  if(isset($rule))
-	    $style_icon->appendChild($rule);
-	  $rule=mapnik_style_point_text($dom, $rule_id, $tags, $global_tags);
-	  if(isset($rule))
-	    $style_text->appendChild($rule);
+	  $def=mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags);
+	  if(isset($def)) {
+	    $style_icon->appendChild($def['rule']);
+	    $columns[]=$def['columns'];
+	  }
+	  $def=mapnik_style_point_text($dom, $rule_id, $tags, $global_tags);
+	  if(isset($def)) {
+	    $style_text->appendChild($def['rule']);
+	    $columns[]=$def['columns'];
+	  }
 	}
 	elseif(in_array($table, array("line"))) {
-	  $rule=mapnik_style_line_line($dom, $rule_id, $tags, $global_tags);
-	  if(isset($rule))
-	    $style_shape->appendChild($rule);
-	  $rule=mapnik_style_line_text($dom, $rule_id, $tags, $global_tags);
-	  if(isset($rule))
-	    $style_text->appendChild($rule);
-	  $rule=mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags);
-	  if(isset($rule))
-	    $style_icon->appendChild($rule);
+	  $def=mapnik_style_line_line($dom, $rule_id, $tags, $global_tags);
+	  if(isset($def)) {
+	    $style_shape->appendChild($def['rule']);
+	    $columns[]=$def['columns'];
+	  }
+	  $def=mapnik_style_line_text($dom, $rule_id, $tags, $global_tags);
+	  if(isset($def)) {
+	    $style_text->appendChild($def['rule']);
+	    $columns[]=$def['columns'];
+	  }
+	  $def=mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags);
+	  if(isset($def)) {
+	    $style_icon->appendChild($def['rule']);
+	    $columns[]=$def['columns'];
+	  }
 	}
-
-	$display_name=$tags->get("display_name");
-	if(!$display_name)
-	  $tags->set("display_name", "[ref] - [name];[name];[ref];[operator]");
-	elseif($display_name=="no")
-	  $tags->delete("display_name");
 
         sql_query("insert into categories_def values (".
 		  postgre_escape($rule_id).", ".postgre_escape($id).", ".
 		  array_to_hstore($tags->data()).");");
       }
 
+      print_r($columns);
+      $new_columns=array();
+      foreach($columns as $col) {
+	if(!isset($col));
+	else if(is_string($col)) {
+	  $new_columns[]=$col;
+	}
+	else if(is_array($col)) {
+	  foreach($col as $col1) {
+	    $new_columns[]=$col1;
+	  }
+	}
+      }
+      $columns=array_unique($new_columns);
+      print_r($columns);
+
       $sql=$data2['sql'];
       $sql_select=array();
       $sql_join=array();
       $sql_select[]="t.*";
-      $sql_select[]="tags_parse(t.osm_id, t.osm_tags, t.geo, t.rule_tags->'display_name') as display_name";
-      $sql_select[]="tags_parse(t.osm_id, t.osm_tags, t.geo, t.rule_tags->'display_type') as display_type";
-//      $sql_select[]="(CASE WHEN cache_name.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.display_name_pattern) ELSE cache_name.result END) as display_name";
-//      $sql_join[]="left join tags_parse_cache_table cache_name on t.osm_type=cache_name.osm_type and t.osm_id=cache_name.osm_id and t.display_name_pattern=cache_name.pattern";
-//      $sql_select[]="(CASE WHEN cache_type.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.display_type_pattern) ELSE cache_type.result END) as display_type";
-//      $sql_join[]="left join tags_parse_cache_table cache_type on t.osm_type=cache_type.osm_type and t.osm_id=cache_type.osm_id and t.display_type_pattern=cache_type.pattern";
-      if($tags->get("icon_text")) {
-	$sql_select[]="tags_parse(t.osm_id, t.osm_tags, t.geo, t.rule_tags->'icon_text') as icon_text";
-//	$sql_select[]="(CASE WHEN cache_icon.result is null THEN tags_parse_cache(t.osm_type, t.osm_id, t.icon_text_pattern) ELSE cache_icon.result END) as icon_text";
-//	$sql_join[]="left join tags_parse_cache_table cache_icon on t.osm_type=cache_icon.osm_type and t.osm_id=cache_icon.osm_id and t.icon_text_pattern=cache_icon.pattern";
+
+      foreach($columns as $col) {
+	$el=explode("|", $col);
+	$str="osb_$el[0](t.osm_id, t.osm_tags, t.geo, t.rule_tags";
+	for($i=1; $i<sizeof($el); $i++)
+	  $str.=", ".postgre_escape($el[$i]);
+	$str.=") as \"$el[1]\"";
+	$sql_select[]=$str;
       }
-//      $sql_select[]="tags_parse(t.osm_type, t.osm_id, t.display_name_pattern) as display_name";
-//      $sql_select[]="tags_parse(t.osm_type, t.osm_id, t.display_type_pattern) as display_type";
 
       $sql_select="\n  ".implode(",\n  ", $sql_select);
       $sql_join="\n  ".implode("\n  ", $sql_join);
