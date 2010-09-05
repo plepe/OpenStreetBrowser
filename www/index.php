@@ -86,7 +86,7 @@ else
 
 
 <div id='toolboxbuttons'>
-<table id='toolboxbuttons_table' cellspacing="0" style="border:0px; margin:0px; padding:0px;">
+<table id='toolboxbuttons_table' cellspacing="0" style="border:0px; margin:0px 5px 0px 0px; padding:0px;">
 	<tr>
 	</tr>
 </table>
