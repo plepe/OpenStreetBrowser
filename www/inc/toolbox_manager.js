@@ -53,8 +53,6 @@ function _toolbox_manager() {
     for(var i=0; i<this.toolboxes.length; i++) {
       var tb=this.toolboxes[i];
       tb.button.onclick=this.activate_toolbox.bind(this, i);
-      tb.button.className="toolboxbutton";
-      tb.content.className="toolbox";
       toolbox_divs.appendChild(tb.content);
     }
 
