@@ -144,7 +144,7 @@ function ext_wikipedia($object) {
   $text=wikipedia_get_abstract($object, $page, $lang);
 
   if($text) {
-    $ret.="$text<a class='external' href='$url'>".lang("read_more")."</a>";
+    $ret.="$text<a class='external' href='$url' target='_blank'>".lang("read_more")."</a>";
   }
 
   return $ret;

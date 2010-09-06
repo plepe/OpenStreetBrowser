@@ -10,7 +10,7 @@ function list_template() {
   $ret="";
 
   $ret.="$lang_str[list_info]<br>\n";
-  $ret.="<img src='img/ajax_loader.gif' /> loading</div>\n";
+  $ret.="<img src='img/ajax_loader.gif' /> ".lang("loading")."</div>\n";
 
   return $ret;
 }

@@ -23,14 +23,17 @@ body, li, td {
   height:100%;
 }
 .search {
+  z-index:11;
   width: 250px;
   margin-top: 3px;
 }
+
 input#search {
-  border: 1px solid #999;
+  border: 1px solid;
   background-color:#efefef;
   width: 250px;
   padding:3px;
+  margin-top:2px;
   font-size:1em;
   color:#333;
 }
@@ -46,7 +49,7 @@ input#search {
   line-height:130%;
   margin-top:5px;
 }
-.logo p { padding-top:45px; margin:0; }
+.logo p { padding-top:35px; margin:0; }
 .logo .bigger { font-size:28px; }
 .logo .smaller { font-size:14px; }
 .logo img { 
@@ -71,7 +74,7 @@ input#search {
   border-left:1px solid #999;
   height:100%;
 }
-.map_key_hidden {
+.map_key_hidden {
   display: none;
 }
 .map_key {
@@ -84,13 +87,19 @@ input#search {
   height:100%;
   overflow: auto;
 }
-.info {
+.info {
   position: absolute;
   width: 250px;
   overflow: auto;
   overflow-x:hidden;
-  bottom: 45px;
-  top: 180px;
+  bottom: 38px;
+}
+div#lang_select {
+  position: absolute;
+  height: 20px;
+  bottom: 5px;
+  width: 250px;
+  left: 10px;
 }
 div#options{
   position: absolute;
@@ -112,7 +121,8 @@ select#lang {
   font-size: 14px;
 }
 h1 {
-  margin:0;  font-size: 13px;
+  margin:0;
+  font-size: 13px;
   font-weight: bold;
   padding:3px 5px;
 }
@@ -191,8 +201,8 @@ a { color:#333; text-decoration:none; }
 ul { padding:0; margin:0 0 7px 15px; list-style-type:square; line-height:120%; padding-left: 20px; }
 li { padding-bottom:2px; }
 li a:hover { background-color:#ccc; }
-div.loading { padding-top:16px; }
-img.loading { padding-left: 13px; border-width: 0px; }
+/* div.loading { padding-top:40px; } */
+img.loading { padding-left: 7px; border-width: 0px; }
 
 .object { background-color:#efefef; }
 .object h2 { 
@@ -214,11 +224,18 @@ img.loading { padding-left: 13px; border-width: 0px; }
 }
 .licence {
   position: absolute;
-  left: 285px;
-  bottom: 13px;
+  left: 280px;
+  bottom: 2px;
   color: #333333;
   font-family: Tahoma,Arial,Verdana;
   font-size: smaller;
+  text-shadow: 0.1em 0.1em 0.1em #ffffff;
+}
+.olControlScaleLine {
+  text-shadow: 0.1em 0.1em 0.1em #ffffff;
+}
+.olControlMousePosition {
+  text-shadow: 0.1em 0.1em 0.1em #ffffff;
 }
 li.listitem {
 }
@@ -245,7 +262,8 @@ div.permalink {
   display: block;
   position: absolute;
   font-size: smaller;
-}
+  text-shadow: 0.1em 0.1em 0.1em #ffffff;
+} 
 div.edit_icon {
   position: absolute;
   background: white;
@@ -284,4 +302,59 @@ div.editor_category_rule_list{
 
 a.external {
   font-style: italic;
+}
+
+a.external:hover {
+  text-decoration: underline;
+}
+
+label:hover {
+  text-decoration:underline;
+}
+
+.contextmenu {
+  position:absolute;
+  background:#FEFEFE;
+  border:1px solid #999999;  
+}
+
+td.contextmenu_entry:hover {
+  background:#CECECE;
+  cursor:pointer;
+}
+
+select.icon-menu option {
+  background-repeat: no-repeat;
+  background-position: 3px center;
+  text-indent: 18px;
+}
+
+.layerImg {
+  width:50px;
+}
+
+.layerImg:hover {
+  width:100px;
+}
+
+/**************************/
+/* css hacks and so on... */
+/**************************/
+
+/* to remove dotted lines around links in mozilla */
+a:active {
+  outline:none;
+}
+a:focus{
+  outline:none;
+  -moz-outline-style: none;
+}
+
+/* fix IE box problems */
+* html .toolbox {
+  width:250px;
+}
+
+* html .toolboxbutton {
+  border:none;
 }

@@ -94,6 +94,9 @@ function get_overlay(id) {
 }
 
 function finish_drag(feature, pos) {
+  if(feature.ob&&feature.ob.finish_drag)
+    feature.ob.finish_drag(pos);
+
   call_hooks("finish_drag", feature, pos);
 }
 
@@ -138,9 +141,9 @@ function overlays_init() {
     agri_ind: new OpenLayers.Layer.OSM("Agriculture &amp; Industry", "tiles/agri_ind/", {numZoomLevels: 19, isBaseLayer: false, visibility: false })
   };
 
-  vector_layer=new OpenLayers.Layer.Vector("Data", {});
+  vector_layer=new OpenLayers.Layer.Vector(t("overlay:data"), {});
   vector_layer.setOpacity(0.7);
-  drag_layer=new OpenLayers.Layer.Vector("Draggable", {});
+  drag_layer=new OpenLayers.Layer.Vector(t("overlay:draggable"), {});
 
   drag_feature=new OpenLayers.Control.DragFeature(drag_layer);
 

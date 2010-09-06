@@ -1,5 +1,6 @@
 <?
 include_once "data_dir.php";
+include_once "git_obj.php";
 $icon_dir;
 
 class icon_obj extends git_obj {

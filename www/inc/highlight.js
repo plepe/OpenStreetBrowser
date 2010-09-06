@@ -1,8 +1,12 @@
 var highlight_feature=[];
 var highlight_feature_timer;
+var highlight_next_no_zoom=false; // when set to true, next 'pan_to_highlight' does not zoom, only center
 
 function pan_to_highlight(lon, lat, zoom) {
   var autozoom=options_get("autozoom");
+
+  if(highlight_next_no_zoom)
+    zoom=map.zoom;
 
   if((zoom)&&((map.zoom>zoom+1)||(map.zoom<zoom-1))) {
     if((!autozoom)||(autozoom=="pan")||(autozoom=="move"))
@@ -14,6 +18,8 @@ function pan_to_highlight(lon, lat, zoom) {
     else if(autozoom=="move")
       map.setCenter(new OpenLayers.LonLat(lon, lat), map.zoom);
   }
+
+  highlight_next_no_zoom=false;
 }
 
 var last_highlight_request;

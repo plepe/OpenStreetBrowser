@@ -1,12 +1,18 @@
 <?
 $lang_str["general_info"]="General Information"; // delete
-$lang_str["search_field"]="Search ...";
+$lang_str["search_field"]="Search...";
+$lang_str["search_tip"]="e.g. 'London', 'Cromwell Road', 'post box near Hyde Park',...";
+$lang_str["search_clear"]="Clear search field";
 $lang_str["noname"]="(noname)";
 $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";
 $lang_str["result_no"]="nothing found";
 $lang_str["search_process"]="searching";
 $lang_str["read_more"]="read more";
+$lang_str["search_more"]="more results";
+$lang_str["search_results"]="Search results";
+$lang_str["search_nominatim"]="search provided by";
+$lang_str["loading"]="loading";
 
 $lang_str["head_general_info"]="General Information";
 $lang_str["head_stops"]="Stops";

@@ -272,12 +272,12 @@ function comm_info($ret, $object) {
   if($v=$object->tags->get("website")) {
     if(!eregi("^[a-z0-9]+://", $v))
       $v="http://$v";
-    $r.=$tags->compile_text("#tag/website#: <a href='$v'>%website%</a><br />\n");
+    $r.=$tags->compile_text("#tag/website#: <a class='external' href='$v' target='_blank'>%website%</a><br />\n");
   }
   if($v=$object->tags->get("url")) {
     if(!eregi("^[a-z0-9]+://", $v))
       $v="http://$v";
-    $r.=$tags->compile_text("#tag/website#: <a href='$v'>%url%</a><br />\n");
+    $r.=$tags->compile_text("#tag/website#: <a class='external' href='$v' target='_blank'>%url%</a><br />\n");
   }
 
   $ret[]=array("general_info", $r);
