@@ -1,5 +1,8 @@
 drop table if exists save_actions;
-create table save_actions as (select * from actions);
+create table save_actions as (select now(), * from actions);
+
+-- use this to play back save_actions into actions:
+-- insert into actions (select data_type, (CASE WHEN oneof_is(to_textarray(action), 'D') THEN 'D' WHEN oneof_is(to_textarray(action), 'C') THEN 'C' ELSE 'M' END), id from save_actions group by data_type, id);
 
 CREATE OR REPLACE FUNCTION osmosisUpdate() RETURNS void AS $$
 DECLARE
@@ -7,8 +10,8 @@ BEGIN
   raise notice 'called osmosisUpdate()';
 
   -- for later check make a copy of actions
-  delete from save_actions;
-  insert into save_actions (select * from actions);
+  -- delete from save_actions;
+  insert into save_actions (select now(), * from actions);
 
   raise notice 'saved actions';
 
