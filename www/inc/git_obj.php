@@ -111,7 +111,7 @@ class git_obj {
     fwrite($f, $content);
     fclose($f);
 
-    $this->exec("git add {$file}");
+    $this->exec("git add \"{$file}\"");
 
     $this->chback();
     $this->commit_close();
@@ -132,8 +132,8 @@ class git_obj {
     $this->commit_open();
     $this->chdir();
 
-    $this->exec("git rm -r -f {$this->id}/");
-    $this->exec("rm -r -f {$this->id}/");
+    $this->exec("git rm -r -f \"{$this->id}/\"");
+    $this->exec("rm -r -f \"{$this->id}/\"");
 
     $this->chback();
     $this->commit_close();
@@ -153,7 +153,7 @@ class git_obj {
     $this->commit_open();
     $this->chdir();
 
-    $this->exec("git rm -f $file");
+    $this->exec("git rm -f \"$file\"");
 
     $this->chback();
     $this->commit_close();
