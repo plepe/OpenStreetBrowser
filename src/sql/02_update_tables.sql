@@ -62,28 +62,15 @@ BEGIN
   raise notice 'deleted from osm_polygon 2';
 
   -- insert changed/created points
-  insert into osm_point
-    select * from (select
-      'node_'||nodes.id as osm_id,
-      node_assemble_tags(nodes.id) as osm_tags,
-      ST_Transform(geom, 900913) as osm_way
-      from nodes
-	join actions on nodes.id=actions.id
-      where data_type='N' and action in ('C', 'M')
-	and abs(Y(geom))!=90
-      ) as x
-    where (array_dims(akeys(osm_tags)))!='[1:0]';
+  perform assemble_point(actions.id) from actions where actions.data_type='N' and actions.action in ('C', 'M');
 
   raise notice 'inserted to osm_point';
 
   -- insert changed/created lines
-  insert into osm_line
-    SELECT
-      'way_'||ways.id as osm_id,
-	way_assemble_tags(ways.id) as osm_tags,
-	ST_SetSRID(way_get_geom(ways.id), 900913) as osm_way
-    from ways 
-      join (select way_id as id from way_nodes join actions on way_nodes.node_id=actions.id and actions.data_type='N' and actions.action='M' group by way_id union select id from actions where data_type='W' and action in ('C', 'M')) actions 
+  perform assemble_line(id) from 
+    (select id from actions where data_type='W' and action in ('C', 'M')
+    union
+    (select way_id as id from way_nodes join actions on way_nodes.node_id=actions.id and actions.data_type='N' and actions.action='M' group by way_id union select id from actions where data_type='W' and action in ('C', 'M'))) actions 
      on ways.id=actions.id
     group by ways.id;
 
