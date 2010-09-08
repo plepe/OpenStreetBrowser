@@ -143,4 +143,5 @@ function real_export() {
   $export_vars_todo=array();
 }
 
+plugins_init();
 register_hook("html_done", "real_export");
