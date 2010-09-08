@@ -93,7 +93,7 @@ function wikipedia_get_abstract($object, $page, $lang) {
   return "<div class='wikipedia_abstract'>$img$text</div>";
 }
 
-function ext_wikipedia($object) {
+function wikipedia_info($info_ret, $object) {
   $ret="";
   global $data_lang;
   $page=0;
@@ -147,5 +147,7 @@ function ext_wikipedia($object) {
     $ret.="$text<a class='external' href='$url' target='_blank'>".lang("read_more")."</a>";
   }
 
-  return $ret;
+  $info_ret[]=array("wikipedia", $ret);
 }
+
+register_hook("info", "wikipedia_info");

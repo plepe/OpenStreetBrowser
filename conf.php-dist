@@ -29,3 +29,4 @@ $plugins=array("measure", "favorites", "wikipedia");
 // measure - do some measurement on the map
 // favorites - set favorites on the map
 // marker - set markers on the map
+// wikipedia - write some information of objects where we know about wikipedia
