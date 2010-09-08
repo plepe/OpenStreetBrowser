@@ -67,7 +67,7 @@ function marker(lon, lat) {
   var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
   var geo = new OpenLayers.Geometry.Point(pos.lon, pos.lat);
   this.feature = new OpenLayers.Feature.Vector(geo, 0, {
-    externalGraphic: 'http://www.openstreetmap.org/openlayers/img/marker.png',
+    externalGraphic: 'plugins/marker/marker.png',
     graphicWidth: 21,
     graphicHeight: 25,
     graphicXOffset: -11,
@@ -93,7 +93,7 @@ function marker_add_context(pos) {
 }
 
 function marker_init() {
-  contextmenu_add("img/toolbox_marker.png", "add marker", marker_add_context);
+  contextmenu_add("plugins/marker/icon.png", "add marker", marker_add_context);
 }
 
 register_hook("get_permalink", marker_permalink);
