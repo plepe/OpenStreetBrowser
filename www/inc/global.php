@@ -23,27 +23,6 @@ while($r=readdir($dir)) {
   }
 }
 closedir($dir);
-$dir=opendir("external/");
-while($r=readdir($dir)) {
-  unset($ext);
-  if(substr($r, 0, 1)!=".") {
-    $ext=substr($r, strrpos($r, ".")+1);
-  }
-
-  switch($ext) {
-    case "php":
-      require_once "external/$r";
-      break;
-    case "js":
-      if(!$design_hidden)
-        print "<script type='text/javascript' src='external/$r'></script>\n";
-      break;
-    case "css":
-      if(!$design_hidden)
-        print "<link rel='stylesheet' type='text/css' href=\"inc/$r\">\n";
-  }
-}
-closedir($dir);
 unset($dir);
 
 function html_var_to_js($v) {
