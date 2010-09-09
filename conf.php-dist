@@ -32,3 +32,4 @@ $plugins=array("measure", "favorites", "wikipedia");
 // wikipedia - write some information of objects where we know about wikipedia
 // navigation - navigation on the map
 // layer_chooser - show possible base maps and general overlays in options
+// toolbox - provide a toolbox interface (for other plugins)
