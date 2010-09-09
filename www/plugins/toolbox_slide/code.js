@@ -2,7 +2,7 @@
 
 var timer, i=0, details_style, search_style, toolbox_style, details_top, oldtop=180, lastview, toolbox_active, toolbox_locked=0;
 
-function toolbox_fillwithtext(text) {
+function toolbox_slide_fillwithtext(text) {
   return;
   if(toolbox_locked==0){
     toolbox_locked=1;
@@ -22,7 +22,7 @@ function toolbox_fillwithtext(text) {
   }
 }
 
-function toolbox_slide(from, to, direction) {
+function toolbox_slide_slide(from, to, direction) {
   var top = from+(direction*10*i);
   details_style.top=top+"px";
   search_style.top=top-37+"px";
