@@ -83,39 +83,40 @@ else
 </script>
 
 <div class='menu'>
-<div class='logo'><a href="http://wiki.openstreetmap.org/wiki/OpenStreetBrowser"><img src="img/osb_logo.png" alt="OpenStreetBrowser" name="OpenStreetBrowser" border="0"/></a><p>OpenStreet <span class="bigger">Browser</span></p></div>
-
-
-<div id='toolboxbuttons'>
-<table id='toolboxbuttons_table' cellspacing="0" style="border:0px; margin:0px 5px 0px 0px; padding:0px;">
-	<tr>
-	</tr>
-</table>
-</div>
-
-<div id='toolbox_container'></div>
-<div id='search' class='search' style="position:absolute; top:143px;">
-<form name='osb_search_form_name' id='osb_search_form' action='javascript:search()'">
-<input name='osb_search' id='search' style="border-color:#999999;" value='<?=lang("search_field")?>' onFocus="search_focus(this)" onkeyup="search_brush(this,event)" onblur="search_onblur(this)" "title="<?=lang("search_tip")?>"/>
-<img name='brush' src="besen.png" border="0" alt="" title="<?=lang("search_clear")?>" style="position:absolute; right:3px; top:6px; visibility:hidden; cursor:pointer;" onclick="search_clear(document.osb_search_form_name.osb_search)" onmousedown="if (event.preventDefault) event.preventDefault()">
-</form>
-</div>
-<div id='details' class='info' style="top:180px">
-<form id='details_content' class='details' action='javascript:details_content_submit()'>
 <?
-print list_template();
+$menu_list=array();
+$menu_list[]=array(-10, "<div class='logo'><a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'><img src='img/osb_logo.png' alt='OpenStreetBrowser' name='OpenStreetBrowser' border='0'/></a><p>OpenStreet <span class='bigger'>Browser</span></p></div>");
+$menu_list[]=array(-6,
+  "<div id='search' class='search' style='position:absolute; top:143px;'>\n".
+  "<form name='osb_search_form_name' id='osb_search_form' action='javascript:search()'>\n".
+  "<input name='osb_search' id='search' style='border-color:#999999;' value='".lang('search_field')."' onFocus='search_focus(this)' onkeyup='search_brush(this,event)' onblur='search_onblur(this)' 'title='".lang('search_tip')."'/>\n".
+  "<img name='brush' src='besen.png' border='0' alt='' title='".lang('search_clear')."' style='position:absolute; right:3px; top:6px; visibility:hidden; cursor:pointer;' onclick='search_clear(document.osb_search_form_name.osb_search)' onmousedown='if (event.preventDefault) event.preventDefault()'>\n".
+  "</form></div>\n");
+$menu_list[]=array(0,
+  "<div id='details' class='info' style='top:180px'>\n".
+  "<form id='details_content' class='details' action='javascript:details_content_submit()'>\n".
+  list_template().
+  "</form></div>\n");
+$menu_list[]=array(5,
+  "<div id='lang_select'>\n".
+  "<a href='javascript:toggle_mapkey()'>".lang("main:map_key")."</a> |\n".
+  "<a href='javascript:show_options()'>".lang("main:options")."</a> |\n".
+  "<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'>".lang("main:about")."</a> |\n".
+  "<a href='javascript:time_count_do_beg()'>".lang("main:donate")."</a>\n".
+  "</div>\n");
+
+call_hooks("menu_show", &$menu_list);
+
+$menu_list=weight_sort($menu_list);
+foreach($menu_list as $entry) {
+  print $entry;
+}
+
 ?>
-</form>
-</div>
-<div id='lang_select'>
-<a href='javascript:toggle_mapkey()'><?=lang("main:map_key")?></a> |
-<a href='javascript:show_options()'><?=lang("main:options")?></a> |
-<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'><?=lang("main:about")?></a> |
-<a href='javascript:time_count_do_beg()'><?=lang("main:donate")?></a>
-</div>
 <?
 //show_lang_select();
 ?>
+</div>
 <div class="map" id="map"></div>
 <div id="contextmenu" class="contextmenu" onmouseout="contextmenu_mouseout(event)" onmouseover="javascript:clearTimeout(contexttimer)" style="top:20px; left:500px; display:none;">
 <span id="contextmenu_pointer" style="position:absolute; width:10px; height:10px;"></span>
