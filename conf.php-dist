@@ -31,3 +31,4 @@ $plugins=array("measure", "favorites", "wikipedia");
 // marker - set markers on the map
 // wikipedia - write some information of objects where we know about wikipedia
 // navigation - navigation on the map
+// layer_chooser - show possible base maps and general overlays in options
