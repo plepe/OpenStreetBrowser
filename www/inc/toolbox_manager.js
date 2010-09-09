@@ -56,28 +56,13 @@ function _toolbox_manager() {
       toolbox_divs.appendChild(tb.content);
     }
 
-    var newtds=[];
-    var max_done=-100;
-    while(newtds.length!=this.toolboxes.length) {
-      var min_tds=[];
-      var min_wgt=100;
-
-      for(var i=0; i<this.toolboxes.length; i++) {
-	var tb=this.toolboxes[i];
-
-	if((tb.options.weight<min_wgt)&&(tb.options.weight>max_done)) {
-	  min_wgt=tb.options.weight;
-	  min_tds=[];
-	}
-	if(tb.options.weight==min_wgt) {
-	  min_tds.push(tb);
-	}
-      }
-
-      newtds=newtds.concat(min_tds);
-      max_done=min_wgt;
+    var sorttds=[];
+    for(var i=0; i<this.toolboxes.length; i++) {
+      var tb=this.toolboxes[i];
+      sorttds.push([ tb.options.weight, tb ]);
     }
-
+    var newtds=weight_sort(sorttds);
+    
     for(var i=0; i<newtds.length; i++) {
       toolbox_buttons.rows[0].appendChild(newtds[i].button);
     }
