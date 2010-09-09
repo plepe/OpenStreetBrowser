@@ -1,8 +1,10 @@
 <?
 $plugins_list=array();
+$plugins_include_files=array();
 
 function plugins_include($plugin) {
   global $plugins_list;
+  global $plugins_include_files;
 
   if((!file_exists("plugins/$plugin"))&&
      (!file_exists("plugins/$plugin/conf.php")))
@@ -15,6 +17,9 @@ function plugins_include($plugin) {
   global $$var_active;
   global $$var_depend;
   global $$var_tags;
+
+  if(file_exists("plugins/$plugin/code.php"))
+    $plugins_include_files[$plugin][]="code.php";
 
   include_once("plugins/$plugin/conf.php");
 
@@ -31,14 +36,18 @@ function plugins_include($plugin) {
 
   $plugins_list[$plugin]=$$var_tags;
 
-  if(file_exists("plugins/$plugin/code.php"))
-    include_once("plugins/$plugin/code.php");
+  if($plugins_include_files[$plugin])
+    foreach($plugins_include_files[$plugin] as $file) {
+      if(preg_match("/\.php$/", $file))
+	include_once("plugins/$plugin/$file");
+    }
 
   return true;
 }
 
 function plugins_html_head($plugin) {
   global $plugins_list;
+  global $plugins_include_files;
   global $plugins;
   $plugins_script="";
   $str="";
@@ -56,9 +65,17 @@ function plugins_html_head($plugin) {
     $plugins_script.="var {$var_tags}=new tags(".html_var_to_js($$var_tags->data()).");\n";
 
     if(file_exists("plugins/$plugin/code.js"))
-      $str.="<script type='text/javascript' src='plugins/$plugin/code.js'></script>\n";
+      $plugins_include_files[$plugin][]="code.js";
     if(file_exists("plugins/$plugin/style.css"))
-      $str.="<link rel='stylesheet' type='text/css' href=\"plugins/$plugin/style.css\">\n";
+      $plugins_include_files[$plugin][]="style.css";
+
+    if($plugins_include_files[$plugin])
+      foreach($plugins_include_files[$plugin] as $file) {
+	if(preg_match("/\.js$/", $file))
+	  $str.="<script type='text/javascript' src='plugins/$plugin/$file'></script>\n";
+	if(preg_match("/\.css$/", $file))
+	  $str.="<link rel='stylesheet' type='text/css' href=\"plugins/$plugin/$file\">\n";
+      }
   }
 
   $plugins_script.="var plugins=".html_var_to_js($plugins).";\n";
@@ -88,6 +105,12 @@ function plugins_init() {
   $plugins=array_keys($plugins_list);
 
   closedir($d);
+}
+
+function plugins_include_file($plugin, $file) {
+  global $plugins_include_files;
+
+  $plugins_include_files[$plugin][]=$file;
 }
 
 register_hook("html_done", "plugins_html_head");
