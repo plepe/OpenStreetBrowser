@@ -34,3 +34,4 @@ $plugins=array("measure", "favorites", "wikipedia");
 // layer_chooser - show possible base maps and general overlays in options
 // toolbox - provide a toolbox interface (for other plugins)
 // toolbox_slide - slide the toolbox when opening/closeing/changing
+// search - add a search field to the menu, use the nominatim service
