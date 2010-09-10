@@ -32,6 +32,11 @@ class git_dir {
       return false;
     }
 
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $id)) {
+      return array("status"=>"Invalid Filename");
+    }
+
     if(!file_exists($this->path())) {
       $this->master->commit_start();
       mkdir($this->path());
@@ -140,6 +145,11 @@ class git_dir {
     //else
       // check if not used yet
 
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $id)) {
+      return array("status"=>"Invalid Filename");
+    }
+
     $this->master->commit_open();
 
     $this->chdir();
@@ -159,6 +169,11 @@ class git_dir {
   function get_obj($id) {
     if($this->commit_id())
       $this->master->commit_open();
+
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $id)) {
+      return array("status"=>"Invalid Filename");
+    }
 
     $r=$this->exec("git ls-files $id/");
 

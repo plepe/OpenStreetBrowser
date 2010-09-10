@@ -10,6 +10,11 @@ class git_obj {
   var $files;
 
   function __construct($dir, $id, $files=array()) {
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $this->id)) {
+      return array("status"=>"Invalid Filename");
+    }
+
     $this->dir=$dir;
     $this->id=$id;
     $this->files=$files;
@@ -74,7 +79,10 @@ class git_obj {
       $this->exec("git checkout $version_branch");
     }
 
-    // TODO: check valid filename
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $file)) {
+      return array("status"=>"Invalid Filename");
+    }
 
     $content=file_get_contents("$file");
     $version=$this->version(null, 1);
@@ -102,6 +110,11 @@ class git_obj {
 
     if(!$this->commit_id()) {
       return array("status"=>"No commit started.");
+    }
+
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $file)) {
+      return array("status"=>"Invalid Filename");
     }
 
     $this->commit_open();
@@ -150,6 +163,11 @@ class git_obj {
       return array("status"=>"No commit started.");
     }
 
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $file)) {
+      return array("status"=>"Invalid Filename");
+    }
+
     $this->commit_open();
     $this->chdir();
 
@@ -170,6 +188,11 @@ class git_obj {
       return array("status"=>"Git directory is not in sane state");
     }
 
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $file)) {
+      return array("status"=>"Invalid Filename");
+    }
+
     $this->chdir();
 
     if(in_array($file, $this->files)) {
@@ -188,6 +211,11 @@ class git_obj {
   function remove_untracked($file) {
     if(!$this->dir->is_sane) {
       return array("status"=>"Git directory is not in sane state");
+    }
+
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $file)) {
+      return array("status"=>"Invalid Filename");
     }
 
     $this->chdir();
