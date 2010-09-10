@@ -26,16 +26,7 @@ function start_location_start(start_value) {
       set_location(lastview);
       break;
     case "savedview":
-      var lonlat=cookie_read("_osb_permalink").split("|");
-      if(map) {
-        var coords = new OpenLayers.LonLat(lonlat[0], lonlat[1]).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-        map.setCenter(coords,lonlat[2]);
-      } else {
-        start_lon=lonlat[0];
-        start_lat=lonlat[1];
-        start_zoom=lonlat[2];
-      }
-
+      set_location(cookie_read("_osb_permalink"));
       break;
     case "startnormal":
       break;
@@ -67,6 +58,14 @@ function start_location_activate() {
   }
 }
 
+function start_location_view_changed(ev) {
+  cookie_write("_osb_location", hash_to_string(get_permalink()));
+}
+
+function start_location_recv_permalink(hash) {
+  cookie_write("_osb_permalink", hash);
+}
+
 function start_location_init() {
   start_location_toolbox=new toolbox({
     icon: "plugins/start_location/icon.png",
@@ -86,3 +85,5 @@ function start_location_init() {
 }
 
 register_hook("init", start_location_init);
+register_hook("view_changed", start_location_view_changed);
+register_hook("recv_permalink", start_location_recv_permalink);
