@@ -98,7 +98,7 @@ class object {
       $ret.="<h1>$name_lang</h1>\n";
 
     $ret.="<div class='obj_actions'>\n";
-    $ret.="<a class='zoom' href='#'>".lang("info_back")."</a>\n";
+    $ret.="<a class='zoom' href='#' onClick='redraw()'>".lang("info_back")."</a>\n";
     $ret.="<a class='zoom' href='javascript:zoom_to_feature()'>".lang("info_zoom")."</a>\n";
     $ret.="</div>\n";
 
