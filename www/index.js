@@ -135,6 +135,7 @@ function redraw() {
   unset_highlight();
   var x=get_hash();
   showing_details=false;
+  call_hooks("unselect_all");
 
   if(x=="") {
     show_list();
