@@ -47,7 +47,7 @@ function marker(lon, lat) {
   // finish_drag
   this.finish_drag=function(pos) {
     // calculate lonlat of new position
-    var lonlat=map.getLonLatFromPixel(pos).transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+    var lonlat=pos.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
 
     // save new position to marker_list
     delete marker_list[this.lon+"|"+this.lat];
@@ -57,6 +57,14 @@ function marker(lon, lat) {
 
     // update permalink
     update_permalink();
+  }
+
+  // object_select
+  this.object_select=function(pos) {
+  }
+
+  // object_unselect
+  this.object_unselect=function(pos) {
   }
 
   // constructor
