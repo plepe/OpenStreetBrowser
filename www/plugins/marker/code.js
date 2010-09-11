@@ -1,6 +1,22 @@
 var marker_list={};
 var marker_drag_control;
 
+var marker_style={
+    externalGraphic: 'plugins/marker/marker.png',
+    graphicWidth: 21,
+    graphicHeight: 25,
+    graphicXOffset: -11,
+    graphicYOffset: -25
+  };
+var marker_style_selected={
+    externalGraphic: 'plugins/marker/marker_selected.png',
+    graphicWidth: 21,
+    graphicHeight: 25,
+    graphicXOffset: -11,
+    graphicYOffset: -25
+  };
+
+
 function marker_update(new_hash) {
   // no mlat / mlon in new_hash
   if(!(new_hash.mlat)||(!new_hash.mlon))
@@ -61,10 +77,14 @@ function marker(lon, lat) {
 
   // object_select
   this.object_select=function(pos) {
+    this.feature.style=marker_style_selected;
+    drag_layer.drawFeature(this.feature);
   }
 
   // object_unselect
   this.object_unselect=function(pos) {
+    this.feature.style=marker_style;
+    drag_layer.drawFeature(this.feature);
   }
 
   // constructor
@@ -74,13 +94,7 @@ function marker(lon, lat) {
   // create the new marker
   var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
   var geo = new OpenLayers.Geometry.Point(pos.lon, pos.lat);
-  this.feature = new OpenLayers.Feature.Vector(geo, 0, {
-    externalGraphic: 'plugins/marker/marker.png',
-    graphicWidth: 21,
-    graphicHeight: 25,
-    graphicXOffset: -11,
-    graphicYOffset: -25
-  });
+  this.feature = new OpenLayers.Feature.Vector(geo, 0, marker_style);
   drag_layer.addFeatures([this.feature]);
   this.feature.ob=this;
 
