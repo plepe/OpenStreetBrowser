@@ -35,3 +35,4 @@ $plugins=array("measure", "favorites", "wikipedia");
 // toolbox - provide a toolbox interface (for other plugins)
 // toolbox_slide - slide the toolbox when opening/closeing/changing
 // search - add a search field to the menu, use the nominatim service
+// start_location - toolbox that let users change viewport

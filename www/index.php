@@ -131,6 +131,6 @@ foreach($menu_list as $entry) {
 <?
 call_hooks("html_done", null);
 ?>
-<div class="permalink"><a href="" id="permalink" onclick="var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));cookie_write('_osb_permalink', center.lon + '|' + center.lat + '|' + map.zoom + '|' + location.hash);"><?=lang("main:permalink")?></a></div>
+<div class="permalink"><a href="" id="permalink" onclick="var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));"><?=lang("main:permalink")?></a></div>
 </body>
 </html>
