@@ -90,7 +90,10 @@ function overlays_init() {
   vector_layer.setOpacity(0.7);
   drag_layer=new OpenLayers.Layer.Vector(t("overlay:draggable"), {});
 
-  mod_feature=new OpenLayers.Control.ModifyFeature(drag_layer);
+  var mod_feature=new OpenLayers.Control.ModifyFeature(drag_layer);
+  drag_layer.select=mod_feature.selectControl.select.bind(mod_feature.selectControl);
+  drag_layer.unselect=mod_feature.selectControl.unselect.bind(mod_feature.selectControl);
+  drag_layer.unselectAll=mod_feature.selectControl.unselectAll.bind(mod_feature.selectControl);
 
   for(var i in overlays_layers) {
     map.addLayer(overlays_layers[i]);
@@ -112,7 +115,7 @@ function overlays_init() {
 }
 
 function overlays_unselect() {
-  mod_feature.selectControl.unselectAll();
+  drag_layer.unselectAll();
 }
 
 register_hook("unselect_all", overlays_unselect);

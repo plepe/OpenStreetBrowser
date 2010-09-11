@@ -146,7 +146,7 @@ function marker(lon, lat) {
   // remove
   this.remove=function() {
     delete marker_list[this.lon+"|"+this.lat];
-    mod_feature.selectControl.unselect(this.feature);
+    drag_layer.unselect(this.feature);
     drag_layer.removeFeatures([this.feature]);
     update_permalink();
     redraw();
@@ -179,8 +179,8 @@ function marker_add_context(pos) {
   var m=marker_add(pos.lon, pos.lat);
 
   // select marker
-  mod_feature.selectControl.unselectAll();
-  mod_feature.selectControl.select(m.feature);
+  drag_layer.unselectAll();
+  drag_layer.select(m.feature);
 }
 
 function marker_init() {
