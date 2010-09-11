@@ -65,6 +65,11 @@ function marker(lon, lat) {
     // calculate lonlat of new position
     var lonlat=pos.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
 
+    if(lonlat.x) {
+      lonlat.lon=lonlat.x;
+      lonlat.lat=lonlat.y;
+    }
+
     // save new position to marker_list
     delete marker_list[this.lon+"|"+this.lat];
     this.lon=lonlat.lon;
@@ -73,12 +78,21 @@ function marker(lon, lat) {
 
     // update permalink
     update_permalink();
+
+    this.update_details();
+  }
+
+  // next_drag
+  this.next_drag=function(pos) {
+    this.finish_drag(pos);
   }
 
   // object_select
   this.object_select=function(pos) {
     this.feature.style=marker_style_selected;
     drag_layer.drawFeature(this.feature);
+
+    this.show_details();
   }
 
   // object_unselect
@@ -87,9 +101,47 @@ function marker(lon, lat) {
     drag_layer.drawFeature(this.feature);
   }
 
+  // show_details
+  this.show_details=function() {
+    var ret="";
+    var info_content=document.getElementById("details_content");
+
+    dom_clean(info_content);
+    var div=dom_create_append(info_content, "div");
+    div.className="object";
+
+    var head=dom_create_append(div, "h1");
+    dom_create_append_text(head, t("marker", 1));
+
+    var div1=dom_create_append(div, "div");
+    div1.className="obj_actions";
+    div1.innerHTML="<a class='zoom' href='#' onClick='redraw()'>"+t("info_back")+"</a><br>\n";
+
+    var head=dom_create_append(div, "h2");
+    dom_create_append_text(head, t("head:location", 1));
+    this.details_location=dom_create_append(div, "ul");
+    this.update_details();
+
+    var head=dom_create_append(div, "h2");
+    dom_create_append_text(head, t("head:action"));
+    var ul=dom_create_append(div, "ul");
+  }
+
+  // update_details
+  this.update_details=function() {
+    if(!this.details_location)
+      return;
+
+    dom_clean(this.details_location);
+    var li=dom_create_append(this.details_location, "li");
+    dom_create_append_text(li, t("longitude", 1)+": "+this.lon.toFixed(5));
+    var li=dom_create_append(this.details_location, "li");
+    dom_create_append_text(li, t("latitude", 1)+": "+this.lat.toFixed(5));
+  }
+
   // constructor
-  this.lon=lon;
-  this.lat=lat;
+  this.lon=parseFloat(lon);
+  this.lat=parseFloat(lat);
 
   // create the new marker
   var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
@@ -111,7 +163,11 @@ function marker_add(lon, lat) {
 
 function marker_add_context(pos) {
   // add a marker on the pos
-  marker_add(pos.lon, pos.lat);
+  var m=marker_add(pos.lon, pos.lat);
+
+  // select marker
+  mod_feature.selectControl.unselectAll();
+  mod_feature.selectControl.select(m.feature);
 }
 
 function marker_init() {
