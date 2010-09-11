@@ -11,19 +11,35 @@ CREATE OR REPLACE FUNCTION rel_get_geom(bigint, int) RETURNS geometry AS $$
 DECLARE
   id alias for $1;
   rec alias for $2;
-  geom_nodes geometry;
-  geom_ways  geometry;
-  --geom_rels  geometry;
+  geom_arr_nodes geometry[];
+  geom_arr_ways  geometry[];
+  geom_nodes     geometry;
+  geom_ways      geometry;
+  o		 int;
+  -- geom_rels  geometry[];
 BEGIN
-  raise notice 'rel_get_geom(%, %)', id, rec;
+  -- raise notice 'rel_get_geom(%, %)', id, rec;
 
   --if rec>0 then
   --  return null;
   --end if;
 
-  geom_nodes:=(select ST_Collect(geom) from nodes where nodes.id in (select member_id from relation_members where relation_id=id and member_type='N'));
-  geom_ways:=(select ST_Collect(way_get_geom(ways.id)) from ways where ways.id in (select member_id from relation_members where relation_id=id and member_type='W'));
+  geom_arr_nodes:=(select to_array(geom) from nodes where nodes.id in (select member_id from relation_members where relation_id=id and member_type='N'));
+  geom_arr_ways:=(select to_array(way_get_geom(member_id)) from (select member_id from relation_members where relation_id=id and member_type='W') x);
   --geom_rels:=(select ST_Collect(rel_get_geom(relations.id, rec+1)) from relations where relations.id in (select member_id from relation_members where relation_id=id and member_type='R'));
+
+  if array_upper(geom_arr_nodes, 1) is not null then
+    geom_nodes:=ST_Collect(geom_arr_nodes);
+  end if;
+
+  geom_ways:=null::geometry;
+  if array_lower(geom_arr_ways, 1) is not null then
+    for i in array_lower(geom_arr_ways, 1)..array_upper(geom_arr_ways, 1) loop
+      if geom_arr_ways[i] is not null then
+	geom_ways:=ST_Collect(geom_ways, geom_arr_ways[i]);
+      end if;
+    end loop;
+  end if;
 
   return ST_Collect(geom_nodes, geom_ways);
 END;
@@ -93,7 +109,7 @@ BEGIN
     return false;
   end if;
 
-  raise notice 'assemble_point(%)', id;
+  -- raise notice 'assemble_point(%)', id;
 
   -- okay, insert
   insert into osm_point
@@ -124,7 +140,7 @@ BEGIN
   -- get geometry
   geom:=way_get_geom(id);
 
-  raise notice 'assemble_line(%)', id;
+  -- raise notice 'assemble_line(%)', id;
 
   -- okay, insert
   insert into osm_line
@@ -159,7 +175,7 @@ BEGIN
   -- get geometry
   geom:=rel_get_geom(id, 0);
 
-  raise notice 'assemble_rel(%)', id;
+  -- raise notice 'assemble_rel(%)', id;
 
   -- okay, insert
   insert into osm_rel
@@ -194,7 +210,7 @@ BEGIN
   tags:=(select osm_tags from osm_line where osm_id='way_'||id);
   -- no need to check if tags is null ... it wouldn't be in osm_line
 
-  raise notice 'assemble_polygon(%)', id;
+  -- raise notice 'assemble_polygon(%)', id;
 
   -- are we member of any multipolygon relation and are we 'outer'?
   if (select count(*) from relation_members join relation_tags on relation_members.relation_id=relation_tags.relation_id and relation_tags.k='type' where member_id='8125153' and member_type='W' and member_role='outer')>0 then
@@ -221,7 +237,7 @@ DECLARE
   tags hstore;
   outer_members bigint[];
 BEGIN
-  raise notice 'assemble_multipolygon(%)', id;
+  -- raise notice 'assemble_multipolygon(%)', id;
 
   -- get list of outer members
   outer_members:=(select to_intarray(member_id) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id);
@@ -244,7 +260,7 @@ BEGIN
       'rel_'||id,
       'rel_'||id,
       tags,
-      ST_SetSRID(geom, 900913)
+      ST_Transform(geom, 900913)
     );
 
   return true;
