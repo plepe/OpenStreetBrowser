@@ -37,12 +37,10 @@ function _toolbox_manager() {
   // resize_toolbox
   this.resize_toolbox=function() {
     var toolbox=document.getElementById("toolbox_container");
-    var search=document.getElementById("search");
     var details=document.getElementById("details");
     var size=toolbox.offsetHeight;
 
-    search.style.top=143+size;
-    details.style.top=180+size;
+    details.style.top=150+size;
   }
 
   // show_buttons

@@ -1,4 +1,22 @@
 var search_last;
+var search_toolbox;
+
+function search_init() {
+  search_toolbox=new toolbox({
+    icon: "plugins/search/icon.png",
+    icon_title: "search",
+    weight: -4,
+  });
+  register_toolbox(search_toolbox);
+  var text = "<form name='osb_search_form_name' id='osb_search_form' action='javascript:search()'><input name='osb_search' id='search' value='Suchen...' onFocus='search_focus(this)' onkeyup='search_brush(this,event)' onblur='search_onblur(this)' 'title='Suchen'/><img name='brush' src='plugins/search/brush.png' border='0' alt='' title='Suchen' style='position:absolute; right:3px; top:2px; visibility:hidden; cursor:pointer;' onclick='search_clear(document.osb_search_form_name.osb_search)' onmousedown='if (event.preventDefault) event.preventDefault()'></form>";
+  search_toolbox.content.innerHTML=text;
+  if(toolbox_manager.current_active==-1) {
+    search_toolbox.activate();
+  }
+}
+
+register_hook("init", search_init);
+
 
 function search_focus(ob) {
   if(ob.value==lang_str["search_field"]) {
@@ -7,7 +25,6 @@ function search_focus(ob) {
   else if((ob.value!="")) {
     document.getElementById("osb_search_form").brush.style.visibility = 'visible';
   }
-  document.getElementById("osb_search_form").osb_search.style.borderColor = '#cc9900';
 }
 
 function search_clear(ob) {
@@ -33,7 +50,6 @@ function search_onblur(ob) {
     ob.value=lang_str["search_field"];
     document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
   }
-  document.getElementById("osb_search_form").osb_search.style.borderColor = '#999999';
 }
 
 function search() {

@@ -20,7 +20,7 @@ function measure_init() {
     icon_title: "measurements",
     callback_activate: measure_activate,
     callback_deactivate: measure_deactivate,
-    weight: 5,
+    weight: -2,
   });
   register_toolbox(measure_toolbox);
   contextmenu_add("plugins/measure/icon.png", "measurement tool", measure_click);
