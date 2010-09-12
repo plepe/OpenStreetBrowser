@@ -46,7 +46,7 @@ function search($param) {
   }
   $ret.="</ul>\n";
 
-  $ret.="<i><a href='javascript:search_more()'>".lang("search_more")."</a></i><br>\n";
+  $ret.="<a class='external' href='javascript:search_more()'>".lang("search_more")."</a><br>\n";
   $ret.="(".lang("search_nominatim")." <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>)<br>\n";
 
   $ret.="</div>\n";
