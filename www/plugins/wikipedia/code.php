@@ -6,6 +6,9 @@ function wikipedia_parse($text) {
   while(eregi("^(.*)'''([^']*)'''(.*)$", $text, $m)) {
     $text=$m[1].$m[2].$m[3];
   }
+  while(eregi("^(.*)<ref>([^']*)</ref>(.*)", $text, $m)) {
+    $text=$m[1].$m[3].$m[4];
+  }
   return $text;
 }
 
