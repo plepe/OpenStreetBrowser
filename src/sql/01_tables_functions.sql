@@ -3,13 +3,16 @@ DECLARE
   id alias for $1;
   ret text;
 BEGIN
-  -- raise notice 'way_get_geom(%)', id;
   ret:=cache_search('way_'||id, 'geom');
   if ret is not null then
+    -- raise notice 'way_get_geom(%) - cache hit', id;
     return ret;
   end if;
 
-  ret:=(select cache_insert('way_'||way_id, 'geom', to_textarray('node_'||node_id), cast(MakeLine(geom) as text)) from (select * from way_nodes join nodes on way_nodes.node_id=nodes.id where way_nodes.way_id=id order by sequence_id) c group by way_id);
+  -- raise notice 'way_get_geom(%)', id;
+
+--  raise notice 'count: %', (select count(node_id) from (select * from way_nodes join nodes on way_nodes.node_id=nodes.id where way_nodes.way_id=id order by sequence_id) c group by way_id);
+  ret:=(select cache_insert('way_'||way_id, 'geom', to_textarray('node_'||node_id), (CASE WHEN count(*)>1 THEN cast(MakeLine(geom) as text) ELSE null::text END)) from (select * from way_nodes join nodes on way_nodes.node_id=nodes.id where way_nodes.way_id=id order by sequence_id) c group by way_id);
 
   return ret;
 END;
