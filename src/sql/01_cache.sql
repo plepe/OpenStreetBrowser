@@ -1,0 +1,67 @@
+drop table if exists osm_cache;
+create table osm_cache (
+  osm_id		text		not null,
+  cache_type		text		not null,
+  content		text		null,
+  cur_timestamp		timestamp	not null
+);
+create index osm_cache_id on osm_cache(osm_id);
+create index osm_cache_id_type on osm_cache(osm_id, cache_type);
+
+drop table if exists osm_cache_depend;
+create table osm_cache_depend (
+  osm_id		text		not null,
+  cache_type		text		not null,
+  depend_id		text		not null
+);
+create index osm_cache_depend_id on osm_cache_depend(osm_id);
+create index osm_cache_depend_id_type on osm_cache_depend(osm_id, cache_type);
+create index osm_cache_depend_depid on osm_cache_depend(depend_id);
+
+CREATE OR REPLACE FUNCTION cache_search(text, text) RETURNS text AS $$
+DECLARE
+  osm_id alias for $1;
+  cache_type alias for $2;
+  content text;
+BEGIN
+  content:=(select osm_cache.content from osm_cache where osm_cache.osm_id=osm_id limit 1);
+  return content;
+END;
+$$ LANGUAGE plpgsql stable;
+
+CREATE OR REPLACE FUNCTION cache_insert(text, text, text[], text) RETURNS text AS $$
+DECLARE
+  osm_id alias for $1;
+  cache_type alias for $2;
+  depend alias for $3;
+  content alias for $4;
+BEGIN
+  insert into osm_cache values (osm_id, cache_type, content, now());
+
+  insert into osm_cache_depend values (osm_id, cache_type, osm_id);
+  for i in array_lower(depend, 1)..array_upper(depend, 1) loop
+    insert into osm_cache_depend values (osm_id, cache_type, depend[i]);
+  end loop;
+  return content;
+END;
+$$ LANGUAGE plpgsql volatile;
+
+CREATE OR REPLACE FUNCTION cache_remove(text) RETURNS bool AS $$
+DECLARE
+  depend_id alias for $1;
+BEGIN
+  -- raise notice 'cache_remove(%)', depend_id;
+
+  delete from osm_cache
+    using osm_cache_depend dep
+    where osm_cache.osm_id=dep.osm_id
+      and dep.depend_id=depend_id;
+
+  delete from osm_cache_depend
+    using osm_cache_depend dep
+    where osm_cache_depend.osm_id=dep.osm_id
+      and dep.depend_id=depend_id;
+
+  return true;
+END;
+$$ LANGUAGE plpgsql volatile;
