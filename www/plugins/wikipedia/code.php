@@ -70,6 +70,7 @@ function wikipedia_get_abstract($object, $page, $lang) {
   if(@$f=fopen(wikipedia_action_url($object, $page, $lang, "raw"), "r")) {
     $text=""; unset($img);
     $enough=0;
+    $inside=0;
     while(($r=fgets($f))&&(!$enough)) {
   //    if(!$img&&eregi("\[\[Bild:([^\|\]]*)[\|\]]", $r, $m)) {
       $r=chop($r);
@@ -77,6 +78,14 @@ function wikipedia_get_abstract($object, $page, $lang) {
 	 (preg_match("/^<!--/", $r))
 	) {
       }
+
+      elseif(ereg("\{\{(.*)", $r)) {
+        $inside=1;
+      }
+      elseif(ereg("\}\}(.*)", $r)) {
+        $inside=0;
+      }
+
       elseif(!$img&&eregi("\[\[.*:([^\|]*\.(png|jpg|gif))", $r, $m)) {
 	$img=$m[1];
 	$img="<img src='http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img' align='left' class='wikipedia_image'>\n";
@@ -85,7 +94,7 @@ function wikipedia_get_abstract($object, $page, $lang) {
 	$img=$m[1];
 	$img="<img src='http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img' align='left' class='wikipedia_image'>\n";
       }
-      elseif(!ereg("^[\|\}\{\[\!]", $r)) {
+      elseif($inside==0 && !ereg("^[\|\}\{\[\!]", $r)) {
 	$text.=wikipedia_parse($r);
 	$enough=1;
       }
