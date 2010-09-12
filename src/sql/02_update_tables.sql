@@ -17,6 +17,15 @@ BEGIN
 
   raise notice E'statistics:\n%', (select array_to_string(to_textarray(stat.text), E'\n') from (select data_type || E'\t' || action || E'\t' || count(id) as text from actions group by data_type, action order by data_type, action) stat);
   
+  -- delete cache
+  perform cache_remove(
+    (CASE WHEN data_type='N' THEN 'node_'||id
+          WHEN data_type='W' THEN 'way_'||id
+	  WHEN data_type='R' THEN 'rel_'||id
+    END)) from actions;
+
+  raise notice 'deleted from osm_cache';
+
   -- delete changed/deleted points
   delete from osm_point using actions where osm_id='node_'||actions.id and data_type='N';
 

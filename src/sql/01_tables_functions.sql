@@ -1,11 +1,19 @@
 CREATE OR REPLACE FUNCTION way_get_geom(bigint) RETURNS geometry AS $$
 DECLARE
   id alias for $1;
+  ret text;
 BEGIN
   -- raise notice 'way_get_geom(%)', id;
-  return (select MakeLine(geom) from (select geom from way_nodes join nodes on node_id=nodes.id where way_id=id order by sequence_id) as x);
+  ret:=cache_search('way_'||id, 'geom');
+  if ret is not null then
+    return ret;
+  end if;
+
+  ret:=(select cache_insert('way_'||way_id, 'geom', to_textarray('node_'||node_id), cast(MakeLine(geom) as text)) from (select * from way_nodes join nodes on way_nodes.node_id=nodes.id where way_nodes.way_id=id order by sequence_id) c group by way_id);
+
+  return ret;
 END;
-$$ LANGUAGE plpgsql stable;
+$$ LANGUAGE plpgsql volatile;
 
 CREATE OR REPLACE FUNCTION rel_get_geom(bigint, int) RETURNS geometry AS $$
 DECLARE
@@ -13,6 +21,7 @@ DECLARE
   rec alias for $2;
   geom_arr_nodes geometry[];
   geom_arr_ways  geometry[];
+  geom_arr_ways1 geometry[];
   geom_nodes     geometry;
   geom_ways      geometry;
   o		 int;
@@ -25,7 +34,7 @@ BEGIN
   --end if;
 
   geom_arr_nodes:=(select to_array(geom) from nodes where nodes.id in (select member_id from relation_members where relation_id=id and member_type='N'));
-  geom_arr_ways:=(select to_array(way_get_geom(member_id)) from (select member_id from relation_members where relation_id=id and member_type='W') x);
+  geom_arr_ways:=(select to_array(geom) as geom from (select way_get_geom(member_id) as geom from (select member_id from relation_members where relation_id=12 and member_type='W') x) x1 where x1.geom is not null);
   --geom_rels:=(select ST_Collect(rel_get_geom(relations.id, rec+1)) from relations where relations.id in (select member_id from relation_members where relation_id=id and member_type='R'));
 
   if array_upper(geom_arr_nodes, 1) is not null then
@@ -34,11 +43,7 @@ BEGIN
 
   geom_ways:=null::geometry;
   if array_lower(geom_arr_ways, 1) is not null then
-    for i in array_lower(geom_arr_ways, 1)..array_upper(geom_arr_ways, 1) loop
-      if geom_arr_ways[i] is not null then
-	geom_ways:=ST_Collect(geom_ways, geom_arr_ways[i]);
-      end if;
-    end loop;
+    geom_ways:=ST_Collect(geom_arr_ways);
   end if;
 
   return ST_Collect(geom_nodes, geom_ways);
