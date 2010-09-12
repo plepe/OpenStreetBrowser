@@ -35,7 +35,7 @@ function list_make_list(cat) {
   var places=cat.getElementsByTagName("place");
 
   if(places.length==0) {
-    ret+=t("nothing found")+"\n";
+    ret+=t("nothing_found")+"\n";
   }
 
   for(var placei=0; placei<places.length; placei++) {

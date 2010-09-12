@@ -320,7 +320,7 @@ class map_key {
   function show_info($bounds) {
     global $overlays_show;
     global $class_info;
-    $ret=lang("map_key_head")." (".lang("map_key_zoom")." $bounds[zoom])";
+    $ret=lang("map_key_head")." (".lang("map_key:zoom")." $bounds[zoom])";
 
     load_classes("roads", $bounds);
     load_classes("road_features", $bounds);
@@ -347,13 +347,13 @@ class map_key {
 //    $ret.=$this->show_mss("land", array("world1", "world", "coastpoly", "landuse"), "Landuse", $bounds);
 //    $ret.=$this->show_mss("water", array("waterarea", "water"), "Water", $bounds);
 //    $ret.=$this->show_mss("land", array("buildings"), "Buildings", $bounds);
-    $ret.="<h4>".lang("head_places")."</h4>\n";
+    $ret.="<h4>".lang("head:places")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("places_db"), 
       array("place"=>"*"), $bounds);
     $ret.="</table>\n";
 
-    $ret.="<h4>".lang("head_roads")."</h4>\n";
+    $ret.="<h4>".lang("head:roads")."</h4>\n";
     $ret.="<table>\n";
 //    $ret.=$this->show_mss(array("roads_casing", "roads_fill", "roads_rail"), 
 //      array("highway_type"=>"=rail", "railway"=>array("=tram", "=rail"), "tracks"=>"=single"), $bounds);
@@ -365,7 +365,7 @@ class map_key {
       array("type"=>"*"), $bounds, array("prefix"=>"square_"));
     $ret.="</table>\n";
 
-    $ret.="<h4>".lang("head_rails")."</h4>\n";
+    $ret.="<h4>".lang("head:rails")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("roads_extract"), 
       array("highway_type"=>"=rail"), $bounds);
@@ -373,7 +373,7 @@ class map_key {
       array("railway"=>"*", "tracks"=>"*"), $bounds);
     $ret.="</table>\n";
 
-    $ret.="<h4>".lang("head_goods")."</h4>\n";
+    $ret.="<h4>".lang("head:goods")."</h4>\n";
     $ret.="<table>\n";
 //    $ret.=$this->show_mss(array("roads_casing", "roads_fill", "roads_rail"), 
 //      array("highway_type"=>"=rail", "railway"=>array("=tram", "=rail"), "tracks"=>"=single"), $bounds);
@@ -383,7 +383,7 @@ class map_key {
       array("highway_type"=>array("=power", "=pipeline"), "sub_type"=>"*"), $bounds);
     $ret.="</table>\n";
 
-    $ret.="<h4>".lang("head_borders")."</h4>\n";
+    $ret.="<h4>".lang("head:borders")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("world1"), 
       array(), $bounds, array("prefix"=>"admin_level=2"));
@@ -391,7 +391,7 @@ class map_key {
       array("admin_level"=>array("=2", "=3", "=4", "=5", "=6", "=8", "=10")), $bounds);
     $ret.="</table>\n";
 
-    $ret.="<h4>".lang("head_landuse")."</h4>\n";
+    $ret.="<h4>".lang("head:landuse")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("landuse_extract"), 
       array("landuse"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1)));
@@ -405,7 +405,7 @@ class map_key {
       array("landuse"=>"=water"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1)));
     $ret.="</table>\n";
     
-    $ret.="<h4>".lang("head_buildings")."</h4>\n";
+    $ret.="<h4>".lang("head:buildings")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("buildings"), 
       array("building"=>"*"), $bounds, array("geom"=>array("poly"=>1)));
@@ -413,7 +413,7 @@ class map_key {
       array("type"=>"*", "sub_type"=>"*"), $bounds);
     $ret.="</table>\n";
 
-    $ret.="<h4>".lang("head_power")."</h4>\n";
+    $ret.="<h4>".lang("head:power")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("power_point"), 
       array("power_type"=>"*"), $bounds);
@@ -421,14 +421,14 @@ class map_key {
       array("power_type"=>"*"), $bounds);
     $ret.="</table>\n";
 
-    $ret.="<h4>".lang("head_housenumbers")."</h4>\n";
+    $ret.="<h4>".lang("head:housenumbers")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("housenumbers"), 
       array(), $bounds, array("prefix"=>"housenumber"));
     $ret.="</table>\n";
 
     if($bounds[overlays][pt]) {
-      $ret.="<h4>".lang("head_pt")."</h4>\n";
+      $ret.="<h4>".lang("head:pt")."</h4>\n";
       $ret.="<table>\n";
 
       $ret.=$this->show_mss(array("routes", "routestext"), 
@@ -441,7 +441,7 @@ class map_key {
     }
 
     if($bounds[overlays][culture]) {
-      $ret.="<h4>".lang("head_culture")."</h4>\n";
+      $ret.="<h4>".lang("head:culture")."</h4>\n";
       $ret.="<table>\n";
 
       $ret.=$this->show_mss(array("amenity_culture"),
@@ -451,7 +451,7 @@ class map_key {
     }
 
     if($bounds[overlays][services]) {
-      $ret.="<h4>".lang("head_services")."</h4>\n";
+      $ret.="<h4>".lang("head:services")."</h4>\n";
       $ret.="<table>\n";
 
       $ret.=$this->show_mss(array("amenity_services"),
@@ -464,7 +464,7 @@ class map_key {
 //    $ret.=$this->show_mss("overlay_pt", "stations", "PT Stops", $bounds);
     
     if($bounds[overlays][car]) {
-      $ret.="<h4>".lang("head_car")."</h4>\n";
+      $ret.="<h4>".lang("head:car")."</h4>\n";
       $ret.="<table>\n";
 
       $ret.=$this->show_mss(array("amenity_car"),
@@ -474,7 +474,7 @@ class map_key {
     }
 
     if($bounds[overlays][ch]) {
-      $ret.="<h4>".lang("head_ch")."</h4>\n";
+      $ret.="<h4>".lang("head:ch")."</h4>\n";
       $ret.="<table>\n";
 
       $ret.=$this->show_mss(array("amenity_services"),

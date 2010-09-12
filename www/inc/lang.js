@@ -6,10 +6,12 @@ function change_language() {
   ob.submit();
 }
 
-function t(str, count) {
+function lang(str, count) {
   var l;
 
   if(l=lang_str[str]) {
+    if(typeof(l)=="string")
+      return l;
     if((l.length>1)&&(count==1))
       return l[0];
     else if(l.length>1)
@@ -25,6 +27,12 @@ function t(str, count) {
     return l[1];
 
   return str;
+}
+
+function t(str, count) {
+  // TODO: write deprecation message to debug
+
+  return lang(str, count);
 }
 
 function lang_change(key, value) {

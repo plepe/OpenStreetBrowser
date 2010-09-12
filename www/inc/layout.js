@@ -57,7 +57,7 @@ function list_entry(ob) {
 
   var name=ob.getAttribute("name"+trans);
   if(!name)
-    name=t("unnamed");
+    name=t("noname");
 
   return "<li class='listitem' style=\""+li_style+"\" id='list_"+ob.getAttribute("id")+"' title='"+title+"'><element id='"+ob.getAttribute("id")+"'><a href='#"+ob.getAttribute("id")+"' onMouseOver='set_highlight([\""+ob.getAttribute("id")+"\"])' onMouseOut='unset_highlight()'>"+name+"</a>"+add+"</element></li>\n";
 }
