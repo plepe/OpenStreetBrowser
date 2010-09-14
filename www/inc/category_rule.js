@@ -115,8 +115,9 @@ function category_rule(category, dom) {
     this.id=dom.getAttribute("id");
     this.tags=new tags();
     this.tags.readDOM(dom);
-    if(this.tags.get("icon"))
-      this.icon=icon_git.get_obj(this.tags.get("icon"));
+//    if(this.tags.get("icon"))
+//      this.icon=icon_git.get_obj(this.tags.get("icon"));
+// TODO: maybe initialize icon, when we need it?
   }
   this.data=[];
   this.category=category;
