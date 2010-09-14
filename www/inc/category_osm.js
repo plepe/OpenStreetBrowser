@@ -250,6 +250,9 @@ function category_osm(id) {
     // Got a wrong version - reload definition (which requests new data later)
     var recv_version=dom.getAttribute("version");
     if((recv_version)&&(recv_version!=this.version)) {
+      // save received data to be processed after loading correct version
+      this.recv_pending=[ dom, viewbox, this.result ];
+
       this.result=0;
 
       this.load_def(recv_version);
@@ -303,9 +306,6 @@ function category_osm(id) {
 
     this.write_div();
 
-    if(category_root)
-      category_root.shall_reload();
-
     if(this.rules.length) {
       // register overlay - empty categories don't get an overlay
       if(!(this.overlay=get_overlay(this.id)))
@@ -314,6 +314,18 @@ function category_osm(id) {
       this.overlay.set_version(this.version);
       this.overlay.set_name(this.tags.get_lang("name", ui_lang));
     }
+
+    // We still have received data ... process now
+    if(this.recv_pending) {
+      var x=this.recv_pending;
+      delete(this.recv_pending);
+      this.result=x[2];
+      this.recv(x[0], x[1]);
+    }
+    // if not, we could load data now
+    else if(category_root)
+      category_root.shall_reload();
+
   }
 
   // get_rule
