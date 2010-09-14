@@ -86,8 +86,8 @@ foreach($wiki_data[Importance] as $wd) {
   $list_importance[]=$wd[key];
 }
 
-foreach($wiki_data["Categories"] as $src) {
-  $list_category[]=$src[category];
+foreach($wiki_data["Categories"] as $src=>$data) {
+  $list_category[$data[category]]=$data;
 }
 
 function parse_src_more($str) {
@@ -137,7 +137,8 @@ foreach($wiki_data["Values"] as $src) {
   $categories[$src[category]][]=$rule;
 }
 
-foreach($categories as $cat_id=>$rules) {
+foreach($list_category as $cat_id=>$cat_data) {
+  $rules=$categories[$cat_id];
   $ret="";
 
   $cat=new tags();
@@ -164,9 +165,32 @@ foreach($categories as $cat_id=>$rules) {
     }
   }
 
+  if(preg_match("/\//", $cat_id))
+    $cat->set("hide", "yes");
+
+  $list=array();
+  foreach($list_category as $sub_cat_id=>$sub_cat_data) {
+    if((substr($sub_cat_id, 0, strlen($cat_id))==$cat_id)&&
+       (substr_count($sub_cat_id, "/")-substr_count($cat_id, "/")==1)) {
+      $list[]=strtr($sub_cat_id, array("/"=>"_"));
+    }
+  }
+    
+  if(sizeof($list)) {
+    $cat->set("sub_categories", implode(";", $list));
+  }
+
   $ret.="<category>\n";
   $ret.=$cat->write_xml("  ");
   foreach($rules as $num=>$rule) {
+    $style=array();
+    if($cat_data['fg-color'])
+      $style[]="fill: {$cat_data['fg-color']};";
+    if($cat_data['bg-color'])
+      $style[]="halo_fill: {$cat_data['bg-color']};";
+    if(sizeof($style))
+      $rule->set("icon_text_style", implode(" ", $style));
+
     $ret.="  <rule id=\"$num\">\n";
     $ret.=$rule->write_xml("    ");
     $ret.="  </rule>\n";
