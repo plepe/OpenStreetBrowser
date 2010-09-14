@@ -306,12 +306,14 @@ function category_osm(id) {
     if(category_root)
       category_root.shall_reload();
 
-    // register overlay
-    if(!(this.overlay=get_overlay(this.id)))
-      this.overlay=new overlay(this.id);
-    this.overlay.register_category(this);
-    this.overlay.set_version(this.version);
-    this.overlay.set_name(this.tags.get_lang("name", ui_lang));
+    if(this.rules.length) {
+      // register overlay - empty categories don't get an overlay
+      if(!(this.overlay=get_overlay(this.id)))
+	this.overlay=new overlay(this.id);
+      this.overlay.register_category(this);
+      this.overlay.set_version(this.version);
+      this.overlay.set_name(this.tags.get_lang("name", ui_lang));
+    }
   }
 
   // get_rule
