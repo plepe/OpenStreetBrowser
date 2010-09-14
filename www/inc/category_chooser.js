@@ -33,7 +33,11 @@ function category_chooser(callback) {
       var a=dom_create_append(li, "a");
       a.onclick=this.choose.bind(this, ob.getAttribute("id"));
 
-      dom_create_append_text(a, ob.firstChild.nodeValue);
+      var text=t("unnamed");
+      if(ob.firstChild)
+	text=ob.firstChild.nodeValue;
+	
+      dom_create_append_text(a, text);
     }
 
     var input=dom_create_append(this.win.content, "input");
