@@ -213,7 +213,7 @@ class git_obj {
     }
   }
 
-  function preprocess($files) {
+  function preprocess($files=array()) {
     // you can overwrite this function. Will be called after a successful
     // commit for every changed git_obj with the list of changed files
   }
