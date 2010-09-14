@@ -4,7 +4,7 @@ include_once "git_obj.php";
 $icon_dir;
 
 class icon_obj extends git_obj {
-  function preprocess($files) {
+  function preprocess($files=array()) {
     $srcfile=$this->path("file.src");
     $dstfile=$this->path("preview.png");
 
@@ -15,10 +15,10 @@ class icon_obj extends git_obj {
     switch($mime) {
       case "image/svg+xml":
         // imagemagick in Ubuntu Jaunty/Lucid is broken ... use rsvg instead
-	$this->exec("rsvg {$srcfile} {$dstfile}");
+	$x=$this->exec("rsvg \"{$srcfile}\" \"{$dstfile}\"");
 	break;
       default:
-	$this->exec("convert {$srcfile} png:{$dstfile}");
+	$this->exec("convert \"{$srcfile}\" \"png:{$dstfile}\"");
     }
   }
 

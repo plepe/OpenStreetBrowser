@@ -1,15 +1,80 @@
 <?
 require_once("conf.php");
 require_once("src/wiki_stuff.php");
+include_once "www/inc/global.php";
 require_once("www/inc/tags.php");
 require_once("www/inc/functions.php");
+require_once("www/inc/hooks.php");
+require_once("www/inc/lock.php");
+require_once("www/inc/git_dir.php");
+require_once("www/inc/icon.php");
+require_once("www/inc/data_dir.php");
 require_once("www/lang/en.php");
+
+icon_init();
 
 $columns=array(
   "Categories"=>array("category", "bg-color", "fg-color", "overlay"),
   "Values"=>array("keys", "desc", "category", "importance", "icon", "overlay", "more"),
   "Importance"=>array("key", "onlyicon", "icontext")
 );
+
+function get_author() {
+  return "MCP <mcp@openstreetbrowser.org>";
+}
+
+function wiki_download_icon($name) {
+  global $icon_list;
+  global $wiki_img;
+  global $wiki_imgsrc;
+  global $icon_dir;
+
+  $icon=strtr($name, array(" "=>"_"));
+  if(preg_match("/^(.*)\.[^\.]*$/", $name, $m))
+    $icon_id=$m[1];
+  else
+    $icon_id=$name;
+
+  $f=$icon_dir->get_obj($icon_id);
+  if($f)
+    return $icon_id;
+
+  if(!isset($icon_list[$icon])) {
+    $img_data=gzfile("$wiki_img$icon");
+
+    if(!$img_data)
+      print "Can't open $wiki_img$icon\n";
+
+    unset($icon_path);
+    foreach($img_data as $r) {
+      if(eregi("<div class=\"fullImageLink\" .*<a href=\"([^\"]*)\">", $r, $m)) {
+	print "DOWNLOADING $m[1]\n";
+	$img=file_get_contents("$wiki_imgsrc$m[1]");
+	if(!$img)
+	  print "Can't download $wiki_imgsrc$m[1]\n";
+      }
+    }
+  }
+
+  $f=$icon_dir->create_obj($icon_id);
+  $f->save("file.src", $img);
+
+  $d=new DOMDocument();
+  $tags=dom_create_append($d, "tags", $d);
+  $tag=dom_create_append($tags, "tag", $d);
+  $tag->setAttribute("k", "name");
+  $tag->setAttribute("v", $icon_id);
+
+  $tag=dom_create_append($tags, "tag", $d);
+  $tag->setAttribute("k", "source");
+  $tag->setAttribute("v", "$wiki_img$icon");
+
+  $f->save("tags.xml", $d->saveXML());
+
+  return $icon_id;
+}
+
+$data_dir->commit_start();
 
 $wiki_data=read_wiki();
 $list_category=array();
@@ -51,16 +116,20 @@ $imp_match=array();
 foreach($wiki_data["Values"] as $src) {
   $rule=new tags();
 
-  $rule->set("match", parse_to_simple($src[keys]));
-  $rule->set("importance", $src[importance]);
+  $rule->set("match", parse_to_simple($src['keys']));
+  $rule->set("importance", $src['importance']);
   if($src[description])
-    $rule->set("display_type", "[$src[desc]]");
-  if(preg_match("/\[\[Image:(.*)\]\]/", $src[icon], $m))
-    $rule->set("icon", "osm_wiki:$m[1]");
+    $rule->set("display_type", "[{$src['desc']}]");
+  if(preg_match("/\[\[Image:(.*)\]\]/", $src['icon'], $m)) {
+    $icon=wiki_download_icon($m[1]);
+    $rule->set("icon", $icon);
 
-  $more=parse_src_more($src[more]);
+    wiki_download_icon($m[1]);
+  }
+
+  $more=parse_src_more($src['more']);
   if($more[tables])
-    $rule->set("type", implode(";", explode(",", $more[tables])));
+    $rule->set("type", implode(";", explode(",", $more['tables'])));
 
   if($x=$lang_str["tag_".strtr($rule->get("match"), array("="=>"/"))])
     $rule->set("name", $x);
@@ -73,7 +142,7 @@ foreach($categories as $cat_id=>$rules) {
 
   $cat=new tags();
 
-  $f=popen("grep 'cat:$cat_id' /osm/skunkosm/www/lang/en.js", "r");
+  $f=popen("grep 'cat:$cat_id' $root_path/www/lang/en.js", "r");
   $r=fgets($f);
   pclose($f);
 
@@ -85,12 +154,14 @@ foreach($categories as $cat_id=>$rules) {
     $cat->set("name", $cat_id);
   }
 
-  $f=popen("grep 'cat:$cat_id' /osm/skunkosm/www/lang/de.js", "r");
-  $r=fgets($f);
-  pclose($f);
+  foreach(array("de", "it", "ja") as $lang) {
+    $f=popen("grep 'cat:$cat_id' $root_path/www/lang/$lang.js", "r");
+    $r=fgets($f);
+    pclose($f);
 
-  if(preg_match("/lang_str\[\".*\"\]=\[ (\".*\", )?\"(.*)\" \];/", $r, $m)) {
-    $cat->set("name:de", $m[2]);
+    if(preg_match("/lang_str\[\".*\"\]=\[ (\".*\", )?\"(.*)\" \];/", $r, $m)) {
+      $cat->set("name:$lang", $m[2]);
+    }
   }
 
   $ret.="<category>\n";
@@ -102,8 +173,13 @@ foreach($categories as $cat_id=>$rules) {
   }
   $ret.="</category>\n";
 
-  do_post_request("http://www.openstreetbrowser.org/skunk/categories.php?todo=save&id=new", $ret);
+  $cat_id=strtr($cat_id, array("/"=>"_"));
+
+  print "Upload $cat_id\n";
+  file_put_contents("$lists_dir/$cat_id.xml", $ret);
 }
+
+$data_dir->commit_end("import vom osm wiki");
 exit;
 
 function to_cat_list($cat_list, $cat_part) {
