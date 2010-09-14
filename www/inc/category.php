@@ -283,24 +283,14 @@ class category {
 
     $ret.="  <tag k=\"geo:center\" v=\"$res[center]\"/>\n";
 
-    if($x=$ob->tags->parse($rule_tags->get("display_name"), $lang)) {
+    if($x=$ob->tags->parse($rule_tags->get("list_text"), $lang)) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"display_name:$lang\" v=\"$x\"/>\n";
     }
 
-    if($x=$ob->tags->parse($rule_tags->get("display_name"))) {
+    if($x=$ob->tags->parse($rule_tags->get("list_text"))) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"display_name\" v=\"$x\"/>\n";
-    }
-
-    if($x=$ob->tags->parse($rule_tags->get("display_type"), $lang)) {
-      $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"display_type:$lang\" v=\"$x\"/>\n";
-    }
-
-    if($x=$ob->tags->parse($rule_tags->get("display_type"))) {
-      $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"display_type\" v=\"$x\"/>\n";
     }
 
     if($x=$rule_tags->get("icon")) {

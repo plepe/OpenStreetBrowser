@@ -2,13 +2,16 @@
 $maybe_delete_indexes=array();
 $default_tags=array(
   'point'=>array(
-    'display_name'=>"[ref] - [name];[name];[ref];[operator]",
+    'icon_text'=>"[name];[ref];[operator]",
+    'list_text'=>"[ref] - [name];[name];[ref];[operator]",
   ),
   'line'=>array(
-    'display_name'=>"[ref] - [name];[name];[ref];[operator]",
+    'line_text'=>"[name];[ref];[operator]",
+    'list_text'=>"[ref] - [name];[name];[ref];[operator]",
   ),
   'polygon'=>array(
-    'display_name'=>"[ref] - [name];[name];[ref];[operator]",
+    'icon_text'=>"[name];[ref];[operator]",
+    'list_text'=>"[ref] - [name];[name];[ref];[operator]",
   ),
 );
 
@@ -390,7 +393,7 @@ function match_to_sql($match, $table_def, $type="exact") {
       return "false";
     default:
       print "invalid match! "; print_r($match);
-      return "X";
+      return "true";
   }
 }
 
