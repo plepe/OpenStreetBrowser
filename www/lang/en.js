@@ -10,6 +10,11 @@ lang_str["cancel"]		  =[ "Cancel" ];
 lang_str["choose"]		  =[ "Choose" ];
 
 lang_str["geo_click_pos"]         =[ "Click on your position on the map" ];
+lang_str["longitude"]             =[ "Longitude", "Longitudes" ];
+lang_str["latitude"]              =[ "Latitude", "Latitudes" ];
+
+lang_str["head:location"]         =[ "Location" ];
+lang_str["head:action"]           =[ "Action" ];
 
 lang_str["start:choose"]          =[ "Choose map view" ];
 lang_str["start:geolocation"]     =[ "get geolocation" ];

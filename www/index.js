@@ -136,6 +136,7 @@ function redraw() {
   unset_highlight();
   var x=get_hash();
   showing_details=false;
+  call_hooks("unselect_all");
 
   if(x=="") {
   }
@@ -207,6 +208,7 @@ function check_redraw() {
 
   if(location.hash!=last_location_hash) {
     if(location.hash.substr(0, 2)=="#?") {
+      call_hooks("recv_permalink", location.hash.substr(2));
       location_params=string_to_hash(location.hash.substr(2));
     }
     else if(location.hash.substr(0, 1)=="#") {
@@ -245,9 +247,6 @@ function view_changed(event) {
 
   view_changed_timer=setTimeout("view_changed_delay()", 300);
   check_mapkey();
-  
-  var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
-  cookie_write("_osb_location", hash_to_string(get_permalink()));
 
   call_hooks("view_changed", event);
 }

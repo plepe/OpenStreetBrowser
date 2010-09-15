@@ -38,7 +38,7 @@ function icon_init() {
   $icon_dir=new git_dir($data_dir, "icons", "icon_obj");
 }
 
-register_hook("html_start", "icon_init");
+register_hook("init", "icon_init");
 register_hook("ajax_start", "icon_init");
 register_hook("mcp_start", "icon_init");
 register_hook("list_start", "icon_init");

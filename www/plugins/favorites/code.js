@@ -23,7 +23,7 @@ function favorites(lon, lat) {
   var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
   var geo = new OpenLayers.Geometry.Point(pos.lon, pos.lat);
   this.feature = new OpenLayers.Feature.Vector(geo, 0, {
-    externalGraphic: 'img/favorite.png',
+    externalGraphic: 'plugins/favorites/favorite.png',
     graphicWidth: 23,
     graphicHeight: 24,
     graphicXOffset: -5,
@@ -63,10 +63,10 @@ function favorites_add_context(pos) {
 }
 
 function favorites_init() {
-  contextmenu_add("img/toolbox_favorites.png", "add favorite", favorites_add_context);
+  contextmenu_add("plugins/favorites/icon.png", "add favorite", favorites_add_context);
 
   favorites_toolbox=new toolbox({
-    icon: "img/toolbox_favorites.png",
+    icon: "plugins/favorites/icon.png",
     icon_title: "favorites",
     callback_activate: favorites_toolbox_text
   });

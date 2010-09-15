@@ -16,14 +16,14 @@ function measure_click(pos) {
 
 function measure_init() {
   measure_toolbox=new toolbox({
-    icon: "img/toolbox_measure.png",
+    icon: "plugins/measure/icon.png",
     icon_title: "measurements",
     callback_activate: measure_activate,
     callback_deactivate: measure_deactivate,
-    weight: 5,
+    weight: -2,
   });
   register_toolbox(measure_toolbox);
-  contextmenu_add("img/toolbox_measure.png", "measurement tool", measure_click);
+  contextmenu_add("plugins/measure/icon.png", "measurement tool", measure_click);
 
   var text = "<i>Measurements</i><br/><br/>At first set measure points on the map.<br/><br/>distance: 0m<br/>area: 0m²<br/><br/>";
   measure_toolbox.content.innerHTML=text;

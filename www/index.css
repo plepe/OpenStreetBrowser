@@ -22,18 +22,14 @@ body, li, td {
   background-repeat:repeat-y;
   height:100%;
 }
-.search {
-  z-index:11;
-  width: 250px;
-  margin-top: 3px;
+#osb_search_form {
+  margin: -2px 0px 1px;
 }
-
 input#search {
-  border: 1px solid;
+  border: 0px solid;
   background-color:#efefef;
-  width: 250px;
-  padding:3px;
-  margin-top:2px;
+  width: 242px;
+  padding:1px;
   font-size:1em;
   color:#333;
 }

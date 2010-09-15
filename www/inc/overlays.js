@@ -93,12 +93,48 @@ function get_overlay(id) {
   return overlays_list[id];
 }
 
-function finish_drag(feature, pos) {
+function finish_drag(feature) {
+  var pos=feature.geometry.getCentroid();
   if(feature.ob&&feature.ob.finish_drag)
     feature.ob.finish_drag(pos);
 
   call_hooks("finish_drag", feature, pos);
 }
+
+function start_drag(feature) {
+  var pos=feature.geometry.getCentroid();
+  if(feature.ob&&feature.ob.start_drag)
+    feature.ob.start_drag(pos);
+
+  call_hooks("start_drag", feature, pos);
+}
+
+function next_drag(feature) {
+  var pos=feature.geometry.getCentroid();
+  if(feature.ob&&feature.ob.next_drag)
+    feature.ob.next_drag(pos);
+
+  call_hooks("next_drag", feature, pos);
+}
+
+function object_select(ev) {
+  var feature=ev.feature;
+  var pos=feature.geometry.getCentroid();
+  if(feature.ob&&feature.ob.object_select)
+    feature.ob.object_select(pos);
+
+  call_hooks("object_select", feature, pos);
+}
+
+function object_unselect(ev) {
+  var feature=ev.feature;
+  var pos=feature.geometry.getCentroid();
+  if(feature.ob&&feature.ob.object_unselect)
+    feature.ob.object_unselect(pos);
+
+  call_hooks("object_unselect", feature, pos);
+}
+
 
 function list_overlays() {
   var list=[];
@@ -145,14 +181,32 @@ function overlays_init() {
   vector_layer.setOpacity(0.7);
   drag_layer=new OpenLayers.Layer.Vector(t("overlay:draggable"), {});
 
-  drag_feature=new OpenLayers.Control.DragFeature(drag_layer);
+  var mod_feature=new OpenLayers.Control.ModifyFeature(drag_layer);
+  drag_layer.select=mod_feature.selectControl.select.bind(mod_feature.selectControl);
+  drag_layer.unselect=mod_feature.selectControl.unselect.bind(mod_feature.selectControl);
+  drag_layer.unselectAll=mod_feature.selectControl.unselectAll.bind(mod_feature.selectControl);
 
   for(var i in overlays_layers) {
     map.addLayer(overlays_layers[i]);
   }
   map.addLayer(vector_layer);
   map.addLayer(drag_layer);
-  map.addControl(drag_feature);
-  drag_feature.activate();
-  drag_feature.onComplete=finish_drag;
+  map.addControl(mod_feature);
+
+  mod_feature.mode |= OpenLayers.Control.ModifyFeature.DRAG;
+  mod_feature.dragComplete=finish_drag;
+  mod_feature.dragVertex=next_drag;
+//  mod_feature.dragStart=start_drag; -- with this activated selecting objects doesn't work
+  drag_layer.events.on({
+    'featureselected': object_select,
+    'featureunselected': object_unselect
+  });
+
+  mod_feature.activate();
 }
+
+function overlays_unselect() {
+  drag_layer.unselectAll();
+}
+
+register_hook("unselect_all", overlays_unselect);
