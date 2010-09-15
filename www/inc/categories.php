@@ -925,3 +925,11 @@ function category_history($id, $param=array()) {
 
   return $ret;
 }
+
+function categories_init() {
+  global $default_categories;
+  if(isset($default_categories))
+    html_export_var(array("default_categories"=>$default_categories));
+}
+
+register_hook("init", "categories_init");

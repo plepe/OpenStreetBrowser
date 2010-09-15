@@ -43,3 +43,6 @@ $data_dir="$root_dir/data/";
 // $renderd_files - Define additional styles for renderd (point to a renderd-file)
 $renderd_files=array(
 );
+
+// $default_categories - Define a list of categories which should automatically be loaded
+$default_categories=array();
