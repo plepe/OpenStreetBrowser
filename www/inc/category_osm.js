@@ -115,6 +115,9 @@ function category_osm(id) {
     param.category=this.id;
     param.count=10;
 
+    if(!this.rules.length)
+      return;
+
     if((this.result)&&(this.result.viewbox==param.viewbox)&&(!more)) {
       this.write_div();
       return;
