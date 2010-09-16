@@ -80,12 +80,18 @@ function category_osm(id) {
 //      max=limit;
 
     dom_clean(div.data);
-    var ul=dom_create_append(div.data, "ul");
 
-    for(var i=offset; i<max; i++) {
-      var match_ob=this.result.data[i];
-      call_hooks("category_show_match", this, match_ob);
-      match_ob.write_list(ul);
+    if((this.result.status=="recv")&&(!this.result.data.length)) {
+      var txt=dom_create_append_text(div.data, t("nothing found"));
+    }
+    else {
+      var ul=dom_create_append(div.data, "ul");
+
+      for(var i=offset; i<max; i++) {
+	var match_ob=this.result.data[i];
+	call_hooks("category_show_match", this, match_ob);
+	match_ob.write_list(ul);
+      }
     }
 
     dom_clean(div.more);
