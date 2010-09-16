@@ -36,18 +36,14 @@ function category_osm(id) {
     new category_editor(this.id);
   }
   
-  // open_category
-  this.inherit_open_category=this.open_category;
-  this.open_category=function(div) {
-    this.inherit_open_category(div);
+  // unhide_category
+  this.on_unhide_category=function(div) {
     if(this.overlay)
       this.overlay.show();
   }
 
-  // close_category
-  this.inherit_close_category=this.close_category;
-  this.close_category=function(div) {
-    this.inherit_close_category(div);
+  // hide_category
+  this.on_hide_category=function(div) {
     if(this.overlay)
       this.overlay.hide();
   }
