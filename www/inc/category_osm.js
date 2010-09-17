@@ -36,18 +36,14 @@ function category_osm(id) {
     new category_editor(this.id);
   }
   
-  // open_category
-  this.inherit_open_category=this.open_category;
-  this.open_category=function(div) {
-    this.inherit_open_category(div);
+  // unhide_category
+  this.on_unhide_category=function(div) {
     if(this.overlay)
       this.overlay.show();
   }
 
-  // close_category
-  this.inherit_close_category=this.close_category;
-  this.close_category=function(div) {
-    this.inherit_close_category(div);
+  // hide_category
+  this.on_hide_category=function(div) {
     if(this.overlay)
       this.overlay.hide();
   }
@@ -84,12 +80,18 @@ function category_osm(id) {
 //      max=limit;
 
     dom_clean(div.data);
-    var ul=dom_create_append(div.data, "ul");
 
-    for(var i=offset; i<max; i++) {
-      var match_ob=this.result.data[i];
-      call_hooks("category_show_match", this, match_ob);
-      match_ob.write_list(ul);
+    if((this.result.status=="recv")&&(!this.result.data.length)) {
+      var txt=dom_create_append_text(div.data, t("nothing found"));
+    }
+    else {
+      var ul=dom_create_append(div.data, "ul");
+
+      for(var i=offset; i<max; i++) {
+	var match_ob=this.result.data[i];
+	call_hooks("category_show_match", this, match_ob);
+	match_ob.write_list(ul);
+      }
     }
 
     dom_clean(div.more);
@@ -114,6 +116,9 @@ function category_osm(id) {
     param.zoom=get_zoom();
     param.category=this.id;
     param.count=10;
+
+    if(!this.rules.length)
+      return;
 
     if((this.result)&&(this.result.viewbox==param.viewbox)&&(!more)) {
       this.write_div();

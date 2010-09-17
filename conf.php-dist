@@ -44,6 +44,9 @@ $data_dir="$root_dir/data/";
 $renderd_files=array(
 );
 
+// $default_categories - Define a list of categories which should automatically be loaded
+$default_categories=array();
+
 // List of plugins which should be loaded
 $plugins=array("measure", "favorites", "wikipedia");
 
