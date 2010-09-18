@@ -92,7 +92,8 @@ $menu_list[]=array(0,
   list_template().
   "</form></div>\n");
 $menu_list[]=array(5,
-  "<div id='lang_select'>\n".
+  "<div id='options'>\n".
+  "<span id='user_info'>{$current_user->login_info()}</span><br/>\n".
   "<a href='javascript:toggle_mapkey()'>".lang("main:map_key")."</a> |\n".
   "<a href='javascript:show_options()'>".lang("main:options")."</a> |\n".
   "<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'>".lang("main:about")."</a> |\n".

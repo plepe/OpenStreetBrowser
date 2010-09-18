@@ -90,16 +90,9 @@ input#search {
   overflow-x:hidden;
   bottom: 38px;
 }
-div#lang_select {
-  position: absolute;
-  height: 20px;
-  bottom: 5px;
-  width: 250px;
-  left: 10px;
-}
 div#options{
   position: absolute;
-  height: 30px;
+  height: 25px;
   bottom: 10px;
   width: 250px;
   left: 10px;
