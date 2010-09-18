@@ -5,6 +5,10 @@ function category_editor(id) {
     this.form=document.createElement("div");
     this.win.content.appendChild(this.form);
 
+    var txt=document.createElement("div");
+    txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Category_Tags#Category'>Help</a>):\n";
+    this.form.appendChild(txt);
+
     var div=document.createElement("div");
     this.tags.editor(div);
     this.form.appendChild(div);
@@ -364,7 +368,7 @@ function category_edit_rule(category, dom) {
     this.content.appendChild(this.tags_editor);
 
     var txt=document.createElement("div");
-    txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Edit_List'>Help</a>):\n";
+    txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Category_Tags#Rule'>Help</a>):\n";
     this.tags_editor.appendChild(txt);
 
     this.tags.editor_on_change_key=this.editor_change_key.bind(this);
