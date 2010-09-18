@@ -139,6 +139,7 @@ function redraw() {
   call_hooks("unselect_all");
 
   if(x=="") {
+    category_list_hash_changed();
   }
   else if(x=="mapkey") {
     hide();

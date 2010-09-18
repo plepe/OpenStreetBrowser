@@ -121,7 +121,7 @@ function category_list_hash_changed(hash) {
   dom_clean(div);
   root_div=category_root.attach_div(div);
 
-  if(!hash.obj) {
+  if((!hash)||(!hash.obj)) {
     category_root.open_category(root_div);
   }
   else {
