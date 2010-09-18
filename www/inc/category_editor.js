@@ -261,6 +261,11 @@ function category_edit_rule(category, dom) {
 
       dom_create_append_text(header, t("category_rule_tag:match")+": "+this.tags.get("match"));
     }
+
+    dom_create_append(header, "br");
+    var input=dom_create_append(header, "input");
+    input.type="button";
+    input.value=t("expand");
   }
 
   this.choose_icon=function() {

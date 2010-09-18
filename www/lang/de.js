@@ -7,6 +7,7 @@ lang_str["list_info"]             =[ "Wähle eine Kategorie, um den Karteninhalt
 lang_str["save"]		  =[ "Speichern" ];
 lang_str["cancel"]		  =[ "Abbrechen" ];
 lang_str["choose"]		  =[ "Wählen" ];
+lang_str["expand"]		  =[ "Ausklappen" ];
 
 lang_str["geo_click_pos"]         =[ "Klicke auf Deine aktuelle Position auf der Karte" ];
 lang_str["longitude"]             =[ "Längengrad", "Längengrade" ];

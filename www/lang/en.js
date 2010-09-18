@@ -8,6 +8,7 @@ lang_str["ok"]		    	  =[ "Ok" ];
 lang_str["save"]		  =[ "Save" ];
 lang_str["cancel"]		  =[ "Cancel" ];
 lang_str["choose"]		  =[ "Choose" ];
+lang_str["expand"]		  =[ "Expand" ];
 
 lang_str["geo_click_pos"]         =[ "Click on your position on the map" ];
 lang_str["longitude"]             =[ "Longitude", "Longitudes" ];
