@@ -46,6 +46,9 @@ function wiki_download_icon($name) {
   else
     $icon_id=$name;
 
+  if(preg_match("/^OSB (.*)$/i", $icon_id, $m))
+    $icon_id=$m[1];
+
   $f=$icon_dir->get_obj($icon_id);
   if($f)
     return $icon_id;
