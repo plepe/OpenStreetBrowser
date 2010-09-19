@@ -26,10 +26,11 @@ $scale_text=array("global"=>4, "international"=>8, "national"=>10, "regional"=>1
 include "categories_sql.php";
 $default_style=array(
   "point|icon_style"=>"allow_overlap: true;",
-  "point|icon_label_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: true;",
+  "point|icon_label_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: true; halo_fill: #ffffff; halo_radius: 1;",
   "line_text_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;",
   "point|icon_text_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1",
-  "line|icon_label_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; spacing: 200; unlock_image: true;",
+  "line|icon_label_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; spacing: 200; placement: line; halo_fill: #ffffff; halo_radius: 1;",
+  "line|icon_text_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; placement: point; halo_fill: #ffffff; halo_radius: 1;",
   "line_text_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;",
   "line_style"=>"stroke-width: 2; stroke: #7f7f7f;",
   "polygon_style"=>"fill-opacity: 0.5; fill: #7f7f7f;",
@@ -358,27 +359,47 @@ function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
   $scale->appendChild($dom->createTextNode(
     $scales_levels[$scale_icon[$tags->get("importance")]]));
 
+  $sym=$dom->createElement("ShieldSymbolizer");
+  $rule->appendChild($sym);
+  $sym->setAttribute("file", "$icon");
+  $sym->setAttribute("type", "png");
+
+  $size=getimagesize("$icon");
+
+  $sym->setAttribute("width", $size[0]);
+  $sym->setAttribute("height", $size[1]);
+
   if($tags->get("icon_label")) {
-    $add_columns[]="tags_parse|icon_label";
-    $sym=$dom->createElement("ShieldSymbolizer");
-    $rule->appendChild($sym);
-    $sym->setAttribute("file", "$icon");
-    $sym->setAttribute("type", "png");
-
-    $size=getimagesize("$icon");
-
-    $sym->setAttribute("width", $size[0]);
-    $sym->setAttribute("height", $size[1]);
-
     $style=new css($default_style['line|icon_label_style']);
+
+    $add_columns[]="tags_parse|icon_label";
     $sym->setAttribute("name", "icon_label");
 
     $style->apply($global_tags->get("icon_label_style"));
     $style->apply($tags->get("icon_label_style"));
-    foreach(array("file", "width", "height", "type") as $a)
-      unset($style->style[$a]);
-    $style->dom_set_attributes($sym, $dom);
   }
+  elseif($tags->get("icon_text")) {
+    $style=new css($default_style['line|icon_text_style']);
+
+    $add_columns[]="tags_parse|icon_text";
+    $sym->setAttribute("name", "icon_text");
+    $sym->setAttribute("dy", $size[1]/2+4);
+    $sym->setAttribute("vertical_alignment", "bottom");
+
+    $style->apply($global_tags->get("icon_text_style"));
+    $style->apply($tags->get("icon_text_style"));
+  }
+  else {
+    $style=new css($default_style['line|icon_label_style']);
+
+    $add_columns[]="empty_string|icon_label";
+    $sym->setAttribute("name", "icon_label");
+    $sym->setAttribute("no_text", "true");
+  }
+
+  foreach(array("file", "width", "height", "type") as $a)
+    unset($style->style[$a]);
+  $style->dom_set_attributes($sym, $dom);
 
   return array('rule'=>$rule, "columns"=>$add_columns);
 }
