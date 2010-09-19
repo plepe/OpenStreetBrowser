@@ -226,10 +226,8 @@ BEGIN
     return false;
   end if;
 
-  raise notice 'assemble_polygon(%)', id;
-
   -- are we member of any multipolygon relation and are we 'outer'?
-  if (select count(*) from relation_members join relation_tags on relation_members.relation_id=relation_tags.relation_id and relation_tags.k='type' where member_id='8125153' and member_type='W' and member_role='outer')>0 then
+  if (select count(*) from relation_members join relation_tags on relation_members.relation_id=relation_tags.relation_id and relation_tags.k='type' where member_id=id and member_type='W' and member_role='outer')>0 then
     return false;
   end if;
 
@@ -239,7 +237,7 @@ BEGIN
       'way_'||id,
       null,
       tags,
-      geom
+      ST_Transform(ST_MakePolygon(geom), 900913)
     );
 
   return true;
@@ -253,7 +251,7 @@ DECLARE
   tags hstore;
   outer_members bigint[];
 BEGIN
-  -- raise notice 'assemble_multipolygon(%)', id;
+  raise notice 'assemble_multipolygon(%)', id;
 
   -- get list of outer members
   outer_members:=(select to_intarray(member_id) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id);
@@ -262,6 +260,10 @@ BEGIN
   geom:=build_multipolygon(
     (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id),
     (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='inner' group by relation_id));
+
+  if geom is null then
+    return false;
+  end if;
 
   -- tags
   tags:=rel_assemble_tags(id);
