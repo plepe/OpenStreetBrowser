@@ -2,6 +2,11 @@ function category_editor(id) {
   // editor
   this.init=function() {
     dom_clean(this.win.content);
+
+    if(!current_user.username) {
+      dom_create_append_text(this.win.content, t("You are not logged in. You cannot save your changes."));
+    }
+
     this.form=document.createElement("div");
     this.win.content.appendChild(this.form);
 

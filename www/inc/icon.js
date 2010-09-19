@@ -82,13 +82,18 @@ function icon_editor(icon, callback) {
     delete(this.win);
   }
 
-  this.win=new win("icon_editor");
+  if(!data_dir.commit_start())
+    return;
 
-  data_dir.commit_start();
   if(icon)
     this.obj=icon;
   else
     this.obj=icon_git.create_obj();
+
+  if(!this.obj)
+    return;
+
+  this.win=new win("icon_editor");
 
   var comment=dom_create_append(this.win.content, "div");
   dom_create_append_text(comment, "Upload Icon:");
@@ -162,10 +167,12 @@ function icon_chooser(current, callback) {
     obj_list[i].write_chooser(ul, this.choose_callback.bind(this));
   }
 
-  var a=dom_create_append(this.win.content, "input");
-  a.type="button";
-  a.value="Create new icon";
-  a.onclick=this.new_icon.bind(this);
+  if(current_user.username) {
+    var a=dom_create_append(this.win.content, "input");
+    a.type="button";
+    a.value="Create new icon";
+    a.onclick=this.new_icon.bind(this);
+  }
 
   var a=dom_create_append(this.win.content, "input");
   a.type="button";
