@@ -197,15 +197,15 @@ foreach($list_category as $cat_id=>$cat_data) {
   }
 
   $ret.="<category>\n";
+  $style=array();
+  if($cat_data['fg-color'])
+    $style[]="fill: {$cat_data['fg-color']};";
+  if($cat_data['bg-color'])
+    $style[]="halo_fill: {$cat_data['bg-color']};";
+  if(sizeof($style))
+    $cat->set("icon_text_style", implode(" ", $style));
   $ret.=$cat->write_xml("  ");
   foreach($rules as $num=>$rule) {
-    $style=array();
-    if($cat_data['fg-color'])
-      $style[]="fill: {$cat_data['fg-color']};";
-    if($cat_data['bg-color'])
-      $style[]="halo_fill: {$cat_data['bg-color']};";
-    if(sizeof($style))
-      $rule->set("icon_text_style", implode(" ", $style));
 
     $ret.="  <rule id=\"$num\">\n";
     $ret.=$rule->write_xml("    ");
