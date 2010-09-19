@@ -22,6 +22,11 @@ function git_obj(dir, id, files) {
     param.file=file;
     param.commit_id=this.commit_id();
 
+    if(!p.commit_id) {
+      alert("No commit started");
+      return null;
+    }
+
     var p=[];
     ajax_build_request(param, null, p);
 
@@ -34,6 +39,11 @@ function git_obj(dir, id, files) {
     param.file=file;
     param.content=content;
     param.commit_id=this.commit_id();
+
+    if(!p.commit_id) {
+      alert("No commit started");
+      return null;
+    }
 
     var response=ajax("git_obj_save", param);
     var ret=response.return_value;

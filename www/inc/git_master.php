@@ -184,6 +184,10 @@ class git_master {
       return array("status"=>"Git directory is not in sane state");
     }
 
+    if(!$current_user->username) {
+      return array("status"=>"Permission denied: not logged in");
+    }
+
     $this->lock();
     $this->chdir();
 

@@ -3,6 +3,11 @@ function git_master() {
 
   // commit_start
   this.commit_start=function(param) {
+    if(!current_user.username) {
+      alert(t("Permission denied: not logged in"));
+      return;
+    }
+
     var p=array_merge(new clone(this.ajax_param), param);
 
     var response=ajax("git_commit_start", p);
@@ -25,6 +30,11 @@ function git_master() {
     p.commit_id=this.commit_id();
     p.message=message;
 
+    if(!p.commit_id) {
+      alert("No commit started");
+      return null;
+    }
+
     var response=ajax("git_commit_end", p);
     var ret=response.return_value;
     commit_id=null;
@@ -35,6 +45,11 @@ function git_master() {
   this.commit_cancel=function(param) {
     var p=new clone(this.ajax_param);
     p.commit_id=this.commit_id();
+
+    if(!p.commit_id) {
+      alert("No commit started");
+      return null;
+    }
 
     var response=ajax("git_commit_cancel", p);
     var ret=response.return_value;
