@@ -9,6 +9,17 @@ require_once("www/inc/lock.php");
 require_once("www/inc/git_dir.php");
 require_once("www/inc/icon.php");
 require_once("www/inc/data_dir.php");
+function lang($x) {
+  global $lang_str;
+  return $lang_str[$x];
+}
+
+foreach(array("de", "it", "ja") as $lang) {
+  $lang_str=array();
+  require_once("www/lang/$lang.php");
+  $lang_str_[$lang]=$lang_str;
+}
+$lang_str=array();
 require_once("www/lang/en.php");
 
 icon_init();
@@ -133,6 +144,11 @@ foreach($wiki_data["Values"] as $src) {
 
   if($x=$lang_str["tag_".strtr($rule->get("match"), array("="=>"/"))])
     $rule->set("name", $x);
+
+  foreach(array("de", "it", "ja") as $lang) {
+    if($x=$lang_str_[$lang]["tag_".strtr($rule->get("match"), array("="=>"/"))])
+      $rule->set("name:$lang", $x);
+  }
 
   $categories[$src[category]][]=$rule;
 }
