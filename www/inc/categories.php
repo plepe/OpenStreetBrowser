@@ -139,7 +139,7 @@ function get_icon($file) {
 //                                         //   param1 as text
 //                                         //   param2 as text
 //                                         // ) returns text as param1;
-function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags, $importance) {
   global $scales_levels;
   global $scale_icon;
   global $lists_dir;
@@ -166,7 +166,7 @@ function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_icon[$tags->get("importance")]]));
+    $scales_levels[$scale_icon[$importance]]));
 
   $sym=$dom->createElement("PointSymbolizer");
   $rule->appendChild($sym);
@@ -204,7 +204,7 @@ function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
   return array('rule'=>$rule, 'columns'=>$add_columns);
 }
 
-function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags, $importance) {
   global $scales_levels;
   global $scale_text;
   global $lists_dir;
@@ -219,7 +219,7 @@ function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_text[$tags->get("importance")]]));
+    $scales_levels[$scale_text[$importance]]));
 
   $sym=$dom->createElement("TextSymbolizer");
   $rule->appendChild($sym);
@@ -271,7 +271,7 @@ function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
   return array('rule'=>$rule, 'columns'=>$add_columns);
 }
 
-function mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags, $importance) {
   global $scales_levels;
   global $scale_icon;
   global $lists_dir;
@@ -285,7 +285,7 @@ function mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_icon[$tags->get("importance")]]));
+    $scales_levels[$scale_icon[$importance]]));
 
   $sym=$dom->createElement("PolygonSymbolizer");
   $rule->appendChild($sym);
@@ -300,7 +300,7 @@ function mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags) {
   return array('rule'=>$rule);
 }
 
-function mapnik_style_line_line($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_line_line($dom, $rule_id, $tags, $global_tags, $importance) {
   global $scales_levels;
   global $scale_icon;
   global $lists_dir;
@@ -314,7 +314,7 @@ function mapnik_style_line_line($dom, $rule_id, $tags, $global_tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_icon[$tags->get("importance")]]));
+    $scales_levels[$scale_icon[$importance]]));
 
   $sym=$dom->createElement("LineSymbolizer");
   $rule->appendChild($sym);
@@ -329,7 +329,7 @@ function mapnik_style_line_line($dom, $rule_id, $tags, $global_tags) {
   return array('rule'=>$rule);
 }
 
-function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags, $importance) {
   global $scales_levels;
   global $scale_icon;
   global $lists_dir;
@@ -356,7 +356,7 @@ function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_icon[$tags->get("importance")]]));
+    $scales_levels[$scale_icon[$importance]]));
 
   if($tags->get("icon_label")) {
     $add_columns[]="tags_parse|icon_label";
@@ -383,7 +383,7 @@ function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
   return array('rule'=>$rule, "columns"=>$add_columns);
 }
 
-function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance) {
   global $scales_levels;
   global $scale_text;
   global $lists_dir;
@@ -398,7 +398,7 @@ function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_text[$tags->get("importance")]]));
+    $scales_levels[$scale_text[$importance]]));
 
   $add_columns[]="tags_parse|line_text";
   $sym=$dom->createElement("TextSymbolizer");
@@ -500,36 +500,36 @@ function build_mapnik_style($id, $data, $global_tags) {
       foreach($data2['rule'] as $i=>$tags) {
 	$rule_id=$data2['rule_id'][$i];
 	if(in_array($table, array("polygon"))) {
-	  $def=mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags);
+	  $def=mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_shape->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
 	}
 	if(in_array($table, array("point", "polygon"))) {
-	  $def=mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags);
+	  $def=mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_icon->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
-	  $def=mapnik_style_point_text($dom, $rule_id, $tags, $global_tags);
+	  $def=mapnik_style_point_text($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_text->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
 	}
 	elseif(in_array($table, array("line"))) {
-	  $def=mapnik_style_line_line($dom, $rule_id, $tags, $global_tags);
+	  $def=mapnik_style_line_line($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_shape->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
-	  $def=mapnik_style_line_text($dom, $rule_id, $tags, $global_tags);
+	  $def=mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_text->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
-	  $def=mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags);
+	  $def=mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_icon->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
