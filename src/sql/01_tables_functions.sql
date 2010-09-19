@@ -138,7 +138,7 @@ DECLARE
   tags hstore;
 BEGIN
   -- get tags
-  tags:=node_assemble_tags(id);
+  tags:=way_assemble_tags(id);
 
   -- if no tags, return
   if array_upper(akeys(tags), 1) is null then
@@ -149,6 +149,9 @@ BEGIN
   geom:=way_get_geom(id);
 
   -- raise notice 'assemble_line(%)', id;
+  if (IsClosed(geom)) and NPoints(geom)>3 then
+    return false;
+  end if;
 
   -- okay, insert
   insert into osm_line
@@ -203,8 +206,16 @@ DECLARE
   geom geometry;
   tags hstore;
 BEGIN
-  -- get geom - count on osm_line for this
-  geom:=(select osm_way from osm_line where osm_id='way_'||id);
+  -- get tags
+  tags:=way_assemble_tags(id);
+
+  -- if no tags, return
+  if array_upper(akeys(tags), 1) is null then
+    return false;
+  end if;
+
+  -- get geometry
+  geom:=way_get_geom(id);
 
   -- check geometry
   if geom is null then
@@ -215,10 +226,7 @@ BEGIN
     return false;
   end if;
 
-  tags:=(select osm_tags from osm_line where osm_id='way_'||id);
-  -- no need to check if tags is null ... it wouldn't be in osm_line
-
-  -- raise notice 'assemble_polygon(%)', id;
+  raise notice 'assemble_polygon(%)', id;
 
   -- are we member of any multipolygon relation and are we 'outer'?
   if (select count(*) from relation_members join relation_tags on relation_members.relation_id=relation_tags.relation_id and relation_tags.k='type' where member_id='8125153' and member_type='W' and member_role='outer')>0 then
