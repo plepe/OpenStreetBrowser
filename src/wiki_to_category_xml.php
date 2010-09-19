@@ -9,6 +9,17 @@ require_once("www/inc/lock.php");
 require_once("www/inc/git_dir.php");
 require_once("www/inc/icon.php");
 require_once("www/inc/data_dir.php");
+function lang($x) {
+  global $lang_str;
+  return $lang_str[$x];
+}
+
+foreach(array("de", "it", "ja") as $lang) {
+  $lang_str=array();
+  require_once("www/lang/$lang.php");
+  $lang_str_[$lang]=$lang_str;
+}
+$lang_str=array();
 require_once("www/lang/en.php");
 
 icon_init();
@@ -34,6 +45,9 @@ function wiki_download_icon($name) {
     $icon_id=$m[1];
   else
     $icon_id=$name;
+
+  if(preg_match("/^OSB (.*)$/i", $icon_id, $m))
+    $icon_id=$m[1];
 
   $f=$icon_dir->get_obj($icon_id);
   if($f)
@@ -87,7 +101,14 @@ foreach($wiki_data[Importance] as $wd) {
 }
 
 foreach($wiki_data["Categories"] as $src=>$data) {
-  $list_category[$data[category]]=$data;
+  $list_category[$data['category']]=$data;
+  $x=explode("/", $data['category']);
+  for($i=1; $i<sizeof($x); $i++) {
+    $n=implode("/", array_slice($x, 0, $i));
+    if(!isset($list_category[$n])) {
+      $list_category[$n]=array();
+    }
+  }
 }
 
 function parse_src_more($str) {
@@ -133,6 +154,11 @@ foreach($wiki_data["Values"] as $src) {
 
   if($x=$lang_str["tag_".strtr($rule->get("match"), array("="=>"/"))])
     $rule->set("name", $x);
+
+  foreach(array("de", "it", "ja") as $lang) {
+    if($x=$lang_str_[$lang]["tag_".strtr($rule->get("match"), array("="=>"/"))])
+      $rule->set("name:$lang", $x);
+  }
 
   $categories[$src[category]][]=$rule;
 }
@@ -181,15 +207,15 @@ foreach($list_category as $cat_id=>$cat_data) {
   }
 
   $ret.="<category>\n";
+  $style=array();
+  if($cat_data['fg-color'])
+    $style[]="fill: {$cat_data['fg-color']};";
+  if($cat_data['bg-color'])
+    $style[]="halo_fill: {$cat_data['bg-color']};";
+  if(sizeof($style))
+    $cat->set("icon_text_style", implode(" ", $style));
   $ret.=$cat->write_xml("  ");
   foreach($rules as $num=>$rule) {
-    $style=array();
-    if($cat_data['fg-color'])
-      $style[]="fill: {$cat_data['fg-color']};";
-    if($cat_data['bg-color'])
-      $style[]="halo_fill: {$cat_data['bg-color']};";
-    if(sizeof($style))
-      $rule->set("icon_text_style", implode(" ", $style));
 
     $ret.="  <rule id=\"$num\">\n";
     $ret.=$rule->write_xml("    ");
