@@ -98,7 +98,14 @@ foreach($wiki_data[Importance] as $wd) {
 }
 
 foreach($wiki_data["Categories"] as $src=>$data) {
-  $list_category[$data[category]]=$data;
+  $list_category[$data['category']]=$data;
+  $x=explode("/", $data['category']);
+  for($i=1; $i<sizeof($x); $i++) {
+    $n=implode("/", array_slice($x, 0, $i));
+    if(!isset($list_category[$n])) {
+      $list_category[$n]=array();
+    }
+  }
 }
 
 function parse_src_more($str) {
