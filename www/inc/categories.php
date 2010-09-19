@@ -230,8 +230,8 @@ function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
       if($icon=$icon->icon_file()) {
 
 	$size=getimagesize("$icon");
-	$sym->setAttribute("dy", $size[1]);
-	$sym->setAttribute("vertical_alignment", "middle");
+	$sym->setAttribute("dy", $size[1]/2+1);
+	$sym->setAttribute("vertical_alignment", "bottom");
       }
 
   $add_columns[]="tags_parse|icon_text";
@@ -251,8 +251,8 @@ function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
     $rule->appendChild($sym);
 
     if($icon) {
-      $sym->setAttribute("dy", $size[1]+$style->style['size']);
-      $sym->setAttribute("vertical_alignment", "middle");
+      $sym->setAttribute("dy", $size[1]/2+1+$style->style['size']);
+      $sym->setAttribute("vertical_alignment", "bottom");
     }
 
     $add_columns[]="tags_parse|icon_text_data";
