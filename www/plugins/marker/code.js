@@ -79,6 +79,9 @@ function marker(lon, lat) {
     // update permalink
     update_permalink();
 
+    // Inform other objects
+    call_hooks("marker_moved", this);
+
     this.update_details();
   }
 
@@ -150,6 +153,9 @@ function marker(lon, lat) {
     drag_layer.removeFeatures([this.feature]);
     update_permalink();
     redraw();
+
+    // Inform other objects
+    call_hooks("marker_removed", this);
   }
 
   // constructor
@@ -168,6 +174,9 @@ function marker(lon, lat) {
 
   // force an update of the permalink
   update_permalink();
+
+  // Inform other objects
+  call_hooks("marker_created", this);
 }
 
 function marker_add(lon, lat) {
