@@ -12,7 +12,7 @@
 //                                  - param is an assoc. array:
 //                                    e.g. { route_type: "foot", lang: "en" }
 //                                    start_point, end_point and the list
-//                                    transit_points can be OpenLayers objects
+//                                    transit_points can be OpenLayers Points
 //                                    or { lat: , lon: } in srid 4326
 //                                  - callback is function which will be called
 //                                    after loading the route. Gets passed the
@@ -32,9 +32,28 @@ function navigation_cloudmade() {
   // get_route
   this.get_route=function(param, _callback) {
     var route=new navigate_cloudmade_route();
-    route.param=param;
+    var utm=new OpenLayers.Projection("EPSG:4326");
     callback=_callback;
- 
+
+    if(param.start_point.lat) {
+      param.start_point={ lat: param.start_point.lat, lon: param.start_point.lon };
+    }
+    else if(param.start_point.CLASS_NAME) {
+      var p=new OpenLayers.Geometry.Point(param.start_point.x, param.start_point.y);
+      var t=p.transform(map.getProjectionObject(), utm);
+      param.start_point={ lat: t.y, lon: t.x };
+    }
+
+    if(param.end_point.lat) {
+      param.end_point={ lat: param.end_point.lat, lon: param.end_point.lon };
+    }
+    else if(param.end_point.CLASS_NAME) {
+      var p=new OpenLayers.Geometry.Point(param.end_point.x, param.end_point.y);
+      var t=p.transform(map.getProjectionObject(), utm);
+      param.end_point={ lat: t.y, lon: t.x };
+    }
+
+    route.param=param;
     ajax_direct("plugins/navigation_cloudmade/call.php", param, this.recv.bind(this, route));
   }
 
@@ -42,8 +61,8 @@ function navigation_cloudmade() {
   this.recv=function(route, response) {
     route.recv(response);
 
-    callback(route);
-    return;
+    if(callback)
+      callback(route);
   }
 
   // constructor
