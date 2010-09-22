@@ -11,7 +11,7 @@
 //   .get_route(param, callback)    - call to calculate a route
 //                                  - param is an assoc. array:
 //                                    e.g. { route_type: "foot", lang: "en" }
-//                                    start_point, end_point and the list
+//                                    start_point, end_point and the list of
 //                                    transit_points can be OpenLayers Points
 //                                    or { lat: , lon: } in srid 4326
 //                                  - callback is function which will be called
@@ -52,6 +52,14 @@ function navigation_cloudmade() {
       var t=p.transform(map.getProjectionObject(), utm);
       param.end_point={ lat: t.y, lon: t.x };
     }
+
+    if(param.transit_points)
+      for(var i=0; i<param.transit_points.length;i++) {
+	var p=new OpenLayers.Geometry.Point(param.transit_points[i].x,
+	                                    param.transit_points[i].y);
+	var t=p.transform(map.getProjectionObject(), utm);
+	param.transit_points[i]={ lat: t.y, lon: t.x };
+      }
 
     route.param=param;
     ajax_direct("plugins/navigation_cloudmade/call.php", param, this.recv.bind(this, route));

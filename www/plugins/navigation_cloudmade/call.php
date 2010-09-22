@@ -15,6 +15,16 @@ $end_point=$param['end_point'];
 $end_point="{$end_point['lat']},{$end_point['lon']}";
 unset($param['end_point']);
 
+// transfer points
+$transit_points=array();
+if($param['transit_points']) foreach($param['transit_points'] as $p) {
+  $transit_points[]="{$p['lat']},{$p['lon']}";
+}
+if(sizeof($transit_points))
+  $transit_points="[".implode(",", $transit_points)."],";
+else
+  $transit_points="";
+
 // route_type
 if(!$param['route_type'])
   $route_type="car";
@@ -37,7 +47,7 @@ foreach($param as $k=>$v) {
 
 // compile URL for the route
 $url="http://routes.cloudmade.com/$key_cloudmade_api/api/0.3/".
-     "$start_point,$end_point/$route_type.gpx?".implode("&", $add_param);
+     "$start_point,$transit_points$end_point/$route_type.gpx?".implode("&", $add_param);
 
 // get route
 @$ret=file_get_contents($url);
