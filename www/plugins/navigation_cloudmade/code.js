@@ -4,6 +4,8 @@
 // nav_show in this example is a callback function which gets passed an object
 // of type navigation_cloudmade_route (defined below).
 //
+// At the end of this file you'll find a simple example for calculation a route
+//
 // IMPORTANT FUNCTIONS
 //
 // class navigation_cloudmade       - a class to interact with the routing 
@@ -117,3 +119,19 @@ function navigate_cloudmade_route() {
 
   // constructor
 }
+
+//// Example ////
+// function nav_show(route) {
+//   route.show();
+// }
+// 
+// var nav_ml=[];
+// var nav=new navigation_cloudmade();
+// function nav_init(marker) {
+//   nav_ml.push(marker.feature.geometry);
+//   if(nav_ml.length==4) {
+//     nav.get_route({ start_point: nav_ml[0], end_point: nav_ml[3], transit_points: [ nav_ml[1], nav_ml[2] ] }, nav_show);
+//   }
+// }
+//
+// register_hook("marker_created", nav_init);
