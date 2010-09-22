@@ -75,6 +75,11 @@ function navigate_cloudmade_route() {
     this.dom=response.responseXML;
     this.text=response.responseText;
 
+    if(!this.dom) {
+      alert("Failed to request route:\n"+this.text);
+      return;
+    }
+
     var utm=new OpenLayers.Projection("EPSG:4326");
 
     var wpts=this.dom.getElementsByTagName("wpt");

@@ -40,7 +40,11 @@ $url="http://routes.cloudmade.com/$key_cloudmade_api/api/0.3/".
      "$start_point,$end_point/$route_type.gpx?".implode("&", $add_param);
 
 // get route
-$ret=file_get_contents($url);
+@$ret=file_get_contents($url);
+if($ret===false) {
+  print("routes.cloudmade.com reported: $http_response_header[0]");
+  exit;
+}
 
 // print route as answer (in content-type text/xml)
 Header("Content-Type: text/xml; charset=UTF-8");
