@@ -53,7 +53,7 @@ DECLARE
   cache_type alias for $2;
   content text;
 BEGIN
-  content:=(select osm_cache.content from osm_cache where osm_cache.osm_id=osm_id and now()<=outdate limit 1);
+  content:=(select osm_cache.content from osm_cache where osm_cache.osm_id=osm_id and osm_cache.cache_type=cache_type and now()<=outdate limit 1);
   return content;
 END;
 $$ LANGUAGE plpgsql stable;
