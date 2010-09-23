@@ -162,7 +162,7 @@ function wikipedia_info($info_ret, $object) {
 
   $text=wikipedia_get_abstract($object, $page, $lang);
 
-  cache_insert($object->id, "wikipedia_info:$data_lang", $text);
+  cache_insert($object->id, "wikipedia_info:$data_lang", $text, "1 hour");
 
   if($text) {
     $ret.="$text<a class='external' href='$url' target='_blank'>".lang("read_more")."</a>";
