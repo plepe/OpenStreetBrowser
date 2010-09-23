@@ -29,20 +29,33 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql stable;
 
-CREATE OR REPLACE FUNCTION cache_insert(text, text, text[], text) RETURNS text AS $$
+CREATE OR REPLACE FUNCTION cache_insert(text, text, text, text[]) RETURNS text AS $$
 DECLARE
   osm_id alias for $1;
   cache_type alias for $2;
-  depend alias for $3;
-  content alias for $4;
+  content alias for $3;
+  depend alias for $4;
 BEGIN
-  insert into osm_cache values (osm_id, cache_type, content, now());
+  delete from osm_cache where osm_cache.osm_id=osm_id and osm_cache.cache_type=cache_type;
+  delete from osm_cache_depend where osm_cache_depend.osm_id=osm_id and osm_cache_depend.cache_type=cache_type;
 
+  insert into osm_cache values (osm_id, cache_type, content, now());
   insert into osm_cache_depend values (osm_id, cache_type, osm_id);
-  for i in array_lower(depend, 1)..array_upper(depend, 1) loop
-    insert into osm_cache_depend values (osm_id, cache_type, depend[i]);
-  end loop;
+
+  if array_lower(depend, 1) is not null then
+    for i in array_lower(depend, 1)..array_upper(depend, 1) loop
+      insert into osm_cache_depend values (osm_id, cache_type, depend[i]);
+    end loop;
+  end if;
+
   return content;
+END;
+$$ LANGUAGE plpgsql volatile;
+
+CREATE OR REPLACE FUNCTION cache_insert(text, text, text) RETURNS text AS $$
+DECLARE
+BEGIN
+  return (select cache_insert($1, $2, $3, null::text[]));
 END;
 $$ LANGUAGE plpgsql volatile;
 
