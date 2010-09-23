@@ -26,7 +26,7 @@ unset($my_lat);
 function maskErrors() {
 }
 
-if($text=file_get_contents("http://iplocationtools.com/ip_query.php?ip=$_SERVER[REMOTE_ADDR]")) {
+if($text=@file_get_contents("http://iplocationtools.com/ip_query.php?ip=$_SERVER[REMOTE_ADDR]")) {
   $dom=new DOMDocument();
   set_error_handler('maskErrors');
   $dom->loadXML($text);
