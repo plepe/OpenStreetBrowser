@@ -247,6 +247,14 @@ function init() {
 		  transparent: true, "visibility": false });
   map.addLayers([ hill ]);
 
+  var contour = new OpenLayers.Layer.OSM(
+                 "Contourshading",
+		 "http://hills-nc.openstreetmap.de/",
+		{ type: 'png', numZoomLevels: 16,
+		  displayOutsideMaxExtent: true, isBaseLayer: false,
+		  transparent: true, "visibility": false });
+  map.addLayers([ contour ]);
+
   var permalink=document.getElementById("permalink");
   map.addControl(new OpenLayers.Control.Permalink(permalink, "http://www.openstreetbrowser.org/"));
 
