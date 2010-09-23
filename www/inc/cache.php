@@ -36,10 +36,16 @@ function cache_insert($osm_id, $k, $content, $depend=array()) {
   $pg_osm_id=postgre_escape($osm_id);
   $pg_k=postgre_escape($k);
   $pg_content=postgre_escape($content);
-  $pg_depend=array();
-  foreach($depend as $depend_id)
-    $pg_depend[]=postgre_escape($depend_id);
-  $pg_depend="Array[".implode(",", $pg_depend)."]::text[]";
+
+  if(sizeof($depend)) {
+    $pg_depend=array();
+    foreach($depend as $depend_id)
+      $pg_depend[]=postgre_escape($depend_id);
+    $pg_depend="Array[".implode(",", $pg_depend)."]::text[]";
+  }
+  else {
+    $pg_depend="null::text[]";
+  }
 
   sql_query("select cache_insert({$pg_osm_id}, {$pg_k}, {$pg_content}, {$pg_depend})");
 
