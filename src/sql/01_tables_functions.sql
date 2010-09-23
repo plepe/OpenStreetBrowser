@@ -12,7 +12,7 @@ BEGIN
   -- raise notice 'way_get_geom(%)', id;
 
 --  raise notice 'count: %', (select count(node_id) from (select * from way_nodes join nodes on way_nodes.node_id=nodes.id where way_nodes.way_id=id order by sequence_id) c group by way_id);
-  ret:=(select cache_insert('way_'||way_id, 'geom', to_textarray('node_'||node_id), (CASE WHEN count(*)>1 THEN cast(MakeLine(geom) as text) ELSE null::text END)) from (select * from way_nodes join nodes on way_nodes.node_id=nodes.id where way_nodes.way_id=id order by sequence_id) c group by way_id);
+  ret:=(select cache_insert('way_'||way_id, 'geom', (CASE WHEN count(*)>1 THEN cast(MakeLine(geom) as text) ELSE null::text END), to_textarray('node_'||node_id)) from (select * from way_nodes join nodes on way_nodes.node_id=nodes.id where way_nodes.way_id=id order by sequence_id) c group by way_id);
 
   return ret;
 END;
@@ -251,7 +251,7 @@ DECLARE
   tags hstore;
   outer_members bigint[];
 BEGIN
-  raise notice 'assemble_multipolygon(%)', id;
+  -- raise notice 'assemble_multipolygon(%)', id;
 
   -- get list of outer members
   outer_members:=(select to_intarray(member_id) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id);
