@@ -110,6 +110,13 @@ function wikipedia_info($info_ret, $object) {
   global $data_lang;
   $page=0;
 
+  if($text=cache_search($object->id, "wikipedia_info:$data_lang")) {
+    $ret.="$text<a class='external' href='$url' target='_blank'>".lang("read_more")."</a>";
+
+    $info_ret[]=array("wikipedia", $ret);
+    return;
+  }
+
   if($page=$object->tags->get("wikipedia:$data_lang")) {
     $lang=$data_lang;
   }
@@ -154,6 +161,8 @@ function wikipedia_info($info_ret, $object) {
     return;
 
   $text=wikipedia_get_abstract($object, $page, $lang);
+
+  cache_insert($object->id, "wikipedia_info:$data_lang", $text);
 
   if($text) {
     $ret.="$text<a class='external' href='$url' target='_blank'>".lang("read_more")."</a>";
