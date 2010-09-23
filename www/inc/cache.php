@@ -43,6 +43,11 @@ function cache_insert($osm_id, $k, $content, $depend=array(), $interval=null) {
   $pg_k=postgre_escape($k);
   $pg_content=postgre_escape($content);
 
+  if(is_string($depend)) {
+    $interval=$depend;
+    $depend=array();
+  }
+
   if(sizeof($depend)) {
     $pg_depend=array();
     foreach($depend as $depend_id)
