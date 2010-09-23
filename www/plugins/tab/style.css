@@ -1,0 +1,34 @@
+.tab_manager {
+}
+.tab_manager_content {
+}
+.tab_manager_header {
+  background: #d0d0d0;
+  border-top: 1px solid #d0d0d0;
+  padding-top: 1px;
+  border-bottom: 1px solid black;
+}
+.tab_header {
+  background: #d0d0d0;
+  border-top: 1px solid #d0d0d0;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 1px;
+  cursor: pointer;
+}
+.tab_content {
+  display: none;
+}
+.tab_header_active {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid #ffffff;
+  background: #ffffff;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 1px;
+  cursor: default;
+}
+.tab_content_active {
+}

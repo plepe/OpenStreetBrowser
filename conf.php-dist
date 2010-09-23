@@ -37,3 +37,5 @@ $plugins=array("measure", "favorites", "wikipedia");
 // search - add a search field to the toolbox, use the nominatim service
 // start_location - toolbox that let users change viewport
 // help - adds a entry for help to the toolbox
+// tab - tabbed windows
+// navigation_cloudmade - an interface to the cloudmade routing service
