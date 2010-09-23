@@ -4,9 +4,13 @@ function sql_query($qry) {
 
   if($sql_debug)
     debug($qry);
-    //print "$qry\n";
 
-  return pg_query($qry);
+  $res=pg_query($qry);
+
+  if(($sql_debug)&&($res===false))
+    debug(pg_last_error());
+
+  return $res;
 }
 
 function postgre_escape($str) {
