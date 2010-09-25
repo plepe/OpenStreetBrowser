@@ -37,6 +37,9 @@ class place_node extends place {
   }
 
   function get_centre() {
+    $res=sql_query("select X(way) as lon, Y(way) as lat from (select ST_Centroid(load_geo('{$this->data['element']}_{$this->data['id']}')) as way) x");
+    $elem=pg_fetch_assoc($res);
+    return $elem;
   }
 
   function get_ways() {
