@@ -140,6 +140,7 @@ function redraw() {
 
   if(x=="") {
     category_list_hash_changed();
+    view_changed(null);
   }
   else if(x=="mapkey") {
     hide();
