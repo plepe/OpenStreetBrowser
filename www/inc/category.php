@@ -77,7 +77,7 @@ class category {
     $this->dom->loadXML($this->text);
 
     $this->tags=new tags();
-    $this->tags->readDOM($this->dom);
+    $this->tags->readDOM($this->dom->firstChild);
 
     // First, create all file content
     $cur=$this->dom->firstChild;

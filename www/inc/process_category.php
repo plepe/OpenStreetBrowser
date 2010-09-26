@@ -68,6 +68,7 @@ class process_category {
     $cur=$this->node->firstChild;
     $id=$this->category->id;
     $ret=array('_'=>array("errors"=>array()));
+    $ret['_']['tags']=$this->category->tags->data();
 
     while($cur) {
       if($cur->nodeName=="rule") {
