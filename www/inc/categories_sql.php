@@ -375,6 +375,8 @@ function match_to_sql($match, $table_def, $type="exact") {
     case "<=":
       $same="true";
     case "<":
+      $number=parse_number($match[2]);
+
       if($type=="index") {
 	$same="true";
 	$number=pow(100, ceil(log($number, 100)));
