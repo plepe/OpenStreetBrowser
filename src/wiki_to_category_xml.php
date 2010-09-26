@@ -152,12 +152,19 @@ foreach($wiki_data["Values"] as $src) {
   if($more[tables])
     $rule->set("type", implode(";", explode(",", $more['tables'])));
 
-  if($x=$lang_str["tag_".strtr($rule->get("match"), array("="=>"/"))])
+  if($x=$lang_str["tag_".strtr($rule->get("match"), array("="=>"/"))]) {
+    if(is_array($x))
+      $x="$x[0];$x[1]";
     $rule->set("name", $x);
+  }
 
   foreach(array("de", "it", "ja") as $lang) {
-    if($x=$lang_str_[$lang]["tag_".strtr($rule->get("match"), array("="=>"/"))])
-      $rule->set("name:$lang", $x);
+    if($x=$lang_str_[$lang]["tag_".strtr($rule->get("match"), array("="=>"/"))]) {
+      if(is_array($x))
+	$x="$x[0];$x[1]";
+      if($rule->get("name")!=$x)
+	$rule->set("name:$lang", $x);
+    }
   }
 
   $categories[$src[category]][]=$rule;
@@ -187,7 +194,8 @@ foreach($list_category as $cat_id=>$cat_data) {
     pclose($f);
 
     if(preg_match("/lang_str\[\".*\"\]=\[ (\".*\", )?\"(.*)\" \];/", $r, $m)) {
-      $cat->set("name:$lang", $m[2]);
+      if($cat->get("name")!=$m[2])
+	$cat->set("name:$lang", $m[2]);
     }
   }
 
