@@ -1,7 +1,8 @@
 <?
 require_once("conf.php");
 require_once("src/wiki_stuff.php");
-include_once "www/inc/global.php";
+//include_once "www/inc/global.php";
+require_once("www/inc/sql.php");
 require_once("www/inc/tags.php");
 require_once("www/inc/functions.php");
 require_once("www/inc/hooks.php");
@@ -33,6 +34,9 @@ $columns=array(
 function get_author() {
   return "MCP <mcp@openstreetbrowser.org>";
 }
+
+// You have to create the user 'MCP' in the user_list table!
+$current_user=new user(array("username"=>"MCP"), 1);
 
 function wiki_download_icon($name) {
   global $icon_list;
@@ -88,7 +92,11 @@ function wiki_download_icon($name) {
   return $icon_id;
 }
 
-$data_dir->commit_start();
+$x=$data_dir->commit_start();
+if(is_array($x)) {
+  print_r($x);
+  exit;
+}
 
 $wiki_data=read_wiki();
 $list_category=array();
