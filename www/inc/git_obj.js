@@ -22,7 +22,7 @@ function git_obj(dir, id, files) {
     param.file=file;
     param.commit_id=this.commit_id();
 
-    if(!p.commit_id) {
+    if(!param.commit_id) {
       alert("No commit started");
       return null;
     }
@@ -40,7 +40,7 @@ function git_obj(dir, id, files) {
     param.content=content;
     param.commit_id=this.commit_id();
 
-    if(!p.commit_id) {
+    if(!param.commit_id) {
       alert("No commit started");
       return null;
     }

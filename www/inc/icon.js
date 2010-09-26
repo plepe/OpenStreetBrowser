@@ -26,7 +26,7 @@ function icon_obj(dir, id, files) {
   }
 
   this.update=function() {
-    var tags_file=this.load("tags.xml");
+    var tags_file=this.load("tags.xml", this.commit_id());
     if(tags_file&&tags_file.content) {
       var xml=parse_xml(tags_file.content);
       this.tags.set_data({});
