@@ -3,15 +3,12 @@ $maybe_delete_indexes=array();
 $default_tags=array(
   'point'=>array(
     'icon_text'=>"[name];[ref];[operator]",
-    'list_text'=>"[ref] - [name];[name];[ref];[operator]",
   ),
   'line'=>array(
     'line_text'=>"[name];[ref];[operator]",
-    'list_text'=>"[ref] - [name];[name];[ref];[operator]",
   ),
   'polygon'=>array(
     'icon_text'=>"[name];[ref];[operator]",
-    'list_text'=>"[ref] - [name];[name];[ref];[operator]",
   ),
 );
 
