@@ -11,6 +11,7 @@ function category_rule_match(dom, cat, rule) {
     var x;
     var name="";
     var add="";
+    var title="";
 
     var li=dom_create_append(ul, "li");
     li.id=this.id;
@@ -19,10 +20,20 @@ function category_rule_match(dom, cat, rule) {
       li.style.listStyleImage="url('"+x+"')";
     }
     
-    if(this.rule.tags.get_lang("name", ui_lang))
-      li.title=this.rule.tags.get_lang("name", ui_lang);
+    if(this.rule.tags.get_lang("name", ui_lang)) {
+      title=split_semicolon(this.rule.tags.get_lang("name", ui_lang));
+      if(title.length==1)
+	title=title[0];
+      else {
+	if(this.id_split.length>1)
+	  title=title[1];
+	else
+	  title=title[0];
+      }
+    }
     else
-      li.title=this.rule.tags.get("match");
+      title=this.rule.tags.get("match");
+    li.title=title;
 
     var a=dom_create_append(li, "a");
     a.href="#"+this.id;
