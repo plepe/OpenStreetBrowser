@@ -345,14 +345,9 @@ function match_to_sql($match, $table_def, $type="exact") {
 	  return "$not oneof_in(".match_to_sql_colname($match[1], $table_def, $type).", ARRAY[".implode(", ", $ret)."])";
 	}
     case "exist":
-      switch($type) {
-	case "index":
-	  return "osm_tags ? ".postgre_escape($match[1]);
-	default:
-	  return match_to_sql_colname($match[1], $table_def, $type)." is not null";
-      }
+      return "osm_tags ? ".postgre_escape($match[1]);
     case "exist not":
-      return match_to_sql_colname($match[1], $table_def, $type)." is null";
+      return "not osm_tags ? ".postgre_escape($match[1]);
     case ">=":
       $same="true";
     case ">":
