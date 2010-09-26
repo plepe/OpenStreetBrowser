@@ -77,8 +77,9 @@ class process_category {
 	if(is_string($data)) {
 	  $ret['_']['errors'][]="Error in rule $r->id: $data";
 	}
-	
-	$ret=array_merge_recursive($ret, $data);
+	else {
+	  $ret=array_merge_recursive($ret, $data);
+	}
       }
       $cur=$cur->nextSibling;
     }
