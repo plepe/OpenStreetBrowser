@@ -27,13 +27,13 @@ function register_index($table, $key, $type, $id, $val=null) {
         sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gist(osm_way, to_tsvector('simple', osm_tags->$key))");
 	break;
       case "highest_number":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gist(osm_way, parse_highest_number(osm_tags->$key))");
+        //sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gist(osm_way, parse_highest_number(osm_tags->$key))");
 	break;
       case "gteq":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), $val, true, null, null)");
+        //sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), $val, true, null, null)");
 	break;
       case "lteq":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), null, null, $val, true)");
+        //sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), null, null, $val, true)");
 	break;
     }
   }
