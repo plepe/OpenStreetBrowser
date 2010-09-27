@@ -311,6 +311,9 @@ function match_to_sql($match, $table_def, $type="exact") {
 	    $ret[]="osm_tags @> ".array_to_hstore(array($match[1]=>$match[$i]));
 	  }
 
+	  if($not)
+	    $ret[]="osm_tags ? ".postgre_escape($match[1]);
+
 	  return "$not (".implode(") or (", $ret).")";
 	default:
 	  $ret=array();
@@ -318,7 +321,10 @@ function match_to_sql($match, $table_def, $type="exact") {
 	    $ret[]=postgre_escape($match[$i]);
 	  }
 
-	  return "$not osm_tags->".postgre_escape($match[1])." in (".implode(", ", $ret).")";
+	  if($not)
+	    $not="not osm_tags ? ".postgre_escape($match[1])." or not";
+
+	  return "($not osm_tags->".postgre_escape($match[1])." in (".implode(", ", $ret)."))";
 	}
     case "~is not":
       $not="not";
