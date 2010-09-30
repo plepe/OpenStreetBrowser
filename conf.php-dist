@@ -39,3 +39,4 @@ $plugins=array("measure", "favorites", "wikipedia");
 // help - adds a entry for help to the toolbox
 // tab - tabbed windows
 // navigation_cloudmade - an interface to the cloudmade routing service
+// no_basemap - An empty basemap as background map
