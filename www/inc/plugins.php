@@ -1,13 +1,15 @@
 <?
 $plugins_list=array();
 $plugins_include_files=array();
+$plugins_dir="$root_path/www/plugins";
 
-function plugins_include($plugin) {
+function plugins_include($plugin, $app) {
   global $plugins_list;
   global $plugins_include_files;
+  global $plugins_dir;
 
-  if((!file_exists("plugins/$plugin"))&&
-     (!file_exists("plugins/$plugin/conf.php")))
+  if((!file_exists("$plugins_dir/$plugin"))&&
+     (!file_exists("$plugins_dir/$plugin/conf.php")))
     return false;
 
   $var_active="{$plugin}_active";
@@ -18,13 +20,13 @@ function plugins_include($plugin) {
   global $$var_depend;
   global $$var_tags;
 
-  if(file_exists("plugins/$plugin/code.php"))
-    $plugins_include_files[$plugin][]="code.php";
-
-  include_once("plugins/$plugin/conf.php");
+  include_once("$plugins_dir/$plugin/conf.php");
 
   if(!$$var_active)
     return false;
+
+  if(file_exists("$plugins_dir/$plugin/$app.php"))
+    $plugins_include_files[$plugin][]="$app.php";
 
   if(is_array($$var_depend))
     foreach($$var_depend as $inc) {
@@ -39,13 +41,14 @@ function plugins_include($plugin) {
   if($plugins_include_files[$plugin])
     foreach($plugins_include_files[$plugin] as $file) {
       if(preg_match("/\.php$/", $file))
-	include_once("plugins/$plugin/$file");
+	include_once("$plugins_dir/$plugin/$file");
     }
 
   return true;
 }
 
 function plugins_html_head($plugin) {
+  global $plugins_dir;
   global $plugins_list;
   global $plugins_include_files;
   global $plugins;
@@ -64,17 +67,17 @@ function plugins_html_head($plugin) {
     $plugins_script.="var {$var_depend}=".html_var_to_js($$var_depend).";\n";
     $plugins_script.="var {$var_tags}=new tags(".html_var_to_js($$var_tags->data()).");\n";
 
-    if(file_exists("plugins/$plugin/code.js"))
+    if(file_exists("$plugins_dir/$plugin/code.js"))
       $plugins_include_files[$plugin][]="code.js";
-    if(file_exists("plugins/$plugin/style.css"))
+    if(file_exists("$plugins_dir/$plugin/style.css"))
       $plugins_include_files[$plugin][]="style.css";
 
     if($plugins_include_files[$plugin])
       foreach($plugins_include_files[$plugin] as $file) {
 	if(preg_match("/\.js$/", $file))
-	  $str.="<script type='text/javascript' src='plugins/$plugin/$file'></script>\n";
+	  $str.="<script type='text/javascript' src='$plugins_dir/$plugin/$file'></script>\n";
 	if(preg_match("/\.css$/", $file))
-	  $str.="<link rel='stylesheet' type='text/css' href=\"plugins/$plugin/$file\">\n";
+	  $str.="<link rel='stylesheet' type='text/css' href=\"$plugins_dir/$plugin/$file\">\n";
       }
   }
 
@@ -92,14 +95,15 @@ function plugins_html_head($plugin) {
   print $str;
 }
 
-function plugins_init() {
+function plugins_init($app="code") {
+  global $plugins_dir;
   global $plugins_list;
   global $plugins;
   $plugins_list=array();
 
-  $d=opendir("plugins/");
+  $d=opendir("$plugins_dir/");
   foreach($plugins as $plugin) {
-    plugins_include($plugin);
+    plugins_include($plugin, $app);
   }
 
   $plugins=array_keys($plugins_list);
