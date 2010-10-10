@@ -31,7 +31,7 @@ function plugins_include($plugin, $app) {
   if(is_array($$var_depend))
     foreach($$var_depend as $inc) {
       if(!$plugins_list[$inc]) {
-	if(!plugins_include($inc))
+	if(!plugins_include($inc, $app))
 	  return false;
       }
     }
@@ -75,9 +75,9 @@ function plugins_html_head($plugin) {
     if($plugins_include_files[$plugin])
       foreach($plugins_include_files[$plugin] as $file) {
 	if(preg_match("/\.js$/", $file))
-	  $str.="<script type='text/javascript' src='$plugins_dir/$plugin/$file'></script>\n";
+	  $str.="<script type='text/javascript' src='plugins/$plugin/$file'></script>\n";
 	if(preg_match("/\.css$/", $file))
-	  $str.="<link rel='stylesheet' type='text/css' href=\"$plugins_dir/$plugin/$file\">\n";
+	  $str.="<link rel='stylesheet' type='text/css' href=\"plugins/$plugin/$file\">\n";
       }
   }
 
