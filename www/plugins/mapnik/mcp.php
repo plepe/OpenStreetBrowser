@@ -3,6 +3,8 @@ function mapnik_build_renderd($renderd) {
   global $plugins_list;
   global $plugins_dir;
 
+  call_hooks("mapnik_compile");
+
   print "MAPNIK BUILD RENDERD\n";
   foreach($plugins_list as $plugin=>$tags) {
     $d=opendir("$plugins_dir/$plugin");
