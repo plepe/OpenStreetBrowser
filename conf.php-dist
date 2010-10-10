@@ -65,3 +65,5 @@ $plugins=array("measure", "favorites", "wikipedia");
 // tab - tabbed windows
 // navigation_cloudmade - an interface to the cloudmade routing service
 // no_basemap - An empty basemap as background map
+// db - Plugins can define db-stuff using migrations
+// mapnik - Include special mapnik-styles in renderd
