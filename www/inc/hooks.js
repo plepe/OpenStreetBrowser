@@ -1,48 +1,70 @@
-var intern_hooks=new Array();
-var object_hooks={};
+/**
+ * Hooks - Functions can register to hooks and will be called on certain 
+ * events in the system.
+ *
+ * <code>
+ * function example(p) {
+ *   alert("example "+p);
+ * }
+ * register_hook("test_hook", example);
+ * </code>
 
-// call_hooks
-// Calls a functions registered to this hook
-//  why  ... if of hook, e.g. "save"
-//  vars ... Vars that can be changed by hook
-//  param1..4 ... More parameters
-function call_hooks(why, vars, param1, param2, param3, param4) {
-  if(intern_hooks[why])
-    for(var i=0; i<intern_hooks[why].length; i++) {
-      var fun=intern_hooks[why][i];
-      fun(vars, param1, param2, param3, param4);
+ */
+
+/**
+ * Holds a list of all functions which registered a hook
+ * @var array array('hook'=>array(fun, fun, fun))
+ */
+var hooks_intern=new Array();
+
+/**
+ * Holds a list of all hooks of an object, to savely remove all hooks of an object
+ */
+var hooks_object={};
+
+/**
+ * Call hooks - All registered functions will be called
+ * @param text hook The hooks to be called
+ * @param any vars A variable which will be passed by reference and can therefore by modified
+ * @param any params Additional vars
+ */
+function call_hooks(hook, vars, param1, param2, param3, param4) {
+  if(hooks_intern[hook])
+    for(var i=0; i<hooks_intern[hook].length; i++) {
+      hooks_intern[hook][i](vars, param1, param2, param3, param4);
     }
 }
 
-// register_hook
-// Registers a function to be called when hook "why" is fired
-//   why ... id of hook, e.g. "save"
-//   fun ... the function to be called
-//   ob  ... saves this hook to be part of object ob, therefore hook can 
-//           be saveely removed, when object is being discarded
-function register_hook(why, fun, ob) {
-  if(!intern_hooks[why])
-    intern_hooks[why]=new Array();
+/**
+ * Register a function to a hook
+ * @param text hook The hook the function to register to
+ * @param text fun The reference to the function
+ * @param object saves this hook to be part of object ob, therefore hook can be saveely removed, when object is being discarded
+ */
+function register_hook(hook, fun, ob) {
+  if(!hooks_intern[hook])
+    hooks_intern[hook]=new Array();
 
-  intern_hooks[why].push(fun);
+  hooks_intern[hook].push(fun);
 
   if(ob) {
-    if(!object_hooks[ob])
-      object_hooks[ob]=[];
-    object_hooks[ob].push([ why, fun ]);
+    if(!hooks_object[ob])
+      hooks_object[ob]=[];
+    hooks_object[ob].push([ why, fun ]);
   }
 }
 
-// unregister_object_hooks
-// Unregisters all hooks of an object
-//  ob ... This object
-function unregister_object_hooks(ob) {
-  if(!object_hooks[ob])
+/**
+ * Unregisters all hooks of an object
+ * @param object The object
+ */
+function unregister_hooks_object(ob) {
+  if(!hooks_object[ob])
     return;
 
-  for(var i=0; i<object_hooks[ob].length; i++) {
-    var why=object_hooks[ob][i][0];
-    var fun1=object_hooks[ob][i][1];
+  for(var i=0; i<hooks_object[ob].length; i++) {
+    var why=hooks_object[ob][i][0];
+    var fun1=hooks_object[ob][i][1];
 
     for(var j=0; j<intern_hooks[why].length; j++) {
       var fun2=intern_hooks[why][j];
@@ -53,5 +75,5 @@ function unregister_object_hooks(ob) {
     }
   }
 
-  delete(object_hooks[ob]);
+  delete(hooks_object[ob]);
 }

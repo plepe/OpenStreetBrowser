@@ -32,6 +32,7 @@ input#search {
   padding:1px;
   font-size:1em;
   color:#333;
+  outline:none;
 }
 .tools {
   border: 1px dotted #999;
@@ -89,6 +90,9 @@ input#search {
   overflow: auto;
   overflow-x:hidden;
   bottom: 38px;
+}
+.info_loading {
+  position:absolute;
 }
 div#options{
   position: absolute;
@@ -190,7 +194,6 @@ a { color:#333; text-decoration:none; }
 ul { padding:0; margin:0 0 7px 15px; list-style-type:square; line-height:120%; padding-left: 20px; }
 li { padding-bottom:2px; }
 li a:hover { background-color:#ccc; }
-/* div.loading { padding-top:40px; } */
 img.loading { padding-left: 7px; border-width: 0px; }
 
 .object { background-color:#efefef; }
