@@ -1,6 +1,6 @@
 -- **
 -- * Hooks - Functions can register to hooks and will be called on certain 
--- * events in the system. There are similar to hooks in PHP/JS
+-- * events in the system. They are similar to hooks in PHP/JS
 -- *
 -- * <code>
 -- * CREATE OR REPLACE FUNCTION example(text) RETURNS text AS $$
