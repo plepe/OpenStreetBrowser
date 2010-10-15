@@ -334,13 +334,6 @@ function init() {
   map.addControl(new OpenLayers.Control.MousePosition());
   map.addControl(new OpenLayers.Control.ScaleLine());
 
-  measure_control=new OpenLayers.Control.Measure(OpenLayers.Handler.Path,{});
-  measure_control.events.on({
-    "measure": measure_deactivate,
-    "measurepartial": measure_handle
-  });
-  map.addControl(measure_control);
-
   if(start_lon&&(first_load)) {
     var lonlat = new OpenLayers.LonLat(start_lon, start_lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
     map.setCenter(lonlat, start_zoom);
