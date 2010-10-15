@@ -50,7 +50,7 @@ function register_hook(hook, fun, ob) {
   if(ob) {
     if(!hooks_object[ob])
       hooks_object[ob]=[];
-    hooks_object[ob].push([ why, fun ]);
+    hooks_object[ob].push([ hook, fun ]);
   }
 }
 
@@ -63,13 +63,13 @@ function unregister_hooks_object(ob) {
     return;
 
   for(var i=0; i<hooks_object[ob].length; i++) {
-    var why=hooks_object[ob][i][0];
+    var hook=hooks_object[ob][i][0];
     var fun1=hooks_object[ob][i][1];
 
-    for(var j=0; j<intern_hooks[why].length; j++) {
-      var fun2=intern_hooks[why][j];
+    for(var j=0; j<intern_hooks[hook].length; j++) {
+      var fun2=intern_hooks[hook][j];
       if(fun1==fun2) {
-	intern_hooks[why].splice(j, 1);
+	intern_hooks[hook].splice(j, 1);
 	j--;
       }
     }
