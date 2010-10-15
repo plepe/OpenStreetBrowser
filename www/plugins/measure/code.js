@@ -1,4 +1,5 @@
 var measure_toolbox;
+var measure_control;
 
 function measure_handle(event) {
   var geometry = event.geometry;
@@ -32,6 +33,13 @@ function measure_click(pos) {
 }
 
 function measure_init() {
+  measure_control=new OpenLayers.Control.Measure(OpenLayers.Handler.Path,{});
+  measure_control.events.on({
+    "measure": measure_deactivate,
+    "measurepartial": measure_handle
+  });
+  map.addControl(measure_control);
+
   measure_toolbox=new toolbox({
     icon: "plugins/measure/icon.png",
     icon_title: "measurements",
