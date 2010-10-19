@@ -22,11 +22,11 @@ $overlays=array("culture"=>"overlay_culture", "gastro"=>"overlay_food", "service
 
 //$key_cloudmade_api="";
 
-// $root_dir - where is all stuff
-$root_dir="/home/osm";
+// $root_path - where is all stuff
+$root_path="/home/osm";
 
 // $lists_dir - saves available categories (has to be writeable for www)
-$lists_dir="$root_dir/data/lists";
+$lists_dir="$root_path/data/lists";
 
 // $fifo_path - the pipe to the mcp-process
 $fifo_path="/tmp/mcp.fifo";
@@ -38,7 +38,7 @@ $default_user_tags=array();
 $default_anon_tags=array();
 
 // $data_dir - The root of all web server writeable data
-$data_dir="$root_dir/data/";
+$data_dir="$root_path/data/";
 
 // $renderd_files - Define additional styles for renderd (point to a renderd-file)
 $renderd_files=array(
