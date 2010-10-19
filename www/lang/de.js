@@ -1,6 +1,7 @@
+lang_str["search_field"]          =[ "Suchen..." ];
 lang_str["more"]                  =[ "mehr" ];
 lang_str["nothing found"]         =[ "nichts gefunden" ];
-lang_str["loading"]               =[ "lade" ];
+lang_str["loading"]               =[ "Lade..." ];
 lang_str["unnamed"]               =[ "(unbenannt)" ];
 lang_str["list_info"]             =[ "Wähle eine Kategorie, um den Karteninhalt zu durchstöbern oder klicke auf ein Objekt auf der Karte für Details" ];
 lang_str["save"]		  =[ "Speichern" ];
@@ -8,6 +9,14 @@ lang_str["cancel"]		  =[ "Abbrechen" ];
 lang_str["choose"]		  =[ "Wählen" ];
 
 lang_str["geo_click_pos"]         =[ "Klicke auf Deine aktuelle Position auf der Karte" ];
+
+lang_str["start:choose"]          =[ "Wähle einen Kartenausschnitt" ];
+lang_str["start:geolocation"]     =[ "automatische Geolokalisierung" ];
+lang_str["start:lastview"]        =[ "letzter Kartenausschnitt" ];
+lang_str["start:savedview"]       =[ "letzter Permalink" ];
+lang_str["start:startnormal"]     =[ "behalte Ansicht" ];
+lang_str["start:remember"]        =[ "Auswahl merken" ];
+lang_str["start:edit"]            =[ "editiere..." ];
 
 lang_str["tag:amenity=restaurant"]=[ "Restaurant", "Restaurants" ];
 lang_str["tag:amenity=cafe"]      =[ "Kaffehaus", "Kaffeehäuser" ];
@@ -48,12 +57,12 @@ lang_str["cat:places"]=[ "Ort", "Orte" ];
 lang_str["cat:places/places"]=[ "Ort", "Orte" ];
 lang_str["cat:places/residential"]=[ "Wohngebiete" ];
 lang_str["cat:places/streets"]=[ "Straßenverzeichnis" ];
-lang_str["cat:places/natural"]=[ "Natürliche Formationen" ];
+lang_str["cat:places/natural"]=[ "Geographische Objekte" ];
 lang_str["cat:transport"]=[ "Transport" ];
 lang_str["cat:transport/car"]=[ "Motorisierter Individualverkehr" ];
 lang_str["cat:transport/car/amenities"]=[ "Einrichtungen" ];
 lang_str["cat:transport/car/furniture"]=[ "Straßenausstattung" ];
-lang_str["cat:transport/pt"]=[ "Public Transportation" ];
+lang_str["cat:transport/pt"]=[ "Öffentlicher Verkehr" ];
 lang_str["cat:transport/pt/amenities"]=[ "Einrichtungen" ];
 lang_str["cat:transport/pt/routes"]=[ "Routen" ];
 lang_str["cat:transport/pt/stops"]=[ "Haltestellen" ];
@@ -109,3 +118,6 @@ lang_str["category:not_compiled"]=["Neue Kategorie ist in Bearbeitung."];
 
 lang_str["category_rule_tag:match"]=["Tag Vergleich"];
 lang_str["category_rule_tag:description"]=["Beschreibung"];
+
+lang_str["overlay:data"]=[ "Data" ];
+lang_str["overlay:draggable"]=[ "Markierungen" ];

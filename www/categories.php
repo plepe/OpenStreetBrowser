@@ -13,6 +13,8 @@ include "inc/css.php";
 include "../src/wiki_stuff.php";
 include "inc/user.php";
 $sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
+pg_query("SET enable_seqscan='off'");
+
 user_check_auth();
 
 $output=fopen("/tmp/git.log", "a");

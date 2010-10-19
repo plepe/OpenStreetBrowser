@@ -96,7 +96,7 @@ function category(id) {
 
     switch(this.result.status) {
       case "loading":
-	div.status.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+t("loading");
+	div.more.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+t("loading");
 	break;
       case "recv":
         break;

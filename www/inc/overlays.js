@@ -34,11 +34,16 @@ function overlay(id, _tags) {
     }
   }
 
+  // set_name
+  this.set_name=function(name) {
+    this.layer.setName(name);
+  }
+
   // build_url
   this.build_url=function(bounds) {
     var res = map.getResolution();
-    var x = Math.round ((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
-    var y = Math.round ((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+    var x = Math.round ((bounds.left - this.layer.maxExtent.left) / (res * this.layer.tileSize.w));
+    var y = Math.round ((this.layer.maxExtent.top - bounds.top) / (res * this.layer.tileSize.h));
     var z = map.getZoom();
 
     var path = "tiles/"+ this.id + "/" + z + "/" + x + "/" + y + ".png?"+ this.version;
@@ -89,6 +94,9 @@ function get_overlay(id) {
 }
 
 function finish_drag(feature, pos) {
+  if(feature.ob&&feature.ob.finish_drag)
+    feature.ob.finish_drag(pos);
+
   call_hooks("finish_drag", feature, pos);
 }
 
@@ -133,9 +141,9 @@ function overlays_init() {
     agri_ind: new OpenLayers.Layer.OSM("Agriculture &amp; Industry", "tiles/agri_ind/", {numZoomLevels: 19, isBaseLayer: false, visibility: false })
   };
 
-  vector_layer=new OpenLayers.Layer.Vector("Data", {});
+  vector_layer=new OpenLayers.Layer.Vector(t("overlay:data"), {});
   vector_layer.setOpacity(0.7);
-  drag_layer=new OpenLayers.Layer.Vector("Draggable", {});
+  drag_layer=new OpenLayers.Layer.Vector(t("overlay:draggable"), {});
 
   drag_feature=new OpenLayers.Control.DragFeature(drag_layer);
 

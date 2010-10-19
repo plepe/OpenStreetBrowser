@@ -3,8 +3,8 @@ var click_override=null;
 function view_call_back(response) {
   var data=response.responseXML;
   var map_div=document.getElementById("map");
-  map_div.style.cursor=null;
   category_request=null;
+  map_div.style.cursor="default";
 
   if(!data) {
     alert("no data\n"+response.responseText);
@@ -17,6 +17,7 @@ function view_call_back(response) {
     var t=get_content(text_node[0]);
     if(t.substr(0, 8)=="redirect") {
       location.hash="#"+t.substr(9);
+      highlight_next_no_zoom=true;
       return;
     }
   }
@@ -59,7 +60,7 @@ function view_click(event) {
   view_changed_last=now;
 
   var map_div=document.getElementById("map");
-  map_div.style.cursor="wait";
+  map_div.style.cursor="progress";
 
 //  if(get_hash()!="")
 //    return 0;

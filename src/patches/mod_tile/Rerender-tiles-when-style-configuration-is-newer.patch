@@ -1,0 +1,164 @@
+From dcaa4a5bb3b83cbe4ea075c9f29b9bb3370db603 Mon Sep 17 00:00:00 2001
+From: Stephan Plepelits <skunk@xover.mud.at>
+Date: Mon, 31 May 2010 18:16:03 +0200
+Subject: [PATCH] Rerender tiles when style-configuration is newer than tile
+
+- set define RERENDER_UPDATED_STYLE to activate this
+- when checking tile state compare timestamps of style and tile
+---
+ mod_tile.c      |   66 +++++++++++++++++++++++++++++++++++++++++++++++-------
+ render_config.h |    3 ++
+ 2 files changed, 60 insertions(+), 9 deletions(-)
+
+diff --git a/mod_tile.c b/mod_tile.c
+index 79ff432..8a56827 100644
+--- a/mod_tile.c
++++ b/mod_tile.c
+@@ -71,6 +71,8 @@ typedef struct {
+     char baseuri[PATH_MAX];
+     int minzoom;
+     int maxzoom;
++    char filename[PATH_MAX];
++    apr_time_t timestamp;
+ } tile_config_rec;
+ 
+ typedef struct {
+@@ -276,7 +278,7 @@ static apr_time_t getPlanetTime(request_rec *r)
+     return planet_timestamp;
+ }
+ 
+-static enum tileState tile_state_once(request_rec *r)
++static enum tileState tile_state_once(request_rec *r, struct protocol *cmd)
+ {
+     apr_status_t rv;
+     apr_finfo_t *finfo = &r->finfo;
+@@ -290,12 +292,47 @@ static enum tileState tile_state_once(request_rec *r)
+     if (finfo->mtime < getPlanetTime(r))
+         return tileOld;
+ 
++#ifdef RERENDER_UPDATED_STYLE
++    // find correct tile_config
++    ap_conf_vector_t *sconf = r->server->module_config;
++    tile_server_conf *scfg = ap_get_module_config(sconf, &tile_module);
++    tile_config_rec *tile_configs = (tile_config_rec *) scfg->configs->elts;
++    int i;
++
++    for (i = 0; i < scfg->configs->nelts; ++i) {
++	tile_config_rec *tile_config = &tile_configs[i];
++
++	if(!strcmp(tile_config->xmlname, cmd->xmlname)) {
++
++	    // if we haven't already checked timestamp, check it now
++	    if(tile_config->timestamp == 0) {
++		struct apr_finfo_t s;
++
++		if (apr_stat(&s, tile_config->filename, APR_FINFO_MIN, r->pool) != APR_SUCCESS) {
++		    ap_log_rerror(APLOG_MARK, APLOG_ERR, 0, r, "Can't stat tile_config %s", tile_config->filename);
++		    tile_config->timestamp = -1;
++		}
++		else {
++		    tile_config->timestamp = s.mtime;
++		}
++	    }
++
++	    // compare timestamps of file and tile_config
++	    if((tile_config->timestamp != 0) && 
++	       (tile_config->timestamp != -1) && 
++	       (finfo->mtime < tile_config->timestamp)) {
++		return tileOld;
++	    }
++	}
++    }
++#endif
++
+     return tileCurrent;
+ }
+ 
+ static enum tileState tile_state(request_rec *r, struct protocol *cmd)
+ {
+-    enum tileState state = tile_state_once(r);
++    enum tileState state = tile_state_once(r, cmd);
+ #ifdef METATILEFALLBACK
+     if (state == tileMissing) {
+         ap_conf_vector_t *sconf = r->server->module_config;
+@@ -305,7 +342,7 @@ static enum tileState tile_state(request_rec *r, struct protocol *cmd)
+         char path[PATH_MAX];
+         xyz_to_path(path, sizeof(path), scfg->tile_dir, cmd->xmlname, cmd->x, cmd->y, cmd->z);
+         r->filename = apr_pstrdup(r->pool, path);
+-        state = tile_state_once(r);
++        state = tile_state_once(r, cmd);
+         ap_log_rerror(APLOG_MARK, APLOG_INFO, 0, r, "png fallback %d/%d/%d",x,y,z);
+ 
+         if (state == tileMissing) {
+@@ -1003,7 +1040,7 @@ static void register_hooks(__attribute__((unused)) apr_pool_t *p)
+     ap_hook_map_to_storage(tile_storage_hook, NULL, NULL, APR_HOOK_FIRST);
+ }
+ 
+-static const char *_add_tile_config(cmd_parms *cmd, void *mconfig, const char *baseuri, const char *name, int minzoom, int maxzoom)
++static const char *_add_tile_config(cmd_parms *cmd, void *mconfig, const char *baseuri, const char *name, int minzoom, int maxzoom, const char *conffile)
+ {
+     if (strlen(name) == 0) {
+         return "ConfigName value must not be null";
+@@ -1026,14 +1063,15 @@ static const char *_add_tile_config(cmd_parms *cmd, void *mconfig, const char *b
+     tilecfg->xmlname[XMLCONFIG_MAX-1] = 0;
+     tilecfg->minzoom = minzoom;
+     tilecfg->maxzoom = maxzoom;
+-
++    strncpy(tilecfg->filename, conffile, PATH_MAX-1);
++    tilecfg->timestamp = 0;
+ 
+     return NULL;
+ }
+ 
+-static const char *add_tile_config(cmd_parms *cmd, void *mconfig, const char *baseuri, const char *name)
++static const char *add_tile_config(cmd_parms *cmd, void *mconfig, const char *baseuri, const char *name, const char *conffile)
+ {
+-    return _add_tile_config(cmd, mconfig, baseuri, name, 0, MAX_ZOOM);
++    return _add_tile_config(cmd, mconfig, baseuri, name, 0, MAX_ZOOM, conffile);
+ }
+ 
+ static const char *load_tile_config(cmd_parms *cmd, void *mconfig, const char *conffile)
+@@ -1045,6 +1083,8 @@ static const char *load_tile_config(cmd_parms *cmd, void *mconfig, const char *c
+     char key[INILINE_MAX];
+     char value[INILINE_MAX];
+     const char * result;
++    char entry_uri[PATH_MAX];
++    char entry_xml[PATH_MAX];
+ 
+     if (strlen(conffile) == 0) {
+         strcpy(filename, RENDERD_CONFIG);
+@@ -1072,9 +1112,17 @@ static const char *load_tile_config(cmd_parms *cmd, void *mconfig, const char *c
+                 if (strlen(value) >= PATH_MAX){
+                     return "URI too long";
+                 }
+-                result = add_tile_config(cmd, mconfig, value, xmlname);
+-                if (result != NULL) return result;
++		strcpy(entry_uri, value);
+             }
++            else if (!strcmp(key, "XML")){
++                if (strlen(value) >= PATH_MAX){
++                    return "XML too long";
++                }
++		strcpy(entry_xml, value);
++            }
++
++	    result = add_tile_config(cmd, mconfig, entry_uri, xmlname, entry_xml);
++	    if (result != NULL) return result;
+         }
+     }
+     fclose(hini);
+diff --git a/render_config.h b/render_config.h
+index b82d920..e2de3a6 100644
+--- a/render_config.h
++++ b/render_config.h
+@@ -82,4 +82,7 @@
+ // Penalty for client making an invalid request (in seconds)
+ #define CLIENT_PENALTY (3)
+ 
++// Rerender tile if XML style config is newer than tile
++#define RERENDER_UPDATED_STYLE
++
+ #endif
+-- 
+1.7.0.4
+

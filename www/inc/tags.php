@@ -144,40 +144,55 @@ class tags {
 	  if(!$this->match($match_desc[$i]))
 	    return false;
 	return true;
-      case "fuzzy is":
-      case "is":
+      case "~fuzzy is":
+      case "~is":
 	$values=$this->get_multi($match_desc[1]);
 	for($i=2; $i<sizeof($match_desc); $i++)
 	  for($j=0; $j<sizeof($values); $j++)
 	    if($values[$j]==$match_desc[$i])
 	      return true;
         return false;
-      case "is not":
+      case "fuzzy is":
+      case "is":
+	$value=$this->get($match_desc[1]);
+	for($i=2; $i<sizeof($match_desc); $i++)
+	  if($value==$match_desc[$i])
+	    return true;
+        return false;
+      case "~is not":
 	$values=$this->get_multi($match_desc[1]);
 	for($i=2; $i<sizeof($match_desc); $i++)
 	  for($j=0; $j<sizeof($values); $j++)
 	    if($values[$j]!=$match_desc[$i])
 	      return false;
         return true;
+      case "is not":
+	$value=$this->get($match_desc[1]);
+	for($i=2; $i<sizeof($match_desc); $i++)
+	  if($value!=$match_desc[$i])
+	    return false;
+        return true;
+      case "~exist":
       case "exist":
 	if($this->get($match_desc[1]))
 	  return true;
         return false;
+      case "~exist not":
       case "exist not":
 	if($this->get($match_desc[1]))
 	  return false;
         return true;
-      case ">":
-      case "<":
-      case ">=":
-      case "<=":
+      case "~>":
+      case "~<":
+      case "~>=":
+      case "~<=":
 	$values=$this->get_multi($match_desc[1]);
 	for($j=0; $j<sizeof($values); $j++) {
 
 	  $comp1=parse_number($values[$j]);
 	  $comp2=parse_number($match_desc[2]);
 
-	  switch($match_desc[0]) {
+	  switch(substr($match_desc[0], 1)) {
 	    case ">":
 	      if($comp1>$comp2)
 		return true;
@@ -196,6 +211,35 @@ class tags {
 	      break;
 	  }
 	}
+	return false;
+      case ">":
+      case "<":
+      case ">=":
+      case "<=":
+	$value=$this->get($match_desc[1]);
+
+	$comp1=parse_number($value);
+	$comp2=parse_number($match_desc[2]);
+
+	switch($match_desc[0]) {
+	  case ">":
+	    if($comp1>$comp2)
+	      return true;
+	    break;
+	  case "<":
+	    if($comp1<$comp2)
+	      return true;
+	    break;
+	  case ">=":
+	    if($comp1>=$comp2)
+	      return true;
+	    break;
+	  case "<=":
+	    if($comp1<=$comp2)
+	      return true;
+	    break;
+	}
+
 	return false;
       case "not":
         return !$this->match($match_desc[1]);
@@ -250,19 +294,6 @@ class tags {
 
     return $ret;
   }
-}
-
-function parse_hstore($text) {
-  return eval("return array($text);");
-}
-
-function array_to_hstore($arr) {
-  $ret=array();
-  foreach($arr as $k=>$v) {
-    $ret[]="(".postgre_escape($k)."=>".postgre_escape($v).")::hstore";
-  }
-
-  return implode("|| ", $ret);
 }
 
 function parse_array($text, $prefix="") {
@@ -390,6 +421,16 @@ function match_simplify($match, $method=0) {
       for($i=1; $i<sizeof($match); $i++) {
 	for($j=1; $j<$i; $j++) {
 	  if(($match[$i][0]=="is")&&($match[$j][0]=="is")&&
+	     ($match[$i][1]==$match[$j][1])) {
+	    unset($match[$j][0]);
+	    unset($match[$j][1]);
+	    $match[$i]=array_merge($match[$i], $match[$j]);
+	    unset($match[$j]);
+	    $match=array_values($match);
+	    $j--; $i--;
+	  }
+
+	  elseif(($match[$i][0]=="~is")&&($match[$j][0]=="~is")&&
 	     ($match[$i][1]==$match[$j][1])) {
 	    unset($match[$j][0]);
 	    unset($match[$j][1]);

@@ -1,11 +1,13 @@
 .waterarea[landuse=dock][zoom>=10],
 .waterarea[landuse=reservoir][zoom>=10],
+.waterarea[landuse=basin][zoom>=10],
 .waterarea[landuse=riverbank][zoom>=10],
 .waterarea[landuse=water][zoom>=5] {
   polygon-fill: #7eb9e3;
 }
 .waterarea[landuse=dock][zoom>=14],
 .waterarea[landuse=reservoir][zoom>=14],
+.waterarea[landuse=basin][zoom>=14],
 .waterarea[landuse=riverbank][zoom>=14],
 .waterarea[landuse=water][zoom>=14] {
   line-color: #7eb9e3;

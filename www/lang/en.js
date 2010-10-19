@@ -1,6 +1,7 @@
+lang_str["search_field"]          =[ "Search..." ];
 lang_str["more"]                  =[ "more" ];
 lang_str["nothing found"]         =[ "nothing found" ];
-lang_str["loading"]               =[ "loading" ];
+lang_str["loading"]               =[ "Loading..." ];
 lang_str["unnamed"]               =[ "(unnamed)" ];
 lang_str["list_info"]             =[ "Choose a category to browse map content or click on an object on the map for details" ];
 lang_str["ok"]		    	  =[ "Ok" ];
@@ -9,6 +10,14 @@ lang_str["cancel"]		  =[ "Cancel" ];
 lang_str["choose"]		  =[ "Choose" ];
 
 lang_str["geo_click_pos"]         =[ "Click on your position on the map" ];
+
+lang_str["start:choose"]          =[ "Choose map view" ];
+lang_str["start:geolocation"]     =[ "get geolocation" ];
+lang_str["start:lastview"]        =[ "last view" ];
+lang_str["start:savedview"]       =[ "last permalink" ];
+lang_str["start:startnormal"]     =[ "keep view" ];
+lang_str["start:remember"]        =[ "remember decision" ];
+lang_str["start:edit"]            =[ "edit..." ];
 
 lang_str["tag:amenity=restaurant"]=[ "restaurant", "restaurants" ];
 lang_str["tag:amenity=cafe"]      =[ "cafe", "cafes" ];
@@ -110,3 +119,6 @@ lang_str["category:not_compiled"]=["New category is being prepared."];
 
 lang_str["category_rule_tag:match"]=["Match"];
 lang_str["category_rule_tag:description"]=["Description"];
+
+lang_str["overlay:data"]=[ "Data" ];
+lang_str["overlay:draggable"]=[ "Markers" ];

@@ -1,12 +1,18 @@
 <?
 $lang_str["general_info"]="Allgemeine Informationen";
-$lang_str["search_field"]="Suchen ...";
+$lang_str["search_field"]="Suchen...";
+$lang_str["search_tip"]="z.B. 'Berlin', 'Goethestraße', 'Kneipe in München',...";
+$lang_str["search_clear"]="Suchfeld löschen";
 $lang_str["noname"]="(kein Name)";
 $lang_str["info_back"]="zur Übersicht";
 $lang_str["info_zoom"]="zoomen";
 $lang_str["result_no"]="nichts gefunden";
-$lang_str["search_process"]="suche ...";
+$lang_str["search_process"]="suche...";
 $lang_str["read_more"]="weiterlesen";
+$lang_str["search_more"]="mehr Ergebnisse";
+$lang_str["search_results"]="Suchergebnisse";
+$lang_str["search_nominatim"]="Suche bereitgestellt von";
+$lang_str["loading"]="lade";
 
 $lang_str["head_general_info"]="Allgemeine Informationen";
 $lang_str["head_stops"]="Haltestellen";
@@ -106,8 +112,8 @@ $lang_str["main:map_key"]="Legende";
 $lang_str["main:options"]="Optionen";
 $lang_str["main:about"]="Impressum";
 $lang_str["main:donate"]="Spende";
-$lang_str["main:licence"]="Kartendaten: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> Mitwirkende | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> und <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">Mitwirkende</a>";
-$lang_str["main:permalink"]="Beständiger Link";
+$lang_str["main:licence"]="Kartendaten: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>-Mitwirkende | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> und <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">Mitwirkende</a>";
+$lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'>".lang("info_back")."</a></div><h1>Objekt nicht gefunden</h1>Ein Objekt mit der ID \"%s\" konnte nicht gefunden werden. Das kann eine (oder mehrere) der folgenden Ursachen haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde von einer anderen Applikation identifiziert und ist im OpenStreetBrowser (noch) nicht verfügbar</li><li>Das Objekt liegt ausserhalb des unterstützten Gebiets</li><li>Der Link, dem Du gefolgt bist, war alt und das Objekt wurde inzwischen aus der OpenStreetMap gelöscht.</li>";
 

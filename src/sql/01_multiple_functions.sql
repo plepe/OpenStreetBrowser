@@ -93,7 +93,30 @@ begin
 
   return null;
 end;
-$$ language 'plpgsql';
+$$ language 'plpgsql' immutable;
+
+create or replace function parse_highest_number(text)
+  returns float
+  as $$
+declare
+  val      alias for $1;
+  val_list text[];
+  ret      float;
+  highest  float;
+begin
+  val_list:=split_semicolon(val);
+  highest:=-999999999;
+
+  for i in array_lower(val_list, 1)..array_upper(val_list, 1) loop
+    ret:=parse_number(val_list[i]);
+    if ret>highest then
+      highest:=ret;
+    end if;
+  end loop;
+
+  return highest;
+end;
+$$ language 'plpgsql' immutable;
 
 create or replace function is_between(text, float, bool, float, bool)
   returns bool 
@@ -181,7 +204,7 @@ begin
   end loop;
   return false;
 end;
-$$ language 'plpgsql';
+$$ language 'plpgsql' immutable;
 
 create or replace function split_semicolon(text)
   returns text[]

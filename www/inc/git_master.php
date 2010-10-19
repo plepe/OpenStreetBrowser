@@ -213,7 +213,11 @@ class git_master {
       $this->exec("git checkout $branch");
     }
 
-    $author=$current_user->get_author();
+    if($current_user)
+      $author=$current_user->get_author();
+    else
+      $author="MCP <mcp@openstreetbrowser.org>";
+
     $this->exec("git commit --allow-empty -m 'temporary message' --author='$author'");
     $this->exec("git checkout master");
 
@@ -242,7 +246,11 @@ class git_master {
       return array("status"=>"No commit started");
     }
 
-    $author=$current_user->get_author();
+    if($current_user)
+      $author=$current_user->get_author();
+    else
+      $author="MCP <mcp@openstreetbrowser.org>";
+
     $branch=$this->commit_id;
     $this->chdir();
     $this->lock();
@@ -320,7 +328,11 @@ class git_master {
   function commit_close() {
     global $current_user;
 
-    $author=$current_user->get_author();
+    if($current_user)
+      $author=$current_user->get_author();
+    else
+      $author="MCP <mcp@openstreetbrowser.org>";
+
     $this->exec("git commit --amend --allow-empty -m 'temporary message' --author='$author'");
     $this->exec("git checkout master");
 
@@ -335,9 +347,10 @@ class git_master {
     $changed_list=array();
     foreach($changed_files as $f) {
       if(preg_match("/^([^\/]*)\/([^\/]*)\/(.*)$/", $f, $m)) {
-	$changed_list[$m[1]][$m[2]]=$m[3];
+	$changed_list[$m[1]][$m[2]][]=$m[3];
       }
     }
+    print_r($changed_list);
 
     foreach($changed_list as $dir_id=>$list) {
       $git_dir=$this->get_dir($dir_id);

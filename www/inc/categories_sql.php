@@ -1,5 +1,16 @@
 <?
 $maybe_delete_indexes=array();
+$default_tags=array(
+  'point'=>array(
+    'display_name'=>"[ref] - [name];[name];[ref];[operator]",
+  ),
+  'line'=>array(
+    'display_name'=>"[ref] - [name];[name];[ref];[operator]",
+  ),
+  'polygon'=>array(
+    'display_name'=>"[ref] - [name];[name];[ref];[operator]",
+  ),
+);
 
 function register_index($table, $key, $type, $id, $val=null) {
   $key=postgre_escape($key);
@@ -10,13 +21,16 @@ function register_index($table, $key, $type, $id, $val=null) {
   if(!pg_num_rows($res)) {
     switch($type) {
       case "tsvector":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gin(to_tsvector('simple', osm_tags->$key))");
+        sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gist(osm_way, to_tsvector('simple', osm_tags->$key))");
+	break;
+      case "highest_number":
+        sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gist(osm_way, parse_highest_number(osm_tags->$key))");
 	break;
       case "gteq":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_tags) where oneof_between(split_semicolon(osm_tags->$key), $val, true, null, null)");
+        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), $val, true, null, null)");
 	break;
       case "lteq":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_tags) where oneof_between(split_semicolon(osm_tags->$key), null, null, $val, true)");
+        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), null, null, $val, true)");
 	break;
     }
   }
@@ -95,10 +109,10 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
 
   //$where[]="(\"rule_$id\"='$importance' or \"rule_$id\" is null)";
 
-  if(in_array($importance, array("global", "international", "national")))
-    $where[]="Intersects(osm_way, !bbox!)";
-  else
-    $where[]="osm_way&&!bbox!";
+//  if(in_array($importance, array("global", "international", "national")))
+//    $where[]="Intersects(osm_way, !bbox!)";
+//  else
+  $where[]="osm_way&&!bbox!";
 
   print "WHERE";
   print_r($where);
@@ -109,13 +123,16 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
     $where="";
 
   $select=implode(", ", $select);
-  return "select t2.osm_id as osm_id, t2.geo, t2.osm_tags as osm_tags, t2.result[1] as rule_id, t2.result[2] as importance, cd.rule_tags as rule_tags from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance'";// group by t2.result[1], t2.result[2], t2.result[3]";
+  return "select t2.osm_id as osm_id, t2.geo, t2.osm_tags as osm_tags, t2.result->'rule_id' as rule_id, t2.result->'importance' as importance, result as rule_tags from (select {$select} {$from} {$where}) as t2 where t2.result->'importance'='$importance'";// group by t2.result[1], t2.result[2], t2.result[3]";
   //return "select array_to_string(to_textarray(t2.osm_id), ';') as osm_id, ST_Collect(t2.geo) as geo, tags_merge(to_array(t2.osm_tags)) as osm_tags, t2.result[1] as rule_id, t2.result[2] as importance, tags_merge(to_array(cd.rule_tags)) as rule_tags from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3]";
 //select *, rule_tags->'display_name_pattern' as display_name_pattern, rule_tags->'display_type_pattern' as display_type_pattern, rule_tags->'icon_text_pattern' as icon_text_pattern from (
 }
 
 function create_sql_classify_fun($rules, $table="point", $id="tmp") {
   global $postgis_tables;
+  global $default_tags;
+
+  $def_tags=$default_tags[$table];
   $classify_function_declare="";
   $classify_function_getdata="";
   $classify_function="";
@@ -148,13 +165,14 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
 
     $imp=$tags->get("importance");
     if(!$imp)
-      $imp="'local'";
-    elseif(strpos($imp, "[")) {
-      $imp=postgre_escape($imp);
-      $imp="tags_parse(_osm_id, osm_tags, osm_way, $imp)";
-    }
-    else
-      $imp="'$imp'";
+      $tags->set("importance", "local");
+//    elseif(strpos($imp, "[")) {
+//      $imp=postgre_escape($imp);
+//      $imp="tags_parse(_osm_id, osm_tags, osm_way, $imp)";
+//    }
+//    else {
+//      $imp=postgre_escape($imp);
+//    }
 
     if($x=$tags->get("group")) {
       $x=postgre_escape($x);
@@ -164,10 +182,13 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
       $group_id="_osm_id";
     }
 
-    $classify_function_match[]="if $qry then\n    result=Array[".postgre_escape($rule_id).",$imp, $group_id];";
+    $arr=$tags->data();
+    $arr['rule_id']=$rule_id;
+    $classify_function_match[]="if $qry then\n".
+      "    result:=".array_to_hstore(array_merge($def_tags, $arr)).";";
   }
 
-  $classify_function_declare.="  result text[];\n";
+  $classify_function_declare.="  result hstore;\n";
   $classify_function_match=implode("\n  else", $classify_function_match);
   if($classify_function_match)
     $classify_function_match="  $classify_function_match\n  end if;\n";
@@ -180,7 +201,7 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
 
   $funname="classify_{$id}_{$table}";
   $classify_function.="create or replace function $funname(text, hstore, geometry)\n";
-  $classify_function.="returns text[] as $$\n";
+  $classify_function.="returns hstore as $$\n";
   $classify_function.="declare\n";
   $classify_function.="  _osm_id   alias for $1;\n";
   $classify_function.="  osm_tags  alias for $2;\n";
@@ -189,6 +210,9 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
   $classify_function.="begin\n";
   $classify_function.=$classify_function_getdata;
   $classify_function.=$classify_function_match;
+  $classify_function.="  if result is not null then\n";
+  $classify_function.="    result:=result || ('importance'=>tags_parse(_osm_id, osm_tags, osm_way, result->'importance'))::hstore;\n";
+  $classify_function.="  end if;\n";
   $classify_function.="  return result;\n";
   $classify_function.="end;\n";
   $classify_function.="$$ language plpgsql immutable;\n";
@@ -280,6 +304,25 @@ function match_to_sql($match, $table_def, $type="exact") {
     case "is not":
       $not="not";
     case "is":
+      switch($type) {
+	case "index":
+	  $ret=array();
+	  for($i=2; $i<sizeof($match); $i++) {
+	    $ret[]="osm_tags @> ".array_to_hstore(array($match[1]=>$match[$i]));
+	  }
+
+	  return "$not (".implode(") or (", $ret).")";
+	default:
+	  $ret=array();
+	  for($i=2; $i<sizeof($match); $i++) {
+	    $ret[]=postgre_escape($match[$i]);
+	  }
+
+	  return "$not osm_tags->".postgre_escape($match[1])." in (".implode(", ", $ret).")";
+	}
+    case "~is not":
+      $not="not";
+    case "~is":
       switch($type) {
 	case "index":
 	  $ret=array();
@@ -430,9 +473,11 @@ function build_match_part($part) {
     $c_not=false;
     $where_not="";
     switch($operator) {
+      case "~!=":
       case "!=":
         $c_not=true;
 	$where_not="!";
+      case "~=":
       case "=":
 	$c=array(
 	  ($c_not?"is not":"is"),
@@ -455,6 +500,10 @@ function build_match_part($part) {
 	    $c[0]="exist not";
 	  }
 	}
+
+	if(substr($operator, 0, 1)=="~") {
+	  $c[0]="~{$c[0]}";
+	}
 	
 	if($c_prevnot===true) {
 	  $case=array("or", $case, $c);
@@ -465,6 +514,10 @@ function build_match_part($part) {
 	else
 	  $case=$c;
 	break;
+      case "~>":
+      case "~<":
+      case "~>=":
+      case "~<=":
       case ">":
       case "<":
       case ">=":
@@ -523,7 +576,7 @@ function parse_explode($match) {
 	}
         elseif($c==" ") {
 	}
-	elseif(!in_array($c, array("\"", "'", "=", "!", ">", "<"))) {
+	elseif(!in_array($c, array("\"", "'", "=", "!", ">", "<", "~"))) {
 	  $key.=$c;
 	  $m=6;
 	}
@@ -532,7 +585,7 @@ function parse_explode($match) {
 	}
 	break;
       case 1:
-	if(in_array($c, array("=", "!", ">", "<"))) {
+	if(in_array($c, array("=", "!", ">", "<", "~"))) {
 	  $operator.=$c;
 	}
 	else {
@@ -551,7 +604,7 @@ function parse_explode($match) {
 	  $values[sizeof($values)-1][]=$value;
 	  unset($value);
 	}
-	elseif(in_array($c, array("=", "!", ">", "<"))) {
+	elseif(in_array($c, array("=", "!", ">", "<", "~"))) {
 	  $values[sizeof($values)-1][]=$value;
 	  unset($value);
 	  $m=1;
@@ -620,7 +673,7 @@ function parse_explode($match) {
 	}
 	break;
       case 5:
-	if(in_array($c, array("=", "!", ">", "<"))) {
+	if(in_array($c, array("=", "!", ">", "<", "~"))) {
 	  $m=1;
 	  $i--;
 	}
@@ -629,7 +682,7 @@ function parse_explode($match) {
 	}
 	break;
       case 6:
-	if(in_array($c, array("=", "!", ">", "<"))) {
+	if(in_array($c, array("=", "!", ">", "<", "~"))) {
 	  $m=1;
 	  $i--;
 	}

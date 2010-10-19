@@ -98,6 +98,8 @@ function category_osm(id) {
       a.onclick=this.show_more.bind(this);
       dom_create_append_text(a, t("more"));
     }
+
+    this.write_status(div);
   }
 
   // show_more - load more data from server
@@ -309,6 +311,7 @@ function category_osm(id) {
       this.overlay=new overlay(this.id);
     this.overlay.register_category(this);
     this.overlay.set_version(this.version);
+    this.overlay.set_name(this.tags.get_lang("name", ui_lang));
   }
 
   // get_rule

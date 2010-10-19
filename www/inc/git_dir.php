@@ -41,7 +41,7 @@ class git_dir {
       $this->master->commit_start();
       mkdir($this->path());
       touch("{$this->path()}/.dummy");
-      $this->master->exec("git add {$this->id}");
+      $this->master->exec("git add \"{$this->id}\"");
       $this->master->commit_end("Created directory '{$this->id}'");
     }
   }
@@ -156,7 +156,7 @@ class git_dir {
     mkdir("$id/");
     touch("{$id}/.dummy");
 
-    $this->exec("git add $id/");
+    $this->exec("git add \"$id/\"");
 
     $this->master->commit_close();
 
@@ -175,7 +175,7 @@ class git_dir {
       return array("status"=>"Invalid Filename");
     }
 
-    $r=$this->exec("git ls-files $id/");
+    $r=$this->exec("git ls-files \"$id/\"");
 
     if($this->commit_id())
       $this->master->commit_close();

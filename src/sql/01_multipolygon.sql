@@ -64,6 +64,10 @@ begin
     outer_ways:=next;
   end loop;
 
+  if array_lower(outer_ways, 1) is null then
+    return ret_outer;
+  end if;
+
   for o in array_lower(outer_ways, 1)..array_upper(outer_ways, 1) loop
     if(IsClosed(outer_ways[o])) then
       ret_outer:=ST_Collect(ret_outer, outer_ways[o]);

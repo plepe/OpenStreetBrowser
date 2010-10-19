@@ -37,7 +37,7 @@ function _category_list() {
 
     dom_clean(div.more);
     var more_cat=dom_create_append(div.more, "a");
-    dom_create_append_text(more_cat, "More categories");
+    dom_create_append_text(more_cat, t("more_categories"));
     more_cat.onclick=this.choose_category.bind(this);
   }
 
@@ -115,7 +115,7 @@ function category_list_hash_changed(hash) {
   dom_clean(div);
   root_div=category_root.attach_div(div);
 
-  if(hash=="") {
+  if(!hash.obj) {
     category_root.open_category(root_div);
   }
   else {

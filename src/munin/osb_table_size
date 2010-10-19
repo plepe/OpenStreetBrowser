@@ -1,0 +1,31 @@
+#!/usr/bin/php
+<?
+$tables_prefix="osm_";
+include_once "/home/osm/conf.php";
+include_once "/home/osm/src/inc/sql.php";
+$sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
+
+$res=sql_query("select table_name, pg_relation_size(table_name) as size from information_schema.tables where table_schema='public' and table_name similar to '$tables_prefix%'");
+while($elem=pg_fetch_assoc($res)) {
+  $tables[$elem['table_name']]=$elem;
+}
+
+switch($argv[1]) {
+  case 'config':
+    print <<<EOT
+graph_title DB table size
+graph_vlabel bytes
+graph_category other
+graph_info This graph shows the size of some database tables.
+
+EOT;
+   foreach($tables as $t=>$data) {
+     print "$t.label $t\n";
+   }
+   break;
+ default:
+   foreach($tables as $t=>$data) {
+     print "$t.value {$data['size']}\n";
+   }
+}
+//select pg_relation_size('osm_line')/1024.0/1024/1024

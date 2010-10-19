@@ -1,13 +1,47 @@
 var search_last;
 
 function search_focus(ob) {
-  ob.value="";
+  if(ob.value==lang_str["search_field"]) {
+    ob.value='';
+  }
+  else if((ob.value!="")) {
+    document.getElementById("osb_search_form").brush.style.visibility = 'visible';
+  }
+  document.getElementById("osb_search_form").osb_search.style.borderColor = '#cc9900';
 }
 
-function search(ob) {
+function search_clear(ob) {
+  ob.value='';
+  document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
+  ob.focus();
+}
+
+function search_brush(ob,e) {
+  if((ob.value!="")) {
+    document.getElementById("osb_search_form").brush.style.visibility = 'visible';
+  }
+  else {
+    document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
+  }
+  if(e.which==27) {
+    search_clear(ob);
+  }
+}
+
+function search_onblur(ob) {
+  if((ob.value=='\0')||(ob.value=="")) {
+    ob.value=lang_str["search_field"];
+    document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
+  }
+  document.getElementById("osb_search_form").osb_search.style.borderColor = '#999999';
+}
+
+function search() {
+  var search_form=document.getElementById("osb_search_form");
+
   var details_content=document.getElementById("details_content");
   var details=document.getElementById("details");
-  location.hash="#search_"+ob.value;
+  location.hash="#search_"+search_form.elements.osb_search.value;
 }
 
 function real_search(value, param) {
@@ -23,7 +57,7 @@ function real_search(value, param) {
   ajax("search", param, search_result);
 
   search_last=value;
-  details_content.innerHTML="Loading ...";
+  details_content.innerHTML=lang_str["loading"];
   details.className="info_loading";
 }
 
