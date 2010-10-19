@@ -214,7 +214,7 @@ img.loading { padding-left: 7px; border-width: 0px; }
   text-align: center;
   font-style: italic;
 }
-.licence {
+#licence {
   position: absolute;
   left: 280px;
   bottom: 2px;
