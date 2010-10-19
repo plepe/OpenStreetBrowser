@@ -65,5 +65,10 @@ function main() {
 
   $ret.="</results>\n";
 
-  return $ret;
+  $dom=new DOMDocument();
+  $dom->loadXML($ret);
+
+  call_hooks("list_request", $dom);
+
+  return $dom->saveXML();
 }
