@@ -63,6 +63,8 @@ function ajax_git_obj_save($param) {
 function ajax_git_obj_load($param) {
   global $data_dir;
   $dir=get_git_directory($param['dir']);
+  if($param['version_branch'])
+    $data_dir->commit_continue($param['version_branch']);
   $obj=$dir->get_obj($param['obj']);
   $result=$obj->load($param['file'], $param['version_branch']);
   return $result;

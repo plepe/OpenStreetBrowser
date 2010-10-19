@@ -1,7 +1,7 @@
 #include <unistd.h>
 
 #define CMD "/etc/init.d/apache2"
-#define PARAM "restart"
+#define PARAM "reload"
 
 void
 main() {

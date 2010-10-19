@@ -2,8 +2,17 @@ function category_editor(id) {
   // editor
   this.init=function() {
     dom_clean(this.win.content);
+
+    if(!current_user.username) {
+      dom_create_append_text(this.win.content, t("You are not logged in. You cannot save your changes."));
+    }
+
     this.form=document.createElement("div");
     this.win.content.appendChild(this.form);
+
+    var txt=document.createElement("div");
+    txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Category_Tags#Category'>Help</a>):\n";
+    this.form.appendChild(txt);
 
     var div=document.createElement("div");
     this.tags.editor(div);
@@ -257,6 +266,11 @@ function category_edit_rule(category, dom) {
 
       dom_create_append_text(header, t("category_rule_tag:match")+": "+this.tags.get("match"));
     }
+
+    dom_create_append(header, "br");
+    var input=dom_create_append(header, "input");
+    input.type="button";
+    input.value=t("expand");
   }
 
   this.choose_icon=function() {
@@ -364,7 +378,7 @@ function category_edit_rule(category, dom) {
     this.content.appendChild(this.tags_editor);
 
     var txt=document.createElement("div");
-    txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Edit_List'>Help</a>):\n";
+    txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Category_Tags#Rule'>Help</a>):\n";
     this.tags_editor.appendChild(txt);
 
     this.tags.editor_on_change_key=this.editor_change_key.bind(this);

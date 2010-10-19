@@ -24,6 +24,17 @@ $scales_levels=array(
 $scale_icon=array("global"=>2, "international"=>5, "national"=>8, "regional"=>11, "urban"=>13, "suburban"=>15, "local"=>17);
 $scale_text=array("global"=>4, "international"=>8, "national"=>10, "regional"=>13, "urban"=>15, "suburban"=>16, "local"=>18);
 include "categories_sql.php";
+$default_style=array(
+  "point|icon_style"=>"allow_overlap: true;",
+  "point|icon_label_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: true; halo_fill: #ffffff; halo_radius: 1;",
+  "line_text_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;",
+  "point|icon_text_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1",
+  "line|icon_label_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; spacing: 200; placement: line; halo_fill: #ffffff; halo_radius: 1;",
+  "line|icon_text_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; placement: point; halo_fill: #ffffff; halo_radius: 1;",
+  "line_text_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;",
+  "line_style"=>"stroke-width: 2; stroke: #7f7f7f;",
+  "polygon_style"=>"fill-opacity: 0.5; fill: #7f7f7f;",
+);
 
 function category_version() {
   global $lists_dir;
@@ -129,10 +140,12 @@ function get_icon($file) {
 //                                         //   param1 as text
 //                                         //   param2 as text
 //                                         // ) returns text as param1;
-function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags, $importance) {
   global $scales_levels;
   global $scale_icon;
   global $lists_dir;
+  global $default_style;
+  $add_columns=array();
 
   $icon=$tags->get("icon");
   if(!$icon)
@@ -154,7 +167,7 @@ function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_icon[$tags->get("importance")]]));
+    $scales_levels[$scale_icon[$importance]]));
 
   $sym=$dom->createElement("PointSymbolizer");
   $rule->appendChild($sym);
@@ -166,35 +179,38 @@ function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags) {
   $sym->setAttribute("width", $size[0]);
   $sym->setAttribute("height", $size[1]);
 
-  $style=new css("allow_overlap: true;");
-  $style->apply($global_tags->get("icon_point_style"));
-  $style->apply($tags->get("icon_point_style"));
+  $style=new css($default_style['point|icon_style']);
+  $style->apply($global_tags->get("icon_style"));
+  $style->apply($tags->get("icon_style"));
   foreach(array("file", "width", "height", "type") as $a)
     unset($style->style[$a]);
   $style->dom_set_attributes($sym, $dom);
 
-  if($tags->get("icon_text")) {
+  if($tags->get("icon_label")) {
     $sym=$dom->createElement("TextSymbolizer");
     $rule->appendChild($sym);
 
-    $sym->setAttribute("name", "icon_text");
+    $sym->setAttribute("name", "icon_label");
     $sym->setAttribute("placement", "point");
 
-    $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: true;");
-    $style->apply($global_tags->get("icon_text_style"));
-    $style->apply($tags->get("icon_text_style"));
+    $style=new css($default_style['point|icon_label_style']);
+    $style->apply($global_tags->get("icon_label_style"));
+    $style->apply($tags->get("icon_label_style"));
     foreach(array("vertical_alignment", "name", "dy") as $a)
       unset($style->style[$a]);
     $style->dom_set_attributes($sym, $dom);
+    $add_columns[]="tags_parse|icon_label";
   }
 
-  return array('rule'=>$rule, 'columns'=>"tags_parse|icon_text");
+  return array('rule'=>$rule, 'columns'=>$add_columns);
 }
 
-function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags, $importance) {
   global $scales_levels;
   global $scale_text;
   global $lists_dir;
+  global $default_style;
+  $add_columns=array();
 
   $rule=$dom->createElement("Rule");
   $filter=$dom->createElement("Filter");
@@ -204,7 +220,7 @@ function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_text[$tags->get("importance")]]));
+    $scales_levels[$scale_text[$importance]]));
 
   $sym=$dom->createElement("TextSymbolizer");
   $rule->appendChild($sym);
@@ -215,48 +231,52 @@ function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags) {
       if($icon=$icon->icon_file()) {
 
 	$size=getimagesize("$icon");
-	$sym->setAttribute("dy", $size[1]);
-	$sym->setAttribute("vertical_alignment", "middle");
+	$sym->setAttribute("dy", $size[1]/2+1);
+	$sym->setAttribute("vertical_alignment", "bottom");
       }
 
-  $sym->setAttribute("name", "display_name");
+  $add_columns[]="tags_parse|icon_text";
+  $sym->setAttribute("name", "icon_text");
   $sym->setAttribute("placement", "point");
 
-  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ff0000; halo_radius: 1");
-  $style->apply($global_tags->get("display_style"));
-  $style->apply($tags->get("display_style"));
+  $style=new css($default_style['point|icon_text_style']);
+  $style->apply($global_tags->get("icon_text_style"));
+  $style->apply($tags->get("icon_text_style"));
+  print_r($style);
   foreach(array("vertical_alignment", "name", "dy") as $a)
     unset($style->style[$a]);
   $style->dom_set_attributes($sym, $dom);
 
-  $sym=$dom->createElement("TextSymbolizer");
-  $rule->appendChild($sym);
+  if($tags->get("icon_text_data")) {
+    $sym=$dom->createElement("TextSymbolizer");
+    $rule->appendChild($sym);
 
-  if($icon) {
-    $sym->setAttribute("dy", $size[1]+$style->style['size']);
-    $sym->setAttribute("vertical_alignment", "middle");
+    if($icon) {
+      $sym->setAttribute("dy", $size[1]/2+1+$style->style['size']);
+      $sym->setAttribute("vertical_alignment", "bottom");
+    }
+
+    $add_columns[]="tags_parse|icon_text_data";
+    $sym->setAttribute("name", "icon_text_data");
+    $sym->setAttribute("placement", "point");
+
+    $style=new css($default_style['point|icon_text_style']);
+    $style->apply($global_tags->get("icon_text_style"));
+    $style->apply($tags->get("icon_text_style"));
+    $style->style['size']-=2;
+    foreach(array("vertical_alignment", "name", "dy") as $a)
+      unset($style->style[$a]);
+    $style->dom_set_attributes($sym, $dom);
   }
 
-  $sym->setAttribute("name", "display_type");
-  $sym->setAttribute("placement", "point");
-
-  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ff0000; halo_radius: 1");
-  $style->apply($global_tags->get("display_style"));
-  $style->apply($tags->get("display_style"));
-  $style->style['size']-=2;
-  foreach(array("vertical_alignment", "name", "dy") as $a)
-    unset($style->style[$a]);
-  $style->dom_set_attributes($sym, $dom);
-
-  return array('rule'=>$rule, 
-               'columns'=>array("tags_parse|display_name",
-	                        "tags_parse|display_type"));
+  return array('rule'=>$rule, 'columns'=>$add_columns);
 }
 
-function mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags, $importance) {
   global $scales_levels;
   global $scale_icon;
   global $lists_dir;
+  global $default_style;
 
   $rule=$dom->createElement("Rule");
   $filter=$dom->createElement("Filter");
@@ -266,12 +286,12 @@ function mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_icon[$tags->get("importance")]]));
+    $scales_levels[$scale_icon[$importance]]));
 
   $sym=$dom->createElement("PolygonSymbolizer");
   $rule->appendChild($sym);
 
-  $style=new css("");
+  $style=new css($default_style['polygon_style']);
 
   $style->apply($global_tags->get("polygon_style"));
   $style->apply($tags->get("polygon_style"));
@@ -281,10 +301,11 @@ function mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags) {
   return array('rule'=>$rule);
 }
 
-function mapnik_style_line_line($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_line_line($dom, $rule_id, $tags, $global_tags, $importance) {
   global $scales_levels;
   global $scale_icon;
   global $lists_dir;
+  global $default_style;
 
   $rule=$dom->createElement("Rule");
   $filter=$dom->createElement("Filter");
@@ -294,12 +315,12 @@ function mapnik_style_line_line($dom, $rule_id, $tags, $global_tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_icon[$tags->get("importance")]]));
+    $scales_levels[$scale_icon[$importance]]));
 
   $sym=$dom->createElement("LineSymbolizer");
   $rule->appendChild($sym);
 
-  $style=new css("");
+  $style=new css($default_style['line_style']);
 
   $style->apply($global_tags->get("line_style"));
   $style->apply($tags->get("line_style"));
@@ -309,10 +330,12 @@ function mapnik_style_line_line($dom, $rule_id, $tags, $global_tags) {
   return array('rule'=>$rule);
 }
 
-function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags, $importance) {
   global $scales_levels;
   global $scale_icon;
   global $lists_dir;
+  global $default_style;
+  $add_columns=array();
 
   $icon=$tags->get("icon");
   if(!$icon)
@@ -334,7 +357,7 @@ function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_icon[$tags->get("importance")]]));
+    $scales_levels[$scale_icon[$importance]]));
 
   $sym=$dom->createElement("ShieldSymbolizer");
   $rule->appendChild($sym);
@@ -346,22 +369,47 @@ function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags) {
   $sym->setAttribute("width", $size[0]);
   $sym->setAttribute("height", $size[1]);
 
-  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; spacing: 200; unlock_image: true;");
-  $sym->setAttribute("name", "icon_text");
+  if($tags->get("icon_label")) {
+    $style=new css($default_style['line|icon_label_style']);
 
-  $style->apply($global_tags->get("icon_point_style"));
-  $style->apply($tags->get("icon_point_style"));
+    $add_columns[]="tags_parse|icon_label";
+    $sym->setAttribute("name", "icon_label");
+
+    $style->apply($global_tags->get("icon_label_style"));
+    $style->apply($tags->get("icon_label_style"));
+  }
+  elseif($tags->get("icon_text")) {
+    $style=new css($default_style['line|icon_text_style']);
+
+    $add_columns[]="tags_parse|icon_text";
+    $sym->setAttribute("name", "icon_text");
+    $sym->setAttribute("dy", $size[1]/2+4);
+    $sym->setAttribute("vertical_alignment", "bottom");
+
+    $style->apply($global_tags->get("icon_text_style"));
+    $style->apply($tags->get("icon_text_style"));
+  }
+  else {
+    $style=new css($default_style['line|icon_label_style']);
+
+    $add_columns[]="empty_string|icon_label";
+    $sym->setAttribute("name", "icon_label");
+    $sym->setAttribute("no_text", "true");
+  }
+
   foreach(array("file", "width", "height", "type") as $a)
     unset($style->style[$a]);
   $style->dom_set_attributes($sym, $dom);
 
-  return array('rule'=>$rule);
+  return array('rule'=>$rule, "columns"=>$add_columns);
 }
 
-function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags) {
+function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance) {
   global $scales_levels;
   global $scale_text;
   global $lists_dir;
+  global $default_style;
+  $add_columns=array();
 
   $rule=$dom->createElement("Rule");
   $filter=$dom->createElement("Filter");
@@ -371,38 +419,37 @@ function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags) {
   $scale=$dom->createElement("MaxScaleDenominator");
   $rule->appendChild($scale);
   $scale->appendChild($dom->createTextNode(
-    $scales_levels[$scale_text[$tags->get("importance")]]));
+    $scales_levels[$scale_text[$importance]]));
 
+  $add_columns[]="tags_parse|line_text";
   $sym=$dom->createElement("TextSymbolizer");
   $rule->appendChild($sym);
 
-  $sym->setAttribute("name", "display_name");
+  $sym->setAttribute("name", "line_text");
   $sym->setAttribute("placement", "line");
 
-  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ff0000; halo_radius: 1; spacing: 300;");
-  $style->apply($global_tags->get("display_style"));
-  $style->apply($tags->get("display_style"));
+  $style=new css($default_style['line_text_style']);
+  $style->apply($global_tags->get("line_text_style"));
+  $style->apply($tags->get("line_text_style"));
   foreach(array("name") as $a)
     unset($style->style[$a]);
   $style->dom_set_attributes($sym, $dom);
 
-  $sym=$dom->createElement("TextSymbolizer");
+/*  $sym=$dom->createElement("TextSymbolizer");
   $rule->appendChild($sym);
 
-  $sym->setAttribute("name", "display_type");
+  $sym->setAttribute("name", "line_type");
   $sym->setAttribute("placement", "line");
 
-  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ff0000; halo_radius: 1; spacing: 300;");
+  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;");
   $style->apply($global_tags->get("display_style"));
   $style->apply($tags->get("display_style"));
   $style->style['size']-=2;
   foreach(array("name") as $a)
     unset($style->style[$a]);
-  $style->dom_set_attributes($sym, $dom);
+  $style->dom_set_attributes($sym, $dom); */
 
-  return array('rule'=>$rule, 
-               'columns'=>array("tags_parse|display_name",
-	                        "tags_parse|display_type"));
+  return array('rule'=>$rule, 'columns'=>$add_columns);
 }
 
 function mapnik_get_layer($dom, $name, $sql) {
@@ -474,36 +521,36 @@ function build_mapnik_style($id, $data, $global_tags) {
       foreach($data2['rule'] as $i=>$tags) {
 	$rule_id=$data2['rule_id'][$i];
 	if(in_array($table, array("polygon"))) {
-	  $def=mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags);
+	  $def=mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_shape->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
 	}
 	if(in_array($table, array("point", "polygon"))) {
-	  $def=mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags);
+	  $def=mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_icon->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
-	  $def=mapnik_style_point_text($dom, $rule_id, $tags, $global_tags);
+	  $def=mapnik_style_point_text($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_text->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
 	}
 	elseif(in_array($table, array("line"))) {
-	  $def=mapnik_style_line_line($dom, $rule_id, $tags, $global_tags);
+	  $def=mapnik_style_line_line($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_shape->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
-	  $def=mapnik_style_line_text($dom, $rule_id, $tags, $global_tags);
+	  $def=mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_text->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
-	  $def=mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags);
+	  $def=mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_icon->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
@@ -791,7 +838,10 @@ function category_list($lang="en") {
       $x->loadXML(file_get_contents("$lists_dir/$f"));
       $tags=new tags();
       $tags->readDOM($x->firstChild);
-      $ret[$m[1]]=$tags;
+
+      if($tags->get("hide")!="yes") {
+	$ret[$m[1]]=$tags;
+      }
     }
   }
   closedir($d);
@@ -896,3 +946,11 @@ function category_history($id, $param=array()) {
 
   return $ret;
 }
+
+function categories_init() {
+  global $default_categories;
+  if(isset($default_categories))
+    html_export_var(array("default_categories"=>$default_categories));
+}
+
+register_hook("init", "categories_init");

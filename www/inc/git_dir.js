@@ -36,6 +36,11 @@ function git_dir(master, id, obj_proto) {
       p.obj=id;
     p.commit_id=this.commit_id();
 
+    if(!p.commit_id) {
+      alert("No commit started");
+      return null;
+    }
+
     var ret=ajax("git_create_obj", p);
     var result=ret.responseXML.getElementsByTagName("result");
     result=result[0];

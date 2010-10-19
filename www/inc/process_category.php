@@ -68,6 +68,7 @@ class process_category {
     $cur=$this->node->firstChild;
     $id=$this->category->id;
     $ret=array('_'=>array("errors"=>array()));
+    $ret['_']['tags']=$this->category->tags->data();
 
     while($cur) {
       if($cur->nodeName=="rule") {
@@ -77,8 +78,9 @@ class process_category {
 	if(is_string($data)) {
 	  $ret['_']['errors'][]="Error in rule $r->id: $data";
 	}
-	
-	$ret=array_merge_recursive($ret, $data);
+	else {
+	  $ret=array_merge_recursive($ret, $data);
+	}
       }
       $cur=$cur->nextSibling;
     }

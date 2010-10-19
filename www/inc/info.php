@@ -197,16 +197,6 @@ function osm_info($ret, $object, $param) {
 
 register_hook("info", osm_info);
 
-// WIKIPEDIA
-function wikipedia($ret, $object) {
-  $r=ext_wikipedia($object);
-
-  if($r)
-    $ret[]=array("wikipedia", $r);
-}
-
-register_hook("info", wikipedia);
-
 // PLACES
 function places_info($ret, $object) {
   $tags=$object->tags;

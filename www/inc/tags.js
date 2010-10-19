@@ -73,7 +73,10 @@ function tags(d) {
       indent="";
 
     for(var key in data) {
-      ret+=indent+"<tag k=\""+key+"\" v=\""+data[key]+"\" />\n";
+      var s=data[key].replace(/&/g, "&amp;")
+                     .replace(/</g, "&lt;")
+		     .replace(/>/g, "&gt;");
+      ret+=indent+"<tag k=\""+key+"\" v=\""+s+"\" />\n";
     }
 
     return ret;

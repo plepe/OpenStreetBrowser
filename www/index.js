@@ -136,8 +136,11 @@ function redraw() {
   unset_highlight();
   var x=get_hash();
   showing_details=false;
+  call_hooks("unselect_all");
 
   if(x=="") {
+    category_list_hash_changed();
+    view_changed(null);
   }
   else if(x=="mapkey") {
     hide();
@@ -207,6 +210,7 @@ function check_redraw() {
 
   if(location.hash!=last_location_hash) {
     if(location.hash.substr(0, 2)=="#?") {
+      call_hooks("recv_permalink", location.hash.substr(2));
       location_params=string_to_hash(location.hash.substr(2));
     }
     else if(location.hash.substr(0, 1)=="#") {
@@ -245,9 +249,6 @@ function view_changed(event) {
 
   view_changed_timer=setTimeout("view_changed_delay()", 300);
   check_mapkey();
-  
-  var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
-  cookie_write("_osb_location", hash_to_string(get_permalink()));
 
   call_hooks("view_changed", event);
 }
@@ -299,9 +300,8 @@ function init() {
   layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
   layerOsmarender = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
   layerCycle = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
-  layerPolygon = new OpenLayers.Layer.Vector("Polygon Layer");
 
-  map.addLayers([ layerOSB, layerMapnik, layerOsmarender, layerCycle, layerPolygon ]);
+  map.addLayers([ layerOSB, layerMapnik, layerOsmarender, layerCycle ]);
 
   layerHill = new OpenLayers.Layer.OSM(
     "Hillshading (NASA SRTM3 v2)",
@@ -310,6 +310,14 @@ function init() {
     displayOutsideMaxExtent: true, isBaseLayer: false,
     transparent: true, "visibility": false });
   map.addLayers([ layerHill ]);
+
+  layerContour = new OpenLayers.Layer.OSM(
+    "Contourshading",
+    "http://hills-nc.openstreetmap.de/",
+    { type: 'png', numZoomLevels: 16,
+    displayOutsideMaxExtent: true, isBaseLayer: false,
+    transparent: true, "visibility": false });
+  map.addLayers([ layerContour ]); 
 
   map.div.oncontextmenu = function noContextMenu(e) {
     rightclick(e);
@@ -323,9 +331,6 @@ function init() {
 
   map.addControl(new OpenLayers.Control.MousePosition());
   map.addControl(new OpenLayers.Control.ScaleLine());
-
-  polygon_control=new OpenLayers.Control.DrawFeature(layerPolygon,OpenLayers.Handler.Polygon);
-  map.addControl(polygon_control);
 
   if(start_lon&&(first_load)) {
     var lonlat = new OpenLayers.LonLat(start_lon, start_lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
@@ -347,6 +352,7 @@ function init() {
   call_hooks("init");
   //setTimeout("call_hooks(\"post_init\")", 2000);
 }
+
 
 function add_funs(arr) {
   arr.search=function(needle) {

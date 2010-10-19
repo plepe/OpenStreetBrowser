@@ -14,7 +14,9 @@ begin
   if(_osm_type='node') then
     return (select osm_way from osm_point where osm_id=_osm_typeid);
   elsif(_osm_type='way') then
-    return (select osm_way from osm_line where osm_id=_osm_typeid);
+    return (select osm_way from osm_line where osm_id=_osm_typeid
+	    union
+            select osm_way from osm_polygon where osm_id=_osm_typeid);
   elsif(_osm_type='rel') then
     return (select osm_way from osm_rel where osm_id=_osm_typeid);
   end if;

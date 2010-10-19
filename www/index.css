@@ -22,20 +22,17 @@ body, li, td {
   background-repeat:repeat-y;
   height:100%;
 }
-.search {
-  z-index:11;
-  width: 250px;
-  margin-top: 3px;
+#osb_search_form {
+  margin: -2px 0px 1px;
 }
-
 input#search {
-  border: 1px solid;
+  border: 0px solid;
   background-color:#efefef;
-  width: 250px;
-  padding:3px;
-  margin-top:2px;
+  width: 242px;
+  padding:1px;
   font-size:1em;
   color:#333;
+  outline:none;
 }
 .tools {
   border: 1px dotted #999;
@@ -94,16 +91,12 @@ input#search {
   overflow-x:hidden;
   bottom: 38px;
 }
-div#lang_select {
-  position: absolute;
-  height: 20px;
-  bottom: 5px;
-  width: 250px;
-  left: 10px;
+.info_loading {
+  position:absolute;
 }
 div#options{
   position: absolute;
-  height: 30px;
+  height: 25px;
   bottom: 10px;
   width: 250px;
   left: 10px;
@@ -201,7 +194,6 @@ a { color:#333; text-decoration:none; }
 ul { padding:0; margin:0 0 7px 15px; list-style-type:square; line-height:120%; padding-left: 20px; }
 li { padding-bottom:2px; }
 li a:hover { background-color:#ccc; }
-/* div.loading { padding-top:40px; } */
 img.loading { padding-left: 7px; border-width: 0px; }
 
 .object { background-color:#efefef; }
@@ -222,7 +214,7 @@ img.loading { padding-left: 7px; border-width: 0px; }
   text-align: center;
   font-style: italic;
 }
-.licence {
+#licence {
   position: absolute;
   left: 280px;
   bottom: 2px;

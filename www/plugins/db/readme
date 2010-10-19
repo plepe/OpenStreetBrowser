@@ -1,0 +1,21 @@
+file
+  db.sql -> This is what the db structure should look like
+  functions.sql -> Reload this file every time we start mcp
+  update/DATE_1.sql -> Updates to database, will be imorted alphabetically 
+  update/DATE_2.sql ->   sorted.
+
+When initializing database the db.sql will be imported. All existing updates
+will be marked as done. When a new file appears it will be imported. Updates
+will be only done when re-starting the mcp.
+
+TODO:
+
+mcp.php -> execute when starting mcp
+
+-> plugin_manager
+
+db.sql -> create table to store plugin-information
+( plugin text, osm_tags hstore )
+key 'updates' of osm_tags holds a ,-seperated list of loaded updates
+
+

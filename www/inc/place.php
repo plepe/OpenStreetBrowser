@@ -37,10 +37,9 @@ class place_node extends place {
   }
 
   function get_centre() {
-    $bbox=bbox($this->data[way]);
-    return array("lon"=>$bbox[0]+($bbox[2]-$bbox[0])/2,
-                 "lat"=>$bbox[1]+($bbox[3]-$bbox[1])/2);
-
+    $res=sql_query("select X(way) as lon, Y(way) as lat from (select ST_Centroid(load_geo('{$this->data['element']}_{$this->data['id']}')) as way) x");
+    $elem=pg_fetch_assoc($res);
+    return $elem;
   }
 
   function get_ways() {
@@ -142,19 +141,9 @@ class place_way extends place {
   }
 
   function get_centre() {
-    $bbox=bbox($this->data[way]);
-    if(!$bbox) {
-      $res=sql_query("select astext(ST_Centroid(way)) as way from planet_osm_polygon where osm_id='{$this->data[id]}' union ".
-                     "select astext(ST_Centroid(way)) as way from relation_members rm left join planet_osm_polygon po on rm.relation_id=-po.osm_id where member_id='{$this->data[id]}' and member_type='W' and member_role='outer'");
-
-      $elem=pg_fetch_assoc($res);
-      $bbox=bbox($elem[way]);
-    }
-
-    return array("lon"=>$bbox[0]+($bbox[2]-$bbox[0])/2,
-                 "lat"=>$bbox[1]+($bbox[3]-$bbox[1])/2,
-		 "way"=>$this->data[way]);
-
+    $res=sql_query("select X(way) as lon, Y(way) as lat from (select ST_Centroid(load_geo('{$this->data['element']}_{$this->data['id']}')) as way) x");
+    $elem=pg_fetch_assoc($res);
+    return $elem;
   }
 
   function get_nodes() {

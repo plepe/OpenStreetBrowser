@@ -43,3 +43,28 @@ $data_dir="$root_path/data/";
 // $renderd_files - Define additional styles for renderd (point to a renderd-file)
 $renderd_files=array(
 );
+
+// $default_categories - Define a list of categories which should automatically be loaded
+$default_categories=array();
+
+// List of plugins which should be loaded
+$plugins=array("measure", "favorites", "wikipedia");
+
+// Available plugins:
+// measure - do some measurement on the map
+// favorites - set favorites on the map
+// marker - set markers on the map
+// wikipedia - write some information of objects where we know about wikipedia
+// navigation - navigation on the map
+// layer_chooser - show possible base maps and general overlays in options
+// toolbox - provide a toolbox interface (for other plugins)
+// toolbox_slide - slide the toolbox when opening/closeing/changing
+// search - add a search field to the toolbox, use the nominatim service
+// start_location - toolbox that let users change viewport
+// help - adds a entry for help to the toolbox
+// tab - tabbed windows
+// navigation_cloudmade - an interface to the cloudmade routing service
+// no_basemap - An empty basemap as background map
+// db - Plugins can define db-stuff using migrations
+// mapnik - Include special mapnik-styles in renderd
+// state_info - Info about state of database

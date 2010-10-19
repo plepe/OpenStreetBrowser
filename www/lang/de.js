@@ -7,8 +7,15 @@ lang_str["list_info"]             =[ "Wähle eine Kategorie, um den Karteninhalt
 lang_str["save"]		  =[ "Speichern" ];
 lang_str["cancel"]		  =[ "Abbrechen" ];
 lang_str["choose"]		  =[ "Wählen" ];
+lang_str["expand"]		  =[ "Ausklappen" ];
 
 lang_str["geo_click_pos"]         =[ "Klicke auf Deine aktuelle Position auf der Karte" ];
+lang_str["longitude"]             =[ "Längengrad", "Längengrade" ];
+lang_str["latitude"]              =[ "Breitengrad", "Breitengrade" ];
+
+lang_str["head:location"]         =[ "Position", "Positionen" ];
+lang_str["head:action"]           =[ "Aktion", "Aktionen" ];
+
 
 lang_str["start:choose"]          =[ "Wähle einen Kartenausschnitt" ];
 lang_str["start:geolocation"]     =[ "automatische Geolokalisierung" ];

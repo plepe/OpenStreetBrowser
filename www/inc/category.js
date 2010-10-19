@@ -39,12 +39,48 @@ function category(id) {
 
     this.write_div(div);
     this.request_data();
+
+    this.unhide_category(div);
   }
 
   // close_category - call to close category
   this.close_category=function(div) {
+    this.hide_category(div);
+
     div.className="category_closed";
     div.open=false;
+  }
+
+  // hide_category - when closing a this or a parent category, don't close
+  //   this category too, but at least hide it
+  this.hide_category=function(div) {
+    if(!div.open)
+      return;
+
+    if(this.on_hide_category)
+      this.on_hide_category(div);
+
+    for(var i=0; i<this.sub_categories.length; i++) {
+      var id=this.sub_categories[i].id;
+      if(id&&div.sub&&div.sub.child_divs&&div.sub.child_divs[id])
+	this.sub_categories[i].hide_category(div.sub.child_divs[id]);
+    }
+  }
+
+  // unhide_category - when opening a this or a parent category, and this
+  //   category was opened before, show it again
+  this.unhide_category=function(div) {
+    if(!div.open)
+      return;
+
+    if(this.on_unhide_category)
+      this.on_unhide_category(div);
+
+    for(var i=0; i<this.sub_categories.length; i++) {
+      var id=this.sub_categories[i].id;
+      if(id&&div.sub&&div.sub.child_divs&&div.sub.child_divs[id])
+	this.sub_categories[i].unhide_category(div.sub.child_divs[id]);
+    }
   }
 
   // visible - is at least one instance of this category opened?

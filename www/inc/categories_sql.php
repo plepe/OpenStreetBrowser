@@ -2,13 +2,13 @@
 $maybe_delete_indexes=array();
 $default_tags=array(
   'point'=>array(
-    'display_name'=>"[ref] - [name];[name];[ref];[operator]",
+    'icon_text'=>"[name];[ref];[operator]",
   ),
   'line'=>array(
-    'display_name'=>"[ref] - [name];[name];[ref];[operator]",
+    'line_text'=>"[name];[ref];[operator]",
   ),
   'polygon'=>array(
-    'display_name'=>"[ref] - [name];[name];[ref];[operator]",
+    'icon_text'=>"[name];[ref];[operator]",
   ),
 );
 
@@ -24,13 +24,13 @@ function register_index($table, $key, $type, $id, $val=null) {
         sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gist(osm_way, to_tsvector('simple', osm_tags->$key))");
 	break;
       case "highest_number":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gist(osm_way, parse_highest_number(osm_tags->$key))");
+        //sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gist(osm_way, parse_highest_number(osm_tags->$key))");
 	break;
       case "gteq":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), $val, true, null, null)");
+        //sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), $val, true, null, null)");
 	break;
       case "lteq":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), null, null, $val, true)");
+        //sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), null, null, $val, true)");
 	break;
     }
   }
@@ -109,10 +109,10 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
 
   //$where[]="(\"rule_$id\"='$importance' or \"rule_$id\" is null)";
 
-//  if(in_array($importance, array("global", "international", "national")))
-//    $where[]="Intersects(osm_way, !bbox!)";
-//  else
-  $where[]="osm_way&&!bbox!";
+  if(in_array($importance, array("global", "international", "national")))
+    $where[]="Intersects(osm_way, !bbox!)";
+  else
+    $where[]="osm_way&&!bbox!";
 
   print "WHERE";
   print_r($where);
@@ -311,6 +311,9 @@ function match_to_sql($match, $table_def, $type="exact") {
 	    $ret[]="osm_tags @> ".array_to_hstore(array($match[1]=>$match[$i]));
 	  }
 
+	  if($not)
+	    $ret[]="osm_tags ? ".postgre_escape($match[1]);
+
 	  return "$not (".implode(") or (", $ret).")";
 	default:
 	  $ret=array();
@@ -318,7 +321,10 @@ function match_to_sql($match, $table_def, $type="exact") {
 	    $ret[]=postgre_escape($match[$i]);
 	  }
 
-	  return "$not osm_tags->".postgre_escape($match[1])." in (".implode(", ", $ret).")";
+	  if($not)
+	    $not="not osm_tags ? ".postgre_escape($match[1])." or not";
+
+	  return "($not osm_tags->".postgre_escape($match[1])." in (".implode(", ", $ret)."))";
 	}
     case "~is not":
       $not="not";
@@ -342,14 +348,9 @@ function match_to_sql($match, $table_def, $type="exact") {
 	  return "$not oneof_in(".match_to_sql_colname($match[1], $table_def, $type).", ARRAY[".implode(", ", $ret)."])";
 	}
     case "exist":
-      switch($type) {
-	case "index":
-	  return "osm_tags ? ".postgre_escape($match[1]);
-	default:
-	  return match_to_sql_colname($match[1], $table_def, $type)." is not null";
-      }
+      return "osm_tags ? ".postgre_escape($match[1]);
     case "exist not":
-      return match_to_sql_colname($match[1], $table_def, $type)." is null";
+      return "not osm_tags ? ".postgre_escape($match[1]);
     case ">=":
       $same="true";
     case ">":
@@ -372,6 +373,8 @@ function match_to_sql($match, $table_def, $type="exact") {
     case "<=":
       $same="true";
     case "<":
+      $number=parse_number($match[2]);
+
       if($type=="index") {
 	$same="true";
 	$number=pow(100, ceil(log($number, 100)));
@@ -390,7 +393,7 @@ function match_to_sql($match, $table_def, $type="exact") {
       return "false";
     default:
       print "invalid match! "; print_r($match);
-      return "X";
+      return "true";
   }
 }
 

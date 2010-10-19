@@ -5,76 +5,56 @@ SFUNC = array_append,
 STYPE = geometry[],
 INITCOND = '{}'); 
 
-create or replace function join_to_multipolygon(geometry[])
+create or replace function make_multipolygon(geometry[])
 returns geometry
 as $$
 declare
-  outer_ways	geometry[];
-  next          geometry[];
-  this          geometry;
-  ret_outer	geometry;
-  o             int;
-  o1            int;
-  done		boolean:=true;
+  src		alias for $1;
+  todo		geometry[];
+  done		geometry[];
+  cur		geometry;
+  cur1		geometry;
 begin
-  outer_ways:=$1;
-  next:=Array[]::geometry[];
+  done:=Array[]::geometry[];
 
-  if(outer_ways is null) then
+  -- empty array
+  if src is null or array_lower(src, 1) is null then
     return null;
   end if;
 
-  for o in array_lower(outer_ways, 1)..array_upper(outer_ways, 1) loop
-    if(IsClosed(outer_ways[o])) then
-      ret_outer:=ST_Collect(ret_outer, outer_ways[o]);
+  -- first find all closed geometries in array and push into done
+  for i in array_lower(src, 1)..array_upper(src, 1) loop
+    if src[i] is null then
+      raise notice 'got null geometry, index %', i;
+    elsif (IsClosed(src[i])) and NPoints(src[i])>3 then
+      done:=array_append(done, ST_MakePolygon(src[i]));
+    elsif not ST_IsValid(src[i]) then
+      raise notice 'ignore invalid line %', i;
     else
-      next:=array_append(next, outer_ways[o]);
+      todo:=array_append(todo, src[i]);
     end if;
   end loop;
 
-  outer_ways:=next;
-  done:=true;
+  -- merge all other geometries together
+  cur:=ST_LineMerge(ST_Collect(todo));
 
-  if array_lower(outer_ways, 1) is null then
-    return ret_outer;
-  end if;
-
-  while(done) loop
-    done:=false;
-    next:=Array[]::geometry[];
-
-    for o in array_lower(outer_ways, 1)..array_upper(outer_ways, 1) loop
-      this:=outer_ways[o];
-
-      for o1 in o+1..array_upper(outer_ways, 1) loop
-
-	if (this is not null) and (ST_Touches(this, outer_ways[o1])) then
-	  this:=ST_LineMerge(ST_Collect(this, outer_ways[o1]));
-	  outer_ways[o1]:=null;
-	  done:=true;
-	end if;
-      end loop;
-
-      if this is not null then
-	next:=array_append(next, this);
+  -- if those build a closed geometry
+  if ST_NumGeometries(cur) is null then
+    if IsClosed(cur) and NPoints(cur)>3 then
+      done:=array_append(done, MakePolygon(cur));
+    end if;
+  else
+  -- several geometries? check each of them ...
+    for i in 1..ST_NumGeometries(cur) loop
+      cur1:=ST_GeometryN(cur, i);
+      if IsClosed(cur1) and NPoints(cur1)>3 then
+	done:=array_append(done, ST_MakePolygon(cur1));
       end if;
-
     end loop;
-
-    outer_ways:=next;
-  end loop;
-
-  if array_lower(outer_ways, 1) is null then
-    return ret_outer;
   end if;
 
-  for o in array_lower(outer_ways, 1)..array_upper(outer_ways, 1) loop
-    if(IsClosed(outer_ways[o])) then
-      ret_outer:=ST_Collect(ret_outer, outer_ways[o]);
-    end if;
-  end loop;
-
-  return ret_outer;
+  -- we are done :)
+  return ST_Collect(done);
 end;
 $$ language 'plpgsql';
 
@@ -84,14 +64,46 @@ as $$
 declare
   outer_ways	geometry;
   inner_ways	geometry;
+  next		geometry;
+  i		int;
 begin
-  outer_ways:=join_to_multipolygon($1);
-  inner_ways:=join_to_multipolygon($2);
+  if $1 is null then
+    return null;
+  end if;
+
+  if coalesce(array_upper($1, 1), 0)+coalesce(array_upper($2, 1), 0)>256 then
+    raise notice 'multipolygon consists of % (more then 256) ways ... ignore', coalesce(array_upper($1, 1), 0)+coalesce(array_upper($2, 1), 0);
+    return null;
+  end if;
+
+  outer_ways:=make_multipolygon($1);
+
+  if outer_ways is null then
+    return null;
+  end if;
+
+  if not IsValid(outer_ways) then
+    return outer_ways;
+  end if;
+
+  if $2 is not null then
+    inner_ways:=make_multipolygon($2);
+  end if;
 
   if inner_ways is null then
     return outer_ways;
   end if;
 
-  return ST_Difference(outer_ways, inner_ways);
+  -- raise notice E'outer_ways (%): %\ninner_ways (%): %', NumGeometries(outer_ways), astext(outer_ways), NumGeometries(inner_ways), astext(inner_ways);
+
+  -- substract the inner ways one by one
+  for i in 1..ST_NumGeometries(inner_ways) loop
+    next:=ST_GeometryN(inner_ways, i);
+    if ST_IsValid(next) then
+      outer_ways:=ST_Difference(outer_ways, next);
+    end if;
+  end loop;
+
+  return outer_ways; -- ST_Difference(outer_ways, inner_ways);
 end;
 $$ language 'plpgsql';

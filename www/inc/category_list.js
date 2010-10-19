@@ -87,6 +87,8 @@ function _category_list() {
       return;
     }
 
+    call_hooks("list_receive", data);
+
     var request;
     if(request=data.getElementsByTagName("request"))
       request=request[0];
@@ -107,6 +109,12 @@ function _category_list() {
 
 function category_list_init() {
   category_root=new _category_list();
+
+  if(default_categories) {
+    for(var i=0; i<default_categories.length; i++) {
+      category_root.sub_categories.push("osm:"+default_categories[i]);
+    }
+  }
 }
 
 function category_list_hash_changed(hash) {
@@ -115,7 +123,7 @@ function category_list_hash_changed(hash) {
   dom_clean(div);
   root_div=category_root.attach_div(div);
 
-  if(!hash.obj) {
+  if((!hash)||(!hash.obj)) {
     category_root.open_category(root_div);
   }
   else {

@@ -77,7 +77,7 @@ class category {
     $this->dom->loadXML($this->text);
 
     $this->tags=new tags();
-    $this->tags->readDOM($this->dom);
+    $this->tags->readDOM($this->dom->firstChild);
 
     // First, create all file content
     $cur=$this->dom->firstChild;
@@ -283,24 +283,20 @@ class category {
 
     $ret.="  <tag k=\"geo:center\" v=\"$res[center]\"/>\n";
 
-    if($x=$ob->tags->parse($rule_tags->get("display_name"), $lang)) {
+    $list_text="[ref] - [name];[name];[ref];[operator]";
+    if($this->tags->get("list_text"))
+      $list_text=$this->tags->get("list_text");
+    if($rule_tags->get("list_text"))
+      $list_text=$rule_tags->get("list_text");
+    
+    if($x=$ob->tags->parse($list_text, $lang)) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"display_name:$lang\" v=\"$x\"/>\n";
     }
 
-    if($x=$ob->tags->parse($rule_tags->get("display_name"))) {
+    if($x=$ob->tags->parse($list_text)) {
       $x=strtr($x, $make_valid);
       $ret.="  <tag k=\"display_name\" v=\"$x\"/>\n";
-    }
-
-    if($x=$ob->tags->parse($rule_tags->get("display_type"), $lang)) {
-      $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"display_type:$lang\" v=\"$x\"/>\n";
-    }
-
-    if($x=$ob->tags->parse($rule_tags->get("display_type"))) {
-      $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"display_type\" v=\"$x\"/>\n";
     }
 
     if($x=$rule_tags->get("icon")) {
