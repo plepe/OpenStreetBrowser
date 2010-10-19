@@ -67,3 +67,4 @@ $plugins=array("measure", "favorites", "wikipedia");
 // no_basemap - An empty basemap as background map
 // db - Plugins can define db-stuff using migrations
 // mapnik - Include special mapnik-styles in renderd
+// state_info - Info about state of database
