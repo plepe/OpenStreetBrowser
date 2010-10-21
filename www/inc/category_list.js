@@ -1,6 +1,7 @@
 var category_root;
 var root_div;
 var category_request;
+var default_categories;
 
 function _category_list() {
   this.inheritFrom=category;
