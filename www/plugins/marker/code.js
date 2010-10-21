@@ -146,6 +146,19 @@ function marker(lon, lat) {
     dom_create_append_text(li, t("latitude", 1)+": "+this.lat.toFixed(5));
   }
 
+  // write_list
+  this.write_list=function(ul) {
+    var li=dom_create_append(ul, "li");
+    li.style.listStyleImage="url('plugins/marker/icon.png')";
+
+    var a=dom_create_append(li, "a");
+    //a.href="marker_";
+
+    dom_create_append_text(a, "Marker "+
+      this.lat.toFixed(5)+"/"+
+      this.lon.toFixed(5));
+  }
+
   // remove
   this.remove=function() {
     delete marker_list[this.lon+"|"+this.lat];
