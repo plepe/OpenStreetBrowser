@@ -34,4 +34,21 @@ function register_basemap(id, layer) {
   map.addLayer(layer);
 }
 
+function basemap_permalink(permalink) {
+  for(var i in basemaps) {
+    if(map.baseLayer==basemaps[i])
+      permalink.basemap=i;
+  }
+}
+
+function basemap_hash_changed(new_hash) {
+  if(!new_hash.basemap)
+    return;
+
+  if(basemaps[new_hash.basemap])
+    map.setBaseLayer(basemaps[new_hash.basemap]);
+}
+
 register_hook("basemap_init", basemap_init);
+register_hook("get_permalink", basemap_permalink);
+register_hook("hash_changed", basemap_hash_changed);
