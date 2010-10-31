@@ -1,7 +1,7 @@
 function hill_init() {
   register_layer("hill", 
     new OpenLayers.Layer.OSM(
-      "Hillshading (NASA SRTM3 v2)",
+      lang("hill:name"),
       "http://toolserver.org/~cmarqu/hill/", {
         type: 'png',
         displayOutsideMaxExtent: true,
