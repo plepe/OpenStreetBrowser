@@ -86,14 +86,8 @@ else
 <?
 $menu_list=array();
 $menu_list[]=array(-10, "<div class='logo'><a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'><img src='img/osb_logo.png' alt='OpenStreetBrowser' name='OpenStreetBrowser' border='0'/></a><p>OpenStreet <span class='bigger'>Browser</span></p></div>");
-$menu_list[]=array(-6,
-  "<div id='search' class='search' style='position:absolute; top:143px;'>\n".
-  "<form name='osb_search_form_name' id='osb_search_form' action='javascript:search()'>\n".
-  "<input name='osb_search' id='search' style='border-color:#999999;' value='".lang('search_field')."' onFocus='search_focus(this)' onkeyup='search_brush(this,event)' onblur='search_onblur(this)' 'title='".lang('search_tip')."'/>\n".
-  "<img name='brush' src='besen.png' border='0' alt='' title='".lang('search_clear')."' style='position:absolute; right:3px; top:6px; visibility:hidden; cursor:pointer;' onclick='search_clear(document.osb_search_form_name.osb_search)' onmousedown='if (event.preventDefault) event.preventDefault()'>\n".
-  "</form></div>\n");
 $menu_list[]=array(0,
-  "<div id='details' class='info' style='top:180px'>\n".
+  "<div id='details' class='info' style='top:150px'>\n".
   "<form id='details_content' class='details' action='javascript:details_content_submit()'>\n".
   list_template().
   "</form></div>\n");
@@ -122,8 +116,6 @@ foreach($menu_list as $entry) {
 <span id="contextmenu_pointer" style="position:absolute; width:10px; height:10px;"></span>
 <table id="contextmenu_table" cellspacing="0">
 </table></div>
-
-<!--<div id="debugging" style="top:20px; left:300px; position:absolute; display:block; background:#FEFEFE; border:1px solid #999999;"><i>Die Super-Debugging-Box 3000</i><br/></div>-->
 
 <div class="shadow"></div>
 <div class="map_key_hidden" id="map_key"></div>

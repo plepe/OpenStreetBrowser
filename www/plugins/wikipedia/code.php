@@ -6,6 +6,9 @@ function wikipedia_parse($text) {
   while(eregi("^(.*)'''([^']*)'''(.*)$", $text, $m)) {
     $text=$m[1].$m[2].$m[3];
   }
+  while(eregi("^(.*)<ref([^']*)</ref>(.*)", $text, $m)) {
+    $text=$m[1].$m[3].$m[4];
+  }
   return $text;
 }
 
@@ -67,6 +70,7 @@ function wikipedia_get_abstract($object, $page, $lang) {
   if(@$f=fopen(wikipedia_action_url($object, $page, $lang, "raw"), "r")) {
     $text=""; unset($img);
     $enough=0;
+    $inside=0;
     while(($r=fgets($f))&&(!$enough)) {
   //    if(!$img&&eregi("\[\[Bild:([^\|\]]*)[\|\]]", $r, $m)) {
       $r=chop($r);
@@ -74,6 +78,14 @@ function wikipedia_get_abstract($object, $page, $lang) {
 	 (preg_match("/^<!--/", $r))
 	) {
       }
+
+      elseif(ereg("\{\{(.*)", $r)) {
+        $inside=1;
+      }
+      elseif(ereg("\}\}(.*)", $r)) {
+        $inside=0;
+      }
+
       elseif(!$img&&eregi("\[\[.*:([^\|]*\.(png|jpg|gif))", $r, $m)) {
 	$img=$m[1];
 	$img="<img src='http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img' align='left' class='wikipedia_image'>\n";
@@ -82,7 +94,7 @@ function wikipedia_get_abstract($object, $page, $lang) {
 	$img=$m[1];
 	$img="<img src='http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img' align='left' class='wikipedia_image'>\n";
       }
-      elseif(!ereg("^[\|\}\{\[\!]", $r)) {
+      elseif($inside==0 && !ereg("^[\|\}\{\[\!]", $r)) {
 	$text.=wikipedia_parse($r);
 	$enough=1;
       }
@@ -97,6 +109,13 @@ function wikipedia_info($info_ret, $object) {
   $ret="";
   global $data_lang;
   $page=0;
+
+  if($text=cache_search($object->id, "wikipedia_info:$data_lang")) {
+    $ret.="$text<a class='external' href='$url' target='_blank'>".lang("read_more")."</a>";
+
+    $info_ret[]=array("wikipedia", $ret);
+    return;
+  }
 
   if($page=$object->tags->get("wikipedia:$data_lang")) {
     $lang=$data_lang;
@@ -143,8 +162,10 @@ function wikipedia_info($info_ret, $object) {
 
   $text=wikipedia_get_abstract($object, $page, $lang);
 
+  cache_insert($object->id, "wikipedia_info:$data_lang", $text, "1 hour");
+
   if($text) {
-    $ret.="$text<a class='external' href='$url' target='_blank'>".lang("wikipedia:read_more")."</a>";
+    $ret.="$text<a class='external' style='line-height:2em;' href='$url' target='_blank'>".lang("wikipedia:read_more")."</a>";
   }
 
   $info_ret[]=array("wikipedia", $ret);

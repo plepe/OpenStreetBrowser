@@ -9,7 +9,8 @@ function navigation_set_destination(pos) {
 function navigation_init() {
   navigation_toolbox=new toolbox({
     icon: "plugins/navigation/icon.png",
-    icon_title: "navigation"
+    icon_title: "navigation",
+    weight: -3,
   });
   register_toolbox(navigation_toolbox);
   contextmenu_add("plugins/navigation/home.png", "set home", navigation_set_home);

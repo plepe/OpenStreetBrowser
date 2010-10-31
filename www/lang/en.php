@@ -754,3 +754,8 @@ $lang_str["search_field"]="Search...";
 $lang_str["search_tip"]="e.g. 'London', 'Cromwell Road', 'post box near Hyde Park',...";
 $lang_str["search_clear"]="Clear search field";
 $lang_str["wikipedia:read_more"]="read more";
+
+$lang_str["basemap:osb"]="OpenStreetBrowser";
+$lang_str["basemap:mapnik"]="Standard (Mapnik)";
+$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
+$lang_str["basemap:cyclemap"]="CycleMap";
