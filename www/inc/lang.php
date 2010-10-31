@@ -112,11 +112,27 @@ if(!isset($data_lang))
   $data_lang="";
 
 
-require_once("lang/en.php");
-if($ui_lang)
-  require_once("lang/$ui_lang.php");
+function lang_init() {
+  global $lang_str;
+  global $ui_lang;
+  global $ui_langs;
+  global $data_lang;
+  global $plugins_list;
 
-if(!$design_hidden)
-  print "<script type='text/javascript' src='inc/lang.js'></script>\n";
+  require_once("lang/en.php");
+  if($ui_lang)
+    require_once("lang/$ui_lang.php");
 
-html_export_var(array("ui_lang"=>$ui_lang, "data_lang"=>$data_lang, "ui_langs"=>$ui_langs, "lang_str"=>$lang_str));
+  foreach($plugins_list as $plugin=>$dummy) {
+    if(file_exists("plugins/$plugin/lang_en.php"))
+      require_once("plugins/$plugin/lang_en.php");
+
+    if(file_exists("plugins/$plugin/lang_{$ui_lang}.php"))
+      require_once("plugins/$plugin/lang_{$ui_lang}.php");
+  }
+
+  if(!$design_hidden)
+    print "<script type='text/javascript' src='inc/lang.js'></script>\n";
+
+  html_export_var(array("ui_lang"=>$ui_lang, "data_lang"=>$data_lang, "ui_langs"=>$ui_langs, "lang_str"=>$lang_str));
+}
