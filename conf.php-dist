@@ -76,3 +76,5 @@ $basemaps=array(
 // db - Plugins can define db-stuff using migrations
 // mapnik - Include special mapnik-styles in renderd
 // state_info - Info about state of database
+// hill - Hill Shading on base of NASA SRTM
+// contour - Contour Shading (DE/AT/CH only)
