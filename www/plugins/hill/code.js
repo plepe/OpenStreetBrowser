@@ -7,7 +7,8 @@ function hill_init() {
         displayOutsideMaxExtent: true,
         isBaseLayer: false,
         transparent: true,
-        visibility: false 
+        visibility: false,
+        weight: -5
       })
   );
 }

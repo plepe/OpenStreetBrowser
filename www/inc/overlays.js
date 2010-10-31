@@ -86,9 +86,9 @@ function overlays_init() {
     agri_ind: new OpenLayers.Layer.OSM("Agriculture &amp; Industry", "tiles/agri_ind/", {numZoomLevels: 19, isBaseLayer: false, visibility: false })
   };
 
-  vector_layer=new OpenLayers.Layer.Vector(t("overlay:data"), {});
+  vector_layer=new OpenLayers.Layer.Vector(t("overlay:data"), { weight: 10 });
   vector_layer.setOpacity(0.7);
-  drag_layer=new OpenLayers.Layer.Vector(t("overlay:draggable"), {});
+  drag_layer=new OpenLayers.Layer.Vector(t("overlay:draggable"), { weight: 11 });
 
   var mod_feature=new OpenLayers.Control.ModifyFeature(drag_layer);
   drag_layer.select=mod_feature.selectControl.select.bind(mod_feature.selectControl);
