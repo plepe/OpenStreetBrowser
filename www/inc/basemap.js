@@ -28,4 +28,10 @@ function basemap_init() {
   }
 }
 
+function register_basemap(id, layer) {
+  basemaps[id]=layer;
+
+  map.addLayer(layer);
+}
+
 register_hook("basemap_init", basemap_init);
