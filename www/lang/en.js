@@ -100,3 +100,8 @@ lang_str["lang:"]=[ "Local language" ];
 
 lang_str["overlay:data"]=[ "Data" ];
 lang_str["overlay:draggable"]=[ "Markers" ];
+
+lang_str["basemap:osb"]=[ "OpenStreetBrowser" ];
+lang_str["basemap:mapnik"]=[ "Standard (Mapnik)" ];
+lang_str["basemap:osmarender"]=[ "Standard (OsmaRender)" ];
+lang_str["basemap:cyclemap"]=[ "CycleMap" ];
