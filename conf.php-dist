@@ -47,3 +47,5 @@ $basemaps=array(
 // tab - tabbed windows
 // navigation_cloudmade - an interface to the cloudmade routing service
 // no_basemap - An empty basemap as background map
+// hill - Hill Shading on base of NASA SRTM
+// contour - Contour Shading (DE/AT/CH only)

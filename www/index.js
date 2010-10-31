@@ -300,22 +300,6 @@ function init() {
 
   call_hooks("basemap_init");
 
-  layerHill = new OpenLayers.Layer.OSM(
-    "Hillshading (NASA SRTM3 v2)",
-    "http://toolserver.org/~cmarqu/hill/",
-    { type: 'png',
-    displayOutsideMaxExtent: true, isBaseLayer: false,
-    transparent: true, "visibility": false });
-  map.addLayers([ layerHill ]);
-
-  layerContour = new OpenLayers.Layer.OSM(
-    "Contourshading",
-    "http://hills-nc.openstreetmap.de/",
-    { type: 'png', numZoomLevels: 16,
-    displayOutsideMaxExtent: true, isBaseLayer: false,
-    transparent: true, "visibility": false });
-  map.addLayers([ layerContour ]); 
-
   map.div.oncontextmenu = function noContextMenu(e) {
     rightclick(e);
     return false; //cancel the right click of brower
