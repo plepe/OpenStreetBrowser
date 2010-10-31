@@ -26,12 +26,16 @@ function basemap_init() {
 
     map.addLayer(basemaps[i]);
   }
+
+  overlays_reorder();
 }
 
 function register_basemap(id, layer) {
   basemaps[id]=layer;
 
   map.addLayer(layer);
+
+  overlays_reorder();
 }
 
 function basemap_permalink(permalink) {

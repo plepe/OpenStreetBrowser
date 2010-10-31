@@ -4,6 +4,8 @@ function register_layer(id, layer) {
   layers[id]=layer;
 
   map.addLayer(layer);
+
+  overlays_reorder();
 }
 
 function layers_permalink(permalink) {

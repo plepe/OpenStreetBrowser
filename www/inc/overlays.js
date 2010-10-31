@@ -112,10 +112,39 @@ function overlays_init() {
   });
 
   mod_feature.activate();
+
+  overlays_reorder();
 }
 
 function overlays_unselect() {
   drag_layer.unselectAll();
+}
+
+function overlays_reorder() {
+  var list_overlays=[];
+  var list_basemaps=[];
+
+  for(var i=0; i<map.layers.length; i++) {
+    var w=map.layers[i].options.weight;
+    if(!w)
+      w=0;
+
+    if(map.layers[i].isBaseLayer)
+      list_basemaps.push([ w, map.layers[i] ]);
+    else
+      list_overlays.push([ w, map.layers[i] ]);
+  }
+
+  list_basemaps=weight_sort(list_basemaps);
+  list_overlays=weight_sort(list_overlays);
+
+  for(var i=0; i<list_basemaps.length; i++) {
+    map.setLayerIndex(list_basemaps[i], i);
+  }
+
+  for(var i=0; i<list_overlays.length; i++) {
+    map.setLayerIndex(list_overlays[i], i+list_basemaps.length);
+  }
 }
 
 register_hook("unselect_all", overlays_unselect);
