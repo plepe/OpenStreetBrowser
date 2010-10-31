@@ -50,6 +50,13 @@ $default_categories=array();
 // List of plugins which should be loaded
 $plugins=array("measure", "favorites", "wikipedia");
 
+// Which basemaps should be loaded
+//   'mapnik', 'osmarender' and 'cyclemap' are predefined values
+$basemaps=array(
+  "osb"=>array("http://www.openstreetbrowser.org/tiles/base/", array("numZoomLevels"=>19)),
+  "mapnik"=>"mapnik",
+);
+
 // Available plugins:
 // measure - do some measurement on the map
 // favorites - set favorites on the map

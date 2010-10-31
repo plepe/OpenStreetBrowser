@@ -296,12 +296,7 @@ function init() {
 			new OpenLayers.Control.Navigation() ]
 	  });
 
-  layerOSB = new OpenLayers.Layer.OSM("OpenStreetBrowser", "http://www.openstreetbrowser.org/tiles/base/", {numZoomLevels: 19});
-  layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
-  layerOsmarender = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
-  layerCycle = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
-
-  map.addLayers([ layerOSB, layerMapnik, layerOsmarender, layerCycle ]);
+  call_hooks("basemap_init");
 
   layerHill = new OpenLayers.Layer.OSM(
     "Hillshading (NASA SRTM3 v2)",
