@@ -53,6 +53,6 @@ function basemap_hash_changed(new_hash) {
     map.setBaseLayer(basemaps[new_hash.basemap]);
 }
 
-register_hook("basemap_init", basemap_init);
+register_hook("init", basemap_init);
 register_hook("get_permalink", basemap_permalink);
 register_hook("hash_changed", basemap_hash_changed);
