@@ -20,6 +20,8 @@ $symbol_path="/home/osm/render/symbols";
 $style_path="/home/osm/render";
 $overlays=array("culture"=>"overlay_culture", "gastro"=>"overlay_food", "services"=>"overlay_services");
 
+// If you want to use the Cloudmade API (e.g. for tiles or navigation) provide
+// a valid API key here
 //$key_cloudmade_api="";
 
 // List of plugins which should be loaded
@@ -49,3 +51,5 @@ $basemaps=array(
 // no_basemap - An empty basemap as background map
 // hill - Hill Shading on base of NASA SRTM
 // contour - Contour Shading (DE/AT/CH only)
+// overlays - Additional overlays
+// cloudmade_basemap - Add the default cloudmade basemap

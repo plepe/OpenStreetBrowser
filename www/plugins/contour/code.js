@@ -1,5 +1,5 @@
 function contour_init() {
-  register_layer("contour",
+  overlays_register("contour",
     new OpenLayers.Layer.OSM(
       lang("contour:name"),
       "http://hills-nc.openstreetmap.de/", {
@@ -8,7 +8,8 @@ function contour_init() {
         displayOutsideMaxExtent: true,
         isBaseLayer: false,
         transparent: true,
-        visibility: false
+        visibility: false,
+        weight: -5
       })
   );
 }

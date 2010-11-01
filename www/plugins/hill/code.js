@@ -1,5 +1,5 @@
 function hill_init() {
-  register_layer("hill", 
+  overlays_register("hill", 
     new OpenLayers.Layer.OSM(
       lang("hill:name"),
       "http://toolserver.org/~cmarqu/hill/", {
@@ -7,7 +7,8 @@ function hill_init() {
         displayOutsideMaxExtent: true,
         isBaseLayer: false,
         transparent: true,
-        visibility: false 
+        visibility: false,
+        weight: -5
       })
   );
 }
