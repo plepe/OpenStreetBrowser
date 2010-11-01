@@ -113,14 +113,14 @@ function overlays_init() {
 
   mod_feature.activate();
 
-  overlays_reorder();
+  layers_reorder();
 }
 
 function overlays_unselect() {
   drag_layer.unselectAll();
 }
 
-function overlays_reorder() {
+function layers_reorder() {
   var list_overlays=[];
   var list_basemaps=[];
 

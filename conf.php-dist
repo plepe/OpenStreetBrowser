@@ -49,3 +49,4 @@ $basemaps=array(
 // no_basemap - An empty basemap as background map
 // hill - Hill Shading on base of NASA SRTM
 // contour - Contour Shading (DE/AT/CH only)
+// overlays - Additional overlays

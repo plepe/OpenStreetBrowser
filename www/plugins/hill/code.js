@@ -1,5 +1,5 @@
 function hill_init() {
-  register_layer("hill", 
+  overlays_register("hill", 
     new OpenLayers.Layer.OSM(
       "Hillshading (NASA SRTM3 v2)",
       "http://toolserver.org/~cmarqu/hill/", {

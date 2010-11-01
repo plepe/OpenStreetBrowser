@@ -27,7 +27,7 @@ function basemap_init() {
     map.addLayer(basemaps[i]);
   }
 
-  overlays_reorder();
+  layers_reorder();
 }
 
 function register_basemap(id, layer) {
@@ -35,7 +35,7 @@ function register_basemap(id, layer) {
 
   map.addLayer(layer);
 
-  overlays_reorder();
+  layers_reorder();
 }
 
 function basemap_permalink(permalink) {

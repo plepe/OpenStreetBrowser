@@ -1,5 +1,5 @@
 function contour_init() {
-  register_layer("contour",
+  overlays_register("contour",
     new OpenLayers.Layer.OSM(
       "Contourshading",
       "http://hills-nc.openstreetmap.de/", {
