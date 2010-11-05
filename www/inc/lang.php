@@ -105,19 +105,23 @@ function lang_from_browser($avail_langs=null) {
   return $chosen_lang;
 }
 
-$ui_lang=$_REQUEST[ui_lang];
+$ui_lang=$_REQUEST['ui_lang'];
 if(!$ui_lang)
-  $lang=$_REQUEST[lang];
-if($_REQUEST[param][ui_lang])
-  $ui_lang=$_REQUEST[param][ui_lang];
+  $lang=$_REQUEST['lang'];
+if($_REQUEST['param']['ui_lang'])
+  $ui_lang=$_REQUEST['param']['ui_lang'];
+if(!$ui_lang)
+  $ui_lang=$_COOKIE['ui_lang'];
 if(!$ui_lang)
   $ui_lang=lang_from_browser($ui_langs);
 if(!$ui_lang)
   $ui_lang="en";
 
-$data_lang=$_REQUEST[data_lang];
-if($_REQUEST[param][data_lang])
-  $data_lang=$_REQUEST[param][data_lang];
+$data_lang=$_REQUEST['data_lang'];
+if($_REQUEST['param']['data_lang'])
+  $data_lang=$_REQUEST['param']['data_lang'];
+if(!$data_lang)
+  $ui_lang=$_COOKIE['data_lang'];
 if(!isset($data_lang))
   $data_lang=lang_from_browser();
 if(!isset($data_lang))
@@ -131,16 +135,19 @@ function lang_init() {
   global $data_lang;
   global $plugins_list;
 
-  require_once("lang/en.php");
-  if($ui_lang)
-    require_once("lang/$ui_lang.php");
+  include_once("lang/en.php");
+  include_once("lang/tags_en.php");
+  if($ui_lang&&($ui_lang!="en")) {
+    include_once("lang/{$ui_lang}.php");
+    include_once("lang/tags_{$ui_lang}.php");
+  }
 
   foreach($plugins_list as $plugin=>$dummy) {
     if(file_exists("plugins/$plugin/lang_en.php"))
-      require_once("plugins/$plugin/lang_en.php");
+      include_once("plugins/$plugin/lang_en.php");
 
     if(file_exists("plugins/$plugin/lang_{$ui_lang}.php"))
-      require_once("plugins/$plugin/lang_{$ui_lang}.php");
+      include_once("plugins/$plugin/lang_{$ui_lang}.php");
   }
 
   if(!$design_hidden)
