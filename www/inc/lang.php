@@ -155,3 +155,14 @@ function lang_init() {
 
   html_export_var(array("ui_lang"=>$ui_lang, "data_lang"=>$data_lang, "ui_langs"=>$ui_langs, "lang_str"=>$lang_str));
 }
+
+// DEPRECATED: include JS language file
+function lang_html_end() {
+  global $design_hidden;
+  global $ui_lang;
+
+  if((!$design_hidden)&&(file_exists("lang/{$ui_lang}.js")))
+    print "<script type='text/javascript' src='lang/{$ui_lang}.js'></script>\n";
+}
+// DEPRECATED: remove when removing function lang_html_done
+register_hook("html_end", "lang_html_end");
