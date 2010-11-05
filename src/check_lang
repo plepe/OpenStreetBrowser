@@ -15,10 +15,16 @@ function lang() {
 $lang_str=array();
 @include "www/lang/en.php";
 @include "www/lang/tags_en.php";
+$d=opendir("www/plugins");
+while($f=readdir($d))
+  @include "www/plugins/$f/lang_en.php";
 $en_lang=$lang_str;
+
 $lang_str=array();
 @include "www/lang/{$check}.php";
 @include "www/lang/tags_{$check}.php";
+while($f=readdir($d))
+  @include "www/plugins/$f/lang_{$check}.php";
 $check_lang=$lang_str;
 
 $missing=array();
