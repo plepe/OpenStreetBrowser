@@ -45,14 +45,22 @@ foreach($check_lang as $k=>$v) {
   }
 }
 
+print "* There's a total of ".sizeof($en_lang)." strings in English version.\n";
+if($verbose)
+  print implode(", ", array_keys($en_lang))."\n";
+
+print "* There's a total of ".sizeof($check_lang)." strings in the translation.\n";
+if($verbose)
+  print implode(", ", array_keys($check_lang))."\n";
+
 print "* ".sizeof($missing)." Strings missing.\n";
 if($verbose)
   print implode(", ", $missing)."\n";
 
-print "* ".sizeof($deprecated)." Strings deprecated (defined in translation, but not in check language):\n";
+print "* ".sizeof($deprecated)." Strings deprecated (defined in translation, but not in English):\n";
 if($verbose)
   print implode(", ", $deprecated)."\n";
 
-print "* ".sizeof($same)." Strings not translated (or translation equal to original language):\n";
+print "* ".sizeof($same)." Strings not translated (or translation equal to English):\n";
 if($verbose)
   print implode(", ", $same)."\n";
