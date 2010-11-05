@@ -121,12 +121,11 @@ $data_lang=$_REQUEST['data_lang'];
 if($_REQUEST['param']['data_lang'])
   $data_lang=$_REQUEST['param']['data_lang'];
 if(!$data_lang)
-  $ui_lang=$_COOKIE['data_lang'];
+  $data_lang=$_COOKIE['data_lang'];
 if(!isset($data_lang))
   $data_lang=lang_from_browser();
 if(!isset($data_lang))
   $data_lang="";
-
 
 function lang_init() {
   global $lang_str;
