@@ -12,11 +12,21 @@ function lang(str, count) {
   if(l=lang_str[str]) {
     if(typeof(l)=="string")
       return l;
-    if((l.length>1)&&(count==1))
-      return l[0];
-    else if(l.length>1)
-      return l[1];
-    else
+
+    var i;
+    if(l.length>1) {
+      if((count===0)||(count>1))
+        i=1;
+      else
+        i=0;
+
+      // if a Gender is defined, shift values
+      if(typeof(l[0]=="number"))
+        i++;
+
+      return l[i];
+    }
+    else if(l.length==1)
       return l[0];
   }
 

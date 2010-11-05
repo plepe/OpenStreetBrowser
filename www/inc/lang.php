@@ -1,5 +1,8 @@
 <?
 include "lang/list.php";
+define("F", 1);
+define("M", 2);
+define("N", 3);
 
 function lang() {
   global $lang_str;
@@ -32,11 +35,20 @@ function lang() {
     $l=$lang_str[$key];
   }
 
-  if(is_array($l)) {
-    $count--;
-    if(!isset($l[$count]))
-      $count=1;
-    $l=$l[$count];
+  if(is_array($l)&&(sizeof($l)==1)) {
+    $l=$l[0];
+  }
+  elseif(is_array($l)) {
+    if(($count===0)||($count>1))
+      $i=1;
+    else
+      $i=0;
+
+    // if a Gender is defined, shift values
+    if(is_integer($l[0]))
+      $i++;
+
+    $l=$l[$i];
   }
 
   return vsprintf($l, $params);
