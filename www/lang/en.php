@@ -118,6 +118,13 @@ $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
+// please finish this list, see list.php for full list of languages
+$lang_str["lang:de"]="German";
+$lang_str["lang:bg"]="Bulgarian";
+$lang_str["lang:en"]="English";
+$lang_str["lang:es"]="Spanish";
+$lang_str["lang:it"]="Italian";
+
 // the following language strings are deprecated
 $lang_str["cat:leisure"]=array( "Leisure, Sport and Shopping " );
 $lang_str["cat:leisure/gastro"]=array( "Gastronomy" );

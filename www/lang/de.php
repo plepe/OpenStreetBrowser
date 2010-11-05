@@ -116,3 +116,10 @@ $lang_str["main:licence"]="Kartendaten: <a href=\"http://creativecommons.org/lic
 $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'>".lang("info_back")."</a></div><h1>Objekt nicht gefunden</h1>Ein Objekt mit der ID \"%s\" konnte nicht gefunden werden. Das kann eine (oder mehrere) der folgenden Ursachen haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde von einer anderen Applikation identifiziert und ist im OpenStreetBrowser (noch) nicht verfügbar</li><li>Das Objekt liegt ausserhalb des unterstützten Gebiets</li><li>Der Link, dem Du gefolgt bist, war alt und das Objekt wurde inzwischen aus der OpenStreetMap gelöscht.</li>";
+
+// please finish this list, see list.php for full list of languages
+$lang_str["lang:de"]="Deutsch";
+$lang_str["lang:bg"]="Bulgarisch";
+$lang_str["lang:en"]="Englisch";
+$lang_str["lang:es"]="Spanisch";
+$lang_str["lang:it"]="Italienisch";
