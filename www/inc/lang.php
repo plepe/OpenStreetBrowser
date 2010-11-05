@@ -54,13 +54,6 @@ function lang() {
   return vsprintf($l, $params);
 }
 
-$available_languages=array(
-  ""=>"Default Language",
-  "en"=>"English",
-  "de"=>"Deutsch",
-  "bg"=>"Български"
-);
-
 function show_lang_select() {
   global  $available_languages;
 
@@ -132,7 +125,14 @@ function lang_init() {
   global $ui_lang;
   global $ui_langs;
   global $data_lang;
+  global $language_list;
   global $plugins_list;
+
+  // Define a language string for every language
+  foreach($language_list as $abbr=>$lang) {
+    $lang_str["lang:".$abbr]=$lang;
+    $lang_str["lang_native:".$abbr]=$lang;
+  }
 
   include_once("lang/en.php");
   include_once("lang/tags_en.php");
@@ -152,7 +152,7 @@ function lang_init() {
   if(!$design_hidden)
     print "<script type='text/javascript' src='inc/lang.js'></script>\n";
 
-  html_export_var(array("ui_lang"=>$ui_lang, "data_lang"=>$data_lang, "ui_langs"=>$ui_langs, "lang_str"=>$lang_str));
+  html_export_var(array("ui_lang"=>$ui_lang, "data_lang"=>$data_lang, "ui_langs"=>$ui_langs, "lang_str"=>$lang_str, "language_list"=>$language_list));
 }
 
 // DEPRECATED: include JS language file

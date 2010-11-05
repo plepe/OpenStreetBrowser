@@ -16,7 +16,6 @@ call_hooks("init", $dummy);
 ?>
 <script type="text/javascript" src="index.js"></script>
 <script type="text/javascript" src="ajax.js"></script>
-<script type="text/javascript" src="lang/list.js"></script>
 <!-- <script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script> -->
 </head>
 <body>
