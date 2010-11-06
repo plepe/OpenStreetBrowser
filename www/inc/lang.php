@@ -134,19 +134,16 @@ function lang_init() {
     $lang_str["lang_native:".$abbr]=$lang;
   }
 
-  include_once("lang/en.php");
-  include_once("lang/tags_en.php");
+  @include_once("lang/en.php");
+  @include_once("lang/tags_en.php");
   if($ui_lang&&($ui_lang!="en")) {
-    include_once("lang/{$ui_lang}.php");
-    include_once("lang/tags_{$ui_lang}.php");
+    @include_once("lang/{$ui_lang}.php");
+    @include_once("lang/tags_{$ui_lang}.php");
   }
 
   foreach($plugins_list as $plugin=>$dummy) {
-    if(file_exists("plugins/$plugin/lang_en.php"))
-      include_once("plugins/$plugin/lang_en.php");
-
-    if(file_exists("plugins/$plugin/lang_{$ui_lang}.php"))
-      include_once("plugins/$plugin/lang_{$ui_lang}.php");
+    @include_once("plugins/$plugin/lang_en.php");
+    @include_once("plugins/$plugin/lang_{$ui_lang}.php");
   }
 
   if(!$design_hidden)
