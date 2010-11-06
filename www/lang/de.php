@@ -1,17 +1,10 @@
 <?
 $lang_str["general_info"]="Allgemeine Informationen";
-$lang_str["search_field"]="Suchen...";
-$lang_str["search_tip"]="z.B. 'Berlin', 'Goethestraße', 'Kneipe in München',...";
-$lang_str["search_clear"]="Suchfeld löschen";
 $lang_str["noname"]="(kein Name)";
 $lang_str["info_back"]="zur Übersicht";
 $lang_str["info_zoom"]="zoomen";
 $lang_str["result_no"]="nichts gefunden";
-$lang_str["search_process"]="suche...";
 $lang_str["wikipedia:read_more"]="weiterlesen";
-$lang_str["search_more"]="mehr Ergebnisse";
-$lang_str["search_results"]="Suchergebnisse";
-$lang_str["search_nominatim"]="Suche bereitgestellt von";
 $lang_str["loading"]="lade";
 
 $lang_str["head_general_info"]="Allgemeine Informationen";

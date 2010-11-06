@@ -21,10 +21,6 @@ $lang_str["noname"]="(noname)";
 $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";
 $lang_str["nothing_found"]         =array( "nothing found" );
-$lang_str["search_process"]="searching";
-$lang_str["search_more"]="more results";
-$lang_str["search_results"]="Search results";
-$lang_str["search_nominatim"]="search provided by";
 $lang_str["loading"]               =array( "Loading..." );
 
 // Headings
@@ -108,9 +104,6 @@ $lang_str["lang:"]=array( "Local language" );
 $lang_str["overlay:data"]=array( "Data" );
 $lang_str["overlay:draggable"]=array( "Markers" );
 
-$lang_str["search_field"]="Search...";
-$lang_str["search_tip"]="e.g. 'London', 'Cromwell Road', 'post box near Hyde Park',...";
-$lang_str["search_clear"]="Clear search field";
 $lang_str["wikipedia:read_more"]="read more";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
