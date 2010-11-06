@@ -1,0 +1,72 @@
+If you want to translate OpenStreetBrowser to another language, please
+note the following points:
+
+1. All language strings are defined in the following files, where XX is
+  the abbreviation of the language (e.g. "en" for English, "en-gb" for
+  British English):
+  - www/lang/XX.php
+  - www/lang/tags_XX.php
+  - www/plugins/*/lang_XX.php
+
+  There are still files www/lang/XX.js, but these should be removed soon
+  and replaced by entries in the XX.php, as all strings will be exported
+  to the JavaScript code.
+
+  Before reading the localized language file the English file will be
+  read, therefore if a string is not defined in your language its
+  English original will be used.
+
+  The representative list of translation strings is the English list.
+  Strings defined in other languages and not in English should be
+  deprecated. The are many strings in the English version which are
+  depreacted but still being used. Those might be removed anytime soon.
+
+2. Every language string looks like this:
+  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
+  the first entry is the translation of the language string in Singular,
+  the second the Plurarl form.
+
+  Optionally you can define the Gender (F, M, N) of this word, e.g. the
+  German translation for office:
+  $lang_str["office"]=array(N, "Büro", "Büros");
+
+  If a Singular/Plural form is not
+  suitable/necessary you can ignore the array, e.g.
+  $lang_str["help"]="Help";
+
+3. All tags should have translations in www/lang/tags_XX.php, with
+  language strings like "tag:key" for the translation of the key and
+  "tag:key=value" for the translation of the value. E.g.
+  $lang_str["tag:amenity"]=array("Amenity", "Amenities");
+  $lang_str["tag:amenity=bar"]=array("Bar", "Bars");
+
+  Furthermore you can describe the tags with the array $tag_type. Every
+  entry is an array again to further specify its type, e.g.:
+  $tag_type["width"]=array("number", "m", "in");
+                ^             ^       ^    ^
+                |             |       |    \-- the preferred unit in this locale
+                |             |       \------- the default unit for this tag
+                |             \--------------- the type of the value
+                \----------------------------- tag
+
+  This defines, that the default value for the tag width is a number, with
+  its default unit m (for meter) and the preferred unit for this locale is
+  in (for inch).
+
+  The following types are valid:
+  * text          default (e.g. religion, name)
+  * number        a value, with default unit and preferred unit as defined
+                  by the second and third entry in this array (e.g. width,
+                  voltage)
+  * count         an integer value (e.g. population)
+  * date          a date
+  * link          an Internet URL
+
+  NOTE: the $tag_type can already be defined, but it's not used yet.
+  There might also be more tag types soon and a way to format the output
+  (e.g. "100.000 m" or "2010-12-24").
+
+4. Add your language to www/lang/list.php
+
+5. You can check the state of the translation executing the script
+  "src/check_lang" with the abbreviation of your language as parameter

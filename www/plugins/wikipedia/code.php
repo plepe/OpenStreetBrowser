@@ -165,7 +165,7 @@ function wikipedia_info($info_ret, $object) {
   cache_insert($object->id, "wikipedia_info:$data_lang", $text, "1 hour");
 
   if($text) {
-    $ret.="$text<a class='external' style='line-height:2em;' href='$url' target='_blank'>".lang("read_more")."...</a>";
+    $ret.="$text<a class='external' style='line-height:2em;' href='$url' target='_blank'>".lang("wikipedia:read_more")."</a>";
   }
 
   $info_ret[]=array("wikipedia", $ret);

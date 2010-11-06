@@ -141,14 +141,24 @@ function show_options() {
   ret+="<div class='options_help'>"+t("help:language_support")+"</div>\n";
   ret+="<p>\n";
   var ui_langs_x={};
-  for(var i=0; i<ui_langs.length; i++)
-    ui_langs_x[ui_langs[i]]=language_list[ui_langs[i]];
+  for(var i=0; i<ui_langs.length; i++) {
+    var str=language_list[ui_langs[i]];
+    if(lang("lang:"+ui_langs[i])!=str)
+      str+=" ("+lang("lang:"+ui_langs[i])+")";
+    ui_langs_x[ui_langs[i]]=str;
+  }
   ret+=options_select("ui_lang", ui_langs_x);
   ret+="<br/>\n";
 
   var ui_langs_x={};
-  l=language_list;
+  l=new clone(language_list);
   l[""]=t("lang:");
+
+  for(var i in l) {
+    if(lang("lang:"+i)!=l[i])
+      l[i]+=" ("+lang("lang:"+i)+")";
+  }
+
   ret+=options_select("data_lang", l);
   ret+="</p>\n";
 

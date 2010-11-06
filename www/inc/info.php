@@ -39,7 +39,7 @@ register_hook("info", shop_info);
 // FOOD & DRINK
 function food_drink_list_description($ret, $object, $list) {
   if($value=$object->tags->get("cuisine"))
-    $ret[]=lang("tag_cuisine/$value");
+    $ret[]=lang("tag:cuisine=$value");
 }
 
 function food_drink_info($ret, $object) {
@@ -62,7 +62,7 @@ register_hook("info", food_drink_info);
 function sport_list_description($ret, $object, $list) {
   if($list!="leisure_sport_tourism|sport")
     if($value=$object->tags->get("sport"))
-      $ret[]=lang("tag_sport/$value");
+      $ret[]=lang("tag:sport=$value");
 }
 
 function sport_info($ret, $object) {
@@ -112,14 +112,14 @@ register_hook("info", network_info);
 // RELIGION
 function religion_list_description($ret, $object, $list) {
   if($value=$object->tags->get("religion"))
-    $ret[]=lang("tag_religion/$value");
+    $ret[]=lang("tag:religion=$value");
   if($value=$object->tags->get("denomination"))
-    $ret[]=lang("tag_denomination/$value");
+    $ret[]=lang("tag:denomination=$value");
 }
 
 function religion_info($ret, $object) {
-  $ret[]=array("general_info", $object->tags->compile_text("#tag/religion#: #tag_religion/%religion%#<br />\n"));
-  $ret[]=array("general_info", $object->tags->compile_text("#tag/denomination#: #tag_denomination/%denomination%#<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag:religion#: #tag:religion=%religion%#<br />\n"));
+  $ret[]=array("general_info", $object->tags->compile_text("#tag:denomination#: #tag:denomination=%denomination%#<br />\n"));
 }
 
 register_hook("list_description", religion_list_description);
@@ -181,7 +181,7 @@ function osm_info($ret, $object, $param) {
     }
   }
 
-  $r.="<h4>".lang("head_actions")."</h4>\n";
+  $r.="<h4>".lang("head:actions")."</h4>\n";
   if(($object->place_type=="node")||($object->place_type=="way")||($object->place_type=="rel")) {
     $r.="<li><a href='http://www.openstreetmap.org/browse/{$object_elements[$object->place_type]}/$object->only_id'>".lang("action_browse")."</a></li>\n";
   }
@@ -204,10 +204,10 @@ function places_info($ret, $object) {
   if(!$tags->get("place"))
     return;
 
-  $r.=lang("tag/place").": ".lang("place/".$tags->get("place"))."<br />\n";
-  $r.=$tags->compile_text("#tag/capital#: #yes/%capital%#<br />\n");
-  $r.=$tags->compile_text("#tag/is_in#: %is_in%<br />\n");
-  $r.=$tags->compile_text("#tag/population#: %population%<br />\n");
+  $r.=lang("tag:place").": ".lang("tag:place=".$tags->get("place"))."<br />\n";
+  $r.=$tags->compile_text("#tag:capital#: #%capital%#<br />\n");
+  $r.=$tags->compile_text("#tag:is_in#: %is_in%<br />\n");
+  $r.=$tags->compile_text("#tag:population#: %population%<br />\n");
 
   switch($tags->get("place")) {
     case "continent":
@@ -452,7 +452,7 @@ function power_info($ret, $object) {
   $text="";
 
   if($power=$object->tags->get("power")) {
-    $text.=lang("power_".$object->tags->get("power"))."<br />\n";
+    $text.=lang("tag:power=".$object->tags->get("power"))."<br />\n";
 
     switch($power) {
       case "line":
@@ -475,7 +475,7 @@ function power_list_description($ret, $object, $list) {
   switch($object->tags->get("power")) {
     case "generator":
       if($value=$object->tags->get("power_source"))
-	$ret[]=lang("tag_power_source/$value");
+	$ret[]=lang("tag:power_source=$value");
   }
 }
 

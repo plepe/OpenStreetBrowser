@@ -26,12 +26,16 @@ function basemap_init() {
 
     map.addLayer(basemaps[i]);
   }
+
+  layers_reorder();
 }
 
 function register_basemap(id, layer) {
   basemaps[id]=layer;
 
   map.addLayer(layer);
+
+  layers_reorder();
 }
 
 function basemap_permalink(permalink) {
@@ -49,6 +53,6 @@ function basemap_hash_changed(new_hash) {
     map.setBaseLayer(basemaps[new_hash.basemap]);
 }
 
-register_hook("basemap_init", basemap_init);
+register_hook("init", basemap_init);
 register_hook("get_permalink", basemap_permalink);
 register_hook("hash_changed", basemap_hash_changed);

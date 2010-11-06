@@ -5,7 +5,7 @@ include("code.php");
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>OpenStreetBrowser</title>
-<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script src="OpenLayers/OpenLayers.js"></script>
 <link rel="stylesheet" type="text/css" href="index.css" />
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <link rel="search" type="application/opensearchdescription+xml" title="OpenStreetBrowser" href="osb_search.xml" />
@@ -16,7 +16,6 @@ call_hooks("init", $dummy);
 ?>
 <script type="text/javascript" src="index.js"></script>
 <script type="text/javascript" src="ajax.js"></script>
-<script type="text/javascript" src="lang/list.js"></script>
 <!-- <script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script> -->
 </head>
 <body>
@@ -125,5 +124,8 @@ foreach($menu_list as $entry) {
 call_hooks("html_done", null);
 ?>
 <div class="permalink"><a href="" id="permalink" onclick="var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));"><?=lang("main:permalink")?></a></div>
+<?
+call_hooks("html_end", null);
+?>
 </body>
 </html>
