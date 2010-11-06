@@ -1,17 +1,10 @@
 <?
 $lang_str["general_info"]="Загальна інформація"; // delete
-$lang_str["search_field"]="Пошук...";
-$lang_str["search_tip"]="наприклад 'Київ', 'Грінченка Миколи вулиця', 'post box near Hyde Park',...";
-$lang_str["search_clear"]="Очистити поле пошуку";
 $lang_str["noname"]="(без імені)";
 $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="наблизити";
 $lang_str["result_no"]="нічого не знайдено";
-$lang_str["search_process"]="пошук";
 $lang_str["wikipedia:read_more"]="докладніше";
-$lang_str["search_more"]="шукати далі";
-$lang_str["search_results"]="Результати пошуку";
-$lang_str["search_nominatim"]="search provided by";
 $lang_str["loading"]="завантаження";
  
 $lang_str["head_general_info"]="Загальна інформація";
