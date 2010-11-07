@@ -4,8 +4,16 @@ require "../../conf.php";
 $verbose=false;
 
 $ui_lang=$_REQUEST['ui_lang'];
-if(!$ui_lang)
-  $ui_lang="en";
+if(!$ui_lang) {
+  include "$root_path/www/lang/list.php";
+
+  print "The following languages are defined:<ul>\n";
+  foreach($ui_langs as $ui_lang) {
+    print "<li> <a href='check_lang.php?ui_lang={$ui_lang}'>{$ui_lang}: {$language_list[$ui_lang]}</a>\n";
+  }
+  print "</ul>\n";
+  exit;
+}
 
 function lang() {
 }
