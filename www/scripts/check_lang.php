@@ -1,3 +1,9 @@
+<? Header("content-type: text/html; charset=utf-8"); ?>
+<html>
+<head>
+<title>OpenStreetBrowser - Language Check</title>
+</head>
+<body>
 <?
 require "../../conf.php";
 
@@ -84,4 +90,6 @@ while($f=readdir($d))
 closedir($d);
 $lang_str_dst=$lang_str;
 
-
+?>
+</body>
+</html>
