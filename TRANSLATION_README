@@ -68,5 +68,6 @@ note the following points:
 
 4. Add your language to www/lang/list.php
 
-5. You can check the state of the translation executing the script
-  "src/check_lang" with the abbreviation of your language as parameter
+5. You can check the state of the translation using the page
+  http://ROOT_PATH/scripts/check_lang.php (e.g.
+  http://www.openstreetbrowser.org/scripts/check_lang.php).
