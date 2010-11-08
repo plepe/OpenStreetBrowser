@@ -57,7 +57,7 @@ BEGIN
      union
      select id from actions where data_type='W'
      union
-     select member_id from save_actions actions join relation_members on actions.data_type=relation_members.member_type and actions.id=relation_members.member_id join relation_tags on relation_members.relation_id=relation_tags.relation_id and relation_tags.k='type' and relation_tags.v='multipolygon' where relation_members.member_role='outer' and relation_members.member_type='W') actions
+     select member_id from actions join relation_members on actions.data_type=relation_members.member_type and actions.id=relation_members.member_id join relation_tags on relation_members.relation_id=relation_tags.relation_id and relation_tags.k='type' and relation_tags.v='multipolygon' where relation_members.member_role='outer' and relation_members.member_type='W') actions
   where osm_id='way_'||id;
 
   raise notice 'deleted from osm_polygon 1';
