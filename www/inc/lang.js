@@ -6,15 +6,27 @@ function change_language() {
   ob.submit();
 }
 
-function t(str, count) {
+function lang(str, count) {
   var l;
 
   if(l=lang_str[str]) {
-    if((l.length>1)&&(count==1))
-      return l[0];
-    else if(l.length>1)
-      return l[1];
-    else
+    if(typeof(l)=="string")
+      return l;
+
+    var i;
+    if(l.length>1) {
+      if((count===0)||(count>1))
+        i=1;
+      else
+        i=0;
+
+      // if a Gender is defined, shift values
+      if(typeof(l[0]=="number"))
+        i++;
+
+      return l[i];
+    }
+    else if(l.length==1)
       return l[0];
   }
 
@@ -25,6 +37,12 @@ function t(str, count) {
     return l[1];
 
   return str;
+}
+
+function t(str, count) {
+  // TODO: write deprecation message to debug
+
+  return lang(str, count);
 }
 
 function lang_change(key, value) {

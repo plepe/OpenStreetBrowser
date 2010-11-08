@@ -123,4 +123,5 @@ function real_export() {
 }
 
 plugins_init();
+lang_init();
 register_hook("html_done", "real_export");

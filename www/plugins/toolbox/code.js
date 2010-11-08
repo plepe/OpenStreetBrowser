@@ -9,9 +9,9 @@
 //   weight: order of icons (-10 left ... +10 right)
 function toolbox(options) {
   // activate
-  this.activate=function() {
+  this.activate=function(force) {
     if(this.manager) {
-      this.manager.activate_toolbox(this);
+      this.manager.activate_toolbox(this,force);
     }
   }
 

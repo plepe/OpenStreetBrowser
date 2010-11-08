@@ -114,23 +114,23 @@ function marker(lon, lat) {
     div.className="object";
 
     var head=dom_create_append(div, "h1");
-    dom_create_append_text(head, t("marker", 1));
+    dom_create_append_text(head, lang("marker:name"));
 
     var div1=dom_create_append(div, "div");
     div1.className="obj_actions";
-    div1.innerHTML="<a class='zoom' href='#' onClick='redraw()'>"+t("info_back")+"</a><br>\n";
+    div1.innerHTML="<a class='zoom' href='#' onClick='redraw()'>"+lang("info_back")+"</a><br>\n";
 
     var head=dom_create_append(div, "h2");
-    dom_create_append_text(head, t("head:location", 1));
+    dom_create_append_text(head, lang("head:location", 1));
     this.details_location=dom_create_append(div, "ul");
     this.update_details();
 
     var head=dom_create_append(div, "h2");
-    dom_create_append_text(head, t("head:action"));
+    dom_create_append_text(head, lang("head:actions"));
     var ul=dom_create_append(div, "ul");
     var li=dom_create_append(ul, "li");
     var a=dom_create_append(li, "a");
-    dom_create_append_text(a, t("marker_action:remove"));
+    dom_create_append_text(a, lang("marker:action_remove"));
     a.onclick=this.remove.bind(this);
   }
 
@@ -141,9 +141,22 @@ function marker(lon, lat) {
 
     dom_clean(this.details_location);
     var li=dom_create_append(this.details_location, "li");
-    dom_create_append_text(li, t("longitude", 1)+": "+this.lon.toFixed(5));
+    dom_create_append_text(li, lang("longitude")+": "+this.lon.toFixed(5));
     var li=dom_create_append(this.details_location, "li");
-    dom_create_append_text(li, t("latitude", 1)+": "+this.lat.toFixed(5));
+    dom_create_append_text(li, lang("latitude")+": "+this.lat.toFixed(5));
+  }
+
+  // write_list
+  this.write_list=function(ul) {
+    var li=dom_create_append(ul, "li");
+    li.style.listStyleImage="url('plugins/marker/icon.png')";
+
+    var a=dom_create_append(li, "a");
+    //a.href="marker_";
+
+    dom_create_append_text(a, lang("marker:name")+" "+
+      this.lat.toFixed(5)+"/"+
+      this.lon.toFixed(5));
   }
 
   // remove
@@ -193,7 +206,7 @@ function marker_add_context(pos) {
 }
 
 function marker_init() {
-  contextmenu_add("plugins/marker/icon.png", "add marker", marker_add_context);
+  contextmenu_add("plugins/marker/icon.png", lang("marker:add_marker"), marker_add_context);
 }
 
 register_hook("get_permalink", marker_permalink);

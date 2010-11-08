@@ -34,6 +34,11 @@ class git_master {
       return array("status"=>"Git directory is not in sane state");
     }
 
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $path)) {
+      return array("status"=>"Invalid Pathname");
+    }
+
     $this->last_cwd=getcwd();
     chdir("{$this->path}/{$path}");
   }
@@ -50,6 +55,11 @@ class git_master {
   function exec($command, $stdin=0, $path="") {
     $ret="";
     $this->log.="{$path}> {$command}\n";
+
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $path)) {
+      return array("status"=>"Invalid Pathname");
+    }
 
     $descriptors=array(
       0=>array("pipe", "r"),
@@ -366,6 +376,11 @@ class git_master {
     if(!$id)
       $id=uniqid();
 
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $id)) {
+      return array("status"=>"Invalid Filename");
+    }
+
     $this->chdir();
     mkdir("$id/");
 
@@ -383,6 +398,11 @@ class git_master {
 
   function get_file($id) {
     $this->commit_open();
+
+    # Any file/directory starts with . ?
+    if(preg_match("/^\.|\/\./", $id)) {
+      return array("status"=>"Invalid Filename");
+    }
 
     $r=$this->exec("git ls-files $id/");
     $r=explode("\n", $r);

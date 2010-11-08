@@ -128,3 +128,8 @@ lang_str["category_rule_tag:description"]=["Beschreibung"];
 
 lang_str["overlay:data"]=[ "Data" ];
 lang_str["overlay:draggable"]=[ "Markierungen" ];
+
+lang_str["basemap:osb"]=[ "OpenStreetBrowser" ];
+lang_str["basemap:mapnik"]=[ "Standard (Mapnik)" ];
+lang_str["basemap:osmarender"]=[ "Standard (OsmaRender)" ];
+lang_str["basemap:cyclemap"]=[ "CycleMap" ];

@@ -5,6 +5,52 @@ var list_reload_working=0;
 var category_leaf={};
 var category_more={};
 
+list_cache.clean_up=function() {
+  while(this.length>10) {
+    this.shift();
+  }
+}
+
+list_cache.search_element=function(viewbox, category) {
+  for(var i=0; i<this.length; i++) {
+    if((this[i].viewbox==viewbox)&&
+       (this[i].category==category))
+      return this[i];
+  }
+
+  return null;
+}
+
+list_cache.search=function(viewbox, category) {
+  var ret;
+
+  if(ret=list_cache.search_element(viewbox, category))
+    return ret.text;
+
+  return null;
+}
+
+function list_make_list(cat) {
+  var ret="";
+  var places=cat.getElementsByTagName("place");
+
+  if(places.length==0) {
+    ret+=t("nothing_found")+"\n";
+  }
+
+  for(var placei=0; placei<places.length; placei++) {
+    var place=places[placei];
+    ret+=list_entry(place);
+  }
+
+  if(cat.getAttribute("complete")!="true") {
+    var cat_id=cat.getAttribute("id")
+    ret+="<a id='more_"+cat_id+"' href='javascript:list_more(\""+cat_id+"\")'>"+t("more")+"</a>\n";
+  }
+
+  return ret;
+}
+
 function list_more_call_back(response) {
   var data=response.responseXML;
   list_reload_working=0;

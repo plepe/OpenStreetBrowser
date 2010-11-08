@@ -148,6 +148,8 @@ function category_osm(id) {
       return;
     }
 
+    call_hooks("list_receive", data);
+
     var request;
     if(request=data.getElementsByTagName("request"))
       request=request[0];

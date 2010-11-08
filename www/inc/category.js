@@ -210,6 +210,11 @@ function category(id) {
     return div;
   }
 
+  // register_sub_category
+  this.register_sub_category=function(ob) {
+    this.sub_categories.push(ob);
+  }
+
   // constructor
   this.id=id;
   this.tags=new tags({ name: this.id });

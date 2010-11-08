@@ -7,7 +7,7 @@ function _toolbox_manager() {
   }
 
   // activate_toolbox
-  this.activate_toolbox=function(index) {
+  this.activate_toolbox=function(index,force) {
     if(typeof index!="number") {
       for(var i=0; i<this.toolboxes.length; i++) {
 	if(this.toolboxes[i]==index)
@@ -21,7 +21,7 @@ function _toolbox_manager() {
       this.toolboxes[this.current_active].content.className="toolbox";
     }
 
-    if((this.current_active==index)||(index==-1)) {
+    if((force!=1)&&((this.current_active==index)||(index==-1))) {
       this.current_active=-1;
       this.resize_toolbox();
       return;

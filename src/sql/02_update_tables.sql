@@ -4,10 +4,18 @@
 -- use this to play back save_actions into actions:
 -- insert into actions (select data_type, (CASE WHEN oneof_is(to_textarray(action), 'D') THEN 'D' WHEN oneof_is(to_textarray(action), 'C') THEN 'C' ELSE 'M' END), id from save_actions group by data_type, id);
 
+-- **
+-- * Hooks:
+-- * 'osmosis_update_start' - called when function is called
+-- * 'osmosis_update_delete' - called when changed items were removed - use this to remove data from other tables
+-- * 'osmosis_update_finish' - called when data has been updated - use this to update data in other tables
+
 CREATE OR REPLACE FUNCTION osmosisUpdate() RETURNS void AS $$
 DECLARE
 BEGIN
   raise notice 'called osmosisUpdate()';
+
+  perform call_hooks('osmosis_update_start');
 
   -- for later check make a copy of actions
   -- delete from save_actions;
@@ -70,6 +78,8 @@ BEGIN
 
   raise notice 'deleted from osm_polygon 2';
 
+  perform call_hooks('osmosis_update_delete');
+
   -- insert changed/created points
   perform assemble_point(actions.id) from actions where actions.data_type='N' and actions.action in ('C', 'M');
 
@@ -114,6 +124,9 @@ BEGIN
           relation_tags.v='multipolygon';
 
   raise notice 'inserted to osm_polygon 2';
+
+  perform call_hooks('osmosis_update_finish');
+
   raise notice 'finished osmosisUpdate()';
 END;
 $$ LANGUAGE plpgsql;

@@ -2,6 +2,7 @@
 <?
 include "conf.php";
 include "inc/hooks.php";
+include "inc/plugins.php";
 include "inc/lock.php";
 include "inc/number.php";
 include "inc/tags.php";
@@ -18,6 +19,7 @@ include "inc/data_dir.php";
 include "inc/icon.php";
 include "gen_renderd_conf.php";
 $sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
+plugins_init("mcp");
 call_hooks("mcp_start");
 
 function restart_renderd() {

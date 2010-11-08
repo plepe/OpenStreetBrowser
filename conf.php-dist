@@ -20,13 +20,15 @@ $symbol_path="/home/osm/render/symbols";
 $style_path="/home/osm/render";
 $overlays=array("culture"=>"overlay_culture", "gastro"=>"overlay_food", "services"=>"overlay_services");
 
+// If you want to use the Cloudmade API (e.g. for tiles or navigation) provide
+// a valid API key here
 //$key_cloudmade_api="";
 
-// $root_dir - where is all stuff
-$root_dir="/home/osm";
+// $root_path - where is all stuff
+$root_path="/home/osm";
 
 // $lists_dir - saves available categories (has to be writeable for www)
-$lists_dir="$root_dir/data/lists";
+$lists_dir="$root_path/data/lists";
 
 // $fifo_path - the pipe to the mcp-process
 $fifo_path="/tmp/mcp.fifo";
@@ -38,7 +40,7 @@ $default_user_tags=array();
 $default_anon_tags=array();
 
 // $data_dir - The root of all web server writeable data
-$data_dir="$root_dir/data/";
+$data_dir="$root_path/data/";
 
 // $renderd_files - Define additional styles for renderd (point to a renderd-file)
 $renderd_files=array(
@@ -50,10 +52,18 @@ $default_categories=array();
 // List of plugins which should be loaded
 $plugins=array("measure", "favorites", "wikipedia");
 
+// Which basemaps should be loaded
+//   'mapnik', 'osmarender' and 'cyclemap' are predefined values
+$basemaps=array(
+  "osb"=>array("http://www.openstreetbrowser.org/tiles/base/", array("numZoomLevels"=>19)),
+  "mapnik"=>"mapnik",
+);
+
 // Available plugins:
 // measure - do some measurement on the map
 // favorites - set favorites on the map
 // marker - set markers on the map
+// marker_list - Show list of visible markers as category
 // wikipedia - write some information of objects where we know about wikipedia
 // navigation - navigation on the map
 // layer_chooser - show possible base maps and general overlays in options
@@ -65,3 +75,10 @@ $plugins=array("measure", "favorites", "wikipedia");
 // tab - tabbed windows
 // navigation_cloudmade - an interface to the cloudmade routing service
 // no_basemap - An empty basemap as background map
+// db - Plugins can define db-stuff using migrations
+// mapnik - Include special mapnik-styles in renderd
+// state_info - Info about state of database
+// hill - Hill Shading on base of NASA SRTM
+// contour - Contour Shading (DE/AT/CH only)
+// overlays - Additional overlays
+// cloudmade_basemap - Add the default cloudmade basemap

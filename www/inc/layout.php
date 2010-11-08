@@ -51,7 +51,7 @@ function infobox($headname, $text, $state="opened") {
   $ret.="<h2><input type='checkbox' name='$headname' ".
         ($state=="opened"?" checked='checked'":"")." onChange='box_change(this)' />\n";
   $ret.="<a href='javascript:box_click(\"$headname\")'>".
-    lang("head_$headname")."</a></h2><div class=\"infobox_content\">\n";
+    lang("head:$headname")."</a></h2><div class=\"infobox_content\">\n";
 
   $ret.=$text;
 

@@ -8,7 +8,7 @@ function help_init() {
   });
   register_toolbox(help_toolbox);
 
-  var text = "<i>Help</i><br/><br/>Later you can see text here...<br/><br/>";
+  var text = "<i>Help</i><br/><br/><div>"+t("list_info")+"</div><br/>";
   help_toolbox.content.innerHTML=text;
 }
 
