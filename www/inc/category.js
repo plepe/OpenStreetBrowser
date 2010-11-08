@@ -92,6 +92,28 @@ function category(id) {
     return false;
   }
 
+  // visible_list - return recursively all visible categories
+  this.visible_list=function() {
+    var ret="";
+
+    if(!this.visible())
+      return;
+
+    ret=this.id;
+
+    var list=[];
+    for(var i=0; i<this.sub_categories.length; i++) {
+      var state=this.sub_categories[i].visible_list();
+      if(state)
+        list.push(state);
+    }
+
+    if(list.length)
+      ret+="["+list.join(",")+"]";
+
+    return ret;
+  }
+
   // request_data - load new data from server
   this.request_data=function() {
   }

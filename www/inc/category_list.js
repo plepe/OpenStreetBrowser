@@ -119,6 +119,7 @@ function category_list_init() {
 }
 
 function category_list_hash_changed(hash) {
+  // Either show category list or something else (like details)
   var div=document.getElementById("details_content");
 
   dom_clean(div);
@@ -130,7 +131,17 @@ function category_list_hash_changed(hash) {
   else {
     category_root.close_category(root_div);
   }
+
+  // Check if a category is opened by permalink
+}
+
+function category_list_permalink(permalink) {
+  var a=1;
+
+  var ret=category_root.visible_list();
+  permalink.categories=ret;
 }
 
 register_hook("init", category_list_init);
 register_hook("hash_changed", category_list_hash_changed);
+register_hook("get_permalink", category_list_permalink);
