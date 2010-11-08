@@ -42,11 +42,18 @@ function change_next() {
   return 0;
 }
 
+sql_query("select cache_clean()");
+$last_clean=time();
+
 while(1) {
   $ret2=change_next();
 
-  if(($ret2==0)) {
-    print "Error? Let's wait a little ...\n";
-    sleep(30);
+  // Always wait a little
+  sleep(30);
+
+  if($last_clean+7200<time()) {
+    print "More than an hour passed since last cache clean ...\n";
+    sql_query("select cache_clean()");
+    $last_clean=time();
   }
 }
