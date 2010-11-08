@@ -34,7 +34,7 @@ function marker_list_category(id) {
 }
 
 function marker_list_init() {
-  category_root.register_sub_category(new marker_list_category("marker_list"));
+  category_root.register_sub_category(new marker_list_category(lang("marker_list:title")));
 }
 
 register_hook("init", marker_list_init);
