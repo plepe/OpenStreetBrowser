@@ -281,40 +281,12 @@ class category {
     $ret.="id=\"$id\" ";
     $ret.="rule_id=\"$res[rule_id]\">\n";
 
-    $ret.="  <tag k=\"geo:center\" v=\"$res[center]\"/>\n";
-
-    $list_text="[ref] - [name];[name];[ref];[operator]";
-    if($this->tags->get("list_text"))
-      $list_text=$this->tags->get("list_text");
-    if($rule_tags->get("list_text"))
-      $list_text=$rule_tags->get("list_text");
-    
-    if($x=$ob->tags->parse($list_text, $lang)) {
-      $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"display_name:$lang\" v=\"$x\"/>\n";
+    foreach($tags as $k=>$v) {
+      $ret.="  <tag k=\"$k\" v=\"$v\" />\n";
     }
 
-    if($x=$ob->tags->parse($list_text)) {
-      $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"display_name\" v=\"$x\"/>\n";
-    }
-
-    if($x=$rule_tags->get("icon")) {
-      $icon=get_icon($x);
-
-      if($icon)
-	$icon=$icon->icon_url();
-
-      if($icon) {
-	$icon=strtr($icon, $make_valid);
-	$ret.="  <tag k=\"icon\" v=\"{$icon}\"/>\n";
-      }
-    }
-
-    if($x=$rule_tags->get("importance")) {
-      $x=strtr($x, $make_valid);
-      $ret.="  <tag k=\"importance\" v=\"$x\"/>\n";
-    }
+    $ret.="  <tag k=\"#geo:center\" v=\"$res[center]\"/>\n";
+    $ret.="  <tag k=\"#importance\" v=\"$res[importance]\"/>\n";
 
     $ret.="</match>\n";
 

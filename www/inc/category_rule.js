@@ -16,10 +16,12 @@ function category_rule_match(dom, cat, rule) {
     var li=dom_create_append(ul, "li");
     li.id=this.id;
     li.rule_id=this.rule.id;
-    if(x=this.tags.get("icon")) {
-      li.style.listStyleImage="url('"+x+"')";
+
+    if(x=this.rule.tags.get("icon")) {
+      x=get_icon(x);
+      li.style.listStyleImage="url('"+x.icon_url()+"')";
     }
-    
+
     if(this.rule.tags.get_lang("name", ui_lang)) {
       title=split_semicolon(this.rule.tags.get_lang("name", ui_lang));
       if(title.length==1)
@@ -40,14 +42,22 @@ function category_rule_match(dom, cat, rule) {
     a.onmouseover=this.set_highlight.bind(this);
     a.onmouseout=this.unset_highlight.bind(this);
 
-    x=this.tags.get("display_name");
+    var parse_str=this.rule.tags.get("list_tags");
+    if(!parse_str)
+      parse_str="[ref] - [name];[name];[ref];[operator]";
+
+    x=this.tags.parse(parse_str, data_lang);
     if(!x)
       x=t("unnamed");
     dom_create_append_text(a, x);
     
-    if(x=this.tags.get("display_type")) {
-      x=" ("+x+")";
-      dom_create_append_text(li, x);
+    var parse_str=this.rule.tags.get("list_type");
+    if(parse_str) {
+      x=this.tags.parse(parse_str, data_lang);
+      if(x) {
+        x=" ("+x+")";
+        dom_create_append_text(li, x);
+      }
     }
   }
   
@@ -87,7 +97,7 @@ function category_rule_match(dom, cat, rule) {
 
     if(!this.highlight) {
       var geo=this.tags.get("geo");
-      var geo_center=this.tags.get("geo:center");
+      var geo_center=this.tags.get("#geo:center");
 
       if(!geo) {
 	// request from server

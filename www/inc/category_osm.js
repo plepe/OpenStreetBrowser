@@ -211,7 +211,7 @@ function category_osm(id) {
 	  this.data.push(match_ob);
 	  call_hooks("category_load_match", this, match_ob)
 
-	  var mimp=match_ob.tags.get("importance");
+	  var mimp=match_ob.tags.get("#importance");
 	  if(mimp!=last_importance) {
 	    for(var i=0; i<importance.length; i++) {
 	      if(mimp==importance[i])

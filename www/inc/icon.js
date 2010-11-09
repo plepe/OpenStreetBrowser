@@ -184,4 +184,13 @@ function icon_init() {
   icon_git=new git_dir(data_dir, "icons", icon_obj);
 }
 
+function get_icon(file) {
+  icon_obj=icon_git.get_obj(file);
+
+  if(icon_obj)
+    return icon_obj;
+
+  return false;
+}
+
 register_hook("init", icon_init);
