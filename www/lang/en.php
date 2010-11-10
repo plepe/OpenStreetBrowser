@@ -22,6 +22,7 @@ $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";
 $lang_str["nothing_found"]         =array( "nothing found" );
 $lang_str["loading"]               =array( "Loading..." );
+$lang_str["more"]                  ="more";
 
 // Headings
 $lang_str["head:general_info"]="General Information";
