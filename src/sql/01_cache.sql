@@ -65,7 +65,7 @@ DECLARE
   content	alias for $3;
   depend	alias for $4;
   outdate	alias for $5;
-  _outdate	interval:='1 month';
+  _outdate	interval:='2 days';
 BEGIN
   if outdate is not null then
     _outdate:=outdate;
@@ -138,6 +138,7 @@ $$ LANGUAGE plpgsql volatile;
 CREATE OR REPLACE FUNCTION cache_clean() RETURNS bool AS $$
 DECLARE
 BEGIN
+  raise notice 'called cache_clean()';
   delete from osm_cache_depend using osm_cache
   where 
     osm_cache.cache_type=osm_cache_depend.cache_type and
@@ -146,6 +147,7 @@ BEGIN
   delete from osm_cache
   where 
     osm_cache.outdate<now();
+  raise notice 'finished cache_clean()';
 
   return true;
 END;
