@@ -147,15 +147,15 @@ function marker(lon, lat) {
 
   // write_list
   this.write_list=function(ul) {
-    var li=dom_create_append(ul, "li");
-    li.style.listStyleImage="url('plugins/marker/icon.png')";
+    var ret={};
 
-    var a=dom_create_append(li, "a");
-    //a.href="marker_";
+    ret.icon_url="plugins/marker/icon.png";
 
-    dom_create_append_text(a, lang("marker:name")+" "+
+    ret.name=lang("marker:name")+" "+
       this.lat.toFixed(5)+"/"+
-      this.lon.toFixed(5));
+      this.lon.toFixed(5);
+
+    return ret;
   }
 
   // remove

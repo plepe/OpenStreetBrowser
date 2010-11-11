@@ -23,15 +23,17 @@ function marker_list_category(id) {
       return;
 
     dom_clean(div.data);
-    var ul=dom_create_append(div.data, "ul");
 
+    var show_list=[];
     var bounds=map.calculateBounds().toGeometry();
     for(var i=0; i<marker_list.length; i++) {
       var marker=marker_list[i];
       if(bounds.intersects(marker.feature.geometry)) {
-        marker.write_list(ul);
+        show_list.push(marker.write_list());
       }
     }
+
+    new list(div.data, show_list, null, { show_count: 2, empty_text: lang("marker_list:empty_text") });
   }
 }
 
