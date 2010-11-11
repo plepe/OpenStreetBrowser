@@ -19,6 +19,8 @@ function marker_list_category(id) {
 
     if(!div)
       return;
+    if(!div.open)
+      return;
 
     dom_clean(div.data);
     var ul=dom_create_append(div.data, "ul");
