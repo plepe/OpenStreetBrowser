@@ -26,7 +26,7 @@ function marker_list_category(id) {
     var ul=dom_create_append(div.data, "ul");
 
     var bounds=map.calculateBounds().toGeometry();
-    for(var i in marker_list) {
+    for(var i=0; i<marker_list.length; i++) {
       var marker=marker_list[i];
       if(bounds.intersects(marker.feature.geometry)) {
         marker.write_list(ul);
