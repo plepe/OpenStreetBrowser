@@ -33,7 +33,7 @@ function marker_list_category(id) {
       }
     }
 
-    new list(div.data, show_list, null, { show_count: 2, empty_text: lang("marker_list:empty_text") });
+    new list(div.data, show_list, null, { empty_text: lang("marker_list:empty_text") });
   }
 }
 
