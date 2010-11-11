@@ -1,5 +1,6 @@
-var marker_list={};
+var marker_list=[];
 var marker_drag_control;
+var marker_highest_id=0;
 
 var marker_style={
     externalGraphic: 'plugins/marker/marker.png',
@@ -28,7 +29,13 @@ function marker_update(new_hash) {
 
   for(var i=0; i<mlats.length; i++) {
     // if we already set this marker, ignore
-    if(marker_list[mlons[i]+"|"+mlats[i]])
+    var found=0;
+    for(var j=0; j<marker_list; j++) {
+      if((marker_list[i].lon==mlons[i])&&
+         (marker_list[i].lat==mlats[i]))
+        found=1;
+    }
+    if(found)
       continue;
 
     // add marker
@@ -42,12 +49,10 @@ function marker_permalink(permalink) {
   var mlons=[];
 
   // for each element in marker_list
-  for(var i in marker_list) {
-    var pos=i.split(/\|/);
-
+  for(var i=0; i<marker_list.length; i++) {
     // push them to the arrays
-    mlons.push(pos[0]);
-    mlats.push(pos[1]);
+    mlons.push(marker_list[i].lon);
+    mlats.push(marker_list[i].lat);
   }
 
   // if we don't have any markers in the list, return
@@ -69,12 +74,6 @@ function marker(lon, lat) {
       lonlat.lon=lonlat.x;
       lonlat.lat=lonlat.y;
     }
-
-    // save new position to marker_list
-    delete marker_list[this.lon+"|"+this.lat];
-    this.lon=lonlat.lon;
-    this.lat=lonlat.lat;
-    marker_list[this.lon+"|"+this.lat]=this;
 
     // update permalink
     update_permalink();
@@ -161,7 +160,10 @@ function marker(lon, lat) {
 
   // remove
   this.remove=function() {
-    delete marker_list[this.lon+"|"+this.lat];
+    for(var i=0; i<marker_list.length; i++) {
+      if(marker_list[i]==this)
+        marker_list=marker_list.slice(0, i).concat(marker_list.slice(i+1));
+    }
     drag_layer.unselect(this.feature);
     drag_layer.removeFeatures([this.feature]);
     update_permalink();
@@ -174,6 +176,7 @@ function marker(lon, lat) {
   // constructor
   this.lon=parseFloat(lon);
   this.lat=parseFloat(lat);
+  this.id="marker_"+marker_highest_id++;
 
   // create the new marker
   var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
@@ -183,7 +186,7 @@ function marker(lon, lat) {
   this.feature.ob=this;
 
   // save marker in marker_list
-  marker_list[lon+"|"+lat]=this;
+  marker_list.push(this);
 
   // force an update of the permalink
   update_permalink();
