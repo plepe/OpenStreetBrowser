@@ -108,7 +108,7 @@ function marker(lon, lat) {
 
   // show_details
   this.show_details=function() {
-    new info(this).show();
+    new info(this);
   }
 
   // update_details

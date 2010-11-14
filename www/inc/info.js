@@ -17,7 +17,39 @@
 //    .content: A string with the text, which will be added to a new div or a
 //      dom node, which will be append the the chapter (recommended)
 //   object is the reference to the geo object
+//
+// example: { head: "actions", weight: 5, content: "Some Action")
 function info(ob) {
+  // get_data
+  this.get_data=function() {
+    // get chapters
+    this.chapters=[];
+
+    if(this.ob.id) {
+      ajax("info", this.ob.id, this.get_data_callback.bind(this));
+    }
+
+    this.ob.info(this.chapters);
+    call_hooks("info", this.chapters, this.ob);
+
+    this.show();
+  }
+
+
+  // get_data_callback
+  this.get_data_callback=function(response) {
+    var data=response.return_value;
+
+    if(data===null) {
+      alert("no data\n"+response.responseText);
+      return;
+    }
+
+    this.chapters=this.chapters.concat(data);
+
+    this.show();
+  }
+
   // show
   this.show=function() {
     var ret="";
@@ -46,12 +78,7 @@ function info(ob) {
       dom_create_append_text(a, lang("info_back"));
     }
 
-    // get chapters
-    var chapters=[];
-    this.ob.info(chapters);
-    call_hooks("info", chapters, this.ob);
-
-    var data=merge_chapters(chapters);
+    var data=merge_chapters(this.chapters);
 
     this.div_chapter={};
     for(var i=0; i<data.length; i++) {
@@ -67,16 +94,22 @@ function info(ob) {
 
       for(var j=0; j<data[i].length; j++) {
         if(!data[i][j].content) {
+          var div=dom_create_append(this.div_chapter[head], "div");
+          data[i][j].content_node=div;
         }
         else if(typeof data[i][j].content=="string") {
           var div=dom_create_append(this.div_chapter[head], "div");
           div.innerHTML=data[i][j].content;
+          data[i][j].content_node=div;
         }
         else {
           this.div_chapter[head].appendChild(data[i][j].content);
+          data[i][j].content_node=data[i][j].content;
         }
       }
     }
+
+    this.data=data;
   }
 
   // hide
@@ -85,11 +118,16 @@ function info(ob) {
 
   // constructor
   this.ob=ob;
+  this.get_data();
+  this.show();
 }
 
 function merge_chapters(chapters) {
   var sort_chapters={};
   for(var i=0; i<chapters.length; i++) {
+    if(!chapters[i])
+      continue;
+
     var w=chapters[i].weight;
     if(!w)
       w=0;
