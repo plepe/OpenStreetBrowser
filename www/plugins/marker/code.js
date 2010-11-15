@@ -155,8 +155,8 @@ function marker(lon, lat) {
     var ret={};
 
     ret.icon_url="plugins/marker/icon.png";
-
     ret.name=this.name();
+    ret.href="#"+this.id;
 
     return ret;
   }
