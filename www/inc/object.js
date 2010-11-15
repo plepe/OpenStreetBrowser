@@ -1,3 +1,4 @@
+/// maybe deprecated code following
 var objects=[];
 var tag_to_place_type={ "relation": "rel", "way": "way", "node": "node", "coll": "coll" };
 
@@ -19,22 +20,6 @@ function load_objects_from_xml(src) {
       el=el.nextSibling;
     }
   }
-}
-
-function load_objects(id) {
-  ajax("get_objects", { "obs": id, "all": 1 }, load_object);
-}
-
-function load_object(data) {
-  var data=response.responseXML;
-
-  if(!data) {
-    alert("no data\n"+response.responseText);
-    return;
-  }
-
-  var osm=data.getElementsByTagName("osm");
-  load_objects_from_xml(osm);
 }
 
 function get_loaded_object(id) {

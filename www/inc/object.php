@@ -161,6 +161,18 @@ class object {
     $this->tags->get_xml($obj, $root);
 
   }
+
+  function export_dom($document) {
+    $match=$document->createElement("match");
+    $match->setAttribute("id", $this->id);
+
+    $tags=$this->tags->export_dom($document);
+    for($i=0; $i<sizeof($tags); $i++) {
+      $match->appendChild($tags[$i]);
+    }
+
+    return $match;
+  }
 }
 
 // elem can by either a string or an array. if id is a string it has to be
@@ -421,4 +433,14 @@ function ajax_object_load_more_tags($param) {
   }
 
   return $ret;
+}
+
+function ajax_load_object($param, $xml) {
+  $ob=load_object($param['ob']);
+
+  $result=dom_create_append($xml, "result", $xml);
+  $node=$ob->export_dom($xml);
+
+  if($node)
+    $result->appendChild($node);
 }

@@ -73,3 +73,41 @@ function osm_object(dom) {
   this.id=dom.getAttribute("id");
   this.id_split=split_semicolon(dom.getAttribute("id"));
 }
+
+function osm_object_load(id, callback) {
+  var ajax_callback=null;
+  if(callback)
+    ajax_callback=osm_object_load_callback.bind(this, (typeof id=="string"), callback);
+
+  var response=ajax("load_object", { "ob": id }, ajax_callback);
+
+  if(!callback)
+    return osm_object_load_callback((typeof id=="string"), null, response);
+}
+
+function osm_object_load_callback(single_object, callback, response) {
+  var data=response.responseXML;
+  var ret=[];
+
+  if(!data) {
+    alert("no data\n"+response.responseText);
+    return;
+  }
+
+  var matches=data.getElementsByTagName("match");
+  for(var i=0; i<matches.length; i++) {
+    ret.push(new osm_object(matches[i]));
+  }
+
+  if(single_object) {
+    if(ret.length)
+      ret=ret[0];
+    else
+      ret=null;
+  }
+
+  if(!callback)
+    return ret;
+  else
+    callback(ret);
+}
