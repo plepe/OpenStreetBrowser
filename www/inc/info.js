@@ -112,6 +112,31 @@ function info(ob) {
     this.data=data;
   }
 
+  // show_loading
+  this.show_loading=function() {
+    var ret="";
+    var info_content=document.getElementById("details_content");
+    dom_clean(info_content);
+
+    this.div=dom_create_append(info_content, "div");
+    this.div.className="object";
+
+    // header
+    var h1=dom_create_append(this.div, "h1");
+    dom_create_append_text(h1, ob);
+
+    // interaction
+    var actions=dom_create_append(this.div, "div");
+    var a=dom_create_append(actions, "a");
+    a.className="zoom";
+    a.href="#";
+    a.onclick=redraw;
+    dom_create_append_text(a, lang("info_back"));
+
+    var div=dom_create_append(this.div, "div");
+    div.innerHTML="<img src=\"img/ajax_loader.gif\" /> "+lang("loading");
+  }
+
   // hide
   this.hide=function() {
   }
@@ -124,6 +149,8 @@ function info(ob) {
   // search_object
   this.search_object=function(ob) {
     var search_ob=[];
+
+    this.show_loading();
 
     call_hooks("search_object", search_ob, ob, this.search_object_callback.bind(this));
 
