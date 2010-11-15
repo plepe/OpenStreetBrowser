@@ -26,6 +26,16 @@ function osm_object(dom) {
     callback(response.return_value);
   }
 
+  // name
+  this.name=function(param) {
+    return this.tags.get_lang("name");
+  }
+
+  // info
+  this.info=function(chapters) {
+    this.tags.info(chapters);
+  }
+
   // highlight_geo
   this.highlight_geo=function(param) {
     if(this.highlight) {

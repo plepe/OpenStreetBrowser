@@ -67,6 +67,18 @@ function tags(d) {
     data=d;
   }
 
+  this.info=function(chapters, lang) {
+    var ul=document.createElement("ul");
+
+    for(var key in data) {
+      var li=dom_create_append(ul, "li");
+
+      dom_create_append_text(li, key+": "+data[key]);
+    }
+
+    chapters.push({ head: 'tags', content: ul });
+  }
+
   this.xml=function(indent) {
     var ret="";
     if(!indent)
