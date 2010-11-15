@@ -61,7 +61,7 @@ function info(ob) {
 
     // header
     var h1=dom_create_append(this.div, "h1");
-    dom_create_append_text(h1, ob.name());
+    dom_create_append_text(h1, this.ob.name());
 
     // interaction
     var actions=dom_create_append(this.div, "div");
@@ -71,7 +71,7 @@ function info(ob) {
     a.onclick=redraw;
     dom_create_append_text(a, lang("info_back"));
 
-    if(ob.geo) {
+    if(this.ob.geo) {
       var a=dom_create_append(actions, "a");
       a.className="zoom";
       a.onclick=this.zoom_to_feature.bind.this();
@@ -116,10 +116,48 @@ function info(ob) {
   this.hide=function() {
   }
 
+  // not_found
+  this.not_found=function() {
+    alert("not found");
+  }
+
+  // search_object
+  this.search_object=function(ob) {
+    var search_ob=[];
+
+    call_hooks("search_object", search_ob, ob, this.search_object_callback.bind(this));
+
+    if(!search_ob.length)
+      return this.not_found();
+
+    for(var i=0; i<search_ob.length; i++) {
+      if(search_ob[i]) {
+        this.ob=search_ob[0];
+        this.get_data();
+        return;
+      }
+    }
+  }
+
+  this.search_object_callback=function(ob) {
+    if(!ob) {
+      this.not_found();
+      return;
+    }
+
+    this.ob=ob;
+    this.get_data();
+  }
+
   // constructor
-  this.ob=ob;
-  this.get_data();
-  this.show();
+  if(typeof ob=="string") {
+    this.ob=null;
+    this.search_object(ob);
+  }
+  else {
+    this.ob=ob;
+    this.get_data();
+  }
 }
 
 function merge_chapters(chapters) {

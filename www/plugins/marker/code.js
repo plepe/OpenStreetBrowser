@@ -214,6 +214,13 @@ function marker_add_context(pos) {
   drag_layer.select(m.feature);
 }
 
+function marker_search_object(ret, id) {
+  for(var i=0; i<marker_list.length; i++) {
+    if(marker_list[i].id==id)
+      ret.push(marker_list[i]);
+  }
+}
+
 function marker_init() {
   contextmenu_add("plugins/marker/icon.png", lang("marker:add_marker"), marker_add_context);
 }
@@ -221,3 +228,4 @@ function marker_init() {
 register_hook("get_permalink", marker_permalink);
 register_hook("hash_changed", marker_update);
 register_hook("init", marker_init);
+register_hook("search_object", marker_search_object);

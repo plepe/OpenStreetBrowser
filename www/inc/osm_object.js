@@ -111,3 +111,13 @@ function osm_object_load_callback(single_object, callback, response) {
   else
     callback(ret);
 }
+
+function osm_object_search_object(ret, id, callback) {
+  var id_parts=id.split("_");
+  if(in_array(id_parts[0], osm_object_valid_prefixes)) {
+    var ob=osm_object_load(id, callback);
+    ret.push(ob);
+  }
+}
+
+register_hook("search_object", osm_object_search_object);
