@@ -39,8 +39,8 @@ function osm_object(dom) {
   // highlight_geo
   this.highlight_geo=function(param) {
     if(this.highlight) {
-      if(this.tags.get("geo"))
-	this.highlight.add_geo([this.tags.get("geo")]);
+      if(this.tags.get("#geo"))
+	this.highlight.add_geo([this.tags.get("#geo")]);
     }
   }
 
@@ -49,12 +49,12 @@ function osm_object(dom) {
     var geos=[];
 
     if(!this.highlight) {
-      var geo=this.tags.get("geo");
+      var geo=this.tags.get("#geo");
       var geo_center=this.tags.get("#geo:center");
 
       if(!geo) {
 	// request from server
-	this.load_more_tags(["geo"], this.highlight_geo.bind(this));
+	this.load_more_tags(["#geo"], this.highlight_geo.bind(this));
       }
       else {
 	geos.push(geo);

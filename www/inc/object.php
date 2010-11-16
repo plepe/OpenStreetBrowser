@@ -428,8 +428,8 @@ function ajax_object_load_more_tags($param) {
   $tags=explode(",", $param['tags']);
   $ret=array();
 
-  if(in_array("geo", $tags)) {
-    $ret['geo']=$ob->data['way'];
+  if(in_array("#geo", $tags)) {
+    $ret['#geo']=$ob->data['way'];
   }
 
   return $ret;
@@ -437,6 +437,8 @@ function ajax_object_load_more_tags($param) {
 
 function ajax_load_object($param, $xml) {
   $ob=load_object($param['ob']);
+
+  $ob->tags->set("#geo", $ob->data['way']);
 
   $result=dom_create_append($xml, "result", $xml);
   $node=$ob->export_dom($xml);
