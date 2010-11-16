@@ -77,6 +77,40 @@ function osm_object(dom) {
     this.highlight.hide();
   }
 
+  // info_show_real
+  this.info_show_real=function() {
+    var way=new postgis(this.tags.get("#geo"));
+    this.info_features=way.geo();
+    set_feature_style(this.info_features,
+      {
+	strokeWidth: 2,
+	strokeColor: "black",
+	externalGraphic: "img/big_node.png",
+	graphicWidth: 11,
+	graphicHeight: 11,
+	graphicXOffset: -6,
+	graphicYOffset: -6,
+	fill: "none"
+      });
+    vector_layer.addFeatures(this.info_features);
+  }
+
+  // info_show
+  this.info_show=function(info_ob) {
+    if(!this.tags.get("#geo")) {
+      // request from server
+      this.load_more_tags(["#geo"], this.info_show_real.bind(this));
+    }
+    else
+      this.info_show_real();
+  }
+
+  // info_hide
+  this.info_hide=function(info_ob) {
+    if(this.info_features)
+      vector_layer.removeFeatures(this.info_features);
+  }
+
   // constructor
   this.tags=new tags();
   this.tags.readDOM(dom);
