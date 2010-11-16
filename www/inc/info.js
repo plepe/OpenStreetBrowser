@@ -18,7 +18,18 @@
 //      dom node, which will be append the the chapter (recommended)
 //   object is the reference to the geo object
 //
-// example: { head: "actions", weight: 5, content: "Some Action")
+//   chapter example: { head: "actions", weight: 5, content: "Some Action")
+// 
+// "info_show" (this, object)
+//   called when showing info about an object. Also a function in the object
+//   "info_show" will be called, if it exists.
+//
+// "info_hide" (this, object)
+//   called when hiding the information about the object. Also a function in
+//   the object "info_hide" will be called, if it exists.
+//
+var info_current=null;
+
 function info(ob) {
   // get_data
   this.get_data=function() {
@@ -33,6 +44,11 @@ function info(ob) {
     call_hooks("info", this.chapters, this.ob);
 
     this.show();
+
+    call_hooks("info_show", this, this.ob);
+
+    if(this.ob.info_show)
+      this.ob.info_show(this);
   }
 
 
@@ -139,6 +155,14 @@ function info(ob) {
 
   // hide
   this.hide=function() {
+    info_current=null;
+
+    unregister_hooks_object(this);
+
+    call_hooks("info_hide", this, this.ob);
+
+    if(this.ob&&this.ob.info_hide)
+      this.ob.info_hide(this);
   }
 
   // not_found
@@ -177,6 +201,12 @@ function info(ob) {
   }
 
   // constructor
+  if(info_current) {
+    // if an info is currently displayed, hide the old one
+    info_current.hide();
+  }
+  info_current=this;
+
   if(typeof ob=="string") {
     this.ob=null;
     this.search_object(ob);
@@ -185,6 +215,8 @@ function info(ob) {
     this.ob=ob;
     this.get_data();
   }
+
+  register_hook("unselect_all", this.hide.bind(this), this);
 }
 
 function merge_chapters(chapters) {
