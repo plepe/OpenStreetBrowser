@@ -66,10 +66,10 @@ function unregister_hooks_object(ob) {
     var hook=hooks_object[ob][i][0];
     var fun1=hooks_object[ob][i][1];
 
-    for(var j=0; j<intern_hooks[hook].length; j++) {
-      var fun2=intern_hooks[hook][j];
+    for(var j=0; j<hooks_intern[hook].length; j++) {
+      var fun2=hooks_intern[hook][j];
       if(fun1==fun2) {
-	intern_hooks[hook].splice(j, 1);
+	hooks_intern[hook].splice(j, 1);
 	j--;
       }
     }
