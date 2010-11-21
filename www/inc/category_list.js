@@ -133,6 +133,11 @@ function category_list_hash_changed(hash) {
   }
 
   // Check if a category is opened by permalink
+  if(hash&&hash.categories) {
+    var list=string_to_category_list(hash.categories);
+
+    category_root.open_list(list);
+  }
 }
 
 function category_list_to_string(hash) {
@@ -150,6 +155,50 @@ function category_list_to_string(hash) {
   }
 
   return list.join(",");
+}
+
+function string_to_category_list(str) {
+  var level=0;
+  var current_id="";
+  var list={};
+  var sub_text="";
+
+  if(str=="")
+    return {};
+
+  for(var i=0; i<str.length; i++) {
+    switch(str.substr(i, 1)) {
+      case "[":
+        if(level>0)
+          sub_text+=str[i];
+        level++;
+        break;
+      case "]":
+        level--;
+        if(level>0)
+          sub_text+=str[i];
+        break;
+      case ",":
+        if(level==0) {
+          list[current_id]=string_to_category_list(sub_text);
+          sub_text="";
+          current_id="";
+        }
+        else
+          sub_text+=str[i];
+        break;
+      default:
+        if(level==0)
+          current_id+=str[i];
+        else if(level>0)
+          sub_text+=str[i];
+    }
+  }
+
+  if(current_id!="")
+    list[current_id]=string_to_category_list(sub_text);
+
+  return list;
 }
 
 function category_list_permalink(permalink) {

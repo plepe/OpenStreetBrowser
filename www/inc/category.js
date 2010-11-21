@@ -108,6 +108,28 @@ function category(id) {
     return ret;
   }
 
+  // open_list - open categories according to list
+  this.open_list=function(list) {
+    for(var l in list) {
+      var found=false;
+
+      for(var i=0; i<this.sub_categories.length; i++) {
+        if(this.sub_categories[i].id==l) {
+          found=this.sub_categories[i];
+        }
+      }
+
+      if(!found) {
+        found=new category_osm(l);
+        this.register_sub_category(found);
+        found.attach_div(this.divs[0].sub);
+      }
+
+      found.open_category(this.divs[0].sub.child_divs[l]);
+      found.open_list(list[l]);
+    }
+  }
+
   // request_data - load new data from server
   this.request_data=function() {
   }
