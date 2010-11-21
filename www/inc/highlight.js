@@ -1,3 +1,4 @@
+var highlight_current_active={};
 var highlight_feature=[];
 var highlight_feature_timer;
 var highlight_next_no_zoom=false; // when set to true, next 'pan_to_highlight' does not zoom, only center
@@ -118,6 +119,10 @@ function unset_highlight() {
   vector_layer.removeFeatures(highlight_feature);
   highlight_feature=[];
   last_highlight_request=[];
+
+  for(var i in highlight_current_active) {
+    highlight_current_active[i].hide();
+  }
 }
 
 function highlight(geos, center) {
@@ -130,6 +135,8 @@ function highlight(geos, center) {
     vector_layer.addFeatures(this.features);
     vector_layer.addFeatures(this.center_feature);
     this.shown=true;
+
+    highlight_current_active.id=this;
   }
 
   // hide
@@ -137,6 +144,8 @@ function highlight(geos, center) {
     vector_layer.removeFeatures(this.features);
     vector_layer.removeFeatures(this.center_feature);
     this.shown=false;
+
+    delete(highlight_current_active.id);
   }
 
   // add_geo
