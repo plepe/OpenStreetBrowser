@@ -135,10 +135,29 @@ function category_list_hash_changed(hash) {
   // Check if a category is opened by permalink
 }
 
+function category_list_to_string(hash) {
+  if(!hash)
+    return "";
+
+  var list=[];
+  for(var i in hash) {
+    var x=category_list_to_string(hash[i]);
+
+    var ret=i;
+    if(x!="")
+      ret+="["+x+"]";
+    list.push(ret);
+  }
+
+  return list.join(",");
+}
+
 function category_list_permalink(permalink) {
   var a=1;
 
   var ret=category_root.visible_list();
+  ret=category_list_to_string(ret);
+
   permalink.categories=ret;
 }
 

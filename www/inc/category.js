@@ -92,24 +92,18 @@ function category(id) {
     return false;
   }
 
-  // visible_list - return recursively all visible categories
+  // visible_list - return recursively all visible sub categories
   this.visible_list=function() {
-    var ret="";
+    var ret={};
 
     if(!this.visible())
-      return;
+      return 0;
 
-    ret=this.id;
-
-    var list=[];
     for(var i=0; i<this.sub_categories.length; i++) {
       var state=this.sub_categories[i].visible_list();
       if(state)
-        list.push(state);
+        ret[this.sub_categories[i].id]=state;
     }
-
-    if(list.length)
-      ret+="["+list.join(",")+"]";
 
     return ret;
   }
