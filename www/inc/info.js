@@ -90,7 +90,7 @@ function info(ob) {
     if(this.ob.geo) {
       var a=dom_create_append(actions, "a");
       a.className="zoom";
-      a.onclick=this.zoom_to_feature.bind.this();
+      a.onclick=this.zoom_to_feature.bind(this);
       dom_create_append_text(a, lang("info_back"));
     }
 
