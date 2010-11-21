@@ -41,6 +41,8 @@ function category(id) {
     this.request_data();
 
     this.unhide_category(div);
+
+    update_permalink();
   }
 
   // close_category - call to close category
@@ -49,6 +51,8 @@ function category(id) {
 
     div.className="category_closed";
     div.open=false;
+
+    update_permalink();
   }
 
   // hide_category - when closing a this or a parent category, don't close
@@ -90,6 +94,44 @@ function category(id) {
 	return true;
 
     return false;
+  }
+
+  // visible_list - return recursively all visible sub categories
+  this.visible_list=function() {
+    var ret={};
+
+    if(!this.visible())
+      return 0;
+
+    for(var i=0; i<this.sub_categories.length; i++) {
+      var state=this.sub_categories[i].visible_list();
+      if(state)
+        ret[this.sub_categories[i].id]=state;
+    }
+
+    return ret;
+  }
+
+  // open_list - open categories according to list
+  this.open_list=function(list) {
+    for(var l in list) {
+      var found=false;
+
+      for(var i=0; i<this.sub_categories.length; i++) {
+        if(this.sub_categories[i].id==l) {
+          found=this.sub_categories[i];
+        }
+      }
+
+      if(!found) {
+        found=new category_osm(l);
+        this.register_sub_category(found);
+        found.attach_div(this.divs[0].sub);
+      }
+
+      found.open_category(this.divs[0].sub.child_divs[l]);
+      found.open_list(list[l]);
+    }
   }
 
   // request_data - load new data from server
