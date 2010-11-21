@@ -307,8 +307,21 @@ function category_osm(id) {
     if(list) {
       list=split_semicolon(list);
 
-      for(var i=0; i<list.length; i++)
-	this.sub_categories.push("osm:"+list[i]);
+      for(var i=0; i<list.length; i++) {
+        var found=false;
+
+        for(var j=0; j<this.sub_categories.length; j++) {
+          if(((typeof this.sub_categories[j]=="string")&&
+               (this.sub_categories[j]==list[i]))||
+             ((typeof this.sub_categories[j]=="object")&&
+               (this.sub_categories[j].id==list[i]))) {
+            found=true;
+          }
+        }
+
+        if(!found)
+          this.sub_categories.push("osm:"+list[i]);
+      }
     }
 
     this.write_div();
