@@ -124,7 +124,7 @@ function category(id) {
       }
 
       if(!found) {
-        found=new category_osm(l);
+        found=get_category("osm:"+l);
         this.register_sub_category(found);
         found.attach_div(this.divs[0].sub);
       }
