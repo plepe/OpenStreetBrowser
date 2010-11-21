@@ -41,6 +41,8 @@ function category(id) {
     this.request_data();
 
     this.unhide_category(div);
+
+    update_permalink();
   }
 
   // close_category - call to close category
@@ -49,6 +51,8 @@ function category(id) {
 
     div.className="category_closed";
     div.open=false;
+
+    update_permalink();
   }
 
   // hide_category - when closing a this or a parent category, don't close
