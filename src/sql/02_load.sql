@@ -6,6 +6,7 @@ declare
   _osm_type   text;
   _osm_id     bigint;
   _osm_typeid alias for $1;
+  rel_type    text;
 begin
   x:=string_to_array(_osm_typeid, '_');
   _osm_type:=x[1];
@@ -18,7 +19,13 @@ begin
 	    union
             select osm_way from osm_polygon where osm_id=_osm_typeid);
   elsif(_osm_type='rel') then
-    return (select osm_way from osm_rel where osm_id=_osm_typeid);
+    rel_type:=(select osm_tags->'type' from osm_rel where osm_id=_osm_typeid);
+    raise notice 'rel_type %', rel_type;
+    if rel_type='multipolygon' then
+      return (select osm_way from osm_polygon where osm_id=_osm_typeid);
+    else
+      return (select osm_way from osm_rel where osm_id=_osm_typeid);
+    end if;
   end if;
 
   return null;

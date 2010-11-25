@@ -436,8 +436,10 @@ function ajax_object_load_more_tags($param) {
   $tags=explode(",", $param['tags']);
   $ret=array();
 
-  if(in_array("#geo", $tags)) {
-    $ret['#geo']=$ob->data['way'];
+  foreach($tags as $t) {
+    if($v=$ob->tags->get($t)) {
+      $ret[$t]=$v;
+    }
   }
 
   return $ret;

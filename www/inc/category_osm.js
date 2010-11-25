@@ -150,9 +150,11 @@ function category_osm(id) {
 
     call_hooks("list_receive", data);
 
-    var request;
-    if(request=data.getElementsByTagName("request"))
-      request=request[0];
+    var request=data.getElementsByTagName("request");
+    if(!request.length)
+      return;
+
+    request=request[0];
     var viewbox=request.getAttribute("viewbox");
 
     var cats=data.getElementsByTagName("category");
