@@ -93,6 +93,10 @@ function osm_object(dom) {
 	fill: "none"
       });
     vector_layer.addFeatures(this.info_features);
+
+    var center=new postgis(this.tags.get("#geo:center")).geo();
+    if(center[0]&&center[0].geometry)
+      pan_to_highlight(center[0].geometry.x, center[0].geometry.y, 15);
   }
 
   // info_show
