@@ -19,6 +19,9 @@ function state_info_list_receive(data) {
   if(request=data.getElementsByTagName("request"))
     request=request[0];
 
+  if(!request)
+    return;
+
   var t=request.getAttribute("state");
   if(!t)
     return;
