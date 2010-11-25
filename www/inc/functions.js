@@ -263,3 +263,18 @@ function in_array (needle, haystack, argStrict) {
 
     return false;
 }
+
+function isDom(obj)
+{
+ var elm = document.createElement('div');
+ try
+ {
+ elm.appendChild(obj);
+ }
+ catch (e)
+ {
+ return false;
+ }
+
+ return true;
+}

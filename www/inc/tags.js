@@ -69,11 +69,21 @@ function tags(d) {
 
   this.info=function(chapters, lang) {
     var ul=document.createElement("ul");
+    var disp=new clone(this);
 
-    for(var key in data) {
+    call_hooks("info_tags_show", disp);
+
+    disp=disp.data();
+    for(var key in disp) {
       var li=dom_create_append(ul, "li");
 
-      dom_create_append_text(li, key+": "+data[key]);
+      if(isDom(disp[key])) {
+        dom_create_append_text(li, key+": ");
+        li.appendChild(disp[key]);
+      }
+      else {
+        dom_create_append_text(li, key+": "+disp[key]);
+      }
     }
 
     chapters.push({ head: 'tags', content: ul });
