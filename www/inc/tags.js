@@ -69,11 +69,10 @@ function tags(d) {
 
   this.info=function(chapters, lang) {
     var ul=document.createElement("ul");
-    var disp=new clone(this);
+    var disp=new clone(data);
 
-    call_hooks("info_tags_show", disp);
+    call_hooks("info_tags_show", disp, this);
 
-    disp=disp.data();
     for(var key in disp) {
       var li=dom_create_append(ul, "li");
 
