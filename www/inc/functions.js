@@ -161,29 +161,6 @@ function weight_sort(arr) {
   return ret2;
 }
 
-function dom_create_append(parent, type, xml) {
-  if(!xml)
-    xml=document;
-
-  var x=xml.createElement(type);
-  parent.appendChild(x);
-  return x;
-}
-
-function dom_create_append_text(parent, text, xml) {
-  if(!xml)
-    xml=document;
-
-  var x=xml.createTextNode(text);
-  parent.appendChild(x);
-  return x;
-}
-
-function dom_clean(parent) {
-  while(parent.firstChild)
-    parent.removeChild(parent.firstChild);
-}
-
 // Source: http://www.hardcode.nl/subcategory_1/article_414-copy-or-clone-javascript-array-object
 // use as: var b=new clone(a);
 function clone(source) {
@@ -262,19 +239,4 @@ function in_array (needle, haystack, argStrict) {
     }
 
     return false;
-}
-
-function isDom(obj)
-{
- var elm = document.createElement('div');
- try
- {
- elm.appendChild(obj);
- }
- catch (e)
- {
- return false;
- }
-
- return true;
 }

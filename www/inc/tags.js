@@ -77,7 +77,7 @@ function tags(d) {
     for(var key in disp) {
       var li=dom_create_append(ul, "li");
 
-      if(isDom(disp[key])) {
+      if(is_dom(disp[key])) {
         dom_create_append_text(li, key+": ");
         li.appendChild(disp[key]);
       }
