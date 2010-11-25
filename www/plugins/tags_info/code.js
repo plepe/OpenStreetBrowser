@@ -1,4 +1,5 @@
-function tags_info_show(disp, tags) {
+/*
+function tags_info_show_EXAMPLE(disp, tags) {
   // show an additional tag
   disp.foo="bar";
 
@@ -12,6 +13,16 @@ function tags_info_show(disp, tags) {
   var b=document.createElement("b");
   dom_create_append_text(b, tags.get("name"));
   disp.name=b;
+}
+*/
+
+function tags_info_show(disp, tags) {
+  // Hide all #geo-tags
+  for(var i in disp) {
+    if((i=="#geo")||(i.match(/^#geo:/))) {
+      delete(disp[i]);
+    }
+  }
 }
 
 register_hook("info_tags_show", tags_info_show);

@@ -71,6 +71,7 @@ function tags(d) {
     var ul=document.createElement("ul");
     var disp=new clone(data);
 
+    // See plugin Tags Info how to handle this hook
     call_hooks("info_tags_show", disp, this);
 
     for(var key in disp) {
