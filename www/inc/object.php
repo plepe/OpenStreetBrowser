@@ -261,8 +261,9 @@ function load_object($elem=0, $tags=null) {
   }
 
   // load data if necessary
-  if(!$elem) {
-    $qry="select astext(load_geo('$id')) as way";
+  $add_tags=array();
+  if(!defined($elem)) {
+    $qry="select astext(way) as \"way\", astext(way) as \"#geo\", astext(ST_Centroid(way)) as \"#geo:center\" from (select load_geo('$id') as way) x";
 /*    switch($object_place_type) {
       case "node":
         $qry="select astext(osm_way) as way from osm_nodes where osm_id='$id'";
@@ -280,6 +281,11 @@ function load_object($elem=0, $tags=null) {
 
     $res=sql_query($qry);
     $elem=pg_fetch_assoc($res);
+
+    foreach($elem as $k=>$v) {
+      if(substr($k, 0, 1)=="#")
+        $add_tags[$k]=$v;
+    }
   }
 
   if(!$elem)
@@ -314,6 +320,8 @@ function load_object($elem=0, $tags=null) {
     while($elemt=pg_fetch_assoc($rest)) {
       $tags[$elemt[k]]=$elemt[v];
     }
+
+    $tags=array_merge($tags, $add_tags);
 
     $elem[tags]=new tags($tags);
   }
@@ -437,8 +445,6 @@ function ajax_object_load_more_tags($param) {
 
 function ajax_load_object($param, $xml) {
   $ob=load_object($param['ob']);
-
-  $ob->tags->set("#geo", $ob->data['way']);
 
   $result=dom_create_append($xml, "result", $xml);
   $node=$ob->export_dom($xml);
