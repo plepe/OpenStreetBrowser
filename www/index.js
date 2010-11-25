@@ -155,17 +155,7 @@ function redraw() {
     real_search(x.substr(7));
   }
   else {
-    var param={"obj": x};
-    call_hooks("request_details", param);
-    ajax("details", param, call_back);
-
-    var details_content=document.getElementById("details_content");
-    var details=document.getElementById("details");
-//    var map_div=document.getElementById("map");
-
-    details_content.innerHTML="<div class=\"loading\"><img src=\"img/ajax_loader.gif\" /> "+t("loading")+"</div>";
-    //map_key.className="info_hidden";
-    details.className="info_loading";
+    new info(x);
   }
 
   if(location_params.lat&&location_params.lon) {

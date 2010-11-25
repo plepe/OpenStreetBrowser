@@ -82,4 +82,5 @@ $basemaps=array(
 // contour - Contour Shading (DE/AT/CH only)
 // overlays - Additional overlays
 // cloudmade_basemap - Add the default cloudmade basemap
+// tags_info - Change display of tags in info
 // info_navigation - Navigate to currently shown info

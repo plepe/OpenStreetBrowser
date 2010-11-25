@@ -22,6 +22,7 @@ $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";
 $lang_str["nothing_found"]         =array( "nothing found" );
 $lang_str["loading"]               =array( "Loading..." );
+$lang_str["more"]                  ="more";
 
 // Headings
 $lang_str["head:general_info"]="General Information";
@@ -46,6 +47,7 @@ $lang_str["head:routing"]="Routing";
 $lang_str["head:search"]="Search";
 $lang_str["head:actions"]=array("Action", "Actions");
 $lang_str["head:location"]         ="Location";
+$lang_str["head:tags"]=array("Tag", "Tags");
 
 $lang_str["action_browse"]="browse in OSM";
 $lang_str["action_edit"]="edit in OSM";
@@ -79,7 +81,7 @@ $lang_str["main:donate"]="Donate";
 $lang_str["main:licence"]="Map Data: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributors | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">contributors</a>";
 $lang_str["main:permalink"]="Permalink";
 
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'>".lang("info_back")."</a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
+$lang_str["help:no_object"]="No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 $lang_str["start:choose"]          =array( "Choose map view" );
 $lang_str["start:geolocation"]     =array( "get geolocation" );

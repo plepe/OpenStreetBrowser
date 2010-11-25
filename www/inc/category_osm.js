@@ -15,7 +15,7 @@ function category_osm(id) {
 
     if(this.result&&this.result.viewbox==viewbox)
       return;
-    
+
     if(!div.open)
       return;
 
@@ -124,7 +124,7 @@ function category_osm(id) {
       this.write_div();
       return;
     }
-    if(!more) {
+    if((!more)||(!this.result)) {
       this.result=new this.result_ob(this);
     }
 
@@ -259,10 +259,14 @@ function category_osm(id) {
     if((recv_version)&&(recv_version!=this.version)) {
       // save received data to be processed after loading correct version
       this.recv_pending=[ dom, viewbox, this.result ];
-
       this.result=0;
 
       this.load_def(recv_version);
+      return;
+    }
+
+    if(!this.result) {
+      alert("Result object vanished");
       return;
     }
 

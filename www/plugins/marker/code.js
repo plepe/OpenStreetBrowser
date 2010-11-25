@@ -65,6 +65,9 @@ function marker_permalink(permalink) {
 }
 
 function marker(lon, lat) {
+  this.inheritFrom=geo_object;
+  this.inheritFrom();
+
   // finish_drag
   this.finish_drag=function(pos) {
     // calculate lonlat of new position
@@ -105,32 +108,7 @@ function marker(lon, lat) {
 
   // show_details
   this.show_details=function() {
-    var ret="";
-    var info_content=document.getElementById("details_content");
-
-    dom_clean(info_content);
-    var div=dom_create_append(info_content, "div");
-    div.className="object";
-
-    var head=dom_create_append(div, "h1");
-    dom_create_append_text(head, lang("marker:name"));
-
-    var div1=dom_create_append(div, "div");
-    div1.className="obj_actions";
-    div1.innerHTML="<a class='zoom' href='#' onClick='redraw()'>"+lang("info_back")+"</a><br>\n";
-
-    var head=dom_create_append(div, "h2");
-    dom_create_append_text(head, lang("head:location", 1));
-    this.details_location=dom_create_append(div, "ul");
-    this.update_details();
-
-    var head=dom_create_append(div, "h2");
-    dom_create_append_text(head, lang("head:actions"));
-    var ul=dom_create_append(div, "ul");
-    var li=dom_create_append(ul, "li");
-    var a=dom_create_append(li, "a");
-    dom_create_append_text(a, lang("marker:action_remove"));
-    a.onclick=this.remove.bind(this);
+    new info(this);
   }
 
   // update_details
@@ -145,17 +123,42 @@ function marker(lon, lat) {
     dom_create_append_text(li, lang("latitude")+": "+this.lat.toFixed(5));
   }
 
+  // name
+  this.name=function() {
+    return lang("marker:name")+" "+
+      this.lat.toFixed(5)+"/"+
+      this.lon.toFixed(5);
+  }
+
+  // info
+  this.info=function(chapters) {
+    this.details_location=document.createElement("ul");
+    this.update_details();
+    chapters.push({
+      head: "location",
+      weight: -1,
+      content: this.details_location
+    });
+
+    var a=document.createElement("a");
+    dom_create_append_text(a, lang("marker:action_remove"));
+    a.onclick=this.remove.bind(this);
+    chapters.push({
+      head: "actions",
+      weight: 1,
+      content: a
+    });
+  }
+
   // write_list
   this.write_list=function(ul) {
-    var li=dom_create_append(ul, "li");
-    li.style.listStyleImage="url('plugins/marker/icon.png')";
+    var ret={};
 
-    var a=dom_create_append(li, "a");
-    //a.href="marker_";
+    ret.icon_url="plugins/marker/icon.png";
+    ret.name=this.name();
+    ret.href="#"+this.id;
 
-    dom_create_append_text(a, lang("marker:name")+" "+
-      this.lat.toFixed(5)+"/"+
-      this.lon.toFixed(5));
+    return ret;
   }
 
   // remove
@@ -174,6 +177,9 @@ function marker(lon, lat) {
   }
 
   // constructor
+  this.id="marker"; // TODO: should be unique
+  this.type="marker";
+
   this.lon=parseFloat(lon);
   this.lat=parseFloat(lat);
   this.id="marker_"+marker_highest_id++;
@@ -208,6 +214,13 @@ function marker_add_context(pos) {
   drag_layer.select(m.feature);
 }
 
+function marker_search_object(ret, id) {
+  for(var i=0; i<marker_list.length; i++) {
+    if(marker_list[i].id==id)
+      ret.push(marker_list[i]);
+  }
+}
+
 function marker_init() {
   contextmenu_add("plugins/marker/icon.png", lang("marker:add_marker"), marker_add_context);
 }
@@ -215,3 +228,4 @@ function marker_init() {
 register_hook("get_permalink", marker_permalink);
 register_hook("hash_changed", marker_update);
 register_hook("init", marker_init);
+register_hook("search_object", marker_search_object);

@@ -105,48 +105,6 @@ function ajax_details($param, $xml) {
 
 }
 
-function ajax_load_object($param, $xml) {
-  global $load_xml;
-  //$ob=load_element($param[obj]);
-  /*
-  $obj=explode("_", $param[obj]);
-
-  switch($obj[0]) {
-    case "relation":
-    case "rel":
-    case "route":
-      $ob=load_relation($obj[1]);
-      //return route_info($obj[1]);
-      break;
-    case "node":
-//      return stop_info($obj[1]);
-      $ob=load_node($obj[1]);
-      break;
-  }
-  */
-
-  //foreach($param[obj] as $p)
-  $load_xml=$param[obj];
-
-  $osm=$xml->createElement("osm");
-  $ret=$xml->createElement("result");
-  $osm->setAttribute("generator", "PublicTransport OSM");
-  $ret->appendChild($osm);
-  $xml->appendChild($ret);
-
-//  $load_xml[]=$param[obj];
-  objects_to_xml($load_xml, $xml, $osm, 1);
-
-  $req=$xml->createElement("request");
-  $ret->appendChild($req);
-
-  foreach($param[obj] as $p) {
-    $r=$xml->createElement("obj");
-    $r->setAttribute("id", $p);
-    $req->appendChild($r);
-  }
-}
-
 function ajax_get_mapkey($param, $xml) {
   $mapkey=new map_key();
   $ret=$mapkey->show_info($param);

@@ -67,6 +67,28 @@ function tags(d) {
     data=d;
   }
 
+  this.info=function(chapters, lang) {
+    var ul=document.createElement("ul");
+    var disp=new clone(data);
+
+    // See plugin Tags Info how to handle this hook
+    call_hooks("info_tags_show", disp, this);
+
+    for(var key in disp) {
+      var li=dom_create_append(ul, "li");
+
+      if(isDom(disp[key])) {
+        dom_create_append_text(li, key+": ");
+        li.appendChild(disp[key]);
+      }
+      else {
+        dom_create_append_text(li, key+": "+disp[key]);
+      }
+    }
+
+    chapters.push({ head: 'tags', content: ul });
+  }
+
   this.xml=function(indent) {
     var ret="";
     if(!indent)

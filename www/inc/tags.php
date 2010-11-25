@@ -294,6 +294,20 @@ class tags {
 
     return $ret;
   }
+
+  function export_dom($document) {
+    $ret=array();
+
+    foreach($this->data as $key=>$value) {
+      $tag=$document->createElement("tag");
+      $tag->setAttribute("k", $key);
+      $tag->setAttribute("v", $value);
+
+      $ret[]=$tag;
+    }
+
+    return $ret;
+  }
 }
 
 function parse_array($text, $prefix="") {
