@@ -49,7 +49,7 @@ function ajax(funcname, param, callback) {
 
     var ret=this.xmldata.getElementsByTagName("return");
     if(ret.length) {
-      var ret=json_parse(ret[0].firstChild.nodeValue);
+      var ret=json_decode(ret[0].firstChild.nodeValue);
       req.return_value=ret;
     }
   }
