@@ -41,7 +41,13 @@ $return=$fun($_REQUEST["param"], $xml);
 if(!$xml->firstChild) {
   $res=dom_create_append($xml, "result", $xml);
   $ret=dom_create_append($res, "return", $xml);
-  dom_create_append_text($ret, json_encode($return), $xml);
+
+  $return=json_split(json_encode($return));
+
+  foreach($return as $r) {
+    $part=dom_create_append($ret, "part", $xml);
+    dom_create_append_text($part, $r, $xml);
+  }
 }
 call_hooks("xml_done", $xml);
 print $xml->saveXML();
