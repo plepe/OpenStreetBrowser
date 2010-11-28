@@ -115,6 +115,25 @@ function osm_object(dom) {
       vector_layer.removeFeatures(this.info_features);
   }
 
+  // show_element
+  this.list_element=function() {
+    var li=document.createElement("li");
+    li.className="list";
+
+    // href
+    var a=dom_create_append(li, "a");
+    if(this.id)
+      a.href="#"+this.id;
+
+    a.onmouseover=this.set_highlight.bind(this);
+    a.onmouseout=this.unset_highlight.bind(this);
+
+    // name
+    dom_create_append_text(a, this.name());
+
+    return li;
+  }
+
   // constructor
   this.tags=new tags();
   this.tags.readDOM(dom);

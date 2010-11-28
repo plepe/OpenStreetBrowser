@@ -44,9 +44,9 @@ function whats_here(lonlat) {
 
     var match=result.firstChild;
     while(match) {
-      var li=dom_create_append(ul, "li");
       var osm=new osm_object(match);
-      dom_create_append_text(li, osm.name());
+
+      ul.appendChild(osm.list_element());
 
       match=match.nextSibling;
     }
