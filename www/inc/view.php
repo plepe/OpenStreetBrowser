@@ -7,81 +7,55 @@ function find_objects($param) {
   $dist_mul=(19-$param[zoom])*(19-$param[zoom]);
   $dist=5*$dist_mul;
 
-  $ret.="<a class='zoom' onClick='redraw()' href='#'>".lang("info_back")."</a><br>\n";
-  $ret.=lang("search_process")."<br/>";
   $poly="PolyFromText('POLYGON((".
     ($param[lon]-$dist)." ".($param[lat]-$dist).",".
     ($param[lon]-$dist)." ".($param[lat]+$dist).",".
     ($param[lon]+$dist)." ".($param[lat]+$dist).",".
     ($param[lon]+$dist)." ".($param[lat]-$dist).",".
     ($param[lon]-$dist)." ".($param[lat]-$dist)."))', 900913)";
-  $distance="Distance(way, GeometryFromText('POINT($param[lon] $param[lat])', 900913))";
+  $distance="Distance(osm_way, GeometryFromText('POINT($param[lon] $param[lat])', 900913))";
 
-  $qry="select element, (CASE WHEN id<0 THEN (select member_id from relation_members where relation_id=-id and member_role='outer' limit 1) ELSE id END), distance, way_area, instead from (".
-    "select 'way' as element, 2 as r_type, osm_id as id, way, $distance-1.5*$dist_mul as distance, 1 as way_area, 
-    (select 'coll_' || coll_id from coll_members left join planet_osm_colls on coll_id=id where member_id=osm_id and member_type='W' and type='street')
-     as instead
-      from planet_osm_line ".
-    " union ".
-    "select 'node' as element, 1 as r_type, osm_id as id, way, $distance-4*$dist_mul as distance, 0 as way_area, null as instead
-      from planet_osm_point ".
-    " union ".
-    "select 'way' as element, 2 as r_type, osm_id as id, way, $distance as distance, way_area, null as instead ".
-    "from planet_osm_polygon ".
-    ") as t1 ".
-    "where way&&$poly and distance<'$dist' order by distance";
+  $qry="select *, astext(ST_Centroid(osm_way)) as \"#geo:center\", $distance as \"#distance\" from (".
+    "select osm_id, osm_tags, osm_way, 1 as \"#area\" from osm_point where osm_way&&$poly".
+    " union all ".
+    "select osm_id, osm_tags, osm_way, ST_Length(osm_way) as \"#area\" from osm_line where osm_way&&$poly".
+    " union all ".
+    "select osm_id, osm_tags, osm_way, ST_Area(osm_way) as \"#area\" from osm_polygon where osm_way&&$poly".
+    ") x order by \"#distance\" asc";
+
   $res=sql_query($qry);
-  $min_dist=$dist;
-  $min_distg0_ind=-1;
-  $min_way_area_s0=100000000000;
-  $min_way_area_ind=-1;
   while($elem=pg_fetch_assoc($res)) {
-    if($elem[id]) {
-      $list[]=$elem;
-
-      if($elem[distance]<$min_dist)
-	$min_dist=$elem[distance];
-      if(($elem[distance]>0)&&($min_distg0_ind==-1))
-	$min_distg0_ind=sizeof($list)-1;
-      if($elem[distance]<=0) {
-	if($elem[way_area]<$min_way_area_s0) {
-	  $min_way_area_s0=$elem[way_area];
-	  $min_way_area_ind=sizeof($list)-1;
-	}
-      }
+    $osm_tags=parse_hstore($elem['osm_tags']);
+    foreach($elem as $k=>$v) {
+      if(substr($k, 0, 1)=="#")
+        $osm_tags[$k]=$v;
     }
-  }
-/*  $ret.="min_dist $min_dist<br>min_distg0_ind $min_distg0_ind<br>min_way_area_s0 $min_way_area_s0<br>min_way_area_ind $min_way_area_ind<br>\n";
-  $ret.="<pre>".print_r($list, 1)."</pre>"; */
 
-  if(!sizeof($list))
-    return "<a class='zoom' onClick='redraw()' href='#'>".lang("info_back")."</a><br>\n".
-      lang("nothing_found");
-
-  $matches=0;
-  foreach($list as $elem) {
-    if(($elem[distance]==$min_dist)&&($elem[way_area]==$min_way_area_s0))
-      $matches++;
-  }
-
-  if($matches==1) {
-    $elem=$list[$min_way_area_ind];
-    if($elem[instead])
-      return "redirect $elem[instead]";
-    return "redirect $elem[element]_$elem[id]";
-  }
-
-  load_objects($list);
-
-  foreach($list as $l) {
-    $l1=$l;
-    if($l[instead])
-      $l1=$l[instead];
-    if($ob=load_object($l1)) {
-      $ret.=list_entry($ob->id, $ob->long_name()." - ".sprintf("%.0f", $l[distance]));
-      $load_xml[]=$ob->id;
-    }
+    $ret[]=array("id"=>$elem['osm_id'], "tags"=>new tags($osm_tags));
   }
 
   return $ret;
 }
+
+function ajax_find_objects($param, $xml) {
+  $ret=find_objects($param);
+
+  $result=$xml->createElement("result");
+
+  foreach($ret as $ob) {
+    $match=dom_create_append($result, "match", $xml);
+    foreach($ob as $k=>$v) {
+      if($k=="tags") {
+        $v=$v->export_dom($xml);
+        foreach($v as $v1)
+          $match->appendChild($v1);
+      }
+      else
+        $match->setAttribute($k, $v);
+    }
+  }
+
+  $xml->appendChild($result);
+}
+
+

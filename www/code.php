@@ -28,28 +28,6 @@ function ajax_load_list($bounds, $xml) {
   //objects_to_xml($load_xml, $xml, $osm, 1, $bounds);
 }
 
-function ajax_find_objects($param, $xml) {
-  global $load_xml;
-
-  $load_xml[]=$param[obj];
-
-  $ret=find_objects($param);
-  $text=$xml->createTextNode($ret);
-
-  $ret=$xml->createElement("result");
-  $value=$xml->createElement("text");
-  $value->appendChild($text);
-  $ret->appendChild($value);
-  $xml->appendChild($ret);
-
-  $osm=$xml->createElement("osm");
-  $osm->setAttribute("generator", "PublicTransport OSM");
-  $ret->appendChild($osm);
-
-  objects_to_xml($load_xml, $xml, $osm, 1);
-
-}
-
 $prefered_zoom_levels=array();
 function map_zoom($zoom) {
   global $prefered_zoom_levels;

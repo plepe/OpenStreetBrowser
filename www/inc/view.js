@@ -81,7 +81,10 @@ function view_click_delay(lon, lat) {
     category_request.abort();
   }
 
-  category_request=ajax("find_objects", { "left": x.left, "top": x.top, "right": x.right, "bottom": x.bottom, "zoom": map.zoom, "lon": lon, "lat": lat, "overlays": list_overlays() }, view_call_back);
+  var cat=category_root.visible_list();
+  cat=category_list_to_string(cat);
+
+  category_request=ajax("find_objects", { "zoom": map.zoom, "lon": lon, "lat": lat, "categories": cat }, view_call_back);
 }
 
 
