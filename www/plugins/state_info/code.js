@@ -32,7 +32,7 @@ function state_info_list_receive(data) {
     state_info_create_span();
 
   dom_clean(state_info_date);
-  dom_create_append_text(state_info_date, " "+(1900+t.getYear())+"-"+t.getMonth()+"-"+t.getDate());
+  dom_create_append_text(state_info_date, " "+(1900+t.getYear())+"-"+(t.getMonth()+1)+"-"+t.getDate());
 }
 
 register_hook("list_receive", state_info_list_receive);
