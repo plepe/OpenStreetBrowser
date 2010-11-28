@@ -48,6 +48,7 @@ $lang_str["head:search"]="Search";
 $lang_str["head:actions"]=array("Action", "Actions");
 $lang_str["head:location"]         ="Location";
 $lang_str["head:tags"]=array("Tag", "Tags");
+$lang_str["head:whats_here"]="What's here?";
 
 $lang_str["action_browse"]="browse in OSM";
 $lang_str["action_edit"]="edit in OSM";

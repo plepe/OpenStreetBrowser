@@ -1,4 +1,5 @@
 var click_override=null;
+var view_div;
 
 function view_call_back(response) {
   var data=response.responseXML;
@@ -9,11 +10,8 @@ function view_call_back(response) {
     return;
   }
 
-  var details=document.getElementById("details");
-  details.className="info";
-  dom_clean(details);
-
-  var ul=dom_create_append(details, "ul");
+  dom_clean(view_div);
+  var ul=dom_create_append(view_div, "ul");
 
   var result=data.getElementsByTagName("list");
   if(!result.length) {
@@ -69,9 +67,29 @@ function view_click_delay(lon, lat) {
   cat=category_list_to_string(cat);
 
   category_request=ajax("find_objects", { "zoom": map.zoom, "lon": lon, "lat": lat, "categories": cat }, view_call_back);
+  var lonlat = new OpenLayers.LonLat(lon, lat).transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
 
-  var details=document.getElementById("details");
-  details.innerHTML="Loading";
+  var details=document.getElementById("details_content");
+  dom_clean(details);
+
+  var div=dom_create_append(details, "div");
+  div.className="object";
+
+  var h1=dom_create_append(details, "h1");
+  dom_create_append_text(h1, lang("Position: ")+lonlat.lat.toFixed(5)+"/"+lonlat.lon.toFixed(5));
+
+  var actions=dom_create_append(details, "div");
+  var a=dom_create_append(actions, "a");
+  a.className="zoom";
+  a.href="#";
+  a.onclick=redraw;
+  dom_create_append_text(a, lang("info_back"));
+
+  var h2=dom_create_append(details, "h2");
+  dom_create_append_text(h2, lang("head:whats_here"));
+
+  view_div=dom_create_append(details, "div");
+  view_div.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
 
   call_hooks("view_click");
 }
