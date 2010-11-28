@@ -2,42 +2,34 @@ var click_override=null;
 
 function view_call_back(response) {
   var data=response.responseXML;
-  var map_div=document.getElementById("map");
   category_request=null;
-  map_div.style.cursor="default";
 
   if(!data) {
     alert("no data\n"+response.responseText);
     return;
   }
 
-  var text_node=data.getElementsByTagName("text");
+  var details=document.getElementById("details");
+  details.className="info";
+  dom_clean(details);
 
-  if(text_node&&text_node[0]) {
-    var t=get_content(text_node[0]);
-    if(t.substr(0, 8)=="redirect") {
-      location.hash="#"+t.substr(9);
-      highlight_next_no_zoom=true;
-      return;
-    }
+  var ul=dom_create_append(details, "ul");
+
+  var result=data.getElementsByTagName("list");
+  if(!result.length) {
+    alert("No result!");
+    return;
   }
+  result=result[0];
 
-  var info_content=document.getElementById("details_content");
-  var info=document.getElementById("details");
+  var match=result.firstChild;
+  while(match) {
+    var li=dom_create_append(ul, "li");
+    var osm=new osm_object(match);
+    dom_create_append_text(li, osm.name());
 
-  info.className="info";
-//  map_div.className="map";
-  if(text_node) {
-    if(!text_node[0])
-      show_msg("Returned data invalid", response.responseText);
-    var text=get_content(text_node[0]);
-    info_content.innerHTML=text;
+    match=match.nextSibling;
   }
-
-  check_overlays(data);
-
-  var osm=data.getElementsByTagName("osm");
-  load_objects_from_xml(osm);
 
   return;
 }
@@ -59,12 +51,6 @@ function view_click(event) {
 
   view_changed_last=now;
 
-  var map_div=document.getElementById("map");
-  map_div.style.cursor="progress";
-
-//  if(get_hash()!="")
-//    return 0;
-
   if(view_changed_timer)
     clearTimeout(view_changed_timer);
 
@@ -75,8 +61,6 @@ function view_click_delay(lon, lat) {
   last_location_hash="#";
   location.hash="#";
 
-  var x=map.calculateBounds();
-
   if(category_request) {
     category_request.abort();
   }
@@ -85,6 +69,9 @@ function view_click_delay(lon, lat) {
   cat=category_list_to_string(cat);
 
   category_request=ajax("find_objects", { "zoom": map.zoom, "lon": lon, "lat": lat, "categories": cat }, view_call_back);
+
+  var details=document.getElementById("details");
+  details.innerHTML="Loading";
+
+  call_hooks("view_click");
 }
-
-

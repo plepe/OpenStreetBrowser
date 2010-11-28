@@ -41,9 +41,10 @@ function ajax_find_objects($param, $xml) {
   $ret=find_objects($param);
 
   $result=$xml->createElement("result");
+  $list=dom_create_append($result, "list", $xml);
 
   foreach($ret as $ob) {
-    $match=dom_create_append($result, "match", $xml);
+    $match=dom_create_append($list, "match", $xml);
     foreach($ob as $k=>$v) {
       if($k=="tags") {
         $v=$v->export_dom($xml);
