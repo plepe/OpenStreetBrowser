@@ -84,3 +84,4 @@ $basemaps=array(
 // cloudmade_basemap - Add the default cloudmade basemap
 // tags_info - Change display of tags in info
 // info_navigation - Navigate to currently shown info
+// whats_here - Query OSM objects under cursor

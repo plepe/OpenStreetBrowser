@@ -1,6 +1,6 @@
 <?
 //include "../../render/config_queries.php";
-function find_objects($param) {
+function whats_here_find($param) {
   global $load_xml;
 //  global $query;
 
@@ -37,8 +37,8 @@ function find_objects($param) {
   return $ret;
 }
 
-function ajax_find_objects($param, $xml) {
-  $ret=find_objects($param);
+function ajax_whats_here_find($param, $xml) {
+  $ret=whats_here_find($param);
 
   $result=$xml->createElement("result");
   $list=dom_create_append($result, "list", $xml);
@@ -58,5 +58,6 @@ function ajax_find_objects($param, $xml) {
 
   $xml->appendChild($result);
 }
+
 
 
