@@ -265,6 +265,10 @@ BEGIN
     return false;
   end if;
 
+  if ST_IsEmpty(geom) then
+    return false;
+  end if;
+
   -- tags
   tags:=rel_assemble_tags(id);
   -- if only one outer polygon, merge its tags
