@@ -12,6 +12,7 @@ include "inc/category.php";
 include "inc/categories.php";
 include "inc/process_category.php";
 include "inc/functions.php";
+include "inc/dom.php";
 include "inc/css.php";
 include "inc/postgis.php";
 include "inc/git_obj.php";
