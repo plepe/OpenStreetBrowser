@@ -69,15 +69,15 @@ declare
   numval   float;
   unit_fac float;
 begin
-  if val ~ E'^([0-9\.,]+) *(.*)$' then
-    val_n:=substring(val from E'^([0-9\.,]+) *.*');
-    val_u:=substring(val from E'^[0-9\.,]+ *(.*)');
+  if val ~ E'^(-?[0-9\.,]+) *(.*)$' then
+    val_n:=substring(val from E'^(-?[0-9\.,]+) *.*');
+    val_u:=substring(val from E'^-?[0-9\.,]+ *(.*)');
 
-    if val_n similar to E'^[0-9]+$' then
+    if val_n ~ E'^-?[0-9]+$' then
       numval=cast(val_n as float);
-    elsif val_n similar to E'^[0-9]*\.[0-9]+$' then
+    elsif val_n ~ E'^-?[0-9]*\.[0-9]+$' then
       numval=cast(val_n as float);
-    elsif val_n similar to E'^[0-9]*,[0-9]+$' then
+    elsif val_n ~ E'^-?[0-9]*,[0-9]+$' then
       numval=cast(replace(val_n, ',', '.') as float);
     else
       return null;
@@ -95,6 +95,22 @@ begin
 end;
 $$ language 'plpgsql' immutable;
 
+create or replace function parse_number_or_0(text)
+  returns float
+  as $$
+declare
+  ret	float;
+begin
+  ret:=parse_number($1);
+  
+  if(ret is null) then
+    return 0;
+  else
+    return ret;
+  end if;
+end;
+$$ language 'plpgsql' immutable;
+
 create or replace function parse_highest_number(text)
   returns float
   as $$
@@ -106,6 +122,10 @@ declare
 begin
   val_list:=split_semicolon(val);
   highest:=-999999999;
+
+  if array_lower(val_list, 1) is null then
+    return null;
+  end if;
 
   for i in array_lower(val_list, 1)..array_upper(val_list, 1) loop
     ret:=parse_number(val_list[i]);
