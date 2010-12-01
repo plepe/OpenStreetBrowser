@@ -3,11 +3,13 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="geometry_field">osm_way</Parameter>
+      <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
-	(select way, name,
+	(select osm_way, osm_tags->'name' as "name",
 	  %SQL_bridge_tunnel%,
 	  %SQL_HIGHWAY_TYPE%
-	  from planet_osm_line
+	  from osm_line
 	  where %LAYER_WHERE%
 	  order by %SQL_highway_level% desc
 	) as tb1
@@ -20,11 +22,13 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="geometry_field">osm_way</Parameter>
+      <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
-	(select way, cast(' ' as text) as text,
+	(select osm_way, cast(' ' as text) as text,
 	  %SQL_bridge_tunnel%,
 	  %SQL_HIGHWAY_TYPE%
-	  from planet_osm_line
+	  from osm_line
 	  where %LAYER_WHERE%
 	  order by %SQL_highway_level% desc
 	) as tb1

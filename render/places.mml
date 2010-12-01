@@ -4,14 +4,16 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="geometry_field">osm_way</Parameter>
+      <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
-      (select name, name_en, (CASE 
-        WHEN "place"='city' AND "pop_cat"='L' THEN 'city_large'
-	WHEN "place"='city' AND "pop_cat"='M' THEN 'city_medium'
-	WHEN "place"='town' AND "pop_cat"='L' THEN 'town_large'
-	ELSE "place"
-      END) as place, "label" from planet_osm_place
-      where place in ('continent', 'country', 'state', 'city', 'region', 'town', 'island') order by %SQL_places_sort%) as places
+      (select /* place high */
+        osm_way,
+        osm_tags->'name' as "name",
+        osm_tags->'name:en' as "name_en",
+        %SQL_place%
+      from osm_point_place_extract
+      order by %SQL_places_sort%) as places
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
@@ -21,13 +23,17 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="geometry_field">osm_way</Parameter>
+      <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
-      (select name, name_en, (CASE 
-        WHEN "place"='city' AND "pop_cat"='L' THEN 'city_large'
-	WHEN "place"='city' AND "pop_cat"='M' THEN 'city_medium'
-	WHEN "place"='town' AND "pop_cat"='L' THEN 'town_large'
-	ELSE "place"
-      END) as place, "label" from planet_osm_place order by %SQL_places_sort%) as places
+      (select /* places_db */
+        osm_way,
+        osm_tags->'name' as "name",
+        osm_tags->'name:en' as "name_en",
+        %SQL_place%
+      from osm_point
+      where osm_tags?'place'
+      order by %SQL_places_sort%) as places
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>

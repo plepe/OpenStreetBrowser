@@ -222,8 +222,8 @@ $query['places_sort']=<<<EOT
        ELSE                          20
      END) ASC,
      (CASE
-       WHEN not osm_tags?>'population' THEN 0
-       ELSE                           osm_tags->'population'
+       WHEN not osm_tags?'population' THEN 0
+       ELSE parse_number(osm_tags->'population')
      END) DESC
 EOT;
 $query['shop']=<<<EOT
@@ -282,4 +282,87 @@ $query['bridge_tunnel']=<<<EOT
     WHEN osm_tags->'tunnel' in ('yes', 'true', '1') THEN 'yes' 
     ELSE 'no'
   END) as tunnel
+EOT;
+$query['water_area']=<<<EOT
+  (CASE
+    WHEN osm_tags?'waterway' THEN osm_tags->'waterway'
+    WHEN osm_tags?'landuse' THEN osm_tags->'landuse'
+    WHEN osm_tags?'natural' THEN osm_tags->'natural'
+  END)
+EOT;
+$query['rail']=<<<EOT
+  (CASE 
+    WHEN osm_tags->'railway' in ('tram', 'light_rail') THEN 'tram'
+    WHEN osm_tags->'railway' in ('rail', 'narrow_gauge', 'monorail', 'subway') THEN 'rail' 
+    END) as "railway",
+  (CASE WHEN osm_tags->'railway' in ('subway', 'tram', 'light_rail') THEN
+    (CASE
+      WHEN osm_tags->'tracks' in ('left', 'right') THEN osm_tags->'tracks'
+      WHEN osm_tags->'tracks' in ('1', 'single') THEN 'single'
+      WHEN osm_tags->'tracks' in ('3', '4', '5', '6') THEN  'multiple'
+      ELSE 'double' END) 
+  ELSE
+    (CASE
+      WHEN osm_tags->'tracks' in ('2', 'double') THEN 'double'
+      WHEN osm_tags->'tracks' in ('3', '4', '5', '6') THEN  'multiple'
+      ELSE 'single' END) END) as "tracks"
+EOT;
+$query['buildings']=<<<EOT
+ (CASE
+    WHEN osm_tags->'building' in ('no')
+      THEN null
+    WHEN osm_tags->'amenity' in ('place_of_worship')
+      THEN 'worship'
+    WHEN osm_tags->'highway' in ('toll_booth')
+      OR osm_tags->'railway' in ('station', 'platform')
+      OR osm_tags->'aeroway' in ('terminal', 'helipad')
+      OR osm_tags->'aerialway' in ('station')
+      OR osm_tags->'amenity' in ('ferry_terminal')
+      THEN 'road_amenities'
+    WHEN osm_tags->'barrier' in ('hedge', 'fence')
+      THEN 'nature_building'
+    WHEN osm_tags->'power' in ('generator')
+      OR osm_tags->'man_made' in ('gasometer', 'wasterwater_plant', 'watermill', 'water_tower', 'water_works', 'windmill', 'works', 'reservoir_covered')
+      THEN 'industrial'
+    WHEN osm_tags->'amenity' in ('college', 'cinema', 'kindergarten', 'library', 'school', 'university')
+      THEN 'education'
+    WHEN osm_tags->'amenity' in ('theatre', 'arts_centre', 'cinema', 'fountain', 'studio')
+      THEN 'culture'
+    WHEN osm_tags?'shop'
+      THEN 'shop'
+    WHEN osm_tags->'amenity' in ('hospital', 'emergency_phone', 'fire_station', 'police')
+      THEN 'emergency'
+    WHEN osm_tags->'amenity' in ('pharmacy', 'baby_hatch', 'dentist', 'doctors', 'veterinary')
+      THEN 'health'
+    WHEN osm_tags->'amenity' in ('government', 'gouvernment', 'public_building', 'court_house', 'embassy', 'prison', 'townhall')
+      THEN 'public'
+    WHEN osm_tags->'amenity' in ('post_office')
+      THEN 'communication'
+    WHEN osm_tags->'amenity' in ('hospital', 'baby_hatch', 'dentist', 'doctors', 'pharmacy', 'veterinary')
+      THEN 'public'
+    WHEN osm_tags->'tourism' in ('museum', 'artwork', 'attraction', 'viewpoint', 'theme_park', 'zoo')
+      THEN 'culture'
+    WHEN osm_tags?'military'
+      THEN 'military'
+    WHEN osm_tags?'historic'
+      THEN 'historic'
+    WHEN osm_tags->'building' in ('residental', 'residential', 'apartments', 'block', 'flats', 'appartments')
+       THEN 'residential'
+    WHEN osm_tags->'amenity' in ('bicycle_parking', 'bicycle_rental', 'shelter')
+      OR osm_tags->'leisure' in ('sports_centre', 'stadium', 'track', 'pitch', 'ice_rink')
+      OR osm_tags?'sport'
+      THEN 'sport'
+    ELSE
+      'default'
+  END) as "building"
+EOT;
+$query['place']=<<<EOT
+  (CASE 
+    WHEN osm_tags->'place'='country' AND parse_number_or_0(osm_tags->'population')>20000000 THEN 'country_large'
+    WHEN osm_tags->'place'='country' AND parse_number_or_0(osm_tags->'population')>1000000 THEN 'country_medium'
+    WHEN osm_tags->'place'='city' AND parse_number_or_0(osm_tags->'population')>1000000 THEN 'city_large'
+    WHEN osm_tags->'place'='city' AND parse_number_or_0(osm_tags->'population')>200000 THEN 'city_medium'
+    WHEN osm_tags->'place'='town' AND parse_number_or_0(osm_tags->'population')>30000 THEN 'town_large'
+    ELSE osm_tags->'place'
+  END) as "place"
 EOT;

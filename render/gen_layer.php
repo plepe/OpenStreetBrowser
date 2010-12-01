@@ -21,7 +21,9 @@ function fit($template, $num=0, $where=0) {
     $rep["%SQL_$k%"]=$sql;
   }
 
-  $rep["%LAYER_WHERE%"]="layer_level=$num";
+  $rep["%LAYER_WHERE%"]="parse_layer(osm_tags)=$num";
+  $rep["%LAYER%"]="$num";
+  $rep["%ROOT_PATH%"]=getenv('ROOT_PATH');
 
   return strtr($template, $rep);
 }
