@@ -1,7 +1,12 @@
 #!/usr/bin/php
 <?
 include("config_queries.php");
-$base    =file_get_contents("template_base.mml");
+if(sizeof($argv)<2) {
+  print "{$argv[0]} file\n";
+  exit;
+}
+
+$base    =file_get_contents($argv[1]);
 
 // When you add more keys here, don't forget to add these keys also to the 
 // layer detection in src/sql/02_layer.sql
@@ -24,6 +29,7 @@ function fit($template, $num=0, $where=0) {
   $rep["%LAYER_WHERE%"]="parse_layer(osm_tags)=$num";
   $rep["%LAYER%"]="$num";
   $rep["%ROOT_PATH%"]=getenv('ROOT_PATH');
+  $rep["%DB_NAME%"]=getenv('DB_NAME');
 
   return strtr($template, $rep);
 }
