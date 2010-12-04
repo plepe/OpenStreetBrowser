@@ -34,6 +34,6 @@ create index osm_polygon_water_idx on osm_polygon using gist(osm_way, osm_tags) 
 -- osm_point_place_extract
 create view osm_point_place_extract as
   select * from osm_point where
-    osm_tags->'place' in ('continent', 'country', 'state', 'city', 'region', 'town', 'island');
+    osm_tags->'place' in ('continent', 'country', 'state', 'city', 'county', 'region', 'town', 'island');
 create index osm_point_place_extract_idx on osm_point using gist(osm_way, osm_tags) where
-    osm_tags->'place' in ('continent', 'country', 'state', 'city', 'region', 'town', 'island');
+    osm_tags->'place' in ('continent', 'country', 'state', 'city', 'county', 'region', 'town', 'island');
