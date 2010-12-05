@@ -79,9 +79,10 @@ echo "BASE"
 echo "Layers"
 cd $ROOT_PATH/render
 ./gen_rotate_img.php
-./gen_layer.php > base.mml
-cascadenik-compile.py $ROOT_PATH/render/base.mml > $ROOT_PATH/render/base.xml
-$ROOT_PATH/src/update_xml $ROOT_PATH/render/base.xml
+./gen_layer.php template_base.mml > base.mml
+cascadenik-compile.py $ROOT_PATH/render/base.mml $ROOT_PATH/render/base_1.xml
+./mapnik_merge_layer.php base_1.xml > base_2.xml
+./mapnik_extract_datasource.php base_2.xml > base.xml
 echo "PT"
 cd $ROOT_PATH/render/img/rotate/src
 for i in *.svg ; do convert -background none $i ../`echo $i | sed "s/svg$/png/"` ; done

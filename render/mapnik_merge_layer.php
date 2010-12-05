@@ -20,7 +20,7 @@ while($node) {
   if(isset($node->tagName)&&($node->tagName=="Layer")) {
     $x=new DOMXPath($dom);
     $nl=$x->query("Datasource/Parameter[@name='table']", $node);
-    if($nl->length)
+    if($nl->length) {
       $layer_table=$nl->item(0)->firstChild->nodeValue;
 
       fprintf($stderr, strlen($layer_table)." ".strlen($last_layer_table)."\n");
