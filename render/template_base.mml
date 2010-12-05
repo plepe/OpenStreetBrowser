@@ -34,7 +34,7 @@
   <Layer class="landuse_extract" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
@@ -49,7 +49,7 @@
   <Layer class="landuse" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
@@ -64,7 +64,7 @@
   <Layer class="roads_extract" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
@@ -81,7 +81,7 @@
   <Layer class="roads_casing_end" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
@@ -100,7 +100,7 @@
   <Layer class="waterarea" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(select osm_tags->'name' as "name", osm_way, %SQL_water_area% as landuse from osm_polygon_water) as water</Parameter>
@@ -117,7 +117,7 @@
   <Layer class="roads_text" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
@@ -138,7 +138,7 @@
   <Layer class="rot_feature" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(select name, "highway" as type, way, 
@@ -151,7 +151,7 @@
   <Layer class="amenity" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(select name, way, 
@@ -165,7 +165,7 @@
   <!--<Layer class="amenity" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(select name, way as way, 
@@ -179,7 +179,7 @@
   <Layer class="area_text" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(select name, way, way_area, (CASE
@@ -201,7 +201,7 @@
   <Layer class="housenumber_lines" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(
@@ -216,7 +216,7 @@
   <Layer class="housenumbers" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(
@@ -230,7 +230,7 @@
   <Layer class="housenumbers" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(
@@ -244,7 +244,7 @@
   <Layer class="hn" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">

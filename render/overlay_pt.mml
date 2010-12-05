@@ -7,7 +7,7 @@
    <Layer class="routes" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
       (select way, 
          (array['local', 'suburban', 'urban', 'regional', 'national', 'international'])[max(CASE
@@ -60,7 +60,7 @@
    <Layer class="routes" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
       (select way, 
          (array['local', 'suburban', 'urban', 'regional', 'national', 'international'])[max(CASE
@@ -99,7 +99,7 @@
    <Layer class="routes_features" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
       (select way, 
          (array['local', 'suburban', 'urban', 'regional', 'national', 'international'])[max(CASE
@@ -153,7 +153,7 @@
    <Layer class="routes_features" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
       (select way, 
          (array['local', 'urban', 'regional', 'national', 'international'])[max(CASE
@@ -193,7 +193,7 @@
    <Layer class="stations_bbox" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
 	(select name, importance, bbox as way from planet_osm_stations) as stations
       </Parameter>
@@ -204,7 +204,7 @@
    <Layer class="stations_all" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
 	(select name, importance, way from planet_osm_point where
   (highway='bus_stop' or railway='tram_stop' or
@@ -220,7 +220,7 @@
    <Layer class="stops_p" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
 	(select angle_p as angle, type, importance, way, 
 	  (CASE WHEN direction=1 THEN 'forward'
@@ -236,7 +236,7 @@
    <Layer class="stops_n" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
 	(select angle_n as angle, type, importance, way,
 	  (CASE WHEN direction=1 THEN 'forward'
@@ -251,7 +251,7 @@
    <Layer class="stops_o" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
 	(select name, (CASE 
 	  WHEN railway in ('subway_entrance') THEN 'railway_'||"railway"
@@ -276,7 +276,7 @@
    <Layer class="stations_center" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
 	(select name, importance, center as way from planet_osm_stations) as stations
       </Parameter>
@@ -287,7 +287,7 @@
    <Layer class="stations_top" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
 	(select name, importance, top as way from planet_osm_stations) as stations
       </Parameter>
@@ -298,7 +298,7 @@
    <Layer class="stop_routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
       (select
         p.way, rm.member_id, r.route,
@@ -327,7 +327,7 @@
    <!-- <Layer class="stations_type" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">topline</Parameter>
       <Parameter name="table">
 	(select distinct t.coll_id, type, st.topline, st.importance from (
@@ -376,7 +376,7 @@
    <Layer class="pt_line" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
       (select 
         osm_id, name, ref,
@@ -399,7 +399,7 @@
     <StyleName>routes-text</StyleName>
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">__DBNAME__</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="table">
       (select route_refs as ref, way, importance, route, tunnel, bridge, highway, railway,
      	  (CASE
