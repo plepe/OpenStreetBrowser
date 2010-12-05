@@ -527,7 +527,7 @@ function build_mapnik_style($id, $data, $global_tags) {
 	    $columns[]=$def['columns'];
 	  }
 	}
-	if(in_array($table, array("point", "polygon"))) {
+	if(in_array($table, array("point", "polygon", "point_place_extract"))) {
 	  $def=mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_icon->appendChild($def['rule']);
@@ -602,7 +602,7 @@ function build_mapnik_style($id, $data, $global_tags) {
 	$map_layers['polygon_shape'][$importance][]=$style_shape;
 	$map_layers['polygon_shape'][$importance][]=$layer;
       }
-      if(in_array($table, array("point", "polygon"))) {
+      if(in_array($table, array("point", "polygon", "point_place_extract"))) {
 	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
 	$map_layers['point_icon'][$importance][]=$style_icon;
 	$map_layers['point_icon'][$importance][]=$layer;
