@@ -209,24 +209,24 @@
 .directions[oneway=backward][type=major][zoom>=15] {
   line-pattern-file: url('img/oneway_back.png');
 }
-.smoothness[highway_type=motorway][sub_type=t2][smoothness=impassable][zoom>=9][zoom<10],
-.smoothness[highway_type=motorway][sub_type=t4][smoothness=impassable][zoom>=9][zoom<10],
-.smoothness[highway_type=major][sub_type=t1][smoothness=impassable][zoom>=10][zoom<12],
-.smoothness[highway_type=major][sub_type=t2][smoothness=impassable][zoom>=10][zoom<12],
-.smoothness[highway_type=major][sub_type=t3][smoothness=impassable][zoom>=10][zoom<12],
-.smoothness[highway_type=major][sub_type=t4][smoothness=impassable][zoom>=11][zoom<13],
+.smoothness[highway_type=motorway][highway_sub_type=t2][smoothness=impassable][zoom>=9][zoom<10],
+.smoothness[highway_type=motorway][highway_sub_type=t4][smoothness=impassable][zoom>=9][zoom<10],
+.smoothness[highway_type=major][highway_sub_type=t1][smoothness=impassable][zoom>=10][zoom<12],
+.smoothness[highway_type=major][highway_sub_type=t2][smoothness=impassable][zoom>=10][zoom<12],
+.smoothness[highway_type=major][highway_sub_type=t3][smoothness=impassable][zoom>=10][zoom<12],
+.smoothness[highway_type=major][highway_sub_type=t4][smoothness=impassable][zoom>=11][zoom<13],
 .smoothness[highway_type=path][smoothness=impassable][zoom>=15][zoom<17]
 {
   line-pattern-file: url('img/smoothness/impassable-2.png');
 }
-.smoothness[highway_type=motorway][sub_type=t1][smoothness=impassable][zoom>=9][zoom<10],
-.smoothness[highway_type=motorway][sub_type=t2][smoothness=impassable][zoom>=10][zoom<13],
-.smoothness[highway_type=motorway][sub_type=t3][smoothness=impassable][zoom>=9][zoom<10],
-.smoothness[highway_type=motorway][sub_type=t4][smoothness=impassable][zoom>=10][zoom<13],
-.smoothness[highway_type=major][sub_type=t1][smoothness=impassable][zoom>=12][zoom<13],
-.smoothness[highway_type=major][sub_type=t2][smoothness=impassable][zoom>=12][zoom<15],
-.smoothness[highway_type=major][sub_type=t3][smoothness=impassable][zoom>=12][zoom<13],
-.smoothness[highway_type=major][sub_type=t4][smoothness=impassable][zoom>=13][zoom<14],
+.smoothness[highway_type=motorway][highway_sub_type=t1][smoothness=impassable][zoom>=9][zoom<10],
+.smoothness[highway_type=motorway][highway_sub_type=t2][smoothness=impassable][zoom>=10][zoom<13],
+.smoothness[highway_type=motorway][highway_sub_type=t3][smoothness=impassable][zoom>=9][zoom<10],
+.smoothness[highway_type=motorway][highway_sub_type=t4][smoothness=impassable][zoom>=10][zoom<13],
+.smoothness[highway_type=major][highway_sub_type=t1][smoothness=impassable][zoom>=12][zoom<13],
+.smoothness[highway_type=major][highway_sub_type=t2][smoothness=impassable][zoom>=12][zoom<15],
+.smoothness[highway_type=major][highway_sub_type=t3][smoothness=impassable][zoom>=12][zoom<13],
+.smoothness[highway_type=major][highway_sub_type=t4][smoothness=impassable][zoom>=13][zoom<14],
 .smoothness[highway_type=minor][smoothness=impassable][zoom>=14][zoom<15],
 .smoothness[highway_type=pedestrian][smoothness=impassable][zoom>=14][zoom<15],
 .smoothness[highway_type=service][smoothness=impassable][zoom>=15][zoom<16],
@@ -238,41 +238,41 @@
 {
   line-pattern-file: url('img/smoothness/impassable-5.png');
 }
-.smoothness[highway_type=motorway][sub_type=t1][smoothness=impassable][zoom>=10][zoom<13],
-.smoothness[highway_type=motorway][sub_type=t2][smoothness=impassable][zoom>=13][zoom<16],
-.smoothness[highway_type=motorway][sub_type=t3][smoothness=impassable][zoom>=10][zoom<13],
-.smoothness[highway_type=motorway][sub_type=t4][smoothness=impassable][zoom>=13][zoom<16],
-.smoothness[highway_type=major][sub_type=t1][smoothness=impassable][zoom>=13][zoom<15],
-.smoothness[highway_type=major][sub_type=t2][smoothness=impassable][zoom>=15][zoom<17],
-.smoothness[highway_type=major][sub_type=t3][smoothness=impassable][zoom>=13][zoom<15],
-.smoothness[highway_type=major][sub_type=t4][smoothness=impassable][zoom>=14][zoom<16],
+.smoothness[highway_type=motorway][highway_sub_type=t1][smoothness=impassable][zoom>=10][zoom<13],
+.smoothness[highway_type=motorway][highway_sub_type=t2][smoothness=impassable][zoom>=13][zoom<16],
+.smoothness[highway_type=motorway][highway_sub_type=t3][smoothness=impassable][zoom>=10][zoom<13],
+.smoothness[highway_type=motorway][highway_sub_type=t4][smoothness=impassable][zoom>=13][zoom<16],
+.smoothness[highway_type=major][highway_sub_type=t1][smoothness=impassable][zoom>=13][zoom<15],
+.smoothness[highway_type=major][highway_sub_type=t2][smoothness=impassable][zoom>=15][zoom<17],
+.smoothness[highway_type=major][highway_sub_type=t3][smoothness=impassable][zoom>=13][zoom<15],
+.smoothness[highway_type=major][highway_sub_type=t4][smoothness=impassable][zoom>=14][zoom<16],
 .smoothness[highway_type=minor][smoothness=impassable][zoom>=15][zoom<16],
 .smoothness[highway_type=pedestrian][smoothness=impassable][zoom>=15][zoom<16]
 {
   line-pattern-file: url('img/smoothness/impassable-6.png');
 }
-.smoothness[highway_type=motorway][sub_type=t1][zoom>=13][zoom<17],
-.smoothness[highway_type=motorway][sub_type=t3][zoom>=13][zoom<17],
-.smoothness[highway_type=motorway][sub_type=t2][zoom>=16],
-.smoothness[highway_type=motorway][sub_type=t4][zoom>=16],
-.smoothness[highway_type=major][sub_type=t1][zoom>=15][zoom<17],
-.smoothness[highway_type=major][sub_type=t2][zoom>=17],
-.smoothness[highway_type=major][sub_type=t3][zoom>=15][zoom<17],
-.smoothness[highway_type=major][sub_type=t4][zoom>=16],
+.smoothness[highway_type=motorway][highway_sub_type=t1][zoom>=13][zoom<17],
+.smoothness[highway_type=motorway][highway_sub_type=t3][zoom>=13][zoom<17],
+.smoothness[highway_type=motorway][highway_sub_type=t2][zoom>=16],
+.smoothness[highway_type=motorway][highway_sub_type=t4][zoom>=16],
+.smoothness[highway_type=major][highway_sub_type=t1][zoom>=15][zoom<17],
+.smoothness[highway_type=major][highway_sub_type=t2][zoom>=17],
+.smoothness[highway_type=major][highway_sub_type=t3][zoom>=15][zoom<17],
+.smoothness[highway_type=major][highway_sub_type=t4][zoom>=16],
 .smoothness[highway_type=minor][zoom>=16],
 .smoothness[highway_type=pedestrian][zoom>=16]
 {
   line-pattern-file: url('img/smoothness/impassable-9.png');
 }
-.smoothness[highway_type=motorway][sub_type=t1][zoom>=16][zoom<18],
-.smoothness[highway_type=motorway][sub_type=t3][zoom>=16][zoom<18],
-.smoothness[highway_type=major][sub_type=t1][zoom>=17],
-.smoothness[highway_type=major][sub_type=t3][zoom>=17]
+.smoothness[highway_type=motorway][highway_sub_type=t1][zoom>=16][zoom<18],
+.smoothness[highway_type=motorway][highway_sub_type=t3][zoom>=16][zoom<18],
+.smoothness[highway_type=major][highway_sub_type=t1][zoom>=17],
+.smoothness[highway_type=major][highway_sub_type=t3][zoom>=17]
 {
   line-pattern-file: url('img/smoothness/impassable-12.png');
 }
-.smoothness[highway_type=motorway][sub_type=t1][zoom>=18],
-.smoothness[highway_type=motorway][sub_type=t3][zoom>=18]
+.smoothness[highway_type=motorway][highway_sub_type=t1][zoom>=18],
+.smoothness[highway_type=motorway][highway_sub_type=t3][zoom>=18]
 {
   line-pattern-file: url('img/smoothness/impassable-16.png');
 }

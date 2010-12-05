@@ -64,7 +64,11 @@ $query['highway']= <<<EOT
 	    WHEN osm_tags->'man_made'='pipeline' and osm_tags->'type' in ('heat', 'hot_water') THEN 't5'
 	    /* ELSE */
 	    ELSE 'default'
-	    END) as sub_type
+	    END) as highway_sub_type,
+  (CASE
+    WHEN osm_tags->'highway'='pedestrian' THEN 'pedestrian'
+    WHEN osm_tags->'amenity'='parking' THEN 'parking'
+  END) as highway_poly_type
 EOT;
 $query['landuse']=<<<EOT
        (CASE
@@ -148,7 +152,7 @@ $query['landuse']=<<<EOT
 	         OR osm_tags->'military' in ('barracks', 'airfield') THEN 't1'
 	       ELSE 't0'
 	     END)
-	END) as sub_type
+	END) as landuse_sub_type
 EOT;
 $query['base_amenity']=<<<EOT
            (CASE
@@ -160,7 +164,7 @@ $query['base_amenity']=<<<EOT
 	     WHEN osm_tags->'amenity' in ('fountain') THEN 'obstacle'
 	     WHEN osm_tags->'historic' in ('monument', 'memorial') THEN 'obstacle'
 	     WHEN osm_tags?'power' THEN 'power'
-	   END) as type,
+	   END) as amenity_type,
 	   (CASE
 	     /* type = natural_big and natural */
 	     WHEN osm_tags?'natural' THEN (CASE
@@ -189,11 +193,11 @@ $query['base_amenity']=<<<EOT
 	     WHEN osm_tags->'power' in ('tower') THEN 't1'
 	     WHEN osm_tags->'power' in ('station', 'sub_station', 'generator') THEN 't2'
 
-	   END) as sub_type,
+	   END) as amenity_sub_type,
 	   (CASE
 	     WHEN osm_tags->'natural' in ('peak', 'volcano', 'glacier') THEN osm_tags->'ele'
 	     WHEN osm_tags->'highway' in ('mountain_pass') THEN osm_tags->'ele'
-	   END) as desc
+	   END) as amenity_desc
 EOT;
 $query['places']=<<<EOT
       (select 'node' as type, id_place_node as id, name, way,
