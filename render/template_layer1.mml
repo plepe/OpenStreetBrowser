@@ -1,15 +1,14 @@
-<!-- Layer %LAYER_NUM% -->
-  <Layer class="roads_casing" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
-    <Datasource>
+   <Datasource name="roads %LAYER%">
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
-	(select osm_way, /* A %LAYER% */
+	(select osm_way,
 	  %SQL_bridge_tunnel%,
-	  osm_tags->'highway' as "highway", 
-	  %SQL_HIGHWAY_TYPE%
+	  parse_layer(osm_tags) as "layer",
+	  %SQL_HIGHWAY_TYPE%,
+	  %SQL_rail%
 	  from osm_line
 	  where %LAYER_WHERE%
 	  order by %SQL_highway_level% asc
@@ -18,20 +17,16 @@
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
-  </Layer>
-  <Layer class="square_casing" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
-    <Datasource>
+    <Datasource name="square %LAYER%">
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
-	(select osm_way,/* B %LAYER% */
+	(select osm_way,
+	  parse_layer(osm_tags) as "layer",
 	    %SQL_bridge_tunnel%,
-	    (CASE
-	      WHEN osm_tags->'highway'='pedestrian' THEN 'pedestrian'
-	      WHEN osm_tags->'amenity'='parking' THEN 'parking'
-	      END) as type
+	    %SQL_highway%
 	  from osm_polygon
 	  where %LAYER_WHERE%
 	  and (osm_tags@>'highway=>pedestrian' or osm_tags@>'amenity=>parking')
@@ -40,98 +35,14 @@
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
-  </Layer>
-  <Layer class="square_fill" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
-    <Datasource>
+    <Datasource name="buildings %LAYER%">
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
-      <Parameter name="table">
-	(select osm_way,/* C %LAYER% */
-	    %SQL_bridge_tunnel%,
-	    (CASE
-	      WHEN osm_tags->'highway'='pedestrian' THEN 'pedestrian'
-	      WHEN osm_tags->'amenity'='parking' THEN 'parking'
-	      END) as type
-	  from osm_polygon
-	  where %LAYER_WHERE%
-	  and (osm_tags@>'highway=>pedestrian' or osm_tags@>'amenity=>parking')
-	) as t3
-      </Parameter>
-      <Parameter name="estimate_extent">false</Parameter>
-      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
-    </Datasource>
-  </Layer>
-  <Layer class="roads_fill" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
-    <Datasource>
-      <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">%DB_NAME%</Parameter>
-      <Parameter name="geometry_field">osm_way</Parameter>
-      <Parameter name="srid">900913</Parameter>
-      <Parameter name="table">
-	(select osm_way, /* D %LAYER% */
-	  %SQL_bridge_tunnel%,
-	  osm_tags->'highway' as "highway",
-	  osm_tags->'railway' as "railway",
-	  %SQL_HIGHWAY_TYPE%
-	  from osm_line
-	  where %LAYER_WHERE%
-	  order by %SQL_highway_level% asc
-	) as t4
-      </Parameter>
-      <Parameter name="estimate_extent">false</Parameter>
-      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
-    </Datasource>
-  </Layer>
-  <Layer class="roads_rail" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
-    <Datasource>
-      <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">%DB_NAME%</Parameter>
-      <Parameter name="geometry_field">osm_way</Parameter>
-      <Parameter name="srid">900913</Parameter>
-      <Parameter name="table">
-	(select osm_way, /* E %LAYER% */
-	  %SQL_bridge_tunnel%,
-	  osm_tags->'highway' as "highway",
-	  %SQL_rail%
-	  from osm_line
-	  where %LAYER_WHERE%
-	  order by %SQL_highway_level% asc
-	) as t5
-      </Parameter>
-      <Parameter name="estimate_extent">false</Parameter>
-      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
-    </Datasource>
-  </Layer>
-  <Layer class="roads_features" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
-    <Datasource>
-      <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">%DB_NAME%</Parameter>
-      <Parameter name="geometry_field">osm_way</Parameter>
-      <Parameter name="srid">900913</Parameter>
-      <Parameter name="table">
-	(select osm_way,/* F %LAYER% */ 
-	  %SQL_bridge_tunnel%,
-	  osm_tags->'highway' as "highway", 
-	  %SQL_HIGHWAY_TYPE%
-	  from osm_line
-	  where %LAYER_WHERE%
-	  order by %SQL_highway_level% desc
-	) as t6
-      </Parameter>
-      <Parameter name="estimate_extent">false</Parameter>
-      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
-    </Datasource>
-  </Layer>
-  <Layer class="buildings" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
-    <Datasource>
-      <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">%DB_NAME%</Parameter>
-      <Parameter name="geometry_field">osm_way</Parameter>
-      <Parameter name="srid">900913</Parameter>
-      <Parameter name="table">(select /* G %LAYER% */
+      <Parameter name="table">(select
          osm_tags->'name' as "name", osm_way,
+	 parse_layer(osm_tags) as "layer",
          %SQL_buildings%
 	 from osm_polygon 
 	 where (osm_tags?'building')
@@ -140,5 +51,26 @@
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
-  </Layer>
 
+<!-- Layer %LAYER_NUM% -->
+  <Layer class="roads_casing" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource base="roads %LAYER%"/>
+  </Layer>
+  <Layer class="square_casing" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource base="square %LAYER%"/>
+  </Layer>
+  <Layer class="square_fill" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource base="square %LAYER%"/>
+  </Layer>
+  <Layer class="roads_fill" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource base="roads %LAYER%"/>
+  </Layer>
+  <Layer class="roads_rail" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource base="roads %LAYER%"/>
+  </Layer>
+  <Layer class="roads_features" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource base="roads %LAYER%"/>
+  </Layer>
+  <Layer class="buildings" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource base="buildings %LAYER%"/>
+  </Layer>

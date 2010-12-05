@@ -7,6 +7,7 @@
    <Stylesheet src="road_features.mss" />
    <Stylesheet src="amenities.mss" />
    <Stylesheet src="rot_feature.mss" />
+   <Stylesheet src="buildings.mss" />
 
 <!-- all layers -->
   <Layer class="world1" status="on" srs="+proj=merc +datum=WGS84 +over">
@@ -69,7 +70,9 @@
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
 	(select osm_way,
-	  %SQL_highway%
+	  %SQL_bridge_tunnel%,
+	  %SQL_highway%,
+	  %SQL_rail%
 	  from osm_line_extract
 	  order by %SQL_highway_level% asc
 	) as line_extract
