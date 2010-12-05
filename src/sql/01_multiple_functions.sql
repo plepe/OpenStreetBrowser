@@ -75,7 +75,7 @@ begin
 
     if val_n ~ E'^-?[0-9]+$' then
       numval=cast(val_n as float);
-    elsif val_n ~ E'^-?[0-9]*\.[0-9]+$' then
+    elsif val_n ~ E'^-?[0-9]*\\.[0-9]+$' then
       numval=cast(val_n as float);
     elsif val_n ~ E'^-?[0-9]*,[0-9]+$' then
       numval=cast(replace(val_n, ',', '.') as float);
