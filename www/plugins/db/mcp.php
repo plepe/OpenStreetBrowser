@@ -27,6 +27,11 @@ function db_init() {
     }
     ksort($updates);
 
+    // always reload functions
+    if(file_exists("$plugins_dir/$plugin/functions.sql")) {
+      sql_query(file_get_contents("$plugins_dir/$plugin/functions.sql"));
+    }
+
     if(file_exists("$plugins_dir/$plugin/db.sql")) {
       // If plugin has never been loaded before, load db.sql
       if(!$plugins_db[$plugin]) {
@@ -44,11 +49,6 @@ function db_init() {
 	  }
 	}
       }
-    }
-
-    // always reload functions
-    if(file_exists("$plugins_dir/$plugin/functions.sql")) {
-      sql_query(file_get_contents("$plugins_dir/$plugin/functions.sql"));
     }
 
     // save update information to database
