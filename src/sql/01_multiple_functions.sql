@@ -64,20 +64,23 @@ create or replace function parse_number(text)
   as $$
 declare
   val      alias for $1;
+  val_     text;
   val_n    text;
   val_u    text;
   numval   float;
   unit_fac float;
 begin
-  if val ~ E'^(-?[0-9\.,]+) *(.*)$' then
-    val_n:=substring(val from E'^(-?[0-9\.,]+) *.*');
-    val_u:=substring(val from E'^-?[0-9\.,]+ *(.*)');
+  val_:=trim(both E'\t\n\r ' from val);
 
-    if val_n ~ E'^-?[0-9]+$' then
+  if val_ ~ E'^([+-]?[0-9\.,]+)\\s*(.*)$' then
+    val_n:=substring(val_ from E'^([+-]?[0-9\.,]+)\\s*.*');
+    val_u:=substring(val_ from E'^[+-]?[0-9\.,]+\\s*(.*)');
+
+    if val_n ~ E'^[+-]?[0-9]+$' then
       numval=cast(val_n as float);
-    elsif val_n ~ E'^-?[0-9]*\\.[0-9]+$' then
+    elsif val_n ~ E'^[+-]?[0-9]*\\.[0-9]+$' then
       numval=cast(val_n as float);
-    elsif val_n ~ E'^-?[0-9]*,[0-9]+$' then
+    elsif val_n ~ E'^[+-]?[0-9]*,[0-9]+$' then
       numval=cast(replace(val_n, ',', '.') as float);
     else
       return null;
@@ -111,6 +114,29 @@ begin
 end;
 $$ language 'plpgsql' immutable;
 
+create or replace function parse_numbers(text)
+  returns float[]
+  as $$
+declare
+  val      alias for $1;
+  val_list text[];
+  ret_list float[];
+  highest  float;
+begin
+  val_list:=split_semicolon(val);
+
+  if array_lower(val_list, 1) is null then
+    return null;
+  end if;
+
+  for i in array_lower(val_list, 1)..array_upper(val_list, 1) loop
+    ret_list[i]:=parse_number(val_list[i]);
+  end loop;
+
+  return ret_list;
+end;
+$$ language 'plpgsql' immutable;
+
 create or replace function parse_highest_number(text)
   returns float
   as $$
@@ -119,9 +145,11 @@ declare
   val_list text[];
   ret      float;
   highest  float;
+  init     float;
 begin
   val_list:=split_semicolon(val);
-  highest:=-999999999;
+  init:=-999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+  highest:=init;
 
   if array_lower(val_list, 1) is null then
     return null;
@@ -134,7 +162,44 @@ begin
     end if;
   end loop;
 
+  if(highest=init) then
+    return null;
+  end if;
+
   return highest;
+end;
+$$ language 'plpgsql' immutable;
+
+create or replace function parse_lowest_number(text)
+  returns float
+  as $$
+declare
+  val      alias for $1;
+  val_list text[];
+  ret      float;
+  init     float;
+  lowest   float;
+begin
+  val_list:=split_semicolon(val);
+  init:=999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+  lowest:=init;
+
+  if array_lower(val_list, 1) is null then
+    return null;
+  end if;
+
+  for i in array_lower(val_list, 1)..array_upper(val_list, 1) loop
+    ret:=parse_number(val_list[i]);
+    if ret<lowest then
+      lowest:=ret;
+    end if;
+  end loop;
+
+  if(lowest=init) then
+    return null;
+  end if;
+
+  return lowest;
 end;
 $$ language 'plpgsql' immutable;
 
