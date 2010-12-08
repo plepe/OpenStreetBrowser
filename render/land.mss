@@ -1,3 +1,6 @@
+Map {
+  map-bgcolor: #7eb9e3;
+}
 .world1[zoom<5] {
   polygon-fill: #f2efd9;
 }
