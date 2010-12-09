@@ -125,6 +125,8 @@ BEGIN
 
   raise notice 'inserted to osm_polygon 2';
 
+  perform call_hooks('osmosis_update_insert');
+
   perform call_hooks('osmosis_update_finish');
 
   raise notice 'finished osmosisUpdate()';
