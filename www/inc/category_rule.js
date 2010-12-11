@@ -38,7 +38,7 @@ function category_rule_match(dom, cat, rule) {
     a.onmouseover=this.set_highlight.bind(this);
     a.onmouseout=this.unset_highlight.bind(this);
 
-    var parse_str=this.rule.tags.get("list_tags");
+    var parse_str=this.rule.tags.get("list_text");
     if(!parse_str)
       parse_str="[ref] - [name];[name];[ref];[operator]";
 
