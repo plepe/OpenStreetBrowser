@@ -20,7 +20,7 @@ begin
             select osm_way from osm_polygon where osm_id=_osm_typeid);
   elsif(_osm_type='rel') then
     rel_type:=(select osm_tags->'type' from osm_rel where osm_id=_osm_typeid);
-    raise notice 'rel_type %', rel_type;
+
     if rel_type='multipolygon' then
       return (select osm_way from osm_polygon where osm_id=_osm_typeid);
     else
