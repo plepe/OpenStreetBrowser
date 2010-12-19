@@ -176,7 +176,7 @@ class category {
     // viewbox
     if($param[viewbox]) {
       $coord=explode(",", $param[viewbox]);
-      $sql_where['*'][]="Intersects(SnapToGrid(geo, 0.00001), PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913))";
+      $sql_where['*'][]="CollectionIntersects(SnapToGrid(geo, 0.00001), PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913))";
     }
 
   //// set some more vars
