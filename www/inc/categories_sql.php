@@ -184,6 +184,8 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
 
     $arr=$tags->data();
     $arr['rule_id']=$rule_id;
+    if(!$def_tags)
+      $def_tags=array();
     $classify_function_match[]="if $qry then\n".
       "    result:=".array_to_hstore(array_merge($def_tags, $arr)).";";
   }
