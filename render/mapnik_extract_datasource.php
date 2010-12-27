@@ -22,6 +22,7 @@ for($di=0; $di<$datasource_list->length; $di++) {
   $table_list=$x->query("Parameter[@name='table']", $datasource);
   if($table_list->length) {
     $table=$table_list->item(0)->firstChild->nodeValue;
+
     if(isset($avail_datasources[$table])) {
       $id=$avail_datasources[$table];
     }
@@ -30,6 +31,8 @@ for($di=0; $di<$datasource_list->length; $di++) {
       $avail_datasources[$table]=$id;
       $datasource->setAttribute("name", "datasource $id");
       $map->insertBefore($datasource, $map->firstChild);
+
+      $table_list->item(0)->firstChild->nodeValue="/*** datasource $id */ $table";
     }
 
     $ds_ref=$dom->createElement("Datasource");
