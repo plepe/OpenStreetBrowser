@@ -183,7 +183,7 @@ DECLARE
   geom_ways  geometry;
   tags hstore;
   outer_members bigint[];
-  members text[];
+  members record;
 BEGIN
   -- get tags
   tags:=rel_assemble_tags(id);
@@ -202,7 +202,7 @@ BEGIN
   geom:=rel_get_geom(id, 0);
 
   -- get members
-  members:=(select to_textarray((CASE WHEN member_type='N' THEN 'node_' WHEN member_type='W' THEN 'way_' WHEN member_type='R' then 'rel_' ELSE 'error_' END) || member_id) from relation_members where relation_id=id group by relation_id);
+  select to_textarray((CASE WHEN member_type='N' THEN 'node_' WHEN member_type='W' THEN 'way_' WHEN member_type='R' then 'rel_' ELSE 'error_' END) || member_id) as ids, to_textarray(member_role) as roles into members from relation_members where relation_id=id group by relation_id;
 
   -- raise notice 'assemble_rel(%)', id;
 
@@ -211,7 +211,8 @@ BEGIN
     values (
       'rel_'||id,
       tags,
-      members,
+      members.ids,
+      members.roles,
       ST_Transform(geom, 900913)
     );
 
