@@ -40,6 +40,8 @@ function category_rule_match(dom, cat, rule) {
 
     var parse_str=this.rule.tags.get("list_text");
     if(!parse_str)
+      parse_str=this.category.tags.get("list_text");
+    if(!parse_str)
       parse_str="[ref] - [name];[name];[ref];[operator]";
 
     x=this.tags.parse(parse_str, data_lang);
