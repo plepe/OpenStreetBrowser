@@ -14,6 +14,8 @@ function postgis(text) {
     else if(!this.ob.length)
       this.ob=[this.ob];
 
+    this.ob=array_remove_undefined(array_unfold(this.ob));
+
     return this.ob;
   }
 }
