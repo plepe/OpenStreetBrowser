@@ -1,0 +1,2 @@
+alter table osm_rel add column members text[];
+update osm_rel set members=(select to_textarray((CASE WHEN member_type='N' THEN 'node_' WHEN member_type='W' THEN 'way_' WHEN member_type='R' then 'rel_' ELSE 'error_' END) || member_id) from relation_members where relation_id=cast (substr(osm_id, 5) as bigint) group by relation_id);
