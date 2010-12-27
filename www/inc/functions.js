@@ -51,6 +51,38 @@ function string_to_hash(str) {
   return ret;
 }
 
+// array_unfold ... removes depth of convoluted arrays
+function array_unfold(arr) {
+  arr=arr.concat([]);
+
+  for(var i=0; i<arr.length; i++) {
+    if((typeof arr[i]==='object')&&(arr[i].length)) {
+      var part2=arr[i];
+      var part3=arr.splice(i+1);
+      var part1=arr.splice(0, i);
+      arr=part1.concat(part2).concat(part3);
+      i--;
+    }
+  }
+
+  return arr;
+}
+
+// array_remove_undefined ... remove all undefined/null values in array
+function array_remove_undefined(arr) {
+  var undef;
+  arr=arr.concat([]);
+
+  for(var i=0; i<arr.length; i++) {
+    if((arr[i]===undef)||(arr[i]===null)) {
+      arr=array_remove(arr, i);
+      i--;
+    }
+  }
+
+  return arr;
+}
+
 // array_delete removes an element from the array at the pos position
 // example:
 //   array_remove([ 1, 2, 3, 4, 5 ], 2)
