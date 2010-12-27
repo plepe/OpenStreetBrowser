@@ -183,6 +183,11 @@ BEGIN
     return false;
   end if;
 
+  -- don't assemble multipolygons ...
+  if tags->'type' in ('multipolygon') then
+    return false;
+  end if;
+
   -- get geometry
   geom:=rel_get_geom(id, 0);
 
