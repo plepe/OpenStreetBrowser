@@ -8,6 +8,12 @@ lang_str["save"]		  =[ "Speichern" ];
 lang_str["cancel"]		  =[ "Abbrechen" ];
 
 lang_str["geo_click_pos"]         =[ "Klicke auf Deine aktuelle Position auf der Karte" ];
+lang_str["longitude"]             =[ "Längengrad", "Längengrade" ];
+lang_str["latitude"]              =[ "Breitengrad", "Breitengrade" ];
+
+lang_str["head:location"]         =[ "Position", "Positionen" ];
+lang_str["head:action"]           =[ "Aktion", "Aktionen" ];
+
 
 lang_str["start:choose"]          =[ "Wähle einen Kartenausschnitt" ];
 lang_str["start:geolocation"]     =[ "automatische Geolokalisierung" ];
@@ -95,3 +101,8 @@ lang_str["lang:"]=[ "Lokale Sprache" ];
 
 lang_str["overlay:data"]=[ "Data" ];
 lang_str["overlay:draggable"]=[ "Markierungen" ];
+
+lang_str["basemap:osb"]=[ "OpenStreetBrowser" ];
+lang_str["basemap:mapnik"]=[ "Standard (Mapnik)" ];
+lang_str["basemap:osmarender"]=[ "Standard (OsmaRender)" ];
+lang_str["basemap:cyclemap"]=[ "CycleMap" ];

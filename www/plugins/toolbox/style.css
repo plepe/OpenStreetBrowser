@@ -1,0 +1,55 @@
+.toolbox_active {
+  background-color:#EFEFEF;
+  border:1px solid #999999;
+  color:#333333;
+  display:block;
+  padding:5px 3px 0;
+  top:0px;
+  width:242px;
+  position:relative;
+  line-height:0.8;
+  margin-bottom:-2px;
+  z-index:2;
+}
+.toolbox {
+  display: none;
+}
+#toolbox_container {
+  display:block;
+}
+
+#toolboxbuttons {
+  display:block;
+  position:absolute;
+  top:121px;
+  left:10px;
+  width:250px;
+  z-index:3;
+}
+#toolboxbuttons_table {
+  float: right;
+}
+
+.toolboxbutton {
+  padding:1px;
+  border:1px solid transparent;
+}
+
+td.toolboxbutton:hover {
+  background-color:#FEFEFE;
+  border:1px solid #CCCCCC;
+  cursor:pointer;
+}
+
+.toolboxbutton_active {
+  padding:1px;
+  border:1px solid;
+  border-color:#999999 #999999 #EFEFEF;
+  background-color:#EFEFEF;
+}
+
+td.toolboxbutton_active:hover {
+  cursor:pointer;
+}
+
+

@@ -56,7 +56,7 @@ function find_objects($param) {
 
   if(!sizeof($list))
     return "<a class='zoom' href='#'>".lang("info_back")."</a><br>\n".
-      lang("result_no");
+      lang("nothing_found");
 
   $matches=0;
   foreach($list as $elem) {

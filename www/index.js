@@ -135,6 +135,7 @@ function redraw() {
   unset_highlight();
   var x=get_hash();
   showing_details=false;
+  call_hooks("unselect_all");
 
   if(x=="") {
     show_list();
@@ -208,6 +209,7 @@ function check_redraw() {
 
   if(location.hash!=last_location_hash) {
     if(location.hash.substr(0, 2)=="#?") {
+      call_hooks("recv_permalink", location.hash.substr(2));
       location_params=string_to_hash(location.hash.substr(2));
     }
     else if(location.hash.substr(0, 1)=="#") {
@@ -247,11 +249,6 @@ function view_changed(event) {
 
   view_changed_timer=setTimeout("view_changed_delay()", 300);
   check_mapkey();
-  
-  
-  var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
-  cookie_write("_osb_location", hash_to_string(get_permalink()));
-
 
   call_hooks("view_changed", event);
 }
@@ -301,42 +298,13 @@ function init() {
 			new OpenLayers.Control.Navigation() ]
 	  });
 
-  layerOSB = new OpenLayers.Layer.OSM("OpenStreetBrowser", "http://www.openstreetbrowser.org/tiles/base/", {numZoomLevels: 19});
-  layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Standard (Mapnik)");
-  layerOsmarender = new OpenLayers.Layer.OSM.Osmarender("Standard (Osmarender)");
-  layerCycle = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
-  layerPolygon = new OpenLayers.Layer.Vector("Polygon Layer");
-
-  map.addLayers([ layerOSB, layerMapnik, layerOsmarender, layerCycle, layerPolygon ]);
-
-  layerHill = new OpenLayers.Layer.OSM(
-    "Hillshading (NASA SRTM3 v2)",
-    "http://toolserver.org/~cmarqu/hill/",
-    { type: 'png',
-    displayOutsideMaxExtent: true, isBaseLayer: false,
-    transparent: true, "visibility": false });
-  map.addLayers([ layerHill ]);
-
   map.div.oncontextmenu = function noContextMenu(e) {
     rightclick(e);
     return false; //cancel the right click of brower
   };
 
-  var permalink=document.getElementById("permalink");
-  permalink_control=new OpenLayers.Control.Permalink(permalink, get_baseurl()+"#");
-  map.addControl(permalink_control);
-  permalink_control.createParams=get_permalink;
-
   map.addControl(new OpenLayers.Control.MousePosition());
   map.addControl(new OpenLayers.Control.ScaleLine());
-
-  polygon_control=new OpenLayers.Control.DrawFeature(layerPolygon,OpenLayers.Handler.Polygon);
-  map.addControl(polygon_control);
-
-  if(start_lon&&(first_load)) {
-    var lonlat = new OpenLayers.LonLat(start_lon, start_lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-    map.setCenter(lonlat, start_zoom);
-  }
 
   redraw_timer=setTimeout("check_redraw()", 300);
   register_hook("hash_changed", redraw);
@@ -349,8 +317,20 @@ function init() {
   map_key_init();
 
   call_hooks("init");
+
+  var permalink=document.getElementById("permalink");
+  permalink_control=new OpenLayers.Control.Permalink(permalink, get_baseurl()+"#");
+  map.addControl(permalink_control);
+  permalink_control.createParams=get_permalink;
+
+  if(start_lon&&(first_load)) {
+    var lonlat = new OpenLayers.LonLat(start_lon, start_lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+    map.setCenter(lonlat, start_zoom);
+  }
+
   //setTimeout("call_hooks(\"post_init\")", 2000);
 }
+
 
 function add_funs(arr) {
   arr.search=function(needle) {

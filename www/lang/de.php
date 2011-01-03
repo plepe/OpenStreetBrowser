@@ -1,40 +1,33 @@
 <?
 $lang_str["general_info"]="Allgemeine Informationen";
-$lang_str["search_field"]="Suchen...";
-$lang_str["search_tip"]="z.B. 'Berlin', 'Goethestraße', 'Kneipe in München',...";
-$lang_str["search_clear"]="Suchfeld löschen";
 $lang_str["noname"]="(kein Name)";
 $lang_str["info_back"]="zur Übersicht";
 $lang_str["info_zoom"]="zoomen";
 $lang_str["result_no"]="nichts gefunden";
-$lang_str["search_process"]="suche...";
-$lang_str["read_more"]="weiterlesen";
-$lang_str["search_more"]="mehr Ergebnisse";
-$lang_str["search_results"]="Suchergebnisse";
-$lang_str["search_nominatim"]="Suche bereitgestellt von";
+$lang_str["wikipedia:read_more"]="weiterlesen";
 $lang_str["loading"]="lade";
 
-$lang_str["head_general_info"]="Allgemeine Informationen";
-$lang_str["head_stops"]="Haltestellen";
-$lang_str["head_routes"]="Routen";
-$lang_str["head_members"]="Mitglieder";
-$lang_str["head_address"]="Adresse";
-$lang_str["head_internal"]="Interne OSM-Daten";
-$lang_str["head_wikipedia"]="Wikipedia";
-$lang_str["head_housenumbers"]="Hausnummern";
-$lang_str["head_roads"]="Straßen";
-$lang_str["head_rails"]="Eisenbahnstrecken";
-$lang_str["head_places"]="Orte";
-$lang_str["head_borders"]="Grenzen";
-$lang_str["head_landuse"]="Landnutzung";
-$lang_str["head_buildings"]="Gebäude";
-$lang_str["head_pt"]="Öffentlicher Verkehr";
-$lang_str["head_services"]="Dienstleistungen";
-$lang_str["head_culture"]="Kultureinrichtungen";
-$lang_str["head_graves"]="Wichtige Gräber";
-$lang_str["head_routing"]="Routenplanung";
-$lang_str["head_search"]="Suche";
-$lang_str["head_actions"]="Aktionen";
+$lang_str["head:general_info"]="Allgemeine Informationen";
+$lang_str["head:stops"]="Haltestellen";
+$lang_str["head:routes"]="Routen";
+$lang_str["head:members"]="Mitglieder";
+$lang_str["head:address"]="Adresse";
+$lang_str["head:internal"]="Interne OSM-Daten";
+$lang_str["head:wikipedia"]="Wikipedia";
+$lang_str["head:housenumbers"]="Hausnummern";
+$lang_str["head:roads"]="Straßen";
+$lang_str["head:rails"]="Eisenbahnstrecken";
+$lang_str["head:places"]="Orte";
+$lang_str["head:borders"]="Grenzen";
+$lang_str["head:landuse"]="Landnutzung";
+$lang_str["head:buildings"]="Gebäude";
+$lang_str["head:pt"]="Öffentlicher Verkehr";
+$lang_str["head:services"]="Dienstleistungen";
+$lang_str["head:culture"]="Kultureinrichtungen";
+$lang_str["head:graves"]="Wichtige Gräber";
+$lang_str["head:routing"]="Routenplanung";
+$lang_str["head:search"]="Suche";
+$lang_str["head:actions"]="Aktionen";
 
 $lang_str["action_browse"]="In OSM ansehen";
 $lang_str["action_edit"]="Auf OSM editieren";
@@ -116,3 +109,10 @@ $lang_str["main:licence"]="Kartendaten: <a href=\"http://creativecommons.org/lic
 $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'>".lang("info_back")."</a></div><h1>Objekt nicht gefunden</h1>Ein Objekt mit der ID \"%s\" konnte nicht gefunden werden. Das kann eine (oder mehrere) der folgenden Ursachen haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde von einer anderen Applikation identifiziert und ist im OpenStreetBrowser (noch) nicht verfügbar</li><li>Das Objekt liegt ausserhalb des unterstützten Gebiets</li><li>Der Link, dem Du gefolgt bist, war alt und das Objekt wurde inzwischen aus der OpenStreetMap gelöscht.</li>";
+
+// please finish this list, see list.php for full list of languages
+$lang_str["lang:de"]="Deutsch";
+$lang_str["lang:bg"]="Bulgarisch";
+$lang_str["lang:en"]="Englisch";
+$lang_str["lang:es"]="Spanisch";
+$lang_str["lang:it"]="Italienisch";

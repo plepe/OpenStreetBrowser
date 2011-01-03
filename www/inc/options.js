@@ -34,6 +34,8 @@ function options_load() {
 function save_options() {
   var form=document.getElementById("options_form");
 
+  call_hooks("options_save", null);
+
   options_set("autozoom", options_radio_get("autozoom"));
   options_set("ui_lang", options_select_get("ui_lang"));
   options_set("data_lang", options_select_get("data_lang"));
@@ -110,18 +112,6 @@ function options_select_get(key) {
   return form.elements[key].value;
 }
 
-function options_toggle_hill() {
-  if(layerHill.getVisibility()==false) {
-    layerHill.setVisibility(true);
-  } else {
-    layerHill.setVisibility(false);
-  }
-}
-
-function option_layers() {
-  return "<table><tr><td><a href='javascript:layerOSB.map.setBaseLayer(layerOSB);close_options();'><img class='layerImg' src='img/layerOSB.png'><br>OSB</a></td><td><a href='javascript:layerMapnik.map.setBaseLayer(layerMapnik);close_options();'><img class='layerImg' src='img/layerMapnik.png'><br>Mapnik</a></td><td><a href='javascript:layerOsmarender.map.setBaseLayer(layerOsmarender);close_options();'><img class='layerImg' src='img/layerOsmarender.png'><br>Osmarender</td><td><a href='javascript:layerCycle.map.setBaseLayer(layerCycle);close_options();'><img class='layerImg' src='img/layerCycle.png'><br>Cycle Map</td><td><a href='javascript:options_toggle_hill();close_options();'><img class='layerImg' src='img/layerHill.png'><br>Schraffur</a></td></tr></table>";
-}
-
 function show_options() {
   var ret;
 
@@ -130,12 +120,18 @@ function show_options() {
 
   options_win=new win("options_win");
 
+
+  // Every function which registers to this hooks should
+  // push a "weight"-entry to the list, e.g. [ 0, "some text" ]
+  var options_list=[];
+  call_hooks("options_show", options_list);
+
   ret ="<form action='javascript:save_options()' id='options_form'>\n";
 
-  ret+="<h4>"+t("options:mapstyle")+"</h4>\n";
-  ret+="<div class='options_help'>"+t("help:mapstyle")+"</div>\n";
-
-  ret+= option_layers();
+  options_list=weight_sort(options_list);
+  for(var i=0; i<options_list.length; i++) {
+    ret+=options_list[i];
+  }
 
   ret+="<h4>"+t("options:autozoom")+"</h4>\n";
   ret+="<div class='options_help'>"+t("help:autozoom")+"</div>\n";
@@ -145,14 +141,24 @@ function show_options() {
   ret+="<div class='options_help'>"+t("help:language_support")+"</div>\n";
   ret+="<p>\n";
   var ui_langs_x={};
-  for(var i=0; i<ui_langs.length; i++)
-    ui_langs_x[ui_langs[i]]=language_list[ui_langs[i]];
+  for(var i=0; i<ui_langs.length; i++) {
+    var str=language_list[ui_langs[i]];
+    if(lang("lang:"+ui_langs[i])!=str)
+      str+=" ("+lang("lang:"+ui_langs[i])+")";
+    ui_langs_x[ui_langs[i]]=str;
+  }
   ret+=options_select("ui_lang", ui_langs_x);
   ret+="<br/>\n";
 
   var ui_langs_x={};
-  l=language_list;
+  l=new clone(language_list);
   l[""]=t("lang:");
+
+  for(var i in l) {
+    if(lang("lang:"+i)!=l[i])
+      l[i]+=" ("+lang("lang:"+i)+")";
+  }
+
   ret+=options_select("data_lang", l);
   ret+="</p>\n";
 
