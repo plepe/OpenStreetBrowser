@@ -127,6 +127,7 @@ function lang_init() {
   global $data_lang;
   global $language_list;
   global $plugins_list;
+  global $design_hidden;
 
   // Define a language string for every language
   foreach($language_list as $abbr=>$lang) {
