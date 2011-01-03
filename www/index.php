@@ -83,13 +83,22 @@ else
 
 <div class='menu'>
 <div class='logo'><a href="http://wiki.openstreetmap.org/wiki/OpenStreetBrowser"><img src="img/osb_logo.png" alt="OpenStreetBrowser" name="OpenStreetBrowser" border="0"/></a><p>OpenStreet <span class="bigger">Browser</span></p></div>
-<div class='search'>
-<form name='osb_search_form_name' id='osb_search_form' action='javascript:search()' style="position:relative; margin-bottom:3px;">
+
+
+<div id='toolboxbuttons'>
+<table id='toolboxbuttons_table' cellspacing="0" style="border:0px; margin:0px; padding:0px;">
+	<tr>
+	</tr>
+</table>
+</div>
+
+<div id='toolbox_container'></div>
+<div id='search' class='search' style="position:absolute; top:143px;">
+<form name='osb_search_form_name' id='osb_search_form' action='javascript:search()'">
 <input name='osb_search' id='search' style="border-color:#999999;" value='<?=lang("search_field")?>' onFocus="search_focus(this)" onkeyup="search_brush(this,event)" onblur="search_onblur(this)" "title="<?=lang("search_tip")?>"/>
-<img name='brush' src="besen.png" border="0" alt="" title="<?=lang("search_clear")?>" style="position:absolute; right:3px; bottom:3px; visibility:hidden; cursor:pointer;" onclick="search_clear(document.osb_search_form_name.osb_search)" onmousedown="if (event.preventDefault) event.preventDefault()">
+<img name='brush' src="besen.png" border="0" alt="" title="<?=lang("search_clear")?>" style="position:absolute; right:3px; top:6px; visibility:hidden; cursor:pointer;" onclick="search_clear(document.osb_search_form_name.osb_search)" onmousedown="if (event.preventDefault) event.preventDefault()">
 </form>
 </div>
-<div id='start' class='start' style="display:block;"></div>
 <div id='details' class='info' style="top:180px">
 <form id='details_content' class='details' action='javascript:details_content_submit()'>
 <?
@@ -107,6 +116,13 @@ print list_template();
 //show_lang_select();
 ?>
 <div class="map" id="map"></div>
+<div id="contextmenu" class="contextmenu" onmouseout="contextmenu_mouseout(event)" onmouseover="javascript:clearTimeout(contexttimer)" style="top:20px; left:500px; display:none;">
+<span id="contextmenu_pointer" style="position:absolute; width:10px; height:10px;"></span>
+<table id="contextmenu_table" cellspacing="0">
+</table></div>
+
+<!--<div id="debugging" style="top:20px; left:300px; position:absolute; display:block; background:#FEFEFE; border:1px solid #999999;"><i>Die Super-Debugging-Box 3000</i><br/></div>-->
+
 <div class="shadow"></div>
 <div class="map_key_hidden" id="map_key"></div>
 <div class="licence"><?=lang("main:licence")?></div>
@@ -114,6 +130,5 @@ print list_template();
 call_hooks("html_done", null);
 ?>
 <div class="permalink"><a href="" id="permalink" onclick="var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));cookie_write('_osb_permalink', center.lon + '|' + center.lat + '|' + map.zoom + '|' + location.hash);"><?=lang("main:permalink")?></a></div>
-<script type="text/javascript">start_show();</script>
 </body>
 </html>

@@ -80,9 +80,9 @@ function options_select(key, values) {
     current_value=values[0];
 
   ret+=t("options:"+key)+": ";
-  ret+="  <select name='"+key+"'>\n";
+  ret+="  <select name='"+key+"' class='icon-menu'>\n";
   for(var i=0; i<values_keys.length; i++) {
-    ret+="  <option value='"+values_keys[i]+"'";
+    ret+="  <option style=\"background-image: url('img/lang/"+values_keys[i]+".png');\" value='"+values_keys[i]+"'";
     if(current_value==values_keys[i])
       ret+=" selected='selected'";
     ret+=">"+t(values[values_keys[i]])+"</option>\n";
@@ -110,6 +110,18 @@ function options_select_get(key) {
   return form.elements[key].value;
 }
 
+function options_toggle_hill() {
+  if(layerHill.getVisibility()==false) {
+    layerHill.setVisibility(true);
+  } else {
+    layerHill.setVisibility(false);
+  }
+}
+
+function option_layers() {
+  return "<table><tr><td><a href='javascript:layerOSB.map.setBaseLayer(layerOSB);close_options();'><img class='layerImg' src='img/layerOSB.png'><br>OSB</a></td><td><a href='javascript:layerMapnik.map.setBaseLayer(layerMapnik);close_options();'><img class='layerImg' src='img/layerMapnik.png'><br>Mapnik</a></td><td><a href='javascript:layerOsmarender.map.setBaseLayer(layerOsmarender);close_options();'><img class='layerImg' src='img/layerOsmarender.png'><br>Osmarender</td><td><a href='javascript:layerCycle.map.setBaseLayer(layerCycle);close_options();'><img class='layerImg' src='img/layerCycle.png'><br>Cycle Map</td><td><a href='javascript:options_toggle_hill();close_options();'><img class='layerImg' src='img/layerHill.png'><br>Schraffur</a></td></tr></table>";
+}
+
 function show_options() {
   var ret;
 
@@ -120,13 +132,14 @@ function show_options() {
 
   ret ="<form action='javascript:save_options()' id='options_form'>\n";
 
+  ret+="<h4>"+t("options:mapstyle")+"</h4>\n";
+  ret+="<div class='options_help'>"+t("help:mapstyle")+"</div>\n";
+
+  ret+= option_layers();
+
   ret+="<h4>"+t("options:autozoom")+"</h4>\n";
   ret+="<div class='options_help'>"+t("help:autozoom")+"</div>\n";
   ret+=options_radio("autozoom", [ "pan", "move", "stay" ]);
-
-  ret+="<h4>"+t("options:start")+"</h4>\n";
-  ret+="<div class='options_help'>"+t("help:start")+"</div>\n";
-  ret+="<input type='button' onClick='javascript:cookie_delete(\"start_value\");start_show();close_options();' value="+t("start:edit")+">\n";
 
   ret+="<h4>"+t("options:language_support")+"</h4>\n";
   ret+="<div class='options_help'>"+t("help:language_support")+"</div>\n";

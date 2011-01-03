@@ -14,7 +14,8 @@ var language_list={
   "fr": "français",
   "ga": "Gaeilge",
   "is": "íslenska",
-  "it": "italiano",
+  "it": "Italiano",
+  "ja": "日本語",
   "lv": "latviešu valoda",
   "lt": "lietuvių kalba",
   "hu": "magyar",
@@ -35,6 +36,7 @@ var language_list={
   "sv": "svenska",
   "uk": "украї́нська мо́ва"
 }
+
 //for(var i in language_list)
 //  lang_str["lang:"+i]=[ language_list[i] ];
 

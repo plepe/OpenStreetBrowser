@@ -13,7 +13,7 @@ lang_str["start:choose"]          =[ "Wähle einen Kartenausschnitt" ];
 lang_str["start:geolocation"]     =[ "automatische Geolokalisierung" ];
 lang_str["start:lastview"]        =[ "letzter Kartenausschnitt" ];
 lang_str["start:savedview"]       =[ "letzter Permalink" ];
-lang_str["start:startnormal"]     =[ "behalte Standardansicht" ];
+lang_str["start:startnormal"]     =[ "behalte Ansicht" ];
 lang_str["start:remember"]        =[ "Auswahl merken" ];
 lang_str["start:edit"]            =[ "editiere..." ];
 
@@ -87,10 +87,11 @@ lang_str["help:autozoom"]=[ "Wenn ein Objekt ausgewählt wird, schwenkt der Kart
 lang_str["options:autozoom:pan"]=[ "Auf das aktuelle Objekt schwenken (schöner)" ];
 lang_str["options:autozoom:move"]=[ "Zum aktuellen Objekt springen (schneller)" ];
 lang_str["options:autozoom:stay"]=[ "Den Kartenausschnitt nie verschieben" ];
-lang_str["options:start"]=[ "Startverhalten" ];
-lang_str["help:start"]=[ "Es lässt sich einstellen, wie der OpenStreetBrowser sich verhält, wenn man ihn startet." ];
 lang_str["options:language_support"]=[ "Sprachunterstützung" ];
 lang_str["help:language_support"]=[ "In diesen Optionen können die verwendeten Sprachen eingestellt werden. In der ersten Einstellung kann die Sprache der Anwendungsoberfläche gewählt werden. Mit der zweiten Einstellung kann die Datensprache eingestellt werden. Die Daten vieler geographischer Objekte sind in mehrere Sprachen übersetzt. Wenn keine Übersetzung vorhanden ist, oder \"Lokale Sprache\" ausgewählt wurde, wird die Hauptsprache des Objektes angezeigt." ];
 lang_str["options:ui_lang"]=[ "Anwendungssprache" ];
 lang_str["options:data_lang"]=[ "Datensprache" ];
 lang_str["lang:"]=[ "Lokale Sprache" ];
+
+lang_str["overlay:data"]=[ "Data" ];
+lang_str["overlay:draggable"]=[ "Markierungen" ];
