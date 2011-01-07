@@ -36,6 +36,7 @@ function template_lang_file($src, $dst) {
     return;
 
   print "==== File: $dst ====\n";
+  print "<syntaxhighlight lang=\"php\">\n";
 
   if(file_exists("$root_path/$src")) {
     $f=fopen("$root_path/$src", "r");
@@ -72,6 +73,7 @@ function template_lang_file($src, $dst) {
       print "\$lang_str[\"$k\"]=".esc($v).";\n";
     }
   }
+  print "</syntaxhighlight>\n";
 
   print "\n";
 }
