@@ -21,13 +21,15 @@ function template_lang_file($src, $dst) {
   global $root_path;
 
   $lang_str=array();
-  @include "$root_path/$src";
+  if(file_exists("$root_path/$src"))
+    include "$root_path/$src";
   $lang_str_src=$lang_str;
   if(!$lang_str_src)
     $lang_str_src=array();
 
   $lang_str=array();
-  @include "$root_path/$dst";
+  if(file_exists("$root_path/$dst"))
+    include "$root_path/$dst";
   $lang_str_dst=$lang_str;
   if(!$lang_str_dst)
     $lang_str_dst=array();
@@ -92,3 +94,5 @@ print "==== Statistics ====\n";
 print "* Done: $count_done\n";
 print "* Missing: $count_missing\n";
 print "* Goal: ".sprintf("%.0f", ($count_done/($count_done+$count_missing)*100))."%\n";
+
+print "\n[[Category:OpenStreetBrowser]]\n";
