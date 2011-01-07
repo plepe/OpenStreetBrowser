@@ -1,4 +1,36 @@
 <?
+//  All tags should have translations in www/lang/tags_XX.php, with
+//  language strings like "tag:key" for the translation of the key and
+//  "tag:key=value" for the translation of the value. E.g.
+//  $lang_str["tag:amenity"]=array("Amenity", "Amenities");
+//  $lang_str["tag:amenity=bar"]=array("Bar", "Bars");
+//
+//  Furthermore you can describe the tags with the array $tag_type. Every
+//  entry is an array again to further specify its type, e.g.:
+//  $tag_type["width"]=array("number", "m", "in");
+//                ^             ^       ^    ^
+//                |             |       |    \-- the preferred unit in this locale
+//                |             |       \------- the default unit for this tag
+//                |             \--------------- the type of the value
+//                \----------------------------- tag
+//
+//  This defines, that the default value for the tag width is a number, with
+//  its default unit m (for meter) and the preferred unit for this locale is
+//  in (for inch).
+//
+//  The following types are valid:
+//  * text          default (e.g. religion, name)
+//  * number        a value, with default unit and preferred unit as defined
+//                  by the second and third entry in this array (e.g. width,
+//                  voltage)
+//  * count         an integer value (e.g. population)
+//  * date          a date
+//  * link          an Internet URL
+//
+//  NOTE: the $tag_type can already be defined, but it's not used yet.
+//  There might also be more tag types soon and a way to format the output
+//  (e.g. "100.000 m" or "2010-12-24").
+
 // accomodation
 $lang_str["tag:accomodation"]="Accomodation";
 
