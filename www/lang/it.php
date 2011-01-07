@@ -1,10 +1,17 @@
 <?
 $lang_str["general_info"]="General Information"; // delete
+$lang_str["search_field"]="Search...";
+$lang_str["search_tip"]="e.g. 'London', 'Cromwell Road', 'post box near Hyde Park',...";
+$lang_str["search_clear"]="Clear search field";
 $lang_str["noname"]="(noname)";
 $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";
 $lang_str["result_no"]="nothing found";
-$lang_str["read_more"]="read more";
+$lang_str["search_process"]="searching";
+$lang_str["wikipedia:read_more"]="read more";
+$lang_str["search_more"]="more results";
+$lang_str["search_results"]="Search results";
+$lang_str["search_nominatim"]="search provided by";
 $lang_str["loading"]="loading";
 
 $lang_str["head:general_info"]="General Information";
@@ -399,13 +406,13 @@ $lang_str["place=hamlet"]="Hamlet";
 $lang_str["place=locality"]="Locality";
 $lang_str["place=island"]="Island";
 
-$lang_str["admin_level=2"]="Country Border";
-$lang_str["admin_level=3"]="Divisions";
-$lang_str["admin_level=4"]="State Border";
-$lang_str["admin_level=5"]="Community Border";
-$lang_str["admin_level=6"]="County Border";
-$lang_str["admin_level=8"]="Town/Municipality Border";
-$lang_str["admin_level=10"]="Subdivisions of Cities";
+$lang_str["tag:admin_level=2"]="Country Border";
+$lang_str["tag:admin_level=3"]="Divisions";
+$lang_str["tag:admin_level=4"]="State Border";
+$lang_str["tag:admin_level=5"]="Community Border";
+$lang_str["tag:admin_level=6"]="County Border";
+$lang_str["tag:admin_level=8"]="Town/Municipality Border";
+$lang_str["tag:admin_level=10"]="Subdivisions of Cities";
 
 $lang_str["sub_type=t3|type=historic"]="UNESCO World Heritage Site";
 $lang_str["sub_type=|type=place_of_worship"]="Place of Worship";
@@ -662,3 +669,66 @@ $lang_str["main:licence"]="Map Data: <a href=\"http://creativecommons.org/licens
 $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'>".lang("info_back")."</a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
+
+
+// The following strings were converted from JS
+$lang_str["tag:amenity=restaurant"]= array( "Ristorante", "Ristoranti" );
+$lang_str["cat:leisure"]= "Tempo libero, Sport e Shopping" ;
+$lang_str["cat:leisure/gastro"]= "Gastronomia" ;
+$lang_str["cat:leisure/leisure"]= "Tempo libero" ;
+$lang_str["cat:leisure/sport"]= "Sport" ;
+$lang_str["cat:leisure/shop"]= "Acquisti" ;
+$lang_str["cat:culture"]= "Cultura e Religione" ;
+$lang_str["cat:culture/culture"]= "Cultura" ;
+$lang_str["cat:culture/religion"]= "Religione" ;
+$lang_str["cat:culture/historic"]= "Storia" ;
+$lang_str["cat:culture/tourism"]= "Turismo" ;
+$lang_str["cat:shop"]= "Acquisti" ;
+$lang_str["cat:services"]= "Servizi" ;
+$lang_str["cat:services/communication"]= "Communicazioni" ;
+$lang_str["cat:services/financial"]= "Finanze" ;
+$lang_str["cat:services/emergency"]= "Pubblica sicurezza" ;
+$lang_str["cat:services/health"]= "Salute ed Ospedali" ;
+$lang_str["cat:services/education"]= "Educazione" ;
+$lang_str["cat:services/public"]= "Servizi pubblici" ;
+$lang_str["cat:services/tourism"]= "Turismo" ;
+$lang_str["cat:places"]= array( "Luogo", "Luoghi" );
+$lang_str["cat:places/places"]= array( "Luogo", "Luoghi" );
+$lang_str["cat:places/residential"]= "Zona residenziale" ;
+$lang_str["cat:places/streets"]= "Stradario" ;
+$lang_str["cat:places/natural"]= "Natura" ;
+$lang_str["cat:transport"]= "Trasporti" ;
+$lang_str["cat:transport/car"]= "Trasporti individuali" ;
+$lang_str["cat:transport/car/amenities"]= "dotazioni" ;
+$lang_str["cat:transport/car/furniture"]= "accessori" ;
+$lang_str["cat:transport/pt"]= "Trasporto pubblico" ;
+$lang_str["cat:transport/pt/amenities"]= "dotazioni" ;
+$lang_str["cat:transport/pt/routes"]= "Percorso" ;
+$lang_str["cat:transport/pt/stops"]= "Fermata" ;
+$lang_str["cat:transport/alternative"]= "Alternative (bici, escursioni, ...)" ;
+$lang_str["cat:transport/alternative/amenities"]= "dotazioni" ;
+$lang_str["cat:transport/alternative/routes"]= "Direzioni" ;
+$lang_str["cat:transport/other"]= "Altri" ;
+$lang_str["cat:industry"]= "Industria" ;
+$lang_str["cat:industry/power"]= "Energia" ;
+$lang_str["cat:industry/works"]= "Stabilimento" ;
+$lang_str["cat:agri_ind"]= "Agricoltura e Industria" ;
+$lang_str["cat:agri_ind/power"]= "Energia" ;
+$lang_str["cat:agri_ind/works"]= "Stailimento" ;
+$lang_str["cat:agri_ind/agriculture"]= "Agricoltura" ;
+$lang_str["cat:agri_ind/construction"]= "Cantieri" ;
+$lang_str["cat:agri_ind/railway"]= "Ferrovia" ;
+$lang_str["cat:agri_ind/resources"]= "Risorse" ;
+$lang_str["cat:agri_ind/landfill"]= "Discarica" ;
+$lang_str["cat:agri_ind/military"]= "Militare" ;
+$lang_str["options:autozoom"]= "Menu selezione zoom" ;
+$lang_str["help:autozoom"]= "Se un oggetto è selezionato la mappa potrebbe subire ingrandimenti oppure spostamenti. Con le seguenti opzioni è possibile scegliere:" ;
+$lang_str["options:autozoom:pan"]= "muoviti al punto selezonato" ;
+$lang_str["options:autozoom:move"]= "salta al punto selezionato" ;
+$lang_str["options:autozoom:stay"]= "non fare nulla" ;
+$lang_str["options:language_support"]= "Seleziona la lingua" ;
+$lang_str["help:language_support"]= "Qui puoi scegliere le tue lingue preferite. La prima cambia la lingua dell'interfaccia mentre la seconda la lingua dei contenuti. Le informazioni possono essere tradotte in molti idiomi selezionando l'opportuna \"lingua dati\"." ;
+$lang_str["options:ui_lang"]= "Lingua interfaccia" ;
+$lang_str["options:data_lang"]= "Lingua dati" ;
+$lang_str["lang:"]= "Lingua del tuo browser" ;
+$lang_str["overlay:marker"]= "Marker" ;
