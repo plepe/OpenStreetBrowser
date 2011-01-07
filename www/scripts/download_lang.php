@@ -61,7 +61,7 @@ function parse($lang, $wikipage) {
     else {
       if(eregi("^(.*)\\\$lang_str\[\"([^\"]*)\"\](.*)$", $r, $m)) {
 	$str=rewrite_str($m[2]);
-        $r="$m[1]\$lang_str=[\"$str\"]$m[3]";
+        $r="$m[1]\$lang_str[\"$str\"]$m[3]";
       }
 
       if($w)
@@ -76,4 +76,3 @@ function parse($lang, $wikipage) {
 foreach($languages as $lang=>$wikipage) {
   parse($lang, $wikipage);
 }
-
