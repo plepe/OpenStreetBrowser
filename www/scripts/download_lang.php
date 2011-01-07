@@ -9,6 +9,9 @@ unset($file);
 while($r=fgets($f)) {
   if(eregi("==== (.*) ====", $r, $m)) {
     $file=$m[1];
+    if(eregi("^(.*)en\.(.*)$", $file, $m)) {
+      $file="$m[1]$lang.$m[2]";
+    }
     print "Writing to $file\n";
     if($w)
       fclose($w);
