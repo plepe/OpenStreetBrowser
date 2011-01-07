@@ -83,6 +83,10 @@ function template_lang_file($src, $dst) {
 $count_done=0;
 $count_missing=0;
 
+print "Current OSB version: ";
+system("git rev-parse HEAD");
+print "\n";
+
 template_lang_file("www/lang/en.php", "www/lang/{$ui_lang}.php");
 template_lang_file("www/lang/tags_en.php", "www/lang/tags_{$ui_lang}.php");
 $d=opendir("$root_path/www/plugins");
