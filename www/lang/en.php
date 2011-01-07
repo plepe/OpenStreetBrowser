@@ -5,7 +5,7 @@
 //  Every language string looks like this:
 //  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
 //  the first entry is the translation of the language string in Singular,
-//  the second the Plurarl form.
+//  the second the Plural form.
 //
 //  Optionally you can define the Gender (F, M, N) of this word, e.g. the
 //  German translation for office:
