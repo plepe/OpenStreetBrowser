@@ -9,7 +9,7 @@ require "../../conf.php";
 
 $verbose=false;
 
-$ui_lang=$_REQUEST['ui_lang'];
+$ui_lang=$_GET['ui_lang'];
 if(!$ui_lang) {
   include "$root_path/www/lang/list.php";
 
