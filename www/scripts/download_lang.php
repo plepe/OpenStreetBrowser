@@ -7,8 +7,14 @@ $f=fopen("http://wiki.openstreetmap.org/w/index.php?title=OpenStreetBrowser/Lang
 
 unset($file);
 while($r=fgets($f)) {
-  if(eregi("==== (.*) ====", $r, $m)) {
-    $file=$m[1];
+  if(eregi("==== (File: )?(.*) ====", $r, $m)) {
+    if($m[2]=="Statistics") {
+      if($w)
+	fclose($w);
+      continue;
+    }
+
+    $file=$m[2];
     if(eregi("^(.*)en\.(.*)$", $file, $m)) {
       $file="$m[1]$lang.$m[2]";
     }
