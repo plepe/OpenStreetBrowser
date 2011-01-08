@@ -9,6 +9,13 @@ BEGIN
     return ret;
   end if;
 
+  -- maybe already finished line?
+  ret:=(select osm_way from osm_line where osm_id='way_'||id);
+  if ret is not null then
+    -- raise notice 'way_get_geom(%) - osm_line hit', id;
+    return ST_Transform(ret, 4326);
+  end if;
+
   -- raise notice 'way_get_geom(%)', id;
 
 --  raise notice 'count: %', (select count(node_id) from (select * from way_nodes join nodes on way_nodes.node_id=nodes.id where way_nodes.way_id=id order by sequence_id) c group by way_id);
@@ -31,8 +38,6 @@ DECLARE
   o		 int;
   -- geom_rels  geometry[];
 BEGIN
-  -- raise notice 'rel_get_geom(%, %)', id, rec;
-
   --if rec>0 then
   --  return null;
   --end if;
@@ -50,6 +55,8 @@ BEGIN
   if array_lower(geom_arr_ways, 1) is not null then
     geom_ways:=ST_Collect(geom_arr_ways);
   end if;
+
+  -- raise notice 'rel_get_geom(%, %)', id, rec;
 
   return ST_Collect(geom_nodes, geom_ways);
 END;
