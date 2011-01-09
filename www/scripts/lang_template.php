@@ -8,7 +8,7 @@ function lang() {
 
 function esc($d) {
   if(is_array($d)) {
-    print "array( \"".implode("\", \"", $d)."\" )";
+    return "array( \"".implode("\", \"", $d)."\" )";
   }
   else {
     return "\"$d\"";
