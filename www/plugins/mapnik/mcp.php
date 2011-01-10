@@ -13,11 +13,11 @@ function mapnik_build_renderd($renderd) {
 	$style="{$plugin}_{$m[1]}";
 	print "Found style $style\n";
 
-	$renderd="[$style]\n";
-	$renderd="URI=/tiles/$style/\n";
-	$renderd="XML=$plugins_dir/$plugin/$r\n";
-	$renderd="HOST=dummy.host\n";
-	$renderd="\n";
+	$renderd.="[$style]\n";
+	$renderd.="URI=/tiles/$style/\n";
+	$renderd.="XML=$plugins_dir/$plugin/$r\n";
+	$renderd.="HOST=dummy.host\n";
+	$renderd.="\n";
       }
     }
     closedir($d);

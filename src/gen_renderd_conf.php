@@ -44,7 +44,8 @@ function gen_renderd_conf() {
   }
   
   $renderd="";
-  call_hooks("build_renderd", $renderd);
+  call_hooks("build_renderd", &$renderd);
+  fwrite($conf, $renderd);
 
   // generate dummy entry in renderd.conf to avoid renderd-bug
   global $data_path;
