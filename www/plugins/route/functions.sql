@@ -29,32 +29,53 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql immutable;
 
-CREATE OR REPLACE FUNCTION route_importance(text, text[]) RETURNS text AS $$
+CREATE OR REPLACE FUNCTION route_importance(hstore) RETURNS text AS $$
 DECLARE
-  route alias for $1;
-  network alias for $2;
+  osm_tags alias for $1;
+  route text;
+  network text;
 BEGIN
+  route:=osm_tags->'route';
+  network:=osm_tags->'network';
+
   if route in ('tram', 'bus', 'trolley', 'trolleybus') then
     return 'suburban';
   elsif route in ('light_rail', 'subway') then
     return 'urban';
   elsif route in ('train', 'rail', 'railway', 'ferry') then
     return 'regional';
-  elsif array_pos(network, 'e-road') is not null and route in ('road') then
+  elsif network in ('e-road') and route in ('road') then
     return 'international';
   elsif route in ('road') then
     return 'regional';
-  elsif array_pos(network, 'icn') is not null or array_pos(network, 'iwn') is not null then
+  elsif network in ('icn', 'iwn') then
     return 'international';
-  elsif array_pos(network, 'ncn') is not null or array_pos(network, 'nwn') is not null then
+  elsif network in ('ncn', 'nwn') then
     return 'national';
-  elsif array_pos(network, 'rcn') is not null or array_pos(network, 'rwn') is not null or route in ('hiking') then
+  elsif network in ('rcn', 'rwn') or route in ('hiking') then
     return 'regional';
-  elsif array_pos(network, 'lcn') is not null or array_pos(network, 'lwn') is not null or array_pos(network, 'mtb') is not null or route in ('bicycle', 'mtb') then
+  elsif network in ('lcn', 'lwn', 'mtb') or route in ('bicycle', 'mtb') then
     return 'suburban';
   end if;
 
   return 'local';
+END;
+$$ LANGUAGE plpgsql immutable;
+
+CREATE OR REPLACE FUNCTION route_type(hstore) RETURNS text AS $$
+DECLARE
+  osm_tags alias for $1;
+  route text;
+BEGIN
+  route:=osm_tags->'route';
+
+  if route in ('bus', 'trolley', 'trolleybus', 'minibus') then
+    return 'bus';
+  elsif route in ('tram', 'light_rail') then
+    return 'tram';
+  end if;
+
+  return route;
 END;
 $$ LANGUAGE plpgsql immutable;
 
