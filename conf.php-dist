@@ -85,3 +85,4 @@ $basemaps=array(
 // tags_info - Change display of tags in info
 // info_navigation - Navigate to currently shown info
 // whats_here - Query OSM objects under cursor
+// cascadenik - Automatically compile cascadenik-files in plugins
