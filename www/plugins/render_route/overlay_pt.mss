@@ -248,11 +248,11 @@
   line-color: #0000ff;
   text-fill: #0000ff;
 }
-.routestext[importance=international][zoom>=6][zoom<7] ref,
-.routestext[importance=national][zoom>=7][zoom<8] ref,
-.routestext[importance=regional][zoom>=8][zoom<11] ref,
-.routestext[importance=urban][zoom>=11][zoom<13] ref,
-.routestext[importance=suburban][zoom>=13][zoom<15] ref,
+.routestext[importance=international][zoom>=6] ref,
+.routestext[importance=national][zoom>=7] ref,
+.routestext[importance=regional][zoom>=8] ref,
+.routestext[importance=urban][zoom>=11] ref,
+.routestext[importance=suburban][zoom>=13] ref,
 .routestext[importance=local][zoom>=15] ref
 {
   text-face-name: "DejaVu Sans Book";

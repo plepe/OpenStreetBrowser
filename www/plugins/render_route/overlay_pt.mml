@@ -40,4 +40,100 @@ order by
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
    </Layer>
+   <Layer class="routes_features" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="srid">900913</Parameter>
+      <Parameter name="geometry_field">geom</Parameter>
+      <Parameter name="table">
+(select * from (select
+  member_id,
+  member_way as "geom",
+  route_type(osm_tags) "route",
+  route_refs(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "ref",
+  route_dir(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "dir",
+  member_tags->'tunnel' as "tunnel",
+  route_importance(osm_tags) as "importance",
+  highway_type(member_tags) as "highway_type"
+from
+  osm_rel_members
+where
+  osm_tags @> 'type=>route' and
+  osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
+  osm_way &amp;&amp; !bbox!
+group by
+  route_type(osm_tags),
+  member_id,
+  member_way,
+  member_tags->'tunnel',
+  route_importance(osm_tags),
+  highway_type(member_tags)) routes1
+order by
+  "importance" asc) routes
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+
+   <Layer class="pt_line" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="srid">900913</Parameter>
+      <Parameter name="geometry_field">geom</Parameter>
+      <Parameter name="table">
+      (select 
+        osm_id, osm_tags->'name' as "name", osm_tags->'ref' as "ref",
+        (CASE
+	  WHEN osm_tags->'railway' in ('platform') THEN 'railway_platform'
+	  END) as type,
+	char_length(osm_tags->'ref') as ref_length,
+	osm_way as "geom"
+      from osm_line
+      where
+        osm_tags @> 'railway=>platform'
+      ) as t
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+   <Layer class="routestext" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="srid">900913</Parameter>
+      <Parameter name="geometry_field">geom</Parameter>
+      <Parameter name="table">
+(select * from (select
+  member_id,
+  member_way as "geom",
+  route_type(osm_tags) "route",
+  route_refs(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "ref",
+  route_dir(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "dir",
+  member_tags->'tunnel' as "tunnel",
+  route_importance(osm_tags) as "importance",
+  highway_type(member_tags) as "highway_type"
+from
+  osm_rel_members
+where
+  osm_tags @> 'type=>route' and
+  osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
+  osm_way &amp;&amp; !bbox!
+group by
+  route_type(osm_tags),
+  member_id,
+  member_way,
+  member_tags->'tunnel',
+  route_importance(osm_tags),
+  highway_type(member_tags)) routes1
+order by
+  "importance" desc) routes
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
 </Map>
