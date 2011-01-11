@@ -77,16 +77,17 @@ order by
     </Datasource>
    </Layer>
 
-   <Layer class="stations_top" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+   <Layer class="stations_bbox" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">gisnew</Parameter>
       <Parameter name="srid">900913</Parameter>
-      <Parameter name="geometry_field">geom</Parameter>
+      <Parameter name="geometry_field">bbox</Parameter>
       <Parameter name="table">
 (select
   "name", "importance",
-  GeometryFromText('POINT(' || x(centroid(poly)) || ' ' || ymax(poly) || ')', 900913) as geom
+  GeometryFromText('POINT(' || x(centroid(poly)) || ' ' || ymax(poly) || ')', 900913) as top,
+  geomfromtext('LINESTRING(' || XMIN(poly)||' '||YMIN(poly) ||', '|| XMIN(poly)||' '||YMAX(poly) ||', '|| XMAX(poly)||' '||YMAX(poly)||', '|| XMAX(poly)||' '||YMIN(poly)||', '|| XMIN(poly)||' '||YMIN(poly) ||', '|| XMIN(poly)||' '||YMAX(poly)|| ')', 900913) as bbox
 from
  (select
    osm_tags->'name' as "name",
@@ -107,6 +108,78 @@ from
     osm_tags->'name',
     stop_merge(osm_id, osm_tags, osm_way, 'name')
 ) as stations) as s
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+   <Layer class="stations_top" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="srid">900913</Parameter>
+      <Parameter name="geometry_field">top</Parameter>
+      <Parameter name="table">
+(select
+  "name", "importance",
+  GeometryFromText('POINT(' || x(centroid(poly)) || ' ' || ymax(poly) || ')', 900913) as top,
+  poly as bbox
+from
+ (select
+   osm_tags->'name' as "name",
+   stops_importance(array_agg(osm_tags)) as "importance",
+   envelope(ST_Collect(osm_way)) as "poly"
+  from osm_point
+  where
+    osm_way &amp;&amp; !bbox! and
+    (osm_tags @> 'highway=>bus_stop' or
+     osm_tags @> 'railway=>tram_stop' or
+     osm_tags @> 'railway=>station' or
+     osm_tags @> 'railway=>halt' or
+     osm_tags @> 'amenity=>bus_station' or
+     osm_tags @> 'amenity=>ferry_terminal' or
+     osm_tags @> 'aeroway=>aerodrome' or
+     osm_tags @> 'aerialway=>station')
+  group by
+    osm_tags->'name',
+    stop_merge(osm_id, osm_tags, osm_way, 'name')
+) as stations) as s
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+   <Layer class="stop_routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="srid">900913</Parameter>
+      <Parameter name="geometry_field">osm_way</Parameter>
+      <Parameter name="table">
+(select
+  osm_point.osm_id as "osm_id",
+  osm_point.osm_way as "osm_way",
+  osm_rel.osm_tags->'route' as "route",
+  route_refs(array_agg(osm_rel.osm_tags->'ref'), Array[]::text[]) as "ref",
+  array_pos(
+    (select
+      array_unique(array_agg(osm_rel1.osm_tags->'route'))
+    from osm_rel osm_rel1
+    where
+      osm_rel1.member_ids @> Array[osm_point.osm_id] and 
+      osm_rel1.osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'tram', 'bus', 'trolley', 'minibus', 'ferry', 'light_rail', 'trolleybus')
+    group by
+      osm_point.osm_id),
+   osm_rel.osm_tags->'route') as "row"
+from osm_point
+  join osm_rel on osm_rel.member_ids @> Array[osm_point.osm_id]
+where
+  osm_rel.osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'tram', 'bus', 'trolley', 'minibus', 'ferry', 'light_rail', 'trolleybus')
+group by
+  osm_point.osm_id,
+  osm_point.osm_way,
+  osm_rel.osm_tags->'route'
+  ) as stop_routes
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
