@@ -48,9 +48,22 @@ DECLARE
   way alias for $3;
   parse alias for $4;
   list text[];
+  ret text;
+  i int;
 BEGIN
-  list:=stop_merge(id, tags, way, parse, Array[]::text[]);
+  ret:=cache_search(id, 'point_group');
+  if ret is not null then
+    return ret;
+  end if;
 
-  return (array_sort(list))[1];
+  list:=stop_merge(id, tags, way, parse, Array[]::text[]);
+  ret:=(array_sort(list))[1];
+
+  -- we can remember the lowest id for all objects in the group
+  for i in array_lower(list, 1)..array_upper(list, 1) loop
+    perform cache_insert(list[i], 'point_group', ret, list);
+  end loop;
+
+  return ret;
 END;
 $$ LANGUAGE plpgsql immutable;
