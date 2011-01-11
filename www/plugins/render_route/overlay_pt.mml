@@ -77,6 +77,42 @@ order by
     </Datasource>
    </Layer>
 
+   <Layer class="stations_top" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="srid">900913</Parameter>
+      <Parameter name="geometry_field">geom</Parameter>
+      <Parameter name="table">
+(select
+  "name", "importance",
+  GeometryFromText('POINT(' || x(centroid(poly)) || ' ' || ymax(poly) || ')', 900913) as geom
+from
+ (select
+   osm_tags->'name' as "name",
+   stops_importance(array_agg(osm_tags)) as "importance",
+   envelope(ST_Collect(osm_way)) as "poly"
+  from osm_point
+  where
+    osm_way &amp;&amp; !bbox! and
+    (osm_tags @> 'highway=>bus_stop' or
+     osm_tags @> 'railway=>tram_stop' or
+     osm_tags @> 'railway=>station' or
+     osm_tags @> 'railway=>halt' or
+     osm_tags @> 'amenity=>bus_station' or
+     osm_tags @> 'amenity=>ferry_terminal' or
+     osm_tags @> 'aeroway=>aerodrome' or
+     osm_tags @> 'aerialway=>station')
+  group by
+    osm_tags->'name',
+    stop_merge(osm_id, osm_tags, osm_way, 'name')
+) as stations) as s
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+
    <Layer class="pt_line" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
