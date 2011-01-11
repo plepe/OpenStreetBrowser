@@ -20,7 +20,7 @@ BEGIN
   list_tags=Array[]::hstore[];
   list_geo=Array[]::geometry[];
 
-  for ret in select * from osm_point where osm_way && ST_Buffer(way, 200) and osm_tags @> (parse||'=>'||(tags->parse))::hstore and not osm_id=any(done) loop
+  for ret in select * from osm_point where osm_way && ST_Buffer(way, 200) and osm_tags @> (parse => (tags->parse))::hstore and not osm_id=any(done) loop
     done:=array_append(done, ret.osm_id);
     list_id:=array_append(list_id, ret.osm_id);
     list_tags:=array_append(list_tags, ret.osm_tags);
@@ -51,19 +51,31 @@ DECLARE
   ret text;
   i int;
 BEGIN
+  if not tags?parse then
+    return id;
+  end if;
+
   ret:=cache_search(id, 'point_group');
   if ret is not null then
     return ret;
   end if;
+  
+  -- raise notice 'searching for stops: % %', id, tags->parse;
 
   list:=stop_merge(id, tags, way, parse, Array[]::text[]);
   ret:=(array_sort(list))[1];
 
   -- we can remember the lowest id for all objects in the group
-  for i in array_lower(list, 1)..array_upper(list, 1) loop
-    perform cache_insert(list[i], 'point_group', ret, list);
-  end loop;
+  perform cache_insert(list, 'point_group|'||parse, ret, list);
 
   return ret;
+END;
+$$ LANGUAGE plpgsql immutable;
+
+CREATE OR REPLACE FUNCTION stops_importance(hstore[]) RETURNS text AS $$
+DECLARE
+  tags alias for $1;
+BEGIN
+  return 'urban';
 END;
 $$ LANGUAGE plpgsql immutable;
