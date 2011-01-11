@@ -55,7 +55,7 @@ BEGIN
     return id;
   end if;
 
-  ret:=cache_search(id, 'point_group');
+  ret:=cache_search(id, 'point_group|'||parse);
   if ret is not null then
     return ret;
   end if;
