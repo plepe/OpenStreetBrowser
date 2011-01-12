@@ -9,6 +9,7 @@ $languages=array(
   "ja"=>"Japanese",
   "uk"=>"Ukrainian",
   "it"=>"Italian",
+  "ru"=>"Russian",
 );
 
 function rewrite_str($str) {
