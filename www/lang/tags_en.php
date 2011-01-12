@@ -172,22 +172,22 @@ $lang_str["tag:operator"]="Operator";
 
 // place
 $lang_str["tag:place"]="Place";
-$lang_str["tag:place=continent"]   =array( "Continent", "Continents" );
-$lang_str["tag:place=country"]     =array( "Country", "Countries" );
-$lang_str["tag:place=state"]       =array( "State", "States" );
-$lang_str["tag:place=region"]      =array( "Region", "Regions" );
-$lang_str["tag:place=county"]      =array( "County", "Counties" );
-$lang_str["tag:place=city"]        =array( "City", "Cities" );
-$lang_str["tag:place=town"]        =array( "Town", "Towns" );
-$lang_str["tag:place=village"]     =array( "Village", "Villages" );
-$lang_str["tag:place=suburb"]      =array( "Suburb", "Suburbs" );
-$lang_str["tag:place=locality"]    =array( "Locality", "Localities" );
-$lang_str["tag:place=island"]      =array( "Island", "Islands" );
-$lang_str["tag:place=islet"]       =array( "Islet", "Islets" );
+$lang_str["tag:place=continent"]=array("Continent", "Continents");
+$lang_str["tag:place=country"]=array("Country", "Countries");
+$lang_str["tag:place=state"]=array("State", "States");
+$lang_str["tag:place=region"]=array("Region", "Regions");
+$lang_str["tag:place=county"]=array("County", "Counties");
+$lang_str["tag:place=city"]=array("City", "Cities");
+$lang_str["tag:place=town"]="Town";
+$lang_str["tag:place=village"]=array("Village", "Villages");
+$lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
+$lang_str["tag:place=locality"]=array("Locality", "Localities");
+$lang_str["tag:place=island"]=array("Island", "Islands");
+$lang_str["tag:place=islet"]=array("Islet", "Islets");
 // the following tags are deprecated
 $lang_str["tag:place=city;population>1000000"]=array("City, > 1 Mio Inhabitants", "Cities, > 1 Mio Inhabitants");
 $lang_str["tag:place=city;population>200000"]=array("City, > 200.000 Inhabitants", "Cities, > 200.000 Inhabitants");
-$lang_str["tag:place=town"]="Town";
+#$lang_str["tag:place=town"]="Town";
 $lang_str["tag:place=town;population>30000"]=array("Town, > 30.000 Inhabitants", "Towns, > 30.000 Inhabitants");
 
 // population
@@ -225,7 +225,7 @@ $lang_str["tag:real_ale"]="Real ale offered";
 
 // religion
 $lang_str["tag:religion"]="Religion";
-$lang_str["tag:religion=christian"]=array( "christian" );
+$lang_str["tag:religion=christian"]=array("christian");
 
 // route
 $lang_str["tag:route=train"]="Train";
@@ -313,3 +313,4 @@ $tag_type["wires"]=array("count");
 // website
 $lang_str["tag:website"]="Website";
 $tag_type["website"]=array("link");
+
