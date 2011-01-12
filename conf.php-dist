@@ -86,3 +86,4 @@ $basemaps=array(
 // info_navigation - Navigate to currently shown info
 // whats_here - Query OSM objects under cursor
 // cascadenik - Automatically compile cascadenik-files in plugins
+// move_angle - Calculate relations to other geometric objects
