@@ -42,8 +42,11 @@ function parse($lang, $wikipage) {
   while($r=fgets($f)) {
     if(eregi("==== (File: )?(.*) ====", $r, $m)) {
       if($m[2]=="Statistics") {
-	if($w)
+	if($w) {
+	  print "Done\n";
 	  fclose($w);
+	  unset($w);
+	}
 	continue;
       }
 
@@ -51,10 +54,17 @@ function parse($lang, $wikipage) {
       if(eregi("^(.*)en\.(.*)$", $file, $m)) {
 	$file="$m[1]$lang.$m[2]";
       }
-      print "Writing to $file\n";
-      if($w)
+
+      if($w) {
 	fclose($w);
-      $w=fopen("$root_path/$file", "w");
+	unset($w);
+      }
+
+      print "Writing to $file\n";
+      if(!($w=fopen("$root_path/$file", "w"))) {
+	print "Can't write to file $file\n";
+	exit;
+      }
     }
     elseif(eregi("<\/?syntaxhigh", $r)) {
     }
