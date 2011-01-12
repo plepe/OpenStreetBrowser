@@ -70,9 +70,19 @@ function parse($lang, $wikipage) {
     elseif(eregi("<\/?syntaxhigh", $r)) {
     }
     else {
-      if(eregi("^(.*)\\\$lang_str\[\"([^\"]*)\"\](.*)$", $r, $m)) {
+      if(eregi("^(.*)\\\$lang_str\[\"([^\"]*)\"\]\s*=\s*\"(.*)\";", $r, $m)) {
 	$str=rewrite_str($m[2]);
-        $r="$m[1]\$lang_str[\"$str\"]$m[3]";
+        $r="$m[1]\$lang_str[\"$str\"]=\"".strtr($m[3], array("\""=>"\\\""))."\";\n";
+      }
+
+      elseif(eregi("^(.*)\\\$lang_str\[\"([^\"]*)\"\]\s*=\s*array\( *\"(.*)\" *\);", $r, $m)) {
+	$m[3]=explode("\", \"", $m[3]);
+	foreach($m[3] as $mk=>$mv) {
+	  $m[3][$mk]=strtr($mv, array("\""=>"\\\""));
+	}
+
+	$str=rewrite_str($m[2]);
+        $r="$m[1]\$lang_str[\"$str\"]=array(\"".implode("\", \"", $m[3])."\");\n";
       }
 
       if($w)
