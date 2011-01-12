@@ -66,7 +66,9 @@ BEGIN
   ret:=(array_sort(list))[1];
 
   -- we can remember the lowest id for all objects in the group
-  perform cache_insert(list, 'point_group|'||parse, ret, list);
+  for i in array_lower(list, 1)..array_upper(list, 1) loop
+    perform cache_insert(list[i], 'point_group|'||parse, ret, list);
+  end loop;
 
   return ret;
 END;
