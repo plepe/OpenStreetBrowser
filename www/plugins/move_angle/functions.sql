@@ -19,6 +19,7 @@ DECLARE
   angle_norm float;
   pos_p float;
   pos_n float;
+  length float;
 BEGIN
   select *, line_locate_point(osm_way, way) as "pos" into ret from osm_line where osm_way && ST_Buffer(way, max_dist) order by Distance(way, osm_way) asc limit 1;
   line_point:=line_interpolate_point(ret.osm_way, ret.pos);
@@ -27,16 +28,19 @@ BEGIN
     return null;
   end if;
 
-  pos_p:=ret.pos-0.001;
-  pos_n:=ret.pos+0.001;
+  length:=ST_Length(ret.osm_way);
+  pos_p:=ret.pos-0.001/length;
+  pos_n:=ret.pos+0.001/length;
 
   if pos_p<0 then
     pos_p:=0;
   end if;
 
-  if pos_n>ST_Length(ret.osm_way) then
-    pos_p:=ST_Length(ret.osm_way);
+  if pos_n>1 then
+    pos_n:=1;
   end if;
+
+  -- raise notice 'pos: % % - % - % %', 0, pos_p, ret.pos, pos_n, ST_Length(ret.osm_way);
 
   angle:=ST_Azimuth(line_interpolate_point(ret.osm_way, pos_p), line_interpolate_point(ret.osm_way, pos_n));
 
