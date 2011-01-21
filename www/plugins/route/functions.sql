@@ -16,7 +16,7 @@ BEGIN
     end if;
   end loop;
 
-  return (Array['forward', 'backward', 'both'])[dir];
+  return (Array['both', 'forward', 'backward', 'both'])[dir+1];
 END;
 $$ LANGUAGE plpgsql immutable;
 
