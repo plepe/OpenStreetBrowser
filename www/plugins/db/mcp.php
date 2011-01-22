@@ -29,6 +29,7 @@ function db_init() {
 
     // always reload functions
     if(file_exists("$plugins_dir/$plugin/functions.sql")) {
+      print "Loading $plugin/functions.sql\n";
       sql_query(file_get_contents("$plugins_dir/$plugin/functions.sql"));
     }
 
