@@ -9,10 +9,18 @@ BEGIN
     return ret;
   end if;
 
+  -- maybe already finished line?
+  ret:=(select osm_way from osm_line where osm_id='way_'||id);
+  if ret is not null then
+    -- raise notice 'way_get_geom(%) - osm_line hit', id;
+    return ST_Transform(ret, 4326);
+  end if;
+
   -- raise notice 'way_get_geom(%)', id;
 
 --  raise notice 'count: %', (select count(node_id) from (select * from way_nodes join nodes on way_nodes.node_id=nodes.id where way_nodes.way_id=id order by sequence_id) c group by way_id);
-  ret:=(select cache_insert('way_'||way_id, 'geom', (CASE WHEN count(*)>1 THEN cast(MakeLine(geom) as text) ELSE null::text END), to_textarray('node_'||node_id)) from (select * from way_nodes join nodes on way_nodes.node_id=nodes.id where way_nodes.way_id=id order by sequence_id) c group by way_id);
+  ret:=(select cache_insert('way_'||way_id, 'geom', (CASE WHEN count(*)>1 THEN cast(MakeLine(geom) as text) ELSE null::text END), to_textarray('node_'||node_id)) from (select * from way_nodes join nodes on way_nodes.node_id=nodes.id where way_nodes.way_id=id and abs(Y(geom))!=90 order by sequence_id) c group by way_id);
+  -- abs(Y(geom))!=90 => ignore poles
 
   return ret;
 END;
@@ -30,13 +38,12 @@ DECLARE
   o		 int;
   -- geom_rels  geometry[];
 BEGIN
-  -- raise notice 'rel_get_geom(%, %)', id, rec;
-
   --if rec>0 then
   --  return null;
   --end if;
 
-  geom_arr_nodes:=(select to_array(geom) from nodes where nodes.id in (select member_id from relation_members where relation_id=id and member_type='N'));
+  geom_arr_nodes:=(select to_array(geom) from nodes where nodes.id in (select member_id from relation_members where relation_id=id and member_type='N') and abs(Y(geom))!=90);
+  -- abs(Y(geom))!=90 => ignore poles
   geom_arr_ways:=(select to_array(geom) as geom from (select way_get_geom(member_id) as geom from (select member_id from relation_members where relation_id=id and member_type='W') x) x1 where x1.geom is not null);
   --geom_rels:=(select ST_Collect(rel_get_geom(relations.id, rec+1)) from relations where relations.id in (select member_id from relation_members where relation_id=id and member_type='R'));
 
@@ -48,6 +55,8 @@ BEGIN
   if array_lower(geom_arr_ways, 1) is not null then
     geom_ways:=ST_Collect(geom_arr_ways);
   end if;
+
+  -- raise notice 'rel_get_geom(%, %)', id, rec;
 
   return ST_Collect(geom_nodes, geom_ways);
 END;
