@@ -56,7 +56,7 @@ BEGIN
   content:=(select osm_cache.content from osm_cache where osm_cache.osm_id=osm_id and osm_cache.cache_type=cache_type and now()<=outdate limit 1);
   return content;
 END;
-$$ LANGUAGE plpgsql stable;
+$$ LANGUAGE plpgsql volatile;
 
 CREATE OR REPLACE FUNCTION cache_insert(text, text, text, text[], interval) RETURNS text AS $$
 DECLARE
