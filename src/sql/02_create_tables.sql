@@ -77,3 +77,15 @@ create index osm_polygon_rel_id on osm_polygon(rel_id);
 create index osm_polygon_tags on osm_polygon using gin(osm_tags);
 create index osm_polygon_way  on osm_polygon using gist(osm_way);
 create index osm_polygon_way_tags on osm_polygon using gist(osm_way, osm_tags);
+
+-- all
+drop view if exists osm_all;
+create view osm_all as (
+  select osm_id, 'point' as osm_type, osm_tags, osm_way from osm_point
+  union all
+  select osm_id, 'line' as osm_type, osm_tags, osm_way from osm_line
+  union all
+  select osm_id, 'polygon' as osm_type, osm_tags, osm_way from osm_polygon
+  union all
+  select osm_id, 'rel' as osm_type, osm_tags, osm_way from osm_rel
+);
