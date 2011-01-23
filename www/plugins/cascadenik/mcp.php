@@ -12,6 +12,8 @@ function cascadenik_compile() {
 
 	system("cascadenik-compile.py $plugins_dir/$plugin/$m[1].mml $plugins_dir/$plugin/$m[1].xml");
 	rename("$plugins_dir/$plugin/$m[1].xml", "$plugins_dir/$plugin/$m[1].mapnik");
+
+	call_hooks("cascadenik_compiled", "$plugins_dir/$plugin/$m[1].mapnik");
       }
     }
     closedir($d);
