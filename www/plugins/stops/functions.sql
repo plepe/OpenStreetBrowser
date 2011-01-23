@@ -81,3 +81,59 @@ BEGIN
   return 'urban';
 END;
 $$ LANGUAGE plpgsql immutable;
+
+CREATE OR REPLACE FUNCTION stops_dir(text, hstore, geometry) RETURNS text AS $$
+DECLARE
+  id alias for $1;
+  tags alias for $2;
+  way alias for $3;
+  result record;
+  ret text;
+  dir int:=0;
+  member_of text[]:=Array[]::text[];
+BEGIN
+  -- if direction is defined in the stop, return without checking routes
+  if tags->'direction' in ('forward', 'backward', 'both') then
+    return tags->'direction';
+  end if;
+
+  -- maybe we checked direction before?
+  ret:=cache_search(id, 'stops_dir');
+  if ret is not null then
+    return ret;
+  end if;
+
+  -- go through all relations this stop is member of and check role of stop
+  for result in
+    select
+      r.osm_id as "osm_id",
+      r.member_roles[array_pos(r.member_ids, id)] as "role"
+    from osm_rel r
+    where
+      r.member_ids @> Array[id] and
+      r.osm_tags @> 'type=>route' and
+      r.osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail')
+  loop
+    -- remember list of routes we are member of
+    member_of:=array_append(member_of, result.osm_id);
+
+    -- check role: forward*, backward*, else
+    if substr(result.role, 1, 7)='forward' then
+      dir:=dir|1;
+    elsif substr(result.role, 1, 8)='backward' then
+      dir:=dir|2;
+    else
+      dir:=dir|3;
+    end if;
+  end loop;
+
+  -- direction is one of:
+  ret:=(Array['both', 'forward', 'backward', 'both'])[dir+1];
+
+  -- write to cache, maybe we need this again
+  perform cache_insert(id, 'stops_dir', ret, member_of);
+
+  return ret;
+END;
+$$ LANGUAGE plpgsql immutable;
+
