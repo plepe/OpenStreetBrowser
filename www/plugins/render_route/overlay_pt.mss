@@ -1,23 +1,7 @@
-.routestext[highway_type=motorway]   
-{ text-halo-fill: #ff6838; }
-.routestext[highway_type=motorway_link] 
-{ text-halo-fill: #ff6838; }
-.routestext[highway_type=trunk]      
-{ text-halo-fill: #ff8a00; }
-.routestext[highway_type=trunk_link] 
-{ text-halo-fill: #ff8a00; }
-.routestext[highway_type=primary]    
-{ text-halo-fill: #ffe800; }
-.routestext[highway_type=secondary]  
-{ text-halo-fill: #ffef4c; }
-.routestext[highway_type=tertiary]   
-{ text-halo-fill: #fff8b5; }
-.routestext[highway_type=minor]      
-{ text-halo-fill: #ffffff; }
-.routestext[highway_type=service]    
-{ text-halo-fill: #ffffff; }
-.routestext[highway_type=pedestrian] 
-{ text-halo-fill: #cdcdcd; }
+.routestext
+{
+  text-halo-fill: #afafaf;
+}
 .routes[route=rail],
 .routes[route=railway],
 .routes[route=train],
