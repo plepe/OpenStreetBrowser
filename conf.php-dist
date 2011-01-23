@@ -89,3 +89,4 @@ $basemaps=array(
 // move_angle - Calculate relations to other geometric objects
 // geo_relate - Calculate relations between geometric objects
 // mapnik_rotate - In a mapnik style rotate icons
+// cascadenik_svg - As cascadenik can't handle svg, convert all image-files to png first

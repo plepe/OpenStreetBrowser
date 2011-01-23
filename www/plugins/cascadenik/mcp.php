@@ -10,7 +10,12 @@ function cascadenik_compile() {
       if((substr($r, 0, 1)!=".")&&(preg_match("/^(.*)\.mml$/", $r, $m))) {
 	print "Cascadenik: Found $plugin -> $m[1]\n";
 
-	system("cascadenik-compile.py $plugins_dir/$plugin/$m[1].mml $plugins_dir/$plugin/$m[1].xml");
+	$file="$plugins_dir/$plugin/$m[1].mml";
+
+	call_hooks("cascadenik_compile", &$file);
+
+	print "Cascadenik process file $file\n";
+	system("cascadenik-compile.py $file $plugins_dir/$plugin/$m[1].xml");
 	rename("$plugins_dir/$plugin/$m[1].xml", "$plugins_dir/$plugin/$m[1].mapnik");
 
 	call_hooks("cascadenik_compiled", "$plugins_dir/$plugin/$m[1].mapnik");
