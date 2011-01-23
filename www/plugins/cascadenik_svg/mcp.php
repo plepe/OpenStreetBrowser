@@ -5,8 +5,9 @@ function cascadenik_svg_process($infile, $outfile, $path) {
 
   while($r=fgets($f1)) {
     while(preg_match("/^(.*)url\(\'(.*)\.svg\'\)(.*)$/", $r, $m)) {
-      system("convert -background none $path/$m[2].svg $path/$m[2].cascadenik_svg.png");
-      $r="$m[1]url('$m[2].cascadenik_svg.png')$m[3]";
+      print "Converting $m[2].svg to $m[2].png\n";
+      system("rsvg $path/$m[2].svg $path/$m[2].png");
+      $r="$m[1]url('$m[2].png')$m[3]";
     }
 
     fwrite($f2, $r);
