@@ -65,3 +65,20 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql immutable;
 
+CREATE OR REPLACE FUNCTION move_angle_nearest_point(text, hstore, geometry, float) RETURNS geometry AS $$
+DECLARE
+  id alias for $1;
+  tags alias for $2;
+  way alias for $3;
+  max_dist alias for $4;
+  ret record;
+BEGIN
+  select *, line_locate_point(osm_way, way) as "pos" into ret from osm_line where osm_way && ST_Buffer(way, max_dist) order by Distance(way, osm_way) asc limit 1;
+
+  if ret is null then
+    return way;
+  end if;
+
+  return line_interpolate_point(ret.osm_way, ret.pos);
+END;
+$$ LANGUAGE plpgsql immutable;
