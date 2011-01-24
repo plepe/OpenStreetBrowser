@@ -89,3 +89,11 @@ create view osm_all as (
   union all
   select osm_id, 'rel' as osm_type, osm_tags, osm_way from osm_rel
 );
+
+-- all
+drop view if exists osm_poipoly;
+create view osm_poipoly as (
+  select osm_id, 'point' as osm_type, osm_tags, osm_way from osm_point
+  union all
+  select osm_id, 'polygon' as osm_type, osm_tags, osm_way from osm_polygon
+);
