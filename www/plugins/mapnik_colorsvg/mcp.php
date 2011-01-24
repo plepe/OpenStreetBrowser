@@ -4,7 +4,8 @@ function mapnik_colorsvg_rule($rule, $filter) {
 //  }
   $color_replace=array();
   while(preg_match("/^(.*)'(.*)_color_([0-9A-Fa-f]{6})_([0-9A-Fa-f]{6})'(.*)$/", $filter->nodeValue, $m)) {
-    $color_replace["#$m[3]"]="#$m[4]";
+    if(substr($m[1], -13)!="not (([type]=")
+      $color_replace["#$m[3]"]="#$m[4]";
     $filter->nodeValue="$m[1]'$m[2]'$m[5]";
   }
 
