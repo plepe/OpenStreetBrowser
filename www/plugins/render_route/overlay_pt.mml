@@ -118,8 +118,8 @@ from
       <Parameter name="table">
 (select
   cast(round((move_angle_next_line(p.osm_id, p.osm_tags, p.osm_way, 50))[2]/(2*pi())*72)+54 as int)%72 as "angle", 
-  'bus_stop' as "type",
-  stops_importance(Array[p.osm_tags]) as "importance",
+  stops_type(p.osm_id, p.osm_tags, p.osm_way) as "type",
+  stops_importance(p.osm_id, p.osm_tags, p.osm_way) as "importance",
   move_angle_nearest_point(p.osm_id, p.osm_tags, p.osm_way, 50) as "geo", 
   stops_dir(osm_id, osm_tags, osm_way) as "direction"
 from
@@ -150,8 +150,8 @@ where
       <Parameter name="table">
 (select
   cast(round((move_angle_next_line(p.osm_id, p.osm_tags, p.osm_way, 50))[3]/(2*pi())*72)+54 as int)%72 as "angle", 
-  'bus_stop' as "type",
-  stops_importance(Array[p.osm_tags]) as "importance",
+  stops_type(p.osm_id, p.osm_tags, p.osm_way) as "type",
+  stops_importance(p.osm_id, p.osm_tags, p.osm_way) as "importance",
   move_angle_nearest_point(p.osm_id, p.osm_tags, p.osm_way, 50) as "geo", 
   stops_dir(osm_id, osm_tags, osm_way) as "direction"
 from

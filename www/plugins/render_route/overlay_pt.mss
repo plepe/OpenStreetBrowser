@@ -400,13 +400,13 @@
   point-file: url('img/stop_n_back_large.svg');
   point-allow-overlap: true;
 }
-.stops_p[type=tram_stop_color_000000_FF0000],
-.stops_n[type=tram_stop_color_000000_FF0000]
+.stops_p[type=railway_tram_stop_color_000000_FF0000],
+.stops_n[type=railway_tram_stop_color_000000_FF0000]
 {
   point-allow-overlap: true;
 }
-.stops_p[type=bus_stop_color_000000_0000FF],
-.stops_n[type=bus_stop_color_000000_0000FF]
+.stops_p[type=highway_bus_stop_color_000000_0000FF],
+.stops_n[type=highway_bus_stop_color_000000_0000FF]
 {
   point-allow-overlap: true;
 }
@@ -415,8 +415,8 @@
 {
   point-allow-overlap: true;
 }
-.stops_p[type=subway_station_color_000000_d4009f],
-.stops_n[type=subway_station_color_000000_d4009f]
+.stops_p[type=railway_subway_station_color_000000_d4009f],
+.stops_n[type=railway_subway_station_color_000000_d4009f]
 {
   point-allow-overlap: true;
 }
