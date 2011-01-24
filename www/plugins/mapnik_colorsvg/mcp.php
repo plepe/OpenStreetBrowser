@@ -16,15 +16,16 @@ function mapnik_colorsvg_rule($rule, $filter) {
 
   $file=substr($p->getAttribute("file"), 0, -4);
 
-  $nfile="{$file}_colorsvg_".implode("_", $color_replace);
+  $nfile="{$file}_".implode("_", $color_replace);
   if(!file_exists($nfile.".svg")) {
     $r=file_get_contents($file.".svg");
     $r=strtr($r, $color_replace);
     file_put_contents($nfile.".svg", $r);
+    system("rsvg $nfile.svg $nfile.png");
   }
 
-  $p->setAttribute("file", $nfile.".svg");
-  $p->setAttribute("type", "svg");
+  $p->setAttribute("file", $nfile.".png");
+  $p->setAttribute("type", "png");
 }
 
 function mapnik_colorsvg_compiled($file) {
