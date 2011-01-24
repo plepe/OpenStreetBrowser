@@ -5,6 +5,32 @@ function mapnik_rotate_rule($rule, $filter) {
     $rule->parentNode->removeChild($rule);
   }
   else if(preg_match("/^(.*)\(\[(angle[:_a-zA-Z0-9]*)\]=([0-9]*)\)(.*)$/", $filter->nodeValue, $m)) {
+    // load src image (the svg version for sure)
+    $p=$rule->getElementsByTagName("PointSymbolizer");
+    $p=$p->item(0);
+
+    $src_file=substr($p->getAttribute("file"), 0, -4);
+    $src_svg=new DOMDocument();
+    if(!($src_svg->load("$src_file.svg"))) {
+      print "Failed loading $src_file.svg\n";
+      exit;
+    }
+    print "Loading $src_file.svg\n";
+
+    // get size and find center to rotate
+    $size=getimagesize("$src_file.png");
+    $center=array($size[0]/2.0, $size[1]/2.0);
+
+    // find root g element
+    $g_list=array();
+    $check_list=$src_svg->getElementsByTagName("g");
+    foreach($check_list as $check) {
+      if($check->parentNode->nodeName=="svg") {
+	$g_list[]=$check;
+      }
+      $check=$check->nextSibling;
+    }
+
     for($i=0; $i<$m[3]; $i++) {
       $n=$rule->cloneNode(true);
       $n->setAttribute("name", $n->getAttribute("name")."-$i");
@@ -16,9 +42,18 @@ function mapnik_rotate_rule($rule, $filter) {
       $p=$n->getElementsByTagName("PointSymbolizer");
       $p=$p->item(0);
       $a=($i*360/$m[3]);
-      $p->setAttribute("transform", "rotate($a)");
-      $p->setAttribute("file", substr($p->getAttribute("file"), 0, -4).".svg");
-      $p->setAttribute("type", "svg");
+
+      if(!file_exists("$src_file-$i.png")) {
+	foreach($g_list as $g) {
+	  $g->setAttribute("transform", "rotate($a, $center[0], $center[1])");
+	}
+
+	$src_svg->save("$src_file-$i.svg");
+	system("rsvg $src_file-$i.svg $src_file-$i.png");
+      }
+
+      $p->setAttribute("file", "$src_file-$i.png");
+      $p->setAttribute("type", "png");
 
       $rule->parentNode->appendChild($n);
     }
