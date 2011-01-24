@@ -74,11 +74,37 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql immutable;
 
-CREATE OR REPLACE FUNCTION stops_importance(hstore[]) RETURNS text AS $$
+CREATE OR REPLACE FUNCTION stops_importance(text, hstore, geometry) RETURNS text AS $$
 DECLARE
-  tags alias for $1;
+  id alias for $1;
+  tags alias for $2;
+  way alias for $3;
+  i int;
 BEGIN
-  return 'urban';
+  if tags @> 'aeroway=>aerodrome' then
+    return 'national';
+  elsif tags @> 'amenity=>ferry_terminal' then
+    return 'urban';
+  elsif tags @> 'amenity=>bus_station' then
+    return 'urban';
+  elsif tags @> 'aerialway=>station' then
+    return 'suburban';
+  elsif tags @> 'railway=>halt' then
+    return 'suburban';
+  elsif tags @> 'railway=>station' then
+    select count(*) into i from osm_rel where member_ids @> Array[id] and osm_tags @> 'type=>route, route=>subway';
+    if i>0 then
+      return 'suburban';
+    else
+      return 'urban';
+    end if;
+  elsif tags @> 'railway=>tram_stop' then
+    return 'local';
+  elsif tags @> 'highway=>bus_stop' then
+    return 'local';
+  end if;
+
+  return null;
 END;
 $$ LANGUAGE plpgsql immutable;
 
@@ -137,3 +163,36 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql immutable;
 
+CREATE OR REPLACE FUNCTION stops_type(text, hstore, geometry) RETURNS text AS $$
+DECLARE
+  id alias for $1;
+  tags alias for $2;
+  way alias for $3;
+  i int;
+BEGIN
+  if tags @> 'aeroway=>aerodrome' then
+    return 'aeroway_aerodrome';
+  elsif tags @> 'amenity=>ferry_terminal' then
+    return 'amenity_ferry_terminal';
+  elsif tags @> 'amenity=>bus_station' then
+    return 'amenity_bus_station';
+  elsif tags @> 'aerialway=>station' then
+    return 'aerialway_station';
+  elsif tags @> 'railway=>halt' then
+    return 'railway_halt';
+  elsif tags @> 'railway=>station' then
+    select count(*) into i from osm_rel where member_ids @> Array[id] and osm_tags @> 'type=>route, route=>subway';
+    if i>0 then
+      return 'railway_subway_station';
+    else
+      return 'railway_station';
+    end if;
+  elsif tags @> 'railway=>tram_stop' then
+    return 'railway_tram_stop';
+  elsif tags @> 'highway=>bus_stop' then
+    return 'highway_bus_stop';
+  end if;
+
+  return null;
+END;
+$$ LANGUAGE plpgsql immutable;
