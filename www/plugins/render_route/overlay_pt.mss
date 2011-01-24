@@ -309,7 +309,7 @@
 .stops_p[direction=forward][angle=72][zoom>=14][zoom<16][importance=suburban],
 .stops_p[direction=forward][angle=72][zoom>=15][zoom<17][importance=local]
 {
-  point-file: url('img/rotate/stop_p_for_small.png');
+  point-file: url('img/stop_p_for_small.svg');
   point-allow-overlap: true;
 }
 .stops_p[direction=backward][angle=72][zoom>=9][zoom<10][importance=international],
@@ -319,7 +319,7 @@
 .stops_p[direction=backward][angle=72][zoom>=14][zoom<16][importance=suburban],
 .stops_p[direction=backward][angle=72][zoom>=15][zoom<17][importance=local]
 {
-  point-file: url('img/rotate/stop_p_back_small.png');
+  point-file: url('img/stop_p_back_small.svg');
   point-allow-overlap: true;
 }
 .stops_p[direction=forward][angle=72][zoom>=10][importance=international],
@@ -329,7 +329,7 @@
 .stops_p[direction=forward][angle=72][zoom>=16][importance=suburban],
 .stops_p[direction=forward][angle=72][zoom>=17][importance=local]
 {
-  point-file: url('img/rotate/stop_p_for_large.png');
+  point-file: url('img/stop_p_for_large.svg');
   point-allow-overlap: true;
 }
 .stops_p[direction=backward][angle=72][zoom>=10][importance=international],
@@ -339,7 +339,7 @@
 .stops_p[direction=backward][angle=72][zoom>=16][importance=suburban],
 .stops_p[direction=backward][angle=72][zoom>=17][importance=local]
 {
-  point-file: url('img/rotate/stop_p_back_large.png');
+  point-file: url('img/stop_p_back_large.svg');
   point-allow-overlap: true;
 }
 .stops_p[direction=both][zoom>=9][zoom<10][importance=international],
@@ -349,7 +349,7 @@
 .stops_p[direction=both][zoom>=14][zoom<16][importance=suburban],
 .stops_p[direction=both][zoom>=15][zoom<17][importance=local]
 {
-  point-file: url('img/rotate/stop_small.png');
+  point-file: url('img/stop_small.svg');
 }
 .stops_p[direction=both][zoom>=10][importance=international],
 .stops_p[direction=both][zoom>=11][importance=national],
@@ -358,7 +358,7 @@
 .stops_p[direction=both][zoom>=16][importance=suburban],
 .stops_p[direction=both][zoom>=17][importance=local]
 {
-  point-file: url('img/rotate/stop_large.png');
+  point-file: url('img/stop_large.svg');
 }
 .stops_n[direction=forward][angle=72][zoom>=9][zoom<10][importance=international],
 .stops_n[direction=forward][angle=72][zoom>=10][zoom<11][importance=national],
@@ -367,7 +367,7 @@
 .stops_n[direction=forward][angle=72][zoom>=14][zoom<16][importance=suburban],
 .stops_n[direction=forward][angle=72][zoom>=15][zoom<17][importance=local]
 {
-  point-file: url('img/rotate/stop_n_for_small.png');
+  point-file: url('img/stop_n_for_small.svg');
   point-allow-overlap: true;
 }
 .stops_n[direction=backward][angle=72][zoom>=9][zoom<10][importance=international],
@@ -377,7 +377,7 @@
 .stops_n[direction=backward][angle=72][zoom>=14][zoom<16][importance=suburban],
 .stops_n[direction=backward][angle=72][zoom>=15][zoom<17][importance=local]
 {
-  point-file: url('img/rotate/stop_n_back_small.png');
+  point-file: url('img/stop_n_back_small.svg');
   point-allow-overlap: true;
 }
 .stops_n[direction=forward][angle=72][zoom>=10][importance=international],
@@ -387,7 +387,7 @@
 .stops_n[direction=forward][angle=72][zoom>=16][importance=suburban],
 .stops_n[direction=forward][angle=72][zoom>=17][importance=local]
 {
-  point-file: url('img/rotate/stop_n_for_large.png');
+  point-file: url('img/stop_n_for_large.svg');
   point-allow-overlap: true;
 }
 .stops_n[direction=backward][angle=72][zoom>=10][importance=international],
@@ -397,7 +397,7 @@
 .stops_n[direction=backward][angle=72][zoom>=16][importance=suburban],
 .stops_n[direction=backward][angle=72][zoom>=17][importance=local]
 {
-  point-file: url('img/rotate/stop_n_back_large.png');
+  point-file: url('img/stop_n_back_large.svg');
   point-allow-overlap: true;
 }
 .stops_p[type=tram_stop_color_000000_FF0000],
