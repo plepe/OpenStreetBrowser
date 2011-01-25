@@ -51,19 +51,6 @@ function check_mapkey() {
   if(mapkey_request)
     return;
 
-  for(var i in overlays_layers) {
-    if(overlays_layers[i].visibility==true) {
-      new_mapkey_overlays[i]=1;
-      if(!mapkey_overlays[i])
-	overlays_changed=1;
-    }
-    else {
-      if(mapkey_overlays[i])
-	overlays_changed=1;
-    }
-  }
-//  alert(keys(mapkey_overlays)+" = "+keys(new_mapkey_overlays)+" = "+overlays_changed);
-
   if(map_key.className=='map_key') {
     if((mapkey_zoom!=map.zoom)||(overlays_changed)) {
       mapkey_request=1;
@@ -73,7 +60,4 @@ function check_mapkey() {
 }
 
 function map_key_init() {
-  for(var i in overlays_layers) {
-    overlays_layers[i].events.register("visibilitychanged", map, check_mapkey);
-  }
 }
