@@ -25,3 +25,9 @@ select (CASE
   WHEN $1='global' THEN 7
   ELSE 0 END);
 $$;
+
+create or replace function importance_text(int)
+returns text language sql
+as $$
+select (Array['local', 'suburban', 'urban', 'regional', 'national', 'international', 'global'])[$1];
+$$;

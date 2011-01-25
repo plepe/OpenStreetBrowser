@@ -87,9 +87,9 @@ order by
 from
  (select
    osm_tags->'name' as "name",
-   stops_importance(array_agg(osm_tags)) as "importance",
+   importance_text(max(importance_order(stops_importance(osm_id, osm_tags, osm_way)))) as "importance",
    envelope(ST_Collect(osm_way)) as "poly"
-  from osm_point
+  from osm_poipoly
   where
     osm_way &amp;&amp; !bbox! and
     (osm_tags @> 'highway=>bus_stop' or
@@ -187,9 +187,9 @@ where
 from
  (select
    osm_tags->'name' as "name",
-   stops_importance(array_agg(osm_tags)) as "importance",
+   importance_text(max(importance_order(stops_importance(osm_id, osm_tags, osm_way)))) as "importance",
    envelope(ST_Collect(osm_way)) as "poly"
-  from osm_point
+  from osm_poipoly
   where
     osm_way &amp;&amp; !bbox! and
     (osm_tags @> 'highway=>bus_stop' or
@@ -214,11 +214,12 @@ from
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">gisnew</Parameter>
       <Parameter name="srid">900913</Parameter>
-      <Parameter name="geometry_field">osm_way</Parameter>
+      <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
 (select
-  osm_point.osm_id as "osm_id",
-  osm_point.osm_way as "osm_way",
+  p.osm_id as "osm_id",
+  move_angle_nearest_point(p.osm_id, (array_agg(p.osm_tags))[1], p.osm_way, 50) as "geo", 
+  p.osm_way as "osm_way",
   osm_rel.osm_tags->'route' as "route",
   route_refs(array_agg(osm_rel.osm_tags->'ref'), Array[]::text[]) as "ref",
   array_pos(
@@ -226,18 +227,18 @@ from
       array_unique(array_agg(osm_rel1.osm_tags->'route'))
     from osm_rel osm_rel1
     where
-      osm_rel1.member_ids @> Array[osm_point.osm_id] and 
+      osm_rel1.member_ids @> Array[p.osm_id] and 
       osm_rel1.osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'tram', 'bus', 'trolley', 'minibus', 'ferry', 'light_rail', 'trolleybus')
     group by
-      osm_point.osm_id),
+      p.osm_id),
    osm_rel.osm_tags->'route') as "row"
-from osm_point
-  join osm_rel on osm_rel.member_ids @> Array[osm_point.osm_id]
+from osm_poipoly p
+  join osm_rel on osm_rel.member_ids @> Array[p.osm_id]
 where
   osm_rel.osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'tram', 'bus', 'trolley', 'minibus', 'ferry', 'light_rail', 'trolleybus')
 group by
-  osm_point.osm_id,
-  osm_point.osm_way,
+  p.osm_id,
+  p.osm_way,
   osm_rel.osm_tags->'route'
   ) as stop_routes
       </Parameter>
