@@ -79,3 +79,40 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql immutable;
 
+CREATE OR REPLACE FUNCTION route_type_merge(text[]) RETURNS text AS $$
+DECLARE
+  list text[];
+  route text;
+BEGIN
+  list:=array_unique($1);
+
+  if (list @> Array['rail']) or 
+     (list @> Array['railway']) or 
+     (list @> Array['train']) then
+    return 'rail';
+  end if;
+
+  if (list @> Array['subway']) then
+    return 'subway';
+  end if;
+
+  if (list @> Array['ferry']) then
+    return 'ferry';
+  end if;
+
+  if (list @> Array['tram', 'bus']) then
+    return 'tram_bus';
+  end if;
+
+  if (list @> Array['tram']) then
+    return 'tram';
+  end if;
+
+  if (list @> Array['bus']) then
+    return 'bus';
+  end if;
+
+  return list[1];
+END;
+$$ LANGUAGE plpgsql immutable;
+

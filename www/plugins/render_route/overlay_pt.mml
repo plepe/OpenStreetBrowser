@@ -14,7 +14,7 @@
 (select * from (select
   member_id,
   member_way as "geom",
-  route_type(osm_tags) "route",
+  route_type_merge(array_agg(route_type(osm_tags))) as "route",
   route_refs(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "ref",
   route_dir(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "dir",
   member_tags->'tunnel' as "tunnel",
@@ -26,7 +26,6 @@ where
   osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
   osm_way &amp;&amp; !bbox!
 group by
-  route_type(osm_tags),
   member_id,
   member_way,
   member_tags->'tunnel',
@@ -48,7 +47,7 @@ order by
 (select * from (select
   member_id,
   member_way as "geom",
-  route_type(osm_tags) "route",
+  route_type_merge(array_agg(route_type(osm_tags))) as "route",
   route_refs(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "ref",
   route_dir(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "dir",
   member_tags->'tunnel' as "tunnel",
@@ -60,7 +59,6 @@ where
   osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
   osm_way &amp;&amp; !bbox!
 group by
-  route_type(osm_tags),
   member_id,
   member_way,
   member_tags->'tunnel',
