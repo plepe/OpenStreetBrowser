@@ -188,7 +188,7 @@ BEGIN
       return 'railway_station';
     end if;
   elsif tags @> 'railway=>tram_stop, highway=>bus_stop' then
-    return 'tram_bus';
+    return 'tram_bus_stop';
   elsif tags @> 'railway=>tram_stop' then
     return 'railway_tram_stop';
   elsif tags @> 'highway=>bus_stop' then

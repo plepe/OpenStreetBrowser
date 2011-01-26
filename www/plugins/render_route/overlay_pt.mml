@@ -242,7 +242,7 @@ from
     group by
       p.osm_id),
    osm_rel.osm_tags->'route') as "row"
-from osm_poipoly p
+from osm_point p
   join osm_rel on osm_rel.member_ids @> Array[p.osm_id]
 where
   p.osm_way &amp;&amp; !bbox! and
