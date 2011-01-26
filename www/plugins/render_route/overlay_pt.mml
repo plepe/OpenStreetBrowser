@@ -245,6 +245,7 @@ from
 from osm_poipoly p
   join osm_rel on osm_rel.member_ids @> Array[p.osm_id]
 where
+  p.osm_way &amp;&amp; !bbox! and
   osm_rel.osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'tram', 'bus', 'trolley', 'minibus', 'ferry', 'light_rail', 'trolleybus')
 group by
   p.osm_id,
