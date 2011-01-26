@@ -11,27 +11,33 @@
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geom</Parameter>
       <Parameter name="table">
-(select * from (select
-  member_id,
-  member_way as "geom",
-  route_type_merge(array_agg(route_type(osm_tags))) as "route",
-  route_refs(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "ref",
-  route_dir(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "dir",
-  member_tags->'tunnel' as "tunnel",
-  route_importance(osm_tags) as "importance"
-from
-  osm_rel_members
-where
-  osm_tags @> 'type=>route' and
-  osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
-  osm_way &amp;&amp; !bbox!
+(select
+  route, ref, dir, tunnel, importance,
+  ST_LineMerge(ST_Collect(geom)) as "geom" from
+  (select
+    member_id,
+    member_way as "geom",
+    route_type_merge(array_agg(route_type(osm_tags))) as "route",
+    route_refs(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "ref",
+    route_dir(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "dir",
+    member_tags->'tunnel' as "tunnel",
+    route_importance(osm_tags) as "importance"
+  from
+    osm_rel_members
+  where
+    osm_tags @> 'type=>route' and
+    osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
+    osm_way &amp;&amp; !bbox!
+  group by
+    member_id,
+    member_way,
+    member_tags->'tunnel',
+    route_importance(osm_tags)
+  ) routes
 group by
-  member_id,
-  member_way,
-  member_tags->'tunnel',
-  route_importance(osm_tags)) routes1
+  route, ref, dir, tunnel, importance
 order by
-  "importance" asc) routes
+  "importance" asc ) routes1
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
@@ -44,27 +50,33 @@ order by
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geom</Parameter>
       <Parameter name="table">
-(select * from (select
-  member_id,
-  member_way as "geom",
-  route_type_merge(array_agg(route_type(osm_tags))) as "route",
-  route_refs(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "ref",
-  route_dir(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "dir",
-  member_tags->'tunnel' as "tunnel",
-  route_importance(osm_tags) as "importance"
-from
-  osm_rel_members
-where
-  osm_tags @> 'type=>route' and
-  osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
-  osm_way &amp;&amp; !bbox!
+(select
+  route, ref, dir, tunnel, importance,
+  ST_LineMerge(ST_Collect(geom)) as "geom" from
+  (select
+    member_id,
+    member_way as "geom",
+    route_type_merge(array_agg(route_type(osm_tags))) as "route",
+    route_refs(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "ref",
+    route_dir(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "dir",
+    member_tags->'tunnel' as "tunnel",
+    route_importance(osm_tags) as "importance"
+  from
+    osm_rel_members
+  where
+    osm_tags @> 'type=>route' and
+    osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
+    osm_way &amp;&amp; !bbox!
+  group by
+    member_id,
+    member_way,
+    member_tags->'tunnel',
+    route_importance(osm_tags)
+  ) routes
 group by
-  member_id,
-  member_way,
-  member_tags->'tunnel',
-  route_importance(osm_tags)) routes1
+  route, ref, dir, tunnel, importance
 order by
-  "importance" asc) routes
+  "importance" asc ) routes1
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
@@ -275,28 +287,34 @@ group by
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geom</Parameter>
       <Parameter name="table">
-(select * from (select
-  member_id,
-  member_way as "geom",
-  route_type(osm_tags) "route",
-  route_refs(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "ref",
-  route_dir(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "dir",
-  member_tags->'tunnel' as "tunnel",
-  route_importance(osm_tags) as "importance"
-from
-  osm_rel_members
-where
-  osm_tags @> 'type=>route' and
-  osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
-  osm_way &amp;&amp; !bbox!
+(select
+  route, ref, dir, tunnel, importance,
+  ST_LineMerge(ST_Collect(geom)) as "geom" from
+  (select
+    member_id,
+    member_way as "geom",
+    route_type(osm_tags) "route",
+    route_refs(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "ref",
+    route_dir(to_textarray(osm_tags->'ref'), to_textarray(member_role)) as "dir",
+    member_tags->'tunnel' as "tunnel",
+    route_importance(osm_tags) as "importance"
+  from
+    osm_rel_members
+  where
+    osm_tags @> 'type=>route' and
+    osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
+    osm_way &amp;&amp; !bbox!
+  group by
+    route_type(osm_tags),
+    member_id,
+    member_way,
+    member_tags->'tunnel',
+    route_importance(osm_tags)
+  ) routes
 group by
-  route_type(osm_tags),
-  member_id,
-  member_way,
-  member_tags->'tunnel',
-  route_importance(osm_tags)) routes1
+  route, ref, dir, tunnel, importance
 order by
-  "importance" desc) routes
+  "importance" desc) routes1
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
