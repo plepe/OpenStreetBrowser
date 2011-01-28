@@ -9,3 +9,6 @@ h2 {
   text-decoration: underline;
   font-size: 12pt;
 }
+iframe {
+  border: none;
+}
