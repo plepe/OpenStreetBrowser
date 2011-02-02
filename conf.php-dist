@@ -90,3 +90,4 @@ $basemaps=array(
 // mapnik_rotate - In a mapnik style rotate icons
 // cascadenik_svg - As cascadenik can't handle svg, convert all image-files to png first
 // mapnik_colorsvg - In a mapnik style replace 'color_FROM_TO'
+// basemap - A nice colorful basemap
