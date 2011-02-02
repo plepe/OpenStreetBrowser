@@ -128,10 +128,10 @@ from
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
 (select
-  cast(round((move_angle_next_line(p.osm_id, p.osm_tags, p.osm_way, 50))[2]/(2*pi())*72)+54 as int)%72 as "angle", 
+  cast(round((geo_relate_calc_angles(p.osm_id, p.osm_tags, p.osm_way, 50))[2]/(2*pi())*72)+54 as int)%72 as "angle", 
   stops_type(p.osm_id, p.osm_tags, p.osm_way) as "type",
   stops_importance(p.osm_id, p.osm_tags, p.osm_way) as "importance",
-  move_angle_nearest_point(p.osm_id, p.osm_tags, p.osm_way, 50) as "geo", 
+  geo_relate_nearest_point(p.osm_id, p.osm_tags, p.osm_way, 50) as "geo", 
   stops_dir(osm_id, osm_tags, osm_way) as "direction"
 from
   osm_point p
@@ -156,10 +156,10 @@ where
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
 (select
-  cast(round((move_angle_next_line(p.osm_id, p.osm_tags, p.osm_way, 50))[3]/(2*pi())*72)+54 as int)%72 as "angle", 
+  cast(round((geo_relate_calc_angles(p.osm_id, p.osm_tags, p.osm_way, 50))[3]/(2*pi())*72)+54 as int)%72 as "angle", 
   stops_type(p.osm_id, p.osm_tags, p.osm_way) as "type",
   stops_importance(p.osm_id, p.osm_tags, p.osm_way) as "importance",
-  move_angle_nearest_point(p.osm_id, p.osm_tags, p.osm_way, 50) as "geo", 
+  geo_relate_nearest_point(p.osm_id, p.osm_tags, p.osm_way, 50) as "geo", 
   stops_dir(osm_id, osm_tags, osm_way) as "direction"
 from
   osm_point p
@@ -184,10 +184,10 @@ where
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
 (select
-  cast(round((move_angle_next_line(p.osm_id, p.osm_tags, p.osm_way, 50))[2]/(2*pi())*72)+54 as int)%72 as "angle", 
+  cast(round((geo_relate_calc_angles(p.osm_id, p.osm_tags, p.osm_way, 50))[2]/(2*pi())*72)+54 as int)%72 as "angle", 
   stops_type(p.osm_id, p.osm_tags, p.osm_way) as "type",
   stops_importance(p.osm_id, p.osm_tags, p.osm_way) as "importance",
-  move_angle_nearest_point(p.osm_id, p.osm_tags, p.osm_way, 50) as "geo", 
+  geo_relate_nearest_point(p.osm_id, p.osm_tags, p.osm_way, 50) as "geo", 
   stops_dir(osm_id, osm_tags, osm_way) as "direction"
 from
   osm_point p
@@ -216,10 +216,10 @@ where
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
 (select
-  cast(round((move_angle_next_line(p.osm_id, p.osm_tags, p.osm_way, 50))[3]/(2*pi())*72)+54 as int)%72 as "angle", 
+  cast(round((geo_relate_calc_angles(p.osm_id, p.osm_tags, p.osm_way, 50))[3]/(2*pi())*72)+54 as int)%72 as "angle", 
   stops_type(p.osm_id, p.osm_tags, p.osm_way) as "type",
   stops_importance(p.osm_id, p.osm_tags, p.osm_way) as "importance",
-  move_angle_nearest_point(p.osm_id, p.osm_tags, p.osm_way, 50) as "geo", 
+  geo_relate_nearest_point(p.osm_id, p.osm_tags, p.osm_way, 50) as "geo", 
   stops_dir(osm_id, osm_tags, osm_way) as "direction"
 from
   osm_point p
@@ -319,7 +319,7 @@ from
       <Parameter name="table">
 (select
   p.osm_id as "osm_id",
-  move_angle_nearest_point(p.osm_id, (array_agg(p.osm_tags))[1], p.osm_way, 50) as "geo", 
+  geo_relate_nearest_point(p.osm_id, (array_agg(p.osm_tags))[1], p.osm_way, 50) as "geo", 
   p.osm_way as "osm_way",
   osm_rel.osm_tags->'route' as "route",
   route_refs(array_agg(osm_rel.osm_tags->'ref'), Array[]::text[]) as "ref",
