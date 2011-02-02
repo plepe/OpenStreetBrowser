@@ -5,12 +5,13 @@
 --   3. angle of the nearest point on a line in forward direction
 --   4. angle of the normal to the line between current point and nearest 
 --      point on a line (if current point is on the line return angle 1)
-CREATE OR REPLACE FUNCTION move_angle_next_line(text, hstore, geometry, float) RETURNS float[] AS $$
+CREATE OR REPLACE FUNCTION move_angle_next_line(text, hstore, geometry, float, text default '') RETURNS float[] AS $$
 DECLARE
   id alias for $1;
   tags alias for $2;
   way alias for $3;
   max_dist alias for $4;
+  where_str text:=''; -- alias for $5
   ret record;
   line_point geometry;
   angle float;
@@ -21,7 +22,12 @@ DECLARE
   pos_n float;
   length float;
 BEGIN
-  select *, line_locate_point(osm_way, way) as "pos" into ret from osm_line where osm_way && ST_Buffer(way, max_dist) order by Distance(way, osm_way) asc limit 1;
+  if $5 != '' then
+    where_str:='and '||$5;
+  end if;
+
+  execute 'select *, line_locate_point(osm_way, $3) as "pos" from osm_line where osm_way && ST_Buffer($3, $4) ' || where_str || ' order by Distance($3, osm_way) asc limit 1' into ret using id, tags, way, max_dist;
+
   line_point:=line_interpolate_point(ret.osm_way, ret.pos);
 
   if ST_Length(ret.osm_way)=0 then
@@ -65,15 +71,20 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql immutable;
 
-CREATE OR REPLACE FUNCTION move_angle_nearest_point(text, hstore, geometry, float) RETURNS geometry AS $$
+CREATE OR REPLACE FUNCTION move_angle_nearest_point(text, hstore, geometry, float, text default '') RETURNS geometry AS $$
 DECLARE
   id alias for $1;
   tags alias for $2;
   way alias for $3;
   max_dist alias for $4;
+  where_str text:=''; -- alias for $5
   ret record;
 BEGIN
-  select *, line_locate_point(osm_way, way) as "pos" into ret from osm_line where osm_way && ST_Buffer(way, max_dist) order by Distance(way, osm_way) asc limit 1;
+  if $5 != '' then
+    where_str:='and '||$5;
+  end if;
+
+  execute 'select *, line_locate_point(osm_way, $3) as "pos" from osm_line where osm_way && ST_Buffer($3, $4) ' || where_str || ' order by Distance($3, osm_way) asc limit 1' into ret using id, tags, way, max_dist;
 
   if ret is null then
     return way;
