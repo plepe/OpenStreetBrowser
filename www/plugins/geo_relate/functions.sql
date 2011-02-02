@@ -1,5 +1,42 @@
 -- collects all objects with common tags in a specified distance
--- returns object with lowest id
+-- returns smallest id of matching stop
+CREATE OR REPLACE FUNCTION geo_relate_collect(text, hstore, geometry, hstore, float) RETURNS text AS $$
+DECLARE
+  id alias for $1;
+  tags alias for $2;
+  way alias for $3;
+  match alias for $4;
+  dist alias for $5;
+  list text[];
+  ret text;
+  i int;
+BEGIN
+  if not tags @> match then
+    return null;
+  end if;
+
+  ret:=cache_search(id, 'geo_relate_collect|'||cast(match as text)||'|'||dist);
+  if ret is not null then
+    -- raise notice 'geo_relate:: cache hit % %', id, ret;
+    return ret;
+  end if;
+  
+  -- raise notice 'searching for stops: % %', id, tags->parse;
+
+  list:=geo_relate_collect(id, tags, way, match, dist, Array[]::text[]);
+  ret:=(array_sort(list))[1];
+
+  -- we can remember the lowest id for all objects in the group
+  for i in array_lower(list, 1)..array_upper(list, 1) loop
+    -- raise notice 'geo_relate:: insert %', list[i];
+    perform cache_insert(list[i], 'geo_relate_collect|'||cast(match as text)||'|'||dist, ret, list);
+  end loop;
+
+  return ret;
+END;
+$$ LANGUAGE plpgsql immutable;
+
+-- main function for geo_relate_collect. returns ids of all objects
 CREATE OR REPLACE FUNCTION geo_relate_collect(text, hstore, geometry, hstore, float, text[]) RETURNS text[] AS $$
 DECLARE
   id alias for $1;
@@ -39,43 +76,5 @@ BEGIN
   end loop;
 
   return maybe_min;
-END;
-$$ LANGUAGE plpgsql immutable;
-
--- returns smallest id of matching stop
-CREATE OR REPLACE FUNCTION geo_relate_collect(text, hstore, geometry, hstore, float) RETURNS text AS $$
-DECLARE
-  id alias for $1;
-  tags alias for $2;
-  way alias for $3;
-  match alias for $4;
-  dist alias for $5;
-  list text[];
-  ret text;
-  i int;
-BEGIN
-  if not tags @> match then
-    return null;
-  end if;
-raise notice 'test %', id;
-
-  ret:=cache_search(id, 'geo_relate_collect|'||cast(match as text)||'|'||dist);
-  if ret is not null then
-    raise notice 'cache hit % %', id, ret;
-    return ret;
-  end if;
-  
-  -- raise notice 'searching for stops: % %', id, tags->parse;
-
-  list:=geo_relate_collect(id, tags, way, match, dist, Array[]::text[]);
-  ret:=(array_sort(list))[1];
-
-  -- we can remember the lowest id for all objects in the group
-  for i in array_lower(list, 1)..array_upper(list, 1) loop
-    raise notice 'insert %', list[i];
-    perform cache_insert(list[i], 'geo_relate_collect|'||cast(match as text)||'|'||dist, ret, list);
-  end loop;
-
-  return ret;
 END;
 $$ LANGUAGE plpgsql immutable;
