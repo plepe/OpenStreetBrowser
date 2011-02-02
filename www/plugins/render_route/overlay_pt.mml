@@ -119,6 +119,63 @@ from
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
    </Layer>
+   <!-- EXTRACT -->
+   <Layer class="stops_p_extract" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="srid">900913</Parameter>
+      <Parameter name="geometry_field">geo</Parameter>
+      <Parameter name="table">
+(select
+  cast(round((move_angle_next_line(p.osm_id, p.osm_tags, p.osm_way, 50))[2]/(2*pi())*72)+54 as int)%72 as "angle", 
+  stops_type(p.osm_id, p.osm_tags, p.osm_way) as "type",
+  stops_importance(p.osm_id, p.osm_tags, p.osm_way) as "importance",
+  move_angle_nearest_point(p.osm_id, p.osm_tags, p.osm_way, 50) as "geo", 
+  stops_dir(osm_id, osm_tags, osm_way) as "direction"
+from
+  osm_point p
+where
+  p.osm_way &amp;&amp; !bbox! and
+  (p.osm_tags @> 'railway=>station' or
+   p.osm_tags @> 'amenity=>bus_station' or
+   p.osm_tags @> 'amenity=>ferry_terminal' or
+   p.osm_tags @> 'aeroway=>aerodrome')
+) as stops_p
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+
+   <Layer class="stops_n_extract" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="srid">900913</Parameter>
+      <Parameter name="geometry_field">geo</Parameter>
+      <Parameter name="table">
+(select
+  cast(round((move_angle_next_line(p.osm_id, p.osm_tags, p.osm_way, 50))[3]/(2*pi())*72)+54 as int)%72 as "angle", 
+  stops_type(p.osm_id, p.osm_tags, p.osm_way) as "type",
+  stops_importance(p.osm_id, p.osm_tags, p.osm_way) as "importance",
+  move_angle_nearest_point(p.osm_id, p.osm_tags, p.osm_way, 50) as "geo", 
+  stops_dir(osm_id, osm_tags, osm_way) as "direction"
+from
+  osm_point p
+where
+  p.osm_way &amp;&amp; !bbox! and
+  (p.osm_tags @> 'railway=>station' or
+   p.osm_tags @> 'amenity=>bus_station' or
+   p.osm_tags @> 'amenity=>ferry_terminal' or
+   p.osm_tags @> 'aeroway=>aerodrome')
+) as stops_n
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+
    <Layer class="stops_p" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
@@ -183,6 +240,40 @@ where
     </Datasource>
    </Layer>
 
+   <!-- EXTRACT -->
+   <Layer class="stations_top_extract" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="srid">900913</Parameter>
+      <Parameter name="geometry_field">top</Parameter>
+      <Parameter name="table">
+(select
+  "name", "importance",
+  GeometryFromText('POINT(' || x(centroid(poly)) || ' ' || ymax(poly) || ')', 900913) as top,
+  poly as bbox
+from
+ (select
+   osm_tags->'name' as "name",
+   importance_text(max(importance_order(stops_importance(osm_id, osm_tags, osm_way)))) as "importance",
+   envelope(ST_Collect(osm_way)) as "poly"
+  from osm_poipoly
+  where
+    osm_way &amp;&amp; !bbox! and
+    (osm_tags @> 'railway=>station' or
+     osm_tags @> 'amenity=>bus_station' or
+     osm_tags @> 'amenity=>ferry_terminal' or
+     osm_tags @> 'aeroway=>aerodrome')
+  group by
+    osm_tags->'name',
+    stop_merge(osm_id, osm_tags, osm_way, 'name')
+) as stations) as s
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+   </Layer>
+   <!-- LOW ZOOM -->
    <Layer class="stations_top" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
