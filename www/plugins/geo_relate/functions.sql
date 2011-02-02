@@ -94,6 +94,7 @@ DECLARE
   max_dist alias for $4;
   where_str text:=''; -- alias for $5
   ret record;
+  result float[];
   line_point geometry;
   angle float;
   angle_p float;
@@ -103,6 +104,11 @@ DECLARE
   pos_n float;
   length float;
 BEGIN
+  result:=cache_search(id, 'geo_relate_calc_angles|'||$5||'|'||max_dist);
+  if result is not null then
+    return cast(result as float[]);
+  end if;
+
   if $5 != '' then
     where_str:='and '||$5;
   end if;
@@ -148,7 +154,10 @@ BEGIN
 
   -- raise notice 'pos %: angle: % % % %', ret.pos, angle, angle_p, angle_n, angle_norm;
 
-  return Array[angle, angle_p, angle_n, angle_norm];
+  result:=Array[angle, angle_p, angle_n, angle_norm];
+
+  perform cache_insert(id, 'geo_relate_calc_angles|'||$5||'|'||max_dist, cast(result as text));
+  return result;
 END;
 $$ LANGUAGE plpgsql immutable;
 
@@ -161,7 +170,13 @@ DECLARE
   max_dist alias for $4;
   where_str text:=''; -- alias for $5
   ret record;
+  geo geometry;
 BEGIN
+  geo:=cache_search(id, 'geo_relate_nearest_point|'||$5||'|'||max_dist);
+  if geo is not null then
+    return geo; -- cache hit
+  end if;
+
   if $5 != '' then
     where_str:='and '||$5;
   end if;
@@ -172,6 +187,9 @@ BEGIN
     return way;
   end if;
 
-  return line_interpolate_point(ret.osm_way, ret.pos);
+  geo:=line_interpolate_point(ret.osm_way, ret.pos);
+
+  perform cache_insert(id, 'geo_relate_nearest_point|'||$5||'|'||max_dist, geo);
+  return geo;
 END;
 $$ LANGUAGE plpgsql immutable;
