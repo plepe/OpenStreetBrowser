@@ -1,4 +1,3 @@
-   <Stylesheet src="boundaries.mss" />
 
   <Layer class="bound_world1" status="on" srs="+proj=merc +datum=WGS84 +over">
     <StyleName>world1</StyleName>

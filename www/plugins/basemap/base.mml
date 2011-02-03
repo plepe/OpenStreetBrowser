@@ -8,6 +8,8 @@
    <Stylesheet src="amenities.mss" />
    <Stylesheet src="rot_feature.mss" />
    <Stylesheet src="buildings.mss" />
+   <Stylesheet src="boundaries.mss" />
+   <Stylesheet src="places.mss" />
 
 <!-- all layers -->
   <Layer class="world1" status="on" srs="+proj=merc +datum=WGS84 +over">

@@ -1,7 +1,7 @@
 <?
 $basemap_active=true;
 
-$basemap_depend=array("db", "cascadenik", "geo_relate");
+$basemap_depend=array("db", "cascadenik", "geo_relate", "cascadenik_include");
 
 $basemap_tags=new tags(array(
   "name"=>"Basemap",
