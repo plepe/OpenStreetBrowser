@@ -12,7 +12,7 @@ function cascadenik_compile() {
 
 	$file="$plugins_dir/$plugin/$m[1].mml";
 
-	call_hooks("cascadenik_compile", &$file);
+	call_hooks("cascadenik_compile", &$file, "$plugins_dir/$plugin");
 
 	print "Cascadenik process file $file\n";
 	system("cascadenik-compile.py $file $plugins_dir/$plugin/$m[1].xml");
