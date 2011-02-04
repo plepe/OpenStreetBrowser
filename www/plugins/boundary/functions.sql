@@ -1,6 +1,3 @@
---register_hook('osmosis_update_delete', 'boundary_update_delete');
---register_hook('osmosis_update_finish', 'boundary_update_finish');
-
 CREATE OR REPLACE FUNCTION assemble_boundary(bigint) RETURNS boolean AS $$
 DECLARE
   id alias for $1;
@@ -32,3 +29,42 @@ BEGIN
   return true;
 end;
 $$ language 'plpgsql';
+
+CREATE OR REPLACE FUNCTION boundary_update_delete() RETURNS boolean AS $$
+DECLARE
+BEGIN
+  delete from osm_line using
+    (select way_id as id from way_nodes join actions on way_nodes.node_id=actions.id and actions.data_type='N' and actions.action='M' group by way_id
+     union
+     select id from actions where data_type='W'
+     union
+     select member_id from relation_members rm join actions on rm.relation_id=actions.id and actions.data_type='R' and actions.action in ('M', 'D') where member_type='W'
+     ) actions 
+  where osm_id='way_'||id;
+
+  raise notice 'deleted from osm_boundary';
+
+  return true;
+END;
+$$ language 'plpgsql';
+
+
+CREATE OR REPLACE FUNCTION boundary_update_insert() RETURNS boolean AS $$
+DECLARE
+BEGIN
+  perform assemble_boundary(id) from
+    (select way_id as id from actions join way_tags on actions.id=way_tags.way_id and actions.data_type='W' and actions.action in ('C', 'M') where k='boundary' and v in ('administrative', 'political')
+    union
+    select relation_members.member_id from actions join osm_rel on 'rel_'||actions.id=osm_rel.osm_id and actions.data_type='R' and actions.action in ('C', 'M') join relation_members on cast(substr(osm_rel.osm_id, 5) as int)=relation_members.relation_id and relation_members.member_type='W' where osm_tags@>'type=>boundary' and osm_tags@>'boundary=>administrative'
+    union
+    select way_nodes.way_id as id from way_nodes join actions on way_nodes.node_id=actions.id and actions.data_type='N' and actions.action='M' join way_tags on actions.id=way_tags.way_id and k='boundary' and v in ('administrative', 'political') group by way_nodes.way_id
+    ) x;
+
+  raise notice 'inserted to osm_boundary';
+
+  return true;
+END;
+$$ language 'plpgsql';
+
+select register_hook('osmosis_update_delete', 'boundary_update_delete', 0);
+select register_hook('osmosis_update_insert', 'boundary_update_insert', 0);
