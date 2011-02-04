@@ -29,7 +29,7 @@ function mapnik_colorsvg_rule($rule, $filter) {
   $p->setAttribute("type", "png");
 }
 
-function mapnik_colorsvg_compiled($file) {
+function mapnik_colorsvg_process($file) {
   $dom=new DOMDocument();
   $dom->load($file);
    
@@ -52,5 +52,3 @@ function mapnik_colorsvg_compiled($file) {
 
   return;
 }
-
-register_hook("cascadenik_compiled", "mapnik_colorsvg_compiled");

@@ -1,4 +1,12 @@
 <?
+function renderd_register(&$renderd, $id, $file) {
+  $renderd.="[$id]\n";
+  $renderd.="URI=/tiles/$id/\n";
+  $renderd.="XML=$plugins_dir/$file\n";
+  $renderd.="HOST=dummy.host\n";
+  $renderd.="\n";
+}
+
 function gen_renderd_conf() {
   global $root_path;
   global $lists_dir;

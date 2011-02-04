@@ -62,7 +62,7 @@ function mapnik_rotate_rule($rule, $filter) {
   }
 }
 
-function mapnik_rotate_compiled($file) {
+function mapnik_rotate_process($file) {
   $dom=new DOMDocument();
   $dom->load($file);
    
@@ -85,5 +85,3 @@ function mapnik_rotate_compiled($file) {
 
   return;
 }
-
-register_hook("cascadenik_compiled", "mapnik_rotate_compiled");

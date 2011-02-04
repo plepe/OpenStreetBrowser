@@ -1,28 +1,12 @@
 <?
-function cascadenik_compile() {
-  global $plugins_list;
-  global $plugins_dir;
+function cascadenik_compile($file) {
+  $file_noext=strstr($file, ".", true);
 
-  print "MAPNIK BUILD RENDERD\n";
-  foreach($plugins_list as $plugin=>$tags) {
-    $d=opendir("$plugins_dir/$plugin");
-    while($r=readdir($d)) {
-      if((substr($r, 0, 1)!=".")&&(preg_match("/^(.*)\.mml$/", $r, $m))) {
-	print "Cascadenik: Found $plugin -> $m[1]\n";
+  call_hooks("cascadenik_compile", &$file, $path);
 
-	$file="$plugins_dir/$plugin/$m[1].mml";
+  print "Cascadenik process file $file\n";
+  system("cascadenik-compile.py $file $file_noext.xml");
+  rename("$file_noext.xml", "$file_noext.mapnik");
 
-	call_hooks("cascadenik_compile", &$file, "$plugins_dir/$plugin");
-
-	print "Cascadenik process file $file\n";
-	system("cascadenik-compile.py $file $plugins_dir/$plugin/$m[1].xml");
-	rename("$plugins_dir/$plugin/$m[1].xml", "$plugins_dir/$plugin/$m[1].mapnik");
-
-	call_hooks("cascadenik_compiled", "$plugins_dir/$plugin/$m[1].mapnik");
-      }
-    }
-    closedir($d);
-  }
+  call_hooks("cascadenik_compiled", "$file_noext.mapnik");
 }
-
-register_hook("mapnik_compile", "cascadenik_compile");
