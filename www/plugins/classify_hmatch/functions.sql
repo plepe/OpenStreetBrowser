@@ -6,6 +6,7 @@ DECLARE
   classify_type alias for $4;
   val text;
   ret hstore;
+  rec record;
   i int;
 BEGIN
   osm_tags:=$2;
@@ -37,7 +38,14 @@ BEGIN
     limit 1;
 
     if ret is not null then
-      osm_tags := osm_tags || ret;
+      for rec in
+	select
+	  key => tags_parse(id, osm_tags, way, value) as el
+	from
+	  each(ret)
+      loop
+	osm_tags := osm_tags || rec.el;
+      end loop;
     end if;
   end loop;
 

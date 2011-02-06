@@ -27,7 +27,7 @@ First you have to define your ruleset:
   insert into classify_hmatch values ( 'foobar',
     'source=>Bing',
     'highway',
-    '#foobar=>3',
+    '#foobar=>3, #name=>"[ref] - [name];[name]"',
     -1
   );
 
@@ -36,6 +36,12 @@ matches all objects with a key/value-pair "barrier=>wall". The second inserts
 all objects with a key "barrier", but priority -1 (so the first rule has
 priority). The third insert inserts a rule for all highways which have been
 drawn from Bing imagery.
+
+The hstore elements of the result column will be added to the return value of
+the function. The basic return value is the osm_tags-parameter. The values of
+the result column will be parsed by tags_parse. The third insert is an example
+for this, here the "#name"-element will be the result of either 
+"[ref] - [name]" or "[name]".
 
 Example for a match:
  select classify_hmatch(null, 'barrier=>foobar', null, Array['foobar'])
