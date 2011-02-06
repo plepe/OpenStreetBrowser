@@ -72,12 +72,21 @@
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
-	(select osm_way,
-	  %SQL_bridge_tunnel%,
-	  %SQL_highway%,
-	  %SQL_rail%
-	  from osm_line_extract
-	  order by %SQL_highway_level% asc
+	(select
+	  osm_way,
+	  osm_tags->'#highway_type' as "highway_type",
+	  osm_tags->'#highway_subtype' as "highway_sub_type",
+	  osm_tags->'#bridge' as "bridge",
+	  osm_tags->'#tunnel' as "tunnel",
+	  osm_tags->'#railway' as "railway"
+	from (select
+	    osm_way,
+	    basemap_classify(osm_id, osm_tags, osm_way, 
+	      Array['basemap_highway', 'basemap_bridge', 'basemap_tunnel', 'basemap_railway']) as "osm_tags"
+	    from osm_line_extract
+	    where osm_way &amp;&amp; !bbox!
+	    offset 0) as t1
+	    order by cast(osm_tags->'#highway_level' as int) asc
 	) as line_extract
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
@@ -91,13 +100,22 @@
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
-	(select osm_way, 
-	  %SQL_bridge_tunnel%,
-	  osm_tags->'highway' as "highway", 
-	  %SQL_HIGHWAY_TYPE%
-	  from osm_line
-	  order by %SQL_highway_level% asc
-	) as t
+	(select
+	  osm_way,
+	  osm_tags->'#highway_type' as "highway_type",
+	  osm_tags->'#highway_subtype' as "highway_sub_type",
+	  osm_tags->'#bridge' as "bridge",
+	  osm_tags->'#tunnel' as "tunnel",
+	  osm_tags->'#railway' as "railway"
+	from (select
+	    osm_way,
+	    basemap_classify(osm_id, osm_tags, osm_way, 
+	      Array['basemap_highway', 'basemap_bridge', 'basemap_tunnel', 'basemap_railway']) as "osm_tags"
+	    from osm_line
+	    where osm_way &amp;&amp; !bbox!
+	    offset 0) as t1
+	    order by cast(osm_tags->'#highway_level' as int) asc
+	) as t2
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
@@ -127,14 +145,23 @@
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
-	(select osm_way, osm_tags->'name' as "name",
-	  (CASE WHEN osm_tags->'bridge' in ('yes', 'true') THEN 'yes' ELSE 'no' END) as bridge,
-	  (CASE WHEN osm_tags->'tunnel' in ('yes', 'true') THEN 'yes' ELSE 'no' END) as tunnel,
-	  osm_tags->'highway' as "highway", 
-	  %SQL_highway%
-	  from osm_line
-	  order by %SQL_highway_level% desc
-	) as t
+	(select
+	  osm_way,
+	  osm_tags->'name' as "name",
+	  osm_tags->'#highway_type' as "highway_type",
+	  osm_tags->'#highway_subtype' as "highway_sub_type",
+	  osm_tags->'#bridge' as "bridge",
+	  osm_tags->'#tunnel' as "tunnel",
+	  osm_tags->'#railway' as "railway"
+	from (select
+	    osm_way,
+	    basemap_classify(osm_id, osm_tags, osm_way, 
+	      Array['basemap_highway', 'basemap_bridge', 'basemap_tunnel', 'basemap_railway']) as "osm_tags"
+	    from osm_line
+	    where osm_way &amp;&amp; !bbox!
+	    offset 0) as t1
+	    order by cast(osm_tags->'#highway_level' as int) asc
+	) as t2
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
