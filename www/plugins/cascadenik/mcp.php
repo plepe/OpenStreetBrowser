@@ -1,6 +1,7 @@
 <?
 function cascadenik_compile($file) {
-  $file_noext=strstr($file, ".", true);
+  $file_noext=substr($file, 0, strrpos($file, "."));
+  $path=substr($file, 0, strrpos($file, "/"));
 
   call_hooks("cascadenik_compile", &$file, $path);
 
