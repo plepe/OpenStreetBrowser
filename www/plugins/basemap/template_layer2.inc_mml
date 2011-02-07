@@ -17,7 +17,7 @@
 	from (select
 	    osm_way,
 	    classify_hmatch(osm_id, osm_tags, osm_way, 
-	      Array['basemap_highway', 'basemap_bridge', 'basemap_tunnel']) as "osm_tags"
+	      Array['basemap_highway', 'basemap_bridge', 'basemap_tunnel', 'basemap_railway', 'basemap_railway_tracks']) as "osm_tags"
 	    from osm_line
 	    where osm_way &amp;&amp; !bbox!
 	    and %LAYER_WHERE%
