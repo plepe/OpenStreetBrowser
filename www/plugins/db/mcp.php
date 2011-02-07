@@ -35,7 +35,7 @@ function db_init() {
       }
       // load all missing updates
       else {
-	$updates_done=explode(",", $plugin_tags->get("updates"));
+	$updates_done=explode(";", $plugin_tags->get("updates"));
 	foreach($updates as $update=>$files) {
 	  if(!in_array($update, $updates_done)) {
 	    print "Plugin '$plugin', loading update $update\n";
