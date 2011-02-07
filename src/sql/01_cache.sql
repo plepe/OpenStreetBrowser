@@ -53,7 +53,18 @@ DECLARE
   cache_type alias for $2;
   content text;
 BEGIN
-  content:=(select osm_cache.content from osm_cache where osm_cache.osm_id=osm_id and osm_cache.cache_type=cache_type and now()<=outdate limit 1);
+  select
+    osm_cache.content into content
+  from
+    osm_cache
+  where
+    osm_cache.osm_id=osm_id and
+    osm_cache.cache_type=cache_type and
+    now()<=outdate
+  order by
+    outdate desc
+  limit 1;
+
   return content;
 END;
 $$ LANGUAGE plpgsql volatile;
@@ -70,9 +81,6 @@ BEGIN
   if outdate is not null then
     _outdate:=outdate;
   end if;
-
-  delete from osm_cache where osm_cache.osm_id=osm_id and osm_cache.cache_type=cache_type;
-  delete from osm_cache_depend where osm_cache_depend.osm_id=osm_id and osm_cache_depend.cache_type=cache_type;
 
   insert into osm_cache values (osm_id, cache_type, content, now()+_outdate);
   insert into osm_cache_depend values (osm_id, cache_type, osm_id);
