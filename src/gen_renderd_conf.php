@@ -2,7 +2,7 @@
 function renderd_register(&$renderd, $id, $file) {
   $renderd.="[$id]\n";
   $renderd.="URI=/tiles/$id/\n";
-  $renderd.="XML=$plugins_dir/$file\n";
+  $renderd.="XML=$file\n";
   $renderd.="HOST=dummy.host\n";
   $renderd.="\n";
 }
