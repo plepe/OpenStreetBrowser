@@ -72,15 +72,15 @@
 }
 .admin[admin_level=6][zoom>=9][zoom<11] {
   line-width: 1;
-  line-dasharray: 2,2,5,2;
+  line-dasharray: 2,2;
 }
 .admin[admin_level=6][zoom>=11][zoom<14] {
   line-width: 1.5;
-  line-dasharray: 2,2,5,2;
+  line-dasharray: 2,2;
 }
 .admin[admin_level=6][zoom>=14] {
   line-width: 3;
-  line-dasharray: 2,2,5,2;
+  line-dasharray: 2,2;
 }
 .admin[admin_level=7][zoom>=11][zoom<14],
 .admin[admin_level=8][zoom>=11][zoom<14] {
@@ -100,5 +100,5 @@
 .admin[admin_level=9][zoom>=14],
 .admin[admin_level=10][zoom>=14] {
   line-width: 1.5;
-  line-dasharray: 4,3,1,3;
+  line-dasharray: 4,3;
 }
