@@ -7,5 +7,4 @@ create table classify_hmatch (
   importance	int		not null default 0
 );
 
-create index classify_hmatch_idx_notkeyexists on classify_hmatch using gist("match", "type") where key_exists is not null;
-create index classify_hmatch_idx_keyexists on classify_hmatch using gist("match", "type") where key_exists is null;
+create index classify_hmatch_idx on classify_hmatch using btree("type");

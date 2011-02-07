@@ -9,30 +9,26 @@ DECLARE
   rec record;
   i int;
 BEGIN
+  osm_tags:=cast(cache_search(id, 'classify_hmatch|'||cast(classify_type as text)) as hstore);
+  if osm_tags is not null then
+    return osm_tags;
+  end if;
+
   osm_tags:=$2;
   -- raise notice 'classify % (%)', id, classify_type;
 
   for i in array_lower(classify_type, 1)..array_upper(classify_type, 1) loop
-    select "result" into ret from (
-      (select
-	"result", "importance"
-      from
-	classify_hmatch
-      where
-	"type"=classify_type[i] and
-	osm_tags @> "match" and
-	"key_exists" is null)
-    union all
-      (select
-	"result", "importance"
-      from
-	classify_hmatch
-      where
-	"type"=classify_type[i] and
-	osm_tags @> "match" and
-	"key_exists" is not null and
-	osm_tags ? "key_exists")
-    ) as foo
+    select
+      "result" into ret
+    from
+      classify_hmatch
+    where
+      "type"=classify_type[i] and
+      osm_tags @> "match" and
+      (CASE
+	WHEN "key_exists" is null THEN true
+	ELSE osm_tags ? "key_exists"
+      END)
     order by
       "importance" desc
     limit 1;
@@ -48,6 +44,8 @@ BEGIN
       end loop;
     end if;
   end loop;
+
+  perform cache_insert(id, 'classify_hmatch|'||cast(classify_type as text), cast(osm_tags as text), '6 hours');
 
   return osm_tags;
 END;
