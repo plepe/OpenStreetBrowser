@@ -211,9 +211,9 @@ BEGIN
     values (
       'rel_'||id,
       tags,
+      ST_Transform(geom, 900913),
       members.ids,
-      members.roles,
-      ST_Transform(geom, 900913)
+      members.roles
     );
 
   return true;
