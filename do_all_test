@@ -36,6 +36,7 @@ psql -d $DB_NAME -f /usr/share/postgresql/8.4/contrib/postgis.sql
 psql -d $DB_NAME -f /usr/share/postgresql/8.4/contrib/_int.sql
 psql -d $DB_NAME -f /usr/share/postgresql/8.4/contrib/hstore.sql
 psql -d $DB_NAME -f /usr/share/postgresql/8.4/contrib/spatial_ref_sys.sql
+psql -d $DB_NAME -f /usr/share/postgresql/8.4/contrib/btree_gist.sql
 
 echo "= osmosis"
 echo "- init db for osmosis"
