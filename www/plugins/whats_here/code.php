@@ -5,7 +5,7 @@ function whats_here_find($param) {
 //  global $query;
 
   $dist_mul=(19-$param[zoom])*(19-$param[zoom]);
-  $dist=5*$dist_mul;
+  $dist=3*$dist_mul;
 
   $poly="PolyFromText('POLYGON((".
     ($param[lon]-$dist)." ".($param[lat]-$dist).",".
@@ -15,13 +15,14 @@ function whats_here_find($param) {
     ($param[lon]-$dist)." ".($param[lat]-$dist)."))', 900913)";
   $distance="Distance(osm_way, GeometryFromText('POINT($param[lon] $param[lat])', 900913))";
 
-  $qry="select *, astext(ST_Centroid(osm_way)) as \"#geo:center\", $distance as \"#distance\" from (".
+  $qry="select *, astext(ST_Centroid(osm_way)) as \"#geo:center\" from (".
+    "select *, $distance as \"#distance\" from (".
     "select osm_id, osm_tags, osm_way, 1 as \"#area\" from osm_point where osm_way&&$poly".
     " union all ".
     "select osm_id, osm_tags, osm_way, ST_Length(osm_way) as \"#area\" from osm_line where osm_way&&$poly".
     " union all ".
     "select osm_id, osm_tags, osm_way, ST_Area(osm_way) as \"#area\" from osm_polygon where osm_way&&$poly".
-    ") x order by \"#distance\" asc";
+    ") x1 offset 0) x2 where \"#distance\"<$dist order by \"#distance\" asc";
 
   $res=sql_query($qry);
   while($elem=pg_fetch_assoc($res)) {
