@@ -40,6 +40,7 @@ psql -d gisnew -f /usr/share/postgresql/8.4/contrib/postgis.sql
 psql -d gisnew -f /usr/share/postgresql/8.4/contrib/_int.sql
 psql -d gisnew -f /usr/share/postgresql/8.4/contrib/hstore.sql
 psql -d gisnew -f /usr/share/postgresql/8.4/contrib/spatial_ref_sys.sql
+psql -d gisnew -f /usr/share/postgresql/8.4/contrib/btree_gist.sql
 
 echo "= osmosis"
 echo "- init db for osmosis"
