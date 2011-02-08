@@ -33,11 +33,12 @@ drop table if exists osm_rel;
 create table osm_rel (
   osm_id		text		not null,
   osm_tags		hstore		null,
-  member_ids		text[]		null,
-  member_roles		text[]		null,
   primary key(osm_id)
 );
 select AddGeometryColumn('osm_rel', 'osm_way', 900913, 'GEOMETRY', 2);
+alter table osm_rel
+  add column	member_ids		text[]		null,
+  add column	member_roles		text[]		null;
 
 select assemble_rel(id) from relations;
 
