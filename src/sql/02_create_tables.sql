@@ -48,7 +48,25 @@ create index osm_rel_way_tags on osm_rel using gist(osm_way, osm_tags);
 create index osm_rel_members_idx on osm_rel using gin(member_ids);
 
 drop view osm_rel_members;
-create view osm_rel_members as (select osm_rel.osm_id, osm_line.osm_id as member_id, member_role, osm_rel.osm_tags as osm_tags, osm_line.osm_tags as member_tags, osm_rel.osm_way as osm_way, osm_line.osm_way as member_way from (select osm_rel.*, unnest(member_ids) as member_id, unnest(member_roles) as member_role from osm_rel) osm_rel join osm_line on osm_line.osm_id=osm_rel.member_id);
+create view osm_rel_members as (
+  select
+    osm_rel.osm_id,
+    osm_line.osm_id as member_id,
+    osm_rel.member_ids as rel_member_ids,
+    member_role,
+    osm_rel.osm_tags as osm_tags,
+    osm_line.osm_tags as member_tags,
+    osm_rel.osm_way as osm_way,
+    osm_line.osm_way as member_way
+  from (
+    select
+      osm_rel.*,
+      unnest(member_ids) as member_id,
+      unnest(member_roles) as member_role
+    from osm_rel) osm_rel
+    join osm_line
+      on osm_line.osm_id=osm_rel.member_id
+);
 
 -- polygon
 drop table if exists osm_polygon;
