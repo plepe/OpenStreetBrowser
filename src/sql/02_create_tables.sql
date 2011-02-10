@@ -77,6 +77,9 @@ create table osm_polygon (
   primary key(osm_id)
 );
 select AddGeometryColumn('osm_polygon', 'osm_way', 900913, 'GEOMETRY', 2);
+alter table osm_polygon
+  add column	member_ids		text[]		null,
+  add column	member_roles		text[]		null;
 
 select assemble_polygon(id) from 
   (select
@@ -96,6 +99,7 @@ create index osm_polygon_rel_id on osm_polygon(rel_id);
 create index osm_polygon_tags on osm_polygon using gin(osm_tags);
 create index osm_polygon_way  on osm_polygon using gist(osm_way);
 create index osm_polygon_way_tags on osm_polygon using gist(osm_way, osm_tags);
+create index osm_polygon_members_idx on osm_polygon using gin(member_ids);
 
 -- all
 drop view if exists osm_all;
