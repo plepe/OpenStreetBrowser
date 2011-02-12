@@ -3,6 +3,9 @@ body, li, td {
   font-size: 11px;
   color:#333;
 }
+a:hover {
+  cursor: pointer;
+}
 .menu {
   left: 0px;
   width: 250px;
