@@ -10,6 +10,7 @@ select AddGeometryColumn('osm_boundary', 'osm_way', 900913, 'LINESTRING', 2);
 select assemble_boundary(id) from
   (select way_id as id from way_tags where k='boundary' and v in ('administrative', 'political')
   union
-  select relation_members.member_id from osm_rel join relation_members on cast(substr(osm_rel.osm_id, 5) as int)=relation_members.relation_id and relation_members.member_type='W' where osm_tags@>'type=>boundary' and osm_tags@>'boundary=>administrative') x;
+  select relation_members.member_id from relation_members join relation_tags on relation_members.relation_id=relation_tags.relation_id where relation_tags.k='boundary' and relation_tags.v='administrative' and relation_members.member_type='W'
+) x;
 
 create index osm_boundary_way_tags on osm_boundary using gist(osm_way, osm_tags);

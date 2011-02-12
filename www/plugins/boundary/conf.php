@@ -1,5 +1,5 @@
 <?
-$boundary_active=true;
+$boundary_active=false;
 
 $boundary_depend=array("db");
 
