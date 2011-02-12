@@ -30,7 +30,7 @@ function plugins_include($plugin, $app) {
 
   if(is_array($$var_depend))
     foreach($$var_depend as $inc) {
-      if(!$plugins_list[$inc]) {
+      if(!isset($plugins_list[$inc])) {
 	if(!plugins_include($inc, $app))
 	  return false;
       }
@@ -38,7 +38,7 @@ function plugins_include($plugin, $app) {
 
   $plugins_list[$plugin]=$$var_tags;
 
-  if($plugins_include_files[$plugin])
+  if(isset($plugins_include_files[$plugin]))
     foreach($plugins_include_files[$plugin] as $file) {
       if(preg_match("/\.php$/", $file))
 	include_once("$plugins_dir/$plugin/$file");
