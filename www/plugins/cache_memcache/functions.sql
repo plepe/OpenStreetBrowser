@@ -1,10 +1,12 @@
 CREATE OR REPLACE FUNCTION cache_search(text, text) RETURNS text AS $$
 DECLARE
-  osm_id alias for $1;
-  cache_type alias for $2;
-  content text;
+  osm_id 	alias for $1;
+  cache_type 	alias for $2;
+  content 	text;
+  key           text;
 BEGIN
-  content:=memcache_get(osm_id || '|' || cache_type);
+  key:=md5(osm_id || '|' || cache_type);
+  content:=memcache_get(key);
 
   if content='NULL' then
     return null;
@@ -23,6 +25,7 @@ DECLARE
   outdate	alias for $5;
   _outdate	interval:='2 days';
   ret 		text;
+  key           text;
 BEGIN
   if outdate is not null then
     _outdate:=outdate;
@@ -33,14 +36,15 @@ BEGIN
     ret:='NULL';
   end if;
 
-  raise notice 'insert: (%, %, %)', osm_id || '|' || cache_type, ret, _outdate;
-  perform memcache_set(osm_id || '|' || cache_type, ret, _outdate);
+  key:=md5(osm_id || '|' || cache_type);
+  -- raise notice 'insert: (% / %, %, %)', osm_id || '|' || cache_type, key, ret, _outdate;
+  perform memcache_set(key, ret, _outdate);
 
-  perform cache_set_depend(osm_id, cache_type, osm_id, _outdate);
+  perform cache_set_depend(key, osm_id, _outdate);
 
   if array_lower(depend, 1) is not null then
     for i in array_lower(depend, 1)..array_upper(depend, 1) loop
-      perform cache_set_depend(osm_id, cache_type, depend[i], _outdate);
+      perform cache_set_depend(key, depend[i], _outdate);
     end loop;
   end if;
 
@@ -79,10 +83,16 @@ $$ LANGUAGE plpgsql volatile;
 
 CREATE OR REPLACE FUNCTION cache_set_depend(text, text, text, interval) RETURNS void AS $$
 DECLARE
-  osm_id   	alias for $1;
-  cache_type 	alias for $2;
-  depend	alias for $3;
-  outdate	alias for $4;
+BEGIN
+  perform cache_set_depend(md5($1 || $2), $3, $4);
+END;
+$$ LANGUAGE plpgsql volatile;
+
+CREATE OR REPLACE FUNCTION cache_set_depend(text, text, interval) RETURNS void AS $$
+DECLARE
+  key           alias for $1;
+  depend	alias for $2;
+  outdate	alias for $3;
   cur_depend    text[];
   new_depend    text[];
   cur           text[];
@@ -106,7 +116,7 @@ BEGIN
 
   for i in 2..array_upper(cur_depend, 1) loop
     cur:=cast(cur_depend[i] as text[]);
-    if cur[2]=osm_id and cur[3]=cache_type then
+    if cur[2]=key then
     elsif cast(cur[1] as timestamptz)>now() then
       new_depend:=array_append(new_depend, cast(cur as text));
     end if;
@@ -114,8 +124,7 @@ BEGIN
 
   new_depend:=array_append(new_depend, cast(Array[
     cast(now()+outdate as text),
-    osm_id,
-    cache_type
+    key
   ] as text));
 
   -- raise notice 'new depend: %', new_depend;
@@ -131,6 +140,7 @@ DECLARE
   cur           text[];
 BEGIN
   cur_depend:=cast(memcache_get('depend|' || osm_id) as text[]);
+  -- raise notice 'cur depend: %', cur_depend;
 
   if cur_depend is null then
     return;
@@ -140,7 +150,7 @@ BEGIN
     cur:=cast(cur_depend[i] as text[]);
 
     if cast(cur[1] as timestamptz)>now() then
-      perform memcache_delete(cur[2] || '|' || cur[3]);
+      perform memcache_delete(cur[2]);
     end if;
   end loop;
 
