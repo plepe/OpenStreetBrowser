@@ -59,7 +59,7 @@ BEGIN
   list_tags=Array[]::hstore[];
   list_geo=Array[]::geometry[];
 
-  for ret in select * from osm_all where osm_way && ST_Buffer(way, dist) and Distance(osm_way, way)<200 and osm_tags @> match and not osm_id=any(done) loop
+  for ret in select * from osm_all where osm_way && ST_Buffer(way, dist) and Distance(osm_way, way)<dist and osm_tags @> match and not osm_id=any(done) loop
     done:=array_append(done, ret.osm_id);
     list_id:=array_append(list_id, ret.osm_id);
     list_tags:=array_append(list_tags, ret.osm_tags);
@@ -113,7 +113,7 @@ BEGIN
     where_str:='and '||$5;
   end if;
 
-  execute 'select *, line_locate_point(osm_way, $3) as "pos" from osm_line where osm_way && ST_Buffer($3, $4) ' || where_str || ' order by Distance($3, osm_way) asc limit 1' into ret using id, tags, way, max_dist;
+  execute 'select *, line_locate_point(osm_way, $3) as "pos" from osm_line where osm_way && ST_Buffer($3, $4) ' || where_str || ' and Distance($3, osm_way)<$4 order by Distance($3, osm_way) asc limit 1' into ret using id, tags, way, max_dist;
 
   line_point:=line_interpolate_point(ret.osm_way, ret.pos);
 
@@ -181,7 +181,7 @@ BEGIN
     where_str:='and '||$5;
   end if;
 
-  execute 'select *, line_locate_point(osm_way, $3) as "pos" from osm_line where osm_way && ST_Buffer($3, $4) ' || where_str || ' order by Distance($3, osm_way) asc limit 1' into ret using id, tags, way, max_dist;
+  execute 'select *, line_locate_point(osm_way, $3) as "pos" from osm_line where osm_way && ST_Buffer($3, $4) ' || where_str || ' and Distance($3, osm_way)<$4 order by Distance($3, osm_way) asc limit 1' into ret using id, tags, way, max_dist;
 
   if ret is null then
     return way;

@@ -211,9 +211,9 @@ BEGIN
     values (
       'rel_'||id,
       tags,
+      ST_Transform(geom, 900913),
       members.ids,
-      members.roles,
-      ST_Transform(geom, 900913)
+      members.roles
     );
 
   return true;
@@ -270,6 +270,7 @@ DECLARE
   geom geometry;
   tags hstore;
   outer_members bigint[];
+  members record;
 BEGIN
   -- raise notice 'assemble_multipolygon(%)', id;
 
@@ -296,13 +297,18 @@ BEGIN
     tags:=tags_merge(tags, way_assemble_tags(outer_members[1]));
   end if;
 
+  -- get members
+  select to_textarray((CASE WHEN member_type='N' THEN 'node_' WHEN member_type='W' THEN 'way_' WHEN member_type='R' then 'rel_' ELSE 'error_' END) || member_id) as ids, to_textarray(member_role) as roles into members from relation_members where relation_id=id group by relation_id;
+
   -- okay, insert
   insert into osm_polygon
     values (
       'rel_'||id,
       'rel_'||id,
       tags,
-      ST_Transform(geom, 900913)
+      ST_Transform(geom, 900913),
+      members.ids,
+      members.roles
     );
 
   return true;

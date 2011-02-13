@@ -1,6 +1,8 @@
 <?
 function cascadenik_svg_process($infile, $outfile, $path) {
   global $tmp_dir;
+
+  print "Cascadenik SVG $path/ $infile $tmp_dir/ $outfile\n";
   $f1=fopen("$path/$infile", "r");
   $f2=fopen("$tmp_dir/$outfile", "w");
 
@@ -24,14 +26,15 @@ function cascadenik_svg_process($infile, $outfile, $path) {
   fclose($f2);
 }
 
-function cascadenik_svg_compile($file) {
+function cascadenik_svg_compile($file, $path=null) {
   global $tmp_dir;
 
   if(!preg_match("/^(.*\/)([^\/]*)$/", $file, $m)) {
     print "Mapnik Rotate: No path found???\n";
     return;
   }
-  $path=$m[1];
+  if(!$path)
+    $path=$m[1];
   $nfile="$tmp_dir/$m[2]";
 
   $dom=new DOMDocument();

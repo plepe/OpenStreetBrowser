@@ -7,7 +7,7 @@
    <Layer class="routes" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geom</Parameter>
       <Parameter name="table">
@@ -46,7 +46,7 @@ order by
    <Layer class="routes_features" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geom</Parameter>
       <Parameter name="table">
@@ -86,7 +86,7 @@ order by
    <Layer class="stations_bbox" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">bbox</Parameter>
       <Parameter name="table">
@@ -125,7 +125,7 @@ from
    <Layer class="stops_p_extract" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
@@ -153,7 +153,7 @@ where
    <Layer class="stops_n_extract" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
@@ -181,7 +181,7 @@ where
    <Layer class="stops_p" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
@@ -213,7 +213,7 @@ where
    <Layer class="stops_n" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
@@ -246,7 +246,7 @@ where
    <Layer class="stations_top_extract" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">top</Parameter>
       <Parameter name="table">
@@ -279,7 +279,7 @@ from
    <Layer class="stations_top" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">top</Parameter>
       <Parameter name="table">
@@ -317,7 +317,7 @@ from
    <Layer class="stop_routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
@@ -356,7 +356,7 @@ group by
    <Layer class="pt_line" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geom</Parameter>
       <Parameter name="table">
@@ -379,7 +379,7 @@ group by
    <Layer class="routestext" name="routes" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">gisnew</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geom</Parameter>
       <Parameter name="table">

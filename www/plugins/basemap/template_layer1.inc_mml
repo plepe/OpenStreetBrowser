@@ -5,7 +5,7 @@
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
 	(select
-	  osm_way,
+	  osm_way_line as "osm_way",
 	  parse_layer(osm_tags) as "layer",
 	  osm_tags->'#highway_type' as "highway_type",
 	  osm_tags->'#highway_subtype' as "highway_sub_type",
@@ -14,10 +14,10 @@
 	  osm_tags->'#railway' as "railway",
 	  osm_tags->'#railway_tracks' as "tracks"
 	from (select
-	    osm_way,
+	    osm_way_line,
 	    classify_hmatch(osm_id, osm_tags, osm_way, 
 	      Array['basemap_highway', 'basemap_bridge', 'basemap_tunnel', 'basemap_railway', 'basemap_railway_tracks']) as "osm_tags"
-	    from osm_line
+	    from osm_linepoly
 	    where osm_way &amp;&amp; !bbox!
 	    and %LAYER_WHERE%
 	    offset 0) as t1

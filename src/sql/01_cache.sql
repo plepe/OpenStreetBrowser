@@ -76,7 +76,7 @@ DECLARE
   content	alias for $3;
   depend	alias for $4;
   outdate	alias for $5;
-  _outdate	interval:='2 days';
+  _outdate	interval:='6 hours';
 BEGIN
   if outdate is not null then
     _outdate:=outdate;
