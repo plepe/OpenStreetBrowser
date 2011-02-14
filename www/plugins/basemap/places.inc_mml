@@ -9,7 +9,9 @@
       (select /* place high */
         osm_way,
         osm_tags->'name' as "name",
-        osm_tags->'name:en' as "name_en",
+        (CASE
+	  WHEN (osm_tags->'name:en')!=(osm_tags->'name') THEN (osm_tags->'name:en')
+        END) as "name_en",
         %SQL_place%
       from osm_point_place_extract
       order by %SQL_places_sort%) as places
