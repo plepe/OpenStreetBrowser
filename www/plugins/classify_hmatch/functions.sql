@@ -50,3 +50,25 @@ BEGIN
   return osm_tags;
 END;
 $$ LANGUAGE plpgsql stable;
+
+
+CREATE OR REPLACE FUNCTION classify_hmatch_sqlwhere(text) RETURNS text AS $$
+DECLARE
+  res record;
+  ret text[]:=Array[]::text[];
+  r   text;
+  classify_type alias for $1;
+BEGIN
+  for res in select * from classify_hmatch where "type"=classify_type loop
+    r:=E'(osm_tags @> E''' || regexp_replace(cast(res.match as text), E'''', E'''''') || E'''';
+    if res.key_exists is not null then
+      r:=r || E' and osm_tags ? E''' || regexp_replace(res.key_exists, E'''', E'''''') || E'''';
+    end if;
+    r:=r || ')';
+
+    ret:=array_append(ret, r);
+  end loop;
+
+  return '(' || array_to_string(ret, ' or ') || ')';
+END;
+$$ LANGUAGE plpgsql stable;
