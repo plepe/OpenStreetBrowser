@@ -45,12 +45,12 @@ create index hooks_hook on hooks(hook);
 CREATE OR REPLACE FUNCTION register_hook(text, text, int) RETURNS void AS $$
 #variable_conflict use_variable
 DECLARE
-  hook alias for $1;
+  p_hook alias for $1;
   fun  alias for $2;
   cparams alias for $3;
 BEGIN
-  delete from hooks where hooks.hook=hook and hooks.fun=fun;
-  insert into hooks values (hook, fun, cparams);
+  delete from hooks where hooks.hook=p_hook and hooks.fun=fun;
+  insert into hooks values (p_hook, fun, cparams);
 END;
 $$ LANGUAGE plpgsql volatile;
 
@@ -63,7 +63,7 @@ $$ LANGUAGE plpgsql volatile;
 CREATE OR REPLACE FUNCTION call_hooks(text, text default null, text default null, text default null, text default null) RETURNS text AS $$
 #variable_conflict use_variable
 DECLARE
-  hook		alias for $1;
+  p_hook	alias for $1;
   var		text;
   entry		record;
   ret		text;
@@ -72,7 +72,7 @@ DECLARE
 BEGIN
   var:=$2;
 
-  for entry in select * from hooks where hooks.hook=hook loop
+  for entry in select * from hooks where hooks.hook=p_hook loop
 
     params:=Array[]::text[];
     for i in 1..entry.cparams loop
