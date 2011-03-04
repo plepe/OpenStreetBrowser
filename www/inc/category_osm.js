@@ -352,6 +352,9 @@ function category_osm(id) {
     else if(category_root)
       category_root.shall_reload();
 
+    if(this.visible()) {
+      this.on_unhide_category();
+    }
   }
 
   // get_rule
