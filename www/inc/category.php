@@ -282,8 +282,8 @@ class category {
     $ret.="rule_id=\"$res[rule_id]\">\n";
 
     foreach($tags as $k=>$v) {
-      $k=strtr($k, array("&"=>"&amp;", ">"=>"&gt;", "<"=>"&lt;"));
-      $v=strtr($v, array("&"=>"&amp;", ">"=>"&gt;", "<"=>"&lt;"));
+      $k=strtr($k, array("&"=>"&amp;", ">"=>"&gt;", "<"=>"&lt;", "\""=>"&quot;"));
+      $v=strtr($v, array("&"=>"&amp;", ">"=>"&gt;", "<"=>"&lt;", "\""=>"&quot;"));
       $ret.="  <tag k=\"$k\" v=\"$v\" />\n";
     }
 
