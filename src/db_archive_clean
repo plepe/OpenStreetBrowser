@@ -1,0 +1,19 @@
+#!/bin/bash
+
+ARCHIVE_DIR="/db/archive"
+
+cd $ARCHIVE_DIR
+enough=0
+while [ $enough == 0 ] ; do
+# Calculate free space
+  free=`df -P -m $ARCHIVE_DIR | tail -n1 | awk '{ print $4 }'`
+
+# We need moar!
+  if [ $free -le 1000 ] ; then
+    echo "delete ($free)"
+    rm `ls --sort time | egrep "^[0-9A-F]+$" | tail -n 10`
+  else
+    echo "enough ($free)"
+    enough=1
+  fi
+done
