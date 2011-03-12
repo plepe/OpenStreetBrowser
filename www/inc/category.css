@@ -108,3 +108,11 @@ a.category_tools {
 span.category_old_version {
   color: #df0000;
 }
+
+/* These two classes define objects whose geometric object is being loaded or
+ * already has been loaded */
+li a.loading:hover {
+  cursor: progress;
+}
+li a.loaded:hover {
+}

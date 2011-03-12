@@ -5,16 +5,20 @@ function osm_object(dom) {
   this.inheritFrom();
 
   // load_more_data
-  this.load_more_tags=function(tags, callback) {
+  this.load_more_tags=function(tags, callback, dom_ob) {
     var param={};
     param.id=this.id;
     param.tags=tags.join(",");
 
-    ajax("object_load_more_tags", param, this.load_more_tags_callback.bind(this, callback));
+    if(dom_ob) {
+      add_css_class(dom_ob, "loading");
+    }
+
+    ajax("object_load_more_tags", param, this.load_more_tags_callback.bind(this, callback, dom_ob));
   }
 
   // load_more_tags_callback
-  this.load_more_tags_callback=function(callback, response) {
+  this.load_more_tags_callback=function(callback, dom_ob, response) {
     if(!response.return_value) {
       alert("response not valid: "+response.responseText);
       return;
@@ -22,6 +26,11 @@ function osm_object(dom) {
 
     for(var i in response.return_value)
       this.tags.set(i, response.return_value[i]);
+
+    if(dom_ob) {
+      del_css_class(dom_ob, "loading");
+      add_css_class(dom_ob, "loaded");
+    }
 
     callback(response.return_value);
   }
@@ -45,7 +54,7 @@ function osm_object(dom) {
   }
 
   // set_highlight
-  this.set_highlight=function() {
+  this.set_highlight=function(event) {
     var geos=[];
 
     if(!this.highlight) {
@@ -54,9 +63,12 @@ function osm_object(dom) {
 
       if(!geo) {
 	// request from server
-	this.load_more_tags(["#geo"], this.highlight_geo.bind(this));
+	this.load_more_tags(["#geo"], this.highlight_geo.bind(this), event.target);
       }
       else {
+	if(dom_ob) {
+	  add_css_class(dom_ob, "loaded");
+	}
 	geos.push(geo);
       }
       if(!geo_center) {
