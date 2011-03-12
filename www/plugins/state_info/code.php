@@ -1,24 +1,9 @@
 <?
 function state_info_date() {
-  global $root_path;
-  $file="$root_path/data/updates/state.txt";
+  $res=sql_query("select * from osm_status");
+  $elem=pg_fetch_assoc($res);
 
-  if(!file_exists($file))
-    return;
-
-  $f=fopen($file, "r");
-  while($r=fgets($f)) {
-    $r=explode("=", trim($r));
-    $l[$r[0]]=$r[1];
-  }
-  fclose($f);
-
-  if(!($t=$l['timestamp']))
-    return;
-  
-  $t=stripslashes($t);
-  $t=new DateTime($t);
-
+  $t=new DateTime($elem['last_change']);
   return $t;
 }
 

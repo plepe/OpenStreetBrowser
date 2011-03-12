@@ -43,6 +43,7 @@ create index hooks_hook on hooks(hook);
 -- * @param text fun The name of the function
 -- * @param int cparams The count of params the function should be called with
 CREATE OR REPLACE FUNCTION register_hook(text, text, int) RETURNS void AS $$
+#variable_conflict use_variable
 DECLARE
   hook alias for $1;
   fun  alias for $2;
@@ -60,6 +61,7 @@ $$ LANGUAGE plpgsql volatile;
 -- * the registered amount of params). The return value of each hook will be 
 -- * passed as var1 to the next (see documentation of register_hook)
 CREATE OR REPLACE FUNCTION call_hooks(text, text default null, text default null, text default null, text default null) RETURNS text AS $$
+#variable_conflict use_variable
 DECLARE
   hook		alias for $1;
   var		text;

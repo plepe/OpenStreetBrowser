@@ -3,28 +3,18 @@
 include "/home/osm/conf.php";
 include_once "/home/osm/conf.php";
 
+function register_hook($d1, $d2) {
+}
+
+include_once "/home/osm/src/inc/sql.php";
+$sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
+
+include_once "$root_path/www/plugins/state_info/code.php";
+
 function out_of_date() {
   global $root_path;
-  @$state=file_get_contents("$root_path/data/updates/state.txt");
-  if(!$state) {
-    print "Could not open state file\n";
-    exit;
-  }
 
-  $state=explode("\n", $state);
-  $state_date=null;
-  foreach($state as $state_line) {
-    if(preg_match("/^timestamp=(.*)$/", $state_line, $m)) {
-      $state_date=stripslashes($m[1]);
-    }
-  }
-
-  if(!$state_date) {
-    print "Could not parse state date\n";
-    exit;
-  }
-
-  $state_date=new DateTime($state_date);
+  $state_date=state_info_date();
   $now_date=new DateTime("now", new DateTimeZone("UTC"));
 
   $diff=$now_date->diff($state_date);

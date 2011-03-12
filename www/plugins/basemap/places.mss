@@ -1,3 +1,9 @@
+.places_high name,
+.places_high name_en,
+.places_db name,
+.places_db name_en {
+  text-vertical-align: middle;
+}
 .places_high[place=continent][zoom>=2][zoom<4] name,
 .places_high[place=city_large][zoom>=10][zoom<11] name,
 .places_high[place=city_medium][zoom>=10][zoom<11] name,
@@ -20,6 +26,7 @@
   text-avoid-edges: true;
   text-halo-radius: 2;
   point-allow-overlap: false;
+  text-vertical-align: middle;
 }
 .places_high[place=continent][zoom>=2][zoom<4] name_en,
 .places_high[place=city_large][zoom>=10][zoom<11] name_en,
@@ -43,7 +50,7 @@
   text-avoid-edges: true;
   text-halo-radius: 2;
   point-allow-overlap: false;
-  text-dy: 14;
+  text-dy: 9;
 }
 .places_high[place=continent][zoom=1] name,
 .places_db[place=suburb][zoom>=13][zoom<15] name,
@@ -68,7 +75,7 @@
   text-avoid-edges: true;
   text-halo-radius: 1;
   point-allow-overlap: false;
-  text-dy: 10;
+  text-dy: 6;
 }
 .places_db[place=suburb][zoom>=11][zoom<13] name,
 .places_db[place=locality][zoom>=15] name
@@ -91,7 +98,7 @@
   text-avoid-edges: true;
   text-halo-radius: 1;
   point-allow-overlap: false;
-  text-dy: 8;
+  text-dy: 5;
 }
 .places_high[place=country][zoom>=7][zoom<10] name,
 .places_high[place=state][zoom>=9][zoom<11] name,
@@ -118,7 +125,7 @@
   text-avoid-edges: true;
   text-halo-radius: 2;
   point-allow-overlap: false;
-  text-dy: 14;
+  text-dy: 9;
 }
 
 .places_high[place=country][zoom>=4][zoom<7] name,
@@ -146,7 +153,7 @@
   text-avoid-edges: true;
   text-halo-radius: 1;
   point-allow-overlap: false;
-  text-dy: 10;
+  text-dy: 6;
 }
 .places_high[place=country][zoom>=3][zoom<4] name
 {
@@ -167,7 +174,7 @@
   text-avoid-edges: true;
   text-halo-radius: 1;
   point-allow-overlap: false;
-  text-dy: 8;
+  text-dy: 5;
 }
 .places_high[place=city_large][zoom>=4][zoom<6] name,
 .places_high[place=city_medium][zoom>=6][zoom<8] name,
@@ -177,7 +184,7 @@
 .places_db[place=village][zoom>=11][zoom<13] name,
 .places_db[place=hamlet][zoom>=13][zoom<15] name
 {
-  text-dy: 8;
+  text-dy: 4;
   point-file: url('img/city5.png');
   text-size: 8;
   text-placement: point;
@@ -202,7 +209,7 @@
   text-avoid-edges: false;
   text-halo-radius: 1;
   point-allow-overlap: true;
-  text-dy: 16;
+  text-dy: 13;
 }
 .places_high[place=city_large][zoom>=6][zoom<10] name,
 .places_high[place=city_medium][zoom>=8][zoom<10] name,
@@ -213,7 +220,7 @@
 .places_db[place=town][zoom>=11][zoom<13] name,
 .places_db[place=village][zoom>=13][zoom<15] name
 {
-  text-dy: 10;
+  text-dy: 5;
   text-size: 10;
   point-file: url('img/city7.png');
   text-placement: point;
@@ -239,5 +246,5 @@
   text-avoid-edges: false;
   text-halo-radius: 1;
   point-allow-overlap: true;
-  text-dy: 20;
+  text-dy: 16;
 }
