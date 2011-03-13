@@ -36,7 +36,7 @@ begin
   end loop;
 
   -- merge all other geometries together
-  cur:=ST_LineMerge(ST_Collect(todo));
+  cur:=ST_LineMerge(ST_GeomFromEWKT(ST_AsEWKT(ST_Collect(todo))));
 
   -- if those build a closed geometry
   if ST_NumGeometries(cur) is null then
