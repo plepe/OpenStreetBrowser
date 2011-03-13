@@ -246,11 +246,6 @@ BEGIN
     return false;
   end if;
 
-  -- are we member of any multipolygon relation and are we 'outer'?
-  if (select count(*) from relation_members join relation_tags on relation_members.relation_id=relation_tags.relation_id and relation_tags.k='type' where member_id=id and member_type='W' and member_role='outer')>0 then
-    return false;
-  end if;
-
   -- okay, insert
   insert into osm_polygon
     values (
@@ -269,6 +264,7 @@ DECLARE
   id alias for $1;
   geom geometry;
   tags hstore;
+  tmp hstore;
   outer_members bigint[];
   members record;
 BEGIN
@@ -292,9 +288,21 @@ BEGIN
 
   -- tags
   tags:=rel_assemble_tags(id);
-  -- if only one outer polygon, merge its tags
+
+  -- if there's only one outer polygon, check if multipolygon has no
+  -- (relevant) tags. Then we can import tags and delete outer way from
+  -- osm_polygon
   if(array_upper(outer_members, 1)=1) then
-    tags:=tags_merge(tags, way_assemble_tags(outer_members[1]));
+    -- delete not relevant tags ('created'_by has already been removed)
+    -- Postgres 9.0: tmp:=delete(tags, Array['type', 'source']);
+    tmp:=delete(delete(tags, 'type'), 'source');
+
+    -- in case of undefined polygon merge tags and remove outer polygon
+    if array_upper(akeys(tmp), 1)=0 then
+      tags:=tags_merge(tags, way_assemble_tags(outer_members[1]));
+      delete from osm_polygon where osm_id='way_'||(outer_members[1]);
+    end if;
+
   end if;
 
   -- get members
