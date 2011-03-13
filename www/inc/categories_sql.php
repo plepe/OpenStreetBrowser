@@ -326,7 +326,7 @@ function match_to_sql($match, $table_def, $type="exact") {
 	  if($not)
 	    $not="not osm_tags ? ".postgre_escape($match[1])." or not";
 
-	  return "($not osm_tags->".postgre_escape($match[1])." in (".implode(", ", $ret)."))";
+	  return "($not coalesce(osm_tags->".postgre_escape($match[1]).", '') in (".implode(", ", $ret)."))";
 	}
     case "~is not":
       $not="not";
