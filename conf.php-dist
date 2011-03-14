@@ -53,3 +53,4 @@ $basemaps=array(
 // contour - Contour Shading (DE/AT/CH only)
 // overlays - Additional overlays
 // cloudmade_basemap - Add the default cloudmade basemap
+// iplocation - Locate 'my position' using the iplocationtools-service
