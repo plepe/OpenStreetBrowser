@@ -64,8 +64,7 @@ BEGIN
     (select way_id as id from way_nodes join actions on way_nodes.node_id=actions.id and actions.data_type='N' and actions.action='M' group by way_id
      union
      select id from actions where data_type='W'
-     union
-     select member_id from actions join relation_members on actions.data_type=relation_members.member_type and actions.id=relation_members.member_id join relation_tags on relation_members.relation_id=relation_tags.relation_id and relation_tags.k='type' and relation_tags.v='multipolygon' where relation_members.member_role='outer' and relation_members.member_type='W') actions
+    ) actions
   where osm_id='way_'||id;
 
   raise notice 'deleted from osm_polygon 1';
