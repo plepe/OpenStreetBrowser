@@ -268,23 +268,10 @@ DECLARE
   outer_members bigint[];
   members record;
 BEGIN
-  -- raise notice 'assemble_multipolygon(%)', id;
+  raise notice 'assemble_multipolygon(%)', id;
 
   -- get list of outer members
   outer_members:=(select to_intarray(member_id) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id);
-
-  -- generate multipolygon geometry
-  geom:=build_multipolygon(
-    (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id),
-    (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='inner' group by relation_id));
-
-  if geom is null then
-    return false;
-  end if;
-
-  if ST_IsEmpty(geom) then
-    return false;
-  end if;
 
   -- tags
   tags:=rel_assemble_tags(id);
@@ -303,6 +290,24 @@ BEGIN
       delete from osm_polygon where osm_id='way_'||(outer_members[1]);
     end if;
 
+  end if;
+
+  -- if no tags (beside 'type'), return
+  if array_upper(akeys(delete(tags, 'type')), 1)=0 then
+    return false;
+  end if;
+
+  -- generate multipolygon geometry
+  geom:=build_multipolygon(
+    (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id),
+    (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='inner' group by relation_id));
+
+  if geom is null then
+    return false;
+  end if;
+
+  if ST_IsEmpty(geom) then
+    return false;
   end if;
 
   -- get members
