@@ -18,12 +18,12 @@ BEGIN
   perform call_hooks('osmosis_update_start');
 
   ---- simplify table actions ----
-  -- mark all ways as 'M' which were implicitly changed (because nodes of the
+  -- mark all ways as 'n' which were implicitly changed (because nodes of the
   -- way were changed)
   insert into actions
    (select
       'W' as "data_type",
-      'M' as "action",
+      'n' as "action",
       way_nodes.way_id as "id"
     from
       actions node_actions
@@ -43,7 +43,7 @@ BEGIN
   insert into actions
    (select
       'R' as "data_type",
-      'M' as "action",
+      'n' as "action",
       relation_members.relation_id as "id"
     from
       actions node_actions
@@ -65,7 +65,7 @@ BEGIN
   insert into actions
    (select
       'R' as "data_type",
-      'M' as "action",
+      'w' as "action",
       relation_members.relation_id as "id"
     from
       actions way_actions
@@ -136,25 +136,25 @@ BEGIN
   perform call_hooks('osmosis_update_delete');
 
   -- insert changed/created points
-  perform assemble_point(actions.id) from actions where actions.data_type='N' and actions.action in ('C', 'M');
+  perform assemble_point(actions.id) from actions where actions.data_type='N' and actions.action not in ('D');
 
   raise notice 'inserted to osm_point';
 
   -- insert changed/created lines
   perform assemble_line(id) from 
-    (select id from actions where data_type='W' and action in ('C', 'M')) actions;
+    (select id from actions where data_type='W' and action not in ('D')) actions;
 
   raise notice 'inserted to osm_line';
 
   -- insert changed/created relations
   perform assemble_rel(id) from 
-    (select id from actions where data_type='R' and action in ('C', 'M')) actions;
+    (select id from actions where data_type='R' and action not in ('D')) actions;
 
   raise notice 'inserted to osm_rel';
 
   -- insert changed/created polygons
   perform assemble_polygon(id) from
-       (select id from actions where data_type='W' and action in ('C', 'M')) actions;
+       (select id from actions where data_type='W' and action not in ('D')) actions;
 
     raise notice 'inserted to osm_polygon 1';
 
@@ -162,7 +162,7 @@ BEGIN
     perform
       assemble_multipolygon(actions.id)
     from
-      (select id from actions where data_type='R' and action in ('C', 'M')) actions
+      (select id from actions where data_type='R' and action not in ('D')) actions
 	join relation_tags on
 	  relation_tags.relation_id=actions.id and
 	  relation_tags.k='type'
