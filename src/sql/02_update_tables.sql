@@ -34,7 +34,9 @@ BEGIN
     where
       node_actions.data_type='N' and
       way_nodes.way_id is not null and
-      way_actions.id is null);
+      way_actions.id is null
+    group by
+      way_nodes.way_id);
 
   -- mark all relations as 'n' which were implicitly changed (because nodes of
   -- the relation were changed)
@@ -54,7 +56,9 @@ BEGIN
     where
       node_actions.data_type='N' and
       relation_members.relation_id is not null and
-      rel_actions.id is null);
+      rel_actions.id is null
+    group by
+      relation_members.relation_id);
 
   -- mark all relations as 'w' which were implicitly changed (because ways of
   -- the relation were changed)
@@ -74,7 +78,9 @@ BEGIN
     where
       way_actions.data_type='W' and
       relation_members.relation_id is not null and
-      rel_actions.id is null);
+      rel_actions.id is null
+    group by
+      relation_members.relation_id);
 
   -- we should also mark relations where relations were changed, but currently
   -- we don't do recursive relations
