@@ -104,9 +104,7 @@ BEGIN
 
   -- delete changed/deleted lines
   delete from osm_line using
-    (select way_id as id from way_nodes join actions on way_nodes.node_id=actions.id and actions.data_type='N' and actions.action='M' group by way_id
-     union
-     select id from actions where data_type='W') actions 
+    (select id from actions where data_type='W') actions 
   where osm_id='way_'||id;
 
   raise notice 'deleted from osm_line';
@@ -114,28 +112,17 @@ BEGIN
   -- delete changed/deleted rels
   delete from osm_rel using actions where osm_id='rel_'||actions.id and data_type='R';
 
-  raise notice 'deleted from osm_rel 1';
-
-  delete from osm_rel using
-     (select relation_id as id from actions join relation_members on relation_members.member_id=actions.id and actions.data_type=relation_members.member_type and actions.action='M' group by relation_id) actions
-  where osm_id='rel_'||id;
-
-  raise notice 'deleted from osm_rel 2';
+  raise notice 'deleted from osm_rel';
 
   -- delete changed/deleted polygons
   delete from osm_polygon using
-    (select way_id as id from way_nodes join actions on way_nodes.node_id=actions.id and actions.data_type='N' and actions.action='M' group by way_id
-     union
-     select id from actions where data_type='W'
-    ) actions
+    (select id from actions where data_type='W') actions
   where osm_id='way_'||id;
 
   raise notice 'deleted from osm_polygon 1';
 
   delete from osm_polygon using
-    (select relation_id as id from relation_members join actions on relation_members.member_id=actions.id and actions.data_type=relation_members.member_type and actions.action='M' group by relation_id
-     union
-     select id from actions where data_type='R' and action in ('C', 'M', 'D')) actions
+    (select id from actions where data_type='R') actions
   where osm_id='rel_'||id;
 
   raise notice 'deleted from osm_polygon 2';
@@ -149,36 +136,27 @@ BEGIN
 
   -- insert changed/created lines
   perform assemble_line(id) from 
-    (select id from actions where data_type='W' and action in ('C', 'M')
-    union
-    (select way_id as id from way_nodes join actions on way_nodes.node_id=actions.id and actions.data_type='N' and actions.action='M' group by way_id union select id from actions where data_type='W' and action in ('C', 'M'))) actions;
+    (select id from actions where data_type='W' and action in ('C', 'M')) actions;
 
   raise notice 'inserted to osm_line';
 
   -- insert changed/created relations
   perform assemble_rel(id) from 
-    (select relation_id as id from relation_members join actions on relation_members.member_id=actions.id and actions.data_type=relation_members.member_type and actions.action='M' group by relation_id
-     union
-     select id from actions where data_type='R' and action in ('C', 'M')) actions;
+    (select id from actions where data_type='R' and action in ('C', 'M')) actions;
 
   raise notice 'inserted to osm_rel';
 
-  -- insert changed/created ways
+  -- insert changed/created polygons
   perform assemble_polygon(id) from
-       (select way_id as id from way_nodes join actions on way_nodes.node_id=actions.id and actions.data_type='N' and actions.action='M' group by way_id
-	union
-	select id from actions where data_type='W' and action in ('C', 'M')
-	) actions;
+       (select id from actions where data_type='W' and action in ('C', 'M')) actions;
 
     raise notice 'inserted to osm_polygon 1';
 
+  -- insert changed/created multipolygons
     perform
       assemble_multipolygon(actions.id)
     from
-	  (select relation_id as id from relation_members join actions on relation_members.member_id=actions.id and actions.data_type=relation_members.member_type and actions.action='M' group by relation_id
-	 union
-	 select id from actions where data_type='R' and action in ('C', 'M')
-	) actions
+      (select id from actions where data_type='R' and action in ('C', 'M')) actions
 	join relation_tags on
 	  relation_tags.relation_id=actions.id and
 	  relation_tags.k='type'
