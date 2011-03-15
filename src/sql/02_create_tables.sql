@@ -47,27 +47,6 @@ create index osm_rel_way  on osm_rel using gist(osm_way);
 create index osm_rel_way_tags on osm_rel using gist(osm_way, osm_tags);
 create index osm_rel_members_idx on osm_rel using gin(member_ids);
 
-drop view osm_rel_members;
-create view osm_rel_members as (
-  select
-    osm_rel.osm_id,
-    osm_line.osm_id as member_id,
-    osm_rel.member_ids as rel_member_ids,
-    member_role,
-    osm_rel.osm_tags as osm_tags,
-    osm_line.osm_tags as member_tags,
-    osm_rel.osm_way as osm_way,
-    osm_line.osm_way as member_way
-  from (
-    select
-      osm_rel.*,
-      unnest(member_ids) as member_id,
-      unnest(member_roles) as member_role
-    from osm_rel) osm_rel
-    join osm_line
-      on osm_line.osm_id=osm_rel.member_id
-);
-
 -- polygon
 drop table if exists osm_polygon;
 create table osm_polygon (
@@ -100,39 +79,3 @@ create index osm_polygon_tags on osm_polygon using gin(osm_tags);
 create index osm_polygon_way  on osm_polygon using gist(osm_way);
 create index osm_polygon_way_tags on osm_polygon using gist(osm_way, osm_tags);
 create index osm_polygon_members_idx on osm_polygon using gin(member_ids);
-
--- all
-drop view if exists osm_all;
-create view osm_all as (
-  select osm_id, 'point' as osm_type, osm_tags, osm_way from osm_point
-  union all
-  select osm_id, 'line' as osm_type, osm_tags, osm_way from osm_line
-  union all
-  select osm_id, 'polygon' as osm_type, osm_tags, osm_way from osm_polygon
-  union all
-  select osm_id, 'rel' as osm_type, osm_tags, osm_way from osm_rel
-);
-
--- poipoly
-drop view if exists osm_poipoly;
-create view osm_poipoly as (
-  select osm_id, 'point' as osm_type, osm_tags, osm_way from osm_point
-  union all
-  select osm_id, 'polygon' as osm_type, osm_tags, osm_way from osm_polygon
-);
-
--- linepoly
-drop view if exists osm_linepoly;
-create view osm_linepoly as (
-  select osm_id, 'line' as osm_type, osm_tags, osm_way, osm_way as "osm_way_line" from osm_line
-  union all
-  select osm_id, 'polygon' as osm_type, osm_tags, osm_way, ST_Boundary(osm_way) as "osm_way_line" from osm_polygon
-);
-
--- allrel
-drop view if exists osm_allrel;
-create view osm_allrel as (
-  select osm_id, 'rel' as osm_type, osm_tags, osm_way, member_ids, member_roles from osm_rel
-  union all
-  select osm_id, 'polygon' as osm_type, osm_tags, osm_way, member_ids, member_roles from osm_polygon
-);
