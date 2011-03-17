@@ -93,3 +93,4 @@ $basemaps=array(
 // cascadenik_include - Include inc_mml-files to mml-files
 // classify_hmatch - Match objects using a ruleset (woot! there's docu in man.txt)
 // cache_memcache - A cache using the memcached
+// cluster_call - Send events through the database to db-clients

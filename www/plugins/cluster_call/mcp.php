@@ -1,0 +1,56 @@
+<?
+global $cluster_call_registered;
+global $cluster_call_done;
+$cluster_call_registered=array();
+$cluster_call_done=array();
+
+function cluster_call_tick() {
+  global $cluster_call_done;
+  global $cluster_call_registered;
+  $todo=array();
+  $listed=array();
+
+  // process through currently listed calls
+  $res=sql_query("select * from cluster_call");
+  while($elem=pg_fetch_assoc($res)) {
+    // add new calls to todolist
+    if(!isset($cluster_call_done[$elem['now']])) {
+      $todo[$elem['now']][]=$elem;
+    }
+  }
+
+  // if there's a todolist then iterate through it and call
+  // registered functions
+  if(sizeof($todo)) {
+    foreach($todo as $now=>$now_list) {
+      foreach($now_list as $do)
+	if(isset($cluster_call_registered[$do['event']]))
+	  foreach($cluster_call_registered[$do['event']] as $h) {
+	    $h($do['parameters'], $now, $do['event']);
+	  }
+    }
+
+    // remember done calls
+    $cluster_call_done=array_merge($cluster_call_done, 
+      array_combine(array_keys($todo), array_keys($todo)));
+  }
+}
+
+function cluster_call_register($event, $fun) {
+  global $cluster_call_registered;
+
+  $cluster_call_registered[$event][]=$fun;
+}
+
+function cluster_call($event, $params=0) {
+  $event=postgre_escape($event);
+  $params=postgre_escape(serialize($params));
+
+  sql_query("select cluster_call($event, $params);");
+}
+
+function cluster_call_start() {
+}
+
+register_hook("mcp_start", "cluster_call_start");
+register_hook("mcp_tick", "cluster_call_tick");
