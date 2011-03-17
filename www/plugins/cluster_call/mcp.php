@@ -7,6 +7,7 @@ $cluster_call_done=array();
 function cluster_call_tick() {
   global $cluster_call_done;
   global $cluster_call_registered;
+  global $cluster_call_last_clean;
   $todo=array();
   $listed=array();
 
@@ -17,6 +18,9 @@ function cluster_call_tick() {
     if(!isset($cluster_call_done[$elem['now']])) {
       $todo[$elem['now']][]=$elem;
     }
+
+    // check which calls are currently active
+    $listed[$elem['now']]=$elem['now'];
   }
 
   // if there's a todolist then iterate through it and call
@@ -29,10 +33,15 @@ function cluster_call_tick() {
 	    $h($do['parameters'], $now, $do['event']);
 	  }
     }
+  }
 
-    // remember done calls
-    $cluster_call_done=array_merge($cluster_call_done, 
-      array_combine(array_keys($todo), array_keys($todo)));
+  // remember done calls
+  $cluster_call_done=$listed;
+
+  // After some time delete entries in cluster_call
+  if((!isset($cluster_call_last_clean))||($cluster_call_last_clean+60<time())) {
+    $cluster_call_last_clean=time();
+    sql_query("delete from cluster_call where now<now()-interval '6 hours'");
   }
 }
 
