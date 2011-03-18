@@ -8,6 +8,7 @@ function cluster_call_tick() {
   global $cluster_call_done;
   global $cluster_call_registered;
   global $cluster_call_last_clean;
+  global $root_path;
   $todo=array();
   $listed=array();
 
@@ -37,6 +38,8 @@ function cluster_call_tick() {
 
   // remember done calls
   $cluster_call_done=$listed;
+  $cluster_call_file="$root_path/data/cluster_call.save";
+  file_put_contents($cluster_call_file, serialize($cluster_call_done));
 
   // After some time delete entries in cluster_call
   if((!isset($cluster_call_last_clean))||($cluster_call_last_clean+60<time())) {
@@ -59,6 +62,12 @@ function cluster_call($event, $params=0) {
 }
 
 function cluster_call_start() {
+  global $cluster_call_done;
+  global $root_path;
+  
+  $cluster_call_file="$root_path/data/cluster_call.save";
+  if(file_exists($cluster_call_file))
+    $cluster_call_done=unserialize(file_get_contents("$cluster_call_file"));
 }
 
 register_hook("mcp_start", "cluster_call_start");
