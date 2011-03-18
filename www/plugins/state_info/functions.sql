@@ -6,6 +6,11 @@ BEGIN
       now=now(),
       last_change=(select tstamp from nodes where id=(select max(id) from nodes));
 
+  perform cluster_call(
+    'update_db',
+    cast((select tstamp from nodes where id=(select max(id) from nodes)) as text)
+  );
+
   return true;
 END;
 $$ language 'plpgsql';
