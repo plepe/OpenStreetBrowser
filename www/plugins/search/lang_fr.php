@@ -8,3 +8,4 @@ $lang_str["search_tip"]="e.g. 'Montréal', 'Rue Papineau, 'boite postale près d
 $lang_str["search_clear"]="Effacer le champ de recherche";
 
 
+

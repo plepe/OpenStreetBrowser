@@ -10,6 +10,8 @@ $languages=array(
   "uk"=>"Ukrainian",
   "it"=>"Italian",
   "ru"=>"Russian",
+  "es"=>"Spanish",
+  "cz"=>"Czech",
 );
 
 function rewrite_str($str) {

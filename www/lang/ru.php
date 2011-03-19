@@ -1,11 +1,11 @@
 <?
 // All untranslated strings have a # in front. When you translate a string
 // please remove this hash.
- 
+
 //  Every language string looks like this:
 //  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
 //  the first entry is the translation of the language string in Singular,
-//  the second the .
+//  the second the Plural form.
 //
 //  Optionally you can define the Gender (F, M, N) of this word, e.g. the
 //  German translation for office:
@@ -14,20 +14,20 @@
 //  If a Singular/Plural form is not
 //  suitable/necessary you can ignore the array, e.g.
 //  $lang_str["help"]="Help";
- 
+
 // General
 $lang_str["general_info"]="Общая информация";
 $lang_str["yes"]="да";
-$lang_str["no"]="ект";
-$lang_str["save"]=array( "Сохранить" );
-$lang_str["cancel"]=array( "Отмена" );
-$lang_str["longitude"]=array( "Долгота", "Долготы" );
-$lang_str["latitude"]=array( "Широта", "Широты" );
+$lang_str["no"]="нет";
+$lang_str["save"]=array("Сохранить");
+$lang_str["cancel"]=array("Отмена");
+$lang_str["longitude"]=array("Долгота", "Долготы");
+$lang_str["latitude"]=array("Широта", "Широты");
 $lang_str["noname"]="(неизвестно)";
 $lang_str["info_back"]="возврат к обзору";
 $lang_str["info_zoom"]="приближение";
-$lang_str["nothing_found"]=array( "не найдено" );
-$lang_str["loading"]=array( "Загрузка..." );
+$lang_str["nothing_found"]=array("не найдено");
+$lang_str["loading"]=array("Загрузка...");
 
 // Headings
 $lang_str["head:general_info"]="Общая информация";
@@ -50,18 +50,18 @@ $lang_str["head:culture"]="Культура";
 $lang_str["head:graves"]="Места погребения";
 $lang_str["head:routing"]="Направления движения";
 $lang_str["head:search"]="Поиск";
-$lang_str["head:actions"]=array( "Действие", "Действия" );
+$lang_str["head:actions"]=array("Действие", "Действия");
 $lang_str["head:location"]="Местоположение";
 
 $lang_str["action_browse"]="просмотреть в OSM";
 $lang_str["action_edit"]="править в OSM";
 
-$lang_str["geo_click_pos"]=array( "Кликните на карте на участок, на котром находитесь" );
+$lang_str["geo_click_pos"]=array("Кликните на карте на участок, на котором находитесь");
 $lang_str["geo_set_pos"]="Определить моё местоположение";
-$lang_str["geo_change_pos"]="Задать моё местоположени";
+$lang_str["geo_change_pos"]="Задать моё местоположение";
 
 $lang_str["routing_type_car"]="Автомобиль";
-$lang_str["routing_type_car_shortest"]="Автомобиль (самый короткий)";
+$lang_str["routing_type_car_shortest"]="Автомобиль (короткий)";
 $lang_str["routing_type_bicycle"]="Велосипед";
 $lang_str["routing_type_foot"]="Пешком";
 $lang_str["routing_type"]="Тип маршрута";
@@ -69,7 +69,7 @@ $lang_str["routing_distance"]="Расстояние";
 $lang_str["routing_time"]="Время";
 $lang_str["routing_disclaimer"]="Маршруты: (c) от <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
-$lang_str["list_info"]="Выберите категорию для поиска на карте, или нажмите на объект для получения информации";
+$lang_str["list_info"]="Выберите категорию для поиска на карте или нажмите на объект для получения информации";
 $lang_str["list_leisure_sport_tourism"]="Отдых, туризм и спорт";
 
 // Mapkey
@@ -79,7 +79,7 @@ $lang_str["map_key:zoom"]="Уровень приближения";
 #$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:map_key"]="Обозначения на карте";
-$lang_str["main:options"]="Нстроки";
+$lang_str["main:options"]="Настройки";
 $lang_str["main:about"]="Информация";
 $lang_str["main:donate"]="Помочь проекту";
 $lang_str["main:licence"]="Информация о карте: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> авторы | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Стефан Плепелти</a> и <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">другие</a>";
@@ -87,29 +87,29 @@ $lang_str["main:permalink"]="Ссылка";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Объект не найден</h1>Не найдено объектов соответствующих ID \"%s\". Это могло произойти по таким причинам:<ul><li>Неверный ID.</li><li>Объект был идентифицирован сайтом третьей стороны и (пока что) не добавлен в OpenStreetMap.</li><li>Объект находится не в зоне покрытия карты.</li><li>Ссылка, коротая Вас сюда привела не является актуальной для OpenStreetMap.</li></ul>";
 
-$lang_str["start:choose"]=array( "Выберите вид карты" );
-$lang_str["start:geolocation"]=array( "Определить местоположение" );
-$lang_str["start:lastview"]=array( "последний вид" );
-$lang_str["start:savedview"]=array( "последняя ссылка" );
-$lang_str["start:startnormal"]=array( "сохранить вид" );
-$lang_str["start:remember"]=array( "запомнить решение" );
-$lang_str["start:edit"]=array( "правка..." );
+$lang_str["start:choose"]=array("Выберите вид карты");
+$lang_str["start:geolocation"]=array("Определить местоположение");
+$lang_str["start:lastview"]=array("последний вид");
+$lang_str["start:savedview"]=array("последняя ссылка");
+$lang_str["start:startnormal"]=array("сохранить вид");
+$lang_str["start:remember"]=array("запомнить решение");
+$lang_str["start:edit"]=array("правка...");
 
 $lang_str["options:autozoom"]="Автомасштабирование";
-$lang_str["help:autozoom"]="При выборе объекта, карта софкусируется на нём, текущие настройки приближения могут измениться. С помощью этой функции Вы можете выбрать режим отображения.";
+$lang_str["help:autozoom"]="При выборе объекта, карта сфокусируется на нём, текущие настройки приближения могут измениться. С помощью этой функции Вы можете выбрать режим отображения.";
 $lang_str["options:autozoom:pan"]="Сфокусироваться на объекте (качественней)";
 $lang_str["options:autozoom:move"]="Переход к текущему объекту (быстрее)";
 $lang_str["options:autozoom:stay"]="Никогда не менять режим просмотра";
- 
+
 $lang_str["options:language_support"]="Языковая поддержка";
-$lang_str["help:language_support"]="С помощью этой опции Вы можете выбрать нужный язык. Первый пункт изменяет язык интерфейса. Второй пункт — изменение языка данных на карте. Информация о многих объектах переведена на несколько языков. Если перевод недоступен, или выбрана опция \"Определить язык автоматически\" то информация отображается на основном языке.";
+$lang_str["help:language_support"]="С помощью этой опции Вы можете выбрать нужный язык. Первый пункт изменяет язык интерфейса. Второй пункт — изменение языка данных на карте. Информация о многих объектах переведена на несколько языков. Если перевод недоступен или выбрана опция \"Определить язык автоматически\", то информация отображается на основном языке.";
 $lang_str["options:ui_lang"]="Язык интерфейса";
 $lang_str["options:data_lang"]="Язык информации на карте";
 $lang_str["lang:"]="Определить язык автоматически";
- 
+
 $lang_str["overlay:data"]="Данные";
 $lang_str["overlay:draggable"]="Отметки";
- 
+
 $lang_str["wikipedia:read_more"]="прочесть ещё";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
@@ -148,8 +148,8 @@ $lang_str["cat:services/health"]="Здоровье";
 $lang_str["cat:services/education"]="Образование";
 $lang_str["cat:services/public"]="Комменальные услуги";
 $lang_str["cat:services/tourism"]="Туристические услуги";
-$lang_str["cat:places"]=array( "Место", "Места" );
-$lang_str["cat:places/places"]=array( "Место", "Места" );
+$lang_str["cat:places"]=array("Место", "Места");
+$lang_str["cat:places/places"]=array("Место", "Места");
 $lang_str["cat:places/residential"]="Жилые районы";
 $lang_str["cat:places/streets"]="Муниципальные";
 $lang_str["cat:places/natural"]="Природные образования";
@@ -175,7 +175,7 @@ $lang_str["cat:agri_ind/railway"]="Железная дорога";
 $lang_str["cat:agri_ind/resources"]="Добыча полезных ископаемых";
 $lang_str["cat:agri_ind/landfill"]="Переработка отходов";
 $lang_str["cat:agri_ind/military"]="Военное";
- 
+
 $lang_str["sub_type=t3|type=historic"]="Список Всемирного наследия ЮНЕСКО";
 $lang_str["sub_type=|type=place_of_worship"]="Места молебен";
 $lang_str["sub_type=t1|type=place_of_worship"]="Христианская церковь";
@@ -543,3 +543,5 @@ $lang_str["sub_type=t3|type=tourism"]="Туристическая информа
 #$lang_str["station_type_railway_station"]="Railway Station";
 #$lang_str["station_type_railway_halt"]="Railway Halt";
 // ATTENTION: the last >400 language strings are deprecated
+
+

@@ -46,8 +46,6 @@ $lang_str["tag:admin_level=3"]="Limites territoriales";
 $lang_str["tag:admin_level=4"]="Limites, État / Province / Lander";
 $lang_str["tag:admin_level=5"]="Limites de Régions administratives";
 $lang_str["tag:admin_level=6"]="Limites des MRC (Québec)";
-$lang_str["tag:admin_level=7"]="Limites de Comtés";
-$lang_str["tag:admin_level=7.5"]="Limites, Agglomérations urbaines";
 $lang_str["tag:admin_level=8"]="Limites, Municipalités";
 $lang_str["tag:admin_level=10"]="Limites, Arrondissements municipaux";
 
@@ -309,10 +307,16 @@ $lang_str["tag:voltage"]="Voltage";
 $tag_type["voltage"]=array("number", "V", "V");
 
 // wires
-#$lang_str["tag:wires"]="Fils";
-$tag_type["wires"]=array("nombre");
+#$lang_str["tag:wires"]="Wires";
+$tag_type["wires"]=array("count");
 
 // website
 $lang_str["tag:website"]="Site Web";
-$tag_type["website"]=array("lien");
+$tag_type["website"]=array("link");
+
+
+// The following $lang_str are not defined in www/lang/tags_en.php and might be 
+// deprecated/mislocated/wrong:
+$lang_str["tag:admin_level=7"]="Limites de Comtés";
+$lang_str["tag:admin_level=7.5"]="Limites, Agglomérations urbaines";
 

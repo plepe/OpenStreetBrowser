@@ -32,16 +32,16 @@
 //  (e.g. "100.000 m" or "2010-12-24").
 
 // accomodation
-#$lang_str["tag:accomodation"]="Accomodation";
+$lang_str["tag:accomodation"]="Жильё";
 
 // address
-#$lang_str["tag:address"]="Address";
+$lang_str["tag:address"]="Адрес";
 
 // addr:housenumber
-#$lang_str["tag:addr:housenumber"]="Housenumber";
+$lang_str["tag:addr:housenumber"]="Номер дома";
 
 // admin_level
-#$lang_str["tag:admin_level=2"]="Country Border";
+$lang_str["tag:admin_level=2"]="Граница Страны";
 #$lang_str["tag:admin_level=3"]="Divisions";
 #$lang_str["tag:admin_level=4"]="State Border";
 #$lang_str["tag:admin_level=5"]="Community Border";
@@ -51,9 +51,9 @@
 
 // amenity
 #$lang_str["tag:amenity"]="Amenity";
-#$lang_str["tag:amenity=cinema"]=array("Cinema", "Cinemas");
+$lang_str["tag:amenity=cinema"]=array("Кинотеатр", "Кинотеатры");
 $lang_str["tag:amenity=restaurant"]=array("ресторан", "рестораны");
-#$lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
+$lang_str["tag:amenity=pub"]=array("Паб", "Пабы");
 
 // building
 #$lang_str["tag:building=yes"]="Buildings";
@@ -63,7 +63,7 @@ $lang_str["tag:amenity=restaurant"]=array("ресторан", "ресторан�
 #$lang_str["tag:building=nature_building"]="Natural Buildings (e.g. Barriers)";
 #$lang_str["tag:building=industrial"]="Industrial Buildings";
 #$lang_str["tag:building=education"]="Educational Buildings";
-#$lang_str["tag:building=shop"]="Shops";
+$lang_str["tag:building=shop"]="Магазины";
 #$lang_str["tag:building=public"]="Public Buildings";
 #$lang_str["tag:building=military"]="Military Buildings";
 #$lang_str["tag:building=historic"]="Historical Buildings";
@@ -76,14 +76,14 @@ $lang_str["tag:amenity=restaurant"]=array("ресторан", "ресторан�
 #$lang_str["tag:building=sport"]="Buildings for sport activities";
 
 // cables
-#$lang_str["tag:cables"]="Cables";
+$lang_str["tag:cables"]="Кабели";
 
 // cuisine
 #$lang_str["tag:cuisine"]="Cuisine";
 #$lang_str["tag:cuisine=regional"]="regional";
 
 // description
-#$lang_str["tag:description"]="Description";
+$lang_str["tag:description"]="Описание";
 
 // domination
 #$lang_str["tag:domination"]="Domination";
@@ -108,7 +108,7 @@ $lang_str["tag:amenity=restaurant"]=array("ресторан", "ресторан�
 #$lang_str["tag:is_in"]="Is in";
 
 // landuse
-#$lang_str["tag:landuse=park"]="Park";
+$lang_str["tag:landuse=park"]="Парк";
 #$lang_str["tag:landuse=education"]="Area of educational facilities";
 #$lang_str["tag:landuse=tourism"]="Area of touristic facilities";
 #$lang_str["tag:landuse=garden"]="Farms, Plantages, Gardens";
@@ -128,29 +128,29 @@ $lang_str["tag:amenity=restaurant"]=array("ресторан", "ресторан�
 #$lang_str["tag:landuse=natural|sub_type=t2"]="Glaciers";
 #$lang_str["tag:landuse=natural|sub_type=t3"]="Screes, Heaths";
 #$lang_str["tag:landuse=natural|sub_type=t4"]="Mud";
-#$lang_str["tag:landuse=natural|sub_type=t5"]="Beaches";
+#$lang_str["tag:landuse=natural|sub_type=t5"]="Пляжи";
 
 // leisure
-#$lang_str["tag:leisure=sports_centre"]="Sport Centre";
-#$lang_str["tag:leisure=golf_course"]="Golf Course";
-#$lang_str["tag:leisure=stadium"]="Stadium";
-#$lang_str["tag:leisure=track"]="Track";
+$lang_str["tag:leisure=sports_centre"]="Спортивный центр";
+$lang_str["tag:leisure=golf_course"]="Курсы гольфа";
+$lang_str["tag:leisure=stadium"]="Стадион";
+$lang_str["tag:leisure=track"]="Трек";
 #$lang_str["tag:leisure=pitch"]="Pitche";
 #$lang_str["tag:leisure=water_park"]="Water Park";
 #$lang_str["tag:leisure=marina"]="Marina";
 #$lang_str["tag:leisure=slipway"]="Slipway";
-#$lang_str["tag:leisure=fishing"]="Fishing";
+$lang_str["tag:leisure=fishing"]="Рыбалка";
 #$lang_str["tag:leisure=nature_reserve"]="Nature Reserve";
 #$lang_str["tag:leisure=park"]="Leisure Park";
-#$lang_str["tag:leisure=playground"]="Playground";
-#$lang_str["tag:leisure=garden"]="Garden";
+$lang_str["tag:leisure=playground"]="Игровая площадка";
+$lang_str["tag:leisure=garden"]="Сад";
 #$lang_str["tag:leisure=common"]="Common";
-#$lang_str["tag:leisure=ice_rink"]="Ice Rink";
-#$lang_str["tag:leisure=miniature_golf"]="Miniature Golf";
-#$lang_str["tag:leisure=swimming_pool"]="Swimming Pool";
-#$lang_str["tag:leisure=beach_resort"]="Beach Resort";
+$lang_str["tag:leisure=ice_rink"]="Ледовый каток";
+$lang_str["tag:leisure=miniature_golf"]="Мини-гольф";
+$lang_str["tag:leisure=swimming_pool"]="Бассейн";
+$lang_str["tag:leisure=beach_resort"]="Пляжный курорт";
 #$lang_str["tag:leisure=bird_hide"]="Bird Hide";
-#$lang_str["tag:leisure=sport"]="Other Sport";
+$lang_str["tag:leisure=sport"]="Другой спорт";
 
 // name
 #$lang_str["tag:name"]=array("Name", "Namen");
@@ -159,27 +159,27 @@ $lang_str["tag:amenity=restaurant"]=array("ресторан", "ресторан�
 #$lang_str["tag:network"]="Network";
 
 // note
-#$lang_str["tag:note"]="Note";
+$lang_str["tag:note"]="Заметка";
 
 // old_name
-#$lang_str["tag:old_name"]="Old Name(s)";
+$lang_str["tag:old_name"]="Старое(-ые) имя(-ена)";
 
 // opening_hours
-#$lang_str["tag:opening_hours"]="Opening hours";
+$lang_str["tag:opening_hours"]="Часы работы";
 
 // operator
-#$lang_str["tag:operator"]="Operator";
+$lang_str["tag:operator"]="Оператор";
 
 // place
 #$lang_str["tag:place"]="Place";
-#$lang_str["tag:place=continent"]=array("Continent", "Continents");
-#$lang_str["tag:place=country"]=array("Country", "Countries");
-#$lang_str["tag:place=state"]=array("State", "States");
-#$lang_str["tag:place=region"]=array("Region", "Regions");
+$lang_str["tag:place=continent"]=array("Континент", "Континенты");
+$lang_str["tag:place=country"]=array("Страна", "Страны");
+$lang_str["tag:place=state"]=array("Штат", "Штаты");
+$lang_str["tag:place=region"]=array("Регион", "Регионы");
 #$lang_str["tag:place=county"]=array("County", "Counties");
-#$lang_str["tag:place=city"]=array("City", "Cities");
-#$lang_str["tag:place=town"]="Town";
-#$lang_str["tag:place=village"]=array("Village", "Villages");
+$lang_str["tag:place=city"]=array("Город", "Города");
+#$lang_str["tag:place=town"]="Город";
+$lang_str["tag:place=village"]=array("Деревни", "Деревня");
 #$lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
 #$lang_str["tag:place=locality"]=array("Locality", "Localities");
 #$lang_str["tag:place=island"]=array("Island", "Islands");
@@ -191,7 +191,7 @@ $lang_str["tag:amenity=restaurant"]=array("ресторан", "ресторан�
 #$lang_str["tag:place=town;population>30000"]=array("Town, > 30.000 Inhabitants", "Towns, > 30.000 Inhabitants");
 
 // population
-#$lang_str["tag:population"]="Population";
+$lang_str["tag:population"]="Популяция";
 $tag_type["population"]=array("count");
 
 // power
@@ -249,55 +249,55 @@ $lang_str["tag:religion=christian"]="христианский";
 #$lang_str["tag:route_type"]="Route type";
 
 // shop
-#$lang_str["tag:shop"]="Shop";
+$lang_str["tag:shop"]="Магазин";
 
 // sport
-#$lang_str["tag:sport"]="Sport";
-#$lang_str["tag:sport=9pin"]="9pin Bowling";
-#$lang_str["tag:sport=10pin"]="10pin Bowling";
-#$lang_str["tag:sport=archery"]="Archery";
-#$lang_str["tag:sport=athletics"]="Athletics";
-#$lang_str["tag:sport=australian_football"]="Australian Football";
-#$lang_str["tag:sport=baseball"]="Baseball";
-#$lang_str["tag:sport=basketball"]="Basketball";
-#$lang_str["tag:sport=beachvolleyball"]="Beachvolleyball";
+$lang_str["tag:sport"]="Спорт";
+$lang_str["tag:sport=9pin"]="Боулинг (9-ти кеглевый)";
+$lang_str["tag:sport=10pin"]="Боулинг (10-ти кеглевый)";
+$lang_str["tag:sport=archery"]="Стрельба из лука";
+$lang_str["tag:sport=athletics"]="Атлетика";
+$lang_str["tag:sport=australian_football"]="Австралийский футбол";
+$lang_str["tag:sport=baseball"]="Бейсбол";
+$lang_str["tag:sport=basketball"]="Баскетбол";
+$lang_str["tag:sport=beachvolleyball"]="Пляжный воллейбол";
 #$lang_str["tag:sport=boules"]="Boules";
 #$lang_str["tag:sport=bowls"]="Bowls";
-#$lang_str["tag:sport=canoe"]="Canoe";
-#$lang_str["tag:sport=chess"]="Chess";
-#$lang_str["tag:sport=climbing"]="Climbing";
-#$lang_str["tag:sport=cricket"]="Cricket";
+$lang_str["tag:sport=canoe"]="Каноэ";
+$lang_str["tag:sport=chess"]="Шахматы";
+$lang_str["tag:sport=climbing"]="Скалолазанье";
+$lang_str["tag:sport=cricket"]="Крикет";
 #$lang_str["tag:sport=cricket_nets"]="Cricket Nets";
-#$lang_str["tag:sport=croquet"]="Croquet";
-#$lang_str["tag:sport=cycling"]="Cycling";
-#$lang_str["tag:sport=diving"]="Diving";
-#$lang_str["tag:sport=dog_racing"]="Dog Racing";
-#$lang_str["tag:sport=equestrian"]="Equestrian";
-#$lang_str["tag:sport=football"]="Football";
-#$lang_str["tag:sport=golf"]="Golf";
-#$lang_str["tag:sport=gymnastics"]="Gymnastics";
-#$lang_str["tag:sport=hockey"]="Hockey";
-#$lang_str["tag:sport=horse_racing"]="Horse Racing";
-#$lang_str["tag:sport=korfball"]="Korfball";
+$lang_str["tag:sport=croquet"]="Крокет";
+$lang_str["tag:sport=cycling"]="Велоспорт";
+$lang_str["tag:sport=diving"]="Дайвинг";
+$lang_str["tag:sport=dog_racing"]="Собачьи бега";
+$lang_str["tag:sport=equestrian"]="Конный спорт";
+$lang_str["tag:sport=football"]="Футбол";
+$lang_str["tag:sport=golf"]="Гольф";
+$lang_str["tag:sport=gymnastics"]="Гимнастика";
+$lang_str["tag:sport=hockey"]="Хоккей";
+$lang_str["tag:sport=horse_racing"]="Лошадиные бега";
+$lang_str["tag:sport=korfball"]="Корфбол";
 #$lang_str["tag:sport=motor"]="Motor";
 #$lang_str["tag:sport=multi"]="Multi";
-#$lang_str["tag:sport=orienteering"]="Orienteering";
+$lang_str["tag:sport=orienteering"]="Спортивное ориентирование";
 #$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
-#$lang_str["tag:sport=paragliding"]="Paragliding";
-#$lang_str["tag:sport=pelota"]="Pelota";
+$lang_str["tag:sport=paragliding"]="Парапланеризм";
+$lang_str["tag:sport=pelota"]="Пелота";
 #$lang_str["tag:sport=racquet"]="Racquet";
-#$lang_str["tag:sport=rowing"]="Rowing";
-#$lang_str["tag:sport=rugby"]="Rugby";
-#$lang_str["tag:sport=shooting"]="Shooting";
-#$lang_str["tag:sport=skating"]="Skating";
-#$lang_str["tag:sport=skateboard"]="Skateboard";
-#$lang_str["tag:sport=skiing"]="Skiing";
-#$lang_str["tag:sport=soccer"]="Soccer";
-#$lang_str["tag:sport=swimming"]="Swimming";
-#$lang_str["tag:sport=table_tennis"]="Table Tennis";
-#$lang_str["tag:sport=team_handball"]="Handball";
-#$lang_str["tag:sport=tennis"]="Tennis";
-#$lang_str["tag:sport=volleyball"]="Volleyball";
+$lang_str["tag:sport=rowing"]="Гребля";
+$lang_str["tag:sport=rugby"]="Регби";
+$lang_str["tag:sport=shooting"]="Стрельба";
+$lang_str["tag:sport=skating"]="Конькобежный спорт";
+$lang_str["tag:sport=skateboard"]="Скейтборд";
+$lang_str["tag:sport=skiing"]="Лыжный спорт";
+$lang_str["tag:sport=soccer"]="Футбол";
+$lang_str["tag:sport=swimming"]="Плавание";
+$lang_str["tag:sport=table_tennis"]="Настольный теннис";
+$lang_str["tag:sport=team_handball"]="Гандбол";
+$lang_str["tag:sport=tennis"]="Теннис";
+$lang_str["tag:sport=volleyball"]="Воллейбол";
 
 // vending
 #$lang_str["tag:vending"]="Vending";
@@ -313,4 +313,5 @@ $tag_type["wires"]=array("count");
 // website
 #$lang_str["tag:website"]="Website";
 $tag_type["website"]=array("link");
+
 

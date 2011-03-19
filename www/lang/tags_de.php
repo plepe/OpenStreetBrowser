@@ -35,13 +35,13 @@
 #$lang_str["tag:accomodation"]="Accomodation";
 
 // address
-#$lang_str["tag:address"]="Address";
+$lang_str["tag:address"]="Adresse";
 
 // addr:housenumber
-#$lang_str["tag:addr:housenumber"]="Housenumber";
+$lang_str["tag:addr:housenumber"]="Hausnummer";
 
 // admin_level
-#$lang_str["tag:admin_level=2"]="Country Border";
+$lang_str["tag:admin_level=2"]="Landesgrenze";
 #$lang_str["tag:admin_level=3"]="Divisions";
 #$lang_str["tag:admin_level=4"]="State Border";
 #$lang_str["tag:admin_level=5"]="Community Border";
@@ -51,9 +51,9 @@
 
 // amenity
 #$lang_str["tag:amenity"]="Amenity";
-#$lang_str["tag:amenity=cinema"]=array("Cinema", "Cinemas");
-#$lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
-#$lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
+$lang_str["tag:amenity=cinema"]=array("Kino", "Kinos");
+$lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
+$lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
 
 // building
 #$lang_str["tag:building=yes"]="Buildings";
@@ -80,10 +80,10 @@
 
 // cuisine
 #$lang_str["tag:cuisine"]="Cuisine";
-#$lang_str["tag:cuisine=regional"]="regional";
+$lang_str["tag:cuisine=regional"]="regional";
 
 // description
-#$lang_str["tag:description"]="Description";
+$lang_str["tag:description"]="Beschreibung";
 
 // domination
 #$lang_str["tag:domination"]="Domination";
@@ -153,36 +153,36 @@
 #$lang_str["tag:leisure=sport"]="Other Sport";
 
 // name
-#$lang_str["tag:name"]=array("Name", "Namen");
+$lang_str["tag:name"]=array("Name", "Namen");
 
 // network
 #$lang_str["tag:network"]="Network";
 
 // note
-#$lang_str["tag:note"]="Note";
+$lang_str["tag:note"]="Anmerkung";
 
 // old_name
-#$lang_str["tag:old_name"]="Old Name(s)";
+$lang_str["tag:old_name"]="Alte Bezeichnung(en)";
 
 // opening_hours
-#$lang_str["tag:opening_hours"]="Opening hours";
+$lang_str["tag:opening_hours"]="Öffnungszeiten";
 
 // operator
-#$lang_str["tag:operator"]="Operator";
+$lang_str["tag:operator"]="Betreiber";
 
 // place
-#$lang_str["tag:place"]="Place";
-#$lang_str["tag:place=continent"]=array("Continent", "Continents");
-#$lang_str["tag:place=country"]=array("Country", "Countries");
-#$lang_str["tag:place=state"]=array("State", "States");
-#$lang_str["tag:place=region"]=array("Region", "Regions");
-#$lang_str["tag:place=county"]=array("County", "Counties");
-#$lang_str["tag:place=city"]=array("City", "Cities");
-#$lang_str["tag:place=town"]="Town";
-#$lang_str["tag:place=village"]=array("Village", "Villages");
-#$lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
-#$lang_str["tag:place=locality"]=array("Locality", "Localities");
-#$lang_str["tag:place=island"]=array("Island", "Islands");
+$lang_str["tag:place"]="Ort";
+$lang_str["tag:place=continent"]=array("Kontinent", "Kontinente");
+$lang_str["tag:place=country"]=array("Land", "Länder");
+$lang_str["tag:place=state"]=array("Staat", "Staaten");
+$lang_str["tag:place=region"]=array("Region", "Regionen");
+$lang_str["tag:place=county"]=array("Bezirk", "Bezirke");
+$lang_str["tag:place=city"]=array("Stadt", "Städte");
+$lang_str["tag:place=town"]=array("Kleinstadt", "Kleinstädte");
+$lang_str["tag:place=village"]=array("Dorf", "Dörfer");
+$lang_str["tag:place=suburb"]=array("Vorort", "Vororte");
+$lang_str["tag:place=locality"]=array("Lokalität", "Lokalitäten");
+$lang_str["tag:place=island"]=array("Insel", "Inseln");
 #$lang_str["tag:place=islet"]=array("Islet", "Islets");
 // the following tags are deprecated
 #$lang_str["tag:place=city;population>1000000"]=array("City, > 1 Mio Inhabitants", "Cities, > 1 Mio Inhabitants");
@@ -191,41 +191,41 @@
 #$lang_str["tag:place=town;population>30000"]=array("Town, > 30.000 Inhabitants", "Towns, > 30.000 Inhabitants");
 
 // population
-#$lang_str["tag:population"]="Population";
+$lang_str["tag:population"]="Einwohner";
 $tag_type["population"]=array("count");
 
 // power
-#$lang_str["tag:power"]="Power";
-#$lang_str["tag:power=generator"]="Power Generator";
-#$lang_str["tag:power=line"]="Power Line";
+$lang_str["tag:power"]="Strom";
+$lang_str["tag:power=generator"]="Kraftwerk";
+$lang_str["tag:power=line"]="Stromleitung";
 #$lang_str["tag:power=tower"]="Power Tower";
 #$lang_str["tag:power=pole"]="Power Pole";
 #$lang_str["tag:power=station"]="Power Station";
 #$lang_str["tag:power=sub_station"]="Power Substation";
 
 // power_source
-#$lang_str["tag:power_source"]="Power source";
-#$lang_str["tag:power_source=biofuel"]="Biofuel";
-#$lang_str["tag:power_source=oil"]="Oil";
-#$lang_str["tag:power_source=coal"]="Coal";
-#$lang_str["tag:power_source=gas"]="Gas";
-#$lang_str["tag:power_source=waste"]="Waste";
-#$lang_str["tag:power_source=hydro"]="Hydro";
-#$lang_str["tag:power_source=tidal"]="Tidal";
-#$lang_str["tag:power_source=wave"]="Wave";
-#$lang_str["tag:power_source=geothermal"]="Geothermal";
-#$lang_str["tag:power_source=nuclear"]="Nuclear";
-#$lang_str["tag:power_source=fusion"]="Fusion";
-#$lang_str["tag:power_source=wind"]="Wind";
-#$lang_str["tag:power_source=photovoltaic"]="Photovoltaic";
-#$lang_str["tag:power_source=solar-thermal"]="Solar Thermal";
+$lang_str["tag:power_source"]="Engergiequelle";
+$lang_str["tag:power_source=biofuel"]="Bioethanol";
+$lang_str["tag:power_source=oil"]="Erdöl";
+$lang_str["tag:power_source=coal"]="Kohle";
+$lang_str["tag:power_source=gas"]="Gas";
+$lang_str["tag:power_source=waste"]="Abfall";
+$lang_str["tag:power_source=hydro"]="Wasser";
+$lang_str["tag:power_source=tidal"]="Gezeiten";
+$lang_str["tag:power_source=wave"]="Wellen";
+$lang_str["tag:power_source=geothermal"]="Geothermisch";
+$lang_str["tag:power_source=nuclear"]="Nuklear";
+$lang_str["tag:power_source=fusion"]="Fusion";
+$lang_str["tag:power_source=wind"]="Wind";
+$lang_str["tag:power_source=photovoltaic"]="Photovoltaik";
+$lang_str["tag:power_source=solar-thermal"]="Solarthermisch";
 
 // real_ale
 #$lang_str["tag:real_ale"]="Real ale offered";
 
 // religion
-#$lang_str["tag:religion"]="Religion";
-#$lang_str["tag:religion=christian"]=array("christian");
+$lang_str["tag:religion"]="Religion";
+$lang_str["tag:religion=christian"]=array("christlich");
 
 // route
 #$lang_str["tag:route=train"]="Train";
@@ -283,34 +283,35 @@ $tag_type["population"]=array("count");
 #$lang_str["tag:sport=multi"]="Multi";
 #$lang_str["tag:sport=orienteering"]="Orienteering";
 #$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
-#$lang_str["tag:sport=paragliding"]="Paragliding";
-#$lang_str["tag:sport=pelota"]="Pelota";
+$lang_str["tag:sport=paragliding"]="Paragliding";
+$lang_str["tag:sport=pelota"]="Pelota";
 #$lang_str["tag:sport=racquet"]="Racquet";
 #$lang_str["tag:sport=rowing"]="Rowing";
-#$lang_str["tag:sport=rugby"]="Rugby";
-#$lang_str["tag:sport=shooting"]="Shooting";
-#$lang_str["tag:sport=skating"]="Skating";
-#$lang_str["tag:sport=skateboard"]="Skateboard";
-#$lang_str["tag:sport=skiing"]="Skiing";
-#$lang_str["tag:sport=soccer"]="Soccer";
-#$lang_str["tag:sport=swimming"]="Swimming";
-#$lang_str["tag:sport=table_tennis"]="Table Tennis";
-#$lang_str["tag:sport=team_handball"]="Handball";
-#$lang_str["tag:sport=tennis"]="Tennis";
-#$lang_str["tag:sport=volleyball"]="Volleyball";
+$lang_str["tag:sport=rugby"]="Rugby";
+$lang_str["tag:sport=shooting"]="Schießen";
+$lang_str["tag:sport=skating"]="Skating";
+$lang_str["tag:sport=skateboard"]="Skateboard";
+$lang_str["tag:sport=skiing"]="Ski";
+$lang_str["tag:sport=soccer"]="Fußball";
+$lang_str["tag:sport=swimming"]="Schwimmen";
+$lang_str["tag:sport=table_tennis"]="Tischtennis";
+$lang_str["tag:sport=team_handball"]="Handball";
+$lang_str["tag:sport=tennis"]="Tennis";
+$lang_str["tag:sport=volleyball"]="Volleyball";
 
 // vending
 #$lang_str["tag:vending"]="Vending";
 
 // voltage
-#$lang_str["tag:voltage"]="Voltage";
-$tag_type["voltage"]=array("number", "V", "V");
+$lang_str["tag:voltage"]="Spannung";
+$tag_type["voltage"]=array("Leiter", "V", "V");
 
 // wires
-#$lang_str["tag:wires"]="Wires";
+$lang_str["tag:wires"]="Kabel";
 $tag_type["wires"]=array("count");
 
 // website
-#$lang_str["tag:website"]="Website";
+$lang_str["tag:website"]="Webseite";
 $tag_type["website"]=array("link");
+
 

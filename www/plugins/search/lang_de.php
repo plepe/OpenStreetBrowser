@@ -8,3 +8,4 @@ $lang_str["search_tip"]="z.B. 'Berlin', 'Goethestraße', 'Kneipe in München',..
 $lang_str["search_clear"]="Suchfeld löschen";
 
 
+
