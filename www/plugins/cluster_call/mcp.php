@@ -9,6 +9,8 @@ function cluster_call_tick() {
   global $cluster_call_registered;
   global $cluster_call_last_clean;
   global $root_path;
+  global $db_central;
+
   // $t=microtime(true);
   $todo=array();
   $listed=array();
@@ -45,7 +47,7 @@ function cluster_call_tick() {
   // After some time delete entries in cluster_call
   if((!isset($cluster_call_last_clean))||($cluster_call_last_clean+60<time())) {
     $cluster_call_last_clean=time();
-    sql_query("delete from cluster_call where now<now()-interval '6 hours'");
+    sql_query("delete from cluster_call where now<now()-interval '6 hours'", $db_central);
 
     print "Clean cluster calls\n";
   }
@@ -60,10 +62,11 @@ function cluster_call_register($event, $fun) {
 }
 
 function cluster_call($event, $params=0) {
+  global $db_central;
   $event=postgre_escape($event);
   $params=postgre_escape(serialize($params));
 
-  sql_query("select cluster_call($event, $params);");
+  sql_query("select cluster_call($event, $params);", $db_central);
 }
 
 function cluster_call_start() {
