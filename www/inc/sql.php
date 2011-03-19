@@ -1,14 +1,36 @@
 <?
-function sql_query($qry) {
-  global $sql_debug;
+function sql_query($qry, &$conn=0) {
+  global $db;
 
-  if($sql_debug)
-    debug($qry);
+  // If no database connection is supplied use default
+  if(!$conn)
+    $conn=&$db;
 
-  $res=pg_query($qry);
+  if(!$conn) {
+    print "NO DATABASE\n";
+    exit;
+  }
 
-  if(($sql_debug)&&($res===false))
-    debug(pg_last_error());
+  // If database connection has not been opened yet, open it
+  if(!isset($conn['connection'])) {
+    $conn['connection']=
+      pg_connect("dbname={$conn['name']} user={$conn['user']} password={$conn['passwd']} host={$conn['host']}");
+
+    // Set a title for debugging
+    if(!isset($conn['title']))
+      $conn['title']=print_r($conn['connection'], 1);
+  }
+
+  // Do we want debug information?
+  if(isset($conn['debug'])&&($conn['debug']))
+    debug("CONN {$conn['title']}: ".$qry);
+
+  // Query
+  $res=pg_query($conn['connection'], $qry);
+
+  // If we want debug information AND we have an error, tell about it
+  if(isset($conn['debug'])&&($conn['debug'])&&($res===false))
+    debug("CONN {$conn['title']}: ".pg_last_error());
 
   return $res;
 }
