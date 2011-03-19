@@ -69,16 +69,8 @@ $lang_str["main:donate"]="Sponzorovat";
 #$lang_str["main:licence"]="Map Data: cc-by-sa OpenStreetMap contributors | OSB: Stephan Plepelits and contributors"; 
 #$lang_str["main:permalink"]="Permalink";
 
-#$lang_str["help:no_object"]="
+#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
-Object not found
-
-No object with the ID "%s" could be found. This can be due to one (or more) of the following reasons:
-The ID is wrong.
-The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.
-The object is outside of the supported area.
-The link you were following was old and the object has been deleted from OpenStreetMap.
-";
 $lang_str["start:choose"]=array( "Zvol pohled na mapu" ); 
 $lang_str["start:geolocation"]=array( "získat souřadnice" ); 
 $lang_str["start:lastview"]=array( "minulý pohled" ); 
@@ -94,7 +86,7 @@ $lang_str["start:edit"]=array( "editovat..." );
 #$lang_str["options:autozoom:stay"]=array( "Never change viewport automatically" );
 
 $lang_str["options:language_support"]=array( "Jazyková podpora" ); 
-$lang_str["help:language_support"]=array( "Touto volbou můžeš vybrat své preferované jazyky. První volba změní jazyk uživatelského rozhraní. Druhá volba změní jazyk dat. Popis mnoha geografických objektů byl přeložen do různých jazyků. Jestliže překlad není dostupný nebo byl vybrán "místní jazyk" , popis bude zobrazen v hlavním jazyku objektu." ); 
+$lang_str["help:language_support"]=array( "Touto volbou můžeš vybrat své preferované jazyky. První volba změní jazyk uživatelského rozhraní. Druhá volba změní jazyk dat. Popis mnoha geografických objektů byl přeložen do různých jazyků. Jestliže překlad není dostupný nebo byl vybrán \"místní jazyk\" , popis bude zobrazen v hlavním jazyku objektu." ); 
 $lang_str["options:ui_lang"]=array( "Jazyk rozhraní" ); 
 $lang_str["options:data_lang"]=array( "Jazyk dat" ); 
 $lang_str["lang:"]=array( "Místní jazyk" );
