@@ -120,7 +120,7 @@ $lang_str["basemap:cyclemap"]="CycleMap";
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="German";
 $lang_str["lang:bg"]="Bulgarian";
-$lang_str["lang:cz"]="Czech";
+$lang_str["lang:cs"]="Czech";
 $lang_str["lang:en"]="English";
 $lang_str["lang:es"]="Spanish";
 $lang_str["lang:it"]="Italian";
