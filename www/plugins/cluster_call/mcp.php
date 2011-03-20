@@ -36,6 +36,11 @@ function cluster_call_tick() {
 	  foreach($cluster_call_registered[$do['event']] as $h) {
 	    $h($do['parameters'], $now, $do['event']);
 	  }
+
+	  $p=postgre_escape($do['parameters']);
+	  $n=postgre_escape($now);
+	  $e=postgre_escape($do['event']);
+	  $res=sql_query("select _cluster_call_local($p, $n, $e)");
     }
   }
 
