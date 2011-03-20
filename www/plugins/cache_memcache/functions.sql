@@ -157,3 +157,10 @@ BEGIN
   perform memcache_delete('depend|' || osm_id);
 END;
 $$ LANGUAGE plpgsql volatile;
+
+CREATE OR REPLACE FUNCTION cache_clean() RETURNS bool AS $$
+DECLARE
+BEGIN
+  return true;
+END;
+$$ LANGUAGE plpgsql volatile;
