@@ -1,4 +1,5 @@
 CREATE OR REPLACE FUNCTION way_get_geom(bigint) RETURNS geometry AS $$
+#variable_conflict use_variable
 DECLARE
   id alias for $1;
   ret text;
@@ -27,6 +28,7 @@ END;
 $$ LANGUAGE plpgsql volatile;
 
 CREATE OR REPLACE FUNCTION rel_get_geom(bigint, int) RETURNS geometry AS $$
+#variable_conflict use_variable
 DECLARE
   id alias for $1;
   rec alias for $2;
@@ -63,6 +65,7 @@ END;
 $$ LANGUAGE plpgsql stable;
 
 CREATE OR REPLACE FUNCTION node_assemble_tags(bigint) RETURNS hstore AS $$
+#variable_conflict use_variable
 DECLARE
   id alias for $1;
 BEGIN
@@ -77,6 +80,7 @@ END;
 $$ LANGUAGE plpgsql stable;
 
 CREATE OR REPLACE FUNCTION way_assemble_tags(bigint) RETURNS hstore AS $$
+#variable_conflict use_variable
 DECLARE
   id alias for $1;
 BEGIN
@@ -91,6 +95,7 @@ END;
 $$ LANGUAGE plpgsql stable;
 
 CREATE OR REPLACE FUNCTION rel_assemble_tags(bigint) RETURNS hstore AS $$
+#variable_conflict use_variable
 DECLARE
   id alias for $1;
 BEGIN
@@ -105,6 +110,7 @@ END;
 $$ LANGUAGE plpgsql stable;
 
 CREATE OR REPLACE FUNCTION assemble_point(bigint) RETURNS boolean AS $$
+#variable_conflict use_variable
 DECLARE
   id alias for $1;
   geom geometry;
@@ -141,6 +147,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION assemble_line(bigint) RETURNS boolean AS $$
+#variable_conflict use_variable
 DECLARE
   id alias for $1;
   geom geometry;
@@ -176,6 +183,7 @@ $$ LANGUAGE plpgsql;
 
 
 CREATE OR REPLACE FUNCTION assemble_rel(bigint) RETURNS boolean AS $$
+#variable_conflict use_variable
 DECLARE
   id alias for $1;
   geom geometry;
@@ -221,6 +229,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION assemble_polygon(bigint) RETURNS boolean AS $$
+#variable_conflict use_variable
 DECLARE
   id alias for $1;
   geom geometry;
@@ -260,6 +269,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION assemble_multipolygon(bigint) RETURNS boolean AS $$
+#variable_conflict use_variable
 DECLARE
   id alias for $1;
   geom geometry;

@@ -133,17 +133,21 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql volatile;
 
-CREATE OR REPLACE FUNCTION cache_remove(text) RETURNS void AS $$
+CREATE OR REPLACE FUNCTION cache_remove(text) RETURNS bool AS $$
 DECLARE
   osm_id   	alias for $1;
   cur_depend    text[];
   cur           text[];
 BEGIN
+  if osm_id is null then
+    return false;
+  end if;
+
   cur_depend:=cast(memcache_get('depend|' || osm_id) as text[]);
-  -- raise notice 'cur depend: %', cur_depend;
+  -- raise notice 'remove % (cur depend: %)', osm_id, cur_depend;
 
   if cur_depend is null then
-    return;
+    return false;
   end if;
 
   for i in 2..array_upper(cur_depend, 1) loop
@@ -155,6 +159,8 @@ BEGIN
   end loop;
 
   perform memcache_delete('depend|' || osm_id);
+
+  return true;
 END;
 $$ LANGUAGE plpgsql volatile;
 

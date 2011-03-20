@@ -2,7 +2,8 @@
 <?
 include "conf.php";
 include "inc/sql.php";
-$sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
+include "inc/hooks.php";
+include "inc/debug.php";
 
 function read_state() {
   global $root_path;
@@ -21,8 +22,7 @@ function read_state() {
 }
 
 function change_next() {
-  global $db_name;
-  global $db_passwd;
+  global $db_central;
   global $root_path;
   $working_dir="$root_path/data/updates";
 
@@ -47,7 +47,7 @@ function change_next() {
     1=>array("pipe", "w"),
     2=>array("pipe", "w"));
 
-  $command="osmosis --read-replication-interval workingDirectory=$working_dir --simplify-change --write-pgsql-change database=$db_name password=$db_passwd";
+  $command="osmosis --read-replication-interval workingDirectory=$working_dir --simplify-change --write-pgsql-change database={$db_central['name']} password={$db_central['passwd']}";
 
   print "starting osmosis ".Date("r")."\n";
   $p=proc_open($command, $descriptors, $pipes, null, array("JAVACMD_OPTIONS"=>"-Xmx512M"));
