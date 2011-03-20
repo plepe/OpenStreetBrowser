@@ -7,7 +7,6 @@ function register_hook($d1, $d2) {
 }
 
 include_once "/home/osm/src/inc/sql.php";
-$sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
 
 include_once "$root_path/www/plugins/state_info/code.php";
 
