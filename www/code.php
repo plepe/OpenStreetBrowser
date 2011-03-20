@@ -1,7 +1,6 @@
 <?
 $load_xml=array();
 require_once("../conf.php");
-$sql=pg_connect("dbname=$db_name user=$db_user password=$db_passwd host=$db_host");
 pg_query("SET enable_seqscan='off'");
 require_once("inc/list.php");
 

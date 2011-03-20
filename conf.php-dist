@@ -2,16 +2,26 @@
 $importance_levels=array("international"=>0, "national"=>0, "region"=>7, "urban"=>12, "suburban"=>13, "local"=>13);
 $route_levels=array("train", "rail", "railway", "subway", "light_rail", "ferry", "tram", "trolley", "bus", "minibus");
 $route_types=array("train"=>"Train", "rail"=>"Railway", "railway"=>"Railway", "subway"=>"Subway", "light_rail"=>"Light Rail", "ferry"=>"Ferry", "tram"=>"Tram", "trolley"=>"Trolley", "bus"=>"Bus", "minibus"=>"Minibus");
-$db_name="gis";
-$db_user="www";
-$db_passwd="PASSWORD";
-$db_host="localhost";
+
+// Local read only database
+$db['name']="gis";
+$db['user']="www";
+$db['passwd']="PASSWORD";
+$db['host']="localhost";
+$db['debug']=false;
+
+// Central writeable database
+$db_central['name']="gis";
+$db_central['user']="www";
+$db_central['passwd']="PASSWORD";
+$db_central['host']="localhost";
+$db_central['debug']=false;
+
 $SRID=900913;
 
 $type_list=array("w"=>"way", "n"=>"node", "r"=>"relation");
 $type_list_short=array("w"=>"way", "n"=>"node", "r"=>"rel");
 $type_list_plural=array("w"=>"ways", "n"=>"nodes", "r"=>"rels");
-$sql_debug=false;
 
 $wiki_stylesheet="http://wiki.openstreetmap.org/index.php?title=OpenStreetBrowser/Stylesheet&action=raw";
 $wiki_img="http://wiki.openstreetmap.org/wiki/Image:";
@@ -94,3 +104,4 @@ $basemaps=array(
 // classify_hmatch - Match objects using a ruleset (woot! there's docu in man.txt)
 // cache_memcache - A cache using the memcached
 // iplocation - Locate 'my position' using the iplocationtools-service
+// cluster_call - Send events through the database to db-clients
