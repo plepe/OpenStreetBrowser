@@ -1,5 +1,6 @@
 --drop table if exists save_actions;
 --create table save_actions as (select now(), * from actions);
+-- create index save_actions_now on save_actions(now);
 
 -- use this to play back save_actions into actions:
 -- insert into actions (select data_type, (CASE WHEN oneof_is(to_textarray(action), 'D') THEN 'D' WHEN oneof_is(to_textarray(action), 'C') THEN 'C' ELSE 'M' END), id from save_actions group by data_type, id);
