@@ -1,4 +1,5 @@
 <?
+$design_hidden=true;
 include "../conf.php";
 include "inc/hooks.php";
 include "inc/lock.php";
@@ -10,8 +11,10 @@ include "inc/categories.php";
 include "inc/process_category.php";
 include "inc/functions.php";
 include "inc/css.php";
+include "inc/plugins.php";
 include "../src/wiki_stuff.php";
 include "inc/user.php";
+plugins_init();
 sql_query("SET enable_seqscan='off'");
 
 user_check_auth();
