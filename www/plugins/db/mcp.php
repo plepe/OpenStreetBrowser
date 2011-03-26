@@ -10,10 +10,15 @@ function db_init() {
   }
 
   foreach($plugins as $plugin) {
+    // get current list of tags (incl. currently loaded updates)
+    if(!isset($plugins_db[$plugin]))
+      $plugin_tags=new tags();
+    else
+      $plugin_tags=new tags(parse_hstore($plugins_db[$plugin]['osm_tags']));
+
     // build list of all updates -> array("20101010_1"=>array("sql"))
     // file_name->extensions
     $updates=array();
-    $plugin_tags=new tags(parse_hstore($plugins_db[$plugin]['osm_tags']));
     if(file_exists("$plugins_dir/$plugin/update")) {
       $d=opendir("$plugins_dir/$plugin/update");
       while($f=readdir($d)) {
@@ -29,13 +34,13 @@ function db_init() {
 
     // always reload functions
     if(file_exists("$plugins_dir/$plugin/functions.sql")) {
-      print "Loading $plugin/functions.sql\n";
+      print "Plugin '$plugin', (re-)loading functions.sql\n";
       sql_query(file_get_contents("$plugins_dir/$plugin/functions.sql"));
     }
 
     if(file_exists("$plugins_dir/$plugin/db.sql")) {
       // If plugin has never been loaded before, load db.sql
-      if(!$plugins_db[$plugin]) {
+      if(!isset($plugins_db[$plugin])) {
 	print "Plugin '$plugin', initializing db\n";
 	sql_query(file_get_contents("$plugins_dir/$plugin/db.sql"));
       }
