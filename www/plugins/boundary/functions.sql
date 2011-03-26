@@ -20,7 +20,7 @@ BEGIN
    
   insert into osm_boundary
     values (
-      'way_'||id,
+      'boundary_'||id,
       tags,
       min_admin_level,
       ST_Transform(geom, 900913)
@@ -39,7 +39,7 @@ BEGIN
      union
      select member_id from actions join relation_members rm on rm.relation_id=actions.id and member_type='W' where actions.data_type='R'
      ) actions 
-  where osm_id='way_'||id;
+  where osm_id='boundary_'||id;
 
   GET DIAGNOSTICS num_rows := ROW_COUNT;
   raise notice 'deleted from osm_boundary (%)', num_rows;
