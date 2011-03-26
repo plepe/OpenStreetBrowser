@@ -282,7 +282,7 @@ begin
 
   for i in array_lower(src, 1)..array_upper(src, 1) loop
     keys:=akeys(src[i]);
-    if keys is not null then
+    if keys is not null and array_lower(keys, 1) is not null then
       for j in array_lower(keys, 1)..array_upper(keys, 1) loop
 	t:=collect->keys[j];
 	if(t is null) then
@@ -297,6 +297,10 @@ begin
   end loop;
 
   keys:=akeys(collect);
+  if array_lower(keys, 1) is null then
+    return ''::hstore;
+  end if;
+
   for j in array_lower(keys, 1)..array_upper(keys, 1) loop
       collect:=collect|| (keys[j]=>
         array_to_string(array_unique(split_semicolon(collect->keys[j])), ';'));
