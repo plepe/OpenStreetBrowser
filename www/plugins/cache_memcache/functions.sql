@@ -163,3 +163,10 @@ BEGIN
   return true;
 END;
 $$ LANGUAGE plpgsql volatile;
+
+CREATE OR REPLACE FUNCTION cache_clean() RETURNS bool AS $$
+DECLARE
+BEGIN
+  return true;
+END;
+$$ LANGUAGE plpgsql volatile;
