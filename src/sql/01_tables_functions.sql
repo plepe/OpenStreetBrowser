@@ -255,6 +255,8 @@ BEGIN
     return false;
   end if;
 
+  -- raise notice 'assemble_polygon(%)', id;
+
   -- okay, insert
   insert into osm_polygon
     values (
@@ -278,7 +280,6 @@ DECLARE
   outer_members bigint[];
   members record;
 BEGIN
-  raise notice 'assemble_multipolygon(%)', id;
 
   -- get list of outer members
   outer_members:=(select to_intarray(member_id) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id);
@@ -286,13 +287,22 @@ BEGIN
   -- tags
   tags:=rel_assemble_tags(id);
 
+  -- generate multipolygon geometry
+  geom:=build_multipolygon(
+    (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id),
+    (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='inner' group by relation_id));
+
+  -- of geometry is not valid, then return false
+  if geom is null or ST_IsEmpty(geom) then
+    return false;
+  end if;
+
   -- if there's only one outer polygon, check if multipolygon has no
   -- (relevant) tags. Then we can import tags and delete outer way from
   -- osm_polygon
   if(array_upper(outer_members, 1)=1) then
-    -- delete not relevant tags ('created'_by has already been removed)
-    -- Postgres 9.0: tmp:=delete(tags, Array['type', 'source']);
-    tmp:=delete(delete(tags, 'type'), 'source');
+    -- delete not relevant tags ('created_by' has already been removed)
+    tmp:=delete(tags, Array['type', 'source']);
 
     -- in case of undefined polygon merge tags and remove outer polygon
     if array_upper(akeys(tmp), 1)=0 then
@@ -307,18 +317,7 @@ BEGIN
     return false;
   end if;
 
-  -- generate multipolygon geometry
-  geom:=build_multipolygon(
-    (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id),
-    (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='inner' group by relation_id));
-
-  if geom is null then
-    return false;
-  end if;
-
-  if ST_IsEmpty(geom) then
-    return false;
-  end if;
+  -- raise notice 'assemble_multipolygon(%)', id;
 
   -- get members
   select to_textarray((CASE WHEN member_type='N' THEN 'node_' WHEN member_type='W' THEN 'way_' WHEN member_type='R' then 'rel_' ELSE 'error_' END) || member_id) as ids, to_textarray(member_role) as roles into members from relation_members where relation_id=id group by relation_id;
