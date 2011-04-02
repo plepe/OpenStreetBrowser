@@ -120,6 +120,15 @@ class tags {
     }
   }
 
+  function writeDOM($parent, $dom) {
+    foreach($this->data as $key=>$value) {
+      $tag=$dom->createElement("tag");
+      $tag->setAttribute("k", $key);
+      $tag->setAttribute("v", $value);
+      $parent->appendChild($tag);
+    }
+  }
+
   // match_desc:
   // ( "or" => arr(arr("is", "key", "value")))
 
