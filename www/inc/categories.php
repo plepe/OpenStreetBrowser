@@ -502,8 +502,6 @@ function build_mapnik_style($id, $data, $global_tags) {
 		"line_text" =>array("normal"),
                 "line_icon"=>array("normal"));
 
-  sql_query("delete from categories_def where category_id='$id'");
-
   $dom=new DOMDocument();
   $map=$dom->createElement("Map");
   $map->setAttribute("srs", "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over");
@@ -556,10 +554,6 @@ function build_mapnik_style($id, $data, $global_tags) {
 	    $columns[]=$def['columns'];
 	  }
 	}
-
-        sql_query("insert into categories_def values (".
-		  postgre_escape($rule_id).", ".postgre_escape($id).", ".
-		  array_to_hstore($tags->data()).");");
       }
 
       print_r($columns);
@@ -709,7 +703,75 @@ function category_check_state() {
 //     'branch'=>'id of conflicting branch'
 //     'id'=>    'id of file'
 //   )
+function _category_save($id, $content, $param=array()) {
+  global $db_central;
+  // Create a sql-statement to import whole category in one transaction
+  $sql="begin;";
+
+  // Load file into $file
+  $file=new DOMDocument();
+  if(!($file->loadXML($content))) {
+    return array("status"=>"Could not load data");
+  }
+
+  // Calculate a new version ID
+  $version=uniqid();
+
+  // read main tags
+  $tags=new tags();
+  $root=$file->firstChild;
+  $tags->readDOM($root);
+  
+  // write main tags to db
+  $sql.="insert into category values (".
+    postgre_escape($id).", ".
+    array_to_hstore($tags->data()).", ".
+    "'$version');";
+
+  // process rules
+  $current=$root->firstChild;
+  while($current) {
+    if($current->nodeName=="rule") {
+      // read rule tags
+      $rule_id=$current->getAttribute("id");
+      $tags=new tags();
+      $tags->readDOM($current);
+
+      // write rule tags to db
+      $sql.="insert into category_rule values (".
+	postgre_escape($id).", ".
+	postgre_escape($rule_id).", ".
+	array_to_hstore($tags->data()).", ".
+	"'$version');";
+    }
+
+    $current=$current->nextSibling;
+  }
+
+  // set current category version
+  $sql.="delete from category_current ".
+    "where category_id=".postgre_escape($id).";";
+
+  $sql.="insert into category_current values (".
+    postgre_escape($id).", ".
+    "'$version', now());";
+
+  // inform other cluster servers of new category
+  if(plugins_loaded("cluster_call")) {
+    $sql.="select cluster_call('category_save', ".
+      postgre_escape($id).");";
+  }
+
+  // we are done.
+  $sql.="commit;";
+  sql_query($sql, $db_central);
+  return array("status"=>true, "id"=>$id, "version"=>$version);
+}
+
+
+// MAYBE deprecated function
 function category_save($id, $content, $param=array()) {
+  _category_save($id, $content, $param);
   global $lists_dir;
   global $current_user;
 
