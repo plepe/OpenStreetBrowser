@@ -703,7 +703,7 @@ function category_check_state() {
 //     'branch'=>'id of conflicting branch'
 //     'id'=>    'id of file'
 //   )
-function _category_save($id, $content, $param=array()) {
+function category_save($id, $content, $param=array()) {
   global $db_central;
   // Create a sql-statement to import whole category in one transaction
   $sql="begin;";
@@ -721,12 +721,16 @@ function _category_save($id, $content, $param=array()) {
   $tags=new tags();
   $root=$file->firstChild;
   $tags->readDOM($root);
+
+  // and old version
+  $old_version=$root->getAttribute("version");
   
   // write main tags to db
   $sql.="insert into category values (".
     postgre_escape($id).", ".
     array_to_hstore($tags->data()).", ".
-    "'$version');";
+    "'$version', ".
+    "Array['$old_version']);";
 
   // process rules
   $current=$root->firstChild;
@@ -770,8 +774,7 @@ function _category_save($id, $content, $param=array()) {
 
 
 // MAYBE deprecated function
-function category_save($id, $content, $param=array()) {
-  _category_save($id, $content, $param);
+function old_category_save($id, $content, $param=array()) {
   global $lists_dir;
   global $current_user;
 
@@ -882,8 +885,23 @@ function category_save($id, $content, $param=array()) {
 // $lang      language
 //
 // return:
-// array('category_id'=>'name', ...)
+// array('category_id'=>root tags, ...)
 function category_list($lang="en") {
+  $ret=array();
+
+  // get list of current categories
+  $res=sql_query("select * from category_current left join category on category_current.category_id=category.category_id and category_current.version=category.version");
+  while($elem=pg_fetch_assoc($res)) {
+    $tags=new tags(parse_hstore($elem['tags']));
+    if($tags->get("hide")!="yes") {
+      $ret[$elem['category_id']]=$tags;
+    }
+  }
+
+  return $ret;
+}
+
+function old_category_list($lang="en") {
   global $lists_dir;
 
   if($state=category_check_state()!==true) {
@@ -901,9 +919,9 @@ function category_list($lang="en") {
       $tags=new tags();
       $tags->readDOM($x->firstChild);
 
-      if($tags->get("hide")!="yes") {
+      //if($tags->get("hide")!="yes") {
 	$ret[$m[1]]=$tags;
-      }
+      //}
     }
   }
   closedir($d);
@@ -925,6 +943,61 @@ function category_list($lang="en") {
 // content as text
 // array('status')  on error
 function category_load($id, $param=array()) {
+  // Postgre-Escape id
+  $pg_id=postgre_escape($id);
+
+  // if no version supplied, return current version
+  if(isset($param['version'])) {
+    $version=$param['version'];
+  }
+  else {
+    $res=sql_query("select * from category_current where category_id=$pg_id");
+    if(!$elem=pg_fetch_assoc($res)) {
+      return array('status'=>"'$id': No such category");
+    }
+    else {
+      $version=$elem['version'];
+    }
+  }
+
+  // Postgre-Escape version
+  $pg_version=postgre_escape($version);
+
+  // Get root of category
+  $res=sql_query("select * from category where category_id=$pg_id and version=$pg_version");
+  if(!$elem=pg_fetch_assoc($res)) {
+    return array('status'=>"'$id/$version': No such category/version");
+  }
+
+  // Prepare returning XML
+  $dom=new DOMDocument();
+  $root=$dom->createElement("category");
+  $dom->appendChild($root);
+  $root->setAttribute("id", $id);
+  $root->setAttribute("version", $version);
+
+  // process Tags
+  $tags=new tags(parse_hstore($elem['tags']));
+  $tags->writeDOM($root, $dom);
+
+  // Now process the rules
+  $res=sql_query("select * from category_rule where category_id=$pg_id and version=$pg_version");
+  while($elem=pg_fetch_assoc($res)) {
+    // base
+    $rule=$dom->createElement("rule");
+    $rule->setAttribute("id", $elem['rule_id']);
+    $root->appendChild($rule);
+
+    // tags
+    $tags=new tags(parse_hstore($elem['tags']));
+    $tags->writeDOM($rule, $dom);
+  }
+
+  // we are done!
+  return $dom->saveXML();
+}
+
+function old_category_load($id, $param=array()) {
   global $lists_dir;
 
   if($state=category_check_state()!==true) {
