@@ -765,6 +765,9 @@ function category_save($id, $content, $param=array()) {
     $sql.="select cluster_call('category_save', ".
       postgre_escape($id).");";
   }
+  else {
+    categories_has_saved($id);
+  }
 
   // we are done.
   $sql.="commit;";
@@ -1082,10 +1085,23 @@ function category_history($id, $param=array()) {
   return $ret;
 }
 
+function categories_has_saved($id) {
+  print "Detect saving of $id -> compile\n";
+  $cat=new category($id);
+  $cat->compile();
+}
+
 function categories_init() {
   global $default_categories;
   if(isset($default_categories))
     html_export_var(array("default_categories"=>$default_categories));
 }
 
+function categories_mcp_start() {
+  if(plugins_loaded("cluster_call")) {
+    cluster_call_register("category_save", "categories_has_saved");
+  }
+}
+
 register_hook("init", "categories_init");
+register_hook("mcp_start", "categories_mcp_start");
