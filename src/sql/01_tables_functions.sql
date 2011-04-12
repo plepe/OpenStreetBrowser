@@ -235,11 +235,13 @@ DECLARE
   geom geometry;
   tags hstore;
 BEGIN
+  --raise notice 'assemble_polygon(%) start', id;
   -- get tags
   tags:=way_assemble_tags(id);
 
   -- if no tags, return
   if array_upper(akeys(tags), 1) is null then
+    --raise notice 'assemble_polygon(%) fail tags', id;
     return false;
   end if;
 
@@ -247,11 +249,8 @@ BEGIN
   geom:=way_get_geom(id);
 
   -- check geometry
-  if geom is null then
-    return false;
-  end if;
-
-  if (not IsClosed(geom)) or NPoints(geom)<=3 then
+  if geom is null or (not IsClosed(geom)) or (NPoints(geom)<=3) then
+    --raise notice 'assemble_polygon(%) fail geo', id;
     return false;
   end if;
 
