@@ -1,47 +1,29 @@
-drop table if exists osm_all_extract;
-create table osm_all_extract (
+drop table if exists osm_point_extract;
+create table osm_point_extract (
   osm_id		text		not null,
   osm_tags		hstore		null,
   primary key(osm_id)
 );
-select AddGeometryColumn('osm_all_extract', 'osm_way', 900913, 'GEOMETRY', 2);
-create index osm_all_extract_way_tags on osm_all_extract using gist(osm_way, osm_tags);
+select AddGeometryColumn('osm_point_extract', 'osm_way', 900913, 'GEOMETRY', 2);
 
-delete from classify_hmatch where type='extract';
-insert into classify_hmatch values ('extract', 'highway=>motorway'::hstore, null, '#extract=>roads'::hstore, 0);
-insert into classify_hmatch values ('extract', 'highway=>motorway_link'::hstore, null, '#extract=>roads'::hstore, 0);
-insert into classify_hmatch values ('extract', 'highway=>trunk'::hstore, null, '#extract=>roads'::hstore, 0);
-insert into classify_hmatch values ('extract', 'highway=>trunk_link'::hstore, null, '#extract=>roads'::hstore, 0);
-insert into classify_hmatch values ('extract', 'highway=>primary'::hstore, null, '#extract=>roads'::hstore, 0);
-insert into classify_hmatch values ('extract', 'highway=>primary_link'::hstore, null, '#extract=>roads'::hstore, 0);
-insert into classify_hmatch values ('extract', 'highway=>secondary'::hstore, null, '#extract=>roads'::hstore, 0);
-insert into classify_hmatch values ('extract', 'highway=>tertiary'::hstore, null, '#extract=>roads'::hstore, 0);
+drop table if exists osm_line_extract;
+create table osm_line_extract (
+  osm_id		text		not null,
+  osm_tags		hstore		null,
+  primary key(osm_id)
+);
+select AddGeometryColumn('osm_line_extract', 'osm_way', 900913, 'GEOMETRY', 2);
 
-
-CREATE OR REPLACE FUNCTION extract_init() RETURNS boolean AS $$
-DECLARE
-  num_rows  int;
-BEGIN
-  raise notice '%', 'insert into osm_all_extract ( '
-    || 'select * '
-    || 'from ( '
-    || '  select '
-    || '    osm_id, '
-    || '    classify_hmatch(osm_id, osm_tags, osm_way, Array[''extract'']) as osm_tags, '
-    || '    osm_way '
-    || '  from '
-    || '    osm_all '
-    || '  where '
-    || classify_hmatch_sqlwhere('extract')
-    || ') x '
-    || 'where '
-    || '  osm_tags ? ''#extract'');';
-
-  GET DIAGNOSTICS num_rows = ROW_COUNT;
-  raise notice 'inserted to osm_all_extract (%)', num_rows;
-
-  return true;
-END;
-$$ language 'plpgsql';
+drop table if exists osm_polygon_extract;
+create table osm_polygon_extract (
+  osm_id		text		not null,
+  osm_tags		hstore		null,
+  primary key(osm_id)
+);
+select AddGeometryColumn('osm_polygon_extract', 'osm_way', 900913, 'GEOMETRY', 2);
 
 select extract_init();
+
+create index concurrently osm_extract_point_way_tags on osm_point_extract using gist(osm_way, osm_tags);
+create index concurrently osm_extract_line_way_tags on osm_line_extract using gist(osm_way, osm_tags);
+create index concurrently osm_extract_polygon_way_tags on osm_polygon_extract using gist(osm_way, osm_tags);
