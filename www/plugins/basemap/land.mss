@@ -10,6 +10,20 @@ Map {
 .builtup[zoom<11] {
   polygon-fill: #ddd;
 }
+.landuse_extract[landuse=water][zoom>=5][zoom<10],
+.landuse[landuse=water][zoom>=10] {
+  polygon-fill: #7eb9e3;
+}
+.landuse[landuse=water][zoom>=14] {
+  line-color: #7eb9e3;
+  line-width: 1;
+  line-join: round;
+  line-cap: round;
+}
+.landuse_extract[landuse=land][zoom>=5][zoom<10],
+.landuse[landuse=land][zoom>=10] {
+  polygon-fill: #f2efe9;
+}
 .landuse_extract[landuse=park][zoom>=5][zoom<10],
 .landuse[landuse=park][zoom>=10] {
   polygon-fill: #9ce69c;

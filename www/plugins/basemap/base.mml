@@ -3,7 +3,6 @@
 <Map srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
    <Stylesheet src="roads.mss" />
    <Stylesheet src="land.mss" />
-   <Stylesheet src="water.mss" />
    <Stylesheet src="road_features.mss" />
    <Stylesheet src="amenities.mss" />
    <Stylesheet src="rot_feature.mss" />
@@ -165,31 +164,6 @@
 	    where osm_way &amp;&amp; !bbox!
 	    offset 0) as t1
 	    order by cast(osm_tags->'#highway_level' as int) asc
-	) as t2
-      </Parameter>
-      <Parameter name="estimate_extent">false</Parameter>
-      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
-    </Datasource>
-  </Layer>
-  <Layer class="waterarea" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
-    <Datasource>
-      <Parameter name="type">postgis</Parameter>
-      <Parameter name="dbname">%DB_NAME%</Parameter>
-      <Parameter name="geometry_field">osm_way</Parameter>
-      <Parameter name="srid">900913</Parameter>
-      <Parameter name="table">
-     	(select
-	  osm_way,
-	  osm_tags->'name' as "name",
-	  osm_tags->'#water_area' as "landuse"
-	from (select
-	    osm_way,
-	    classify_hmatch(osm_id, osm_tags, osm_way, 
-	      Array['basemap_water_area']) as "osm_tags"
-	    from osm_polygon_water
-	    where osm_way &amp;&amp; !bbox!
-	    offset 0) as t1
-	    order by ST_Area(osm_way) desc
 	) as t2
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>

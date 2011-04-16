@@ -1,23 +1,3 @@
-.waterarea[landuse=dock][zoom>=10],
-.waterarea[landuse=reservoir][zoom>=10],
-.waterarea[landuse=basin][zoom>=10],
-.waterarea[landuse=riverbank][zoom>=10],
-.waterarea[landuse=water][zoom>=5] {
-  polygon-fill: #7eb9e3;
-}
-.waterarea[landuse=dock][zoom>=14],
-.waterarea[landuse=reservoir][zoom>=14],
-.waterarea[landuse=basin][zoom>=14],
-.waterarea[landuse=riverbank][zoom>=14],
-.waterarea[landuse=water][zoom>=14] {
-  line-color: #7eb9e3;
-  line-width: 1;
-  line-join: round;
-  line-cap: round;
-}
-.waterarea[landuse=land][zoom>=10] {
-  polygon-fill: #f2efe9;
-}
 .water[waterway=river],
 .water[waterway=stream],
 .water[waterway=canal] {
