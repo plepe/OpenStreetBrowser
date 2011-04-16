@@ -13,6 +13,7 @@
 
 CREATE OR REPLACE FUNCTION osmosisUpdate() RETURNS void AS $$
 DECLARE
+  num_rows  int;
 BEGIN
   raise notice 'called osmosisUpdate()';
 
@@ -107,70 +108,82 @@ BEGIN
   -- delete changed/deleted points
   delete from osm_point using actions where osm_id='node_'||actions.id and data_type='N';
 
-  raise notice 'deleted from osm_point';
+  GET DIAGNOSTICS num_rows = ROW_COUNT;
+  raise notice 'deleted from osm_point (%)', num_rows;
 
   -- delete changed/deleted lines
   delete from osm_line using
     (select id from actions where data_type='W') actions 
   where osm_id='way_'||id;
 
-  raise notice 'deleted from osm_line';
+  GET DIAGNOSTICS num_rows = ROW_COUNT;
+  raise notice 'deleted from osm_line (%)', num_rows;
 
   -- delete changed/deleted rels
   delete from osm_rel using actions where osm_id='rel_'||actions.id and data_type='R';
 
-  raise notice 'deleted from osm_rel';
+  GET DIAGNOSTICS num_rows = ROW_COUNT;
+  raise notice 'deleted from osm_rel (%)', num_rows;
 
   -- delete changed/deleted polygons
   delete from osm_polygon using
     (select id from actions where data_type='W') actions
   where osm_id='way_'||id;
 
-  raise notice 'deleted from osm_polygon 1';
+  GET DIAGNOSTICS num_rows = ROW_COUNT;
+  raise notice 'deleted from osm_polygon (ways) (%)', num_rows;
 
   delete from osm_polygon using
     (select id from actions where data_type='R') actions
   where osm_id='rel_'||id;
 
-  raise notice 'deleted from osm_polygon 2';
+  GET DIAGNOSTICS num_rows = ROW_COUNT;
+  raise notice 'deleted from osm_polygon (multipolygons) (%)', num_rows;
 
   perform call_hooks('osmosis_update_delete');
 
   -- insert changed/created points
-  perform assemble_point(actions.id) from actions where actions.data_type='N' and actions.action not in ('D');
+  select count(*) into num_rows from
+    (select id from actions where actions.data_type='N' and actions.action not in ('D')) actions
+  where assemble_point(actions.id);
 
-  raise notice 'inserted to osm_point';
+  raise notice 'inserted to osm_point (%)', num_rows;
 
   -- insert changed/created lines
-  perform assemble_line(id) from 
-    (select id from actions where data_type='W' and action not in ('D')) actions;
+  select count(*) into num_rows from
+    (select id from actions where data_type='W' and action not in ('D')) actions
+  where assemble_line(id);
 
-  raise notice 'inserted to osm_line';
+  raise notice 'inserted to osm_line (%)', num_rows;
 
   -- insert changed/created relations
-  perform assemble_rel(id) from 
-    (select id from actions where data_type='R' and action not in ('D')) actions;
+  select count(*) into num_rows from 
+    (select id from actions where data_type='R' and action not in ('D')) actions
+  where assemble_rel(id);
 
-  raise notice 'inserted to osm_rel';
+  raise notice 'inserted to osm_rel (%)', num_rows;
 
   -- insert changed/created polygons
-  perform assemble_polygon(id) from
-       (select id from actions where data_type='W' and action not in ('D')) actions;
+  select count(*) into num_rows from
+    (select id from actions where data_type='W' and action not in ('D')) actions
+  where assemble_polygon(id);
 
-    raise notice 'inserted to osm_polygon 1';
+  raise notice 'inserted to osm_polygon (ways) (%)', num_rows;
 
   -- insert changed/created multipolygons
-    perform
-      assemble_multipolygon(actions.id)
-    from
-      (select id from actions where data_type='R' and action not in ('D')) actions
+  select count(*) into num_rows from
+      (select id from actions
 	join relation_tags on
 	  relation_tags.relation_id=actions.id and
 	  relation_tags.k='type'
+	where
+	  data_type='R' and
+	  action not in ('D') and
+	  relation_tags.v='multipolygon') actions
       where
-          relation_tags.v='multipolygon';
+	assemble_multipolygon(actions.id);
 
-  raise notice 'inserted to osm_polygon 2';
+  raise notice 'inserted to osm_polygon (multipolygons) (%)', num_rows;
 
   perform call_hooks('osmosis_update_insert');
 
