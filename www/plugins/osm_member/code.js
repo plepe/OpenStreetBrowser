@@ -17,6 +17,9 @@ function osm_member_show_members(div, data) {
     ret.push(entry);
   }
 
+  var dummy=dom_create_append(div, "i");
+  dom_create_append_text(dummy, lang("osm_member-members-help"));
+
   new list( div, ret );
 }
 
@@ -38,6 +41,9 @@ function osm_member_show_member_of(div, data) {
 
     ret.push(entry);
   }
+
+  var dummy=dom_create_append(div, "i");
+  dom_create_append_text(dummy, lang("osm_member-member_of-help"));
 
   new list( div, ret );
 }
