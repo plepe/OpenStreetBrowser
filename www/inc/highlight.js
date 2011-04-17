@@ -125,6 +125,11 @@ function unset_highlight() {
   }
 }
 
+/**
+ * class highlight
+ * geos: string or array of strings ... WKTs defining geometric objects
+ * center: the center of the objects which will be circled
+ */
 function highlight(geos, center) {
   this.features=[];
   this.center_feature=[];
@@ -133,7 +138,8 @@ function highlight(geos, center) {
   // show
   this.show=function() {
     vector_layer.addFeatures(this.features);
-    vector_layer.addFeatures(this.center_feature);
+    if(this.center_feature)
+      vector_layer.addFeatures(this.center_feature);
     this.shown=true;
 
     highlight_current_active.id=this;
@@ -142,7 +148,8 @@ function highlight(geos, center) {
   // hide
   this.hide=function() {
     vector_layer.removeFeatures(this.features);
-    vector_layer.removeFeatures(this.center_feature);
+    if(this.center_feature)
+      vector_layer.removeFeatures(this.center_feature);
     this.shown=false;
 
     delete(highlight_current_active.id);
@@ -150,6 +157,9 @@ function highlight(geos, center) {
 
   // add_geo
   this.add_geo=function(geos) {
+    if(typeof(geos) == 'string')
+      geos=[ geos];
+
     for(var i=0; i<geos.length; i++) {
       var geo=geos[i];
 
@@ -177,15 +187,17 @@ function highlight(geos, center) {
   // constructor
   this.add_geo(geos);
 
-  var way=new postgis(center);
-  this.center_feature=way.geo();
+  if(center) {
+    var way=new postgis(center);
+    this.center_feature=way.geo();
 
-  set_feature_style(this.center_feature, 
-    {
-      externalGraphic: "img/hi_node.png",
-      graphicWidth: 25,
-      graphicHeight: 25,
-      graphicXOffset: -13,
-      graphicYOffset: -13,
-    });
+    set_feature_style(this.center_feature, 
+      {
+	externalGraphic: "img/hi_node.png",
+	graphicWidth: 25,
+	graphicHeight: 25,
+	graphicXOffset: -13,
+	graphicYOffset: -13,
+      });
+  }
 }
