@@ -14,7 +14,7 @@ function osm_member_info(&$chapters, $ob) {
 
     $chapters[]=array(
       "id"=>"osm_member-members",
-      "head"=>lang("members"),
+      "head"=>lang("osm_member-members"),
       "weight"=>5,
       "data"=>$content,
     );
@@ -34,7 +34,7 @@ function osm_member_info(&$chapters, $ob) {
 
     $chapters[]=array(
       "id"=>"osm_member-member_of",
-      "head"=>lang("member_of"),
+      "head"=>lang("osm_member-member_of"),
       "weight"=>5,
       "data"=>$content,
     );
