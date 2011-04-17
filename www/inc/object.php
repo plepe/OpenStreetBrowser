@@ -173,6 +173,15 @@ class object {
 
     return $match;
   }
+
+  function export_array() {
+    $ret=array();
+
+    $ret['osm_id']=$this->id;
+    $ret['osm_tags']=$this->tags->export_array();
+
+    return $ret;
+  }
 }
 
 // elem can by either a string or an array. if id is a string it has to be

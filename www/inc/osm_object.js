@@ -148,9 +148,16 @@ function osm_object(dom) {
 
   // constructor
   this.tags=new tags();
-  this.tags.readDOM(dom);
-  this.id=dom.getAttribute("id");
-  this.id_split=split_semicolon(dom.getAttribute("id"));
+  if(dom.nodeType) {
+    this.tags.readDOM(dom);
+    this.id=dom.getAttribute("id");
+    this.id_split=split_semicolon(dom.getAttribute("id"));
+  }
+  else {
+    this.tags.set_data(dom.osm_tags);
+    this.id=dom.osm_id;
+    this.id_split=split_semicolon(dom.osm_id);
+  }
 }
 
 function osm_object_load(id, callback) {

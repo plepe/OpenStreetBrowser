@@ -308,6 +308,10 @@ class tags {
 
     return $ret;
   }
+
+  function export_array() {
+    return $this->data;
+  }
 }
 
 function parse_array($text, $prefix="") {
