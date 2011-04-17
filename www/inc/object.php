@@ -6,6 +6,7 @@ $output_xml=array();
 $object_elements=array("node"=>"node", "rel"=>"relation", "way"=>"way", "coll"=>"coll");
 $object_element_ids=array("node"=>1, "way"=>2, "rel"=>3, "coll"=>4);
 $object_element_shorts=array("n"=>"node", "r"=>"rel", "w"=>"way", "c"=>"coll");
+$object_element_data_type=array("N"=>"node", "R"=>"rel", "W"=>"way");
 $tag_preloaded=array();
 $priority_chapter=array(
   "general_info"=>-5,
@@ -172,6 +173,71 @@ class object {
     }
 
     return $match;
+  }
+
+  function export_array() {
+    $ret=array();
+
+    $ret['osm_id']=$this->id;
+    $ret['osm_tags']=$this->tags->export_array();
+
+    return $ret;
+  }
+
+  /**
+   * returns list of members, e.g. array("way_123"=>"stop", ...)
+   * @return array key: member_id, value: member_role
+   */
+  function members() {
+    global $object_element_data_type;
+    $ret=null;
+
+    if(isset($this->members))
+      return $this->members;
+
+    switch($this->element) {
+      case "rel":
+	 $id=substr($this->id, 4);
+	 $ret=array();
+
+         $res=sql_query("select * from relation_members where relation_id='$id'");
+	 while($elem=pg_fetch_assoc($res)) {
+	   $elem_id=$object_element_data_type[$elem['member_type']]."_".
+	            $elem['member_id'];
+           $ret[$elem_id]=$elem['member_role'];
+	 }
+    }
+
+    $this->members=$ret;
+
+    return $ret;
+  }
+
+  /**
+   * returns list of relations this object is member of, e.g.
+   * array("rel_123"=>"stop", ...)
+   * @return array key: relation_id, value: member_role
+   */
+  function member_of() {
+    global $object_element_data_type;
+    $ret=null;
+
+    if(isset($this->member_of))
+      return $this->member_of;
+
+    $id=explode("_", $this->id);
+    $data_type=array_search($id[0], $object_element_data_type);
+    $ret=array();
+
+    $res=sql_query("select * from relation_members where member_id='$id[1]' and member_type='$data_type'");
+    while($elem=pg_fetch_assoc($res)) {
+      $elem_id="rel_".$elem['relation_id'];
+      $ret[$elem_id]=$elem['member_role'];
+    }
+
+    $this->member_of=$ret;
+
+    return $ret;
   }
 }
 

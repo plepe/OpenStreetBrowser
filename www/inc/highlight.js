@@ -3,6 +3,22 @@ var highlight_feature=[];
 var highlight_feature_timer;
 var highlight_next_no_zoom=false; // when set to true, next 'pan_to_highlight' does not zoom, only center
 
+function calc_size_on_map(features) {
+  var size=0;
+  var extent=new OpenLayers.Bounds();
+
+  for(var i=0; i<features.length; i++) {
+    extent.extend(features[i].geometry.getBounds());
+  }
+
+  var leftupper=map.getViewPortPxFromLonLat(new OpenLayers.LonLat(extent.left, extent.top));
+  var rightbottom=map.getViewPortPxFromLonLat(new OpenLayers.LonLat(extent.right, extent.bottom));
+
+  var size={ w: rightbottom.x-leftupper.x, h: rightbottom.y-leftupper.y };
+
+  return size;
+}
+
 function pan_to_highlight(lon, lat, zoom) {
   var autozoom=options_get("autozoom");
 
@@ -125,6 +141,11 @@ function unset_highlight() {
   }
 }
 
+/**
+ * class highlight
+ * geos: string or array of strings ... WKTs defining geometric objects
+ * center: the center of the objects which will be circled
+ */
 function highlight(geos, center) {
   this.features=[];
   this.center_feature=[];
@@ -132,8 +153,23 @@ function highlight(geos, center) {
 
   // show
   this.show=function() {
-    vector_layer.addFeatures(this.features);
-    vector_layer.addFeatures(this.center_feature);
+    var too_big=false;
+
+    if(this.features) {
+      vector_layer.addFeatures(this.features);
+
+      var size=calc_size_on_map(this.features);
+      if((size.w>30) || (size.h>30))
+	too_big=true;
+    }
+
+    if(this.center_feature) {
+      if(too_big)
+	vector_layer.removeFeatures(this.center_feature);
+      else
+	vector_layer.addFeatures(this.center_feature);
+    }
+
     this.shown=true;
 
     highlight_current_active.id=this;
@@ -142,7 +178,8 @@ function highlight(geos, center) {
   // hide
   this.hide=function() {
     vector_layer.removeFeatures(this.features);
-    vector_layer.removeFeatures(this.center_feature);
+    if(this.center_feature)
+      vector_layer.removeFeatures(this.center_feature);
     this.shown=false;
 
     delete(highlight_current_active.id);
@@ -150,6 +187,9 @@ function highlight(geos, center) {
 
   // add_geo
   this.add_geo=function(geos) {
+    if(typeof(geos) == 'string')
+      geos=[ geos];
+
     for(var i=0; i<geos.length; i++) {
       var geo=geos[i];
 
@@ -177,15 +217,17 @@ function highlight(geos, center) {
   // constructor
   this.add_geo(geos);
 
-  var way=new postgis(center);
-  this.center_feature=way.geo();
+  if(center) {
+    var way=new postgis(center);
+    this.center_feature=way.geo();
 
-  set_feature_style(this.center_feature, 
-    {
-      externalGraphic: "img/hi_node.png",
-      graphicWidth: 25,
-      graphicHeight: 25,
-      graphicXOffset: -13,
-      graphicYOffset: -13,
-    });
+    set_feature_style(this.center_feature, 
+      {
+	externalGraphic: "img/hi_node.png",
+	graphicWidth: 25,
+	graphicHeight: 25,
+	graphicXOffset: -13,
+	graphicYOffset: -13,
+      });
+  }
 }

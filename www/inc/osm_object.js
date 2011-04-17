@@ -91,7 +91,15 @@ function osm_object(dom) {
 
   // info_show_real
   this.info_show_real=function() {
-    var way=new postgis(this.tags.get("#geo"));
+    var geo=this.tags.get("#geo");
+
+    // if no geometric object, show nothing and return
+    if(!geo) {
+      alert("object has no geometric representation");
+      return;
+    }
+
+    var way=new postgis(geo);
     this.info_features=way.geo();
     set_feature_style(this.info_features,
       {
@@ -106,9 +114,26 @@ function osm_object(dom) {
       });
     vector_layer.addFeatures(this.info_features);
 
-    var center=new postgis(this.tags.get("#geo:center")).geo();
-    if(center[0]&&center[0].geometry)
-      pan_to_highlight(center[0].geometry.x, center[0].geometry.y, 15);
+    this.info_features_extent=new OpenLayers.Bounds();
+    for(var i=0; i<this.info_features.length; i++) {
+      this.info_features_extent.extend(this.info_features[i].geometry.getBounds());
+    }
+
+    var zoom=map.getZoomForExtent(this.info_features_extent);
+    if(zoom>15)
+      zoom=15;
+
+    var center;
+    if(this.tags.get("#geo:center")) {
+      center=new postgis(this.tags.get("#geo:center")).geo();
+      if(center[0]&&center[0].geometry)
+	pan_to_highlight(center[0].geometry.x, center[0].geometry.y, zoom);
+    }
+    else {
+      center=this.info_features_extent.getCenterPixel();
+      pan_to_highlight(center.x, center.y, zoom);
+    }
+
   }
 
   // info_show
@@ -148,9 +173,16 @@ function osm_object(dom) {
 
   // constructor
   this.tags=new tags();
-  this.tags.readDOM(dom);
-  this.id=dom.getAttribute("id");
-  this.id_split=split_semicolon(dom.getAttribute("id"));
+  if(dom.nodeType) {
+    this.tags.readDOM(dom);
+    this.id=dom.getAttribute("id");
+    this.id_split=split_semicolon(dom.getAttribute("id"));
+  }
+  else {
+    this.tags.set_data(dom.osm_tags);
+    this.id=dom.osm_id;
+    this.id_split=split_semicolon(dom.osm_id);
+  }
 }
 
 function osm_object_load(id, callback) {

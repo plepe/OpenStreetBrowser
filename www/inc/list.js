@@ -16,9 +16,18 @@
 //   should_shown - How many elements should be shown right now (waiting for
 //     recv)
 //
-// elements: An array of hash arrays, looking like this:
+// elements: An array of hash arrays, looking like this (see next paragraph):
 // [ { name: 'The Old Pub', href='#node_1234', icon: 'pub' }, ..., null ]
 //
+// possible attributes for each entry:
+// .name ... (string) Name of object
+// .href ... (string) href to object
+// .icon ... (string) An icon. see get_icon()
+// .type ... (string) A type, write in brackets after name
+// .title .. (string) A tooltip for the name
+// .highlight ... (string/array of strings) A WKT of the geometric object
+// .highlight_center ... (string) A WKT of the center of the geometric
+//                       object(s)
 
 var list_default_options;
 
@@ -65,6 +74,12 @@ function list(div, elements, request_more, options) {
     // type
     if(element.type)
       dom_create_append_text(li, " ("+element.type+")");
+
+    // highlight
+    if(element.highlight) {
+      li.onmouseover=this.set_highlight.bind(this, element);
+      li.onmouseout=this.unset_highlight.bind(this, element);
+    }
   }
 
   // more
@@ -103,6 +118,21 @@ function list(div, elements, request_more, options) {
       if(more)
         this.recv(more);
     }
+  }
+
+  // set_highlight
+  this.set_highlight=function(element) {
+    if(!element.ob_highlight)
+      element.ob_highlight=new highlight(element.highlight, element.highlight_center);
+
+    if(element.ob_highlight)
+      element.ob_highlight.show();
+  }
+
+  // unset highlight
+  this.unset_highlight=function(element) {
+    if(element.ob_highlight)
+      element.ob_highlight.hide();
   }
 
   // constructor
