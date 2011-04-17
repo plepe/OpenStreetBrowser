@@ -45,8 +45,6 @@ function info(ob) {
 
     this.show();
 
-    call_hooks("info_show", this, this.ob);
-
     if(this.ob.info_show)
       this.ob.info_show(this);
   }
@@ -126,6 +124,8 @@ function info(ob) {
     }
 
     this.data=data;
+
+    call_hooks("info_show", this, this.ob);
   }
 
   // show_loading
