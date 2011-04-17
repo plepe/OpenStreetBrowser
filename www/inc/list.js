@@ -25,7 +25,9 @@
 // .icon ... (string) An icon. see get_icon()
 // .type ... (string) A type, write in brackets after name
 // .title .. (string) A tooltip for the name
-// .highlight ... (string) A WKT of the geometric object
+// .highlight ... (string/array of strings) A WKT of the geometric object
+// .highlight_center ... (string) A WKT of the center of the geometric
+//                       object(s)
 
 var list_default_options;
 
@@ -120,11 +122,17 @@ function list(div, elements, request_more, options) {
 
   // set_highlight
   this.set_highlight=function(element) {
-    element.ob_highlight=new highlight(element.highlight);
+    if(!element.ob_highlight)
+      element.ob_highlight=new highlight(element.highlight, element.highlight_center);
+
+    if(element.ob_highlight)
+      element.ob_highlight.show();
   }
 
   // unset highlight
   this.unset_highlight=function(element) {
+    if(element.ob_highlight)
+      element.ob_highlight.hide();
   }
 
   // constructor
