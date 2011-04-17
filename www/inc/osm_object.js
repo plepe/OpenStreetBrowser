@@ -106,9 +106,26 @@ function osm_object(dom) {
       });
     vector_layer.addFeatures(this.info_features);
 
-    var center=new postgis(this.tags.get("#geo:center")).geo();
-    if(center[0]&&center[0].geometry)
-      pan_to_highlight(center[0].geometry.x, center[0].geometry.y, 15);
+    this.info_features_extent=new OpenLayers.Bounds();
+    for(var i=0; i<this.info_features.length; i++) {
+      this.info_features_extent.extend(this.info_features[i].geometry.getBounds());
+    }
+
+    var zoom=map.getZoomForExtent(this.info_features_extent);
+    if(zoom>15)
+      zoom=15;
+
+    var center;
+    if(this.tags.get("#geo:center")) {
+      center=new postgis(this.tags.get("#geo:center")).geo();
+      if(center[0]&&center[0].geometry)
+	pan_to_highlight(center[0].geometry.x, center[0].geometry.y, zoom);
+    }
+    else {
+      center=this.info_features_extent.getCenterPixel();
+      pan_to_highlight(center.x, center.y, zoom);
+    }
+
   }
 
   // info_show
