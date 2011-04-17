@@ -19,6 +19,26 @@ function osm_member_info(&$chapters, $ob) {
       "data"=>$content,
     );
   }
+
+  $member_of=$ob->member_of();
+
+  if(sizeof($member_of)) {
+    $content=array();
+    foreach($member_of as $of_id=>$role) {
+      $of=load_object($of_id);
+      if($of) {
+	$of->tags->set("#role", $role);
+	$content[$of_id]=$of->export_array();
+      }
+    }
+
+    $chapters[]=array(
+      "id"=>"osm_member-member_of",
+      "head"=>lang("member_of"),
+      "weight"=>5,
+      "data"=>$content,
+    );
+  }
 }
 
 register_hook("info", "osm_member_info");
