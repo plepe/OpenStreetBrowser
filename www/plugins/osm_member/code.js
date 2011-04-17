@@ -9,6 +9,10 @@ function osm_member_show_members(div, data) {
     entry.href="#"+i;
     if(ob.tags.get("#role"))
       entry.type=ob.tags.get("#role");
+    if(ob.tags.get("#geo"))
+      entry.highlight=ob.tags.get("#geo");
+    if(ob.tags.get("#geo:center"))
+      entry.highlight_center=ob.tags.get("#geo:center");
 
     ret.push(entry);
   }
