@@ -3,6 +3,22 @@ var highlight_feature=[];
 var highlight_feature_timer;
 var highlight_next_no_zoom=false; // when set to true, next 'pan_to_highlight' does not zoom, only center
 
+function calc_size_on_map(features) {
+  var size=0;
+  var extent=new OpenLayers.Bounds();
+
+  for(var i=0; i<features.length; i++) {
+    extent.extend(features[i].geometry.getBounds());
+  }
+
+  var leftupper=map.getViewPortPxFromLonLat(new OpenLayers.LonLat(extent.left, extent.top));
+  var rightbottom=map.getViewPortPxFromLonLat(new OpenLayers.LonLat(extent.right, extent.bottom));
+
+  var size={ w: rightbottom.x-leftupper.x, h: rightbottom.y-leftupper.y };
+
+  return size;
+}
+
 function pan_to_highlight(lon, lat, zoom) {
   var autozoom=options_get("autozoom");
 
@@ -137,9 +153,23 @@ function highlight(geos, center) {
 
   // show
   this.show=function() {
-    vector_layer.addFeatures(this.features);
-    if(this.center_feature)
-      vector_layer.addFeatures(this.center_feature);
+    var too_big=false;
+
+    if(this.features) {
+      vector_layer.addFeatures(this.features);
+
+      var size=calc_size_on_map(this.features);
+      if((size.w>30) || (size.h>30))
+	too_big=true;
+    }
+
+    if(this.center_feature) {
+      if(too_big)
+	vector_layer.removeFeatures(this.center_feature);
+      else
+	vector_layer.addFeatures(this.center_feature);
+    }
+
     this.shown=true;
 
     highlight_current_active.id=this;
