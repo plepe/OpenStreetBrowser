@@ -91,7 +91,15 @@ function osm_object(dom) {
 
   // info_show_real
   this.info_show_real=function() {
-    var way=new postgis(this.tags.get("#geo"));
+    var geo=this.tags.get("#geo");
+
+    // if no geometric object, show nothing and return
+    if(!geo) {
+      alert("object has no geometric representation");
+      return;
+    }
+
+    var way=new postgis(geo);
     this.info_features=way.geo();
     set_feature_style(this.info_features,
       {
