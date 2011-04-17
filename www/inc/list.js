@@ -25,6 +25,7 @@
 // .icon ... (string) An icon. see get_icon()
 // .type ... (string) A type, write in brackets after name
 // .title .. (string) A tooltip for the name
+// .highlight ... (string) A WKT of the geometric object
 
 var list_default_options;
 
@@ -71,6 +72,12 @@ function list(div, elements, request_more, options) {
     // type
     if(element.type)
       dom_create_append_text(li, " ("+element.type+")");
+
+    // highlight
+    if(element.highlight) {
+      li.onmouseover=this.set_highlight.bind(this, element);
+      li.onmouseout=this.unset_highlight.bind(this, element);
+    }
   }
 
   // more
@@ -109,6 +116,15 @@ function list(div, elements, request_more, options) {
       if(more)
         this.recv(more);
     }
+  }
+
+  // set_highlight
+  this.set_highlight=function(element) {
+    element.ob_highlight=new highlight(element.highlight);
+  }
+
+  // unset highlight
+  this.unset_highlight=function(element) {
   }
 
   // constructor
