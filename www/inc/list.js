@@ -16,9 +16,15 @@
 //   should_shown - How many elements should be shown right now (waiting for
 //     recv)
 //
-// elements: An array of hash arrays, looking like this:
+// elements: An array of hash arrays, looking like this (see next paragraph):
 // [ { name: 'The Old Pub', href='#node_1234', icon: 'pub' }, ..., null ]
 //
+// possible attributes for each entry:
+// .name ... (string) Name of object
+// .href ... (string) href to object
+// .icon ... (string) An icon. see get_icon()
+// .type ... (string) A type, write in brackets after name
+// .title .. (string) A tooltip for the name
 
 var list_default_options;
 
