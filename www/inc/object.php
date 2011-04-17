@@ -212,6 +212,33 @@ class object {
 
     return $ret;
   }
+
+  /**
+   * returns list of relations this object is member of, e.g.
+   * array("rel_123"=>"stop", ...)
+   * @return array key: relation_id, value: member_role
+   */
+  function member_of() {
+    global $object_element_data_type;
+    $ret=null;
+
+    if(isset($this->member_of))
+      return $this->member_of;
+
+    $id=explode("_", $this->id);
+    $data_type=array_search($id[0], $object_element_data_type);
+    $ret=array();
+
+    $res=sql_query("select * from relation_members where member_id='$id[1]' and member_type='$data_type'");
+    while($elem=pg_fetch_assoc($res)) {
+      $elem_id="rel_".$elem['relation_id'];
+      $ret[$elem_id]=$elem['member_role'];
+    }
+
+    $this->member_of=$ret;
+
+    return $ret;
+  }
 }
 
 // elem can by either a string or an array. if id is a string it has to be
