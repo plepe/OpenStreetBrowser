@@ -1069,7 +1069,41 @@ function old_category_load($id, $param=array()) {
 //
 // return:
 // array('status')
-function category_history($id, $param=array()) {
+function category_history($id, $param=array(), $version=null) {
+  global $db_central;
+
+  $sql_id=postgre_escape($id);
+  $list=array();
+
+  if(!$version) {
+    $res=sql_query("select * from category_current where category_id=$sql_id", $db_central);
+    $elem=pg_fetch_assoc($res);
+    $version=$elem['version'];
+  }
+
+  $res=sql_query("select * from category where category_id=$sql_id", $db_central);
+  while($elem=pg_fetch_assoc($res)) {
+    $elem['parent_versions']=parse_array($elem['parent_versions']);
+    $list[$elem['version']]=$elem;
+  }
+
+  $ret=array();
+  $last=$version;
+  while($last) {
+    $elem=$list[$last];
+
+    $ret[]=$elem;
+    if(sizeof($elem['parent_versions'])) {
+      $last=$elem['parent_versions'][0];
+    }
+    else
+      $last=null;
+  }
+
+  return $ret;
+}
+
+function old_category_history($id, $param=array()) {
   global $lists_dir;
   $ret=array();
 
