@@ -705,6 +705,8 @@ function category_check_state() {
 //   )
 function category_save($id, $content, $param=array()) {
   global $db_central;
+  global $current_user;
+
   // Create a sql-statement to import whole category in one transaction
   $sql="begin;";
 
@@ -722,6 +724,11 @@ function category_save($id, $content, $param=array()) {
   $root=$file->firstChild;
   $tags->readDOM($root);
 
+  // compile version tags
+  $version_tags=new tags();
+  $version_tags->set("user", $current_user->username);
+  $version_tags->set("date", Date("c"));
+
   // and old version
   $old_version=$root->getAttribute("version");
   
@@ -730,7 +737,9 @@ function category_save($id, $content, $param=array()) {
     postgre_escape($id).", ".
     array_to_hstore($tags->data()).", ".
     "'$version', ".
-    "Array['$old_version']);";
+    "Array['$old_version'], ".
+    array_to_hstore($version_tags->data()).
+    ");";
 
   // process rules
   $current=$root->firstChild;

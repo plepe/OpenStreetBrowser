@@ -4,6 +4,7 @@ create table category (
   tags			hstore,
   version		text	not null,
   parent_versions	text[]	null,
+  version_tags		hstore,
   primary key(category_id, version)
 );
 
