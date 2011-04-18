@@ -38,17 +38,13 @@ class category {
 
   function get_newest_version() {
     global $lists_dir;
+    global $db_central;
 
-    $f=popen("cd $lists_dir ; git log $this->id.xml", "r");
-    $r=fgets($f);
-    pclose($f);
+    $res=sql_query("select * from category_current where category_id='$this->id'", $db_central);
+    if(!$elem=pg_fetch_assoc($res))
+      return null;
 
-    if(preg_match("/commit (.*)$/", $r, $m)) {
-      return $m[1];
-    }
-
-    print "Error parsing git-log: $r\n";
-    return null;
+    return $elem['version'];
   }
 
   function get_data() {
