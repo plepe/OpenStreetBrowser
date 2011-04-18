@@ -1,0 +1,31 @@
+#!/usr/bin/php
+<?
+include "conf.php";
+include "inc/sql.php";
+
+function save($file, $data, $parent) {
+  print "$data[commit] $parent\n";
+}
+
+chdir($lists_dir);
+$d=opendir(".");
+while($f=readdir($d)) {
+  if(preg_match("/(.*)\.xml$/", $f, $m)) {
+    $file=$m[1];
+    print "Processing file '$file'\n";
+
+    $flog=popen("git log --pretty=short $file.xml", "r");
+    $last=null;
+    while($log=fgets($flog)) {
+      $log=trim($log);
+
+      if(preg_match("/commit (.*)$/", $log, $m)) {
+	save($file, $last, $m[1]);
+	$last=array("commit"=>$m[1]);
+      }
+    }
+
+    save($file, $last, null);
+    pclose($flog);
+  }
+}
