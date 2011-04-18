@@ -2,10 +2,66 @@
 <?
 include "conf.php";
 include "inc/sql.php";
+include "inc/tags.php";
+$done=array();
+$sql="";
 
 function save($file, $data, $parent) {
-  print "$file $data[commit] $parent\n";
-  print_r($data);
+  global $done;
+  global $sql;
+
+  //print "$file $data[commit] $parent\n";
+
+  $f=popen("git show {$data['commit']}:$file.xml", "r");
+  $content="";
+  while($r=fgets($f)) {
+    $content.=$r;
+  }
+  pclose($f);
+
+  $dom=new DOMDocument();
+  if(!($dom->loadXML($content))) {
+    $sql.="-- could not load xml $file ({$data['commit']})\n";
+  }
+  $root=$dom->firstChild;
+
+  $tags=new tags();
+  $tags->readDOM($root);
+
+  $version_tags=new tags($data);
+
+  $sql.="insert into category values (".
+    postgre_escape($file).", ".
+    array_to_hstore($tags->data()).", ".
+    "'{$data['commit']}', ".
+    ($parent?"Array['$parent']":"null").", ".
+    array_to_hstore($version_tags->data()).
+    ");\n";
+
+  // process rules
+  $current=$root->firstChild;
+  while($current) {
+    if($current->nodeName=="rule") {
+      // read rule tags
+      $rule_id=$current->getAttribute("id");
+      $tags=new tags();
+      $tags->readDOM($current);
+
+      // write rule tags to db
+      $sql.="insert into category_rule values (".
+	postgre_escape($file).", ".
+	postgre_escape($rule_id).", ".
+	array_to_hstore($tags->data()).", ".
+	"'{$data['commit']}');\n";
+    }
+
+    $current=$current->nextSibling;
+  }
+
+  if(!isset($done[$file])) {
+    $done[$file]=true;
+    $sql.="insert into category_current values ( '$file', '{$data['commit']}', now() );\n";
+  }
 }
 
 chdir($lists_dir);
@@ -13,7 +69,7 @@ $d=opendir(".");
 while($f=readdir($d)) {
   if(preg_match("/(.*)\.xml$/", $f, $m)) {
     $file=$m[1];
-    print "Processing file '$file'\n";
+    //print "Processing file '$file'\n";
 
     $flog=popen("git log --pretty=short $file.xml", "r");
     $last=null;
@@ -47,3 +103,5 @@ while($f=readdir($d)) {
     pclose($flog);
   }
 }
+
+print $sql;
