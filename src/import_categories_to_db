@@ -4,7 +4,8 @@ include "conf.php";
 include "inc/sql.php";
 
 function save($file, $data, $parent) {
-  print "$data[commit] $parent\n";
+  print "$file $data[commit] $parent\n";
+  print_r($data);
 }
 
 chdir($lists_dir);
@@ -19,9 +20,26 @@ while($f=readdir($d)) {
     while($log=fgets($flog)) {
       $log=trim($log);
 
-      if(preg_match("/commit (.*)$/", $log, $m)) {
-	save($file, $last, $m[1]);
+      if(preg_match("/^commit (.*)$/", $log, $m)) {
+	if($last!=null)
+	  save($file, $last, $m[1]);
 	$last=array("commit"=>$m[1]);
+      }
+      elseif(preg_match("/^Author:.*<(.*)@/", $log, $m)) {
+	$last["user"]=$m[1];
+      }
+      elseif(preg_match("/^Date: *(.*)$@/", $log, $m)) {
+	$last["date"]=$m[1];
+      }
+      elseif($log=="") {
+      }
+      else {
+	if(isset($last["comment"]))
+	  $last["comment"].="\n";
+	else
+	  $last["comment"]="";
+
+	$last["comment"].="$log";
       }
     }
 
