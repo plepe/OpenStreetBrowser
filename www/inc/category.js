@@ -69,6 +69,8 @@ function category(id) {
       if(id&&div.sub&&div.sub.child_divs&&div.sub.child_divs[id])
 	this.sub_categories[i].hide_category(div.sub.child_divs[id]);
     }
+
+    call_hooks("hide_category", null, this);
   }
 
   // unhide_category - when opening a this or a parent category, and this
@@ -85,6 +87,8 @@ function category(id) {
       if(id&&div.sub&&div.sub.child_divs&&div.sub.child_divs[id])
 	this.sub_categories[i].unhide_category(div.sub.child_divs[id]);
     }
+
+    call_hooks("unhide_category", null, this);
   }
 
   // visible - is at least one instance of this category opened?
