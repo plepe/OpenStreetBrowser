@@ -1,0 +1,22 @@
+<?
+$overlays_layers=array();
+
+/**
+ * register a TMS overlay for the OpenLayers map
+ * @param string an id for this overlays
+ * @url string the base url for the tiles
+ * @options layer options as defined by OpenLayers
+ */
+function overlays_register($id, $url, $options) {
+  global $overlays_layers;
+
+  $overlays_layers[$id]=array($url, $options);
+}
+
+function overlays_html_done() {
+  global $overlays_layers;
+
+  html_export_var(array("overlays_add"=>$overlays_layers));
+}
+
+register_hook("html_done", "overlays_html_done");
