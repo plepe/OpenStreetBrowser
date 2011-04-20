@@ -69,6 +69,11 @@ $basemaps=array(
   "mapnik"=>"mapnik",
 );
 
+// You can define additional overlays here (needs plugin 'overlays' enabled)
+$overlays_add=array(
+//  "foo"=>array("http://foo.bar/tiles/", array("numZoomLevels"=>19)),
+);
+
 // Available plugins:
 // measure - do some measurement on the map
 // favorites - set favorites on the map
