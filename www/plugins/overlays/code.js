@@ -30,6 +30,38 @@ function overlays_hash_changed(new_hash) {
   }
 }
 
+function overlays_hide_category(dummy, category) {
+  var overlays_tag=category.tags.get("overlays");
+
+  if(overlays_tag) {
+    overlays_tag=split_semicolon(overlays_tag);
+
+    for(var i=0; i<overlays_tag.length; i++) {
+      var id=overlays_tag[i];
+      
+      if(overlays_layers[id]) {
+	overlays_layers[id].setVisibility(false);
+      }
+    }
+  }
+}
+
+function overlays_unhide_category(dummy, category) {
+  var overlays_tag=category.tags.get("overlays");
+
+  if(overlays_tag) {
+    overlays_tag=split_semicolon(overlays_tag);
+
+    for(var i=0; i<overlays_tag.length; i++) {
+      var id=overlays_tag[i];
+      
+      if(overlays_layers[id]) {
+	overlays_layers[id].setVisibility(true);
+      }
+    }
+  }
+}
+
 // nameclash with overlays_init() defined in www/inc/overlays.js
 function overlays_init1() {
   if(overlays_add) for(var i in overlays_add) {
@@ -47,3 +79,5 @@ function overlays_init1() {
 register_hook("get_permalink", overlays_permalink);
 register_hook("hash_changed", overlays_hash_changed);
 register_hook("init", overlays_init1);
+register_hook("hide_category", overlays_hide_category)
+register_hook("unhide_category", overlays_unhide_category)
