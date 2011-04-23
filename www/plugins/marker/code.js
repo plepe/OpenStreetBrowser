@@ -221,6 +221,26 @@ function marker_search_object(ret, id) {
   }
 }
 
+function marker_place(ob) {
+  alert(ob.id);
+}
+
+function marker_info(chapters, ob) {
+  if(ob.geo_center()) {
+    var a=document.createElement("a");
+    a.onclick=marker_place.bind(this, ob);
+    dom_create_append_text(a, lang("marker:place"));
+
+    var entry={
+      head: 'actions',
+      weight: 9,
+      content: [ a ]
+    };
+
+    chapters.push(entry);
+  }
+}
+
 function marker_init() {
   contextmenu_add("plugins/marker/icon.png", lang("marker:add_marker"), marker_add_context);
 }
@@ -229,3 +249,4 @@ register_hook("get_permalink", marker_permalink);
 register_hook("hash_changed", marker_update);
 register_hook("init", marker_init);
 register_hook("search_object", marker_search_object);
+register_hook("info", marker_info);
