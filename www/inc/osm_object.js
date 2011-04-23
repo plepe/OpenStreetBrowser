@@ -40,6 +40,19 @@ function osm_object(dom) {
     return this.tags.get_lang("name");
   }
 
+  // geo_center
+  this.geo_center=function() {
+    if(this._geo_center)
+      return this._geo_center;
+
+    if(this.tags.get("#geo:center")) {
+      var x=new postgis(this.tags.get("#geo:center"));
+      this._geo_center=x.geo();
+    }
+
+    return this._geo_center;
+  }
+
   // info
   this.info=function(chapters) {
     this.tags.info(chapters);

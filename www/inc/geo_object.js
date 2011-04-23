@@ -6,11 +6,12 @@
 //  .type - type of object (e.g. "osm", "marker", "route")
 //
 // the following properties are optional, but should keep to the standard:
-//  .geo  - an OpenLayers geometry object
 //  .tags - A tags instance
 //
 // the following functions should be provided:
 //  .name() - Returning the name of the object in data_lang
+//  .geo()         - a function returning an array of OpenLayers features
+//  .geo_center()  - a function returning an array of OpenLayers features
 function geo_object() {
   // name
   this.name=function() {
@@ -19,5 +20,13 @@ function geo_object() {
 
   // info
   this.info=function(chapters) {
+  }
+
+  // geo
+  this.geo=function() {
+  }
+
+  // geo
+  this.geo_center=function() {
   }
 }
