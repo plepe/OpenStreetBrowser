@@ -12,6 +12,7 @@
 //  .name() - Returning the name of the object in data_lang
 //  .geo()         - a function returning an array of OpenLayers features
 //  .geo_center()  - a function returning an array of OpenLayers features
+
 function geo_object() {
   // name
   this.name=function() {
