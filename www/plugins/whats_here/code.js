@@ -9,6 +9,7 @@ var whats_here_style={
 function whats_here(lonlat) {
   this.inheritFrom=geo_object;
   this.inheritFrom();
+  this.type="whats_here";
 
   this.geo_center=function() {
     return [ this.feature ];

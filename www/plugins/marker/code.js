@@ -67,6 +67,7 @@ function marker_permalink(permalink) {
 function marker(lon, lat) {
   this.inheritFrom=geo_object;
   this.inheritFrom();
+  this.type="marker";
 
   // finish_drag
   this.finish_drag=function(pos) {

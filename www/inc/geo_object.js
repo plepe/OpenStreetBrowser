@@ -14,6 +14,8 @@
 //  .geo_center()  - a function returning an array of OpenLayers features
 
 function geo_object() {
+  this.type="default";
+
   // name
   this.name=function() {
     return "default geo object";
