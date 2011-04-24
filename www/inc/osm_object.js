@@ -72,6 +72,32 @@ function osm_object(dom) {
 	content: [ a ]
       });
     }
+
+    var center;
+    if(center=this.geo_center()) {
+      // check validity
+      if((!center)||(center.length<1)||(!center[0].geometry)) {
+	alert("Could not get geometry of object");
+	return;
+      }
+
+      // calculate lat/lon of object
+      var poi=center[0].geometry.getCentroid()
+		.transform(map.getProjectionObject(),
+			   new OpenLayers.Projection("EPSG:4326"));
+
+      // create link
+      var a=document.createElement("a");
+      a.href="http://www.openstreetmap.org/edit?lat="+poi.y+"&lon="+poi.x+"&zoom=16";
+      dom_create_append_text(a, lang("action_edit"));
+
+      // add chapter
+      chapters.push({
+	head: "actions",
+	weight: 9,
+	content: [ a ]
+      });
+    }
   }
 
   // highlight_geo
