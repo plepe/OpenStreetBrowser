@@ -7,6 +7,13 @@ var whats_here_style={
   };
 
 function whats_here(lonlat) {
+  this.inheritFrom=geo_object;
+  this.inheritFrom();
+
+  this.geo_center=function() {
+    return [ this.feature ];
+  }
+
   this.request=function() {
     if(category_request)
       category_request.abort();
