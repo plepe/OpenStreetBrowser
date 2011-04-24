@@ -1,33 +1,26 @@
 <?
 function search($param) {
-  global $load_xml;
-  $search_str=$param[value];
+  $ret=array();
+  $search_str=$param['value'];
   $add_param=array();
-  $ret="";
 
   $search_str=urlencode($search_str);
   $add_param[]="q=$search_str";
 
-  if($param[shown])
-    $add_param[]="exclude_place_ids=$param[shown]";
+  if($param['shown'])
+    $add_param[]="exclude_place_ids={$param['shown']}";
 
-  if($param[viewbox])
-    $add_param[]="viewbox=$param[viewbox]";
+  if($param['viewbox'])
+    $add_param[]="viewbox={$param['viewbox']}";
 
   $add_param[]="format=xml";
 
   $res=file_get_contents("http://nominatim.openstreetmap.org/search?".
                          implode("&", $add_param));
+
   $resdom=new DOMDocument();
   $resdom->loadXML($res);
 
-  $ret.="<div class='box_opened'>\n";
-  $ret.="<a class='zoom' href='#'>".lang("info_back")."</a><br>\n";
-
-  $ret.="<h1>".lang("search_results")."</h1>\n";
-  if($param[shown])
-    $ret.="<a nominatim_id='$param[shown]'></a>";
-  $ret.="<ul>\n";
   $obl=$resdom->getElementsByTagname("place");
   for($i=0; $i<$obl->length; $i++) {
     $ob=$obl->item($i);
@@ -39,17 +32,18 @@ function search($param) {
 
     $nominatim_id=$ob->getAttribute("place_id");
 
-    $r=list_entry("{$type}_{$id}", $ob->getAttribute("display_name"));
-    $r=strtr($r, array("<a href="=>"<a nominatim_id='$nominatim_id' href="));
+    $ret_ob=array(
+      'osm_id'   =>"{$type}_{$id}",
+      'osm_tags' =>array(),
+    );
 
-    $ret.=$r;
+    $ret_ob['osm_tags']['name']=$ob->getAttribute("display_name");
+    $ret_ob['osm_tags']['nominatim_id']=$nominatim_id;
+    $ret_ob['osm_tags']['lat']=$ob->getAttribute("lat");
+    $ret_ob['osm_tags']['lon']=$ob->getAttribute("lon");
+
+    $ret[]=$ret_ob;
   }
-  $ret.="</ul>\n";
-
-  $ret.="<a class='external' href='javascript:search_more()'>".lang("search_more")."</a><br>\n";
-  $ret.="(".lang("search_nominatim")." <a href='http://nominatim.openstreetmap.org/'>Nominatim</a>)<br>\n";
-
-  $ret.="</div>\n";
 
   return $ret;
 }
@@ -57,17 +51,7 @@ function search($param) {
 function ajax_search($param, $xml) {
   global $load_xml;
 
-  $result=$xml->createElement("result");
-  $text=$xml->createTextNode(search($param));
-
-  $xml->appendChild($result);
-  $result->appendChild($text);
-
-  $osm=$xml->createElement("osm");
-  $osm->setAttribute("generator", "Nominatim");
-  $result->appendChild($osm);
-
-  objects_to_xml($load_xml, $xml, $osm, 1, $bounds);
+  return search($param);
 }
 
 function search_menu_show($list) {

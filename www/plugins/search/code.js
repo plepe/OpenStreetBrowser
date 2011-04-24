@@ -1,5 +1,7 @@
-var search_last;
 var search_toolbox;
+var search_list;
+var search_param;
+var search_shown;
 
 function search_init() {
   search_toolbox=new toolbox({
@@ -70,37 +72,64 @@ function real_search(value, param) {
   var viewbox=[ x.left, x.top, x.right, x.bottom ];
   param.viewbox=viewbox.join(",");
 
-  ajax("search", param, search_result);
+  search_param=param;
+  search_shown=[];
 
-  search_last=value;
-  details_content.innerHTML=lang_str["loading"];
-  details.className="info_loading";
+  dom_clean(details_content);
+
+  details_content.className="info_loading";
+
+  var d=dom_create_append(details_content, "div");
+  d.innerHTML="<a class='zoom' href='#'>"+lang("info_back")+"</a>";
+
+  var search_content=dom_create_append(details_content, "div");
+  search_content.className="search_content";
+
+  var d=dom_create_append(details_content, "div");
+  d.innerHTML="<i>"+lang("search_nominatim")+" <a href='http://nominatim.openstreetmap.org/'>Nominatim</a></i>";
+
+  search_list=new list(search_content, [ null ], search_more );
 }
 
 function search_result(data) {
-  var details_content=document.getElementById("details_content");
-  var details=document.getElementById("details");
+  var elements=[];
 
-  var text=data.responseXML.getElementsByTagName("result");
-  details_content.innerHTML=text[0].textContent;
-  details.className="info";
-
-  var osm=data.responseXML.getElementsByTagName("osm");
-  load_objects_from_xml(osm);
-}
-
-function search_more() {
-  var details_content=document.getElementById("details_content");
-  var as=details_content.getElementsByTagName("a");
-  var ai;
-  var id;
-  var shown=[];
-
-  for(ai=0; ai<as.length; ai++) {
-    if(id=as[ai].getAttribute("nominatim_id")) {
-      shown.push(id);
-    }
+  if(!data.return_value) {
+    alert("no return on search request");
   }
 
-  return real_search(search_last, { shown: shown.join(",") });
+  for(var i=0; i<data.return_value.length; i++) {
+    var el={};
+    var ob=new osm_object(data.return_value[i]);
+
+    search_shown.push(ob.tags.get("nominatim_id"));
+
+    el.name=ob.tags.get("name");
+    el.href="#"+ob.id;
+
+    if(ob.tags.get("#geo:center")) {
+      el.highlight=ob.tags.get("#geo:center");
+    }
+    else if(ob.tags.get("lat")) {
+      var poi=
+        new OpenLayers.Geometry.Point(ob.tags.get("lon"), ob.tags.get("lat"));
+      poi=poi.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+      el.highlight=poi.toString();
+    }
+
+    elements.push(el);
+  }
+
+  // add a null to indicate "more"
+  if(elements.length>0)
+    elements.push(null);
+
+  search_list.recv(elements);
+}
+
+function search_more(param1, param2) {
+  search_param.shown=search_shown.join(",");
+  ajax("search", search_param, search_result);
+
+  return;
 }
