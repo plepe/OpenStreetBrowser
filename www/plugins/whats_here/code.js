@@ -1,3 +1,11 @@
+var whats_here_style={
+    externalGraphic: 'plugins/whats_here/whats_here.png',
+    graphicWidth: 19,
+    graphicHeight: 19,
+    graphicXOffset: -10,
+    graphicYOffset: -10
+  };
+
 function whats_here(lonlat) {
   this.request=function() {
     if(category_request)
@@ -8,6 +16,11 @@ function whats_here(lonlat) {
 
     var pos = new clone(lonlat);
     pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+
+    var geo=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
+    this.feature = new OpenLayers.Feature.Vector(geo, 0, whats_here_style);
+    vector_layer.addFeatures([this.feature]);
+
     category_request=ajax("whats_here_find", { "zoom": map.zoom, "lon": pos.lon, "lat": pos.lat, "categories": cat }, this.request_callback.bind(this));
   }
 
@@ -52,6 +65,11 @@ function whats_here(lonlat) {
     }
 
     return;
+  }
+
+  // info_hide
+  this.info_hide=function() {
+    vector_layer.removeFeatures([this.feature]);
   }
 
   // constructor
