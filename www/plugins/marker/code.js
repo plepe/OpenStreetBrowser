@@ -258,7 +258,7 @@ function marker_place(ob) {
 }
 
 function marker_info(chapters, ob) {
-  if(ob.geo_center()) {
+  if(ob.geo_center()&&(ob.type!="marker")) {
     var a=document.createElement("a");
     a.onclick=marker_place.bind(this, ob);
     a.href="#";
