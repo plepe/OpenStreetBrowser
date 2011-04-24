@@ -24,8 +24,8 @@ function marker_update(new_hash) {
     return;
 
   // get parts of mlat- and mlon-parameters
-  var mlats=new_hash.mlat.split(/,/);
-  var mlons=new_hash.mlon.split(/,/);
+  var mlats=new_hash.mlat.split(/,|%2C/);
+  var mlons=new_hash.mlon.split(/,|%2C/);
 
   for(var i=0; i<mlats.length; i++) {
     // if we already set this marker, ignore
@@ -51,8 +51,8 @@ function marker_permalink(permalink) {
   // for each element in marker_list
   for(var i=0; i<marker_list.length; i++) {
     // push them to the arrays
-    mlons.push(marker_list[i].lon);
-    mlats.push(marker_list[i].lat);
+    mlons.push(marker_list[i].lon.toFixed(5));
+    mlats.push(marker_list[i].lat.toFixed(5));
   }
 
   // if we don't have any markers in the list, return
