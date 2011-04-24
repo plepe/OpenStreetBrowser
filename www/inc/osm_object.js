@@ -56,6 +56,22 @@ function osm_object(dom) {
   // info
   this.info=function(chapters) {
     this.tags.info(chapters);
+
+    if(this.id_split.length==1) {
+      var id=this.id.split("_");
+      if(id[0]=="rel")
+	id[0]="relation";
+
+      var a=document.createElement("a");
+      a.href="http://www.openstreetmap.org/browse/"+id[0]+"/"+id[1];
+      dom_create_append_text(a, lang("action_browse"));
+
+      chapters.push({
+	head: "actions",
+	weight: 9,
+	content: [ a ]
+      });
+    }
   }
 
   // highlight_geo
