@@ -97,7 +97,7 @@ function marker(lon, lat) {
     this.feature.style=marker_style_selected;
     drag_layer.drawFeature(this.feature);
 
-    this.show_details();
+    location.hash="#"+this.id;
   }
 
   // object_unselect
@@ -106,10 +106,7 @@ function marker(lon, lat) {
     drag_layer.drawFeature(this.feature);
   }
 
-  // show_details
-  this.show_details=function() {
-    new info(this);
-  }
+  this.info_hide=this.object_unselect;
 
   // update_details
   this.update_details=function() {
@@ -152,6 +149,9 @@ function marker(lon, lat) {
       weight: 1,
       content: [ a ]
     });
+
+    // show selected marker
+    this.object_select();
   }
 
   // write_list
