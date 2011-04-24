@@ -161,8 +161,15 @@ function marker(lon, lat) {
     ret.icon_url="plugins/marker/icon.png";
     ret.name=this.name();
     ret.href="#"+this.id;
+    ret.highlight=this.feature.geometry.toString();
+    ret.highlight_center=this.feature.geometry.toString();
 
     return ret;
+  }
+
+  // geo_center
+  this.geo_center=function() {
+    return [ this.feature ];
   }
 
   // remove
