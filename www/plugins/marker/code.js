@@ -222,7 +222,21 @@ function marker_search_object(ret, id) {
 }
 
 function marker_place(ob) {
-  alert(ob.id);
+  var center=ob.geo_center();
+
+  // check validity
+  if((!center)||(center.length<1)||(!center[0].geometry)) {
+    alert("Could not get geometry of object");
+    return;
+  }
+
+  // calculate lat/lon of object
+  var poi=center[0].geometry.getCentroid()
+            .transform(map.getProjectionObject(),
+	               new OpenLayers.Projection("EPSG:4326"));
+
+  // place marker
+  marker_add(poi.x, poi.y);
 }
 
 function marker_info(chapters, ob) {
