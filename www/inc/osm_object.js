@@ -132,7 +132,12 @@ function osm_object(dom) {
       this.info_features_extent.extend(this.info_features[i].geometry.getBounds());
     }
 
-    var zoom=map.getZoomForExtent(this.info_features_extent);
+    this.zoom_to_feature();
+  }
+
+  // zoom_to_feature
+  this.zoom_to_feature=function() {
+     var zoom=map.getZoomForExtent(this.info_features_extent);
     if(zoom>15)
       zoom=15;
 
@@ -146,7 +151,6 @@ function osm_object(dom) {
       center=this.info_features_extent.getCenterPixel();
       pan_to_highlight(center.x, center.y, zoom);
     }
-
   }
 
   // info_show
