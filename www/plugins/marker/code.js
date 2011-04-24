@@ -213,11 +213,10 @@ function marker_add(lon, lat) {
 
 function marker_add_context(pos) {
   // add a marker on the pos
-  var m=marker_add(pos.lon, pos.lat);
+  var marker=marker_add(pos.lon, pos.lat);
 
-  // select marker
-  drag_layer.unselectAll();
-  drag_layer.select(m.feature);
+  // redirect to marker-page
+  location.hash="#"+marker.id;
 }
 
 function marker_search_object(ret, id) {
@@ -242,7 +241,10 @@ function marker_place(ob) {
 	               new OpenLayers.Projection("EPSG:4326"));
 
   // place marker
-  marker_add(poi.x, poi.y);
+  var marker=marker_add(poi.x, poi.y);
+
+  // redirect to marker-page
+  location.hash="#"+marker.id;
 
   return false;
 }
