@@ -112,3 +112,5 @@ $overlays_add=array(
 // cluster_call - Send events through the database to db-clients
 // extract - Create a table with extracted data (for small zoom levels)
 // osm_member - Show member information for objects
+// iplocation - Locate 'my position' using the iplocationtools-service
+// blog - On startup show a window with the rss-feed of the blog

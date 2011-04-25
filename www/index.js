@@ -292,7 +292,7 @@ function init() {
   };
 
   map.addControl(new OpenLayers.Control.MousePosition());
-  map.addControl(new OpenLayers.Control.ScaleLine());
+  map.addControl(new OpenLayers.Control.ScaleLine({ geodesic: true }));
 
   redraw_timer=setTimeout("check_redraw()", 300);
   register_hook("hash_changed", redraw);

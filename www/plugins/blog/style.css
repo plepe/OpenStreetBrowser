@@ -1,0 +1,20 @@
+div.blog_win {
+  background: white;
+  position: absolute;
+  background: white;
+  left: 350px;
+  width: 500px;
+  border: 2px solid black;
+  top: 50px;
+  overflow: auto;
+  z-index: 10001;
+  padding: 3px;
+}
+div.blog_content {
+  height: 200px;
+  overflow: auto;
+}
+h2.blog {
+  text-decoration: underline;
+  font-weight: bold;
+}

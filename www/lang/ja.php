@@ -1,12 +1,35 @@
 <?
-$lang_str["general_info"]="General Information"; // delete
+// All untranslated strings have a # in front. When you translate a string
+// please remove this hash.
+
+//  Every language string looks like this:
+//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
+//  the first entry is the translation of the language string in Singular,
+//  the second the Plural form.
+//
+//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
+//  German translation for office:
+//  $lang_str["office"]=array(N, "Büro", "Büros");
+//
+//  If a Singular/Plural form is not
+//  suitable/necessary you can ignore the array, e.g.
+//  $lang_str["help"]="Help";
+
+// General
+$lang_str["general_info"]="General Information";
+$lang_str["yes"]="はい";
+$lang_str["no"]="いいえ";
+#$lang_str["save"]=array("Save");
+#$lang_str["cancel"]=array("Cancel");
+#$lang_str["longitude"]=array("Longitude", "Longitudes");
+#$lang_str["latitude"]=array("Latitude", "Latitudes");
 $lang_str["noname"]="(無名)";
 $lang_str["info_back"]="概要に戻る";
 $lang_str["info_zoom"]="ズーム";
-$lang_str["result_no"]="見つかりません";
-$lang_str["wikipedia:read_more"]="もっと見る";
+#$lang_str["nothing_found"]=array("nothing found");
 $lang_str["loading"]="読み込み中";
- 
+
+// Headings
 $lang_str["head:general_info"]="全般的な情報";
 $lang_str["head:stops"]="Stops";
 $lang_str["head:routes"]="ルート";
@@ -28,22 +51,15 @@ $lang_str["head:graves"]="重要な墓地";
 $lang_str["head:routing"]="ルーティング";
 $lang_str["head:search"]="検索";
 $lang_str["head:actions"]="操作";
- 
+#$lang_str["head:location"]="Location";
+
 $lang_str["action_browse"]="OSM で見る";
 $lang_str["action_edit"]="OSM で編集";
- 
-$lang_str["route_international"]="国際ルート";
-$lang_str["route_national"]="全国ルート";
-$lang_str["route_region"]="地域ルート";
-$lang_str["route_urban"]="近郊ルート";
-$lang_str["route_suburban"]="サブ近郊ルート";
-$lang_str["route_local"]="ローカルルート";
-$lang_str["route_no"]="ルートがありません";
-$lang_str["route_zoom"]="ズームしてルート一覧を見る";
- 
+
+#$lang_str["geo_click_pos"]=array("Click on your position on the map");
 $lang_str["geo_set_pos"]="自分の位置をセット";
 $lang_str["geo_change_pos"]="自分の位置を変更";
- 
+
 $lang_str["routing_type_car"]="車";
 $lang_str["routing_type_car_shortest"]="車 (最短)";
 $lang_str["routing_type_bicycle"]="自転車";
@@ -52,16 +68,150 @@ $lang_str["routing_type"]="経路種別";
 $lang_str["routing_distance"]="距離";
 $lang_str["routing_time"]="時間";
 $lang_str["routing_disclaimer"]="ルーティング: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
- 
-$lang_str["station_type_amenity_bus_station"]="バス停";
-$lang_str["station_type_amenity_ferry_terminal"]="フェリーターミナル";
-$lang_str["station_type_highway_bus_stop"]="バス停";
-$lang_str["station_type_railway_tram_stop"]="電停";
-$lang_str["station_type_railway_station"]="鉄道駅";
-$lang_str["station_type_railway_halt"]="臨時停車駅";
- 
+
 $lang_str["list_info"]="カテゴリを選択してマップの内容をブラウズするかオブジェクトをクリックしてマップの詳細を見ます";
 $lang_str["list_leisure_sport_tourism"]="レジャー、スポート＆観光";
+
+// Mapkey
+$lang_str["map_key:head"]="マップキー";
+$lang_str["map_key:zoom"]="ズームレベル";
+
+$lang_str["grave_is_on"]="Grave is on";
+
+$lang_str["main:map_key"]="マップキー";
+$lang_str["main:options"]="オプション設定";
+$lang_str["main:about"]="About";
+$lang_str["main:donate"]="寄付";
+$lang_str["main:licence"]="マップデータ: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributors | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">投稿者</a>";
+$lang_str["main:permalink"]="パーマリンク";
+
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>オブジェクトがみつかりません</h1>ID \"%s\" のオブジェクトが見つかりません。次のいずれかの理由でしょう:<ul><li>IDが間違っている。</li><li>オブジェクトがまだサードパーティサイトに認識されておらず、OpenStreetBrowserでは(まだ)利用できない。</li><li>オブジェクトはサポート外のエリアにある。</li><li>リンクが古く、オブジェクトはOpenStreetMapから削除されている。</li></ul>";
+
+#$lang_str["start:choose"]=array("Choose map view");
+#$lang_str["start:geolocation"]=array("get geolocation");
+#$lang_str["start:lastview"]=array("last view");
+#$lang_str["start:savedview"]=array("last permalink");
+#$lang_str["start:startnormal"]=array("keep view");
+#$lang_str["start:remember"]=array("remember decision");
+#$lang_str["start:edit"]=array("edit...");
+
+$lang_str["options:autozoom"]="オートズームの挙動";
+$lang_str["help:autozoom"]="オブジェクトを選択すると、閲覧ポートはそのオブジェクトにパンし、ズームレベルも切り替えられます。このオプションで異なるモード間を選択できます。";
+$lang_str["options:autozoom:pan"]="現在のオブジェクトにパン(精度優先)";
+$lang_str["options:autozoom:move"]="現在のオブジェクトに移動(速度優先)";
+$lang_str["options:autozoom:stay"]="自動的に視点の変更をしない";
+
+$lang_str["options:language_support"]="言語サポート";
+$lang_str["help:language_support"]="このオプションであなたの言語設定を選択できます。最初のオプションはユーザインタフェースの言語を変更します。２番目のオプションはデータの言語を切り替えます。多くの地物のデータはいくつかの言語に翻訳されています。翻訳が利用できなかったり \"Local language\" が選択されている場合は、オブジェクトのメイン言語が表示されます。";
+$lang_str["options:ui_lang"]="インターフェース表示";
+$lang_str["options:data_lang"]="データ表示";
+$lang_str["lang:"]="ブラウザの設定言語";
+
+$lang_str["overlay:data"]="データ";
+$lang_str["overlay:draggable"]="マーカー";
+
+$lang_str["wikipedia:read_more"]="もっと見る";
+
+#$lang_str["basemap:osb"]="OpenStreetBrowser";
+#$lang_str["basemap:mapnik"]="Standard (Mapnik)";
+#$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
+#$lang_str["basemap:cyclemap"]="CycleMap";
+
+// please finish this list, see list.php for full list of languages
+#$lang_str["lang:de"]="German";
+#$lang_str["lang:bg"]="Bulgarian";
+#$lang_str["lang:en"]="English";
+#$lang_str["lang:es"]="Spanish";
+#$lang_str["lang:it"]="Italian";
+#$lang_str["lang:fr"]="French";
+#$lang_str["lang:uk"]="Ukrainian";
+#$lang_str["lang:ru"]="Russian";
+#$lang_str["lang:ja"]="Japanese";
+
+// the following language strings are deprecated
+$lang_str["cat:leisure"]="レジャー、スポーツ＆ショッピング";
+$lang_str["cat:leisure/gastro"]="食べ物";
+$lang_str["cat:leisure/leisure"]="レジャー";
+$lang_str["cat:leisure/sport"]="スポーツ";
+$lang_str["cat:leisure/shop"]="ショッピング";
+$lang_str["cat:culture"]="文化と宗教";
+$lang_str["cat:culture/culture"]="文化";
+$lang_str["cat:culture/religion"]="宗教";
+$lang_str["cat:culture/historic"]="記念";
+$lang_str["cat:culture/tourism"]="観光";
+$lang_str["cat:shop"]="ショッピング";
+$lang_str["cat:services"]="サービス";
+$lang_str["cat:services/communication"]="交流";
+$lang_str["cat:services/financial"]="金融";
+$lang_str["cat:services/emergency"]="緊急サービス";
+$lang_str["cat:services/health"]="健康";
+$lang_str["cat:services/education"]="教育サービス";
+$lang_str["cat:services/public"]="公共サービス";
+$lang_str["cat:services/tourism"]="観光サービス";
+$lang_str["cat:places"]=array("Place", "場所");
+$lang_str["cat:places/places"]=array("場所", "場所");
+$lang_str["cat:places/residential"]="住居エリア";
+$lang_str["cat:places/streets"]="通りの標識";
+$lang_str["cat:places/natural"]="自然地層";
+$lang_str["cat:transport"]="輸送機関";
+$lang_str["cat:transport/car"]="個人輸送機関";
+$lang_str["cat:transport/car/amenities"]="生活環境";
+$lang_str["cat:transport/car/routes"]="ルート";
+$lang_str["cat:transport/car/furniture"]="街路設置公共物";
+$lang_str["cat:transport/pt"]="公共輸送";
+$lang_str["cat:transport/pt/amenities"]="生活環境";
+$lang_str["cat:transport/pt/routes"]="ルート";
+$lang_str["cat:transport/pt/stops"]="停留所と駅";
+$lang_str["cat:transport/alternative"]="その他交通 (サイクリング、ハイキング、...)";
+$lang_str["cat:transport/alternative/amenities"]="生活環境";
+$lang_str["cat:transport/alternative/routes"]="ルート";
+$lang_str["cat:transport/other"]="その他";
+$lang_str["cat:agri_ind"]="農業と工業";
+$lang_str["cat:agri_ind/power"]="電力";
+$lang_str["cat:agri_ind/works"]="工場";
+$lang_str["cat:agri_ind/agriculture"]="農業";
+$lang_str["cat:agri_ind/construction"]="建築現場";
+$lang_str["cat:agri_ind/railway"]="鉄道";
+$lang_str["cat:agri_ind/resources"]="資源抽出";
+$lang_str["cat:agri_ind/landfill"]="廃棄物";
+$lang_str["cat:agri_ind/military"]="軍事施設";
+
+$lang_str["sub_type=t3|type=historic"]="ユネスコ世界遺産サイト";
+$lang_str["sub_type=|type=place_of_worship"]="礼拝所";
+$lang_str["sub_type=t1|type=place_of_worship"]="キリスト教教会";
+$lang_str["sub_type=t2|type=place_of_worship"]="イスラム教モスク";
+$lang_str["sub_type=t3|type=place_of_worship"]="ユダヤ教シナゴーグ";
+$lang_str["sub_type=t4|type=place_of_worship"]="Sikh ?";
+
+$lang_str["highway_type=motorway"]="自動車専用道路";
+$lang_str["highway_type=trunk"]="国道";
+$lang_str["highway_type=primary"]="主要地方道";
+$lang_str["highway_type=secondary"]="一般地方道";
+$lang_str["highway_type=tertiary"]="一般道(2車線以上)";
+$lang_str["highway_type=minor"]="一般道(2車線未満)";
+$lang_str["highway_type=service"]="敷地内道路";
+$lang_str["highway_type=pedestrian"]="歩行者専用道路";
+$lang_str["highway_type=track"]="トラック";
+$lang_str["highway_type=path"]="小道 (徒歩, 自転車, 乗馬道)";
+$lang_str["square_type=pedestrian"]="広場";
+$lang_str["square_type=parking"]="駐車ゾーン";
+$lang_str["highway_type=aero_run"]="滑走路";
+$lang_str["highway_type=aero_taxi"]="誘導路";
+
+$lang_str["sub_type=t1|type=communication"]="郵便局";
+$lang_str["sub_type=t2|type=communication"]="郵便ポスト";
+$lang_str["sub_type=t1|type=economic"]="ATM";
+$lang_str["sub_type=t2|type=economic"]="銀行";
+$lang_str["sub_type=t1|type=services"]="リサイクル";
+$lang_str["sub_type=t1|type=man_made"]="塔";
+$lang_str["sub_type=t2|type=man_made"]="風力発電";
+$lang_str["sub_type=t3|type=man_made"]="風車";
+$lang_str["sub_type=t1|type=emergency"]="病院";
+$lang_str["sub_type=t1|type=health"]="薬局";
+$lang_str["sub_type=t1|type=tourism"]="ホテル, ユースホステル, ...";
+$lang_str["sub_type=t2|type=tourism"]="キャンプ場";
+$lang_str["sub_type=t3|type=tourism"]="観光案内";
+
   // Foos & Drink
   $lang_str["list_food_drink"]="飲食店";
     $lang_str["list_amenity_biergarten"]="ビアガーデン";
@@ -82,10 +232,10 @@ $lang_str["list_leisure_sport_tourism"]="レジャー、スポート＆観光";
     $lang_str["list_leisure_pitch"]="運動場";
     $lang_str["list_leisure_water_park"]="親水公園";
     $lang_str["list_leisure_marina"]="マリーナ";
-$lang_str["list_leisure_slipway"]="スリップウェイ";
+    $lang_str["list_leisure_slipway"]="スリップウェイ";
     $lang_str["list_leisure_fishing"]="釣り";
     $lang_str["list_leisure_nature_reserve"]="自然保護区域";
-    $lang_str["list_leisure_park"]="レジャーパーク";
+    $lang_str["list_leisure_park"]="公園";
     $lang_str["list_leisure_playground"]="児童公園";
     $lang_str["list_leisure_garden"]="庭園";
     $lang_str["list_leisure_common"]="共有地";
@@ -127,7 +277,7 @@ $lang_str["list_leisure_slipway"]="スリップウェイ";
     $lang_str["list_sport_orienteering"]="オリエンテーリング";
     $lang_str["list_sport_paddle_tennis"]="パドルテニス";
     $lang_str["list_sport_paragliding"]="パラグライディング";
-$lang_str["list_sport_pelota"]="ペロタ";
+    $lang_str["list_sport_pelota"]="ペロタ";
     $lang_str["list_sport_racquet"]="ラケット";
     $lang_str["list_sport_rowing"]="ボート";
     $lang_str["list_sport_rugby"]="ラグビー";
@@ -171,7 +321,7 @@ $lang_str["list_sport_pelota"]="ペロタ";
     $lang_str["list_tourism_theme_park"]="テーマパーク";
     $lang_str["list_tourism_zoo"]="動物園";
     $lang_str["list_tourism_attraction"]="アトラクション";
- 
+
 $lang_str["list_shopping"]="買い物";
   $lang_str["list_general"]="General";
     $lang_str["list_shop_mall"]="ショッピングモール";
@@ -195,10 +345,10 @@ $lang_str["list_shopping"]="買い物";
     $lang_str["list_shop_market"]="市場";
   $lang_str["list_sport"]="スポーツ";
     $lang_str["list_shop_sports"]="スポーツ用品";
-    $lang_str["list_shop_bicycle"]="自転車ショップ";
-    $lang_str["list_shop_outdoor"]="アウトドアショップ";
+#    $lang_str["list_shop_bicycle"]="Bicycle Shops";
+#    $lang_str["list_shop_outdoor"]="Outdoor Shops";
   $lang_str["list_culture"]="文化";
-    $lang_str["list_shop_books"]="書店";
+    $lang_str["list_shop_books"]="本屋";
     $lang_str["list_shop_kiosk"]="キオスク";
     $lang_str["list_shop_video"]="ビデオショップ";
     $lang_str["list_shop_newsagent"]="新聞販売所";
@@ -207,7 +357,7 @@ $lang_str["list_shopping"]="買い物";
     $lang_str["list_shop_photo"]="写真屋";
     $lang_str["list_shop_travel_agency"]="旅行代理店";
   $lang_str["list_car"]="車とバイク";
-    $lang_str["list_shop_car"]="自動車販売店";
+    $lang_str["list_shop_car"]="Car Shop";
     $lang_str["list_shop_car_dealer"]="自動車ディーラー";
     $lang_str["list_shop_car_repair"]="自動車修理";
     $lang_str["list_shop_car_parts"]="自動車部品";
@@ -245,9 +395,9 @@ $lang_str["list_shopping"]="買い物";
     $lang_str["list_shop_shop"]="不明なショップ";
     $lang_str["list_shop_other"]="その他のショップ";
     $lang_str["list_shop_vending_machine"]="自動販売機";
- 
+
 $lang_str["list_education_culture"]="教育と文化";
-  $lang_str["list_culture"]="文化";
+#  $lang_str["list_culture"]="Culture";
     $lang_str["list_amenity_arts_centre"]="アートセンター";
     $lang_str["list_amenity_theatre"]="劇場";
     $lang_str["list_tourism_museum"]="博物館";
@@ -256,7 +406,7 @@ $lang_str["list_education_culture"]="教育と文化";
     $lang_str["list_amenity_cinema"]="映画";
     $lang_str["list_amenity_studio"]="テレビ/ラジオ/レコーディングスタジオ";
     $lang_str["list_shop_trumpet"]="音楽ショップ";
- 
+
   $lang_str["list_education"]="教育";
     $lang_str["list_amenity_university"]="大学";
     $lang_str["list_amenity_college"]="短大・専修学校";
@@ -264,8 +414,8 @@ $lang_str["list_education_culture"]="教育と文化";
     $lang_str["list_amenity_preschool"]="プレスクール";
     $lang_str["list_amenity_kindergarten"]="幼稚園";
     $lang_str["list_amenity_library"]="図書館";
-    $lang_str["list_shop_books"]="本屋";
- 
+#    $lang_str["list_shop_books"]="Book Shops";
+
   $lang_str["list_historic"]="歴史的建造物";
     $lang_str["list_historic_monument"]="モニュメント";
     $lang_str["list_historic_castle"]="城";
@@ -279,7 +429,7 @@ $lang_str["list_education_culture"]="教育と文化";
     $lang_str["list_historic_wreck"]="難破船";
     $lang_str["list_historic_wayside_cross"]="歴史的な十字架";
     $lang_str["list_historic_wayside_shrine"]="歴史的礼拝所";
- 
+
   $lang_str["list_religion"]="宗教";
     $lang_str["list_amenity_place_of_worship"]="礼拝所";
     $lang_str["list_amenity_grave_yard"]="墓地";
@@ -287,7 +437,7 @@ $lang_str["list_education_culture"]="教育と文化";
     $lang_str["list_amenity_crematorium"]="火葬場";
     $lang_str["list_cemetery_grave"]="墓";
     $lang_str["list_amenity_grave"]="墓";
- 
+
 $lang_str["list_services"]="サービス";
   $lang_str["list_health"]="健康";
     $lang_str["list_amenity_hospital"]="病院";
@@ -298,7 +448,7 @@ $lang_str["list_services"]="サービス";
     $lang_str["list_amenity_veterinary"]="獣医";
     $lang_str["list_amenity_red_cross"]="救急サービス";
     $lang_str["list_amenity_baby_hatch"]="赤ちゃんポスト";
- 
+
   $lang_str["list_public"]="公共サービス";
     $lang_str["list_amenity_townhall"]="市役所";
     $lang_str["list_amenity_public_building"]="公共施設";
@@ -307,7 +457,7 @@ $lang_str["list_services"]="サービス";
     $lang_str["list_amenity_embassy"]="大使館";
     $lang_str["list_amenity_courthouse"]="裁判所";
     $lang_str["list_amenity_prison"]="刑務所";
- 
+
   $lang_str["list_communication"]="コミュニケーション";
     $lang_str["list_amenity_telephone"]="電話";
     $lang_str["list_amenity_emergency_phone"]="緊急電話";
@@ -315,39 +465,39 @@ $lang_str["list_services"]="サービス";
     $lang_str["list_amenity_post_box"]="郵便ポスト";
     $lang_str["list_amenity_wlan"]="無線LANアクセスポイント";
     $lang_str["list_amenity_WLAN"]="無線LANアクセスポイント";
- 
+
   $lang_str["list_disposal"]="ごみ箱";
     $lang_str["list_amenity_recycling"]="リサイクルセンター";
     $lang_str["list_amenity_toilets"]="トイレ";
     $lang_str["list_amenity_waste_disposal"]="ごみ捨て場";
- 
+
 $lang_str["list_transport"]="輸送";
   $lang_str["list_car_motorcycle"]="車とバイク";
     $lang_str["list_amenity_fuel"]="ガソリンスタンド";
     $lang_str["list_amenity_car_rental"]="レンタカー";
     $lang_str["list_amenity_car_sharing"]="カーシェアリング";
     $lang_str["list_amenity_parking"]="駐車場";
-    $lang_str["list_shop_car"]="Car Shop";
-    $lang_str["list_shop_car_repair"]="自動車修理";
- 
+#    $lang_str["list_shop_car"]="Car Shop";
+#    $lang_str["list_shop_car_repair"]="Car Repair";
+
   $lang_str["list_pt_amenities"]="公共輸送施設";
     $lang_str["list_amenity_taxi"]="タクシー乗り場";
     $lang_str["list_amenity_ticket_counter"]="切符売り場";
- 
+
   $lang_str["list_pt_stops"]="公共輸送停留所";
   $lang_str["list_pt_routes"]="公共輸送ルート";
- 
+
   $lang_str["list_pipes"]="商品 (パイプ、電力、 ...)";
     $lang_str["list_power_line"]="電力線";
     $lang_str["list_man_made_pipeline"]="パイプライン";
- 
+
 $lang_str["list_places"]="場所";
   $lang_str["list_streets"]="通りの標識";
   $lang_str["list_nature_recreation"]="自然とリクリエーション";
-    $lang_str["list_leisure_park"]="公園";
-    $lang_str["list_leisure_nature_reserve"]="自然保護区域";
-    $lang_str["list_leisure_common"]="共有地";
-    $lang_str["list_leisure_garden"]="庭園";
+#    $lang_str["list_leisure_park"]="Parks";
+#    $lang_str["list_leisure_nature_reserve"]="Nature Reserves";
+#    $lang_str["list_leisure_common"]="Commons";
+#    $lang_str["list_leisure_garden"]="Gardens";
   $lang_str["list_natural"]="自然地層";
     $lang_str["list_natural_peaks"]="頂上";
     $lang_str["list_natural_spring"]="泉";
@@ -367,22 +517,44 @@ $lang_str["list_places"]="場所";
     $lang_str["list_natural_land"]="島";
     $lang_str["list_natural_cave_entrance"]="洞穴";
     $lang_str["list_natural_tree"]="木";
- 
+
+$lang_str["list_industry"]="工業";
+$lang_str["list_power"]="電力";
+  $lang_str["list_power_generator"]="発電所";
+  $lang_str["list_power_station"]="変電所";
+  $lang_str["list_power_sub_station"]="小規模変電所";
+$lang_str["list_works"]="工場";
+  $lang_str["list_landuse_industrial"]="工業エリア";
+  $lang_str["list_man_made_works"]="工場";
+
+$lang_str["route_international"]="国際ルート";
+$lang_str["route_national"]="全国ルート";
+$lang_str["route_region"]="地域ルート";
+$lang_str["route_urban"]="近郊ルート";
+$lang_str["route_suburban"]="サブ近郊ルート";
+$lang_str["route_local"]="ローカルルート";
+$lang_str["route_no"]="ルートがありません";
+$lang_str["route_zoom"]="ズームしてルート一覧を見る";
+
+$lang_str["station_type_amenity_bus_station"]="バス停";
+$lang_str["station_type_amenity_ferry_terminal"]="フェリーターミナル";
+$lang_str["station_type_highway_bus_stop"]="バス停";
+$lang_str["station_type_railway_tram_stop"]="電停";
+$lang_str["station_type_railway_station"]="鉄道駅";
+$lang_str["station_type_railway_halt"]="臨時停車駅";
+// ATTENTION: the last >400 language strings are deprecated
+
+// The following $lang_str are not defined in www/lang/en.php and might be 
+// deprecated/mislocated/wrong:
+$lang_str["search_field"]="検索...";
+$lang_str["search_tip"]="例 'London', 'Cromwell Road', 'post box near Hyde Park',...";
+$lang_str["search_clear"]="検索フィールドをクリア";
+$lang_str["result_no"]="見つかりません";
+$lang_str["search_process"]="検索中";
+$lang_str["search_more"]="もっと表示";
+$lang_str["search_results"]="検索結果";
+$lang_str["search_nominatim"]="検索機能提供元";
 $lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
- 
-// Mapkey
-$lang_str["map_key:head"]="マップキー";
-$lang_str["map_key:zoom"]="ズームレベル";
 $lang_str["place=continent"]="大陸";
 $lang_str["place=country"]="国";
 $lang_str["place=state"]="州";
@@ -398,44 +570,14 @@ $lang_str["place=village"]="村";
 $lang_str["place=hamlet"]="小村";
 $lang_str["place=locality"]="地域の通称";
 $lang_str["place=island"]="島";
- 
-$lang_str["admin_level=2"]="国境";
-$lang_str["admin_level=3"]="行政区分(未使用)";
-$lang_str["admin_level=4"]="道州境界";
-$lang_str["admin_level=5"]="コミュニティ境界(未使用)";
-$lang_str["admin_level=6"]="都道府県境";
-$lang_str["admin_level=8"]="市町村境";
-$lang_str["admin_level=10"]="町名・街区";
- 
-$lang_str["sub_type=t3|type=historic"]="ユネスコ世界遺産サイト";
-$lang_str["sub_type=|type=place_of_worship"]="礼拝所";
-$lang_str["sub_type=t1|type=place_of_worship"]="キリスト教教会";
-$lang_str["sub_type=t2|type=place_of_worship"]="イスラム教モスク";
-$lang_str["sub_type=t3|type=place_of_worship"]="ユダヤ教シナゴーグ";
-$lang_str["sub_type=t4|type=place_of_worship"]="Sikh ?";
+$lang_str["tag:admin_level=2"]="国境";
+$lang_str["tag:admin_level=3"]="行政区分(未使用)";
+$lang_str["tag:admin_level=4"]="道州境界";
+$lang_str["tag:admin_level=5"]="コミュニティ境界(未使用)";
+$lang_str["tag:admin_level=6"]="都道府県境";
+$lang_str["tag:admin_level=8"]="市町村境";
+$lang_str["tag:admin_level=10"]="町名・街区";
 $lang_str["sub_type=t3|type="]="";
-$lang_str["sub_type=t3|type="]="";
-$lang_str["sub_type=t3|type="]="";
-$lang_str["sub_type=t3|type="]="";
-$lang_str["sub_type=t3|type="]="";
-$lang_str["sub_type=t3|type="]="";
-$lang_str["sub_type=t3|type="]="";
- 
-$lang_str["highway_type=motorway"]="自動車専用道路";
-$lang_str["highway_type=trunk"]="国道";
-$lang_str["highway_type=primary"]="主要地方道";
-$lang_str["highway_type=secondary"]="一般地方道";
-$lang_str["highway_type=tertiary"]="一般道(2車線以上)";
-$lang_str["highway_type=minor"]="一般道(2車線未満)";
-$lang_str["highway_type=service"]="敷地内道路";
-$lang_str["highway_type=pedestrian"]="歩行者専用道路";
-$lang_str["highway_type=track"]="トラック";
-$lang_str["highway_type=path"]="小道 (徒歩, 自転車, 乗馬道)";
-$lang_str["square_type=pedestrian"]="広場";
-$lang_str["square_type=parking"]="駐車ゾーン";
-$lang_str["highway_type=aero_run"]="滑走路";
-$lang_str["highway_type=aero_taxi"]="誘導路";
- 
 $lang_str["landuse=park"]="公園";
 $lang_str["landuse=education"]="教育施設エリア";
 $lang_str["landuse=tourism"]="観光施設エリア";
@@ -456,7 +598,6 @@ $lang_str["landuse=natural|sub_type=t2"]="氷河";
 $lang_str["landuse=natural|sub_type=t3"]="がれ、ヒース";
 $lang_str["landuse=natural|sub_type=t4"]="泥地";
 $lang_str["landuse=natural|sub_type=t5"]="砂浜";
- 
 $lang_str["building=default"]="建物";
 $lang_str["building=worship"]="宗教用建物";
 $lang_str["building=road_amenities"]="輸送施設 (駅、ターミナル、料金所、 ...)";
@@ -475,32 +616,6 @@ $lang_str["building=culture"]="文化的建物";
 $lang_str["building=tourism"]="観光用建物";
 $lang_str["building=sport"]="スポーツ用建物";
 $lang_str["housenumber"]="家番号";
- 
-$lang_str["sub_type=t1|type=communication"]="郵便局";
-$lang_str["sub_type=t2|type=communication"]="郵便ポスト";
-$lang_str["sub_type=t1|type=economic"]="ATM";
-$lang_str["sub_type=t2|type=economic"]="銀行";
-$lang_str["sub_type=t1|type=services"]="リサイクル";
-$lang_str["sub_type=t1|type=man_made"]="塔";
-$lang_str["sub_type=t2|type=man_made"]="風力発電";
-$lang_str["sub_type=t3|type=man_made"]="風車";
-$lang_str["sub_type=t1|type=emergency"]="病院";
-$lang_str["sub_type=t1|type=health"]="薬局";
-$lang_str["sub_type=t1|type=tourism"]="ホテル, ユースホステル, ...";
-$lang_str["sub_type=t2|type=tourism"]="キャンプ場";
-$lang_str["sub_type=t3|type=tourism"]="観光案内";
- 
-$lang_str["grave_is_on"]="Grave is on";
- 
-$lang_str["list_industry"]="工業";
-$lang_str["list_power"]="電力";
-  $lang_str["list_power_generator"]="発電所";
-  $lang_str["list_power_station"]="変電所";
-  $lang_str["list_power_sub_station"]="小規模変電所";
-$lang_str["list_works"]="工場";
-  $lang_str["list_landuse_industrial"]="工業エリア";
-  $lang_str["list_man_made_works"]="工場";
- 
 $lang_str["tag:name"]=array("名前", "名前");
 $lang_str["tag:amenity"]="生活環境";
 $lang_str["tag:place"]="場所";
@@ -523,7 +638,6 @@ $lang_str["tag:domination"]="宗派";
 $lang_str["tag:shop"]="店";
 $lang_str["tag:vending"]="自販機";
 $lang_str["tag:opening_hours"]="営業時間";
- 
 $lang_str["tag:place=continent"]="大陸";
 $lang_str["tag:place=country"]="国";
 $lang_str["tag:place=state"]="州";
@@ -536,7 +650,6 @@ $lang_str["tag:place=hamlet"]="小村(未使用)";
 $lang_str["tag:place=suburb"]="近郊(未使用)";
 $lang_str["tag:place=locality"]="地域の通称";
 $lang_str["tag:place=island"]="島";
- 
 $lang_str["tag:route=train"]="列車";
 $lang_str["tag:route=railway"]="鉄道";
 $lang_str["tag:route=rail"]="鉄道";
@@ -552,7 +665,6 @@ $lang_str["tag:route=road"]="道路";
 $lang_str["tag:route=bicycle"]="自転車";
 $lang_str["tag:route=hiking"]="ハイキング";
 $lang_str["tag:route=mtb"]="マウンテンバイク";
- 
 $lang_str["tag:leisure=sports_centre"]="スポーツセンター";
 $lang_str["tag:leisure=golf_course"]="ゴルフコース";
 $lang_str["tag:leisure=stadium"]="スタジアム";
@@ -618,7 +730,6 @@ $lang_str["tag:sport=table_tennis"]="テーブルテニス";
 $lang_str["tag:sport=team_handball"]="ハンドボール";
 $lang_str["tag:sport=tennis"]="テニス";
 $lang_str["tag:sport=volleyball"]="バレーボール";
- 
 $lang_str["tag:power=generator"]="発電所";
 $lang_str["tag:power=line"]="電力線";
 $lang_str["tag:power=tower"]="送電塔";
@@ -643,22 +754,10 @@ $lang_str["tag:power_source=fusion"]="核融合";
 $lang_str["tag:power_source=wind"]="風力";
 $lang_str["tag:power_source=photovoltaic"]="太陽電池";
 $lang_str["tag:power_source=solar-thermal"]="太陽熱";
- 
 $lang_str["cuisine_regional"]="地域料理";
-$lang_str["yes"]="はい";
-$lang_str["no"]="いいえ";
- 
 $lang_str["tag:amenity=cinema"]=array("映画館", "映画館");
-$lang_str["tag:amenity=restaurant"]=array("レストラン", "レストラン");
+$lang_str["tag:amenity=restaurant"]="レストラン";
 $lang_str["tag:amenity=pub"]=array("パブ", "パブ");
- 
 $lang_str["tag:highway"]=array("道路", "道路");
- 
-$lang_str["main:map_key"]="マップキー";
-$lang_str["main:options"]="オプション設定";
-$lang_str["main:about"]="About";
-$lang_str["main:donate"]="寄付";
-$lang_str["main:licence"]="マップデータ: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributors | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">投稿者</a>";
-$lang_str["main:permalink"]="パーマリンク";
- 
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'>".lang("info_back")."</a></div><h1>オブジェクトがみつかりません</h1>ID \"%s\" のオブジェクトが見つかりません。次のいずれかの理由でしょう:<ul><li>IDが間違っている。</li><li>オブジェクトがまだサードパーティサイトに認識されておらず、OpenStreetBrowserでは(まだ)利用できない。</li><li>オブジェクトはサポート外のエリアにある。</li><li>リンクが古く、オブジェクトはOpenStreetMapから削除されている。</li></ul>";
+$lang_str["tag:religion=christian"]="キリスト教";
+
