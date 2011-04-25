@@ -54,3 +54,4 @@ $basemaps=array(
 // overlays - Additional overlays
 // cloudmade_basemap - Add the default cloudmade basemap
 // iplocation - Locate 'my position' using the iplocationtools-service
+// blog - On startup show a window with the rss-feed of the blog
