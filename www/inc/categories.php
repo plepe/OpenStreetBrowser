@@ -23,7 +23,7 @@ $scales_levels=array(
   1000);
 $scale_icon=array("global"=>2, "international"=>5, "national"=>8, "regional"=>11, "urban"=>13, "suburban"=>15, "local"=>17);
 $scale_text=array("global"=>4, "international"=>8, "national"=>10, "regional"=>13, "urban"=>15, "suburban"=>16, "local"=>18);
-include "categories_sql.php";
+include_once "categories_sql.php";
 $default_style=array(
   "point|icon_style"=>"allow_overlap: true;",
   "point|icon_label_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: true; halo_fill: #ffffff; halo_radius: 1;",
