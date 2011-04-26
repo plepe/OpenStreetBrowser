@@ -99,7 +99,7 @@ from
    osm_tags->'name' as "name",
    importance_text(max(importance_order(stops_importance(osm_id, osm_tags, osm_way)))) as "importance",
    envelope(ST_Collect((CASE
-     WHEN osm_type='point' THEN geo_relate_nearest_point(osm_id, osm_tags, osm_way, 15, E'(CASE WHEN $2 @> ''highway=>bus_stop'' THEN osm_tags ? ''highway'' WHEN $2 ? ''railway'' THEN osm_tags ? ''railway'' ELSE true END)')
+     WHEN osm_type @> 'form=>point' THEN geo_relate_nearest_point(osm_id, osm_tags, osm_way, 15, E'(CASE WHEN $2 @> ''highway=>bus_stop'' THEN osm_tags ? ''highway'' WHEN $2 ? ''railway'' THEN osm_tags ? ''railway'' ELSE true END)')
      ELSE osm_way END))) as "poly"
   from osm_poipoly
   where
@@ -292,7 +292,7 @@ from
    osm_tags->'name' as "name",
    importance_text(max(importance_order(stops_importance(osm_id, osm_tags, osm_way)))) as "importance",
    envelope(ST_Collect((CASE
-     WHEN osm_type='point' THEN geo_relate_nearest_point(osm_id, osm_tags, osm_way, 15, E'(CASE WHEN $2 @> ''highway=>bus_stop'' THEN osm_tags ? ''highway'' WHEN $2 ? ''railway'' THEN osm_tags ? ''railway'' ELSE true END)')
+     WHEN osm_type @> 'form=>point' THEN geo_relate_nearest_point(osm_id, osm_tags, osm_way, 15, E'(CASE WHEN $2 @> ''highway=>bus_stop'' THEN osm_tags ? ''highway'' WHEN $2 ? ''railway'' THEN osm_tags ? ''railway'' ELSE true END)')
      ELSE osm_way END))) as "poly"
   from osm_poipoly
   where
