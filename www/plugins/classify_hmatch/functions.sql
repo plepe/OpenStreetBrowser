@@ -1,9 +1,11 @@
-CREATE OR REPLACE FUNCTION classify_hmatch(text, hstore, geometry, text[]) RETURNS hstore AS $$
+drop function if exists classify_hmatch(text, hstore, geometry, text[]);
+CREATE OR REPLACE FUNCTION classify_hmatch(text[], text, hstore, geometry, hstore default ''::hstore) RETURNS hstore AS $$
 DECLARE
-  id alias for $1;
+  classify_type alias for $1;
+  id alias for $2;
   osm_tags hstore;
-  way alias for $3;
-  classify_type alias for $4;
+  way alias for $4;
+  osm_type alias for $5;
   val text;
   ret hstore;
   rec record;
@@ -14,7 +16,7 @@ BEGIN
     return osm_tags;
   end if;
 
-  osm_tags:=$2;
+  osm_tags:=$3;
   -- raise notice 'classify % (%)', id, classify_type;
 
   for i in array_lower(classify_type, 1)..array_upper(classify_type, 1) loop
@@ -28,7 +30,8 @@ BEGIN
       (CASE
 	WHEN "key_exists" is null THEN true
 	ELSE osm_tags ? "key_exists"
-      END)
+      END) and
+      osm_type @> "type_match"
     order by
       "importance" desc
     limit 1;
@@ -50,7 +53,6 @@ BEGIN
   return osm_tags;
 END;
 $$ LANGUAGE plpgsql stable;
-
 
 CREATE OR REPLACE FUNCTION classify_hmatch_sqlwhere(text) RETURNS text AS $$
 DECLARE
