@@ -296,7 +296,7 @@ BEGIN
     return false;
   end if;
 
-  -- if there's only one outer polygon, check if multipolygon has no
+  -- if there's only one outer polygon, check if multipolygon doesn't have
   -- (relevant) tags. Then we can import tags and delete outer way from
   -- osm_polygon
   if(array_upper(outer_members, 1)=1) then
@@ -304,7 +304,7 @@ BEGIN
     tmp:=delete(tags, Array['type', 'source']);
 
     -- in case of undefined polygon merge tags and remove outer polygon
-    if array_upper(akeys(tmp), 1)=0 then
+    if array_upper(akeys(tmp), 1) is null then
       tags:=tags_merge(tags, way_assemble_tags(outer_members[1]));
       delete from osm_polygon where osm_id='way_'||(outer_members[1]);
     end if;
