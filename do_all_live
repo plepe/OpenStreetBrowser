@@ -129,3 +129,6 @@ touch /osm/tiles/planet-import-complete
 
 cd $ROOT_PATH
 ./software/mod_tile/mod_tile/renderd
+
+cd $ROOT_PATH
+./src/mcp

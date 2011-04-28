@@ -107,8 +107,6 @@ cp $ROOT_PATH/render/agri_ind.template $ROOT_PATH/render/agri_ind.xml
 $ROOT_PATH/src/update_xml $ROOT_PATH/render/agri_ind.xml
 sleep 2
 
-echo "* Starting rendering"
-cd $ROOT_PATH/render
-nice ./render_all
-
 echo "* Finished"
+cd $ROOT_PATH
+./src/mcp
