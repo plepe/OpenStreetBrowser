@@ -291,7 +291,6 @@ function init() {
     return false; //cancel the right click of brower
   };
 
-  map.addControl(new OpenLayers.Control.MousePosition());
   map.addControl(new OpenLayers.Control.ScaleLine({ geodesic: true }));
 
   redraw_timer=setTimeout("check_redraw()", 300);
