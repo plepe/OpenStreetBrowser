@@ -138,7 +138,6 @@ Map {
   text-avoid-edges: true;
   text-halo-radius: 1;
   text-wrap-width: 20;
-  text-fill: #ff0000;
   text-max-char-angle-delta: 20;
 }
 .area_text[way_area>=150000][zoom>=14] name {

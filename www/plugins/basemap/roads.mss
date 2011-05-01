@@ -607,37 +607,20 @@
 .square_fill[tunnel=yes][zoom>=11][zoom<14] {
   polygon-fill: #a7a7a7;
 }
-.square_fill[zoom>=14] { 
-  line-join: round;
-  line-cap: round;
-}
 .square_fill[highway_poly_type=pedestrian][tunnel=yes][zoom>=14] {
   polygon-fill: #a7a7a7;
-  line-color: #a7a7a7;
 }
 .square_fill[highway_poly_type=pedestrian][zoom>=14] {
   polygon-fill: #cdcdcd;
-  line-color: #cdcdcd;
 }
 .square_fill[highway_poly_type=parking][zoom>=10][zoom<14] {
   polygon-fill: #e0e0e0;
 }
 .square_fill[highway_poly_type=parking][tunnel=yes][zoom>=14] {
   polygon-fill: #b7c6d1;
-  line-color: #b7c6d1;
 }
 .square_fill[highway_poly_type=parking][zoom>=14] {
   polygon-fill: #e0e0e0;
-  line-color: #e0e0e0;
-}
-.square_fill[zoom>=14][zoom<15] {
-  line-width: 3;
-}
-.square_fill[zoom>=15][zoom<16] {
-  line-width: 6;
-}
-.square_fill[zoom>=16] {
-  line-width: 9;
 }
 .square_casing[zoom>=14] {
   polygon-fill: #cdcdcd;
@@ -653,13 +636,13 @@
   polygon-fill: #a7a7a7;
 }
 .square_casing[zoom>=14][zoom<15] {
-  line-width: 5;
+  line-width: 2;
 }
 .square_casing[zoom>=15][zoom<16] {
-  line-width: 8;
+  line-width: 3;
 }
 .square_casing[zoom>=16] {
-  line-width: 12;
+  line-width: 3;
 }
 
 .roads_rail[railway=tram],
