@@ -286,11 +286,6 @@ function init() {
 			new OpenLayers.Control.Navigation() ]
 	  });
 
-  map.div.oncontextmenu = function noContextMenu(e) {
-    rightclick(e);
-    return false; //cancel the right click of brower
-  };
-
   map.addControl(new OpenLayers.Control.ScaleLine({ geodesic: true }));
 
   redraw_timer=setTimeout("check_redraw()", 300);
