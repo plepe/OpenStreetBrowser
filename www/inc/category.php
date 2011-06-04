@@ -7,7 +7,7 @@ class category {
     $this->id=$id;
     $this->file="$lists_dir/$this->id";
 
-    if(!file_exists($this->file))
+    if(!file_exists("{$this->file}.save"))
       return null;
 
     $this->get_tags();
