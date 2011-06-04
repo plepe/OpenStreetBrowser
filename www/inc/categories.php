@@ -453,7 +453,7 @@ function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance
 }
 
 function mapnik_get_layer($dom, $name, $sql) {
-  global $db_name;
+  global $db;
 
   $layer=$dom->createElement("Layer");
   $layer->setAttribute("name", "$name");
@@ -471,7 +471,19 @@ function mapnik_get_layer($dom, $name, $sql) {
   $parameter=$dom->createElement("Parameter");
   $datasource->appendChild($parameter);
   $parameter->setAttribute("name", "dbname");
-  $parameter->appendChild($dom->createTextNode("$db_name"));
+  $parameter->appendChild($dom->createTextNode($db['name']));
+  $parameter=$dom->createElement("Parameter");
+  $datasource->appendChild($parameter);
+  $parameter->setAttribute("name", "host");
+  $parameter->appendChild($dom->createTextNode($db['host']));
+  $parameter=$dom->createElement("Parameter");
+  $datasource->appendChild($parameter);
+  $parameter->setAttribute("name", "user");
+  $parameter->appendChild($dom->createTextNode($db['user']));
+  $parameter=$dom->createElement("Parameter");
+  $datasource->appendChild($parameter);
+  $parameter->setAttribute("name", "password");
+  $parameter->appendChild($dom->createTextNode($db['passwd']));
   $parameter=$dom->createElement("Parameter");
   $datasource->appendChild($parameter);
   $parameter->setAttribute("name", "table");
