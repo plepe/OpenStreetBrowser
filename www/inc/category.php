@@ -34,13 +34,12 @@ class category {
 	"version"=>0,
       ));
     }
-}
+  }
 
-  function get_newest_version() {
+  function get_newest_version($db=null) {
     global $lists_dir;
-    global $db_central;
 
-    $res=sql_query("select * from category_current where category_id='$this->id'", $db_central);
+    $res=sql_query("select * from category_current where category_id='$this->id'", $db);
     if(!$elem=pg_fetch_assoc($res))
       return null;
 
