@@ -5,7 +5,7 @@ class category {
   function __construct($id) {
     global $lists_dir;
     $this->id=$id;
-    $this->file="$lists_dir/$this->id.xml";
+    $this->file="$lists_dir/$this->id";
 
     if(!file_exists($this->file))
       return null;
@@ -37,8 +37,6 @@ class category {
   }
 
   function get_newest_version($db=null) {
-    global $lists_dir;
-
     $res=sql_query("select * from category_current where category_id='$this->id'", $db);
     if(!$elem=pg_fetch_assoc($res))
       return null;
@@ -47,10 +45,9 @@ class category {
   }
 
   function get_renderd_config() {
-    global $lists_dir;
     $ret=array();
 
-    $file="$lists_dir/{$this->id}.renderd";
+    $file="$this->file.renderd";
     if(!file_exists($file))
       return null;
 
@@ -71,7 +68,7 @@ class category {
 
     // load category configuration
     if(file_exists("$this->file.save")) {
-      $this->data=unserialize(file_get_contents("$lists_dir/$this->id.xml.save"));
+      $this->data=unserialize(file_get_contents("$this->file.save"));
       return $this->data;
     }
 
