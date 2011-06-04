@@ -33,7 +33,7 @@ class git_dir {
     }
 
     # Any file/directory starts with . ?
-    if(preg_match("/^\.|\/\./", $id)) {
+    if(preg_match("/^\.|\/\./", $this->id)) {
       return array("status"=>"Invalid Filename");
     }
 
