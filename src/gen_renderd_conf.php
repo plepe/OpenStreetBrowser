@@ -26,8 +26,6 @@ function gen_renderd_conf() {
     }
     else {
       $c=$category->get_renderd_config();
-      print_r($c);
-      exit;
 
       if((!isset($c['VERSION']))||($cat_version!=$c['VERSION']))
 	$recompile=true;
