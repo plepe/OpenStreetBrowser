@@ -82,6 +82,7 @@ class category {
 
   function compile() {
     global $lists_dir;
+    global $db_central;
 
     // Load content
     $this->text=category_load($this->id);
@@ -115,7 +116,7 @@ class category {
 
     // ... then write all files at once
     foreach($data['_']['classify_fun'] as $table=>$fun)
-      sql_query($fun);
+      sql_query($fun, $db_central);
 
     $f1=fopen("$this->file.save", "w");
     fwrite($f1, serialize($data));
