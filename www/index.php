@@ -103,10 +103,6 @@ foreach($menu_list as $entry) {
 ?>
 </div>
 <div class="map" id="map"></div>
-<div id="contextmenu" class="contextmenu" onmouseout="contextmenu_mouseout(event)" onmouseover="javascript:clearTimeout(contexttimer)" style="top:20px; left:500px; display:none;">
-<span id="contextmenu_pointer" style="position:absolute; width:10px; height:10px;"></span>
-<table id="contextmenu_table" cellspacing="0">
-</table></div>
 
 <div class="shadow"></div>
 <div class="map_key_hidden" id="map_key"></div>

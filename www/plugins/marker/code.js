@@ -275,7 +275,9 @@ function marker_info(chapters, ob) {
 }
 
 function marker_init() {
-  contextmenu_add("plugins/marker/icon.png", lang("marker:add_marker"), marker_add_context);
+  if(plugins_loaded("contextmenu")) {
+    contextmenu_add("plugins/marker/icon.png", lang("marker:add_marker"), marker_add_context);
+  }
 }
 
 register_hook("get_permalink", marker_permalink);

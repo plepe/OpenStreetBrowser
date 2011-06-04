@@ -114,3 +114,5 @@ $overlays_add=array(
 // osm_member - Show member information for objects
 // iplocation - Locate 'my position' using the iplocationtools-service
 // blog - On startup show a window with the rss-feed of the blog
+// mouseposition - Show the coordinates of the current mouseposition
+// contextmenu - Include a contextmenu on right click

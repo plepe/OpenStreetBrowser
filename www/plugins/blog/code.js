@@ -45,6 +45,11 @@ function blog_show(data) {
     a.target="_new";
     a.innerHTML=rss[i].title;
 
+    var item_info=dom_create_append(blog_content, "div");
+    var d=new Date(rss[i]['pubDate']);
+    item_info.innerHTML=strftime("%Y-%m-%d %H:%m UTC", d)+" by "+
+      rss[i]['dc:creator'];
+
     var item_cont=dom_create_append(blog_content, "div");
     item_cont.innerHTML=rss[i].description;
   }
