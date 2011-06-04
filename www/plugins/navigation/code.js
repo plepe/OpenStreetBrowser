@@ -23,4 +23,35 @@ function navigation_init() {
   navigation_toolbox.content.innerHTML=text;
 }
 
+function navigation_info(chapters, ob) {
+  if(ob.geo_center()) {
+    // set home
+    var a=document.createElement("a");
+    a.onclick=navigation_set_home.bind(this, ob.geo_center());
+    dom_create_append_text(a, lang("set home"));
+
+    var entry={
+      head: 'actions',
+      weight: 9,
+      content: [ a ]
+    };
+
+    chapters.push(entry);
+
+    // set destination
+    var a=document.createElement("a");
+    a.onclick=navigation_set_destination.bind(this, ob.geo_center());
+    dom_create_append_text(a, lang("set destination"));
+
+    var entry={
+      head: 'actions',
+      weight: 9,
+      content: [ a ]
+    };
+
+    chapters.push(entry);
+  }
+}
+
 register_hook("init", navigation_init);
+register_hook("info", navigation_info);
