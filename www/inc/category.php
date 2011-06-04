@@ -46,6 +46,26 @@ class category {
     return $elem['version'];
   }
 
+  function get_renderd_config() {
+    global $lists_dir;
+    $ret=array();
+
+    $file="$lists_dir/{$this->id}.renderd";
+    if(!file_exists($file))
+      return null;
+
+    $f=fopen("$file", "r");
+    $r=fgets($f);
+    while($r=fgets($f)) {
+      $r=trim($r);
+      $r=explode("=", $r);
+      $ret[$r[0]]=$r[1];
+    }
+    fclose($f);
+
+    return $ret;
+  }
+
   function get_data() {
     global $lists_dir;
 
