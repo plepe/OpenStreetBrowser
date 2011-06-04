@@ -812,9 +812,7 @@ function category_list($lang="en") {
   $res=sql_query("select * from category_current left join category on category_current.category_id=category.category_id and category_current.version=category.version");
   while($elem=pg_fetch_assoc($res)) {
     $tags=new tags(parse_hstore($elem['tags']));
-    if($tags->get("hide")!="yes") {
-      $ret[$elem['category_id']]=$tags;
-    }
+    $ret[$elem['category_id']]=$tags;
   }
 
   return $ret;
