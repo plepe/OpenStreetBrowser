@@ -252,5 +252,5 @@ function user_transfer_data() {
   $current_user->transfer_user_info();
 }
 
-register_hook("init", user_check_auth);
-register_hook("html_done", user_transfer_data);
+register_hook("init", "user_check_auth");
+register_hook("html_done", "user_transfer_data");

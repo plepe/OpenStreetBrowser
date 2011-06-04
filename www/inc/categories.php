@@ -628,8 +628,8 @@ function build_mapnik_style($id, $data, $global_tags) {
       $importance_list=array_reverse($importance_list);
 
     for($i=0; $i<sizeof($importance_list); $i++) {
-      if($map_layers[$layer])
-	if($map_layers[$layer][$importance_list[$i]])
+      if(isset($map_layers[$layer]))
+	if(isset($map_layers[$layer][$importance_list[$i]]))
 	  foreach($map_layers[$layer][$importance_list[$i]] as $el)
 	    $map->appendChild($el);
     }

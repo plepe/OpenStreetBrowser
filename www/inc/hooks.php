@@ -23,7 +23,7 @@ $hooks_intern=array();
  * @param any vars A variable which will be passed by reference and can therefore by modified
  * @param any params Additional vars
  */
-function call_hooks($hook, $vars, $param1=0, $param2=0, $param3=0, $param4=0) {
+function call_hooks($hook, $vars=0, $param1=0, $param2=0, $param3=0, $param4=0) {
   global $hooks_intern;
 
   if($hooks_intern[$hook])

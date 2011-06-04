@@ -21,4 +21,4 @@ function debug_write($xml) {
   }
 }
 
-register_hook("xml_done", debug_write);
+register_hook("xml_done", "debug_write");
