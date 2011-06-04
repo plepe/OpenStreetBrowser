@@ -15,8 +15,8 @@ function navigation_init() {
   register_toolbox(navigation_toolbox);
 
   if(plugins_loaded("contextmenu")) {
-    contextmenu_add("plugins/navigation/home.png", "set home", navigation_set_home);
-    contextmenu_add("plugins/navigation/destination.png", "set destination", navigation_set_destination);
+    contextmenu_add("plugins/navigation/home.png", lang("navigation:set_home"), navigation_set_home);
+    contextmenu_add("plugins/navigation/destination.png", lang("navigation:set_destination"), navigation_set_destination);
   }
 
   var text = "<i>Navigation</i><br/><br/>At first select your home and your destination on the map.<br/><br/><img src='plugins/navigation/home.png'> home<br/><img src='plugins/navigation/destination.png'> destination<br/><br/>";
@@ -28,7 +28,7 @@ function navigation_info(chapters, ob) {
     // set home
     var a=document.createElement("a");
     a.onclick=navigation_set_home.bind(this, ob.geo_center());
-    dom_create_append_text(a, lang("set home"));
+    dom_create_append_text(a, lang("navigation:set_home"));
 
     var entry={
       head: 'actions',
@@ -41,7 +41,7 @@ function navigation_info(chapters, ob) {
     // set destination
     var a=document.createElement("a");
     a.onclick=navigation_set_destination.bind(this, ob.geo_center());
-    dom_create_append_text(a, lang("set destination"));
+    dom_create_append_text(a, lang("navigation:set_destination"));
 
     var entry={
       head: 'actions',
