@@ -16,33 +16,31 @@ function gen_renderd_conf() {
   $template=file_get_contents("$root_path/src/renderd.conf.template");
   fwrite($conf, $template);
 
-  $d=opendir("$lists_dir");
-  while($f=readdir($d)) {
-    if(preg_match("/(.*)\.xml$/", $f, $m)) {
-      $recompile=false;
+  foreach(category_list() as $f=>$tags) {
+    print "check state of category '$f'\n";
+    $category=new category($f);
+    $cat_version=$category->get_newest_version()."\n";
 
-      if(!file_exists("$lists_dir/$f.renderd")) {
-	$recompile=true;
-      }
-      else {
-	$stat_xml=stat("$lists_dir/$f");
-	$stat_renderd=stat("$lists_dir/$f.renderd");
-
-	if($stat_xml['mtime']>$stat_renderd['mtime'])
-	  $recompile=true;
-      }
-
-      if($recompile) {
-	print "compiling $m[1]\n";
-	$x=new category($m[1]);
-	$x->compile();
-      }
-
-      $conf_part=file_get_contents("$lists_dir/$f.renderd");
-      fwrite($conf, $conf_part);
+    if(!file_exists("$lists_dir/$f.renderd")) {
+      $recompile=true;
     }
+    else {
+      $c=$category->get_renderd_config();
+      print_r($c);
+      exit;
+
+      if((!isset($c['VERSION']))||($cat_version!=$c['VERSION']))
+	$recompile=true;
+    }
+
+    if($recompile) {
+      print "  (re-)compiling $f\n";
+      $category->compile();
+    }
+
+    $conf_part=file_get_contents("$lists_dir/$f.renderd");
+    fwrite($conf, $conf_part);
   }
-  closedir($d);
 
   global $renderd_files;
   if($renderd_files) foreach($renderd_files as $file) {
