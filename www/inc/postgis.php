@@ -8,7 +8,11 @@ $postgis_tables=array(
   ),
   "rel"=>array(
   ),
-  "point_place_extract"=>array(
+  "point_extract"=>array(
+  ),
+  "polygon_extract"=>array(
+  ),
+  "line_extract"=>array(
   ),
 );
 
