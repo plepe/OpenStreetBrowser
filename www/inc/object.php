@@ -19,7 +19,7 @@ $priority_chapter=array(
 function tag_preload($elem) {
   global $tag_preloaded;
 
-  $tag_preloaded[$elem[element]][$elem[id]][$elem[k]]=$elem[v];
+  $tag_preloaded[$elem['element']][$elem['id']][$elem['k']]=$elem['v'];
 }
 
 class object {
@@ -35,20 +35,20 @@ class object {
   function __construct($data) {
     global $object_element_ids;
     $this->data=$data;
-    $this->tags=$data[tags];
-    $this->element=$data[element];
-    if($data[subid])
-      $this->id="$data[element]_$data[id]_$data[subid]";
+    $this->tags=$data['tags'];
+    $this->element=$data['element'];
+    if($data['subid'])
+      $this->id="{$data['element']}_{$data['id']}_{$data['subid']}";
     else
-      $this->id="$data[element]_$data[id]";
-    $this->only_id=$data[id];
-    if($data[subid]) {
+      $this->id="{$data['element']}_{$data['id']}";
+    $this->only_id=$data['id'];
+    if($data['subid']) {
       $this->place_type="gen_node";
       $this->place_type_id="1";
     }
     else {
-      $this->place_type=$data[element];
-      $this->place_type_id=$object_element_ids[$data[element]];
+      $this->place_type=$data['element'];
+      $this->place_type_id=$object_element_ids[$data['element']];
     }
   }
 
@@ -111,7 +111,7 @@ class object {
 	$content=$chapter[$title];
 	if($content) {
 //	  $ret.="<div class=\"object_chapter\" id=\"object_$title\">\n";
-	  if(in_array($title, $param[info_noshow]))
+	  if(in_array($title, $param['info_noshow']))
 	    $ret.=infobox_closed($title);
 	  else
 	    $ret.=infobox($title, $content);
@@ -150,12 +150,12 @@ class object {
 
     $this->read_data();
 
-    $obj=$root->createElement($object_elements[$this->data[element]]);
+    $obj=$root->createElement($object_elements[$this->data['element']]);
     $parent->appendChild($obj);
-    if($this->data[subid])
-      $obj->setAttribute("id", $this->data[id]."_".$this->data[subid]);
+    if($this->data['subid'])
+      $obj->setAttribute("id", $this->data['id']."_".$this->data['subid']);
     else
-      $obj->setAttribute("id", $this->data[id]);
+      $obj->setAttribute("id", $this->data['id']);
     $output_xml[]=$this->id;
 
     $this->place()->get_xml($obj, $root, $inc_children, $bounds);
@@ -275,30 +275,30 @@ function load_object($elem=0, $tags=null) {
     unset($elem);
   }
   else {
-    if($elem[element])
-      $id="{$elem[element]}_{$elem[id]}";
-    elseif($elem[osm_type])
-      $id="{$elem[osm_type]}_{$elem[osm_id]}";
-    elseif($elem[osm_id])
-      $id="{$elem[osm_id]}";
+    if(isset($elem['element']))
+      $id="{$elem['element']}_{$elem['id']}";
+    elseif(isset($elem['osm_type']))
+      $id="{$elem['osm_type']}_{$elem['osm_id']}";
+    elseif(isset($elem['osm_id']))
+      $id="{$elem['osm_id']}";
     else
-      $id=$elem[id];
+      $id=$elem['id'];
 
-    switch($elem[element]) {
+    if(isset($elem['element'])) switch($elem['element']) {
       case "node":
-        if((!$elem[lon])||(!$elem[lat])||(!$elem[way]))
+        if((!$elem['lon'])||(!$elem['lat'])||(!$elem['way']))
 	  unset($elem);
 	break;
       case "way":
-        if((!$elem[nodes])||(!$elem[way]))
+        if((!$elem['nodes'])||(!$elem['way']))
 	  unset($elem);
 	break;
       case "rel":
-        if((!$elem[member_ids])||(!$elem[member_roles]))
+        if((!$elem['member_ids'])||(!$elem['member_roles']))
 	  unset($elem);
 	break;
       case "coll":
-        if((!$elem[member_ids])||(!$elem[member_roles]))
+        if((!$elem['member_ids'])||(!$elem['member_roles']))
 	  unset($elem);
 	break;
     }
@@ -309,7 +309,7 @@ function load_object($elem=0, $tags=null) {
   }
 
   // if we've already loaded this object, we just return it
-  if($objects[$id])
+  if(isset($objects[$id]))
     return $objects[$id];
 
   // let's see if we have a valid object
@@ -328,7 +328,7 @@ function load_object($elem=0, $tags=null) {
 
   // load data if necessary
   $add_tags=array();
-  if(!defined($elem)) {
+  if(!isset($elem)) {
     $qry="select astext(way) as \"way\", astext(way) as \"#geo\", astext(ST_Centroid(way)) as \"#geo:center\" from (select load_geo('$id') as way) x";
 /*    switch($object_place_type) {
       case "node":
@@ -360,10 +360,10 @@ function load_object($elem=0, $tags=null) {
   // load tags
   if($tags)
     // already loaded
-    $elem[tags]=new tags($tags);
-  elseif($tags=$tag_preloaded[$elem[element]][$elem[id]]) {
-    unset($tag_preloaded[$elem[element]][$elem[id]]);
-    $elem[tags]=new tags($tags);
+    $elem['tags']=new tags($tags);
+  elseif($tags=$tag_preloaded[$elem['element']][$elem['id']]) {
+    unset($tag_preloaded[$elem['element']][$elem['id']]);
+    $elem['tags']=new tags($tags);
   }
   else {
     switch($object_place_type) {
@@ -384,27 +384,27 @@ function load_object($elem=0, $tags=null) {
     $rest=sql_query($qry);
     $tags=array();
     while($elemt=pg_fetch_assoc($rest)) {
-      $tags[$elemt[k]]=$elemt[v];
+      $tags[$elemt['k']]=$elemt['v'];
     }
 
     $tags=array_merge($tags, $add_tags);
 
-    $elem[tags]=new tags($tags);
+    $elem['tags']=new tags($tags);
   }
 
   // now that we have tags we can look what kind of object we are going to load
   $class="object";
   foreach($object_types as $key=>$values) {
-    $obj_val=$elem[tags]->get($key);
+    $obj_val=$elem['tags']->get($key);
     foreach($values as $type=>$c) {
       if($obj_val==$type)
 	$class=$c;
     }
   }
 
-  $elem[element]=$object_place_type;
-  $elem[id]=$object_id;
-  $elem[subid]=$object_subid;
+  $elem['element']=$object_place_type;
+  $elem['id']=$object_id;
+  $elem['subid']=$object_subid;
   $o=new $class($elem);
   $objects[$id]=$o;
 
@@ -428,7 +428,7 @@ function load_objects($list) {
 
   foreach($list as $id) {
     if(is_array($id)) {
-      $list_by_type[$id[element]][]=$id[id];
+      $list_by_type[$id['element']][]=$id['id'];
     }
     else if(ereg("^(node|way|rel|coll)_([0-9]+)$", $id, $m)) {
       $list_by_type[$m[1]][]=$m[2];
@@ -438,56 +438,56 @@ function load_objects($list) {
     }
   }
 
-  if($list_by_type[node]) {
-    $qry="select 'node' as element, node_id as id, k, v from node_tags where node_id in (".implode(",", $list_by_type[node]).")";
+  if($list_by_type['node']) {
+    $qry="select 'node' as element, node_id as id, k, v from node_tags where node_id in (".implode(",", $list_by_type['node']).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
       tag_preload($elem);
     }
 
-    $qry="select 'node' as element, id, lon, lat, astext(way) as way from planet_osm_nodes left join planet_osm_point on id=osm_id where id in (".implode(",", $list_by_type[node]).")";
+    $qry="select 'node' as element, id, lon, lat, astext(way) as way from planet_osm_nodes left join planet_osm_point on id=osm_id where id in (".implode(",", $list_by_type['node']).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
       $ret[]=load_object($elem);
     }
   }
 
-  if($list_by_type[way]) {
-    $qry="select 'way' as element, way_id as id, k, v from way_tags where way_id in (".implode(",", $list_by_type[way]).")";
+  if($list_by_type['way']) {
+    $qry="select 'way' as element, way_id as id, k, v from way_tags where way_id in (".implode(",", $list_by_type['way']).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
       tag_preload($elem);
     }
 
-    $qry="select 'way' as element, id, nodes, astext(CASE WHEN l.way is not null THEN l.way WHEN p.way is not null THEN p.way WHEN r.way is not null THEN r.way END) as way from planet_osm_ways left join planet_osm_line l on id=l.osm_id left join planet_osm_polygon p on id=p.osm_id left join relation_members r1 on r1.member_id=id and r1.member_role='outer' left join planet_osm_polygon r on r.osm_id=-r1.relation_id where id in (".implode(",", $list_by_type[way]).")";
+    $qry="select 'way' as element, id, nodes, astext(CASE WHEN l.way is not null THEN l.way WHEN p.way is not null THEN p.way WHEN r.way is not null THEN r.way END) as way from planet_osm_ways left join planet_osm_line l on id=l.osm_id left join planet_osm_polygon p on id=p.osm_id left join relation_members r1 on r1.member_id=id and r1.member_role='outer' left join planet_osm_polygon r on r.osm_id=-r1.relation_id where id in (".implode(",", $list_by_type['way']).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
       $ret[]=load_object($elem);
     }
   }
 
-  if($list_by_type[rel]) {
-    $qry="select 'rel' as element, relation_id as id, k, v from relation_tags where relation_id in (".implode(",", $list_by_type[rel]).")";
+  if($list_by_type['rel']) {
+    $qry="select 'rel' as element, relation_id as id, k, v from relation_tags where relation_id in (".implode(",", $list_by_type['rel']).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
       tag_preload($elem);
     }
 
-    $qry="select 'rel' as element, id, (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from relation_members where relation_id=id) as member_ids, (select to_textarray(member_role) from relation_members where relation_id=id) as member_roles from planet_osm_rels where id in (".implode(",", $list_by_type[rel]).")";
+    $qry="select 'rel' as element, id, (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from relation_members where relation_id=id) as member_ids, (select to_textarray(member_role) from relation_members where relation_id=id) as member_roles from planet_osm_rels where id in (".implode(",", $list_by_type['rel']).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
       $ret[]=load_object($elem);
     }
   }
 
-  if($list_by_type[coll]) {
-    $qry="select 'coll' as element, coll_id as id, k, v from coll_tags where coll_id in (".implode(",", $list_by_type[coll]).")";
+  if($list_by_type['coll']) {
+    $qry="select 'coll' as element, coll_id as id, k, v from coll_tags where coll_id in (".implode(",", $list_by_type['coll']).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
       tag_preload($elem);
     }
 
-    $qry="select 'coll' as element, id, (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from coll_members where coll_id=id) as member_ids, (select to_textarray(member_role) from coll_members where coll_id=id) as member_roles from planet_osm_colls where id in (".implode(",", $list_by_type[coll]).")";
+    $qry="select 'coll' as element, id, (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from coll_members where coll_id=id) as member_ids, (select to_textarray(member_role) from coll_members where coll_id=id) as member_roles from planet_osm_colls where id in (".implode(",", $list_by_type['coll']).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
       $ret[]=load_object($elem);
