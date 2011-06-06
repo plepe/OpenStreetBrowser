@@ -64,7 +64,8 @@ function ajax_user_savedata($param, $xml) {
 
 function ajax_user_create($param, $xml) {
   global $current_user;
-  
+  global $db_central;
+
   // create top level xml object "result"
   $ret=$xml->createElement("result");
   $xml->appendChild($ret);
@@ -75,14 +76,14 @@ function ajax_user_create($param, $xml) {
 
   $pg_username=postgre_escape($param['username']);
 
-  $res=sql_query("select * from user_list where username=$pg_username");
+  $res=sql_query("select * from user_list where username=$pg_username", $db_central);
   if($elem=pg_fetch_assoc($res)) {
     $status->setAttribute("created", "false");
     $status->setAttribute("error", "user_exists");
   }
   else {
     $md5_password=postgre_escape($param['md5_password']);
-    sql_query("insert into user_list values ($pg_username, $md5_password, ".array_to_hstore($param['tags']).")");
+    sql_query("insert into user_list values ($pg_username, $md5_password, ".array_to_hstore($param['tags']).")", $db_central);
     $status->setAttribute("created", "true");
 
     $user=new user($param, 1);
@@ -131,7 +132,7 @@ class User {
     }
 
     // get user from database
-    $res=sql_query("select * from user_list where username={$this->pg_username}");
+    $res=sql_query("select * from user_list where username={$this->pg_username}", $db_central);
     // user does not exist -> anonymous
     if(!($elem=pg_fetch_assoc($res))) {
       $this->load_anonymous();
@@ -158,7 +159,7 @@ class User {
       return;
 
     $this->auth_id=uniqid();
-    sql_query("insert into auth values ('{$this->auth_id}', {$this->pg_username}, now())");
+    sql_query("insert into auth values ('{$this->auth_id}', {$this->pg_username}, now())", $db_central);
   }
 
   function load_anonymous() {
@@ -195,7 +196,7 @@ class User {
 
     sql_query("update user_list set osm_tags=".
               array_to_hstore($this->tags->data()).
-              " where username=$this->pg_username");
+              " where username=$this->pg_username", $db_central);
   }
 
   function get_author() {
@@ -215,7 +216,7 @@ class User {
 function user_list() {
   $user_list=array();
 
-  $res=sql_query("select * from user_list");
+  $res=sql_query("select * from user_list", $db_central);
   while($elem=pg_fetch_assoc($res)) {
     $user_list[]=$elem['username'];
   }
@@ -236,10 +237,10 @@ function user_check_auth() {
   $auth_id=$_COOKIE['auth_id'];
   $pg_auth_id=postgre_escape($auth_id);
 
-  $res=sql_query("select * from auth where auth_id=$pg_auth_id");
+  $res=sql_query("select * from auth where auth_id=$pg_auth_id", $db_central);
   if($elem=pg_fetch_assoc($res)) {
     $current_user=new user(array("username"=>$elem['username'], "auth_id"=>$auth_id), 1);
-    sql_query("update auth set last_login=now() where auth_id=$pg_auth_id");
+    sql_query("update auth set last_login=now() where auth_id=$pg_auth_id", $db_central);
   }
   else {
     $current_user=new user();
