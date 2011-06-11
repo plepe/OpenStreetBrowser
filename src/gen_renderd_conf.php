@@ -19,7 +19,8 @@ function gen_renderd_conf() {
   foreach(category_list() as $f=>$tags) {
     print "check state of category '$f'\n";
     $category=new category($f);
-    $cat_version=$category->get_newest_version()."\n";
+    $cat_version=$category->get_newest_version();
+    $recompile=false;
 
     if(!file_exists("$lists_dir/$f.renderd")) {
       $recompile=true;

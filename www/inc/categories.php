@@ -687,6 +687,7 @@ function build_renderd_config($id, $data, $global_tags) {
   $ret.="URI=/tiles/$id/\n";
   $ret.="XML=$lists_dir/$id.mapnik\n";
   $ret.="HOST=$www_host\n";
+  $ret.="VERSION={$data['_']['version']}\n";
   $ret.="\n";
 
   return $ret;
