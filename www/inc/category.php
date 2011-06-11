@@ -55,8 +55,9 @@ class category {
     $r=fgets($f);
     while($r=fgets($f)) {
       $r=trim($r);
-      $r=explode("=", $r);
-      $ret[$r[0]]=$r[1];
+      if(preg_match("/^([A-Za-z0-9_]*) *=(.*)$/", $r, $m)) {
+	$ret[$m[1]]=$m[2];
+      }
     }
     fclose($f);
 
