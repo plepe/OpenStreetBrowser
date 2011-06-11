@@ -452,7 +452,7 @@ function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance
   return array('rule'=>$rule, 'columns'=>$add_columns);
 }
 
-function mapnik_get_layer($dom, $name, $sql) {
+function mapnik_get_layer($dom, $name, $sql, $shape_type="") {
   global $db;
 
   $layer=$dom->createElement("Layer");
@@ -495,7 +495,10 @@ function mapnik_get_layer($dom, $name, $sql) {
   $parameter=$dom->createElement("Parameter");
   $datasource->appendChild($parameter);
   $parameter->setAttribute("name", "geometry_field");
-  $parameter->appendChild($dom->createTextNode("geo"));
+  if($shape_type!="") 
+    $parameter->appendChild($dom->createTextNode("geo_{$shape_type}"));
+  else
+    $parameter->appendChild($dom->createTextNode("geo"));
   $parameter=$dom->createElement("Parameter");
   $datasource->appendChild($parameter);
   $parameter->setAttribute("name", "srid");
@@ -632,29 +635,29 @@ function build_mapnik_style($id, $data, $global_tags) {
       $sql="(select{$sql_select} from ($sql) as t{$sql_join}) as u";
 
       if(in_array($table, array("polygon"))) {
-	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_shape", $sql);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_shape", $sql, "polygon");
 	$map_layers['polygon_shape'][$importance][]=$style_shape;
 	$map_layers['polygon_shape'][$importance][]=$layer;
       }
       if(in_array($table, array("point", "polygon", "point_extract"))) {
-	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql, "point");
 	$map_layers['point_icon'][$importance][]=$style_icon;
 	$map_layers['point_icon'][$importance][]=$layer;
 
-	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql, "point");
 	$map_layers['point_text'][$importance][]=$style_text;
 	$map_layers['point_text'][$importance][]=$layer;
       }
       else {
-	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_shape", $sql);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_shape", $sql, "line");
 	$map_layers['line_shape'][$importance][]=$style_shape;
 	$map_layers['line_shape'][$importance][]=$layer;
 
-	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql, "line");
 	$map_layers['line_text'][$importance][]=$style_text;
 	$map_layers['line_text'][$importance][]=$layer;
 
-	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql, "line");
 	$map_layers['line_icon'][$importance][]=$style_icon;
 	$map_layers['line_icon'][$importance][]=$layer;
       }
