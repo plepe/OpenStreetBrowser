@@ -506,6 +506,7 @@ function mapnik_get_layer($dom, $name, $sql) {
 
 function build_mapnik_style($id, $data, $global_tags) {
   global $importance_levels;
+  global $postgis_tables;
 
   $layers=array("polygon_shape"=>array("reverse"),
 		"line_shape" =>array("reverse"),
@@ -530,36 +531,60 @@ function build_mapnik_style($id, $data, $global_tags) {
       $style_shape->setAttribute("name", "{$id}_{$importance}_{$table}_shape");
       foreach($data2['rule'] as $i=>$tags) {
 	$rule_id=$data2['rule_id'][$i];
-	if(in_array($table, array("polygon"))) {
+
+	// layer polygon_shape
+	if(isset($postgis_tables[$table])&&
+	   in_array("polygon_shape", $postgis_tables[$table]['layers'])) {
 	  $def=mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_shape->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
 	}
-	if(in_array($table, array("point", "polygon", "point_extract"))) {
+
+	// layer point_icon
+	if(isset($postgis_tables[$table])&&
+	   in_array("point_icon", $postgis_tables[$table]['layers'])) {
 	  $def=mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_icon->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
+	}
+
+	// layer point_text
+	if(isset($postgis_tables[$table])&&
+	   in_array("point_text", $postgis_tables[$table]['layers'])) {
 	  $def=mapnik_style_point_text($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_text->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
 	}
-	elseif(in_array($table, array("line"))) {
+
+	// layer line_shape
+	if(isset($postgis_tables[$table])&&
+	   in_array("line_shape", $postgis_tables[$table]['layers'])) {
 	  $def=mapnik_style_line_line($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_shape->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
+	}
+
+	// layer line_text
+	if(isset($postgis_tables[$table])&&
+	   in_array("line_text", $postgis_tables[$table]['layers'])) {
 	  $def=mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_text->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
+	}
+
+	// layer line_icon
+	if(isset($postgis_tables[$table])&&
+	   in_array("line_shape", $postgis_tables[$table]['layers'])) {
 	  $def=mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_icon->appendChild($def['rule']);
@@ -568,6 +593,7 @@ function build_mapnik_style($id, $data, $global_tags) {
 	}
       }
 
+      print "Columns (1): ";
       print_r($columns);
       $new_columns=array();
       foreach($columns as $col) {
@@ -582,6 +608,8 @@ function build_mapnik_style($id, $data, $global_tags) {
 	}
       }
       $columns=array_unique($new_columns);
+
+      print "Columns (2): ";
       print_r($columns);
 
       $sql=$data2['sql'];
