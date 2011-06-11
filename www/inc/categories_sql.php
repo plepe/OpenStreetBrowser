@@ -90,6 +90,9 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
 
   $select[]="osm_id";
   $select[]="osm_way as geo";
+  $select[]="osm_way_point as geo_point";
+  $select[]="osm_way_line as geo_line";
+  $select[]="osm_way_polygon as geo_polygon";
   $select[]="osm_tags";
   
   $or_list=array("or");
@@ -101,7 +104,7 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   $w=match_to_sql(match_simplify($or_list), array("table"=>$table, "id"=>$id), "index");
   $where[]="($w)";
 
-  $from="from osm_$table\n";
+  $from="from osm_all_$table\n";
 
   $funname="classify_{$id}_{$table}";
 
@@ -123,7 +126,7 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
     $where="";
 
   $select=implode(", ", $select);
-  return "select t2.osm_id as osm_id, t2.geo, t2.osm_tags as osm_tags, t2.result->'rule_id' as rule_id, t2.result->'importance' as importance, result as rule_tags from (select {$select} {$from} {$where}) as t2 where t2.result->'importance'='$importance'";// group by t2.result[1], t2.result[2], t2.result[3]";
+  return "select t2.osm_id as osm_id, t2.geo, t2.geo_point, t2.geo_line, t2.geo_polygon, t2.osm_tags as osm_tags, t2.result->'rule_id' as rule_id, t2.result->'importance' as importance, result as rule_tags from (select {$select} {$from} {$where}) as t2 where t2.result->'importance'='$importance'";// group by t2.result[1], t2.result[2], t2.result[3]";
   //return "select array_to_string(to_textarray(t2.osm_id), ';') as osm_id, ST_Collect(t2.geo) as geo, tags_merge(to_array(t2.osm_tags)) as osm_tags, t2.result[1] as rule_id, t2.result[2] as importance, tags_merge(to_array(cd.rule_tags)) as rule_tags from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3]";
 //select *, rule_tags->'display_name_pattern' as display_name_pattern, rule_tags->'display_type_pattern' as display_type_pattern, rule_tags->'icon_text_pattern' as icon_text_pattern from (
 }
