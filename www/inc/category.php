@@ -187,8 +187,8 @@ class category {
     }
 
     // viewbox
-    if($param[viewbox]) {
-      $coord=explode(",", $param[viewbox]);
+    if($param['viewbox']) {
+      $coord=explode(",", $param['viewbox']);
       $sql_where['*'][]="CollectionIntersects(SnapToGrid(geo, 0.00001), PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913))";
     }
 
@@ -207,12 +207,12 @@ class category {
 	    $qry_where[]=implode(" and ", $sql_where['*']);
 
 	  $req_where=array();
-	  if($req_data[where])
-	    $req_where[]=implode(" or ", $req_data[where]);
+	  if($req_data['where'])
+	    $req_where[]=implode(" or ", $req_data['where']);
 
-	  if(is_array($req_data[where_imp])) {
-	    if(sizeof($req_data[where_imp]))
-	      $req_where[]="(".implode(" or ", $req_data[where_imp]).") and \"importance\"='$imp'";
+	  if(is_array($req_data['where_imp'])) {
+	    if(sizeof($req_data['where_imp']))
+	      $req_where[]="(".implode(" or ", $req_data['where_imp']).") and \"importance\"='$imp'";
 	    else
 	      $req_where[]="\"importance\"='$imp'";
 	  }
@@ -227,7 +227,7 @@ class category {
 	  if(!$where)
 	    $where="true";
 
-          $sql=strtr($req_data[sql], array(
+          $sql=strtr($req_data['sql'], array(
 	    "!bbox!"=>"PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913)",
 	  ));
 
@@ -289,10 +289,10 @@ class category {
 
     $ret="<match ";
     $ob=load_object($res, $tags);
-    $info=explode("||", $res[res]);
+    $info=explode("||", $res['res']);
 
-    $ret.="id=\"$id\" ";
-    $ret.="rule_id=\"$res[rule_id]\">\n";
+    $ret.="id=\"{$id}\" ";
+    $ret.="rule_id=\"{$res['rule_id']}\">\n";
 
     foreach($tags as $k=>$v) {
       $k=strtr($k, array("&"=>"&amp;", ">"=>"&gt;", "<"=>"&lt;", "\""=>"&quot;"));
@@ -300,8 +300,8 @@ class category {
       $ret.="  <tag k=\"$k\" v=\"$v\" />\n";
     }
 
-    $ret.="  <tag k=\"#geo:center\" v=\"$res[center]\"/>\n";
-    $ret.="  <tag k=\"#importance\" v=\"$res[importance]\"/>\n";
+    $ret.="  <tag k=\"#geo:center\" v=\"{$res['center']}\"/>\n";
+    $ret.="  <tag k=\"#importance\" v=\"{$res['importance']}\"/>\n";
 
     $ret.="</match>\n";
 
