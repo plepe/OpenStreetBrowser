@@ -334,7 +334,9 @@ function category_osm(id) {
 
     if(this.rules.length) {
       // register overlay - empty categories don't get an overlay
-      if(!(this.overlay=get_overlay(this.id)))
+      if(this.tags.get("no_overlay")=="yes")
+	delete(this.overlay);
+      else if(!(this.overlay=get_overlay(this.id)))
 	this.overlay=new overlay(this.id);
       this.overlay.register_category(this);
       this.overlay.set_version(this.version);
