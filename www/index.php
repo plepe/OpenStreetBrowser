@@ -1,6 +1,15 @@
 <?
 Header("content-type: text/html; charset=UTF-8");
 include("code.php");
+
+if($_SERVER['QUERY_STRING']!="") {
+  $path=$_SERVER['SCRIPT_NAME'];
+  if(preg_match("/^(.*)index.php$/", $path, $m))
+    $path=$m[1];
+
+  Header("Location: {$path}#?{$_SERVER['QUERY_STRING']}");
+}
+
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
