@@ -9,7 +9,7 @@ function cloudmade_basemap_init() {
   global $design_hidden;
 
   if(!$design_hidden)
-    print '<script type="text/javascript" src="plugins/cloudmade_basemap/cloudmade.js"></script>\n';
+    print "<script type='text/javascript' src='plugins/cloudmade_basemap/cloudmade.js'></script>\n";
   html_export_var(array("key_cloudmade_api"=>$key_cloudmade_api));
 }
 
