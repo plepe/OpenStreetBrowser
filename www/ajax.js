@@ -18,7 +18,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 var last_params;
-var ajax_urlencode={ "#": "%23" };
 
 // ajax - calls a php_function with params
 // parameter:
@@ -213,7 +212,7 @@ function ajax_build_request(param, prefix, ret) {
     ret.push(prefix+"="+String(param));
   }
   else if(typeof param=="string") {
-    ret.push(prefix+"="+strtr(param, ajax_urlencode));
+    ret.push(prefix+"="+urlencode(param));
   }
   else if(typeof param=="undefined") {
     ret.push(prefix+"="+0);

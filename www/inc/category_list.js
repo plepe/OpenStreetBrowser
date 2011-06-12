@@ -168,9 +168,6 @@ function string_to_category_list(str) {
   if(str=="")
     return {};
 
-  // some browsers do not decode special characters
-  str=strtr(str, { "%5B": "[", "%5D": "]" });
-
   for(var i=0; i<str.length; i++) {
     switch(str.substr(i, 1)) {
       case "[":
