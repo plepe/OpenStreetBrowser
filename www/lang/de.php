@@ -55,6 +55,8 @@ $lang_str["head:actions"]="Aktionen";
 $lang_str["head:tags"]=array("Tag", "Tags");
 $lang_str["head:whats_here"]="Was ist hier?";
 
+$lang_str["tags:add_tag"]="Tag hinzufügen";
+
 $lang_str["action_browse"]="In OSM ansehen";
 $lang_str["action_edit"]="Auf OSM editieren";
 

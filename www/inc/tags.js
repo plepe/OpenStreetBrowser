@@ -167,6 +167,7 @@ function tags(d) {
     this.tr.appendChild(td);
 
     this.key=document.createElement("input");
+    this.key.className="key";
     this.key.name="key";
     this.key.value=key;
     this.key.onchange=this.change_key.bind(this);
@@ -176,6 +177,7 @@ function tags(d) {
     this.tr.appendChild(this.val_td);
 
     this.val=document.createElement("input");
+    this.val.className="value";
     this.val.name="value";
     this.val.value=value;
     this.val.onchange=this.change.bind(this);
@@ -185,6 +187,7 @@ function tags(d) {
     this.tr.appendChild(td);
 
     var input=document.createElement("input");
+    input.className="remove";
     input.type="button";
     input.onclick=this.remove.bind(this);
     input.value="X";
@@ -231,9 +234,10 @@ function tags(d) {
     div.appendChild(this.table);
 
     var input=document.createElement("input");
+    input.className="control";
     input.type="button";
     input.onclick=this.editor_add_tag.bind(this);
-    input.value="Add Tag";
+    input.value=lang("tags:add_tag");
     div.appendChild(input);
   }
 
