@@ -95,7 +95,12 @@ function my_maps_map(data) {
   }
 
   // info
-  this.info=function() {
+  this.info=function(chapters) {
+    var div=document.createElement("div");
+    div.className="my_maps_tags_editor";
+
+    this.tags.editor(div);
+    chapters.push({ head: lang("head:tags"), content: div });
   }
 
   // info_show
