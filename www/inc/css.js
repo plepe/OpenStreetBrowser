@@ -36,3 +36,34 @@ function del_css_class(dom_ob, cl) {
 
   return classes;
 }
+
+/**
+ * Save css style to string
+ */
+function css_style_to_string(style) {
+  var ret=[];
+
+  for(var i in style) {
+    ret.push(i+": "+style[i]+";");
+  }
+
+  return ret.join(" ");
+}
+
+/**
+ * Read css style from string (e.g. "line-width: 2; color: #ff0000;")
+ */
+function css_style_from_string(str) {
+  var parts;
+  var ret={};
+
+  parts=str.split(";");
+  for(var i=0; i<parts.length; i++) {
+    var x=parts[i].split(":");
+    if(x.length>1) {
+      ret[x[0]]=x[1];
+    }
+  }
+
+  return ret;
+}
