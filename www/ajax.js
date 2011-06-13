@@ -27,13 +27,15 @@ var last_params;
 // callback       a function which will be called when the request ist 
 //                finished. if empty the call will be syncronous and the
 //                result will be returned
+// post_data      An optional string which will be passed to the php 
+//                function as third parameter
 //
 // return value/parameter to callback
 // response       the status of the request
 //  .responseText the response as plain text
 //  .responseXML  the response as DOMDocument (if valid XML)
 //  .return_value the return value of the function
-function ajax(funcname, param, callback) {
+function ajax(funcname, param, callback, post_data) {
   // private
   this.xmldata;
   // public
@@ -101,11 +103,27 @@ function ajax(funcname, param, callback) {
     ajax_build_request(param, "param", p);
     p=p.join("&");
 
+    var method;
+    if(post_data) {
+      method="POST";
+    }
+    else {
+      method="GET";
+      post_data="";
+    }
+
     req.onreadystatechange = req_change;
     sync=callback!=null;
-    req.open("GET", "ajax.php?func="+funcname+"&"+p, sync);
+    req.open(method, "ajax.php?func="+funcname+"&"+p, sync);
     last_params=p;
-    req.send("");
+
+    if(method=="POST") {
+      req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      req.setRequestHeader("Content-length", post_data.length);
+      req.setRequestHeader("Connection", "close");
+    }
+
+    req.send(post_data);
 
     if(!sync) {
       get_return();
