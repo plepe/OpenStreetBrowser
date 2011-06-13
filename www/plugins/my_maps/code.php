@@ -1,7 +1,6 @@
 <?
 function ajax_my_maps_save($param, $xml, $post_data) {
   global $db_central;
-  $data=json_decode($post_data, true);
   $id=postgre_escape($param['id']);
   $sql="begin;";
  
@@ -9,8 +8,8 @@ function ajax_my_maps_save($param, $xml, $post_data) {
   $sql.="delete from my_maps_item where map_id=$id;";
 
   $sql.="insert into my_maps_map values ($id, ".
-        array_to_hstore($data['data']).");";
-  foreach($data['items'] as $i=>$item) {
+        array_to_hstore($post_data['data']).");";
+  foreach($post_data['items'] as $i=>$item) {
     $geo=postgre_escape($item['geo']);
     unset($item['geo']);
     $i=postgre_escape($i);
@@ -41,5 +40,5 @@ function ajax_my_maps_load($param, $xml) {
     $ret['items'][]=$d;
   }
 
-  return json_encode($ret);
+  return $ret;
 }

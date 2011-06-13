@@ -69,7 +69,7 @@ function my_maps_map(data) {
   this.save=function() {
     var data=this.data();
 
-    ajax("my_maps_save", { id: this.id }, this.save_callback.bind(this), json_encode(data));
+    ajax("my_maps_save", { id: this.id }, this.save_callback.bind(this), data);
   }
 
   // save_callback
@@ -99,7 +99,7 @@ function my_maps_load(id) {
 }
 
 function my_maps_load_callback(ret) {
-  my_maps_default=new my_maps_map(json_decode(ret.return_value));
+  my_maps_default=new my_maps_map(ret.return_value);
   my_maps_current=my_maps_default;
 }
 
@@ -135,7 +135,7 @@ function my_maps_init() {
   // create a default map
 //  my_maps_default=new my_maps_map(null);
 //  my_maps_current=my_maps_default;
-  my_maps_load("4df5da7fdf53a");
+  my_maps_load("4df5ef855f36b");
 
   // add a control to the map - to be (de)activated when toolbox is
   // (de)activated
