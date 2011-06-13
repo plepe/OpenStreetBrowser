@@ -42,3 +42,17 @@ function ajax_my_maps_load($param, $xml) {
 
   return $ret;
 }
+
+function ajax_my_maps_list($param, $xml) {
+  $ret=array();
+
+  $res=sql_query("select * from my_maps_map");
+  while($elem=pg_fetch_assoc($res)) {
+    $d=parse_hstore($elem['tags']);
+    $d['id']=$elem['id'];
+
+    $ret[]=$d;
+  }
+
+  return $ret;
+}

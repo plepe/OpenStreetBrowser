@@ -2,6 +2,7 @@ var my_maps_toolbox;
 var my_maps_default;
 var my_maps_current=null;
 var my_maps_control;
+var my_maps_win;
 
 function my_maps_item(data, feature) {
   this.inheritFrom=geo_object;
@@ -121,6 +122,43 @@ function my_maps_add_feature(feature) {
   my_maps_current.save();
 }
 
+function my_maps_list() {
+  if(my_maps_win)
+    return;
+
+  ajax("my_maps_list", {}, my_maps_list_callback);
+
+  my_maps_win=new win('my_maps');
+  my_maps_win.list=dom_create_append(my_maps_win.content, "div");
+  my_maps_win.list.innerHTML="<img class='loading' src='img/ajax_loader.gif'> loading";
+  my_maps_win.list.className="my_maps_list";
+  
+  var but=dom_create_append(my_maps_win.content, "input");
+  but.type="button";
+  but.onclick=my_maps_win.close.bind(my_maps_win);
+  but.value=lang("close");
+}
+
+function my_maps_list_callback(ret) {
+  dom_clean(my_maps_win.list);
+
+  for(var i=0; i<ret.return_value.length; i++) {
+    var m=ret.return_value[i];
+
+    var li=dom_create_append(my_maps_win.list, "li");
+    var a=dom_create_append(li, "a");
+    dom_create_append_text(a, (m.name?m.name:m.id));
+    a.onclick=my_maps_list_load.bind(this, m.id);
+  }
+}
+
+function my_maps_list_load(id) {
+  my_maps_load(id);
+
+  my_maps_win.close();
+  my_maps_win=null;
+}
+
 function my_maps_init() {
   // create toolbox
   my_maps_toolbox=new toolbox({
@@ -135,13 +173,19 @@ function my_maps_init() {
   // create a default map
 //  my_maps_default=new my_maps_map(null);
 //  my_maps_current=my_maps_default;
-  my_maps_load("4df5ef855f36b");
+//  my_maps_load("4df5ef855f36b");
 
   // add a control to the map - to be (de)activated when toolbox is
   // (de)activated
   my_maps_control=new OpenLayers.Control.DrawFeature(vector_layer,
     OpenLayers.Handler.Path, {'featureAdded': my_maps_add_feature });
   map.addControl(my_maps_control);
+
+  // populate toolbox
+  var input=dom_create_append(my_maps_toolbox.content, "input");
+  input.type="button";
+  input.onclick=my_maps_list;
+  input.value=lang("my_maps:load_map");
 }
 
 register_hook("init", my_maps_init);
