@@ -59,9 +59,9 @@ function css_style_from_string(str) {
 
   parts=str.split(";");
   for(var i=0; i<parts.length; i++) {
-    var x=parts[i].split(":");
-    if(x.length>1) {
-      ret[x[0]]=x[1];
+    var x=parts[i].match("^[ ]*([^:]+)[ ]*:[ ]*(.*)[ ]*$");
+    if(x) {
+      ret[x[1]]=x[2];
     }
   }
 
