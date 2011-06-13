@@ -1,6 +1,6 @@
 var my_maps_toolbox;
 var my_maps_default;
-var my_maps_current;
+var my_maps_current=null;
 var my_maps_control;
 
 function my_maps_item(data, feature) {
@@ -112,6 +112,11 @@ function my_maps_deactivate() {
 }
 
 function my_maps_add_feature(feature) {
+  if(!my_maps_current) {
+    alert("No active my_maps!");
+    return;
+  }
+
   my_maps_current.add_item(new my_maps_item(null, feature));
   my_maps_current.save();
 }
