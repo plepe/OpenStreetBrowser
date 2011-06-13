@@ -101,6 +101,11 @@ function my_maps_map(data) {
 
     this.tags.editor(div);
     chapters.push({ head: lang("head:tags"), content: div });
+
+    var a=document.createElement("a");
+    dom_create_append_text(a, lang("save"));
+    a.onclick=this.save.bind(this);
+    chapters.push({ head: "actions", weight: 1, content: [ a ] });
   }
 
   // info_show
@@ -160,7 +165,6 @@ function my_maps_add_feature(feature) {
   }
 
   my_maps_current.add_item(new my_maps_item(null, feature));
-  my_maps_current.save();
 }
 
 function my_maps_list() {
