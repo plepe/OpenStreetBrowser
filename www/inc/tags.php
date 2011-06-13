@@ -22,11 +22,17 @@ class tags {
   }
 
   function get($k) {
-    return $this->data[$k];
+    if(isset($this->data[$k]))
+      return $this->data[$k];
+
+    return null;
   }
 
   function get_multi($k) {
-    return split_semicolon($this->data[$k]);
+    if(isset($this->data[$k]))
+      return split_semicolon($this->data[$k]);
+
+    return array();
   }
 
   function get_lang($k, $l=null) {
@@ -34,10 +40,13 @@ class tags {
     if($l===null)
       $l=$data_lang;
 
-    if($ret=($this->data["$k:$l"]))
-      return $ret;
+    if(isset($this->data["$k:$l"]))
+      return $this->data["$k:$l"];
 
-    return $this->data[$k];
+    if(isset($this->data[$k]))
+      return $this->data[$k];
+
+    return null;
   }
 
   function get_lang_multi($k, $l=null) {
@@ -45,10 +54,13 @@ class tags {
     if($l===null)
       $l=$data_lang;
 
-    if($ret=($this->data["$k:$l"]))
-      return split_semicolon($ret);
+    if(isset($this->data["$k:$l"]))
+      return split_semicolon($this->data["$k:$l"]);
 
-    return split_semicolon($this->data[$k]);
+    if(isset($this->data[$k]))
+      return split_semicolon($this->data[$k]);
+
+    return array();
   }
 
   function get_available_languages($key) {

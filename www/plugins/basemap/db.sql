@@ -62,7 +62,9 @@ insert into classify_hmatch values ( 'basemap_highway',
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>pedestrian',
   null,
-  '#highway_type=>pedestrian, #highway_polytype=>pedestrian, #highway_level=>3'
+  '#highway_type=>pedestrian, #highway_level=>3',
+  0,
+  'form=>line'
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>byway',
@@ -244,7 +246,14 @@ insert into classify_hmatch values ( 'basemap_highway',
   null,
   '#highway_type=>pipeline, #highway_subtype=>t5, #highway_level=>0'
 );
-insert into classify_hmatch values ( 'basemap_highway',
+
+-- basemap_highway_poly
+insert into classify_hmatch values ( 'basemap_highway_poly',
+  'highway=>pedestrian',
+  null,
+  '#highway_polytype=>pedestrian, #highway_level=>3'
+);
+insert into classify_hmatch values ( 'basemap_highway_poly',
   'amenity=>parking',
   null,
   '#highway_polytype=>parking, #highway_level=>0'
@@ -1368,4 +1377,33 @@ insert into classify_hmatch values ('basemap_building',
   null,
   '#building=>default',
   0
+);
+
+-- area_text
+insert into classify_hmatch values ('basemap_area_text',
+  'natural=>water',
+  null,
+  '#area_text=>water'
+);
+insert into classify_hmatch values ('basemap_area_text',
+  'natural=>bay',
+  null,
+  '#area_text=>water'
+);
+insert into classify_hmatch values ('basemap_area_text',
+  'highway=>pedestrian',
+  'tunnel',
+  '#area_text=>pedestrian_tunnel',
+  1
+);
+insert into classify_hmatch values ('basemap_area_text',
+  'highway=>pedestrian',
+  null,
+  '#area_text=>pedestrian',
+  0
+);
+insert into classify_hmatch values ('basemap_area_text',
+  'leisure=>park',
+  null,
+  '#area_text=>park'
 );

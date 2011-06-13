@@ -3,6 +3,7 @@ var osm_object_valid_prefixes=[ "node", "way", "rel" ];
 function osm_object(dom) {
   this.inheritFrom=geo_object;
   this.inheritFrom();
+  this.type="osm_object";
 
   // load_more_data
   this.load_more_tags=function(tags, callback, dom_ob) {

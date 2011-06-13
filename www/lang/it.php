@@ -1,12 +1,35 @@
 <?
-$lang_str["general_info"]="General Information"; // delete
+// All untranslated strings have a # in front. When you translate a string
+// please remove this hash.
+
+//  Every language string looks like this:
+//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
+//  the first entry is the translation of the language string in Singular,
+//  the second the Plural form.
+//
+//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
+//  German translation for office:
+//  $lang_str["office"]=array(N, "Büro", "Büros");
+//
+//  If a Singular/Plural form is not
+//  suitable/necessary you can ignore the array, e.g.
+//  $lang_str["help"]="Help";
+
+// General
+$lang_str["general_info"]="General Information";
+$lang_str["yes"]="yes";
+$lang_str["no"]="no";
+#$lang_str["save"]=array("Save");
+#$lang_str["cancel"]=array("Cancel");
+#$lang_str["longitude"]=array("Longitude", "Longitudes");
+#$lang_str["latitude"]=array("Latitude", "Latitudes");
 $lang_str["noname"]="(noname)";
 $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";
-$lang_str["result_no"]="nothing found";
-$lang_str["read_more"]="read more";
+#$lang_str["nothing_found"]=array("nothing found");
 $lang_str["loading"]="loading";
 
+// Headings
 $lang_str["head:general_info"]="General Information";
 $lang_str["head:stops"]="Stops";
 $lang_str["head:routes"]="Routes";
@@ -28,19 +51,12 @@ $lang_str["head:graves"]="Important Graves";
 $lang_str["head:routing"]="Routing";
 $lang_str["head:search"]="Search";
 $lang_str["head:actions"]="Actions";
+#$lang_str["head:location"]="Location";
 
 $lang_str["action_browse"]="browse in OSM";
 $lang_str["action_edit"]="edit in OSM";
 
-$lang_str["route_international"]="International Routes";
-$lang_str["route_national"]="National Routes";
-$lang_str["route_region"]="Regional Routes";
-$lang_str["route_urban"]="Urban Routes";
-$lang_str["route_suburban"]="Suburban Routes";
-$lang_str["route_local"]="Local Routes";
-$lang_str["route_no"]="No routes found";
-$lang_str["route_zoom"]="Zoom in for list of routes";
-
+#$lang_str["geo_click_pos"]=array("Click on your position on the map");
 $lang_str["geo_set_pos"]="Set my position";
 $lang_str["geo_change_pos"]="Change my position";
 
@@ -53,15 +69,149 @@ $lang_str["routing_distance"]="Distance";
 $lang_str["routing_time"]="Time";
 $lang_str["routing_disclaimer"]="Routing: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
-$lang_str["station_type_amenity_bus_station"]="Bus Station";
-$lang_str["station_type_amenity_ferry_terminal"]="Ferry Terminal";
-$lang_str["station_type_highway_bus_stop"]="Bus Stop";
-$lang_str["station_type_railway_tram_stop"]="Tram Stop";
-$lang_str["station_type_railway_station"]="Railway Station";
-$lang_str["station_type_railway_halt"]="Railway Halt";
-
 $lang_str["list_info"]="Choose a category to browse map content or click on an object on the map for details";
 $lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
+
+// Mapkey
+$lang_str["map_key:head"]="Map key";
+$lang_str["map_key:zoom"]="Zoom level";
+
+$lang_str["grave_is_on"]="Grave is on";
+
+$lang_str["main:map_key"]="Map Key";
+$lang_str["main:options"]="Options";
+$lang_str["main:about"]="About";
+$lang_str["main:donate"]="Donate";
+$lang_str["main:licence"]="Map Data: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributors | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">contributors</a>";
+$lang_str["main:permalink"]="Permalink";
+
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
+
+#$lang_str["start:choose"]=array("Choose map view");
+#$lang_str["start:geolocation"]=array("get geolocation");
+#$lang_str["start:lastview"]=array("last view");
+#$lang_str["start:savedview"]=array("last permalink");
+#$lang_str["start:startnormal"]=array("keep view");
+#$lang_str["start:remember"]=array("remember decision");
+#$lang_str["start:edit"]=array("edit...");
+
+$lang_str["options:autozoom"]="Menu selezione zoom";
+$lang_str["help:autozoom"]="Se un oggetto è selezionato la mappa potrebbe subire ingrandimenti oppure spostamenti. Con le seguenti opzioni è possibile scegliere:";
+$lang_str["options:autozoom:pan"]="muoviti al punto selezonato";
+$lang_str["options:autozoom:move"]="salta al punto selezionato";
+$lang_str["options:autozoom:stay"]="non fare nulla";
+
+$lang_str["options:language_support"]="Seleziona la lingua";
+$lang_str["help:language_support"]="Qui puoi scegliere le tue lingue preferite. La prima cambia la lingua dell'interfaccia mentre la seconda la lingua dei contenuti. Le informazioni possono essere tradotte in molti idiomi selezionando l'opportuna \"lingua dati\".";
+$lang_str["options:ui_lang"]="Lingua interfaccia";
+$lang_str["options:data_lang"]="Lingua dati";
+$lang_str["lang:"]="Lingua del tuo browser";
+
+#$lang_str["overlay:data"]=array("Data");
+#$lang_str["overlay:draggable"]=array("Markers");
+
+$lang_str["wikipedia:read_more"]="read more";
+
+#$lang_str["basemap:osb"]="OpenStreetBrowser";
+#$lang_str["basemap:mapnik"]="Standard (Mapnik)";
+#$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
+#$lang_str["basemap:cyclemap"]="CycleMap";
+
+// please finish this list, see list.php for full list of languages
+#$lang_str["lang:de"]="German";
+#$lang_str["lang:bg"]="Bulgarian";
+#$lang_str["lang:en"]="English";
+#$lang_str["lang:es"]="Spanish";
+#$lang_str["lang:it"]="Italian";
+#$lang_str["lang:fr"]="French";
+#$lang_str["lang:uk"]="Ukrainian";
+#$lang_str["lang:ru"]="Russian";
+#$lang_str["lang:ja"]="Japanese";
+
+// the following language strings are deprecated
+$lang_str["cat:leisure"]="Tempo libero, Sport e Shopping";
+$lang_str["cat:leisure/gastro"]="Gastronomia";
+$lang_str["cat:leisure/leisure"]="Tempo libero";
+$lang_str["cat:leisure/sport"]="Sport";
+$lang_str["cat:leisure/shop"]="Acquisti";
+$lang_str["cat:culture"]="Cultura e Religione";
+$lang_str["cat:culture/culture"]="Cultura";
+$lang_str["cat:culture/religion"]="Religione";
+$lang_str["cat:culture/historic"]="Storia";
+$lang_str["cat:culture/tourism"]="Turismo";
+$lang_str["cat:shop"]="Acquisti";
+$lang_str["cat:services"]="Servizi";
+$lang_str["cat:services/communication"]="Communicazioni";
+$lang_str["cat:services/financial"]="Finanze";
+$lang_str["cat:services/emergency"]="Pubblica sicurezza";
+$lang_str["cat:services/health"]="Salute ed Ospedali";
+$lang_str["cat:services/education"]="Educazione";
+$lang_str["cat:services/public"]="Servizi pubblici";
+$lang_str["cat:services/tourism"]="Turismo";
+$lang_str["cat:places"]=array("Luogo", "Luoghi");
+$lang_str["cat:places/places"]=array("Luogo", "Luoghi");
+$lang_str["cat:places/residential"]="Zona residenziale";
+$lang_str["cat:places/streets"]="Stradario";
+$lang_str["cat:places/natural"]="Natura";
+$lang_str["cat:transport"]="Trasporti";
+$lang_str["cat:transport/car"]="Trasporti individuali";
+$lang_str["cat:transport/car/amenities"]="dotazioni";
+#$lang_str["cat:transport/car/routes"]=array("Routes");
+$lang_str["cat:transport/car/furniture"]="accessori";
+$lang_str["cat:transport/pt"]="Trasporto pubblico";
+$lang_str["cat:transport/pt/amenities"]="dotazioni";
+$lang_str["cat:transport/pt/routes"]="Percorso";
+$lang_str["cat:transport/pt/stops"]="Fermata";
+$lang_str["cat:transport/alternative"]="Alternative (bici, escursioni, ...)";
+$lang_str["cat:transport/alternative/amenities"]="dotazioni";
+$lang_str["cat:transport/alternative/routes"]="Direzioni";
+$lang_str["cat:transport/other"]="Altri";
+$lang_str["cat:agri_ind"]="Agricoltura e Industria";
+$lang_str["cat:agri_ind/power"]="Energia";
+$lang_str["cat:agri_ind/works"]="Stailimento";
+$lang_str["cat:agri_ind/agriculture"]="Agricoltura";
+$lang_str["cat:agri_ind/construction"]="Cantieri";
+$lang_str["cat:agri_ind/railway"]="Ferrovia";
+$lang_str["cat:agri_ind/resources"]="Risorse";
+$lang_str["cat:agri_ind/landfill"]="Discarica";
+$lang_str["cat:agri_ind/military"]="Militare";
+
+$lang_str["sub_type=t3|type=historic"]="UNESCO World Heritage Site";
+$lang_str["sub_type=|type=place_of_worship"]="Place of Worship";
+$lang_str["sub_type=t1|type=place_of_worship"]="Christian Church";
+$lang_str["sub_type=t2|type=place_of_worship"]="Islamic Mosque";
+$lang_str["sub_type=t3|type=place_of_worship"]="Jewish Synagogue";
+$lang_str["sub_type=t4|type=place_of_worship"]="Sikh ?";
+
+$lang_str["highway_type=motorway"]="Motorway";
+$lang_str["highway_type=trunk"]="Trunk Road";
+$lang_str["highway_type=primary"]="Primary Road";
+$lang_str["highway_type=secondary"]="Secondary Road";
+$lang_str["highway_type=tertiary"]="Tertiary Road";
+$lang_str["highway_type=minor"]="Minor Road";
+$lang_str["highway_type=service"]="Service Road";
+$lang_str["highway_type=pedestrian"]="Pedestrian Zone";
+$lang_str["highway_type=track"]="Track";
+$lang_str["highway_type=path"]="Path (Foot, Cycle, Bridle)";
+$lang_str["square_type=pedestrian"]="Square";
+$lang_str["square_type=parking"]="Parking Zone";
+$lang_str["highway_type=aero_run"]="Airport Runway";
+$lang_str["highway_type=aero_taxi"]="Airport Taxiway";
+
+$lang_str["sub_type=t1|type=communication"]="Post Offices";
+$lang_str["sub_type=t2|type=communication"]="Post Box";
+$lang_str["sub_type=t1|type=economic"]="ATMs";
+$lang_str["sub_type=t2|type=economic"]="Banks";
+$lang_str["sub_type=t1|type=services"]="Recycling";
+$lang_str["sub_type=t1|type=man_made"]="Tower";
+$lang_str["sub_type=t2|type=man_made"]="Wind Power";
+$lang_str["sub_type=t3|type=man_made"]="Windmill";
+$lang_str["sub_type=t1|type=emergency"]="Hospitals";
+$lang_str["sub_type=t1|type=health"]="Pharmacy";
+$lang_str["sub_type=t1|type=tourism"]="Hotels, Hostels, ...";
+$lang_str["sub_type=t2|type=tourism"]="Camp &amp; Caravan Sites";
+$lang_str["sub_type=t3|type=tourism"]="Tourist Information";
+
   // Foos & Drink
   $lang_str["list_food_drink"]="Food and Drink";
     $lang_str["list_amenity_biergarten"]="Beer gardens";
@@ -85,7 +235,7 @@ $lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
     $lang_str["list_leisure_slipway"]="Slipways";
     $lang_str["list_leisure_fishing"]="Fishing";
     $lang_str["list_leisure_nature_reserve"]="Nature Reserves";
-    $lang_str["list_leisure_park"]="Leisure Parks";
+    $lang_str["list_leisure_park"]="Parks";
     $lang_str["list_leisure_playground"]="Playgrounds";
     $lang_str["list_leisure_garden"]="Gardens";
     $lang_str["list_leisure_common"]="Commons";
@@ -195,10 +345,10 @@ $lang_str["list_shopping"]="Shopping";
     $lang_str["list_shop_market"]="Markets";
   $lang_str["list_sport"]="Sport";
     $lang_str["list_shop_sports"]="General Sports";
-    $lang_str["list_shop_bicycle"]="Bicycle Shops";
-    $lang_str["list_shop_outdoor"]="Outdoor Shops";
+#    $lang_str["list_shop_bicycle"]="Bicycle Shops";
+#    $lang_str["list_shop_outdoor"]="Outdoor Shops";
   $lang_str["list_culture"]="Culture";
-    $lang_str["list_shop_books"]="Book Stores";
+    $lang_str["list_shop_books"]="Book Shops";
     $lang_str["list_shop_kiosk"]="Kiosks";
     $lang_str["list_shop_video"]="Video Shops";
     $lang_str["list_shop_newsagent"]="Newsagents";
@@ -207,7 +357,7 @@ $lang_str["list_shopping"]="Shopping";
     $lang_str["list_shop_photo"]="Photo Shops";
     $lang_str["list_shop_travel_agency"]="Travel Agencies";
   $lang_str["list_car"]="Car &amp; Motorcycle";
-    $lang_str["list_shop_car"]="Car Shops";
+    $lang_str["list_shop_car"]="Car Shop";
     $lang_str["list_shop_car_dealer"]="Car Dealers";
     $lang_str["list_shop_car_repair"]="Car Repair";
     $lang_str["list_shop_car_parts"]="Car Parts";
@@ -247,7 +397,7 @@ $lang_str["list_shopping"]="Shopping";
     $lang_str["list_shop_vending_machine"]="Vending Machines";
 
 $lang_str["list_education_culture"]="Education and Culture";
-  $lang_str["list_culture"]="Culture";
+#  $lang_str["list_culture"]="Culture";
     $lang_str["list_amenity_arts_centre"]="Arts Centres";
     $lang_str["list_amenity_theatre"]="Theatres";
     $lang_str["list_tourism_museum"]="Museums";
@@ -264,7 +414,7 @@ $lang_str["list_education_culture"]="Education and Culture";
     $lang_str["list_amenity_preschool"]="Preschools";
     $lang_str["list_amenity_kindergarten"]="Kindergartens";
     $lang_str["list_amenity_library"]="Libraries";
-    $lang_str["list_shop_books"]="Book Shops";
+#    $lang_str["list_shop_books"]="Book Shops";
 
   $lang_str["list_historic"]="Historic Places";
     $lang_str["list_historic_monument"]="Monuments";
@@ -327,8 +477,8 @@ $lang_str["list_transport"]="Transportation";
     $lang_str["list_amenity_car_rental"]="Car Rentals";
     $lang_str["list_amenity_car_sharing"]="Car Sharings";
     $lang_str["list_amenity_parking"]="Parkings";
-    $lang_str["list_shop_car"]="Car Shop";
-    $lang_str["list_shop_car_repair"]="Car Repair";
+#    $lang_str["list_shop_car"]="Car Shop";
+#    $lang_str["list_shop_car_repair"]="Car Repair";
 
   $lang_str["list_pt_amenities"]="Public Transport amenities";
     $lang_str["list_amenity_taxi"]="Taxi Stations";
@@ -344,10 +494,10 @@ $lang_str["list_transport"]="Transportation";
 $lang_str["list_places"]="Places";
   $lang_str["list_streets"]="Street Directory";
   $lang_str["list_nature_recreation"]="Nature &amp; Recreation";
-    $lang_str["list_leisure_park"]="Parks";
-    $lang_str["list_leisure_nature_reserve"]="Nature Reserves";
-    $lang_str["list_leisure_common"]="Commons";
-    $lang_str["list_leisure_garden"]="Gardens";
+#    $lang_str["list_leisure_park"]="Parks";
+#    $lang_str["list_leisure_nature_reserve"]="Nature Reserves";
+#    $lang_str["list_leisure_common"]="Commons";
+#    $lang_str["list_leisure_garden"]="Gardens";
   $lang_str["list_natural"]="Natural Formations";
     $lang_str["list_natural_peaks"]="Peaks";
     $lang_str["list_natural_spring"]="Springs";
@@ -368,21 +518,43 @@ $lang_str["list_places"]="Places";
     $lang_str["list_natural_cave_entrance"]="Cave Entrances";
     $lang_str["list_natural_tree"]="Trees";
 
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
-$lang_str["list_"]="";
+$lang_str["list_industry"]="Industry";
+$lang_str["list_power"]="Power";
+  $lang_str["list_power_generator"]="Power Generators";
+  $lang_str["list_power_station"]="Power Stations";
+  $lang_str["list_power_sub_station"]="Power Substations";
+$lang_str["list_works"]="Works";
+  $lang_str["list_landuse_industrial"]="Industrial Areas";
+  $lang_str["list_man_made_works"]="Works";
 
-// Mapkey
-$lang_str["map_key:head"]="Map key";
-$lang_str["map_key:zoom"]="Zoom level";
+$lang_str["route_international"]="International Routes";
+$lang_str["route_national"]="National Routes";
+$lang_str["route_region"]="Regional Routes";
+$lang_str["route_urban"]="Urban Routes";
+$lang_str["route_suburban"]="Suburban Routes";
+$lang_str["route_local"]="Local Routes";
+$lang_str["route_no"]="No routes found";
+$lang_str["route_zoom"]="Zoom in for list of routes";
+
+$lang_str["station_type_amenity_bus_station"]="Bus Station";
+$lang_str["station_type_amenity_ferry_terminal"]="Ferry Terminal";
+$lang_str["station_type_highway_bus_stop"]="Bus Stop";
+$lang_str["station_type_railway_tram_stop"]="Tram Stop";
+$lang_str["station_type_railway_station"]="Railway Station";
+$lang_str["station_type_railway_halt"]="Railway Halt";
+// ATTENTION: the last >400 language strings are deprecated
+
+// The following $lang_str are not defined in www/lang/en.php and might be 
+// deprecated/mislocated/wrong:
+$lang_str["search_field"]="Search...";
+$lang_str["search_tip"]="e.g. 'London', 'Cromwell Road', 'post box near Hyde Park',...";
+$lang_str["search_clear"]="Clear search field";
+$lang_str["result_no"]="nothing found";
+$lang_str["search_process"]="searching";
+$lang_str["search_more"]="more results";
+$lang_str["search_results"]="Search results";
+$lang_str["search_nominatim"]="search provided by";
+$lang_str["list_"]="";
 $lang_str["place=continent"]="Continent";
 $lang_str["place=country"]="Country";
 $lang_str["place=state"]="State";
@@ -398,44 +570,14 @@ $lang_str["place=village"]="Village";
 $lang_str["place=hamlet"]="Hamlet";
 $lang_str["place=locality"]="Locality";
 $lang_str["place=island"]="Island";
-
-$lang_str["admin_level=2"]="Country Border";
-$lang_str["admin_level=3"]="Divisions";
-$lang_str["admin_level=4"]="State Border";
-$lang_str["admin_level=5"]="Community Border";
-$lang_str["admin_level=6"]="County Border";
-$lang_str["admin_level=8"]="Town/Municipality Border";
-$lang_str["admin_level=10"]="Subdivisions of Cities";
-
-$lang_str["sub_type=t3|type=historic"]="UNESCO World Heritage Site";
-$lang_str["sub_type=|type=place_of_worship"]="Place of Worship";
-$lang_str["sub_type=t1|type=place_of_worship"]="Christian Church";
-$lang_str["sub_type=t2|type=place_of_worship"]="Islamic Mosque";
-$lang_str["sub_type=t3|type=place_of_worship"]="Jewish Synagogue";
-$lang_str["sub_type=t4|type=place_of_worship"]="Sikh ?";
+$lang_str["tag:admin_level=2"]="Country Border";
+$lang_str["tag:admin_level=3"]="Divisions";
+$lang_str["tag:admin_level=4"]="State Border";
+$lang_str["tag:admin_level=5"]="Community Border";
+$lang_str["tag:admin_level=6"]="County Border";
+$lang_str["tag:admin_level=8"]="Town/Municipality Border";
+$lang_str["tag:admin_level=10"]="Subdivisions of Cities";
 $lang_str["sub_type=t3|type="]="";
-$lang_str["sub_type=t3|type="]="";
-$lang_str["sub_type=t3|type="]="";
-$lang_str["sub_type=t3|type="]="";
-$lang_str["sub_type=t3|type="]="";
-$lang_str["sub_type=t3|type="]="";
-$lang_str["sub_type=t3|type="]="";
-
-$lang_str["highway_type=motorway"]="Motorway";
-$lang_str["highway_type=trunk"]="Trunk Road";
-$lang_str["highway_type=primary"]="Primary Road";
-$lang_str["highway_type=secondary"]="Secondary Road";
-$lang_str["highway_type=tertiary"]="Tertiary Road";
-$lang_str["highway_type=minor"]="Minor Road";
-$lang_str["highway_type=service"]="Service Road";
-$lang_str["highway_type=pedestrian"]="Pedestrian Zone";
-$lang_str["highway_type=track"]="Track";
-$lang_str["highway_type=path"]="Path (Foot, Cycle, Bridle)";
-$lang_str["square_type=pedestrian"]="Square";
-$lang_str["square_type=parking"]="Parking Zone";
-$lang_str["highway_type=aero_run"]="Airport Runway";
-$lang_str["highway_type=aero_taxi"]="Airport Taxiway";
-
 $lang_str["landuse=park"]="Park";
 $lang_str["landuse=education"]="Area of educational facilities";
 $lang_str["landuse=tourism"]="Area of touristic facilities";
@@ -456,7 +598,6 @@ $lang_str["landuse=natural|sub_type=t2"]="Glaciers";
 $lang_str["landuse=natural|sub_type=t3"]="Screes, Heaths";
 $lang_str["landuse=natural|sub_type=t4"]="Mud";
 $lang_str["landuse=natural|sub_type=t5"]="Beaches";
-
 $lang_str["building=default"]="Buildings";
 $lang_str["building=worship"]="Religious Buildings";
 $lang_str["building=road_amenities"]="Facilities for Transportation (Stations, Terminals, Toll Booths, ...)";
@@ -475,32 +616,6 @@ $lang_str["building=culture"]="Cultural Buildings";
 $lang_str["building=tourism"]="Touristic Buildings";
 $lang_str["building=sport"]="Buildings for sport activities";
 $lang_str["housenumber"]="Housenumber";
-
-$lang_str["sub_type=t1|type=communication"]="Post Offices";
-$lang_str["sub_type=t2|type=communication"]="Post Box";
-$lang_str["sub_type=t1|type=economic"]="ATMs";
-$lang_str["sub_type=t2|type=economic"]="Banks";
-$lang_str["sub_type=t1|type=services"]="Recycling";
-$lang_str["sub_type=t1|type=man_made"]="Tower";
-$lang_str["sub_type=t2|type=man_made"]="Wind Power";
-$lang_str["sub_type=t3|type=man_made"]="Windmill";
-$lang_str["sub_type=t1|type=emergency"]="Hospitals";
-$lang_str["sub_type=t1|type=health"]="Pharmacy";
-$lang_str["sub_type=t1|type=tourism"]="Hotels, Hostels, ...";
-$lang_str["sub_type=t2|type=tourism"]="Camp &amp; Caravan Sites";
-$lang_str["sub_type=t3|type=tourism"]="Tourist Information";
-
-$lang_str["grave_is_on"]="Grave is on";
-
-$lang_str["list_industry"]="Industry";
-$lang_str["list_power"]="Power";
-  $lang_str["list_power_generator"]="Power Generators";
-  $lang_str["list_power_station"]="Power Stations";
-  $lang_str["list_power_sub_station"]="Power Substations";
-$lang_str["list_works"]="Works";
-  $lang_str["list_landuse_industrial"]="Industrial Areas";
-  $lang_str["list_man_made_works"]="Works";
-
 $lang_str["tag:name"]=array("Name", "Namen");
 $lang_str["tag:amenity"]="Amenity";
 $lang_str["tag:place"]="Place";
@@ -523,7 +638,6 @@ $lang_str["tag:domination"]="Domination";
 $lang_str["tag:shop"]="Shop";
 $lang_str["tag:vending"]="Vending";
 $lang_str["tag:opening_hours"]="Opening hours";
-
 $lang_str["tag:place=continent"]="Continent";
 $lang_str["tag:place=country"]="Country";
 $lang_str["tag:place=state"]="State";
@@ -536,7 +650,6 @@ $lang_str["tag:place=hamlet"]="Hamlet";
 $lang_str["tag:place=suburb"]="Suburb";
 $lang_str["tag:place=locality"]="Locality";
 $lang_str["tag:place=island"]="Island";
-
 $lang_str["tag:route=train"]="Train";
 $lang_str["tag:route=railway"]="Railway";
 $lang_str["tag:route=rail"]="Railway";
@@ -552,7 +665,6 @@ $lang_str["tag:route=road"]="Road";
 $lang_str["tag:route=bicycle"]="Bicycle";
 $lang_str["tag:route=hiking"]="Hiking";
 $lang_str["tag:route=mtb"]="Mountainbike";
-
 $lang_str["tag:leisure=sports_centre"]="Sport Centre";
 $lang_str["tag:leisure=golf_course"]="Golf Course";
 $lang_str["tag:leisure=stadium"]="Stadium";
@@ -618,7 +730,6 @@ $lang_str["tag:sport=table_tennis"]="Table Tennis";
 $lang_str["tag:sport=team_handball"]="Handball";
 $lang_str["tag:sport=tennis"]="Tennis";
 $lang_str["tag:sport=volleyball"]="Volleyball";
-
 $lang_str["tag:power=generator"]="Power Generator";
 $lang_str["tag:power=line"]="Power Line";
 $lang_str["tag:power=tower"]="Power Tower";
@@ -643,22 +754,13 @@ $lang_str["tag:power_source=fusion"]="Fusion";
 $lang_str["tag:power_source=wind"]="Wind";
 $lang_str["tag:power_source=photovoltaic"]="Photovoltaic";
 $lang_str["tag:power_source=solar-thermal"]="Solar Thermal";
-
 $lang_str["cuisine_regional"]="regional";
-$lang_str["yes"]="yes";
-$lang_str["no"]="no";
-
 $lang_str["tag:amenity=cinema"]=array("Cinema", "Cinemas");
-$lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
+$lang_str["tag:amenity=restaurant"]=array("Ristorante", "Ristoranti");
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
-
 $lang_str["tag:highway"]=array("Highway", "Highways");
+$lang_str["cat:industry"]="Industria";
+$lang_str["cat:industry/power"]="Energia";
+$lang_str["cat:industry/works"]="Stabilimento";
+$lang_str["overlay:marker"]="Marker";
 
-$lang_str["main:map_key"]="Map Key";
-$lang_str["main:options"]="Options";
-$lang_str["main:about"]="About";
-$lang_str["main:donate"]="Donate";
-$lang_str["main:licence"]="Map Data: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributors | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">contributors</a>";
-$lang_str["main:permalink"]="Permalink";
-
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'>".lang("info_back")."</a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";

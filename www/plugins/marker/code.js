@@ -67,6 +67,7 @@ function marker_permalink(permalink) {
 function marker(lon, lat) {
   this.inheritFrom=geo_object;
   this.inheritFrom();
+  this.type="marker";
 
   // finish_drag
   this.finish_drag=function(pos) {
@@ -257,7 +258,7 @@ function marker_place(ob) {
 }
 
 function marker_info(chapters, ob) {
-  if(ob.geo_center()) {
+  if(ob.geo_center()&&(ob.type!="marker")) {
     var a=document.createElement("a");
     a.onclick=marker_place.bind(this, ob);
     a.href="#";
@@ -274,7 +275,9 @@ function marker_info(chapters, ob) {
 }
 
 function marker_init() {
-  contextmenu_add("plugins/marker/icon.png", lang("marker:add_marker"), marker_add_context);
+  if(plugins_loaded("contextmenu")) {
+    contextmenu_add("plugins/marker/icon.png", lang("marker:add_marker"), marker_add_context);
+  }
 }
 
 register_hook("get_permalink", marker_permalink);

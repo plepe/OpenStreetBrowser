@@ -1,6 +1,15 @@
 <?
 Header("content-type: text/html; charset=UTF-8");
 include("code.php");
+
+if($_SERVER['QUERY_STRING']!="") {
+  $path=$_SERVER['SCRIPT_NAME'];
+  if(preg_match("/^(.*)index.php$/", $path, $m))
+    $path=$m[1];
+
+  Header("Location: {$path}#?{$_SERVER['QUERY_STRING']}");
+}
+
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -103,10 +112,6 @@ foreach($menu_list as $entry) {
 ?>
 </div>
 <div class="map" id="map"></div>
-<div id="contextmenu" class="contextmenu" onmouseout="contextmenu_mouseout(event)" onmouseover="javascript:clearTimeout(contexttimer)" style="top:20px; left:500px; display:none;">
-<span id="contextmenu_pointer" style="position:absolute; width:10px; height:10px;"></span>
-<table id="contextmenu_table" cellspacing="0">
-</table></div>
 
 <div class="shadow"></div>
 <div class="map_key_hidden" id="map_key"></div>

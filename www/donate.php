@@ -12,6 +12,17 @@ Header("content-type: application/xhtml+xml; charset=UTF-8");
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Support OpenStreetBrowser - Donate Now</title>
 	<link rel="stylesheet" href="donate.css" type="text/css"/>
+<script type="text/javascript">
+/* <![CDATA[ */
+    (function() {
+        var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+        t.parentNode.insertBefore(s, t);
+    })();
+/* ]]> */
+</script>
 <script type="text/javascript" language="javascript">
 //<![CDATA[
 function validateForm( form ) {
@@ -85,9 +96,15 @@ If you appreciate this service and want to show your gratitude, you could donate
 </p><p>
 I myself promise to donate 5% of this income to the <a href='http://www.osmfoundation.org/'>OpenStreetMap-Foundation</a>.
 </p>
+<hr/>
+<p>
+You could either flattr me:<br/>
+<a class="FlattrButton" style="display:none;" href="http://www.openstreetbrowser.org/"></a>
+</p>
+<hr/>
 <form target="_new" method="post" action="https://www.paypal.com/cgi-bin/webscr" name="paypalcontribution" onsubmit="return validateForm(this)">
 <p><input type="hidden" name="gateway" value="paypal" /><input type="hidden" name="language" value="en" /></p>
-<p>Contribute (with your credit card) through PayPal:</p>
+<p>or contribute (with your credit card) through PayPal:</p>
 
 <div id="amount-box">
 	<input type="hidden" name="cmd" value="_xclick" />

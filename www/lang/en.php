@@ -1,22 +1,28 @@
 <?
-// removed strings: unnamed, result_no
-// renamed
-//   read_more -> wikipedia:read_more
-//   head_action -> head_actions
-//   cuisine_regional -> tag:cuisine=regional
-//   map_key_* -> map_key:*
-//   yes/* -> *
-//   highway_type_* -> tag:highway=*
-//   admin_level=* -> tag:admin_level=*
+// All untranslated strings have a # in front. When you translate a string
+// please remove this hash.
+
+//  Every language string looks like this:
+//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
+//  the first entry is the translation of the language string in Singular,
+//  the second the Plural form.
+//
+//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
+//  German translation for office:
+//  $lang_str["office"]=array(N, "Büro", "Büros");
+//
+//  If a Singular/Plural form is not
+//  suitable/necessary you can ignore the array, e.g.
+//  $lang_str["help"]="Help";
 
 // General
-$lang_str["general_info"]="General Information"; // delete
+$lang_str["general_info"]="General Information";
 $lang_str["yes"]="yes";
 $lang_str["no"]="no";
-$lang_str["save"]		  =array( "Save" );
-$lang_str["cancel"]		  =array( "Cancel" );
-$lang_str["longitude"]             =array( "Longitude", "Longitudes" );
-$lang_str["latitude"]              =array( "Latitude", "Latitudes" );
+$lang_str["save"]=array("Save");
+$lang_str["cancel"]=array("Cancel");
+$lang_str["longitude"]=array("Longitude", "Longitudes");
+$lang_str["latitude"]=array("Latitude", "Latitudes");
 $lang_str["noname"]="(noname)";
 $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";
@@ -53,7 +59,7 @@ $lang_str["head:whats_here"]="What's here?";
 $lang_str["action_browse"]="browse in OSM";
 $lang_str["action_edit"]="edit in OSM";
 
-$lang_str["geo_click_pos"]=array( "Click on your position on the map" );
+$lang_str["geo_click_pos"]=array("Click on your position on the map");
 $lang_str["geo_set_pos"]="Set my position";
 $lang_str["geo_change_pos"]="Change my position";
 
@@ -84,28 +90,28 @@ $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
-$lang_str["start:choose"]          =array( "Choose map view" );
-$lang_str["start:geolocation"]     =array( "get geolocation" );
-$lang_str["start:lastview"]        =array( "last view" );
-$lang_str["start:savedview"]       =array( "last permalink" );
-$lang_str["start:startnormal"]     =array( "keep view" );
-$lang_str["start:remember"]        =array( "remember decision" );
-$lang_str["start:edit"]            =array( "edit..." );
+$lang_str["start:choose"]=array("Choose map view");
+$lang_str["start:geolocation"]=array("get geolocation");
+$lang_str["start:lastview"]=array("last view");
+$lang_str["start:savedview"]=array("last permalink");
+$lang_str["start:startnormal"]=array("keep view");
+$lang_str["start:remember"]=array("remember decision");
+$lang_str["start:edit"]=array("edit...");
 
-$lang_str["options:autozoom"]=array( "Autozoom behaviour" );
-$lang_str["help:autozoom"]=array( "When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes." );
-$lang_str["options:autozoom:pan"]=array( "Pan to current object (nicer)" );
-$lang_str["options:autozoom:move"]=array( "Move to current object (faster)" );
-$lang_str["options:autozoom:stay"]=array( "Never change viewport automatically" );
+$lang_str["options:autozoom"]=array("Autozoom behaviour");
+$lang_str["help:autozoom"]=array("When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.");
+$lang_str["options:autozoom:pan"]=array("Pan to current object (nicer)");
+$lang_str["options:autozoom:move"]=array("Move to current object (faster)");
+$lang_str["options:autozoom:stay"]=array("Never change viewport automatically");
 
-$lang_str["options:language_support"]=array( "Language Support" );
-$lang_str["help:language_support"]=array( "You can choose your prefered languages with this options. The first option changes the language of the user interface. The second option changes the data language. Date of many geographic objects has been translated to several languages. If no translation is available or \"Local language\" was chosen, the main language of the object is displayed." );
-$lang_str["options:ui_lang"]=array( "Interface language" );
-$lang_str["options:data_lang"]=array( "Data language" );
-$lang_str["lang:"]=array( "Local language" );
+$lang_str["options:language_support"]=array("Language Support");
+$lang_str["help:language_support"]=array("You can choose your prefered languages with this options. The first option changes the language of the user interface. The second option changes the data language. Date of many geographic objects has been translated to several languages. If no translation is available or \"Local language\" was chosen, the main language of the object is displayed.");
+$lang_str["options:ui_lang"]=array("Interface language");
+$lang_str["options:data_lang"]=array("Data language");
+$lang_str["lang:"]=array("Local language");
 
-$lang_str["overlay:data"]=array( "Data" );
-$lang_str["overlay:draggable"]=array( "Markers" );
+$lang_str["overlay:data"]=array("Data");
+$lang_str["overlay:draggable"]=array("Markers");
 
 $lang_str["wikipedia:read_more"]="read more";
 
@@ -148,6 +154,11 @@ $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'>"
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="German";
 $lang_str["lang:bg"]="Bulgarian";
+$lang_str["lang:cs"]="Czech";
 $lang_str["lang:en"]="English";
 $lang_str["lang:es"]="Spanish";
 $lang_str["lang:it"]="Italian";
+$lang_str["lang:fr"]="French";
+$lang_str["lang:uk"]="Ukrainian";
+$lang_str["lang:ru"]="Russian";
+$lang_str["lang:ja"]="Japanese";

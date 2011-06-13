@@ -13,7 +13,8 @@
 	  WHEN (osm_tags->'name:en')!=(osm_tags->'name') THEN (osm_tags->'name:en')
         END) as "name_en",
         %SQL_place%
-      from osm_point_place_extract
+      from osm_point_extract
+      where osm_tags?'place'
       order by %SQL_places_sort%) as places
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
