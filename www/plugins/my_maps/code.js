@@ -31,12 +31,14 @@ function my_maps_item(data, feature) {
     // create feature from tags
     var geo=new postgis(data.geo);
     this.feature=geo.geo()[0];
+    this.feature.style=css_style_from_string(this.tags.get("style"));
     vector_layer.addFeatures([this.feature]);
   }
-  else
+  else {
     this.feature=feature;
+    this.feature.style={ strokeWidth: 2, strokeColor: '#ff0000' };
+  }
 
-  this.feature.style={ strokeWidth: 2, strokeColor: '#ff0000' };
   vector_layer.redraw();
 }
 
@@ -88,8 +90,17 @@ function my_maps_map(data) {
   this.tags=new tags(data.data);
   this.items=[];
   for(var i=0; i<data.items.length; i++) {
-    this.add_item(new my_map_item(data.items[i]));
+    this.add_item(new my_maps_item(data.items[i]));
   }
+}
+
+function my_maps_load(id) {
+  ajax("my_maps_load", { id: id }, my_maps_load_callback);
+}
+
+function my_maps_load_callback(ret) {
+  my_maps_default=new my_maps_map(json_decode(ret.return_value));
+  my_maps_current=my_maps_default;
 }
 
 function my_maps_activate() {
@@ -117,8 +128,9 @@ function my_maps_init() {
   register_toolbox(my_maps_toolbox);
 
   // create a default map
-  my_maps_default=new my_maps_map(null);
-  my_maps_current=my_maps_default;
+//  my_maps_default=new my_maps_map(null);
+//  my_maps_current=my_maps_default;
+  my_maps_load("4df5da7fdf53a");
 
   // add a control to the map - to be (de)activated when toolbox is
   // (de)activated
