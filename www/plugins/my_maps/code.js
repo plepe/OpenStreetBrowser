@@ -19,11 +19,19 @@ function my_maps_item(data, feature) {
   }
 
   // constructor
+  if(!data)
+    data={  };
+  if(!data.id)
+    data.id="my_maps_"+uniqid();
+
   this.id=data.id;
   this.tags=new tags(data);
   this.map=null;
   if(!feature) {
     // create feature from tags
+    var geo=new postgis(data.geo);
+    this.feature=geo.geo()[0];
+    vector_layer.addFeatures([this.feature]);
   }
   else
     this.feature=feature;
@@ -33,6 +41,10 @@ function my_maps_item(data, feature) {
 }
 
 function my_maps_map(data) {
+  this.inheritFrom=geo_object;
+  this.inheritFrom();
+  this.type="my_maps_map";
+
   // add_item
   this.add_item=function(item) {
     this.items.push(item);
@@ -52,8 +64,15 @@ function my_maps_map(data) {
   }
 
   // constructor
-  this.tags=new tags();
+  if(!data)
+    data={ data: { id: uniqid()}, items: [] };
+
+  this.id=data.data.id;
+  this.tags=new tags(data.data);
   this.items=[];
+  for(var i=0; i<data.items.length; i++) {
+    this.add_item(new my_map_item(data.items[i]));
+  }
 }
 
 function my_maps_activate() {
@@ -65,7 +84,7 @@ function my_maps_deactivate() {
 }
 
 function my_maps_add_feature(feature) {
-  my_maps_current.add_item(new my_maps_item({}, feature));
+  my_maps_current.add_item(new my_maps_item(null, feature));
 }
 
 function my_maps_init() {
@@ -80,7 +99,7 @@ function my_maps_init() {
   register_toolbox(my_maps_toolbox);
 
   // create a default map
-  my_maps_default=new my_maps_map({});
+  my_maps_default=new my_maps_map(null);
   my_maps_current=my_maps_default;
 
   // add a control to the map - to be (de)activated when toolbox is
