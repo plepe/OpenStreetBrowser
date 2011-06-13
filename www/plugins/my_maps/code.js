@@ -83,6 +83,31 @@ function my_maps_map(data) {
     return ret;
   }
 
+  // name
+  this.name=function() {
+    var ret;
+
+    if(!(ret=this.tags.get_lang("name"))) {
+      return this.id;
+    }
+
+    return ret;
+  }
+
+  // info
+  this.info=function() {
+  }
+
+  // info_show
+  this.info_show=function() {
+    my_maps_control.activate();
+  }
+
+  // info_hide
+  this.info_hide=function() {
+    my_maps_control.deactivate();
+  }
+
   // save
   this.save=function() {
     var data=this.data();
@@ -121,14 +146,6 @@ function my_maps_load_callback(ret) {
 
   my_maps_register(my_map);
   my_maps_set_active(my_map);
-}
-
-function my_maps_activate() {
-  my_maps_control.activate();
-}
-
-function my_maps_deactivate() {
-  my_maps_control.deactivate();
 }
 
 function my_maps_add_feature(feature) {
@@ -190,9 +207,7 @@ function my_maps_init() {
   my_maps_toolbox=new toolbox({
     icon: "plugins/my_maps/icon.png",
     icon_title: "my_maps",
-    weight: 5,
-    callback_activate: my_maps_activate,
-    callback_deactivate: my_maps_deactivate,
+    weight: 5
   });
   register_toolbox(my_maps_toolbox);
 
