@@ -159,6 +159,11 @@ function my_maps_list_load(id) {
   my_maps_win=null;
 }
 
+function my_maps_new() {
+  var m=new my_maps_map(null);
+  my_maps_current=m;
+}
+
 function my_maps_init() {
   // create toolbox
   my_maps_toolbox=new toolbox({
@@ -170,11 +175,6 @@ function my_maps_init() {
   });
   register_toolbox(my_maps_toolbox);
 
-  // create a default map
-//  my_maps_default=new my_maps_map(null);
-//  my_maps_current=my_maps_default;
-//  my_maps_load("4df5ef855f36b");
-
   // add a control to the map - to be (de)activated when toolbox is
   // (de)activated
   my_maps_control=new OpenLayers.Control.DrawFeature(vector_layer,
@@ -182,6 +182,11 @@ function my_maps_init() {
   map.addControl(my_maps_control);
 
   // populate toolbox
+  var input=dom_create_append(my_maps_toolbox.content, "input");
+  input.type="button";
+  input.onclick=my_maps_new;
+  input.value=lang("my_maps:new_map");
+
   var input=dom_create_append(my_maps_toolbox.content, "input");
   input.type="button";
   input.onclick=my_maps_list;
