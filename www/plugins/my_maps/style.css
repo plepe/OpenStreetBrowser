@@ -1,0 +1,22 @@
+div.my_maps {
+  background: white;
+  left: 300px;
+  width: 400px;
+  top: 20px;
+  z-index: 10001;
+  position: absolute;
+  border: 1px solid black;
+}
+div.my_maps_list {
+  height: 200px;
+  overflow: auto;
+}
+div.my_maps_tags_editor td input.key,
+div.my_maps_tags_editor td input.value {
+  font-size: 8pt;
+  width: 90px;
+}
+div.my_maps_tags_editor input.control,
+div.my_maps_tags_editor td input.remove {
+  font-size: 8pt;
+}
