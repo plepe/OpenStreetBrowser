@@ -1,8 +1,25 @@
 var my_maps_toolbox;
-var my_maps_default;
+var my_maps_loaded=[];
 var my_maps_current=null;
 var my_maps_control;
 var my_maps_win;
+
+function my_maps_register(my_map) {
+  my_maps_loaded.push(my_map);
+}
+
+function my_maps_set_active(my_map) {
+  my_maps_current=my_map;
+
+  location.hash="#"+my_map.id;
+}
+
+function my_maps_search_object(ret, id) {
+  for(var i=0; i<my_maps_loaded.length; i++) {
+    if(my_maps_loaded[i].id==id)
+      ret.push(my_maps_loaded[i]);
+  }
+}
 
 function my_maps_item(data, feature) {
   this.inheritFrom=geo_object;
@@ -23,7 +40,7 @@ function my_maps_item(data, feature) {
   if(!data)
     data={  };
   if(!data.id)
-    data.id="my_maps_"+uniqid();
+    data.id=uniqid();
 
   this.id=data.id;
   this.tags=new tags(data);
@@ -85,7 +102,7 @@ function my_maps_map(data) {
 
   // constructor
   if(!data)
-    data={ data: { id: uniqid()}, items: [] };
+    data={ data: { id: "my_maps_"+uniqid()}, items: [] };
 
   this.id=data.data.id;
   this.tags=new tags(data.data);
@@ -100,8 +117,10 @@ function my_maps_load(id) {
 }
 
 function my_maps_load_callback(ret) {
-  my_maps_default=new my_maps_map(ret.return_value);
-  my_maps_current=my_maps_default;
+  my_map=new my_maps_map(ret.return_value);
+
+  my_maps_register(my_map);
+  my_maps_set_active(my_map);
 }
 
 function my_maps_activate() {
@@ -160,8 +179,10 @@ function my_maps_list_load(id) {
 }
 
 function my_maps_new() {
-  var m=new my_maps_map(null);
-  my_maps_current=m;
+  var my_map=new my_maps_map(null);
+
+  my_maps_register(my_map);
+  my_maps_set_active(my_map);
 }
 
 function my_maps_init() {
@@ -194,3 +215,4 @@ function my_maps_init() {
 }
 
 register_hook("init", my_maps_init);
+register_hook("search_object", my_maps_search_object);
