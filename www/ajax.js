@@ -27,7 +27,7 @@ var last_params;
 // callback       a function which will be called when the request ist 
 //                finished. if empty the call will be syncronous and the
 //                result will be returned
-// post_data      An optional string which will be passed to the php 
+// post_data      Optional data which will be passed to the php 
 //                function as third parameter
 //
 // return value/parameter to callback
@@ -106,6 +106,7 @@ function ajax(funcname, param, callback, post_data) {
     var method;
     if(post_data) {
       method="POST";
+      post_data=json_encode(post_data);
     }
     else {
       method="GET";

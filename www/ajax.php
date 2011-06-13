@@ -37,6 +37,9 @@ $fun="ajax_$_REQUEST[func]";
 $xml=new DOMDocument();
 //$ret=export_formated_text("value", html_var_to_js($fun($_REQUEST["param"], $xml)));
 $post_data=file_get_contents("php://input");
+if($post_data) {
+  $post_data=json_decode($post_data, true);
+}
 $return=$fun($_REQUEST["param"], $xml, $post_data);
 
 if(!$xml->firstChild) {
