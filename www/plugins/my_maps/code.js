@@ -8,6 +8,16 @@ function my_maps_item(data, feature) {
   this.inheritFrom();
   this.type="my_maps_item";
 
+  // data
+  this.data=function() {
+    var ret=this.tags.data();
+
+    ret.geo=this.feature.geometry.toString();
+    ret.style=css_style_to_string(this.feature.style);
+
+    return ret;
+  }
+
   // constructor
   this.id=data.id;
   this.tags=new tags(data);
@@ -27,6 +37,18 @@ function my_maps_map(data) {
   this.add_item=function(item) {
     this.items.push(item);
     item.map=this;
+  }
+
+  // data
+  this.data=function() {
+    var ret={};
+    ret.data=this.tags.data();
+    ret.items=[];
+    for(var i=0; i<this.items.length; i++) {
+      ret.items.push(this.items[i].data());
+    }
+
+    return ret;
   }
 
   // constructor
