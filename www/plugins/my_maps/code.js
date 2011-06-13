@@ -63,6 +63,23 @@ function my_maps_map(data) {
     return ret;
   }
 
+  // save
+  this.save=function() {
+    var data=this.data();
+
+    ajax("my_maps_save", { id: this.id }, this.save_callback.bind(this), json_encode(data));
+  }
+
+  // save_callback
+  this.save_callback=function(ret) {
+    if(!ret.return_value) {
+      alert("not saved?");
+    }
+    else {
+      alert("saved");
+    }
+  }
+
   // constructor
   if(!data)
     data={ data: { id: uniqid()}, items: [] };
@@ -85,6 +102,7 @@ function my_maps_deactivate() {
 
 function my_maps_add_feature(feature) {
   my_maps_current.add_item(new my_maps_item(null, feature));
+  my_maps_current.save();
 }
 
 function my_maps_init() {
