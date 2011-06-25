@@ -8,3 +8,4 @@ $lang_str["search_tip"]="例 'London', 'Cromwell Road', 'post box near Hyde Park
 $lang_str["search_clear"]="検索フィールドをクリア";
 
 
+

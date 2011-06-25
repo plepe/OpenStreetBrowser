@@ -1,32 +1,33 @@
 <?
-// All untranslated strings have a # in front. When you translate a string
-// please remove this hash.
+// У всех непереведённых строк стоит # в начале.
+// Когда строка переведена, пожалуйста, удалите этот символ.
 
-//  Every language string looks like this:
-//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
-//  the first entry is the translation of the language string in Singular,
-//  the second the Plural form.
+//  Каждая строка выглядит следующим образом:
+//  $lang_str["restaurant"]=array("Ресторан", "Рестораны");
+//  первым элементом является перевод строки в Единственном числе,
+//  вторым - во Множественном.
 //
-//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
-//  German translation for office:
-//  $lang_str["office"]=array(N, "Büro", "Büros");
+//  Так же, Вы можете определить Род (F, M, N) слова, например
+//  русский перевод слова офис:
+//  $lang_str["office"]=array(M, "Офис", "Офисы");
+//  Где M - прописная латинская (не кириллическая) буква "m".
 //
-//  If a Singular/Plural form is not
-//  suitable/necessary you can ignore the array, e.g.
-//  $lang_str["help"]="Help";
+//  Если Единственное/Множественное число неупотребимо,
+//  вы можете отбросить массив, например:
+//  $lang_str["help"]="Помощь";
 
 // General
 $lang_str["general_info"]="Общая информация";
-$lang_str["yes"]="да";
-$lang_str["no"]="нет";
+$lang_str["yes"]="Да";
+$lang_str["no"]="Нет";
 $lang_str["save"]=array("Сохранить");
 $lang_str["cancel"]=array("Отмена");
-$lang_str["longitude"]=array("Долгота", "Долготы");
-$lang_str["latitude"]=array("Широта", "Широты");
+$lang_str["longitude"]=array( F, "Долгота", "Долготы" );
+$lang_str["latitude"]=array( F, "Широта", "Широты" );
 $lang_str["noname"]="(неизвестно)";
-$lang_str["info_back"]="возврат к обзору";
-$lang_str["info_zoom"]="приближение";
-$lang_str["nothing_found"]=array("не найдено");
+$lang_str["info_back"]="Возврат к обзору";
+$lang_str["info_zoom"]="Приближение";
+$lang_str["nothing_found"]=array("Не найдено");
 $lang_str["loading"]=array("Загрузка...");
 
 // Headings
@@ -50,7 +51,7 @@ $lang_str["head:culture"]="Культура";
 $lang_str["head:graves"]="Места погребения";
 $lang_str["head:routing"]="Направления движения";
 $lang_str["head:search"]="Поиск";
-$lang_str["head:actions"]=array("Действие", "Действия");
+$lang_str["head:actions"]=array( N, "Действие", "Действия" );
 $lang_str["head:location"]="Местоположение";
 
 $lang_str["action_browse"]="просмотреть в OSM";
@@ -85,15 +86,15 @@ $lang_str["main:donate"]="Помочь проекту";
 $lang_str["main:licence"]="Информация о карте: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> авторы | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Стефан Плепелти</a> и <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">другие</a>";
 $lang_str["main:permalink"]="Ссылка";
 
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Объект не найден</h1>Не найдено объектов соответствующих ID \"%s\". Это могло произойти по таким причинам:<ul><li>Неверный ID.</li><li>Объект был идентифицирован сайтом третьей стороны и (пока что) не добавлен в OpenStreetMap.</li><li>Объект находится не в зоне покрытия карты.</li><li>Ссылка, коротая Вас сюда привела не является актуальной для OpenStreetMap.</li></ul>";
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Объект не найден</h1>Не найдено объектов соответствующих ID \"%s\". Это могло произойти по таким причинам:<ul><li>Неверный ID.</li><li>Объект был идентифицирован сайтом третьей стороны и (пока что) не добавлен в OpenStreetMap.</li><li>Объект находится не в зоне покрытия карты.</li><li>Ссылка, которая Вас сюда привела не является актуальной для OpenStreetMap.</li></ul>";
 
-$lang_str["start:choose"]=array("Выберите вид карты");
+$lang_str["start:choose"]=array("Выберите перспективу для карты");
 $lang_str["start:geolocation"]=array("Определить местоположение");
-$lang_str["start:lastview"]=array("последний вид");
-$lang_str["start:savedview"]=array("последняя ссылка");
-$lang_str["start:startnormal"]=array("сохранить вид");
-$lang_str["start:remember"]=array("запомнить решение");
-$lang_str["start:edit"]=array("правка...");
+$lang_str["start:lastview"]=array("Последняя перспектива");
+$lang_str["start:savedview"]=array("Последняя ссылка");
+$lang_str["start:startnormal"]=array("Сохранить перспективу");
+$lang_str["start:remember"]=array("Запомнить решение");
+$lang_str["start:edit"]=array("Правка...");
 
 $lang_str["options:autozoom"]="Автомасштабирование";
 $lang_str["help:autozoom"]="При выборе объекта, карта сфокусируется на нём, текущие настройки приближения могут измениться. С помощью этой функции Вы можете выбрать режим отображения.";
@@ -110,7 +111,7 @@ $lang_str["lang:"]="Определить язык автоматически";
 $lang_str["overlay:data"]="Данные";
 $lang_str["overlay:draggable"]="Отметки";
 
-$lang_str["wikipedia:read_more"]="прочесть ещё";
+$lang_str["wikipedia:read_more"]="Прочесть ещё";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Стандарт (Mapnik)";
@@ -120,6 +121,7 @@ $lang_str["basemap:cyclemap"]="CycleMap";
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Немецкий";
 $lang_str["lang:bg"]="Болгарский";
+$lang_str["lang:cs"]="Чешский";
 $lang_str["lang:en"]="Английский";
 $lang_str["lang:es"]="Испанский";
 $lang_str["lang:it"]="Итальянский";
@@ -148,8 +150,8 @@ $lang_str["cat:services/health"]="Здоровье";
 $lang_str["cat:services/education"]="Образование";
 $lang_str["cat:services/public"]="Комменальные услуги";
 $lang_str["cat:services/tourism"]="Туристические услуги";
-$lang_str["cat:places"]=array("Место", "Места");
-$lang_str["cat:places/places"]=array("Место", "Места");
+$lang_str["cat:places"]=array( N, "Место", "Места" );
+$lang_str["cat:places/places"]=array( N, "Место", "Места" );
 $lang_str["cat:places/residential"]="Жилые районы";
 $lang_str["cat:places/streets"]="Муниципальные";
 $lang_str["cat:places/natural"]="Природные образования";
@@ -231,14 +233,14 @@ $lang_str["sub_type=t3|type=tourism"]="Туристическая информа
     $lang_str["list_leisure_track"]="Треки";
     $lang_str["list_leisure_pitch"]="Площадки";
     $lang_str["list_leisure_water_park"]="Аквапарки";
-#    $lang_str["list_leisure_marina"]="Marinas";
-#    $lang_str["list_leisure_slipway"]="Slipways";
+    $lang_str["list_leisure_marina"]="Гавани";
+    $lang_str["list_leisure_slipway"]="Эллинги";
     $lang_str["list_leisure_fishing"]="Рыбалка";
     $lang_str["list_leisure_nature_reserve"]="Заповедники";
     $lang_str["list_leisure_park"]="Парки";
     $lang_str["list_leisure_playground"]="Игровые площадки";
     $lang_str["list_leisure_garden"]="Сады";
-#    $lang_str["list_leisure_common"]="Commons";
+    $lang_str["list_leisure_common"]="Общественные земли";
     $lang_str["list_leisure_ice_rink"]="Ледовые катки";
     $lang_str["list_leisure_miniature_golf"]="Минигольф";
     $lang_str["list_leisure_swimming_pool"]="Бассеный";
@@ -248,15 +250,15 @@ $lang_str["sub_type=t3|type=tourism"]="Туристическая информа
 // Sport
     $lang_str["list_sport_9pin"]="9-ти кеглевый Боулинг";
     $lang_str["list_sport_10pin"]="10-ти кеглевый Боулинг";
-#    $lang_str["list_sport_archery"]="Archery";
-#    $lang_str["list_sport_athletics"]="Athletics";
-#    $lang_str["list_sport_australian_football"]="Australian Football";
-#    $lang_str["list_sport_baseball"]="Baseball";
-#    $lang_str["list_sport_basketball"]="Basketball";
-#    $lang_str["list_sport_beachvolleyball"]="Beachvolleyball";
-#    $lang_str["list_sport_boules"]="Boules";
-#    $lang_str["list_sport_bowls"]="Bowls";
-#    $lang_str["list_sport_canoe"]="Canoe";
+    $lang_str["list_sport_archery"]="Стрельба из лука";
+    $lang_str["list_sport_athletics"]="Атлетика";
+    $lang_str["list_sport_australian_football"]="Австралийский футбол";
+    $lang_str["list_sport_baseball"]="Бейсбол";
+    $lang_str["list_sport_basketball"]="Баскетбол";
+    $lang_str["list_sport_beachvolleyball"]="Пляжный волейбол";
+    $lang_str["list_sport_boules"]="Петанк";
+    $lang_str["list_sport_bowls"]="Боулз";
+    $lang_str["list_sport_canoe"]="Каноэ";
 #    $lang_str["list_sport_chess"]="Chess";
 #    $lang_str["list_sport_climbing"]="Climbing";
 #    $lang_str["list_sport_cricket"]="Cricket";
@@ -491,50 +493,50 @@ $lang_str["sub_type=t3|type=tourism"]="Туристическая информа
 #    $lang_str["list_power_line"]="Power lines";
 #    $lang_str["list_man_made_pipeline"]="Pipelines";
 
-#$lang_str["list_places"]="Places";
-#  $lang_str["list_streets"]="Street Directory";
-#  $lang_str["list_nature_recreation"]="Nature &amp; Recreation";
-#    $lang_str["list_leisure_park"]="Parks";
-#    $lang_str["list_leisure_nature_reserve"]="Nature Reserves";
-#    $lang_str["list_leisure_common"]="Commons";
-#    $lang_str["list_leisure_garden"]="Gardens";
-#  $lang_str["list_natural"]="Natural Formations";
-#    $lang_str["list_natural_peaks"]="Peaks";
-#    $lang_str["list_natural_spring"]="Springs";
-#    $lang_str["list_natural_glacier"]="Glaciers";
-#    $lang_str["list_natural_volcano"]="Volcanos";
-#    $lang_str["list_natural_cliff"]="Cliffs";
-#    $lang_str["list_natural_scree"]="Screes";
-#    $lang_str["list_natural_fell"]="Fells";
-#    $lang_str["list_natural_heath"]="Heaths";
-#    $lang_str["list_natural_wood"]="Woods";
-#    $lang_str["list_landuse_forest"]="Forests";
-#    $lang_str["list_natural_marsh"]="Marshes";
-#    $lang_str["list_natural_wetland"]="Wetland";
-#    $lang_str["list_natural_water"]="Lakes, etc.";
-#    $lang_str["list_natural_beach"]="Beaches";
-#    $lang_str["list_natural_bay"]="Bays";
-#    $lang_str["list_natural_land"]="Islands";
-#    $lang_str["list_natural_cave_entrance"]="Cave Entrances";
-#    $lang_str["list_natural_tree"]="Trees";
+$lang_str["list_places"]="Места";
+  $lang_str["list_streets"]="Муниципальные";
+  $lang_str["list_nature_recreation"]="Природа &amp; Отдых";
+    $lang_str["list_leisure_park"]="Парки";
+    $lang_str["list_leisure_nature_reserve"]="Заповедники";
+    $lang_str["list_leisure_common"]="Общественные земли";
+    $lang_str["list_leisure_garden"]="Сады";
+  $lang_str["list_natural"]="Природные образования";
+    $lang_str["list_natural_peaks"]="Вершины";
+    $lang_str["list_natural_spring"]="Родники";
+    $lang_str["list_natural_glacier"]="Ледники";
+    $lang_str["list_natural_volcano"]="Вулканы";
+    $lang_str["list_natural_cliff"]="Скалы";
+    $lang_str["list_natural_scree"]="Осыпи";
+    $lang_str["list_natural_fell"]="Буреломы";
+    $lang_str["list_natural_heath"]="Пустоши";
+    $lang_str["list_natural_wood"]="Рощи";
+    $lang_str["list_landuse_forest"]="Леса";
+    $lang_str["list_natural_marsh"]="Болота";
+    $lang_str["list_natural_wetland"]="Болотистая местность";
+    $lang_str["list_natural_water"]="Озёра";
+    $lang_str["list_natural_beach"]="Пляжи";
+    $lang_str["list_natural_bay"]="Бухты";
+    $lang_str["list_natural_land"]="Острова";
+    $lang_str["list_natural_cave_entrance"]="Входы в пещеру";
+    $lang_str["list_natural_tree"]="Деревья";
 
-#$lang_str["list_industry"]="Industry";
-#$lang_str["list_power"]="Power";
-#  $lang_str["list_power_generator"]="Power Generators";
-#  $lang_str["list_power_station"]="Power Stations";
-#  $lang_str["list_power_sub_station"]="Power Substations";
+$lang_str["list_industry"]="Промышленность";
+$lang_str["list_power"]="Энергетика";
+  $lang_str["list_power_generator"]="Электрогенераторы";
+  $lang_str["list_power_station"]="Электростанции";
+  $lang_str["list_power_sub_station"]="Подстанции";
 #$lang_str["list_works"]="Works";
 #  $lang_str["list_landuse_industrial"]="Industrial Areas";
 #  $lang_str["list_man_made_works"]="Works";
 
-#$lang_str["route_international"]="International Routes";
-#$lang_str["route_national"]="National Routes";
-#$lang_str["route_region"]="Regional Routes";
-#$lang_str["route_urban"]="Urban Routes";
-#$lang_str["route_suburban"]="Suburban Routes";
-#$lang_str["route_local"]="Local Routes";
-#$lang_str["route_no"]="No routes found";
-#$lang_str["route_zoom"]="Zoom in for list of routes";
+$lang_str["route_international"]="Международные маршруты";
+$lang_str["route_national"]="Национальные маршруты";
+$lang_str["route_region"]="Региональные маршруты";
+$lang_str["route_urban"]="Городские маршруты";
+$lang_str["route_suburban"]="Пригородные маршруты";
+$lang_str["route_local"]="Местные маршруты";
+$lang_str["route_no"]="Маршрутов не найдено";
+$lang_str["route_zoom"]="Увеличте для отображения маршрутов";
 
 #$lang_str["station_type_amenity_bus_station"]="Bus Station";
 #$lang_str["station_type_amenity_ferry_terminal"]="Ferry Terminal";

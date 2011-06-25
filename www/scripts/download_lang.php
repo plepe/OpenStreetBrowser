@@ -12,6 +12,7 @@ $languages=array(
   "ru"=>"Russian",
   "es"=>"Spanish",
   "cs"=>"Czech",
+  "hu"=>"Hungarian",
 );
 
 function rewrite_str($str) {

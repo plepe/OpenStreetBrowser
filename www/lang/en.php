@@ -162,3 +162,4 @@ $lang_str["lang:fr"]="French";
 $lang_str["lang:uk"]="Ukrainian";
 $lang_str["lang:ru"]="Russian";
 $lang_str["lang:ja"]="Japanese";
+$lang_str["lang:hu"]="Hungarian";
