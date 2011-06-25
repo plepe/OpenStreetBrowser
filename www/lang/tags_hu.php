@@ -35,10 +35,10 @@
 #$lang_str["tag:accomodation"]="Accomodation";
 
 // address
-#$lang_str["tag:address"]="Address";
+$lang_str["tag:address"]="Címek";
 
 // addr:housenumber
-#$lang_str["tag:addr:housenumber"]="Housenumber";
+$lang_str["tag:addr:housenumber"]="Házszám";
 
 // admin_level
 #$lang_str["tag:admin_level=2"]="Country Border";
@@ -108,7 +108,7 @@
 #$lang_str["tag:is_in"]="Is in";
 
 // landuse
-#$lang_str["tag:landuse=park"]="Park";
+$lang_str["tag:landuse=park"]="Park";
 #$lang_str["tag:landuse=education"]="Area of educational facilities";
 #$lang_str["tag:landuse=tourism"]="Area of touristic facilities";
 #$lang_str["tag:landuse=garden"]="Farms, Plantages, Gardens";
@@ -153,22 +153,22 @@
 #$lang_str["tag:leisure=sport"]="Other Sport";
 
 // name
-#$lang_str["tag:name"]=array("Name", "Namen");
+$lang_str["tag:name"]=array("Név", "Nevek");
 
 // network
-#$lang_str["tag:network"]="Network";
+$lang_str["tag:network"]="Hálózat";
 
 // note
 #$lang_str["tag:note"]="Note";
 
 // old_name
-#$lang_str["tag:old_name"]="Old Name(s)";
+$lang_str["tag:old_name"]="régi név";
 
 // opening_hours
-#$lang_str["tag:opening_hours"]="Opening hours";
+$lang_str["tag:opening_hours"]="Nyitvatartás";
 
 // operator
-#$lang_str["tag:operator"]="Operator";
+$lang_str["tag:operator"]="Kezelő";
 
 // place
 #$lang_str["tag:place"]="Place";
@@ -182,7 +182,7 @@
 #$lang_str["tag:place=village"]=array("Village", "Villages");
 #$lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
 #$lang_str["tag:place=locality"]=array("Locality", "Localities");
-#$lang_str["tag:place=island"]=array("Island", "Islands");
+$lang_str["tag:place=island"]=array("Sziget", "Szigetek");
 #$lang_str["tag:place=islet"]=array("Islet", "Islets");
 // the following tags are deprecated
 #$lang_str["tag:place=city;population>1000000"]=array("City, > 1 Mio Inhabitants", "Cities, > 1 Mio Inhabitants");
@@ -191,7 +191,7 @@
 #$lang_str["tag:place=town;population>30000"]=array("Town, > 30.000 Inhabitants", "Towns, > 30.000 Inhabitants");
 
 // population
-#$lang_str["tag:population"]="Population";
+$lang_str["tag:population"]="populáció";
 $tag_type["population"]=array("count");
 
 // power
@@ -229,14 +229,14 @@ $tag_type["population"]=array("count");
 
 // route
 #$lang_str["tag:route=train"]="Train";
-#$lang_str["tag:route=railway"]="Railway";
-#$lang_str["tag:route=rail"]="Railway";
+$lang_str["tag:route=railway"]="Vasút";
+$lang_str["tag:route=rail"]="Vasút";
 #$lang_str["tag:route=light_rail"]="Light Rail";
 #$lang_str["tag:route=subway"]="Subway";
 #$lang_str["tag:route=tram"]="Tram";
 #$lang_str["tag:route=trolley"]="Trolley";
 #$lang_str["tag:route=trolleybus"]="Trolley";
-#$lang_str["tag:route=bus"]="Bus";
+$lang_str["tag:route=bus"]="Busz";
 #$lang_str["tag:route=minibus"]="Minibus";
 #$lang_str["tag:route=ferry"]="Ferry";
 #$lang_str["tag:route=road"]="Road";
@@ -249,10 +249,10 @@ $tag_type["population"]=array("count");
 #$lang_str["tag:route_type"]="Route type";
 
 // shop
-#$lang_str["tag:shop"]="Shop";
+$lang_str["tag:shop"]="Bolt";
 
 // sport
-#$lang_str["tag:sport"]="Sport";
+$lang_str["tag:sport"]="Sport";
 #$lang_str["tag:sport=9pin"]="9pin Bowling";
 #$lang_str["tag:sport=10pin"]="10pin Bowling";
 #$lang_str["tag:sport=archery"]="Archery";
@@ -274,12 +274,12 @@ $tag_type["population"]=array("count");
 #$lang_str["tag:sport=dog_racing"]="Dog Racing";
 #$lang_str["tag:sport=equestrian"]="Equestrian";
 #$lang_str["tag:sport=football"]="Football";
-#$lang_str["tag:sport=golf"]="Golf";
+$lang_str["tag:sport=golf"]="Golf";
 #$lang_str["tag:sport=gymnastics"]="Gymnastics";
 #$lang_str["tag:sport=hockey"]="Hockey";
 #$lang_str["tag:sport=horse_racing"]="Horse Racing";
 #$lang_str["tag:sport=korfball"]="Korfball";
-#$lang_str["tag:sport=motor"]="Motor";
+$lang_str["tag:sport=motor"]="Motor";
 #$lang_str["tag:sport=multi"]="Multi";
 #$lang_str["tag:sport=orienteering"]="Orienteering";
 #$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
@@ -295,8 +295,8 @@ $tag_type["population"]=array("count");
 #$lang_str["tag:sport=soccer"]="Soccer";
 #$lang_str["tag:sport=swimming"]="Swimming";
 #$lang_str["tag:sport=table_tennis"]="Table Tennis";
-#$lang_str["tag:sport=team_handball"]="Handball";
-#$lang_str["tag:sport=tennis"]="Tennis";
+$lang_str["tag:sport=team_handball"]="Kézilabda";
+$lang_str["tag:sport=tennis"]="Tenisz";
 #$lang_str["tag:sport=volleyball"]="Volleyball";
 
 // vending
@@ -313,5 +313,4 @@ $tag_type["wires"]=array("count");
 // website
 #$lang_str["tag:website"]="Website";
 $tag_type["website"]=array("link");
-
 

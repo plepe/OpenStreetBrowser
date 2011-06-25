@@ -120,6 +120,7 @@ $lang_str["wikipedia:read_more"]="もっと見る";
 // please finish this list, see list.php for full list of languages
 #$lang_str["lang:de"]="German";
 #$lang_str["lang:bg"]="Bulgarian";
+#$lang_str["lang:cs"]="Czech";
 #$lang_str["lang:en"]="English";
 #$lang_str["lang:es"]="Spanish";
 #$lang_str["lang:it"]="Italian";
@@ -543,6 +544,7 @@ $lang_str["station_type_railway_tram_stop"]="電停";
 $lang_str["station_type_railway_station"]="鉄道駅";
 $lang_str["station_type_railway_halt"]="臨時停車駅";
 // ATTENTION: the last >400 language strings are deprecated
+
 
 // The following $lang_str are not defined in www/lang/en.php and might be 
 // deprecated/mislocated/wrong:

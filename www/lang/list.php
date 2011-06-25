@@ -1,6 +1,6 @@
 <?
 // The UI has been translated to following languages
-$ui_langs=array("en", "de", "it", "ja", "uk", "fr", "ru", "es", "cs");
+$ui_langs=array("en", "de", "it", "ja", "uk", "fr", "ru", "es", "cs", "hu");
 
 // A list of all languages we know about
 $language_list=array(

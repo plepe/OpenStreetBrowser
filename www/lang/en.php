@@ -128,6 +128,7 @@ $lang_str["lang:fr"]="French";
 $lang_str["lang:uk"]="Ukrainian";
 $lang_str["lang:ru"]="Russian";
 $lang_str["lang:ja"]="Japanese";
+$lang_str["lang:hu"]="Hungarian";
 
 // the following language strings are deprecated
 $lang_str["cat:leisure"]=array("Leisure, Sport and Shopping ");
@@ -544,4 +545,5 @@ $lang_str["station_type_railway_tram_stop"]="Tram Stop";
 $lang_str["station_type_railway_station"]="Railway Station";
 $lang_str["station_type_railway_halt"]="Railway Halt";
 // ATTENTION: the last >400 language strings are deprecated
+
 
