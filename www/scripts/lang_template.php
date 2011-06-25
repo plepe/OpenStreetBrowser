@@ -112,6 +112,7 @@ function template_lang_category($category, $version) {
   global $ui_lang;
 
   print "==== Category: $category ====\n";
+  print "Version: $version\n";
   print "<syntaxhighlight lang=\"php\">\n";
 
   $res=sql_query("select * from category where category_id='$category' and version='$version'", $db_central);
