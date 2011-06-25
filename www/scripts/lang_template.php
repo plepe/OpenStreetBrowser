@@ -124,11 +124,19 @@ function template_lang_category($category, $version) {
 
   print_category_entry("$category:name", $tags, $lang, "Original Name ($lang): {$tags['name']}");
 
+  if($tags['description']) {
+    print_category_entry("$category:description", $tags, $lang, "Default description: \"{$tags['description']}\"");
+  }
+
   $res_rule=sql_query("select * from category_rule where category_id='$category' and version='$version'", $db_central);
   while($elem_rule=pg_fetch_assoc($res_rule)) {
     $tags=parse_hstore($elem_rule['tags']);
 
     print_category_entry("$category:{$elem_rule['rule_id']}:name", $tags, $lang, "Match: {$tags['match']}");
+
+    if($tags['description']) {
+      print_category_entry("$category:{$elem_rule['rule_id']}:description", $tags, $lang, "Default description: \"{$tags['description']}\"");
+    }
   }
 
   print "</syntaxhighlight>\n";
