@@ -40,11 +40,13 @@ function measure_obj_info(chapter, ob) {
   }
 
   if(length) {
-    ret+=lang("measure_obj:length", 0, length.toFixed(3))+"<br>\n";
+    var x=units_format_length(length)
+    ret+=lang("measure_obj:length", 0, x)+"<br>\n";
   }
   
   if(area) {
-    ret+=lang("measure_obj:area", 0, area.toFixed(3))+"<br>\n";
+    var x=units_format_area(area)
+    ret+=lang("measure_obj:area", 0, x)+"<br>\n";
   }
   
   chapter.push({

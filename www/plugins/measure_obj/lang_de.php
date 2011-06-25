@@ -1,5 +1,4 @@
 <?
 $lang_str['measure_obj:head']="Abmessungen";
-$lang_str['measure_obj:length']="Länge: %s m";
-$lang_str['measure_obj:area']="Fläche: %s m²";
-
+$lang_str['measure_obj:length']="Länge: %s";
+$lang_str['measure_obj:area']="Fläche: %s";
