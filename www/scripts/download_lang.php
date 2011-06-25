@@ -1,6 +1,8 @@
 #!/usr/bin/php
 <?
 require "../../conf.php";
+require "../inc/sql.php";
+require "../inc/tags.php";
 
 $languages=array(
   "en"=>"English",
@@ -44,7 +46,7 @@ function parse($lang, $wikipage) {
   $f=fopen("http://wiki.openstreetmap.org/w/index.php?title=OpenStreetBrowser/Languages/$wikipage&action=raw", "r");
   unset($file);
   while($r=fgets($f)) {
-    if(eregi("==== (File: )?(.*) ====", $r, $m)) {
+    if(eregi("==== (File|Category): ?(.*) ====", $r, $m)) {
       if($m[2]=="Statistics") {
 	if($w) {
 	  print "Done\n";
@@ -95,6 +97,17 @@ function parse($lang, $wikipage) {
 
   if($w)
     fclose($w);
+}
+
+// read all categories
+$categories=array();
+$res_all=sql_query("select * from category_current", $db_central);
+while($elem_all=pg_fetch_assoc($res_all)) {
+  $categories[$elem_all['category_id']]=array("version"=>$elem_all['version']);
+  $res_cat=sql_query("select * from category_rule where category_id='{$elem_all['category_id']}' and version='{$elem_all['version']}'", $db_central);
+  while($elem_cat=pg_fetch_assoc($res_cat)) {
+    $categories[$elem_all['category_id']]['rule'][$elem_cat['rule_id']]=array();
+  }
 }
 
 foreach($languages as $lang=>$wikipage) {
