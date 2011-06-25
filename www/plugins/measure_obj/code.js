@@ -40,15 +40,15 @@ function measure_obj_info(chapter, ob) {
   }
 
   if(length) {
-    ret+="Length: "+length.toFixed(3)+" m<br>";
+    ret+=lang("measure_obj:length", 0, length.toFixed(3))+"<br>\n";
   }
   
   if(area) {
-    ret+="Area: "+area.toFixed(3)+" m²<br>";
+    ret+=lang("measure_obj:area", 0, area.toFixed(3))+"<br>\n";
   }
   
   chapter.push({
-    head: lang("measure:head"),
+    head: lang("measure_obj:head"),
     weight: 1,
     content: ret
   });
