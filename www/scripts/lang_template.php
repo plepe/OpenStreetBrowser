@@ -1,6 +1,8 @@
 <?
 Header("Content-type: text/plain; charset=utf-8");
 require "../../conf.php";
+require "../inc/sql.php";
+require "../inc/tags.php";
 $ui_lang=$_GET['ui_lang'];
 
 function lang() {
@@ -80,6 +82,57 @@ function template_lang_file($src, $dst) {
   print "\n";
 }
 
+function print_category_entry($str, $tags, $cat_lang, $comment) {
+  global $ui_lang;
+  global $count_done;
+  global $count_missing;
+
+  if($cat_lang==$ui_lang) {
+    print "\$lang_cat[\"$str\"]=\"{$tags["name"]}\";";
+    $count_done++;
+  }
+  if($tags["name:$ui_lang"]) {
+    print "\$lang_cat[\"$str\"]=\"{$tags["name:$ui_lang"]}\";";
+    $count_done++;
+  }
+  else {
+    print "#\$lang_cat[\"$str\"]=\"{$tags['name']}\";";
+    $count_missing++;
+  }
+
+  if($comment)
+    print " // {$comment}";
+ 
+  print "\n";
+}
+
+function template_lang_category($category, $version) {
+  global $db_central;
+  global $ui_lang;
+
+  print "==== Category: $category ====\n";
+  print "<syntaxhighlight lang=\"php\">\n";
+
+  $res=sql_query("select * from category where category_id='$category' and version='$version'", $db_central);
+  $elem=pg_fetch_assoc($res);
+  $tags=parse_hstore($elem['tags']);
+  $lang=$tags['lang'];
+  if(!$lang)
+    $lang="en";
+
+  print_category_entry("$category:name", $tags, $lang, "Original Name ($lang): {$tags['name']}");
+
+  $res_rule=sql_query("select * from category_rule where category_id='$category' and version='$version'", $db_central);
+  while($elem_rule=pg_fetch_assoc($res_rule)) {
+    $tags=parse_hstore($elem_rule['tags']);
+
+    print_category_entry("$category:{$elem_rule['rule_id']}:name", $tags, $lang, "Match: {$tags['match']}");
+  }
+
+  print "</syntaxhighlight>\n";
+  print "\n";
+}
+
 $count_done=0;
 $count_missing=0;
 
@@ -93,6 +146,11 @@ $d=opendir("$root_path/www/plugins");
 while($f=readdir($d))
   template_lang_file("www/plugins/$f/lang_en.php", "www/plugins/$f/lang_{$ui_lang}.php");
 closedir($d);
+
+$res=sql_query("select * from category_current", $db_central);
+while($elem=pg_fetch_assoc($res)) {
+  template_lang_category($elem['category_id'], $elem['version']);
+}
 
 print "==== Statistics ====\n";
 print "* Done: $count_done\n";
