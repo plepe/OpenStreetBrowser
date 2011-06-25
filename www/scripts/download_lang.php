@@ -42,6 +42,7 @@ function rewrite_str($str) {
 
 function parse($lang, $wikipage) {
   global $root_path;
+  global $lang_cat_list;
 
   $f=fopen("http://wiki.openstreetmap.org/w/index.php?title=OpenStreetBrowser/Languages/$wikipage&action=raw", "r");
   unset($file);
@@ -56,9 +57,16 @@ function parse($lang, $wikipage) {
 	continue;
       }
 
-      $file=$m[2];
-      if(eregi("^(.*)en\.(.*)$", $file, $m)) {
-	$file="$m[1]$lang.$m[2]";
+      if($m[1]=="File") {
+	$file_type=1;
+	$file=$m[2];
+	if(eregi("^(.*)en\.(.*)$", $file, $m)) {
+	  $file="$m[1]$lang.$m[2]";
+	}
+      }
+      else {
+	$file_type=2;
+	$file=$m[2];
       }
 
       if($w) {
@@ -66,10 +74,12 @@ function parse($lang, $wikipage) {
 	unset($w);
       }
 
-      print "Writing to $file\n";
-      if(!($w=fopen("$root_path/$file", "w"))) {
-	print "Can't write to file $file\n";
-	exit;
+      if($file_type==1) {
+	print "Writing to $file\n";
+	if(!($w=fopen("$root_path/$file", "w"))) {
+	  print "Can't write to file $file\n";
+	  exit;
+	}
       }
     }
     elseif(eregi("<\/?syntaxhigh", $r)) {
@@ -77,7 +87,12 @@ function parse($lang, $wikipage) {
     else {
       if(eregi("^(.*)\\\$lang_str\[\"([^\"]*)\"\]\s*=\s*\"(.*)\";", $r, $m)) {
 	$str=rewrite_str($m[2]);
-        $r="$m[1]\$lang_str[\"$str\"]=\"".strtr($m[3], array("\""=>"\\\""))."\";\n";
+	if($file_type==1)
+	  $r="$m[1]\$lang_str[\"$str\"]=\"".strtr($m[3], array("\""=>"\\\""))."\";\n";
+	else {
+	  if(substr($m[1], 0, 1)!="#")
+	    $lang_cat_list[$lang][$str]=$m[3];
+	}
       }
 
       elseif(eregi("^(.*)\\\$lang_str\[\"([^\"]*)\"\]\s*=\s*array\( *\"(.*)\" *\);", $r, $m)) {
@@ -87,7 +102,12 @@ function parse($lang, $wikipage) {
 	}
 
 	$str=rewrite_str($m[2]);
-        $r="$m[1]\$lang_str[\"$str\"]=array(\"".implode("\", \"", $m[3])."\");\n";
+	if($file_type==1)
+	  $r="$m[1]\$lang_str[\"$str\"]=array(\"".implode("\", \"", $m[3])."\");\n";
+	else {
+	  if(substr($m[1], 0, 1)!="#")
+	    $lang_cat_list[$lang][$str]=$m[3];
+	}
       }
 
       if($w)
@@ -100,6 +120,7 @@ function parse($lang, $wikipage) {
 }
 
 // read all categories
+$lang_cat_list=array();
 $categories=array();
 $res_all=sql_query("select * from category_current", $db_central);
 while($elem_all=pg_fetch_assoc($res_all)) {

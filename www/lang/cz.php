@@ -21,13 +21,14 @@ $lang_str["yes"]="ano";
 $lang_str["no"]="ne";
 $lang_str["save"]=array("Uložit");
 $lang_str["cancel"]=array("Zrušit");
-$lang_str["longitude"]=array( F, "Zeměpisná délka", "Zeměpisné délky" );
-$lang_str["latitude"]=array( F, "Zeměpisná šířka", "Zeměpisné šířky" );
+$lang_str["longitude"]=array("F", "Zeměpisná délka", "Zeměpisné délky");
+$lang_str["latitude"]=array("F", "Zeměpisná šířka", "Zeměpisné šířky");
 $lang_str["noname"]="(bezejmenný)";
 $lang_str["info_back"]="zpět na přehled";
 $lang_str["info_zoom"]="přiblížení";
 $lang_str["nothing_found"]=array("nic nenalezeno");
 $lang_str["loading"]=array("Načítání...");
+#$lang_str["more"]="more";
 
 // Headings
 $lang_str["head:general_info"]="Základní informace";
@@ -50,8 +51,10 @@ $lang_str["head:culture"]="Kultura";
 #$lang_str["head:graves"]="Important Graves";
 $lang_str["head:routing"]="Hledání trasy";
 $lang_str["head:search"]="Vyhledávání";
-$lang_str["head:actions"]=array( F, "Akce", "Akce" );
+$lang_str["head:actions"]=array("F", "Akce", "Akce");
 $lang_str["head:location"]="Umístění";
+#$lang_str["head:tags"]=array("Tag", "Tags");
+#$lang_str["head:whats_here"]="What's here?";
 
 $lang_str["action_browse"]="prohlížet v OSM";
 $lang_str["action_edit"]="editovat v OSM";
@@ -112,15 +115,46 @@ $lang_str["overlay:draggable"]=array("Značky");
 
 $lang_str["wikipedia:read_more"]="číst více";
 
+#$lang_str["user:no_auth"]="Username or password wrong!";
+#$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
+#$lang_str["user:create_user"]="Create a new user:";
+#$lang_str["user:username"]="Username";
+#$lang_str["user:email"]="E-mail address";
+#$lang_str["user:password"]="Password";
+#$lang_str["user:password_verify"]="Verify password";
+#$lang_str["user:old_password"]="Old password";
+#$lang_str["user:no_username"]="Please supply a username!";
+#$lang_str["user:password_no_match"]="Passwords do not match!";
+#$lang_str["user:full_name"]="Full name";
+#$lang_str["user:user_exists"]="Username already exists";
+#$lang_str["user:login"]="Login";
+#$lang_str["user:logged_in_as"]="Logged in as ";
+#$lang_str["user:logout"]="Logout";
+
+#$lang_str["error"]="An error occured: ";
+#$lang_str["error:not_logged_in"]="you are not logged in";
+
+#$lang_str["more_categories"]="More categories";
+#$lang_str["category:status"]="Status";
+#$lang_str["category:data_status"]="Status";
+#$lang_str["category:old_version"]="A new version of this category is being prepared.";
+#$lang_str["category:not_compiled"]="New category is being prepared.";
+
+#$lang_str["category_rule_tag:match"]="Match";
+#$lang_str["category_rule_tag:description"]="Description";
+
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
+if(function_exists("lang"))
+#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
+
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Němčina";
 $lang_str["lang:bg"]="Bulharština";
-#$lang_str["lang:cs"]="Czech";
+$lang_str["lang:cs"]="Čeština";
 $lang_str["lang:en"]="Angličtina";
 $lang_str["lang:es"]="Španělština";
 $lang_str["lang:it"]="Italština";
@@ -128,4 +162,5 @@ $lang_str["lang:fr"]="Francouzština";
 $lang_str["lang:uk"]="Ukrajinština";
 $lang_str["lang:ru"]="Ruština";
 $lang_str["lang:ja"]="Japonština";
-$lang_str["lang:cs"]="Čeština";
+#$lang_str["lang:hu"]="Hungarian";
+

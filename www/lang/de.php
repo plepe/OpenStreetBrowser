@@ -52,6 +52,7 @@ $lang_str["head:graves"]="Wichtige Gräber";
 $lang_str["head:routing"]="Routenplanung";
 $lang_str["head:search"]="Suche";
 $lang_str["head:actions"]="Aktionen";
+#$lang_str["head:location"]="Location";
 $lang_str["head:tags"]=array("Tag", "Tags");
 $lang_str["head:whats_here"]="Was ist hier?";
 
@@ -87,7 +88,7 @@ $lang_str["main:donate"]="Spende";
 $lang_str["main:licence"]="Kartendaten: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>-Mitwirkende | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> und <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">Mitwirkende</a>";
 $lang_str["main:permalink"]="Permalink";
 
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Objekt nicht gefunden</h1>Ein Objekt mit der ID \"%s\" konnte nicht gefunden werden. Das kann eine (oder mehrere) der folgenden Ursachen haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde von einer anderen Applikation identifiziert und ist im OpenStreetBrowser (noch) nicht verfügbar</li><li>Das Objekt liegt ausserhalb des unterstützten Gebiets</li><li>Der Link, dem Du gefolgt bist, war alt und das Objekt wurde inzwischen aus der OpenStreetMap gelöscht.</li>";
+$lang_str["help:no_object"]="Ein Objekt mit der ID \"%s\" konnte nicht gefunden werden. Das kann eine (oder mehrere) der folgenden Ursachen haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde von einer anderen Applikation identifiziert und ist im OpenStreetBrowser (noch) nicht verfügbar</li><li>Das Objekt liegt ausserhalb des unterstützten Gebiets</li><li>Der Link, dem Du gefolgt bist, war alt und das Objekt wurde inzwischen aus der OpenStreetMap gelöscht.</li>";
 
 $lang_str["start:choose"]=array("Wähle einen Kartenausschnitt");
 $lang_str["start:geolocation"]=array("automatische Geolokalisierung");
@@ -114,10 +115,41 @@ $lang_str["overlay:draggable"]="Markierungen";
 
 $lang_str["wikipedia:read_more"]="weiterlesen";
 
+#$lang_str["user:no_auth"]="Username or password wrong!";
+#$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
+#$lang_str["user:create_user"]="Create a new user:";
+#$lang_str["user:username"]="Username";
+#$lang_str["user:email"]="E-mail address";
+#$lang_str["user:password"]="Password";
+#$lang_str["user:password_verify"]="Verify password";
+#$lang_str["user:old_password"]="Old password";
+#$lang_str["user:no_username"]="Please supply a username!";
+#$lang_str["user:password_no_match"]="Passwords do not match!";
+#$lang_str["user:full_name"]="Full name";
+#$lang_str["user:user_exists"]="Username already exists";
+$lang_str["user:login"]="Anmelden";
+$lang_str["user:logged_in_as"]="Angemeldet als ";
+$lang_str["user:logout"]="Abmelden";
+
+#$lang_str["error"]="An error occured: ";
+#$lang_str["error:not_logged_in"]="you are not logged in";
+
+#$lang_str["more_categories"]="More categories";
+#$lang_str["category:status"]="Status";
+#$lang_str["category:data_status"]="Status";
+#$lang_str["category:old_version"]="A new version of this category is being prepared.";
+#$lang_str["category:not_compiled"]="New category is being prepared.";
+
+#$lang_str["category_rule_tag:match"]="Match";
+#$lang_str["category_rule_tag:description"]="Description";
+
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
+
+if(function_exists("lang"))
+#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Deutsch";
@@ -130,23 +162,5 @@ $lang_str["lang:fr"]="Französisch";
 $lang_str["lang:uk"]="Ukrainisch";
 $lang_str["lang:ru"]="Russisch";
 $lang_str["lang:ja"]="Japanisch";
+#$lang_str["lang:hu"]="Hungarian";
 
-$lang_str["main:map_key"]="Legende";
-$lang_str["main:options"]="Optionen";
-$lang_str["main:about"]="Impressum";
-$lang_str["main:donate"]="Spende";
-$lang_str["main:licence"]="Kartendaten: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>-Mitwirkende | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> und <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">Mitwirkende</a>";
-$lang_str["main:permalink"]="Permalink";
-
-$lang_str["help:no_object"]="Ein Objekt mit der ID \"%s\" konnte nicht gefunden werden. Das kann eine (oder mehrere) der folgenden Ursachen haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde von einer anderen Applikation identifiziert und ist im OpenStreetBrowser (noch) nicht verfügbar</li><li>Das Objekt liegt ausserhalb des unterstützten Gebiets</li><li>Der Link, dem Du gefolgt bist, war alt und das Objekt wurde inzwischen aus der OpenStreetMap gelöscht.</li>";
-
-$lang_str["user:login"]="Anmelden";
-$lang_str["user:logged_in_as"]="Angemeldet als ";
-$lang_str["user:logout"]="Abmelden";
-
-// please finish this list, see list.php for full list of languages
-$lang_str["lang:de"]="Deutsch";
-$lang_str["lang:bg"]="Bulgarisch";
-$lang_str["lang:en"]="Englisch";
-$lang_str["lang:es"]="Spanisch";
-$lang_str["lang:it"]="Italienisch";

@@ -1,9 +1,9 @@
 <?
-//  У всех тегов должен быть перевод в файлах www/lang/tagx_XX.php в виде 
-//  "tag:key" у перевода ключа и в виде "tag:key=value" у перевода
-//  значения. Например,
+//  All tags should have translations in www/lang/tags_XX.php, with
+//  language strings like "tag:key" for the translation of the key and
+//  "tag:key=value" for the translation of the value. E.g.
 //  $lang_str["tag:amenity"]=array("Amenity", "Amenities");
-//  $lang_str["tag:amenity=bar"]=array("Бар", "Бары");
+//  $lang_str["tag:amenity=bar"]=array("Bar", "Bars");
 //
 //  Furthermore you can describe the tags with the array $tag_type. Every
 //  entry is an array again to further specify its type, e.g.:
@@ -17,8 +17,6 @@
 //  This defines, that the default value for the tag width is a number, with
 //  its default unit m (for meter) and the preferred unit for this locale is
 //  in (for inch).
-//  (Quest. from translator: does "in" a constant and can i define a cyrillic
-//  unit, which is preffered?)
 //
 //  The following types are valid:
 //  * text          default (e.g. religion, name)
@@ -37,7 +35,7 @@
 $lang_str["tag:accomodation"]="Жильё";
 
 // address
-$lang_str["tag:address"]=array( M, "Адрес", "Адреса" );
+$lang_str["tag:address"]=array("M", "Адрес", "Адреса");
 
 // addr:housenumber
 $lang_str["tag:addr:housenumber"]="Номер дома";
@@ -53,9 +51,9 @@ $lang_str["tag:admin_level=2"]="Граница Страны";
 
 // amenity
 #$lang_str["tag:amenity"]="Amenity";
-$lang_str["tag:amenity=cinema"]=array( M, "Кинотеатр", "Кинотеатры" );
-$lang_str["tag:amenity=restaurant"]=array( M, "Ресторан", "Рестораны" );
-$lang_str["tag:amenity=pub"]=array( M, "Паб", "Пабы" );
+$lang_str["tag:amenity=cinema"]=array("M", "Кинотеатр", "Кинотеатры");
+$lang_str["tag:amenity=restaurant"]=array("M", "Ресторан", "Рестораны");
+$lang_str["tag:amenity=pub"]=array("M", "Паб", "Пабы");
 
 // building
 $lang_str["tag:building=yes"]="Постройки";
@@ -85,7 +83,7 @@ $lang_str["tag:cables"]="Кабели";
 #$lang_str["tag:cuisine=regional"]="regional";
 
 // description
-$lang_str["tag:description"]=array( N, "Описание", "Описания" );
+$lang_str["tag:description"]=array("N", "Описание", "Описания");
 
 // domination
 #$lang_str["tag:domination"]="Domination";
@@ -94,7 +92,7 @@ $lang_str["tag:description"]=array( N, "Описание", "Описания" );
 #$lang_str["tag:food"]="Serves food";
 
 // highway
-$lang_str["tag:highway"]=array( N, "Шоссе", "Шоссе" );
+$lang_str["tag:highway"]=array("N", "Шоссе", "Шоссе");
 $lang_str["tag:highway=motorway"]="Автомагистраль";
 #$lang_str["tag:highway=trunk"]="Trunk Road";
 $lang_str["tag:highway=primary"]="Главная дорога";
@@ -131,7 +129,6 @@ $lang_str["tag:landuse=historic"]="Места исторического зна�
 #$lang_str["tag:landuse=natural|sub_type=t3"]="Screes, Heaths";
 #$lang_str["tag:landuse=natural|sub_type=t4"]="Mud";
 #$lang_str["tag:landuse=natural|sub_type=t5"]="Beaches";
-// end of deprecated (?)
 
 // leisure
 $lang_str["tag:leisure=sports_centre"]="Спортивный центр";
@@ -159,10 +156,10 @@ $lang_str["tag:leisure=sport"]="Другой спорт";
 #$lang_str["tag:name"]=array("Name", "Namen");
 
 // network
-$lang_str["tag:network"]=array( F, "Сеть", "Сети" );
+$lang_str["tag:network"]=array("F", "Сеть", "Сети");
 
 // note
-$lang_str["tag:note"]=array( F, "Заметка", "Заметки" );
+$lang_str["tag:note"]=array("F", "Заметка", "Заметки");
 
 // old_name
 $lang_str["tag:old_name"]="Старое(-ые) имя(-ена)";
@@ -171,28 +168,27 @@ $lang_str["tag:old_name"]="Старое(-ые) имя(-ена)";
 $lang_str["tag:opening_hours"]="Часы работы";
 
 // operator
-$lang_str["tag:operator"]=array( M, "Оператор", "Операторы" );
+$lang_str["tag:operator"]=array("M", "Оператор", "Операторы");
 
 // place
-$lang_str["tag:place"]=array( N, "Место", "Места" );
-$lang_str["tag:place=continent"]=array( M, "Континент", "Континенты" );
-$lang_str["tag:place=country"]=array( F, "Страна", "Страны" );
-$lang_str["tag:place=state"]=array( M, "Штат", "Штаты" );
-$lang_str["tag:place=region"]=array( M, "Регион", "Регионы" );
-$lang_str["tag:place=county"]=array( M, "Округ", "Округа" );
-$lang_str["tag:place=city"]=array( M, "Город", "Города" );
-$lang_str["tag:place=town"]=array( M, "Город", "Города" );              // или как?
-$lang_str["tag:place=village"]=array( F, "Деревня", "Деревни" );
-$lang_str["tag:place=suburb"]=array( M, "Пригород", "Пригороды" );
-$lang_str["tag:place=locality"]=array( M, "Район", "Районы" );
-$lang_str["tag:place=island"]=array( M, "Остров", "Острова" );
-$lang_str["tag:place=islet"]=array( M, "Островок", "Островки" );
+$lang_str["tag:place"]=array("N", "Место", "Места");
+$lang_str["tag:place=continent"]=array("M", "Континент", "Континенты");
+$lang_str["tag:place=country"]=array("F", "Страна", "Страны");
+$lang_str["tag:place=state"]=array("M", "Штат", "Штаты");
+$lang_str["tag:place=region"]=array("M", "Регион", "Регионы");
+$lang_str["tag:place=county"]=array("M", "Округ", "Округа");
+$lang_str["tag:place=city"]=array("M", "Город", "Города");
+$lang_str["tag:place=town"]=array("M", "Город", "Города");
+$lang_str["tag:place=village"]=array("F", "Деревня", "Деревни");
+$lang_str["tag:place=suburb"]=array("M", "Пригород", "Пригороды");
+$lang_str["tag:place=locality"]=array("M", "Район", "Районы");
+$lang_str["tag:place=island"]=array("M", "Остров", "Острова");
+$lang_str["tag:place=islet"]=array("M", "Островок", "Островки");
 // the following tags are deprecated
 #$lang_str["tag:place=city;population>1000000"]=array("City, > 1 Mio Inhabitants", "Cities, > 1 Mio Inhabitants");
 #$lang_str["tag:place=city;population>200000"]=array("City, > 200.000 Inhabitants", "Cities, > 200.000 Inhabitants");
 #$lang_str["tag:place=town"]="Town";
 #$lang_str["tag:place=town;population>30000"]=array("Town, > 30.000 Inhabitants", "Towns, > 30.000 Inhabitants");
-// end of deprecated (?)
 
 // population
 $lang_str["tag:population"]="Население";
@@ -228,11 +224,10 @@ $lang_str["tag:power_source=solar-thermal"]="Тепло Солнца";
 #$lang_str["tag:real_ale"]="Real ale offered";
 
 // religion
-$lang_str["tag:religion"]=array( F, "Религия", "Религии" );
+$lang_str["tag:religion"]=array("F", "Религия", "Религии");
 $lang_str["tag:religion=christian"]="Христианский";
 
 // route
-// Какой тут падеж?
 $lang_str["tag:route=train"]="Поезд";
 $lang_str["tag:route=railway"]="Железная дорога";
 #$lang_str["tag:route=rail"]="Railway";
@@ -254,7 +249,7 @@ $lang_str["tag:route=mtb"]="Горный велосипед";
 #$lang_str["tag:route_type"]="Route type";
 
 // shop
-$lang_str["tag:shop"]=array( M, "Магазин", "Магазины" );
+$lang_str["tag:shop"]=array("M", "Магазин", "Магазины");
 
 // sport
 $lang_str["tag:sport"]="Спорт";
@@ -309,14 +304,15 @@ $lang_str["tag:sport=volleyball"]="Воллейбол";
 
 // voltage
 $lang_str["tag:voltage"]="Напряжение";
-$tag_type["voltage"]=array( "number", "V", "В" );
+$tag_type["voltage"]=array("number", "V", "V");
 
 // wires
 $lang_str["tag:wires"]="Провода";
 $tag_type["wires"]=array("count");
 
 // website
-$lang_str["tag:website"]=array( M, "Сайт", "Сайты" );
-$tag_type["website"]=array("ссылка");
+$lang_str["tag:website"]=array("M", "Сайт", "Сайты");
+$tag_type["website"]=array("link");
+
 
 

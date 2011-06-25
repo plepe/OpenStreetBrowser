@@ -26,9 +26,9 @@ $lang_str["latitude"]=array("Latitude", "Latitudes");
 $lang_str["noname"]="(noname)";
 $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";
-$lang_str["nothing_found"]         =array( "nothing found" );
-$lang_str["loading"]               =array( "Loading..." );
-$lang_str["more"]                  ="more";
+$lang_str["nothing_found"]=array("nothing found");
+$lang_str["loading"]=array("Loading...");
+$lang_str["more"]="more";
 
 // Headings
 $lang_str["head:general_info"]="General Information";
@@ -52,7 +52,7 @@ $lang_str["head:graves"]="Important Graves";
 $lang_str["head:routing"]="Routing";
 $lang_str["head:search"]="Search";
 $lang_str["head:actions"]=array("Action", "Actions");
-$lang_str["head:location"]         ="Location";
+$lang_str["head:location"]="Location";
 $lang_str["head:tags"]=array("Tag", "Tags");
 $lang_str["head:whats_here"]="What's here?";
 
@@ -88,7 +88,7 @@ $lang_str["main:donate"]="Donate";
 $lang_str["main:licence"]="Map Data: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributors | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">contributors</a>";
 $lang_str["main:permalink"]="Permalink";
 
-$lang_str["help:no_object"]="No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 $lang_str["start:choose"]=array("Choose map view");
 $lang_str["start:geolocation"]=array("get geolocation");
@@ -134,7 +134,7 @@ $lang_str["user:logout"]="Logout";
 $lang_str["error"]="An error occured: ";
 $lang_str["error:not_logged_in"]="you are not logged in";
 
-$lang_str["more_categories"]= "More categories" ;
+$lang_str["more_categories"]="More categories";
 $lang_str["category:status"]="Status";
 $lang_str["category:data_status"]="Status";
 $lang_str["category:old_version"]="A new version of this category is being prepared.";
@@ -149,7 +149,7 @@ $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
 if(function_exists("lang"))
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'>".lang("info_back")."</a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
+#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="German";
@@ -163,3 +163,4 @@ $lang_str["lang:uk"]="Ukrainian";
 $lang_str["lang:ru"]="Russian";
 $lang_str["lang:ja"]="Japanese";
 $lang_str["lang:hu"]="Hungarian";
+

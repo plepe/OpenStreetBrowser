@@ -101,8 +101,8 @@ $lang_str["tag:highway=trunk"]="Fernstraße";
 #$lang_str["tag:highway=minor"]="Minor Road";
 #$lang_str["tag:highway=service"]="Service Road";
 $lang_str["tag:highway=pedestrian"]="Fußgängerzone";
-#$lang_str["tag:highway=track"]="Weg";
-#$lang_str["tag:highway=path"]="Pfad";
+#$lang_str["tag:highway=track"]="Track";
+#$lang_str["tag:highway=path"]="Path";
 
 // is_in
 $lang_str["tag:is_in"]="ist in";
@@ -144,7 +144,7 @@ $lang_str["tag:leisure=nature_reserve"]="Naturschutzgebiet";
 $lang_str["tag:leisure=park"]="Freizeitpark";
 $lang_str["tag:leisure=playground"]="Spielplatz";
 $lang_str["tag:leisure=garden"]="Garten";
-#$lang_str["tag:leisure=common"]="Allmende";
+#$lang_str["tag:leisure=common"]="Common";
 $lang_str["tag:leisure=ice_rink"]="Eislaufbahn";
 $lang_str["tag:leisure=miniature_golf"]="Minigolf";
 $lang_str["tag:leisure=swimming_pool"]="Schwimmbecken";
@@ -313,5 +313,6 @@ $tag_type["wires"]=array("count");
 // website
 $lang_str["tag:website"]="Webseite";
 $tag_type["website"]=array("link");
+
 
 

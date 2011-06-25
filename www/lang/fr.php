@@ -28,6 +28,7 @@ $lang_str["info_back"]="retour à la Vue d'ensemble";
 $lang_str["info_zoom"]="zoom";
 $lang_str["nothing_found"]=array("n'a rien trouvé");
 $lang_str["loading"]="chargement";
+#$lang_str["more"]="more";
 
 // Headings
 $lang_str["head:general_info"]="Information générale";
@@ -52,6 +53,8 @@ $lang_str["head:routing"]="Routage";
 $lang_str["head:search"]="Recherche";
 $lang_str["head:actions"]="Actions";
 $lang_str["head:location"]="Emplacement";
+#$lang_str["head:tags"]=array("Tag", "Tags");
+#$lang_str["head:whats_here"]="What's here?";
 
 $lang_str["action_browse"]="visualiser dans OSM";
 $lang_str["action_edit"]="éditer dans OSM";
@@ -112,10 +115,41 @@ $lang_str["overlay:draggable"]="Repères";
 
 $lang_str["wikipedia:read_more"]="lire plus";
 
+#$lang_str["user:no_auth"]="Username or password wrong!";
+#$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
+#$lang_str["user:create_user"]="Create a new user:";
+#$lang_str["user:username"]="Username";
+#$lang_str["user:email"]="E-mail address";
+#$lang_str["user:password"]="Password";
+#$lang_str["user:password_verify"]="Verify password";
+#$lang_str["user:old_password"]="Old password";
+#$lang_str["user:no_username"]="Please supply a username!";
+#$lang_str["user:password_no_match"]="Passwords do not match!";
+#$lang_str["user:full_name"]="Full name";
+#$lang_str["user:user_exists"]="Username already exists";
+#$lang_str["user:login"]="Login";
+#$lang_str["user:logged_in_as"]="Logged in as ";
+#$lang_str["user:logout"]="Logout";
+
+#$lang_str["error"]="An error occured: ";
+#$lang_str["error:not_logged_in"]="you are not logged in";
+
+#$lang_str["more_categories"]="More categories";
+#$lang_str["category:status"]="Status";
+#$lang_str["category:data_status"]="Status";
+#$lang_str["category:old_version"]="A new version of this category is being prepared.";
+#$lang_str["category:not_compiled"]="New category is being prepared.";
+
+#$lang_str["category_rule_tag:match"]="Match";
+#$lang_str["category_rule_tag:description"]="Description";
+
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
+
+if(function_exists("lang"))
+#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Allemand";
@@ -128,6 +162,7 @@ $lang_str["lang:fr"]="Frençais";
 $lang_str["lang:uk"]="Ukrainien";
 $lang_str["lang:ru"]="Russe";
 $lang_str["lang:ja"]="Japonais";
+#$lang_str["lang:hu"]="Hungarian";
 
 // The following $lang_str are not defined in www/lang/en.php and might be 
 // deprecated/mislocated/wrong:
