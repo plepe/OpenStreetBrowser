@@ -45,11 +45,12 @@ function template_lang_file($src, $dst) {
   if(file_exists("$root_path/$src")) {
     $f=fopen("$root_path/$src", "r");
     while($r=fgets($f)) {
-      if(eregi("^( *)\\\$lang_str\[\"([^\"]*)\"\]", $r, $m)) {
+      if(eregi("^( *)\\\$lang_str\[['\"]([^\"]*)['\"]\]", $r, $m)) {
 	if($l=$lang_str_dst[$m[2]]) {
 	  print "$m[1]\$lang_str[\"$m[2]\"]=";
 	  print esc($l);
 	  print ";\n";
+
 	  unset($lang_str_dst[$m[2]]);
 
 	  $count_done++;
