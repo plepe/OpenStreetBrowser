@@ -75,6 +75,7 @@ $overlays_add=array(
 );
 
 // Available plugins:
+// units - format length and area values
 // measure - do some measurement on the map
 // measure_obj - do measurements on the current object
 // favorites - set favorites on the map
