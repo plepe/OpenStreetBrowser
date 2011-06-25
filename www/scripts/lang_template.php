@@ -90,9 +90,12 @@ function print_category_entry($str, $tags, $cat_lang, $comment) {
 
   if($cat_lang==$ui_lang) {
     print "\$lang_cat[\"$str\"]=\"{$tags["name"]}\";";
-    $count_done++;
+    if($tags["name"])
+      $count_done++;
+    else
+      $count_missing++;
   }
-  if($tags["name:$ui_lang"]) {
+  elseif($tags["name:$ui_lang"]) {
     print "\$lang_cat[\"$str\"]=\"{$tags["name:$ui_lang"]}\";";
     $count_done++;
   }
