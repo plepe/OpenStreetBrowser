@@ -89,18 +89,18 @@ function print_category_entry($str, $tags, $cat_lang, $comment, $tag) {
   global $count_missing;
 
   if($cat_lang==$ui_lang) {
-    print "\$lang_cat[\"$str\"]=\"{$tags["$tag"]}\";";
+    print "\$lang_str[\"$str\"]=\"{$tags["$tag"]}\";";
     if($tags["$tag"])
       $count_done++;
     else
       $count_missing++;
   }
   elseif($tags["$tag:$ui_lang"]) {
-    print "\$lang_cat[\"$str\"]=\"{$tags["$tag:$ui_lang"]}\";";
+    print "\$lang_str[\"$str\"]=\"{$tags["$tag:$ui_lang"]}\";";
     $count_done++;
   }
   else {
-    print "#\$lang_cat[\"$str\"]=\"{$tags["$tag"]}\";";
+    print "#\$lang_str[\"$str\"]=\"{$tags["$tag"]}\";";
     $count_missing++;
   }
 
