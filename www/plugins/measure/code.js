@@ -33,7 +33,10 @@ function measure_click(pos) {
 }
 
 function measure_init() {
-  measure_control=new OpenLayers.Control.Measure(OpenLayers.Handler.Path,{});
+  measure_control=new OpenLayers.Control.Measure(OpenLayers.Handler.Path,{
+    geodesic: true
+  });
+
   measure_control.events.on({
     "measure": measure_deactivate,
     "measurepartial": measure_handle
