@@ -83,24 +83,24 @@ function template_lang_file($src, $dst) {
   print "\n";
 }
 
-function print_category_entry($str, $tags, $cat_lang, $comment) {
+function print_category_entry($str, $tags, $cat_lang, $comment, $tag) {
   global $ui_lang;
   global $count_done;
   global $count_missing;
 
   if($cat_lang==$ui_lang) {
-    print "\$lang_cat[\"$str\"]=\"{$tags["name"]}\";";
-    if($tags["name"])
+    print "\$lang_cat[\"$str\"]=\"{$tags["$tag"]}\";";
+    if($tags["$tag"])
       $count_done++;
     else
       $count_missing++;
   }
-  elseif($tags["name:$ui_lang"]) {
-    print "\$lang_cat[\"$str\"]=\"{$tags["name:$ui_lang"]}\";";
+  elseif($tags["$tag:$ui_lang"]) {
+    print "\$lang_cat[\"$str\"]=\"{$tags["$tag:$ui_lang"]}\";";
     $count_done++;
   }
   else {
-    print "#\$lang_cat[\"$str\"]=\"{$tags['name']}\";";
+    print "#\$lang_cat[\"$str\"]=\"{$tags["$tag"]}\";";
     $count_missing++;
   }
 
@@ -144,10 +144,10 @@ function template_lang_category($category, $version) {
   }
   // end deprecated stuff
 
-  print_category_entry("$category:name", $tags, $lang, "Original Name ($lang): {$tags['name']}");
+  print_category_entry("$category:name", $tags, $lang, "Original Name ($lang): {$tags['name']}", "name");
 
   if($tags['description']) {
-    print_category_entry("$category:description", $tags, $lang, "Default description: \"{$tags['description']}\"");
+    print_category_entry("$category:description", $tags, $lang, "Default description: \"{$tags['description']}\"", "description");
   }
 
   $res_rule=sql_query("select * from category_rule where category_id='$category' and version='$version'", $db_central);
@@ -169,10 +169,10 @@ function template_lang_category($category, $version) {
     }
     // end deprecated stuff
 
-    print_category_entry("$category:{$elem_rule['rule_id']}:name", $tags, $lang, "Match: {$tags['match']}");
+    print_category_entry("$category:{$elem_rule['rule_id']}:name", $tags, $lang, "Match: {$tags['match']}", "name");
 
     if($tags['description']) {
-      print_category_entry("$category:{$elem_rule['rule_id']}:description", $tags, $lang, "Default description: \"{$tags['description']}\"");
+      print_category_entry("$category:{$elem_rule['rule_id']}:description", $tags, $lang, "Default description: \"{$tags['description']}\"", "description");
     }
   }
 
