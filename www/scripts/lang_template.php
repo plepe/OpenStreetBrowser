@@ -113,6 +113,7 @@ function print_category_entry($str, $tags, $cat_lang, $comment) {
 function template_lang_category($category, $version) {
   global $db_central;
   global $ui_lang;
+  @include "../lang/{$ui_lang}_deprecated.php";
 
   print "==== Category: $category ====\n";
   print "Version: $version\n";
@@ -125,6 +126,24 @@ function template_lang_category($category, $version) {
   if(!$lang)
     $lang="en";
 
+  // check if deprecated $lang_str exists
+  if(!$tags["name:$ui_lang"]) {
+    if($x=$lang_str["cat:".strtr($category, array("_"=>"/"))]) {
+      if(is_array($x))
+	$x=$x[0];
+      $tags["name:$ui_lang"]=$x;
+    }
+    if($x=$lang_str["list_".strtr($category, array("_"=>"_"))]) {
+      if(is_array($x))
+	$x=$x[0];
+      $tags["name:$ui_lang"]=$x;
+    }
+//    elseif($x=$lang_str["station_type_".strtr($tags["match"], array("="=>"_"))]) {
+//      $tags["name:$ui_lang"]=$x;
+//    }
+  }
+  // end deprecated stuff
+
   print_category_entry("$category:name", $tags, $lang, "Original Name ($lang): {$tags['name']}");
 
   if($tags['description']) {
@@ -134,6 +153,21 @@ function template_lang_category($category, $version) {
   $res_rule=sql_query("select * from category_rule where category_id='$category' and version='$version'", $db_central);
   while($elem_rule=pg_fetch_assoc($res_rule)) {
     $tags=parse_hstore($elem_rule['tags']);
+
+    // check if deprecated $lang_str exists
+    if(!$tags["name:$ui_lang"]) {
+      if($x=$lang_str["list_".strtr($tags["match"], array("="=>"_"))]) {
+	if(is_array($x))
+	  $x=$x[0];
+	$tags["name:$ui_lang"]=$x;
+      }
+      elseif($x=$lang_str["station_type_".strtr($tags["match"], array("="=>"_"))]) {
+	if(is_array($x))
+	  $x=$x[0];
+	$tags["name:$ui_lang"]=$x;
+      }
+    }
+    // end deprecated stuff
 
     print_category_entry("$category:{$elem_rule['rule_id']}:name", $tags, $lang, "Match: {$tags['match']}");
 
