@@ -27,8 +27,16 @@ function measure_obj_info(chapter, ob) {
   for(var i=0; i<geo.length; i++) {
     var g=geo[i].geometry;
 
-    length+=measure_obj_control.getLength(g, "m");
-    area+=measure_obj_control.getArea(g, "m");
+    try {
+      length+=measure_obj_control.getLength(g, "m");
+    } catch (e) {
+      // ignore ...
+    }
+    try {
+      area+=measure_obj_control.getArea(g, "m");
+    } catch(e) {
+      // ignore ...
+    }
   }
 
   if(length) {
