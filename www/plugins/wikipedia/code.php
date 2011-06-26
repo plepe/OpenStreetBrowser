@@ -88,11 +88,13 @@ function wikipedia_get_abstract($object, $page, $lang) {
 
       elseif(!$img&&eregi("\[\[.*:([^\|]*\.(png|jpg|gif))", $r, $m)) {
 	$img=$m[1];
-	$img="<img src='http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img' align='left' class='wikipedia_image'>\n";
+	$url=strtr("http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img", array(" "=>"_"));
+	$img="<img src='$url' align='left' class='wikipedia_image'>\n";
       }
       elseif(!$img&&eregi("\|.*= *([^\|]*\.(png|jpg|gif))", $r, $m)) {
 	$img=$m[1];
-	$img="<img src='http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img' align='left' class='wikipedia_image'>\n";
+	$url=strtr("http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img", array(" "=>"_"));
+	$img="<img src='$url' align='left' class='wikipedia_image'>\n";
       }
       elseif($inside==0 && !ereg("^[\|\}\{\[\!]", $r)) {
 	$text.=wikipedia_parse($r);
