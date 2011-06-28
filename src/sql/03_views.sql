@@ -61,9 +61,9 @@ create view osm_all_rel as (
     'type=>rel, form=>special'::hstore as "osm_type",
     "osm_tags",
     "osm_way" as "osm_way",
-    ST_Centroid("osm_way") as "osm_way_point",
-    "osm_way" as "osm_way_line",
-    "osm_way" as "osm_way_polygon"
+    ST_CollectionExtract("osm_way", 1) as "osm_way_point",
+    ST_CollectionExtract("osm_way", 2) as "osm_way_line",
+    ST_CollectionExtract("osm_way", 3) as "osm_way_polygon"
   from osm_rel
 );
 

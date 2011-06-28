@@ -122,14 +122,20 @@ h1 {
   font-weight: bold;
   padding:3px 5px;
 }
-h1 input { display: none; }
-.box_open_1 h1, .object h1 { border-bottom:1px dotted #ddd; margin-bottom:5px; }
-
+h1 input {
+  display: none;
+}
+.box_open_1 h1,
+.object h1 {
+  border-bottom:1px dotted #ddd;
+  margin-bottom:5px;
+}
 h2 {
   margin: 0;
   padding:0 2px;
   font-size: 12px;
   font-weight: normal;
+  clear: left;
 }
 h3 {
   margin: 0;

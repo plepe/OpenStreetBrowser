@@ -23,7 +23,7 @@ $scales_levels=array(
   1000);
 $scale_icon=array("global"=>2, "international"=>5, "national"=>8, "regional"=>11, "urban"=>13, "suburban"=>15, "local"=>17);
 $scale_text=array("global"=>4, "international"=>8, "national"=>10, "regional"=>13, "urban"=>15, "suburban"=>16, "local"=>18);
-include "categories_sql.php";
+include_once "categories_sql.php";
 $default_style=array(
   "point|icon_style"=>"allow_overlap: true;",
   "point|icon_label_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: true; halo_fill: #ffffff; halo_radius: 1;",
@@ -452,8 +452,8 @@ function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance
   return array('rule'=>$rule, 'columns'=>$add_columns);
 }
 
-function mapnik_get_layer($dom, $name, $sql) {
-  global $db_name;
+function mapnik_get_layer($dom, $name, $sql, $shape_type="") {
+  global $db;
 
   $layer=$dom->createElement("Layer");
   $layer->setAttribute("name", "$name");
@@ -471,7 +471,19 @@ function mapnik_get_layer($dom, $name, $sql) {
   $parameter=$dom->createElement("Parameter");
   $datasource->appendChild($parameter);
   $parameter->setAttribute("name", "dbname");
-  $parameter->appendChild($dom->createTextNode("$db_name"));
+  $parameter->appendChild($dom->createTextNode($db['name']));
+  $parameter=$dom->createElement("Parameter");
+  $datasource->appendChild($parameter);
+  $parameter->setAttribute("name", "host");
+  $parameter->appendChild($dom->createTextNode($db['host']));
+  $parameter=$dom->createElement("Parameter");
+  $datasource->appendChild($parameter);
+  $parameter->setAttribute("name", "user");
+  $parameter->appendChild($dom->createTextNode($db['user']));
+  $parameter=$dom->createElement("Parameter");
+  $datasource->appendChild($parameter);
+  $parameter->setAttribute("name", "password");
+  $parameter->appendChild($dom->createTextNode($db['passwd']));
   $parameter=$dom->createElement("Parameter");
   $datasource->appendChild($parameter);
   $parameter->setAttribute("name", "table");
@@ -483,7 +495,10 @@ function mapnik_get_layer($dom, $name, $sql) {
   $parameter=$dom->createElement("Parameter");
   $datasource->appendChild($parameter);
   $parameter->setAttribute("name", "geometry_field");
-  $parameter->appendChild($dom->createTextNode("geo"));
+  if($shape_type!="") 
+    $parameter->appendChild($dom->createTextNode("geo_{$shape_type}"));
+  else
+    $parameter->appendChild($dom->createTextNode("geo"));
   $parameter=$dom->createElement("Parameter");
   $datasource->appendChild($parameter);
   $parameter->setAttribute("name", "srid");
@@ -494,6 +509,7 @@ function mapnik_get_layer($dom, $name, $sql) {
 
 function build_mapnik_style($id, $data, $global_tags) {
   global $importance_levels;
+  global $postgis_tables;
 
   $layers=array("polygon_shape"=>array("reverse"),
 		"line_shape" =>array("reverse"),
@@ -518,36 +534,60 @@ function build_mapnik_style($id, $data, $global_tags) {
       $style_shape->setAttribute("name", "{$id}_{$importance}_{$table}_shape");
       foreach($data2['rule'] as $i=>$tags) {
 	$rule_id=$data2['rule_id'][$i];
-	if(in_array($table, array("polygon"))) {
+
+	// layer polygon_shape
+	if(isset($postgis_tables[$table])&&
+	   in_array("polygon_shape", $postgis_tables[$table]['layers'])) {
 	  $def=mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_shape->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
 	}
-	if(in_array($table, array("point", "polygon", "point_place_extract"))) {
+
+	// layer point_icon
+	if(isset($postgis_tables[$table])&&
+	   in_array("point_icon", $postgis_tables[$table]['layers'])) {
 	  $def=mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_icon->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
+	}
+
+	// layer point_text
+	if(isset($postgis_tables[$table])&&
+	   in_array("point_text", $postgis_tables[$table]['layers'])) {
 	  $def=mapnik_style_point_text($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_text->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
 	}
-	elseif(in_array($table, array("line"))) {
+
+	// layer line_shape
+	if(isset($postgis_tables[$table])&&
+	   in_array("line_shape", $postgis_tables[$table]['layers'])) {
 	  $def=mapnik_style_line_line($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_shape->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
+	}
+
+	// layer line_text
+	if(isset($postgis_tables[$table])&&
+	   in_array("line_text", $postgis_tables[$table]['layers'])) {
 	  $def=mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_text->appendChild($def['rule']);
 	    $columns[]=$def['columns'];
 	  }
+	}
+
+	// layer line_icon
+	if(isset($postgis_tables[$table])&&
+	   in_array("line_shape", $postgis_tables[$table]['layers'])) {
 	  $def=mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags, $importance);
 	  if(isset($def)) {
 	    $style_icon->appendChild($def['rule']);
@@ -556,6 +596,7 @@ function build_mapnik_style($id, $data, $global_tags) {
 	}
       }
 
+      print "Columns (1): ";
       print_r($columns);
       $new_columns=array();
       foreach($columns as $col) {
@@ -570,6 +611,8 @@ function build_mapnik_style($id, $data, $global_tags) {
 	}
       }
       $columns=array_unique($new_columns);
+
+      print "Columns (2): ";
       print_r($columns);
 
       $sql=$data2['sql'];
@@ -592,29 +635,29 @@ function build_mapnik_style($id, $data, $global_tags) {
       $sql="(select{$sql_select} from ($sql) as t{$sql_join}) as u";
 
       if(in_array($table, array("polygon"))) {
-	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_shape", $sql);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_shape", $sql, "polygon");
 	$map_layers['polygon_shape'][$importance][]=$style_shape;
 	$map_layers['polygon_shape'][$importance][]=$layer;
       }
-      if(in_array($table, array("point", "polygon", "point_place_extract"))) {
-	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
+      if(in_array($table, array("point", "polygon", "point_extract"))) {
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql, "point");
 	$map_layers['point_icon'][$importance][]=$style_icon;
 	$map_layers['point_icon'][$importance][]=$layer;
 
-	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql, "point");
 	$map_layers['point_text'][$importance][]=$style_text;
 	$map_layers['point_text'][$importance][]=$layer;
       }
       else {
-	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_shape", $sql);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_shape", $sql, "line");
 	$map_layers['line_shape'][$importance][]=$style_shape;
 	$map_layers['line_shape'][$importance][]=$layer;
 
-	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_text", $sql, "line");
 	$map_layers['line_text'][$importance][]=$style_text;
 	$map_layers['line_text'][$importance][]=$layer;
 
-	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql);
+	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_icon", $sql, "line");
 	$map_layers['line_icon'][$importance][]=$style_icon;
 	$map_layers['line_icon'][$importance][]=$layer;
       }
@@ -628,8 +671,8 @@ function build_mapnik_style($id, $data, $global_tags) {
       $importance_list=array_reverse($importance_list);
 
     for($i=0; $i<sizeof($importance_list); $i++) {
-      if($map_layers[$layer])
-	if($map_layers[$layer][$importance_list[$i]])
+      if(isset($map_layers[$layer]))
+	if(isset($map_layers[$layer][$importance_list[$i]]))
 	  foreach($map_layers[$layer][$importance_list[$i]] as $el)
 	    $map->appendChild($el);
     }
@@ -645,8 +688,9 @@ function build_renderd_config($id, $data, $global_tags) {
 
   $ret.="[$id]\n";
   $ret.="URI=/tiles/$id/\n";
-  $ret.="XML=$lists_dir/$id.xml.mapnik\n";
+  $ret.="XML=$lists_dir/$id.mapnik\n";
   $ret.="HOST=$www_host\n";
+  $ret.="VERSION={$data['_']['version']}\n";
   $ret.="\n";
 
   return $ret;
@@ -800,9 +844,7 @@ function category_list($lang="en") {
   $res=sql_query("select * from category_current left join category on category_current.category_id=category.category_id and category_current.version=category.version");
   while($elem=pg_fetch_assoc($res)) {
     $tags=new tags(parse_hstore($elem['tags']));
-    if($tags->get("hide")!="yes") {
-      $ret[$elem['category_id']]=$tags;
-    }
+    $ret[$elem['category_id']]=$tags;
   }
 
   return $ret;
@@ -921,6 +963,7 @@ function categories_has_saved($id) {
   print "Detect saving of $id -> compile\n";
   $cat=new category($id);
   $cat->compile();
+  restart_renderd();
 }
 
 function categories_init() {

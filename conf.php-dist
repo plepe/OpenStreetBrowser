@@ -75,7 +75,9 @@ $overlays_add=array(
 );
 
 // Available plugins:
+// units - format length and area values
 // measure - do some measurement on the map
+// measure_obj - do measurements on the current object
 // favorites - set favorites on the map
 // marker - set markers on the map
 // marker_list - Show list of visible markers as category
@@ -114,3 +116,5 @@ $overlays_add=array(
 // osm_member - Show member information for objects
 // iplocation - Locate 'my position' using the iplocationtools-service
 // blog - On startup show a window with the rss-feed of the blog
+// mouseposition - Show the coordinates of the current mouseposition
+// contextmenu - Include a contextmenu on right click

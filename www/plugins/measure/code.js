@@ -33,7 +33,10 @@ function measure_click(pos) {
 }
 
 function measure_init() {
-  measure_control=new OpenLayers.Control.Measure(OpenLayers.Handler.Path,{});
+  measure_control=new OpenLayers.Control.Measure(OpenLayers.Handler.Path,{
+    geodesic: true
+  });
+
   measure_control.events.on({
     "measure": measure_deactivate,
     "measurepartial": measure_handle
@@ -48,7 +51,10 @@ function measure_init() {
     weight: -2,
   });
   register_toolbox(measure_toolbox);
-  contextmenu_add("plugins/measure/icon.png", "measurement tool", measure_click);
+
+  if(plugins_loaded("contextmenu")) {
+    contextmenu_add("plugins/measure/icon.png", "measurement tool", measure_click);
+  }
 
   var text = "<i>Measurements</i><br/><br/><div id='measure_text'>Start your measurements by selecting your way on the map...</div><br/><br/>";
   measure_toolbox.content.innerHTML=text;

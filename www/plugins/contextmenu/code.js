@@ -1,8 +1,8 @@
-var contexttimer;
+var contextmenu_timer;
 var contextmenu_pos;
 
-function rightclick(e) {
-  clearTimeout(contexttimer);
+function contextmenu_rightclick(e) {
+  clearTimeout(contextmenu_timer);
 
   var e = (e) ? e : ((window.event) ? window.event : "");
   if (e.pageX || e.pageY) {
@@ -66,7 +66,7 @@ function contextmenu_mouseout(e) {
   }
 
   if (nu) {
-    contexttimer=window.setTimeout("document.getElementById('contextmenu').style.display='none'",500);
+    contextmenu_timer=window.setTimeout("document.getElementById('contextmenu').style.display='none'",500);
   }
 }
 
@@ -114,3 +114,12 @@ function contextmenu_add(img, text, fun, options) {
   // return entry
   return entry;
 }
+
+function contextmenu_init() {
+  map.div.oncontextmenu = function noContextMenu(e) {
+    contextmenu_rightclick(e);
+    return false; //cancel the right click of brower
+  };
+}
+
+register_hook("init", contextmenu_init);

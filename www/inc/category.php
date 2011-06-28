@@ -5,9 +5,9 @@ class category {
   function __construct($id) {
     global $lists_dir;
     $this->id=$id;
-    $this->file="$lists_dir/$this->id.xml";
+    $this->file="$lists_dir/$this->id";
 
-    if(!file_exists($this->file))
+    if(!file_exists("{$this->file}.save"))
       return null;
 
     $this->get_tags();
@@ -34,17 +34,34 @@ class category {
 	"version"=>0,
       ));
     }
-}
+  }
 
-  function get_newest_version() {
-    global $lists_dir;
-    global $db_central;
-
-    $res=sql_query("select * from category_current where category_id='$this->id'", $db_central);
+  function get_newest_version($db=null) {
+    $res=sql_query("select * from category_current where category_id='$this->id'", $db);
     if(!$elem=pg_fetch_assoc($res))
       return null;
 
     return $elem['version'];
+  }
+
+  function get_renderd_config() {
+    $ret=array();
+
+    $file="$this->file.renderd";
+    if(!file_exists($file))
+      return null;
+
+    $f=fopen("$file", "r");
+    $r=fgets($f);
+    while($r=fgets($f)) {
+      $r=trim($r);
+      if(preg_match("/^([A-Za-z0-9_]*) *=(.*)$/", $r, $m)) {
+	$ret[$m[1]]=$m[2];
+      }
+    }
+    fclose($f);
+
+    return $ret;
   }
 
   function get_data() {
@@ -52,7 +69,7 @@ class category {
 
     // load category configuration
     if(file_exists("$this->file.save")) {
-      $this->data=unserialize(file_get_contents("$lists_dir/$this->id.xml.save"));
+      $this->data=unserialize(file_get_contents("$this->file.save"));
       return $this->data;
     }
 
@@ -66,6 +83,7 @@ class category {
 
   function compile() {
     global $lists_dir;
+    global $db_central;
 
     // Load content
     $this->text=category_load($this->id);
@@ -99,7 +117,7 @@ class category {
 
     // ... then write all files at once
     foreach($data['_']['classify_fun'] as $table=>$fun)
-      sql_query($fun);
+      sql_query($fun, $db_central);
 
     $f1=fopen("$this->file.save", "w");
     fwrite($f1, serialize($data));
@@ -170,8 +188,8 @@ class category {
     }
 
     // viewbox
-    if($param[viewbox]) {
-      $coord=explode(",", $param[viewbox]);
+    if($param['viewbox']) {
+      $coord=explode(",", $param['viewbox']);
       $sql_where['*'][]="CollectionIntersects(SnapToGrid(geo, 0.00001), PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913))";
     }
 
@@ -190,12 +208,12 @@ class category {
 	    $qry_where[]=implode(" and ", $sql_where['*']);
 
 	  $req_where=array();
-	  if($req_data[where])
-	    $req_where[]=implode(" or ", $req_data[where]);
+	  if($req_data['where'])
+	    $req_where[]=implode(" or ", $req_data['where']);
 
-	  if(is_array($req_data[where_imp])) {
-	    if(sizeof($req_data[where_imp]))
-	      $req_where[]="(".implode(" or ", $req_data[where_imp]).") and \"importance\"='$imp'";
+	  if(is_array($req_data['where_imp'])) {
+	    if(sizeof($req_data['where_imp']))
+	      $req_where[]="(".implode(" or ", $req_data['where_imp']).") and \"importance\"='$imp'";
 	    else
 	      $req_where[]="\"importance\"='$imp'";
 	  }
@@ -210,7 +228,7 @@ class category {
 	  if(!$where)
 	    $where="true";
 
-          $sql=strtr($req_data[sql], array(
+          $sql=strtr($req_data['sql'], array(
 	    "!bbox!"=>"PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913)",
 	  ));
 
@@ -272,10 +290,10 @@ class category {
 
     $ret="<match ";
     $ob=load_object($res, $tags);
-    $info=explode("||", $res[res]);
+    $info=explode("||", $res['res']);
 
-    $ret.="id=\"$id\" ";
-    $ret.="rule_id=\"$res[rule_id]\">\n";
+    $ret.="id=\"{$id}\" ";
+    $ret.="rule_id=\"{$res['rule_id']}\">\n";
 
     foreach($tags as $k=>$v) {
       $k=strtr($k, array("&"=>"&amp;", ">"=>"&gt;", "<"=>"&lt;", "\""=>"&quot;"));
@@ -283,8 +301,8 @@ class category {
       $ret.="  <tag k=\"$k\" v=\"$v\" />\n";
     }
 
-    $ret.="  <tag k=\"#geo:center\" v=\"$res[center]\"/>\n";
-    $ret.="  <tag k=\"#importance\" v=\"$res[importance]\"/>\n";
+    $ret.="  <tag k=\"#geo:center\" v=\"{$res['center']}\"/>\n";
+    $ret.="  <tag k=\"#importance\" v=\"{$res['importance']}\"/>\n";
 
     $ret.="</match>\n";
 

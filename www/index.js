@@ -197,18 +197,22 @@ function set_location(params) {
 var last_location_hash;
 function check_redraw() {
   location_params={};
+  var new_hash=location.hash;
 
-  if(location.hash!=last_location_hash) {
-    if(location.hash.substr(0, 2)=="#?") {
-      call_hooks("recv_permalink", location.hash.substr(2));
-      location_params=string_to_hash(location.hash.substr(2));
+  // some browsers do not decode special characters
+  new_hash=urldecode(new_hash);
+
+  if(new_hash!=last_location_hash) {
+    if(new_hash.substr(0, 2)=="#?") {
+      call_hooks("recv_permalink", new_hash.substr(2));
+      location_params=string_to_hash(new_hash.substr(2));
     }
-    else if(location.hash.substr(0, 1)=="#") {
-      location_params.obj=location.hash.substr(1);
+    else if(new_hash.substr(0, 1)=="#") {
+      location_params.obj=new_hash.substr(1);
     }
 
     call_hooks("hash_changed", location_params);
-    last_location_hash=location.hash;
+    last_location_hash=new_hash;
   }
 
   redraw_timer=setTimeout("check_redraw()", 300);
@@ -286,12 +290,6 @@ function init() {
 			new OpenLayers.Control.Navigation() ]
 	  });
 
-  map.div.oncontextmenu = function noContextMenu(e) {
-    rightclick(e);
-    return false; //cancel the right click of brower
-  };
-
-  map.addControl(new OpenLayers.Control.MousePosition());
   map.addControl(new OpenLayers.Control.ScaleLine({ geodesic: true }));
 
   redraw_timer=setTimeout("check_redraw()", 300);
