@@ -4,9 +4,25 @@ DECLARE
   geom geometry;
   tags hstore;
   min_admin_level float;
+  rel_ids bigint[];
 BEGIN
+  -- get list of relations which are boundary=administrative or =political
+  rel_ids:=(select array_agg(rm.relation_id)
+   from relation_members rm
+     join relation_tags rt on rm.relation_id=rt.relation_id
+   where id=rm.member_id and rm.member_type='W'
+     and rt.k='boundary' and rt.v in ('administrative', 'political'));
+
   -- get tags
-  tags:=tags_merge(way_assemble_tags(id), (select tags_merge(array_agg(rel_assemble_tags(relation_id))) from relation_members rm where id=rm.member_id and rm.member_type='W'));
+  tags:=tags_merge(
+    (select way_assemble_tags(id)
+     from way_tags
+     where way_id=id
+       and k='boundary' and v in ('administrative', 'political'))
+  ,
+    (select tags_merge(array_agg(rel_assemble_tags(rel_id)))
+     from (select unnest(rel_ids) as rel_id) x)
+  );
 
   min_admin_level:=parse_lowest_number(tags->'admin_level');
 
@@ -23,7 +39,8 @@ BEGIN
       'boundary_'||id,
       tags,
       min_admin_level,
-      ST_Transform(geom, 900913)
+      ST_Transform(geom, 900913),
+      (select array_agg('rel_'||rel_id) from (select unnest(rel_ids) as rel_id) x)
     );
   
   return true;
