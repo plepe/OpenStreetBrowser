@@ -1,5 +1,5 @@
 -- Generate all boundaries which are missing in the database
-select assemble_boundary(y.id)
+select y.id, assemble_boundary(y.id)
 from (
   select x.id, osm_boundary.osm_id
   from (
