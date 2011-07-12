@@ -100,5 +100,16 @@ function whats_here_search_object(objects, str) {
   }
 }
 
+function whats_here_contextmenu(pos) {
+  location.hash="#whats_here="+pos.lon+","+pos.lat;
+}
+
+function whats_here_init() {
+  if(plugins_loaded("contextmenu")) {
+    contextmenu_add("plugins/whats_here/icon.png", lang("whats_here:contextmenu"), whats_here_contextmenu);
+  }
+}
+
+register_hook("init", whats_here_init);
 register_hook("view_click", whats_here_view_click);
 register_hook("search_object", whats_here_search_object);
