@@ -30,6 +30,34 @@ var destination_style={
     graphicYOffset: -23
   };
 
+function navigation_point(lon, lat, style) {
+  this.inheritFrom=geo_object;
+  this.inheritFrom();
+  this.type="marker";
+
+  // geo_center
+  this.geo_center=function() {
+    return this.feature;
+  }
+
+  // remove
+  this.remove=function() {
+    drag_layer.unselect(this.feature);
+    drag_layer.removeFeatures([this.feature]);
+  }
+
+  // constructor
+  this.lon=parseFloat(lon);
+  this.lat=parseFloat(lat);
+  //this.id="";
+
+  var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
+  var geo = new OpenLayers.Geometry.Point(pos.lon, pos.lat);
+  this.feature = new OpenLayers.Feature.Vector(geo, 0, style);
+  drag_layer.addFeatures([this.feature]);
+  this.feature.ob=this;
+}
+
 function route() {
   this.via=new Array();
   this.route_type="car";
@@ -84,85 +112,64 @@ function route() {
   }
 
   //sets your home point
-  this.set_home=function(lon, lat) {
+  this.set_home=function(point) {
     if(this.home) {
-      this.remove_home();
+      this.home.remove();
     }
-    var pos_home = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-    var geo_home = new OpenLayers.Geometry.Point(pos_home.lon, pos_home.lat);
-    this.home = new OpenLayers.Feature.Vector(geo_home, 0, home_style);
-    drag_layer.addFeatures([this.home]);
-    navigation_toolboxtext();
-  }
+    this.home=point;
 
-  //removes your home point
-  this.remove_home=function() {
-    if(this.home){
-      drag_layer.unselect(this.home);
-      drag_layer.removeFeatures([this.home]);
-      this.home="";
-    }
     navigation_toolboxtext();
   }
 
   //sets your destination point
-  this.set_destination=function(lon, lat) {
+  this.set_destination=function(point) {
     if(this.destination) {
-      this.remove_destination();
+      this.destination.remove();
     }
-    var pos_destination = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-    var geo_destination = new OpenLayers.Geometry.Point(pos_destination.lon, pos_destination.lat);
-    this.destination = new OpenLayers.Feature.Vector(geo_destination, 0, destination_style);
-    drag_layer.addFeatures([this.destination]);
-    navigation_toolboxtext();
-  }
+    this.destination=point;
 
-  //removes your destination point
-  this.remove_destination=function() {
-    if(this.destination){
-      drag_layer.unselect(this.destination);
-      drag_layer.removeFeatures([this.destination]);
-      this.destination="";
-    }
     navigation_toolboxtext();
   }
 
   //adds a via point to the via array
-  this.add_via=function(lon, lat){
-    var pos_via = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-    var geo_via = new OpenLayers.Geometry.Point(pos_via.lon, pos_via.lat);
-    this.via.push(new OpenLayers.Feature.Vector(geo_via, 0, via_style));
-    drag_layer.addFeatures([this.via[this.via.length-1]]);
+  this.add_via=function(point) {
+    this.via.push(point);
+
     navigation_toolboxtext();
   }
-  
+
+ 
   //removes the i-th point from the via array
   this.remove_via=function(i){
-    if(this.via[i]){
-      drag_layer.unselect(this.via[i]);
-      drag_layer.removeFeatures([this.via[i]]);
-      this.via.splice(i,1);
-     }
-     navigation_toolboxtext();
+    this.via[i].remove();
+    this.via.splice(i, 1);
   }
 }
 
 function navigation_set_home(pos) {
   navigation_toolbox.activate(1);
-  myroute.set_home(pos.lon, pos.lat);
-  calculate_route();
+  myroute.set_home(new navigation_point(pos.lon, pos.lat, home_style));
+
+  navigation_update_url();
 }
 
 function navigation_add_via(pos) {
   navigation_toolbox.activate(1);
-  myroute.add_via(pos.lon, pos.lat);
-  calculate_route();
+  myroute.add_via(new navigation_point(pos.lon, pos.lat, via_style));
+
+  navigation_update_url();
 }
 
 function navigation_set_destination(pos) {
   navigation_toolbox.activate(1);
-  myroute.set_destination(pos.lon, pos.lat);
-  calculate_route();
+  myroute.set_destination(new navigation_point(pos.lon, pos.lat, home_style));
+
+  navigation_update_url();
+}
+
+function navigation_update_url() {
+
+  location.hash="#navigation="+myroute.home.lon+myroute.home.lat;
 }
 
 var anzeige;
