@@ -35,6 +35,11 @@ function navigation_point(lon, lat, style) {
   this.inheritFrom();
   this.type="marker";
 
+  // name
+  this.name=function() {
+    return lat.toFixed(5)+", "+lon.toFixed(5);
+  }
+
   // geo_center
   this.geo_center=function() {
     return this.feature;
@@ -155,7 +160,7 @@ function navigation_add_via(pos) {
 
 function navigation_set_destination(pos) {
   navigation_toolbox.activate(1);
-  myroute.set_destination(new navigation_point(pos.lon, pos.lat, home_style));
+  myroute.set_destination(new navigation_point(pos.lon, pos.lat, destination_style));
 
   navigation_update_url();
 }
@@ -185,36 +190,62 @@ function calculate_route(){
 function navigation_toolboxtext() {
   var utm=new OpenLayers.Projection("EPSG:4326");
 
+  var starttext=document.getElementById("navigation_starttext");
+  dom_clean(starttext);
   if(!(myroute.home && myroute.destination)) {
-    document.getElementById("navigation_starttext").innerHTML = "Select your home and your destination on the map!<br/><br/>";
-  } else {
-    document.getElementById("navigation_starttext").innerHTML = "";
+    dom_create_append_text(starttext, lang("navigation:toolbox_help"));
   }
 
+  var nav_table=document.getElementById("navigation_points");
+  dom_clean(nav_table);
+
+  // home
+  var tr=dom_create_append(nav_table, "tr");
+
+  var td=dom_create_append(tr, "td");
+  var img=dom_create_append(td, "img");
+  img.src="plugins/navigation/icon_home.png";
+
+  var td=dom_create_append(tr, "td");
   if(!myroute.home) {
-    document.getElementById("navigation_hometext").innerHTML = "home";
-  } else {
-    var home = myroute.home.geometry;//.transform(map.getProjectionObject(), utm);
-    document.getElementById("navigation_hometext").innerHTML = home.x.toFixed(5) + ", " + home.y.toFixed(5);
+    dom_create_append_text(td, lang("navigation:home"));
+  }
+  else {
+    dom_create_append_text(td, myroute.home.name());
   }
 
+  // via
+  var tr=dom_create_append(nav_table, "tr");
+
+  var td=dom_create_append(tr, "td");
+  var img=dom_create_append(td, "img");
+  img.src="plugins/navigation/icon_via.png";
+
+  var td=dom_create_append(tr, "td");
   if(myroute.via.length==0) {
-    document.getElementById("navigation_viatext").innerHTML = "via";
-  } else {
-    document.getElementById("navigation_viatext").innerHTML = "";
+    var div=dom_create_append(td, "div");
+    dom_create_append_text(div, lang("navigation:via"));
+  }
+  else {
     for(var i=0; i<myroute.via.length; i++) {
-      document.getElementById("navigation_viatext").innerHTML += myroute.via[i].geometry.x.toFixed(5) + ", " + myroute.via[i].geometry.y.toFixed(5);
-      if(i!=myroute.via.length-1) {
-        document.getElementById("navigation_viatext").innerHTML += "<br/>";
-      }
+      var div=dom_create_append(td, "div");
+      dom_create_append_text(div, myroute.via[i].name());
     }
   }
 
+  // destination
+  var tr=dom_create_append(nav_table, "tr");
+
+  var td=dom_create_append(tr, "td");
+  var img=dom_create_append(td, "img");
+  img.src="plugins/navigation/icon_destination.png";
+
+  var td=dom_create_append(tr, "td");
   if(!myroute.destination) {
-    document.getElementById("navigation_destinationtext").innerHTML = "destination";
-  } else {
-    var destination = myroute.destination.geometry;//.transform(map.getProjectionObject(), utm);
-    document.getElementById("navigation_destinationtext").innerHTML = destination.x.toFixed(5) + ", " + destination.y.toFixed(5);
+    dom_create_append_text(td, lang("navigation:destination"));
+  }
+  else {
+    dom_create_append_text(td, myroute.destination.name());
   }
 }
 
