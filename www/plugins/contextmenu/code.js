@@ -133,4 +133,21 @@ function contextmenu_init() {
   }
 }
 
+function contextmenu_options_show(list) {
+  var ret="";
+  
+  ret+="<h4>"+lang("contextmenu:head")+"</h4>\n";
+  ret+="<div class='options_help'>"+lang("contextmenu:help")+"</div>\n";
+  ret+=options_radio("contextmenu_mouse_button", [ "right", "left" ]);
+
+  list.push([ 2, ret ]);
+}
+
+function contextmenu_options_save() {
+ var r=options_radio_get("contextmenu_mouse_button");
+  options_set("contextmenu_mouse_button", options_radio_get("contextmenu_mouse_button"));
+}
+
 register_hook("init", contextmenu_init);
+register_hook("options_show", contextmenu_options_show);
+register_hook("options_save", contextmenu_options_save);
