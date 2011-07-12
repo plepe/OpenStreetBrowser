@@ -35,6 +35,11 @@ function navigation_point(lon, lat, style) {
   this.inheritFrom();
   this.type="marker";
 
+  // id
+  this.id=function() {
+    return lat.toFixed(5)+","+lon.toFixed(5);
+  }
+
   // name
   this.name=function() {
     return lat.toFixed(5)+", "+lon.toFixed(5);
@@ -68,9 +73,10 @@ function route() {
   this.travel_with=navigation_cloudmade_travelwith[0].id;
   
   //changes route type
-  this.change_route_type=function(button) {
-    this.travel_with=ob.value;
-    calculate_route();
+  this.change_route_type=function(select) {
+    this.travel_with=select.value;
+
+    navigation_update_url();
   }
 
   //inverts route
@@ -79,8 +85,9 @@ function route() {
     this.home=this.destination;
     this.destination=temp;
     this.via.reverse();
+
     navigation_toolboxtext();
-    calculate_route();
+    navigation_update_url();
   }
   /*
   this.show=function(){
@@ -165,8 +172,20 @@ function navigation_set_destination(pos) {
 }
 
 function navigation_update_url() {
+  var param=[];
 
-  location.hash="#navigation="+myroute.home.lon+myroute.home.lat;
+  if(!(myroute.home && myroute.destination)) {
+    return;
+  }
+
+  param.push(myroute.travel_with);
+  param.push(myroute.home.id());
+  for(var i=0; i<myroute.via.length; i++) {
+    param.push(myroute.via[i].id());
+  }
+  param.push(myroute.destination.id());
+
+  location.hash="#navigation="+param.join(":");
 }
 
 var anzeige;
