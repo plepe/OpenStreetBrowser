@@ -37,12 +37,12 @@ function navigation_point(lon, lat, style) {
 
   // id
   this.id=function() {
-    return lat.toFixed(5)+","+lon.toFixed(5);
+    return this.lat.toFixed(5)+","+this.lon.toFixed(5);
   }
 
   // name
   this.name=function() {
-    return lat.toFixed(5)+", "+lon.toFixed(5);
+    return this.lat.toFixed(5)+", "+this.lon.toFixed(5);
   }
 
   // geo_center
