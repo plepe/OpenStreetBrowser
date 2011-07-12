@@ -110,7 +110,7 @@ function whats_here_contextmenu(pos) {
 
 function whats_here_init() {
   if(plugins_loaded("contextmenu")) {
-    contextmenu_add("plugins/whats_here/icon.png", lang("whats_here:contextmenu"), whats_here_contextmenu);
+    contextmenu_add("plugins/whats_here/icon.png", lang("whats_here:contextmenu"), whats_here_contextmenu, { weight: -10 });
   }
 }
 
