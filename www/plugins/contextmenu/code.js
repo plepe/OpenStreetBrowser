@@ -1,5 +1,6 @@
 var contextmenu_timer;
 var contextmenu_pos;
+var contextmenu_items=[];
 
 function contextmenu_rightclick(e) {
   clearTimeout(contextmenu_timer);
@@ -21,7 +22,9 @@ function contextmenu_rightclick(e) {
   contextmenu_pos=map.getLonLatFromPixel(new OpenLayers.Pixel(posx-offsetx, posy-offsety)).transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
 
   var contextmenu=document.getElementById("contextmenu");
+  contextmenu_compile();
   contextmenu.style.display="block";
+
   var contextWidth = contextmenu.offsetWidth;
   var contextHeight = contextmenu.offsetHeight;
   var contextmenu_pointer = document.getElementById("contextmenu_pointer");
@@ -75,7 +78,7 @@ function contextmenu_hide() {
   document.getElementById('contextmenu').style.display='none';
 }
 
-function contextmenu_entry(cell, options, fun) {
+function contextmenu_entry(options, fun) {
   // contextmenu_fire is called, when entry is selected in list
   this.contextmenu_fire=function() {
     // called saved function
@@ -87,39 +90,86 @@ function contextmenu_entry(cell, options, fun) {
 
   // constructor
   this.fun=fun;
-  this.cell=cell;
+  this.div=document.createElement("div");
   this.options=options;
 
   // create entry in menu
-  cell.onclick=this.contextmenu_fire.bind(this);
-  cell.innerHTML="<img src=\""+this.options.img+"\" border=\"0\" title=\"\"> "+this.options.text;
+  this.div.onclick=this.contextmenu_fire.bind(this);
+  this.div.innerHTML="<img src=\""+this.options.img+"\" border=\"0\" title=\"\"> "+this.options.text;
 }
 
 function contextmenu_add(img, text, fun, options) {
-  // add a row to the table of the contextmenu
-  var tab=document.getElementById("contextmenu_table");
-  var row=tab.insertRow(tab.rows.length);
-  var cell=document.createElement("td");
-  cell.className="contextmenu_entry";
-  row.appendChild(cell);
-
   if(!options)
     options={};
   options.img=img;
   options.text=text;
 
   // create the entry as a contextmenu_entry
-  var entry=new contextmenu_entry(cell, options, fun);
+  var entry=new contextmenu_entry(options, fun);
+
+  // items
+  contextmenu_items.push(entry);
 
   // return entry
   return entry;
 }
 
+function contextmenu_compile() {
+  // add a row to the table of the contextmenu
+  var tab=document.getElementById("contextmenu_table");
+  dom_clean(tab);
+
+  // prepare weightsort
+  var list=[];
+  for(var i=0; i<contextmenu_items.length; i++) {
+    var item=contextmenu_items[i];
+
+    list.push([ item.options.weight, item ]);
+  }
+  list=weight_sort(list);
+
+  for(var i=0; i<list.length; i++) {
+    var row=tab.insertRow(tab.rows.length);
+    var cell=document.createElement("td");
+    cell.className="contextmenu_entry";
+    row.appendChild(cell);
+    cell.appendChild(list[i].div);
+  }
+}
+
 function contextmenu_init() {
-  map.div.oncontextmenu = function noContextMenu(e) {
-    contextmenu_rightclick(e);
-    return false; //cancel the right click of brower
-  };
+  var btn=options_get("contextmenu_mouse_button");
+  if(!btn)
+    btn="right";
+
+  switch(btn) {
+    case "right":
+      map.div.oncontextmenu = function noContextMenu(e) {
+	contextmenu_rightclick(e);
+	return false; //cancel the right click of brower
+      };
+      break;
+    case "left":
+      register_hook("view_click", contextmenu_rightclick);
+      break;
+  }
+}
+
+function contextmenu_options_show(list) {
+  var ret="";
+  
+  ret+="<h4>"+lang("contextmenu:head")+"</h4>\n";
+  ret+="<div class='options_help'>"+lang("contextmenu:help")+"</div>\n";
+  ret+=options_radio("contextmenu_mouse_button", [ "right", "left" ]);
+
+  list.push([ 2, ret ]);
+}
+
+function contextmenu_options_save() {
+ var r=options_radio_get("contextmenu_mouse_button");
+  options_set("contextmenu_mouse_button", options_radio_get("contextmenu_mouse_button"));
 }
 
 register_hook("init", contextmenu_init);
+register_hook("options_show", contextmenu_options_show);
+register_hook("options_save", contextmenu_options_save);

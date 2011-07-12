@@ -33,7 +33,7 @@ function whats_here(lonlat) {
   }
 
   this.name=function() {
-    return lang("Position: ")+lonlat.lat.toFixed(5)+"/"+lonlat.lon.toFixed(5);
+    return lang("whats_here:name", 0, lonlat.lat, lonlat.lon);
   }
 
   this.info=function(chapters) {
@@ -85,6 +85,10 @@ function whats_here(lonlat) {
 }
 
 function whats_here_view_click(event, pos) {
+  // if contextmenu listens for left mouse button ignore
+  if(options_get("contextmenu_mouse_button")=="left")
+    return;
+
   var lonlat = pos.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
   location.hash="#whats_here="+lonlat.lon+","+lonlat.lat;
 }
@@ -100,5 +104,16 @@ function whats_here_search_object(objects, str) {
   }
 }
 
+function whats_here_contextmenu(pos) {
+  location.hash="#whats_here="+pos.lon+","+pos.lat;
+}
+
+function whats_here_init() {
+  if(plugins_loaded("contextmenu")) {
+    contextmenu_add("plugins/whats_here/icon.png", lang("whats_here:contextmenu"), whats_here_contextmenu, { weight: -10 });
+  }
+}
+
+register_hook("init", whats_here_init);
 register_hook("view_click", whats_here_view_click);
 register_hook("search_object", whats_here_search_object);

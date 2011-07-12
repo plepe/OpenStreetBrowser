@@ -50,7 +50,7 @@ function lang(str, count) {
     vars.push(arguments[i]);
   }
 
-  return sprintf(el, vars);
+  return vsprintf(el, vars);
 }
 
 function t(str, count) {
