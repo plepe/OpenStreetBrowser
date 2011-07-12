@@ -68,7 +68,7 @@ function navigation_point(lon, lat, style) {
   this.feature.ob=this;
 }
 
-function navigation_route() {
+function navigation_route(id) {
   this.inheritFrom=geo_object;
   this.inheritFrom();
   this.type="navigation_route";
@@ -89,6 +89,10 @@ function navigation_route() {
     param.push(navigation_current_route.destination.id());
 
     return param.join(":");
+  }
+
+  // info
+  this.info=function(chapters) {
   }
 
   //changes route type
@@ -173,6 +177,20 @@ function navigation_route() {
   // constructor
   this.via=new Array();
   this.travel_with=navigation_cloudmade_travelwith[0].id;
+
+  if(id) {
+    id=id.split(":");
+
+    this.travel_with=id[0];
+    var latlon=id[1].split(",");
+    this.set_home(new navigation_point(latlon[1], latlon[0], home_style));
+    for(var i=2; i<id.length-1; i++) {
+      var latlon=id[i].split(",");
+      this.add_via(new navigation_point(latlon[1], latlon[0], via_style));
+    }
+    var latlon=id[i].split(",");
+    this.set_destination(new navigation_point(latlon[1], latlon[0], destination_style));
+  }
 }
 
 function navigation_set_home(pos) {
@@ -332,6 +350,22 @@ function navigation_init() {
   navigation_toolboxtext();
 }
 
+function navigation_search_object(ret, id) {
+  var m;
+  if(m=id.match("^navigation=(.*)$")) {
+    if(navigation_current_route.id()!=m[1]) {
+      navigation_current_route.remove();
+      navigation_current_route=new navigation_route(m[1]);
+
+      navigation_toolboxtext();
+    }
+
+    navigation_toolbox.activate(1);
+
+    ret.push(navigation_current_route);
+  }
+}
+
 function navigation_info(chapters, ob) {
   if(ob.geo_center()) {
     // set home
@@ -364,3 +398,4 @@ function navigation_info(chapters, ob) {
 
 register_hook("init", navigation_init);
 register_hook("info", navigation_info);
+register_hook("search_object", navigation_search_object);
