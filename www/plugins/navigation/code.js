@@ -6,7 +6,7 @@
  */
 
 var navigation_toolbox;
-var myroute=new route();
+var navigation_current_route=new navigation_route();
 
 var home_style={
     externalGraphic: 'plugins/navigation/home.png',
@@ -33,7 +33,7 @@ var destination_style={
 function navigation_point(lon, lat, style) {
   this.inheritFrom=geo_object;
   this.inheritFrom();
-  this.type="marker";
+  this.type="navigation_point";
 
   // id
   this.id=function() {
@@ -68,10 +68,29 @@ function navigation_point(lon, lat, style) {
   this.feature.ob=this;
 }
 
-function route() {
-  this.via=new Array();
-  this.travel_with=navigation_cloudmade_travelwith[0].id;
-  
+function navigation_route() {
+  this.inheritFrom=geo_object;
+  this.inheritFrom();
+  this.type="navigation_route";
+
+  // id
+  this.id=function() {
+    var param=[];
+
+    if(!(navigation_current_route.home && navigation_current_route.destination)) {
+      return;
+    }
+
+    param.push(navigation_current_route.travel_with);
+    param.push(navigation_current_route.home.id());
+    for(var i=0; i<navigation_current_route.via.length; i++) {
+      param.push(navigation_current_route.via[i].id());
+    }
+    param.push(navigation_current_route.destination.id());
+
+    return param.join(":");
+  }
+
   //changes route type
   this.change_route_type=function(select) {
     this.travel_with=select.value;
@@ -148,44 +167,40 @@ function route() {
     this.via[i].remove();
     this.via.splice(i, 1);
   }
+
+  // constructor
+  this.via=new Array();
+  this.travel_with=navigation_cloudmade_travelwith[0].id;
 }
 
 function navigation_set_home(pos) {
   navigation_toolbox.activate(1);
-  myroute.set_home(new navigation_point(pos.lon, pos.lat, home_style));
+  navigation_current_route.set_home(new navigation_point(pos.lon, pos.lat, home_style));
 
   navigation_update_url();
 }
 
 function navigation_add_via(pos) {
   navigation_toolbox.activate(1);
-  myroute.add_via(new navigation_point(pos.lon, pos.lat, via_style));
+  navigation_current_route.add_via(new navigation_point(pos.lon, pos.lat, via_style));
 
   navigation_update_url();
 }
 
 function navigation_set_destination(pos) {
   navigation_toolbox.activate(1);
-  myroute.set_destination(new navigation_point(pos.lon, pos.lat, destination_style));
+  navigation_current_route.set_destination(new navigation_point(pos.lon, pos.lat, destination_style));
 
   navigation_update_url();
 }
 
 function navigation_update_url() {
-  var param=[];
+  var id=navigation_current_route.id();
 
-  if(!(myroute.home && myroute.destination)) {
+  if(!id)
     return;
-  }
 
-  param.push(myroute.travel_with);
-  param.push(myroute.home.id());
-  for(var i=0; i<myroute.via.length; i++) {
-    param.push(myroute.via[i].id());
-  }
-  param.push(myroute.destination.id());
-
-  location.hash="#navigation="+param.join(":");
+  location.hash="#navigation="+id;
 }
 
 var anzeige;
@@ -200,8 +215,8 @@ function nav_show(route) {
 var nav=new navigation_cloudmade();
 
 function calculate_route(){
-  if(myroute.home && myroute.destination && (myroute.home.geometry.toString() != myroute.destination.geometry.toString())) {
-    nav.get_route({ start_point: myroute.home.geometry, transit_points: myroute.via, end_point: myroute.destination.geometry, route_type: myroute.route_type, route_type_modifier: myroute.route_type_modifier}, nav_show);
+  if(navigation_current_route.home && navigation_current_route.destination && (navigation_current_route.home.geometry.toString() != navigation_current_route.destination.geometry.toString())) {
+    nav.get_route({ start_point: navigation_current_route.home.geometry, transit_points: navigation_current_route.via, end_point: navigation_current_route.destination.geometry, route_type: navigation_current_route.route_type, route_type_modifier: navigation_current_route.route_type_modifier}, nav_show);
   }
 }
 
@@ -210,7 +225,7 @@ function navigation_toolboxtext() {
 
   var starttext=document.getElementById("navigation_starttext");
   dom_clean(starttext);
-  if(!(myroute.home && myroute.destination)) {
+  if(!(navigation_current_route.home && navigation_current_route.destination)) {
     dom_create_append_text(starttext, lang("navigation:toolbox_help"));
   }
 
@@ -225,11 +240,11 @@ function navigation_toolboxtext() {
   img.src="plugins/navigation/icon_home.png";
 
   var td=dom_create_append(tr, "td");
-  if(!myroute.home) {
+  if(!navigation_current_route.home) {
     dom_create_append_text(td, lang("navigation:home"));
   }
   else {
-    dom_create_append_text(td, myroute.home.name());
+    dom_create_append_text(td, navigation_current_route.home.name());
   }
 
   // via
@@ -240,14 +255,14 @@ function navigation_toolboxtext() {
   img.src="plugins/navigation/icon_via.png";
 
   var td=dom_create_append(tr, "td");
-  if(myroute.via.length==0) {
+  if(navigation_current_route.via.length==0) {
     var div=dom_create_append(td, "div");
     dom_create_append_text(div, lang("navigation:via"));
   }
   else {
-    for(var i=0; i<myroute.via.length; i++) {
+    for(var i=0; i<navigation_current_route.via.length; i++) {
       var div=dom_create_append(td, "div");
-      dom_create_append_text(div, myroute.via[i].name());
+      dom_create_append_text(div, navigation_current_route.via[i].name());
     }
   }
 
@@ -259,11 +274,11 @@ function navigation_toolboxtext() {
   img.src="plugins/navigation/icon_destination.png";
 
   var td=dom_create_append(tr, "td");
-  if(!myroute.destination) {
+  if(!navigation_current_route.destination) {
     dom_create_append_text(td, lang("navigation:destination"));
   }
   else {
-    dom_create_append_text(td, myroute.destination.name());
+    dom_create_append_text(td, navigation_current_route.destination.name());
   }
 }
 
@@ -294,7 +309,7 @@ function navigation_init() {
   table.id="navigation_points";
 
   var select=dom_create_append(this.toolbox_content, "select");
-  select.onchange=myroute.change_route_type.bind(myroute, select);
+  select.onchange=navigation_current_route.change_route_type.bind(navigation_current_route, select);
 
   for(var i=0; i<navigation_cloudmade_travelwith.length; i++) {
     var option=dom_create_append(select, "option");
@@ -303,11 +318,11 @@ function navigation_init() {
   }
 
   var button=dom_create_append(this.toolbox_content, "button");
-  button.onclick=myroute.invert.bind(myroute, button);
+  button.onclick=navigation_current_route.invert.bind(navigation_current_route, button);
   dom_create_append_text(button, lang("navigation:invert"));
 
   var button=dom_create_append(this.toolbox_content, "button");
-  button.onclick=myroute.remove.bind(myroute, button);
+  button.onclick=navigation_current_route.remove.bind(navigation_current_route, button);
   dom_create_append_text(button, lang("navigation:remove"));
 
   //var text = "<img src='plugins/navigation/icon_home.png' onclick='alert(home.lon + \"|\" + home.lat)'> <span id='navigation_hometext'></span><br/><img src='plugins/navigation/icon_via.png'> <span id='navigation_viatext' style='display:inline-block; padding-top:7px;'></span><br/><img src='plugins/navigation/icon_destination.png'> <span id='navigation_destinationtext'></span><br/><br/>
