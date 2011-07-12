@@ -64,15 +64,8 @@ function route() {
   this.route_type_modifier="";
   
   //changes route type
-  this.change_route_type=function(obj){
-    var temp=obj.options[obj.selectedIndex].value;
-    if(temp=="car (shortest)") {
-      this.route_type="car";
-      this.route_type_modifier="shortest";
-    } else {
-      this.route_type=temp;
-      this.route_type_modifier="";
-    }
+  this.change_route_type=function(){
+    this.travel_with=this.value;
     calculate_route();
   }
 
@@ -239,8 +232,37 @@ function navigation_init() {
     contextmenu_add("plugins/navigation/icon_destination.png", lang("navigation:set_destination"), navigation_set_destination);
   }
 
-  var text = "<i>Navigation</i><br/><br/><div id='navigation_starttext'></div><img src='plugins/navigation/icon_home.png' onclick='alert(home.lon + \"|\" + home.lat)'> <span id='navigation_hometext'></span><br/><img src='plugins/navigation/icon_via.png'> <span id='navigation_viatext' style='display:inline-block; padding-top:7px;'></span><br/><img src='plugins/navigation/icon_destination.png'> <span id='navigation_destinationtext'></span><br/><br/><select id='travelwith' onchange='myroute.change_route_type(this)'><option value='car'>car</option><option value='car (shortest)'>car (shortest)</option><option value='bicycle'>bicycle</option><option value='foot'>foot</option></select> <button onclick='myroute.invert()'>invert</button><button onclick='myroute.remove()'>clear</button><br/><br/>";
-  navigation_toolbox.content.innerHTML=text;
+  this.toolbox_content=dom_create_append(navigation_toolbox.content, "div");
+  this.toolbox_content.className="navigation";
+
+  var title=dom_create_append(this.toolbox_content, "h1");
+  dom_create_append_text(title, lang("navigation:toolbox_title"));
+
+  var help=dom_create_append(this.toolbox_content, "div");
+  help.id="navigation_starttext";
+
+  var table=dom_create_append(this.toolbox_content, "table");
+  table.id="navigation_points";
+
+  var select=dom_create_append(this.toolbox_content, "select");
+  select.onchange=myroute.change_route_type;
+
+  for(var i=0; i<navigation_cloudmade_travelwith.length; i++) {
+    var option=dom_create_append(select, "option");
+    option.value=navigation_cloudmade_travelwith[i].id;
+    dom_create_append_text(option, lang("navigation_cloudmade:"+navigation_cloudmade_travelwith[i].id));
+  }
+
+  var button=dom_create_append(this.toolbox_content, "button");
+  button.onclick=myroute.invert;
+  dom_create_append_text(button, lang("navigation:invert"));
+
+  var button=dom_create_append(this.toolbox_content, "button");
+  button.onclick=myroute.remove;
+  dom_create_append_text(button, lang("navigation:remove"));
+
+  //var text = "<img src='plugins/navigation/icon_home.png' onclick='alert(home.lon + \"|\" + home.lat)'> <span id='navigation_hometext'></span><br/><img src='plugins/navigation/icon_via.png'> <span id='navigation_viatext' style='display:inline-block; padding-top:7px;'></span><br/><img src='plugins/navigation/icon_destination.png'> <span id='navigation_destinationtext'></span><br/><br/>
+
   navigation_toolboxtext();
 }
 
