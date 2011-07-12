@@ -33,7 +33,7 @@ function whats_here(lonlat) {
   }
 
   this.name=function() {
-    return lang("Position: ")+lonlat.lat.toFixed(5)+"/"+lonlat.lon.toFixed(5);
+    return lang("whats_here:name", 0, lonlat.lat, lonlat.lon);
   }
 
   this.info=function(chapters) {
