@@ -127,10 +127,12 @@ function navigation_route() {
 
   //removes the route
   this.remove=function(button) {
-    this.remove_home();
-    this.remove_destination();
+    if(this.home)
+      this.home.remove();
+    if(this.destination)
+      this.destination.remove();
     for(var i=0;i<this.via.length;i++){
-      this.remove_via(i);
+      this.via.remove(i);
     }
   }
 
