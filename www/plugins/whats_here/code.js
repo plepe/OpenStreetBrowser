@@ -85,6 +85,10 @@ function whats_here(lonlat) {
 }
 
 function whats_here_view_click(event, pos) {
+  // if contextmenu listens for left mouse button ignore
+  if(options_get("contextmenu_mouse_button")=="left")
+    return;
+
   var lonlat = pos.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
   location.hash="#whats_here="+lonlat.lon+","+lonlat.lat;
 }

@@ -116,10 +116,21 @@ function contextmenu_add(img, text, fun, options) {
 }
 
 function contextmenu_init() {
-  map.div.oncontextmenu = function noContextMenu(e) {
-    contextmenu_rightclick(e);
-    return false; //cancel the right click of brower
-  };
+  var btn=options_get("contextmenu_mouse_button");
+  if(!btn)
+    btn="right";
+
+  switch(btn) {
+    case "right":
+      map.div.oncontextmenu = function noContextMenu(e) {
+	contextmenu_rightclick(e);
+	return false; //cancel the right click of brower
+      };
+      break;
+    case "left":
+      register_hook("view_click", contextmenu_rightclick);
+      break;
+  }
 }
 
 register_hook("init", contextmenu_init);
