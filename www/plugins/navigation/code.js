@@ -65,17 +65,16 @@ function navigation_point(lon, lat, style) {
 
 function route() {
   this.via=new Array();
-  this.route_type="car";
-  this.route_type_modifier="";
+  this.travel_with=navigation_cloudmade_travelwith[0].id;
   
   //changes route type
-  this.change_route_type=function(){
-    this.travel_with=this.value;
+  this.change_route_type=function(button) {
+    this.travel_with=ob.value;
     calculate_route();
   }
 
   //inverts route
-  this.invert=function(){
+  this.invert=function(button){
     var temp=this.home;
     this.home=this.destination;
     this.destination=temp;
@@ -101,7 +100,7 @@ function route() {
   */
 
   //removes the route
-  this.remove=function(){
+  this.remove=function(button) {
     this.remove_home();
     this.remove_destination();
     for(var i=0;i<this.via.length;i++){
@@ -276,7 +275,7 @@ function navigation_init() {
   table.id="navigation_points";
 
   var select=dom_create_append(this.toolbox_content, "select");
-  select.onchange=myroute.change_route_type;
+  select.onchange=myroute.change_route_type.bind(myroute, select);
 
   for(var i=0; i<navigation_cloudmade_travelwith.length; i++) {
     var option=dom_create_append(select, "option");
@@ -285,11 +284,11 @@ function navigation_init() {
   }
 
   var button=dom_create_append(this.toolbox_content, "button");
-  button.onclick=myroute.invert;
+  button.onclick=myroute.invert.bind(myroute, button);
   dom_create_append_text(button, lang("navigation:invert"));
 
   var button=dom_create_append(this.toolbox_content, "button");
-  button.onclick=myroute.remove;
+  button.onclick=myroute.remove.bind(myroute, button);
   dom_create_append_text(button, lang("navigation:remove"));
 
   //var text = "<img src='plugins/navigation/icon_home.png' onclick='alert(home.lon + \"|\" + home.lat)'> <span id='navigation_hometext'></span><br/><img src='plugins/navigation/icon_via.png'> <span id='navigation_viatext' style='display:inline-block; padding-top:7px;'></span><br/><img src='plugins/navigation/icon_destination.png'> <span id='navigation_destinationtext'></span><br/><br/>
