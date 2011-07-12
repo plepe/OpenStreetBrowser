@@ -1261,3 +1261,9 @@ function sprintf () {
 
     return format.replace(regex, doFormat);
 }
+
+// Source: http://phpjs.org/functions/vsprintf:580
+function vsprintf (format, args) {
+  return this.sprintf.apply(this, [format].concat(args));
+}
+
