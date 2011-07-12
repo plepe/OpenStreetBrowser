@@ -30,6 +30,22 @@
 //   .show()                        - Show route on drag_layer
 //   .hide()                        - Hide route
 
+var navigation_cloudmade_travelwith=[
+  { id: "car",
+    type: "car"
+  },
+  { id: "car_shortest",
+    type: "car",
+    modifier: "shortest"
+  },
+  { id: "bicycle",
+    type: "bicycle"
+  },
+  { id: "foot",
+    type: "foot"
+  }
+];
+
 function navigation_cloudmade() {
   // get_route
   this.get_route=function(param, _callback) {
@@ -62,6 +78,24 @@ function navigation_cloudmade() {
 	var t=p.transform(map.getProjectionObject(), utm);
 	param.transit_points[i]={ lat: t.y, lon: t.x };
       }
+
+    if(param.travel_with) {
+      var tw;
+      for(var i=0; i<navigation_cloudmade_travelwith.length; i++) {
+	if(navigation_cloudmade_travelwith[i].id==param.travel_with)
+	  tw=navigation_cloudmade_travelwith[i];
+      }
+
+      if(!tw) {
+	alert("navigation_cloudmade :: travel with wrong");
+	return;
+      }
+
+      param.route_type=tw.type;
+      if(tw.modifier)
+	param.route_type_modifier=tw.modifier;
+      delete(param.travel_with);
+    }
 
     route.param=param;
     ajax_direct("plugins/navigation_cloudmade/call.php", param, this.recv.bind(this, route));
