@@ -39,15 +39,17 @@ function measure_obj_info(chapter, ob) {
     }
   }
 
+  ret+="<ul>\n";
   if(length) {
     var x=units_format_length(length)
-    ret+=lang("measure_obj:length", 0, x)+"<br>\n";
+    ret+="<li>"+lang("measure_obj:length", 0, x)+"</li>\n";
   }
   
   if(area) {
     var x=units_format_area(area)
-    ret+=lang("measure_obj:area", 0, x)+"<br>\n";
+    ret+="<li>"+lang("measure_obj:area", 0, x)+"</li>\n";
   }
+  ret+="</ul>\n";
   
   chapter.push({
     head: lang("measure_obj:head"),
