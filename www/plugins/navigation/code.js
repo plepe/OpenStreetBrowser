@@ -99,6 +99,15 @@ function navigation_route(id) {
   // info
   this.info=function(chapters) {
     this.calculate_route();
+
+    this.instructions=document.createElement("div");
+    this.instructions.innerHTML="<img src=\"img/ajax_loader.gif\" /> "+lang("loading");
+
+    chapters.push({
+      head: lang("navigation:instructions"),
+      content: this.instructions,
+      weight: 1
+    });
   }
 
   //changes route type
@@ -187,6 +196,12 @@ function navigation_route(id) {
 
     this.calculated_route=route;
     this.calculated_route.show();
+
+    if(this.instructions) {
+      dom_clean(this.instructions);
+
+      this.calculated_route.print_instructions(this.instructions);
+    }
   }
 
   // calculate_route

@@ -9,3 +9,5 @@ $lang_str["navigation:toolbox_help"]="Select your home and your destination on t
 $lang_str["navigation:home"]="home";
 $lang_str["navigation:via"]="via";
 $lang_str["navigation:destination"]="destination";
+
+$lang_str["navigation:instructions"]="Instructions";
