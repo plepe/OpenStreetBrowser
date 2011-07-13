@@ -45,7 +45,7 @@ function search_init() {
 }
 
 function search_toolbox_activate() {
-  alert(toolbox_manager.current_active);
+  //todo: focus on input field when search toolbox not started automatically
 }
 
 function search_brush_mousedown(event) {
