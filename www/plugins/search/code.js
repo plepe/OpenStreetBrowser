@@ -8,7 +8,8 @@ function search_init() {
   search_toolbox=new toolbox({
     icon: "plugins/search/icon.png",
     icon_title: "search",
-    weight: -4,
+    callback_activate: search_toolbox_activate,
+    weight: -4
   });
   register_toolbox(search_toolbox);
 
@@ -41,6 +42,10 @@ function search_init() {
   if(toolbox_manager.current_active==-1) {
     search_toolbox.activate();
   }
+}
+
+function search_toolbox_activate() {
+  alert(toolbox_manager.current_active);
 }
 
 function search_brush_mousedown(event) {
@@ -110,6 +115,7 @@ function real_search(value, param) {
   details_content.className="info_loading";
 
   var d=dom_create_append(details_content, "div");
+  d.className="zoombuttons";
   d.innerHTML="<a class='zoom' href='#'>"+lang("info_back")+"</a>";
 
   var search_content=dom_create_append(details_content, "div");
