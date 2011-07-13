@@ -100,6 +100,8 @@ class User {
   var $tags=null;
 
   function __construct($param=0, $force_auth=0) {
+    global $db_central;
+
     $this->authenticated=false;
 
     // anonymous user
@@ -155,6 +157,8 @@ class User {
   }
 
   function create_auth() {
+    global $db_central;
+
     if($this->auth_id)
       return;
 
@@ -191,6 +195,8 @@ class User {
   }
 
   function save() {
+    global $db_central;
+
     if(!$this->authenticated)
       return;
 
@@ -214,6 +220,8 @@ class User {
 };
 
 function user_list() {
+  global $db_central;
+
   $user_list=array();
 
   $res=sql_query("select * from user_list", $db_central);
@@ -228,6 +236,7 @@ function user_list() {
 
 function user_check_auth() {
   global $current_user;
+  global $db_central;
 
   if(!$_COOKIE['auth_id']) {
     $current_user=new user();
