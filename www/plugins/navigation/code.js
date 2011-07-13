@@ -78,6 +78,11 @@ function navigation_route(id) {
   this.inheritFrom();
   this.type="navigation_route";
 
+  // name
+  this.name=function() {
+    return lang("navigation:route_name");
+  }
+
   // id
   this.id=function() {
     var param=[];
