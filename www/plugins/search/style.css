@@ -11,3 +11,7 @@ div.search #brush.invisible {
   visibility:hidden;
   cursor:pointer;
 }
+
+div.zoombuttons {
+  margin-bottom: 10px;
+}

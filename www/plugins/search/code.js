@@ -8,7 +8,8 @@ function search_init() {
   search_toolbox=new toolbox({
     icon: "plugins/search/icon.png",
     icon_title: "search",
-    weight: -4,
+    callback_activate: search_toolbox_activate,
+    weight: -4
   });
   register_toolbox(search_toolbox);
 
@@ -41,6 +42,10 @@ function search_init() {
   if(toolbox_manager.current_active==-1) {
     search_toolbox.activate();
   }
+}
+
+function search_toolbox_activate() {
+  //todo: focus on input field when search toolbox not started automatically
 }
 
 function search_brush_mousedown(event) {
@@ -110,13 +115,14 @@ function real_search(value, param) {
   details_content.className="info_loading";
 
   var d=dom_create_append(details_content, "div");
+  d.className="zoombuttons";
   d.innerHTML="<a class='zoom' href='#'>"+lang("info_back")+"</a>";
 
   var search_content=dom_create_append(details_content, "div");
   search_content.className="search_content";
 
   var d=dom_create_append(details_content, "div");
-  d.innerHTML="<i>"+lang("search_nominatim")+" <a href='http://nominatim.openstreetmap.org/'>Nominatim</a></i>";
+  d.innerHTML="("+lang("search_nominatim")+" <a class='external' href='http://nominatim.openstreetmap.org/'>Nominatim</a>)";
 
   search_list=new list(search_content, [ null ], search_more );
 }
