@@ -345,8 +345,13 @@ select.icon-menu option {
 }
 
 div.search_more {
-  margin:0px 0px 10px 10px;
+  padding-left:20px;
+  padding-bottom:5px;
   font-style:italic;
+}
+
+div.search_more:hover {
+  text-decoration:underline;
 }
 
 /**************************/

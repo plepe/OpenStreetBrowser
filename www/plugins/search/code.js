@@ -122,7 +122,7 @@ function real_search(value, param) {
   search_content.className="search_content";
 
   var d=dom_create_append(details_content, "div");
-  d.innerHTML="<i>"+lang("search_nominatim")+" <a href='http://nominatim.openstreetmap.org/'>Nominatim</a></i>";
+  d.innerHTML="("+lang("search_nominatim")+" <a class='external' href='http://nominatim.openstreetmap.org/'>Nominatim</a>)";
 
   search_list=new list(search_content, [ null ], search_more );
 }

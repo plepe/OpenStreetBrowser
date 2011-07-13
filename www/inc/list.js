@@ -109,11 +109,11 @@ function list(div, elements, request_more, options) {
 
       var a=dom_create_append(this.div_more, "a");
       a.onclick=this.more.bind(this);
-      dom_create_append_text(a, lang("more"));
+      dom_create_append_text(a, lang("more")+"...");
     }
     else if(this.elements[this.shown]==null) {
       // we need more
-      this.div_more.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+this.options.loading_text;
+      this.div_more.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+this.options.loading_text+"...";
       var more=request_more(this.elements);
       if(more)
         this.recv(more);
@@ -150,6 +150,7 @@ function list(div, elements, request_more, options) {
   this.div=div;
   this.ul=dom_create_append(div, "ul");
   this.div_more=dom_create_append(div, "div");
+  this.div_more.className="search_more";
   this.show();
 }
 
