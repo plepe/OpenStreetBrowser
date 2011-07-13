@@ -49,7 +49,13 @@ input#search {
   line-height:130%;
   margin-top:5px;
 }
-.logo p { padding-top:35px; margin:0; }
+.logo p { padding-top:17px; margin:0; }
+.logo .version {
+  text-align:right;
+  padding-right: 24px;
+  float:right;
+  font-size: 16px;
+}
 .logo .bigger { font-size:28px; }
 .logo .smaller { font-size:14px; }
 .logo img { 
@@ -336,6 +342,11 @@ select.icon-menu option {
 
 .layerImg:hover {
   width:100px;
+}
+
+div.search_more {
+  margin:0px 0px 10px 10px;
+  font-style:italic;
 }
 
 /**************************/
