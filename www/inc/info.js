@@ -88,10 +88,10 @@ function info(ob) {
     a.onclick=redraw;
     dom_create_append_text(a, lang("info_back"));
 
-    if(this.ob.geo_center()&&this.ob.zoom_to_feature) {
+    if(this.ob.geo_center()) {
       var a=dom_create_append(actions, "a");
       a.className="zoom";
-      a.onclick=this.ob.zoom_to_feature.bind(this.ob);
+      a.onclick=this.ob.geo_zoom_to.bind(this.ob);
       dom_create_append_text(a, lang("info_zoom"));
     }
 

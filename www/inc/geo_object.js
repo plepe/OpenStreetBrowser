@@ -32,4 +32,37 @@ function geo_object() {
   // geo
   this.geo_center=function() {
   }
+
+  // geo_get_extent
+  this.get_extent=function() {
+    var extent=new OpenLayers.Bounds();
+    var geos=this.geo();
+
+    for(var i=0; i<geos.length; i++) {
+      extent.extend(geos[i].geometry.getBounds());
+    }
+
+    return extent;
+  }
+
+  // geo_zoom_to
+  this.geo_zoom_to=function() {
+    var extent=this.get_extent();
+
+    var zoom=map.getZoomForExtent(extent);
+    if(zoom>15)
+      zoom=15;
+
+    var center=this.geo_center();
+    if(center&&center.length)
+      center=center[0];
+    if(center&&center.geometry)
+      center=center.geometry;
+    else
+      center=extent.getCenterPixel();
+
+    pan_to_highlight(center.x, center.y, zoom);
+  }
+
+
 }
