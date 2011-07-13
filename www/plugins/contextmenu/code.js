@@ -140,7 +140,7 @@ function contextmenu_compile() {
 function contextmenu_init() {
   var btn=options_get("contextmenu_mouse_button");
   if(!btn)
-    btn="right";
+    btn="left";
 
   switch(btn) {
     case "right":
@@ -160,7 +160,7 @@ function contextmenu_options_show(list) {
   
   ret+="<h4>"+lang("contextmenu:head")+"</h4>\n";
   ret+="<div class='options_help'>"+lang("contextmenu:help")+"</div>\n";
-  ret+=options_radio("contextmenu_mouse_button", [ "right", "left" ]);
+  ret+=options_radio("contextmenu_mouse_button", [ "left", "right" ]);
 
   list.push([ 2, ret ]);
 }
