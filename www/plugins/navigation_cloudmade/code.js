@@ -136,6 +136,11 @@ function navigate_cloudmade_route() {
     this.vectors=[new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString(points), null, { strokeWidth: 3, strokeColor: '#0000ff' })];
   }
 
+  // geo
+  this.geo=function() {
+    return this.vectors;
+  }
+
   // show
   this.show=function() {
     drag_layer.addFeatures(this.vectors);

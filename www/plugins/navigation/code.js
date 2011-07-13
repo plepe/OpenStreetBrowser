@@ -101,6 +101,14 @@ function navigation_route(id) {
     return param.join(":");
   }
 
+  // geo
+  this.geo=function() {
+    if(!this.calculated_route)
+      return;
+
+    return this.calculated_route.geo();
+  }
+
   // info
   this.info=function(chapters) {
     this.calculate_route();
@@ -207,6 +215,8 @@ function navigation_route(id) {
 
       this.calculated_route.print_instructions(this.instructions);
     }
+
+    this.geo_zoom_to();
   }
 
   // calculate_route
