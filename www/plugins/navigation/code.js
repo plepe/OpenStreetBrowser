@@ -50,6 +50,11 @@ function navigation_point(lon, lat, style) {
     return this.feature;
   }
 
+  // geometry
+  this.geometry=function() {
+    return this.feature.geometry;
+  }
+
   // remove
   this.remove=function() {
     drag_layer.unselect(this.feature);
@@ -93,6 +98,7 @@ function navigation_route(id) {
 
   // info
   this.info=function(chapters) {
+    this.calculate_route();
   }
 
   //changes route type
@@ -174,6 +180,34 @@ function navigation_route(id) {
     this.via.splice(i, 1);
   }
 
+  // show_route
+  this.show_route=function(route) {
+    if(this.calculated_route)
+      this.calculated_route.hide();
+
+    this.calculated_route=route;
+    this.calculated_route.show();
+  }
+
+  // calculate_route
+  this.calculate_route=function() {
+    if(!(this.home && this.destination))
+      return;
+
+    var param={};
+
+    param.start_point=this.home.geometry();
+    if(this.via.length) {
+      param.transit_points=[];
+      for(var i=0; i<this.via.length; i++)
+	param.transit_points.push(this.via[i].geometry());
+    }
+    param.end_point=this.destination.geometry();
+    param.travel_with=this.travel_with;
+
+    nav.get_route(param, this.show_route.bind(this));
+  }
+
   // constructor
   this.via=new Array();
   this.travel_with=navigation_cloudmade_travelwith[0].id;
@@ -223,22 +257,7 @@ function navigation_update_url() {
   location.hash="#navigation="+id;
 }
 
-var anzeige;
-function nav_show(route) {
-  if(anzeige){
-    anzeige.hide();
-  }
-  anzeige=route;
-  route.show();
-}
-
 var nav=new navigation_cloudmade();
-
-function calculate_route(){
-  if(navigation_current_route.home && navigation_current_route.destination && (navigation_current_route.home.geometry.toString() != navigation_current_route.destination.geometry.toString())) {
-    nav.get_route({ start_point: navigation_current_route.home.geometry, transit_points: navigation_current_route.via, end_point: navigation_current_route.destination.geometry, route_type: navigation_current_route.route_type, route_type_modifier: navigation_current_route.route_type_modifier}, nav_show);
-  }
-}
 
 function navigation_toolboxtext() {
   var utm=new OpenLayers.Projection("EPSG:4326");
