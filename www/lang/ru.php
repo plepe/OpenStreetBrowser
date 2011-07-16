@@ -90,14 +90,6 @@ $lang_str["main:permalink"]="Ссылка";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Объект не найден</h1>Не найдено объектов соответствующих ID \"%s\". Это могло произойти по таким причинам:<ul><li>Неверный ID.</li><li>Объект был идентифицирован сайтом третьей стороны и (пока что) не добавлен в OpenStreetMap.</li><li>Объект находится не в зоне покрытия карты.</li><li>Ссылка, которая Вас сюда привела не является актуальной для OpenStreetMap.</li></ul>";
 
-$lang_str["start:choose"]=array("Выберите перспективу для карты");
-$lang_str["start:geolocation"]=array("Определить местоположение");
-$lang_str["start:lastview"]=array("Последняя перспектива");
-$lang_str["start:savedview"]=array("Последняя ссылка");
-$lang_str["start:startnormal"]=array("Сохранить перспективу");
-$lang_str["start:remember"]=array("Запомнить решение");
-$lang_str["start:edit"]=array("Правка...");
-
 $lang_str["options:autozoom"]="Автомасштабирование";
 $lang_str["help:autozoom"]="При выборе объекта, карта сфокусируется на нём, текущие настройки приближения могут измениться. С помощью этой функции Вы можете выбрать режим отображения.";
 $lang_str["options:autozoom:pan"]="Сфокусироваться на объекте (качественней)";
