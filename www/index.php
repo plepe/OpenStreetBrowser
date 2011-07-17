@@ -26,6 +26,7 @@ if(!$version) {
 <?
 include "inc/global.php";
 call_hooks("init", $dummy);
+print_add_html_headers();
 ?>
 <script type="text/javascript" src="index.js"></script>
 <script type="text/javascript" src="ajax.js"></script>
