@@ -134,6 +134,7 @@ function lang_init() {
     print "<script type='text/javascript' src='inc/lang.js'></script>\n";
 
   html_export_var(array("ui_lang"=>$ui_lang, "data_lang"=>$data_lang, "ui_langs"=>$ui_langs, "lang_str"=>$lang_str, "language_list"=>$language_list));
+  add_html_header("<meta http-equiv=\"content-language\" content=\"{$ui_lang}\">");
 }
 
 // DEPRECATED: include JS language file
