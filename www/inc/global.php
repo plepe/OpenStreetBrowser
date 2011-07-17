@@ -38,13 +38,11 @@ while($r=readdir($dir)) {
       require_once "inc/$r";
       break;
     case "js":
-      if(!$design_hidden)
-	if(!in_array($r, array("hooks.js", "lang.js")))
-	  print "<script type='text/javascript' src='inc/$r'></script>\n";
+      if(!in_array($r, array("hooks.js", "lang.js")))
+	add_html_header("<script type='text/javascript' src='inc/$r'></script>");
       break;
     case "css":
-      if(!$design_hidden)
-        print "<link rel='stylesheet' type='text/css' href=\"inc/$r\">\n";
+      add_html_header("<link rel='stylesheet' type='text/css' href=\"inc/$r\">");
   }
 }
 closedir($dir);
