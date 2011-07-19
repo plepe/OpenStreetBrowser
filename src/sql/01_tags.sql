@@ -278,6 +278,10 @@ declare
   j         int;
   t         text;
 begin
+  if src is null then
+    return null;
+  end if;
+
   collect:=''::hstore;
 
   for i in array_lower(src, 1)..array_upper(src, 1) loop

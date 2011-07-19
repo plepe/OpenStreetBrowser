@@ -1,0 +1,17 @@
+div.search #brush.visible {
+  position:absolute;
+  right:3px;
+  visibility:visible;
+  cursor:pointer;
+}
+
+div.search #brush.invisible {
+  position:absolute;
+  right:3px;
+  visibility:hidden;
+  cursor:pointer;
+}
+
+div.zoombuttons {
+  margin-bottom: 10px;
+}

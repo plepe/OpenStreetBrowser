@@ -171,6 +171,8 @@ function weight_sort(arr) {
   for(var i=0; i<arr.length; i++) {
     var cur=arr[i];
     var wgt=cur[0];
+    if(!wgt)
+      wgt=0;
 
     if(!ret1[wgt])
       ret1[wgt]=[];
@@ -1261,3 +1263,9 @@ function sprintf () {
 
     return format.replace(regex, doFormat);
 }
+
+// Source: http://phpjs.org/functions/vsprintf:580
+function vsprintf (format, args) {
+  return this.sprintf.apply(this, [format].concat(args));
+}
+

@@ -2,55 +2,90 @@ var search_toolbox;
 var search_list;
 var search_param;
 var search_shown;
+var search_form;
 
 function search_init() {
   search_toolbox=new toolbox({
     icon: "plugins/search/icon.png",
     icon_title: "search",
-    weight: -4,
+    callback_activate: search_toolbox_activate,
+    weight: -4
   });
   register_toolbox(search_toolbox);
-  var text = "<form name='osb_search_form_name' id='osb_search_form' action='javascript:search()'><input name='osb_search' id='search' value='"+lang("search_field")+"' onFocus='search_focus(this)' onkeyup='search_brush(this,event)' onblur='search_onblur(this)' 'title='"+lang("search_tip")+"'/><img name='brush' src='plugins/search/brush.png' border='0' alt='' title='"+lang("search_clear")+"' style='position:absolute; right:3px; visibility:hidden; cursor:pointer;' onclick='search_clear(document.osb_search_form_name.osb_search)' onmousedown='if (event.preventDefault) event.preventDefault()'></form>";
-  search_toolbox.content.innerHTML=text;
+
+  var content=dom_create_append(search_toolbox.content, "div");
+  content.className="search";
+  
+  search_form=dom_create_append(content, "form");
+  search_form.name="osb_search_form_name";
+  search_form.id="osb_search_form";
+  search_form.action="javascript:search()";
+
+  var input=dom_create_append(search_form, "input");
+  input.name="osb_search";
+  input.id="search";
+  input.value=lang("search_field");
+  input.onfocus=search_focus;
+  input.onkeyup=search_brush;
+  input.onblur=search_onblur;
+  input.title=lang("search_tip");
+
+  var img=dom_create_append(search_form, "img");
+  img.name="brush";
+  img.src="plugins/search/brush.png";
+  img.title=lang("search_clear");
+  img.id="brush";
+  img.className="invisible";
+  img.onclick=search_clear;
+  img.onmousedown=search_brush_mousedown;
+
   if(toolbox_manager.current_active==-1) {
     search_toolbox.activate();
   }
 }
 
+function search_toolbox_activate() {
+  //todo: focus on input field when search toolbox not started automatically
+}
+
+function search_brush_mousedown(event) {
+  if(event.preventDefault)
+    event.preventDefault();
+}
 register_hook("init", search_init);
 
 
-function search_focus(ob) {
-  if(ob.value==lang("search_field")) {
-    ob.value='';
+function search_focus() {
+  if(search_form.osb_search.value==lang("search_field")) {
+    search_form.osb_search.value='';
   }
-  else if((ob.value!="")) {
-    document.getElementById("osb_search_form").brush.style.visibility = 'visible';
+  else if((search_form.osb_search.value!="")) {
+    search_form.brush.className = 'visible';
   }
 }
 
-function search_clear(ob) {
-  ob.value='';
-  document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
-  ob.focus();
+function search_clear() {
+  search_form.osb_search.value='';
+  search_form.brush.className = 'invisible';
+  search_form.osb_search.focus();
 }
 
-function search_brush(ob,e) {
-  if((ob.value!="")) {
-    document.getElementById("osb_search_form").brush.style.visibility = 'visible';
+function search_brush(event) {
+  if((search_form.osb_search.value!="")) {
+    search_form.brush.className = 'visible';
   }
   else {
-    document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
+    search_form.brush.className = 'invisible';
   }
-  if(e.which==27) {
-    search_clear(ob);
+  if(event.which==27) {
+    search_clear();
   }
 }
 
-function search_onblur(ob) {
-  if((ob.value=='\0')||(ob.value=="")) {
-    ob.value=lang_str["search_field"];
-    document.getElementById("osb_search_form").brush.style.visibility = 'hidden';
+function search_onblur() {
+  if((search_form.osb_search.value=='\0')||(search_form.osb_search.value=="")) {
+    search_form.osb_search.value=lang_str["search_field"];
+    search_form.brush.className = 'invisible';
   }
 }
 
@@ -80,13 +115,14 @@ function real_search(value, param) {
   details_content.className="info_loading";
 
   var d=dom_create_append(details_content, "div");
+  d.className="zoombuttons";
   d.innerHTML="<a class='zoom' href='#'>"+lang("info_back")+"</a>";
 
   var search_content=dom_create_append(details_content, "div");
   search_content.className="search_content";
 
   var d=dom_create_append(details_content, "div");
-  d.innerHTML="<i>"+lang("search_nominatim")+" <a href='http://nominatim.openstreetmap.org/'>Nominatim</a></i>";
+  d.innerHTML="("+lang("search_nominatim")+" <a class='external' href='http://nominatim.openstreetmap.org/'>Nominatim</a>)";
 
   search_list=new list(search_content, [ null ], search_more );
 }

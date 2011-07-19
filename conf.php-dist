@@ -1,4 +1,6 @@
 <?
+$version="2.0"
+
 $importance_levels=array("international"=>0, "national"=>0, "region"=>7, "urban"=>12, "suburban"=>13, "local"=>13);
 $route_levels=array("train", "rail", "railway", "subway", "light_rail", "ferry", "tram", "trolley", "bus", "minibus");
 $route_types=array("train"=>"Train", "rail"=>"Railway", "railway"=>"Railway", "subway"=>"Subway", "light_rail"=>"Light Rail", "ferry"=>"Ferry", "tram"=>"Tram", "trolley"=>"Trolley", "bus"=>"Bus", "minibus"=>"Minibus");
