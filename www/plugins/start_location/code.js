@@ -1,4 +1,5 @@
 var start_location_toolbox;
+var start_location_form;
 
 function start_location_options() {
   var form=document.getElementById("startform");
@@ -30,11 +31,14 @@ function start_location_start(start_value) {
       break;
     case "startnormal":
       break;
+    default:
+      call_hooks("start_location_start", start_value);
   }
 }
 
 function start_location_activate() {
   var text = "<i>"+t("start:choose")+":</i><br><form id=\"startform\" style=\"margin-bottom:3px;\">";
+  text += "<div id='start_location_list'>\n";
   if (navigator.geolocation) {
     text += "<input type=\"radio\" name=\"start_value\" id=\"geolocation\" value=\"geolocation\"><label for=\"geolocation\">"+t("start:geolocation")+"</label></br>";
   }
@@ -45,9 +49,13 @@ function start_location_activate() {
     text += "<input type=\"radio\" name=\"start_value\" id=\"savedview\" value=\"savedview\"><label for=\"savedview\">"+t("start:savedview")+"</label></br>";
   }
   text += "<input type=\"radio\" name=\"start_value\" id=\"startnormal\" value=\"startnormal\"><label for=\"startnormal\">"+t("start:startnormal")+"</label></br>";
-  text += "</br><input type=\"button\" name=\"start\" value=\"ok\" onclick=\"start_location_options()\"><input type=\"checkbox\" name=\"start_save\" id=\"save\" value=\"save\"><label for=\"save\">"+t("start:remember")+"</label></br></form>";
+  text += "</div>\n";
+  text += "<input type=\"button\" name=\"start\" value=\"ok\" onclick=\"start_location_options()\"><input type=\"checkbox\" name=\"start_save\" id=\"save\" value=\"save\"><label for=\"save\">"+t("start:remember")+"</label></br></form>";
 
   start_location_toolbox.content.innerHTML=text;
+  start_location_form=document.getElementById("startform");
+
+  call_hooks("start_location_activate", start_location_form);
 
   var c=cookie_read('start_value');
   if(c) {
