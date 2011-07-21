@@ -15,7 +15,13 @@ function mem_check_get_stat() {
 function mem_check_tick() {
   $stat=mem_check_get_stat();
 
-  print $stat['MemFree']+$stat['Cached']."\n";
+  $free=$stat['MemFree']+$stat['Cached'];
+  // print "Mem Free: $free kB\n";
+
+  if($free<2000000) {
+    print "Restarting renderd\n";
+    restart_renderd();
+  }
 }
 
 register_hook("mcp_tick", "mem_check_tick");
