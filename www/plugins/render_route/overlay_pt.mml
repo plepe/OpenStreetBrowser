@@ -27,7 +27,8 @@
   where
     osm_tags @> 'type=>route' and
     osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
-    osm_way &amp;&amp; !bbox!
+    osm_way &amp;&amp; !bbox! and
+    ST_IsValid(osm_way)
   group by
     member_id,
     member_way,
@@ -66,7 +67,8 @@ order by
   where
     osm_tags @> 'type=>route' and
     osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
-    osm_way &amp;&amp; !bbox!
+    osm_way &amp;&amp; !bbox! and
+    ST_IsValid(osm_way)
   group by
     member_id,
     member_way,
@@ -399,7 +401,8 @@ group by
   where
     osm_tags @> 'type=>route' and
     osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
-    osm_way &amp;&amp; !bbox!
+    osm_way &amp;&amp; !bbox! and
+    ST_IsValid(osm_way)
   group by
     route_type(osm_tags),
     member_id,
