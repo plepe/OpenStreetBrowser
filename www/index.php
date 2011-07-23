@@ -89,7 +89,7 @@ else
 <div class='menu'>
 <?
 $menu_list=array();
-$menu_list[]=array(-10, "<div class='logo'><a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'><img src='img/osb_logo.png' alt='OpenStreetBrowser' name='OpenStreetBrowser' border='0'/></a><p>OpenStreet <span class='bigger'>Browser</span><br/><span class='version'>{$version}</span></p></div>");
+$menu_list[]=array(-10, "<div class='logo'><a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'><img src='img/osb_logo.png' alt='OpenStreetBrowser' name='OpenStreetBrowser' border='0'/></a><p>OpenStreet <span class='bigger'>Browser</span><br/><span class='version'><a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/ChangeLog' target='_new'>{$version}</a></span></p></div>");
 $menu_list[]=array(0,
   "<div id='details' class='info' style='top:150px'>\n".
   "<form id='details_content' class='details' action='javascript:details_content_submit()'>\n".
