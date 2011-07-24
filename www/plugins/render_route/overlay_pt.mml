@@ -8,6 +8,9 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geom</Parameter>
       <Parameter name="table">
@@ -27,7 +30,8 @@
   where
     osm_tags @> 'type=>route' and
     osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
-    osm_way &amp;&amp; !bbox!
+    osm_way &amp;&amp; !bbox! and
+    ST_IsValid(osm_way)
   group by
     member_id,
     member_way,
@@ -47,6 +51,9 @@ order by
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geom</Parameter>
       <Parameter name="table">
@@ -66,7 +73,8 @@ order by
   where
     osm_tags @> 'type=>route' and
     osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
-    osm_way &amp;&amp; !bbox!
+    osm_way &amp;&amp; !bbox! and
+    ST_IsValid(osm_way)
   group by
     member_id,
     member_way,
@@ -87,6 +95,9 @@ order by
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">bbox</Parameter>
       <Parameter name="table">
@@ -126,6 +137,9 @@ from
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
@@ -154,6 +168,9 @@ where
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
@@ -182,6 +199,9 @@ where
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
@@ -214,6 +234,9 @@ where
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
@@ -247,6 +270,9 @@ where
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">top</Parameter>
       <Parameter name="table">
@@ -280,6 +306,9 @@ from
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">top</Parameter>
       <Parameter name="table">
@@ -318,6 +347,9 @@ from
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="table">
@@ -357,6 +389,9 @@ group by
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geom</Parameter>
       <Parameter name="table">
@@ -380,6 +415,9 @@ group by
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="geometry_field">geom</Parameter>
       <Parameter name="table">
@@ -399,7 +437,8 @@ group by
   where
     osm_tags @> 'type=>route' and
     osm_tags->'route' in ('train', 'rail', 'railway', 'subway', 'ferry', 'tram', 'trolley', 'trolleybus', 'bus', 'minibus', 'tram', 'light_rail') and
-    osm_way &amp;&amp; !bbox!
+    osm_way &amp;&amp; !bbox! and
+    ST_IsValid(osm_way)
   group by
     route_type(osm_tags),
     member_id,

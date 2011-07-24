@@ -6,7 +6,7 @@ DECLARE
   min_admin_level float;
 BEGIN
   -- get tags
-  tags:=tags_merge(way_assemble_tags(id), (select tags_merge(to_array(osm_tags)) as osm_tags from relation_members rm join osm_rel on 'rel_'||rm.relation_id=osm_rel.osm_id where id=rm.member_id and rm.member_type='W' group by rm.member_id));
+  tags:=tags_merge(way_assemble_tags(id), (select tags_merge(array_agg(rel_assemble_tags(relation_id))) from relation_members rm where id=rm.member_id and rm.member_type='W'));
 
   min_admin_level:=parse_lowest_number(tags->'admin_level');
 

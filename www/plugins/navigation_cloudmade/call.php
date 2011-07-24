@@ -26,8 +26,11 @@ else
   $transit_points="";
 
 // route_type
-if(!$param['route_type'])
+if(!$param['route_type']) {
   $route_type="car";
+} else {
+  $route_type=$param['route_type'];
+}
 unset($param['route_type']);
 
 // route_type_modifier

@@ -1,6 +1,8 @@
 <?
 Header("Content-type: text/plain; charset=utf-8");
 require "../../conf.php";
+require "../inc/sql.php";
+require "../inc/tags.php";
 $ui_lang=$_GET['ui_lang'];
 
 function lang() {
@@ -43,11 +45,12 @@ function template_lang_file($src, $dst) {
   if(file_exists("$root_path/$src")) {
     $f=fopen("$root_path/$src", "r");
     while($r=fgets($f)) {
-      if(eregi("^( *)\\\$lang_str\[\"([^\"]*)\"\]", $r, $m)) {
+      if(eregi("^( *)\\\$lang_str\[['\"]([^\"]*)['\"]\]", $r, $m)) {
 	if($l=$lang_str_dst[$m[2]]) {
 	  print "$m[1]\$lang_str[\"$m[2]\"]=";
 	  print esc($l);
 	  print ";\n";
+
 	  unset($lang_str_dst[$m[2]]);
 
 	  $count_done++;
@@ -80,6 +83,103 @@ function template_lang_file($src, $dst) {
   print "\n";
 }
 
+function print_category_entry($str, $tags, $cat_lang, $comment, $tag) {
+  global $ui_lang;
+  global $count_done;
+  global $count_missing;
+
+  if($cat_lang==$ui_lang) {
+    print "\$lang_str[\"$str\"]=\"{$tags["$tag"]}\";";
+    if($tags["$tag"])
+      $count_done++;
+    else
+      $count_missing++;
+  }
+  elseif($tags["$tag:$ui_lang"]) {
+    print "\$lang_str[\"$str\"]=\"{$tags["$tag:$ui_lang"]}\";";
+    $count_done++;
+  }
+  else {
+    print "#\$lang_str[\"$str\"]=\"{$tags["$tag"]}\";";
+    $count_missing++;
+  }
+
+  if($comment)
+    print " // {$comment}";
+ 
+  print "\n";
+}
+
+function template_lang_category($category, $version) {
+  global $db_central;
+  global $ui_lang;
+  @include "../lang/{$ui_lang}_deprecated.php";
+
+  print "==== Category: $category ====\n";
+  print "Version: $version\n";
+  print "<syntaxhighlight lang=\"php\">\n";
+
+  $res=sql_query("select * from category where category_id='$category' and version='$version'", $db_central);
+  $elem=pg_fetch_assoc($res);
+  $tags=parse_hstore($elem['tags']);
+  $lang=$tags['lang'];
+  if(!$lang)
+    $lang="en";
+
+  // check if deprecated $lang_str exists
+  if(!$tags["name:$ui_lang"]) {
+    if($x=$lang_str["cat:".strtr($category, array("_"=>"/"))]) {
+      if(is_array($x))
+	$x=$x[0];
+      $tags["name:$ui_lang"]=$x;
+    }
+    if($x=$lang_str["list_".strtr($category, array("_"=>"_"))]) {
+      if(is_array($x))
+	$x=$x[0];
+      $tags["name:$ui_lang"]=$x;
+    }
+//    elseif($x=$lang_str["station_type_".strtr($tags["match"], array("="=>"_"))]) {
+//      $tags["name:$ui_lang"]=$x;
+//    }
+  }
+  // end deprecated stuff
+
+  print_category_entry("$category:name", $tags, $lang, "Original Name ($lang): {$tags['name']}", "name");
+
+  if($tags['description']) {
+    print_category_entry("$category:description", $tags, $lang, "Default description: \"{$tags['description']}\"", "description");
+  }
+
+  $res_rule=sql_query("select * from category_rule where category_id='$category' and version='$version'", $db_central);
+  while($elem_rule=pg_fetch_assoc($res_rule)) {
+    $tags=parse_hstore($elem_rule['tags']);
+
+    // check if deprecated $lang_str exists
+    if(!$tags["name:$ui_lang"]) {
+      if($x=$lang_str["list_".strtr($tags["match"], array("="=>"_"))]) {
+	if(is_array($x))
+	  $x=$x[0];
+	$tags["name:$ui_lang"]=$x;
+      }
+      elseif($x=$lang_str["station_type_".strtr($tags["match"], array("="=>"_"))]) {
+	if(is_array($x))
+	  $x=$x[0];
+	$tags["name:$ui_lang"]=$x;
+      }
+    }
+    // end deprecated stuff
+
+    print_category_entry("$category:{$elem_rule['rule_id']}:name", $tags, $lang, "Match: {$tags['match']}", "name");
+
+    if($tags['description']) {
+      print_category_entry("$category:{$elem_rule['rule_id']}:description", $tags, $lang, "Default description: \"{$tags['description']}\"", "description");
+    }
+  }
+
+  print "</syntaxhighlight>\n";
+  print "\n";
+}
+
 $count_done=0;
 $count_missing=0;
 
@@ -93,6 +193,11 @@ $d=opendir("$root_path/www/plugins");
 while($f=readdir($d))
   template_lang_file("www/plugins/$f/lang_en.php", "www/plugins/$f/lang_{$ui_lang}.php");
 closedir($d);
+
+$res=sql_query("select * from category_current", $db_central);
+while($elem=pg_fetch_assoc($res)) {
+  template_lang_category($elem['category_id'], $elem['version']);
+}
 
 print "==== Statistics ====\n";
 print "* Done: $count_done\n";

@@ -41,6 +41,22 @@ function osm_object(dom) {
     return this.tags.get_lang("name");
   }
 
+  // geo
+  this.geo=function() {
+    if(this.info_features)
+      return this.info_features;
+
+    var geo=this.tags.get("#geo");
+
+    if(!geo)
+      return;
+
+    var way=new postgis(geo);
+    this.info_features=way.geo();
+
+    return this.info_features;
+  }
+
   // geo_center
   this.geo_center=function() {
     if(this._geo_center)
@@ -147,16 +163,14 @@ function osm_object(dom) {
 
   // info_show_real
   this.info_show_real=function() {
-    var geo=this.tags.get("#geo");
+    this.geo();
 
     // if no geometric object, show nothing and return
-    if(!geo) {
+    if(!this.info_features) {
       alert("object has no geometric representation");
       return;
     }
 
-    var way=new postgis(geo);
-    this.info_features=way.geo();
     set_feature_style(this.info_features,
       {
 	strokeWidth: 2,

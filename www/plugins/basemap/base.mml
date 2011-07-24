@@ -14,6 +14,9 @@
     <Datasource name="buildings">
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
@@ -63,6 +66,9 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
@@ -89,6 +95,9 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
@@ -114,10 +123,13 @@
   <Layer class="buildings" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource base="buildings"/>
   </Layer>
-  <Layer class="roads_extract" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+  <Layer class="roads_extcas" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
@@ -146,6 +158,9 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
@@ -170,6 +185,37 @@
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
   </Layer>
+  <Layer class="roads_extract" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
+      <Parameter name="geometry_field">osm_way</Parameter>
+      <Parameter name="srid">900913</Parameter>
+      <Parameter name="table">
+	(select
+	  osm_way,
+	  osm_tags->'#highway_type' as "highway_type",
+	  osm_tags->'#highway_subtype' as "highway_sub_type",
+	  osm_tags->'#bridge' as "bridge",
+	  osm_tags->'#tunnel' as "tunnel",
+	  osm_tags->'#railway' as "railway"
+	from (select
+	    osm_way,
+	    classify_hmatch(Array['basemap_highway', 'basemap_bridge', 'basemap_tunnel', 'basemap_railway', 'basemap_railway_tracks'],
+	                    osm_id, osm_tags, osm_way) as "osm_tags"
+	    from osm_line_extract
+	    where osm_way &amp;&amp; !bbox!
+	    offset 0) as t1
+	    order by cast(osm_tags->'#highway_level' as int) asc
+	) as line_extract
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
 
 %INSERTLAYERS template_layer1%
 %INSERT boundaries%
@@ -180,6 +226,9 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
@@ -209,10 +258,45 @@
       <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
     </Datasource>
   </Layer>
+  <Layer class="roads_exttext" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
+      <Parameter name="geometry_field">osm_way</Parameter>
+      <Parameter name="srid">900913</Parameter>
+      <Parameter name="table">
+	(select
+	  osm_way as "osm_way",
+	  osm_tags->'name' as "name",
+	  osm_tags->'#highway_type' as "highway_type",
+	  osm_tags->'#highway_subtype' as "highway_sub_type",
+	  osm_tags->'#bridge' as "bridge",
+	  osm_tags->'#tunnel' as "tunnel",
+	  osm_tags->'#railway' as "railway"
+	from (select
+	    osm_way,
+	    classify_hmatch(Array['basemap_highway', 'basemap_bridge', 'basemap_tunnel', 'basemap_railway', 'basemap_railway_tracks'],
+	                    osm_id, osm_tags, osm_way) as "osm_tags"
+	    from osm_line_extract
+	    where osm_way &amp;&amp; !bbox!
+	    offset 0) as t1
+	    order by cast(osm_tags->'#highway_level' as int) asc
+	) as t2
+      </Parameter>
+      <Parameter name="estimate_extent">false</Parameter>
+      <Parameter name="extent">-20037508,-19929239,20037508,19929239</Parameter>
+    </Datasource>
+  </Layer>
   <Layer class="roads_text" status="on" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over">
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">
@@ -243,6 +327,9 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(select name, "highway" as type, way, 
@@ -256,6 +343,9 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(select name, way, 
@@ -270,6 +360,9 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(select name, way as way, 

@@ -6,7 +6,7 @@ function change_language() {
   ob.submit();
 }
 
-function lang(str, count) {
+function lang_element(str, count) {
   var l;
 
   if(l=lang_str[str]) {
@@ -37,6 +37,20 @@ function lang(str, count) {
     return l[1];
 
   return str;
+}
+
+function lang(str, count) {
+  var el=lang_element(str, count);
+
+  if(arguments.length<=2)
+    return el;
+
+  var vars=[];
+  for(var i=2;i<arguments.length;i++) {
+    vars.push(arguments[i]);
+  }
+
+  return vsprintf(el, vars);
 }
 
 function t(str, count) {
