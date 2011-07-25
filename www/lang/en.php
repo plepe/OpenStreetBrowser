@@ -89,14 +89,6 @@ $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
-$lang_str["start:choose"]=array("Choose map view");
-$lang_str["start:geolocation"]=array("get geolocation");
-$lang_str["start:lastview"]=array("last view");
-$lang_str["start:savedview"]=array("last permalink");
-$lang_str["start:startnormal"]=array("keep view");
-$lang_str["start:remember"]=array("remember decision");
-$lang_str["start:edit"]=array("edit...");
-
 $lang_str["options:autozoom"]=array("Autozoom behaviour");
 $lang_str["help:autozoom"]=array("When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.");
 $lang_str["options:autozoom:pan"]=array("Pan to current object (nicer)");

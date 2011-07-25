@@ -7,7 +7,7 @@ var search_form;
 function search_init() {
   search_toolbox=new toolbox({
     icon: "plugins/search/icon.png",
-    icon_title: "search",
+    icon_title: lang("search:name"),
     callback_activate: search_toolbox_activate,
     weight: -4
   });
@@ -24,16 +24,16 @@ function search_init() {
   var input=dom_create_append(search_form, "input");
   input.name="osb_search";
   input.id="search";
-  input.value=lang("search_field");
+  input.value=lang("search:field");
   input.onfocus=search_focus;
   input.onkeyup=search_brush;
   input.onblur=search_onblur;
-  input.title=lang("search_tip");
+  input.title=lang("search:tip");
 
   var img=dom_create_append(search_form, "img");
   img.name="brush";
   img.src="plugins/search/brush.png";
-  img.title=lang("search_clear");
+  img.title=lang("search:clear");
   img.id="brush";
   img.className="invisible";
   img.onclick=search_clear;
@@ -56,7 +56,7 @@ register_hook("init", search_init);
 
 
 function search_focus() {
-  if(search_form.osb_search.value==lang("search_field")) {
+  if(search_form.osb_search.value==lang("search:field")) {
     search_form.osb_search.value='';
   }
   else if((search_form.osb_search.value!="")) {
@@ -84,7 +84,7 @@ function search_brush(event) {
 
 function search_onblur() {
   if((search_form.osb_search.value=='\0')||(search_form.osb_search.value=="")) {
-    search_form.osb_search.value=lang_str["search_field"];
+    search_form.osb_search.value=lang_str["search:field"];
     search_form.brush.className = 'invisible';
   }
 }
@@ -122,7 +122,7 @@ function real_search(value, param) {
   search_content.className="search_content";
 
   var d=dom_create_append(details_content, "div");
-  d.innerHTML="("+lang("search_nominatim")+" <a class='external' href='http://nominatim.openstreetmap.org/'>Nominatim</a>)";
+  d.innerHTML="("+lang("search:nominatim")+" <a class='external' href='http://nominatim.openstreetmap.org/'>Nominatim</a>)";
 
   search_list=new list(search_content, [ null ], search_more );
 }

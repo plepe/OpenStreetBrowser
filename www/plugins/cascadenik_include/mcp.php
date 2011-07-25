@@ -5,6 +5,7 @@
 
 function cascadenik_include_fit($template, $path, $num=0, $where=0) {
   global $root_path;
+  global $db;
   include("$root_path/render/config_queries.php");
 
   $rep=array(
@@ -21,7 +22,10 @@ function cascadenik_include_fit($template, $path, $num=0, $where=0) {
   $rep["%LAYER_WHERE%"]="parse_layer(osm_tags)=$num";
   $rep["%LAYER%"]="$num";
   $rep["%ROOT_PATH%"]=$root_path;
-  $rep["%DB_NAME%"]=getenv('DB_NAME');
+  $rep["%DB_HOST%"]=$db['host'];
+  $rep["%DB_USER%"]=$db['user'];
+  $rep["%DB_NAME%"]=$db['name'];
+  $rep["%DB_PASS%"]=$db['passwd'];
 
   return strtr($template, $rep);
 }

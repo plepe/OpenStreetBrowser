@@ -90,14 +90,6 @@ $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Objet non trouvé</h1>Aucun objet avec le ID \"%s\" n'a pu être trouvé.Ceci peut être du à une (ou plus) des raisons suivantes::<ul><li>Le ID is inexistant.</li><li>L'objet a été identifié par un site tiers et n'est pas encore disponible dans OpenStreetBrowser.</li><li>L'objet n'est pas dans la zone supportée.</li><li>Le lien que vous suivez est ancien et a été effacé de from OpenStreetMap.</li></ul>";
 
-$lang_str["start:choose"]=array("Choisir le type de carte");
-$lang_str["start:geolocation"]=array("obtenir la géolocalisation");
-$lang_str["start:lastview"]=array("dernière vue");
-$lang_str["start:savedview"]=array("dernier lienPermanent");
-$lang_str["start:startnormal"]=array("conserver la vue");
-$lang_str["start:remember"]=array("mémoriser la décision");
-$lang_str["start:edit"]=array("editer...");
-
 $lang_str["options:autozoom"]="Réglage Autozoom";
 $lang_str["help:autozoom"]="Lors de la sélection d'un objet, la fenêtre d'affichage focus sur cet objet. Le niveau de zoom peut aussi être modifié. Avec cette option vous pouvez sélectionner à partir de different modes.";
 $lang_str["options:autozoom:pan"]="Bascule vers l'objet courant (+ doux)";

@@ -89,14 +89,6 @@ $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="Ein Objekt mit der ID \"%s\" konnte nicht gefunden werden. Das kann eine (oder mehrere) der folgenden Ursachen haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde von einer anderen Applikation identifiziert und ist im OpenStreetBrowser (noch) nicht verfügbar</li><li>Das Objekt liegt ausserhalb des unterstützten Gebiets</li><li>Der Link, dem Du gefolgt bist, war alt und das Objekt wurde inzwischen aus der OpenStreetMap gelöscht.</li>";
 
-$lang_str["start:choose"]=array("Wähle einen Kartenausschnitt");
-$lang_str["start:geolocation"]=array("automatische Geolokalisierung");
-$lang_str["start:lastview"]=array("letzter Kartenausschnitt");
-$lang_str["start:savedview"]=array("letzter Permalink");
-$lang_str["start:startnormal"]=array("behalte Ansicht");
-$lang_str["start:remember"]=array("Auswahl merken");
-$lang_str["start:edit"]=array("editieren...");
-
 $lang_str["options:autozoom"]="Autozoomverhalten";
 $lang_str["help:autozoom"]="Wenn ein Objekt ausgewählt wird, schwenkt der Kartenausschnitt zu dem Objekt, auch der Zoomlevel wird angepasst. Mit dieser Option kann zwischen verschiedenen Modi gewählt werden.";
 $lang_str["options:autozoom:pan"]="Auf das aktuelle Objekt schwenken (schöner)";
