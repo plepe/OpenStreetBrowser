@@ -120,3 +120,4 @@ $overlays_add=array(
 // blog - On startup show a window with the rss-feed of the blog
 // mouseposition - Show the coordinates of the current mouseposition
 // contextmenu - Include a contextmenu on right click
+// mem_check - Checks memory usage and restarts renderd if too high
