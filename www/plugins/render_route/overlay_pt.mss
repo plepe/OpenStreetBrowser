@@ -1,7 +1,14 @@
+.routestext_extract,
 .routestext
 {
   text-halo-fill: #afafaf;
 }
+.routes_extract[route=rail],
+.routes_extract[route=railway],
+.routes_extract[route=train],
+.routestext_extract[route=rail] ref,
+.routestext_extract[route=railway] ref,
+.routestext_extract[route=train] ref,
 .routes[route=rail],
 .routes[route=railway],
 .routes[route=train],
@@ -12,6 +19,8 @@
   line-color: #202020;
   text-fill: #202020;
 }
+.routes_extract[route=subway],
+.routestext_extract[route=subway] ref,
 .routes[route=subway],
 .routestext[route=subway] ref,
 .stop_routes[route=subway] ref
@@ -25,6 +34,8 @@
   text-fill: #ff0000;
   line-color: #ff0000;
 }
+.routes_extract[route=ferry],
+.routestext_extract[route=ferry] ref,
 .routes[route=ferry],
 .routestext[route=ferry] ref
 {
@@ -49,149 +60,198 @@
   text-halo-radius: 0;
 }
 
-.routes[importance=international][zoom>=6],
-.routes[importance=national][zoom>=7],
-.routes[importance=regional][zoom>=8],
+.routes_extract[importance=international][zoom>=6][zoom<10],
+.routes_extract[importance=national][zoom>=7][zoom<10],
+.routes_extract[importance=regional][zoom>=8][zoom<10],
+.routes[importance=international][zoom>=10],
+.routes[importance=national][zoom>=10],
+.routes[importance=regional][zoom>=10],
 .routes[importance=urban][zoom>=11],
 .routes[importance=suburban][zoom>=14],
 .routes[importance=local][zoom>=16]
 {
   line-width: 2;
 }
-.routes[dir!=both][importance=international][zoom>=6],
-.routes[dir!=both][importance=national][zoom>=7],
-.routes[dir!=both][importance=regional][zoom>=8],
+.routes_extract[dir!=both][importance=international][zoom>=6][zoom<10],
+.routes_extract[dir!=both][importance=national][zoom>=7][zoom<10],
+.routes_extract[dir!=both][importance=regional][zoom>=8][zoom<10],
+.routes[dir!=both][importance=international][zoom>=10],
+.routes[dir!=both][importance=national][zoom>=10],
+.routes[dir!=both][importance=regional][zoom>=10],
 .routes[dir!=both][importance=urban][zoom>=11],
 .routes[dir!=both][importance=suburban][zoom>=14],
 .routes[dir!=both][importance=local][zoom>=16]
 {
   line-width: 1;
 }
-.routes[importance=international][zoom>=3][zoom<6],
-.routes[importance=national][zoom>=5][zoom<7],
-.routes[importance=regional][zoom>=7][zoom<8],
-.routes[importance=urban][zoom>=9][zoom<11],
+.routes_extract[importance=international][zoom>=3][zoom<6],
+.routes_extract[importance=national][zoom>=5][zoom<7],
+.routes_extract[importance=regional][zoom>=7][zoom<8],
+.routes_extract[importance=urban][zoom>=9][zoom<10],
+.routes[importance=urban][zoom>=10][zoom<11],
 .routes[importance=suburban][zoom>=12][zoom<14],
 .routes[importance=local][zoom>=14][zoom<16]
 {
   line-width: 1;
 }
-.routes[importance=national][zoom>=4][zoom<5],
-.routes[importance=regional][zoom>=6][zoom<7],
-.routes[importance=urban][zoom>=8][zoom<9],
+.routes_extract[importance=national][zoom>=4][zoom<5],
+.routes_extract[importance=regional][zoom>=6][zoom<7],
+.routes_extract[importance=urban][zoom>=8][zoom<9],
 .routes[importance=suburban][zoom>=10][zoom<12],
 .routes[importance=local][zoom>=12][zoom<14]
 {
   line-width: 0.5;
 }
-.routes_features[route=tram][dir=forward][importance=international][zoom>=6],
-.routes_features[route=tram][dir=forward][importance=national][zoom>=7],
-.routes_features[route=tram][dir=forward][importance=regional][zoom>=8],
+.routes_features_extract[route=tram][dir=forward][importance=international][zoom>=6][zoom<10],
+.routes_features_extract[route=tram][dir=forward][importance=national][zoom>=7][zoom<10],
+.routes_features_extract[route=tram][dir=forward][importance=regional][zoom>=8][zoom<10],
+.routes_features[route=tram][dir=forward][importance=international][zoom>=10],
+.routes_features[route=tram][dir=forward][importance=national][zoom>=10],
+.routes_features[route=tram][dir=forward][importance=regional][zoom>=10],
 .routes_features[route=tram][dir=forward][importance=urban][zoom>=11],
 .routes_features[route=tram][dir=forward][importance=suburban][zoom>=14],
 .routes_features[route=tram][dir=forward][importance=local][zoom>=16]
 {
   line-pattern-file: url('img/tram_forward.png');
 }
-.routes_features[route=tram][dir=backward][importance=international][zoom>=6],
-.routes_features[route=tram][dir=backward][importance=national][zoom>=7],
-.routes_features[route=tram][dir=backward][importance=regional][zoom>=8],
+.routes_features_extract[route=tram][dir=backward][importance=international][zoom>=6][zoom<10],
+.routes_features_extract[route=tram][dir=backward][importance=national][zoom>=7][zoom<10],
+.routes_features_extract[route=tram][dir=backward][importance=regional][zoom>=8][zoom<10],
+.routes_features[route=tram][dir=backward][importance=international][zoom>=10],
+.routes_features[route=tram][dir=backward][importance=national][zoom>=10],
+.routes_features[route=tram][dir=backward][importance=regional][zoom>=10],
 .routes_features[route=tram][dir=backward][importance=urban][zoom>=11],
 .routes_features[route=tram][dir=backward][importance=suburban][zoom>=14],
 .routes_features[route=tram][dir=backward][importance=local][zoom>=16]
 {
   line-pattern-file: url('img/tram_backward.png');
 }
-.routes_features[route=bus][dir=forward][importance=international][zoom>=6],
-.routes_features[route=bus][dir=forward][importance=national][zoom>=7],
-.routes_features[route=bus][dir=forward][importance=regional][zoom>=8],
+.routes_features_extract[route=bus][dir=forward][importance=international][zoom>=6][zoom<10],
+.routes_features_extract[route=bus][dir=forward][importance=national][zoom>=7][zoom<10],
+.routes_features_extract[route=bus][dir=forward][importance=regional][zoom>=8][zoom<10],
+.routes_features[route=bus][dir=forward][importance=international][zoom>=10],
+.routes_features[route=bus][dir=forward][importance=national][zoom>=10],
+.routes_features[route=bus][dir=forward][importance=regional][zoom>=10],
 .routes_features[route=bus][dir=forward][importance=urban][zoom>=11],
 .routes_features[route=bus][dir=forward][importance=suburban][zoom>=14],
 .routes_features[route=bus][dir=forward][importance=local][zoom>=16]
 {
   line-pattern-file: url('img/bus_forward.png');
 }
-.routes_features[route=bus][dir=backward][importance=international][zoom>=6],
-.routes_features[route=bus][dir=backward][importance=national][zoom>=7],
-.routes_features[route=bus][dir=backward][importance=regional][zoom>=8],
+.routes_features_extract[route=bus][dir=backward][importance=international][zoom>=6][zoom<10],
+.routes_features_extract[route=bus][dir=backward][importance=national][zoom>=7][zoom<10],
+.routes_features_extract[route=bus][dir=backward][importance=regional][zoom>=8][zoom<10],
+.routes_features[route=bus][dir=backward][importance=international][zoom>=10],
+.routes_features[route=bus][dir=backward][importance=national][zoom>=10],
+.routes_features[route=bus][dir=backward][importance=regional][zoom>=10],
 .routes_features[route=bus][dir=backward][importance=urban][zoom>=11],
 .routes_features[route=bus][dir=backward][importance=suburban][zoom>=14],
 .routes_features[route=bus][dir=backward][importance=local][zoom>=16]
 {
   line-pattern-file: url('img/bus_backward.png');
 }
-.routes_features[route=tram_bus][dir=forward][importance=international][zoom>=6],
-.routes_features[route=tram_bus][dir=forward][importance=national][zoom>=7],
-.routes_features[route=tram_bus][dir=forward][importance=regional][zoom>=8],
+.routes_features_extract[route=tram_bus][dir=forward][importance=international][zoom>=6][zoom<10],
+.routes_features_extract[route=tram_bus][dir=forward][importance=national][zoom>=7][zoom<10],
+.routes_features_extract[route=tram_bus][dir=forward][importance=regional][zoom>=8][zoom<10],
+.routes_features[route=tram_bus][dir=forward][importance=international][zoom>=10],
+.routes_features[route=tram_bus][dir=forward][importance=national][zoom>=10],
+.routes_features[route=tram_bus][dir=forward][importance=regional][zoom>=10],
 .routes_features[route=tram_bus][dir=forward][importance=urban][zoom>=11],
 .routes_features[route=tram_bus][dir=forward][importance=suburban][zoom>=14],
 .routes_features[route=tram_bus][dir=forward][importance=local][zoom>=16]
 {
   line-pattern-file: url('img/tram_bus_forward.png');
 }
-.routes_features[route=tram_bus][dir=backward][importance=international][zoom>=6],
-.routes_features[route=tram_bus][dir=backward][importance=national][zoom>=7],
-.routes_features[route=tram_bus][dir=backward][importance=regional][zoom>=8],
+.routes_features_extract[route=tram_bus][dir=backward][importance=international][zoom>=6][zoom<10],
+.routes_features_extract[route=tram_bus][dir=backward][importance=national][zoom>=7][zoom<10],
+.routes_features_extract[route=tram_bus][dir=backward][importance=regional][zoom>=8][zoom<10],
+.routes_features[route=tram_bus][dir=backward][importance=international][zoom>=10],
+.routes_features[route=tram_bus][dir=backward][importance=national][zoom>=10],
+.routes_features[route=tram_bus][dir=backward][importance=regional][zoom>=10],
 .routes_features[route=tram_bus][dir=backward][importance=urban][zoom>=11],
 .routes_features[route=tram_bus][dir=backward][importance=suburban][zoom>=14],
 .routes_features[route=tram_bus][dir=backward][importance=local][zoom>=16]
 {
   line-pattern-file: url('img/tram_bus_backward.png');
 }
-.routes_features[route=subway][dir=forward][importance=international][zoom>=6],
-.routes_features[route=subway][dir=forward][importance=national][zoom>=7],
-.routes_features[route=subway][dir=forward][importance=regional][zoom>=8],
+.routes_features_extract[route=subway][dir=forward][importance=international][zoom>=6][zoom<10],
+.routes_features_extract[route=subway][dir=forward][importance=national][zoom>=7][zoom<10],
+.routes_features_extract[route=subway][dir=forward][importance=regional][zoom>=8][zoom<10],
+.routes_features[route=subway][dir=forward][importance=international][zoom>=10],
+.routes_features[route=subway][dir=forward][importance=national][zoom>=10],
+.routes_features[route=subway][dir=forward][importance=regional][zoom>=10],
 .routes_features[route=subway][dir=forward][importance=urban][zoom>=11],
 .routes_features[route=subway][dir=forward][importance=suburban][zoom>=14],
 .routes_features[route=subway][dir=forward][importance=local][zoom>=16]
 {
   line-pattern-file: url('img/subway_forward.png');
 }
-.routes_features[route=subway][dir=backward][importance=international][zoom>=6],
-.routes_features[route=subway][dir=backward][importance=national][zoom>=7],
-.routes_features[route=subway][dir=backward][importance=regional][zoom>=8],
+.routes_features_extract[route=subway][dir=backward][importance=international][zoom>=6][zoom<10],
+.routes_features_extract[route=subway][dir=backward][importance=national][zoom>=7][zoom<10],
+.routes_features_extract[route=subway][dir=backward][importance=regional][zoom>=8][zoom<10],
+.routes_features[route=subway][dir=backward][importance=international][zoom>=10],
+.routes_features[route=subway][dir=backward][importance=national][zoom>=10],
+.routes_features[route=subway][dir=backward][importance=regional][zoom>=10],
 .routes_features[route=subway][dir=backward][importance=urban][zoom>=11],
 .routes_features[route=subway][dir=backward][importance=suburban][zoom>=14],
 .routes_features[route=subway][dir=backward][importance=local][zoom>=16]
 {
   line-pattern-file: url('img/subway_backward.png');
 }
-.routes_features[route=ferry][dir=forward][importance=international][zoom>=6],
-.routes_features[route=ferry][dir=forward][importance=national][zoom>=7],
-.routes_features[route=ferry][dir=forward][importance=regional][zoom>=8],
+.routes_features_extract[route=ferry][dir=forward][importance=international][zoom>=6][zoom<10],
+.routes_features_extract[route=ferry][dir=forward][importance=national][zoom>=7][zoom<10],
+.routes_features_extract[route=ferry][dir=forward][importance=regional][zoom>=8][zoom<10],
+.routes_features[route=ferry][dir=forward][importance=international][zoom>=10],
+.routes_features[route=ferry][dir=forward][importance=national][zoom>=10],
+.routes_features[route=ferry][dir=forward][importance=regional][zoom>=10],
 .routes_features[route=ferry][dir=forward][importance=urban][zoom>=11],
 .routes_features[route=ferry][dir=forward][importance=suburban][zoom>=14],
 .routes_features[route=ferry][dir=forward][importance=local][zoom>=16]
 {
   line-pattern-file: url('img/ferry_forward.png');
 }
-.routes_features[route=ferry][dir=backward][importance=international][zoom>=6],
-.routes_features[route=ferry][dir=backward][importance=national][zoom>=7],
-.routes_features[route=ferry][dir=backward][importance=regional][zoom>=8],
+.routes_features_extract[route=ferry][dir=backward][importance=international][zoom>=6][zoom<10],
+.routes_features_extract[route=ferry][dir=backward][importance=national][zoom>=7][zoom<10],
+.routes_features_extract[route=ferry][dir=backward][importance=regional][zoom>=8][zoom<10],
+.routes_features[route=ferry][dir=backward][importance=international][zoom>=10],
+.routes_features[route=ferry][dir=backward][importance=national][zoom>=10],
+.routes_features[route=ferry][dir=backward][importance=regional][zoom>=10],
 .routes_features[route=ferry][dir=backward][importance=urban][zoom>=11],
 .routes_features[route=ferry][dir=backward][importance=suburban][zoom>=14],
 .routes_features[route=ferry][dir=backward][importance=local][zoom>=16]
 {
   line-pattern-file: url('img/ferry_backward.png');
 }
-.routes_features[route=rail][dir=forward][importance=international][zoom>=6],
-.routes_features[route=rail][dir=forward][importance=national][zoom>=7],
-.routes_features[route=rail][dir=forward][importance=regional][zoom>=8],
+.routes_features_extract[route=rail][dir=forward][importance=international][zoom>=6][zoom<10],
+.routes_features_extract[route=rail][dir=forward][importance=national][zoom>=7][zoom<10],
+.routes_features_extract[route=rail][dir=forward][importance=regional][zoom>=8][zoom<10],
+.routes_features[route=rail][dir=forward][importance=international][zoom>=10],
+.routes_features[route=rail][dir=forward][importance=national][zoom>=10],
+.routes_features[route=rail][dir=forward][importance=regional][zoom>=10],
 .routes_features[route=rail][dir=forward][importance=urban][zoom>=11],
 .routes_features[route=rail][dir=forward][importance=suburban][zoom>=14],
 .routes_features[route=rail][dir=forward][importance=local][zoom>=16]
 {
   line-pattern-file: url('img/rail_forward.png');
 }
-.routes_features[route=rail][dir=backward][importance=international][zoom>=6],
-.routes_features[route=rail][dir=backward][importance=national][zoom>=7],
-.routes_features[route=rail][dir=backward][importance=regional][zoom>=8],
+.routes_features_extract[route=rail][dir=backward][importance=international][zoom>=6][zoom<10],
+.routes_features_extract[route=rail][dir=backward][importance=national][zoom>=7][zoom<10],
+.routes_features_extract[route=rail][dir=backward][importance=regional][zoom>=8][zoom<10],
+.routes_features[route=rail][dir=backward][importance=international][zoom>=10],
+.routes_features[route=rail][dir=backward][importance=national][zoom>=10],
+.routes_features[route=rail][dir=backward][importance=regional][zoom>=10],
 .routes_features[route=rail][dir=backward][importance=urban][zoom>=11],
 .routes_features[route=rail][dir=backward][importance=suburban][zoom>=14],
 .routes_features[route=rail][dir=backward][importance=local][zoom>=16]
 {
   line-pattern-file: url('img/rail_backward.png');
 }
+.routes_extract[route=rail],
+.routes_extract[route=railway],
+.routes_extract[route=train],
+.routestext_extract[route=rail] ref,
+.routestext_extract[route=railway] ref,
+.routestext_extract[route=train] ref,
 .routes[route=rail],
 .routes[route=railway],
 .routes[route=train],
@@ -205,6 +265,8 @@
   line-color: #202020;
   text-fill: #202020;
 }
+.routes_extract[route=light_rail],
+.routestext_extract[route=light_rail] ref,
 .routes[route=tram],
 .routes[route=light_rail],
 .routestext[route=tram] ref,
@@ -215,6 +277,8 @@
   line-color: #ff0000;
   text-fill: #ff0000;
 }
+.routes_extract[route=ferry],
+.routestext_extract[route=ferry] ref,
 .routes[route=ferry],
 .routestext[route=ferry] ref,
 .stop_routes[route=ferry] ref
@@ -232,9 +296,12 @@
   line-color: #0000ff;
   text-fill: #0000ff;
 }
-.routestext[importance=international][zoom>=6] ref,
-.routestext[importance=national][zoom>=7] ref,
-.routestext[importance=regional][zoom>=8] ref,
+.routestext_extract[importance=international][zoom>=6][zoom<10] ref,
+.routestext_extract[importance=national][zoom>=7][zoom<10] ref,
+.routestext_extract[importance=regional][zoom>=8][zoom<10] ref,
+.routestext[importance=international][zoom>=10] ref,
+.routestext[importance=national][zoom>=10] ref,
+.routestext[importance=regional][zoom>=10] ref,
 .routestext[importance=urban][zoom>=11] ref,
 .routestext[importance=suburban][zoom>=13] ref,
 .routestext[importance=local][zoom>=15] ref
