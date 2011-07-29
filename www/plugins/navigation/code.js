@@ -55,10 +55,21 @@ function navigation_point(lon, lat, style) {
     return this.feature.geometry;
   }
 
-  // remove
-  this.remove=function() {
+  // hide
+  this.hide=function() {
     drag_layer.unselect(this.feature);
     drag_layer.removeFeatures([this.feature]);
+  }
+
+  // show
+  this.show=function() {
+    drag_layer.removeFeatures([this.feature]);
+    drag_layer.addFeatures([this.feature]);
+  }
+
+  // remove
+  this.remove=function() {
+    this.hide();
   }
 
   // constructor
@@ -69,7 +80,7 @@ function navigation_point(lon, lat, style) {
   var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
   var geo = new OpenLayers.Geometry.Point(pos.lon, pos.lat);
   this.feature = new OpenLayers.Feature.Vector(geo, 0, style);
-  drag_layer.addFeatures([this.feature]);
+  this.show();
   this.feature.ob=this;
 }
 
@@ -214,6 +225,12 @@ function navigation_route(id) {
       dom_clean(this.instructions);
 
       this.calculated_route.print_instructions(this.instructions);
+    }
+
+    this.home.show();
+    this.destination.show();
+    for(var i=0; i<this.via.length; i++) {
+      this.via[i].show();
     }
 
     this.geo_zoom_to();
