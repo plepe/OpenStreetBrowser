@@ -72,6 +72,18 @@ function navigation_point(lon, lat, style) {
     this.hide();
   }
 
+  // finish_drag
+  this.finish_drag=function(pos) {
+    var lonlat=pos.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+
+    if(lonlat.x) {
+      this.lon=lonlat.x;
+      this.lat=lonlat.y;
+    }
+
+    call_hooks("geo_object_change", null, this);
+  }
+
   // constructor
   this.lon=parseFloat(lon);
   this.lat=parseFloat(lat);
@@ -169,14 +181,17 @@ function navigation_route(id) {
   */
 
   //removes the route
-  this.remove=function(button) {
+  this.remove=function() {
     if(this.home)
       this.home.remove();
     if(this.destination)
       this.destination.remove();
     for(var i=0;i<this.via.length;i++){
-      this.via.remove(i);
+      this.via[i].remove(i);
     }
+    if(this.calculated_route)
+      this.calculated_route.remove();
+    unregister_hooks_object(this);
   }
 
   //sets your home point
@@ -255,6 +270,23 @@ function navigation_route(id) {
     nav.get_route(param, this.show_route.bind(this));
   }
 
+  // notify_change
+  this.notify_change=function(dummy, ob) {
+    var affected=false;
+    if(this.home==ob)
+      affected=true;
+    if(this.destination==ob)
+      affected=true;
+    for(var i=0; i<this.via.length; i++)
+      if(this.via[i]==ob)
+	affected=true;
+    if(!affected)
+      return;
+    
+    navigation_toolboxtext();
+    navigation_update_url();
+  }
+
   // constructor
   this.via=new Array();
   this.travel_with=navigation_cloudmade_travelwith[0].id;
@@ -272,6 +304,8 @@ function navigation_route(id) {
     var latlon=id[i].split(",");
     this.set_destination(new navigation_point(latlon[1], latlon[0], destination_style));
   }
+
+  register_hook("geo_object_change", this.notify_change.bind(this), this);
 }
 
 function navigation_set_home(pos) {
@@ -368,6 +402,10 @@ function navigation_toolboxtext() {
   }
 }
 
+function navigation_current_route_remove() {
+  navigation_current_route.remove();
+}
+
 function navigation_init() {
   navigation_toolbox=new toolbox({
     icon: "plugins/navigation/icon.png",
@@ -408,7 +446,7 @@ function navigation_init() {
   dom_create_append_text(button, lang("navigation:invert"));
 
   var button=dom_create_append(this.toolbox_content, "button");
-  button.onclick=navigation_current_route.remove.bind(navigation_current_route, button);
+  button.onclick=navigation_current_route_remove;//.bind(navigation_current_route, button);
   dom_create_append_text(button, lang("navigation:remove"));
 
   //var text = "<img src='plugins/navigation/icon_home.png' onclick='alert(home.lon + \"|\" + home.lat)'> <span id='navigation_hometext'></span><br/><img src='plugins/navigation/icon_via.png'> <span id='navigation_viatext' style='display:inline-block; padding-top:7px;'></span><br/><img src='plugins/navigation/icon_destination.png'> <span id='navigation_destinationtext'></span><br/><br/>
