@@ -20,7 +20,8 @@ var hooks_intern=new Array();
 /**
  * Holds a list of all hooks of an object, to savely remove all hooks of an object
  */
-var hooks_object={};
+var hooks_object_objects=[];
+var hooks_object_hooks=[];
 
 /**
  * Call hooks - All registered functions will be called
@@ -48,9 +49,14 @@ function register_hook(hook, fun, ob) {
   hooks_intern[hook].push(fun);
 
   if(ob) {
-    if(!hooks_object[ob])
-      hooks_object[ob]=[];
-    hooks_object[ob].push([ hook, fun ]);
+    var p=array_search(ob, hooks_object_objects, true);
+    if(p===false) {
+      p=hooks_object_objects.length;
+      hooks_object_objects.push(ob);
+      hooks_object_hooks.push([]);
+    }
+    
+    hooks_object_hooks[p].push([ hook, fun ]);
   }
 }
 
@@ -59,12 +65,13 @@ function register_hook(hook, fun, ob) {
  * @param object The object
  */
 function unregister_hooks_object(ob) {
-  if(!hooks_object[ob])
+  var p=array_search(ob, hooks_object_objects, true);
+  if(p===false)
     return;
 
-  for(var i=0; i<hooks_object[ob].length; i++) {
-    var hook=hooks_object[ob][i][0];
-    var fun1=hooks_object[ob][i][1];
+  for(var i=0; i<hooks_object_hooks[p].length; i++) {
+    var hook=hooks_object_hooks[p][i][0];
+    var fun1=hooks_object_hooks[p][i][1];
 
     for(var j=0; j<hooks_intern[hook].length; j++) {
       var fun2=hooks_intern[hook][j];
@@ -75,5 +82,6 @@ function unregister_hooks_object(ob) {
     }
   }
 
-  delete(hooks_object[ob]);
+  delete(hooks_object_objects[p]);
+  delete(hooks_object_hooks[p]);
 }
