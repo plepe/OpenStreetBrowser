@@ -163,14 +163,20 @@ function navigation_route(id) {
     navigation_toolboxtext();
     navigation_update_url();
   }
-  /*
+
   this.show=function(){
-    
+    for(var i=0; i<this.members.length; i++) {
+      this.members[i].show();
+    }
   }
+
   this.hide=function(){
-
+    for(var i=0; i<this.members.length; i++) {
+      this.members[i].hide();
+    }
   }
 
+  /*
   this.finish_drag=function(pos){
     alert("fertig");
   }
@@ -259,7 +265,6 @@ function navigation_route(id) {
       this.calculated_route.hide();
 
     this.calculated_route=route;
-    this.calculated_route.show();
 
     if(this.instructions) {
       dom_clean(this.instructions);
@@ -267,12 +272,8 @@ function navigation_route(id) {
       this.calculated_route.print_instructions(this.instructions);
     }
 
-    this.home.show();
-    this.destination.show();
-    for(var i=0; i<this.via.length; i++) {
-      this.via[i].show();
-    }
     this.update();
+    this.show();
 
     this.geo_zoom_to();
   }
