@@ -194,6 +194,31 @@ function navigation_route(id) {
     unregister_hooks_object(this);
   }
 
+  // update
+  this.update=function() {
+    this.members=[];
+    this.member_roles=[];
+
+    if(this.calculated_route) {
+      this.members.push(this.calculated_route);
+      this.member_roles.push("route");
+    }
+    if(this.home) {
+      this.members.push(this.home);
+      this.member_roles.push("home");
+    }
+    for(var i=0; i<this.via.length; i++) {
+      this.members.push(this.via[i]);
+      this.member_roles.push("via");
+    }
+    if(this.destination) {
+      this.members.push(this.destination);
+      this.member_roles.push("destination");
+    }
+
+    navigation_toolboxtext();
+  }
+
   //sets your home point
   this.set_home=function(point) {
     if(this.home) {
@@ -201,7 +226,7 @@ function navigation_route(id) {
     }
     this.home=point;
 
-    navigation_toolboxtext();
+    this.update();
   }
 
   //sets your destination point
@@ -211,14 +236,14 @@ function navigation_route(id) {
     }
     this.destination=point;
 
-    navigation_toolboxtext();
+    this.update();
   }
 
   //adds a via point to the via array
   this.add_via=function(point) {
     this.via.push(point);
 
-    navigation_toolboxtext();
+    this.update();
   }
 
  
@@ -247,6 +272,7 @@ function navigation_route(id) {
     for(var i=0; i<this.via.length; i++) {
       this.via[i].show();
     }
+    this.update();
 
     this.geo_zoom_to();
   }
