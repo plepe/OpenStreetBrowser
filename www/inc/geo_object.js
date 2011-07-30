@@ -5,6 +5,9 @@
 //  .id   - an arbitrary string, identifying this object
 //  .type - type of object (e.g. "osm", "marker", "route")
 //
+//  .show() - Show the object(s) on the map
+//  .hide() - Hide the object(s) from the map
+//
 // the following properties are optional, but should keep to the standard:
 //  .tags - A tags instance
 //
@@ -12,6 +15,13 @@
 //  .name() - Returning the name of the object in data_lang
 //  .geo()         - a function returning an array of OpenLayers features
 //  .geo_center()  - a function returning an array of OpenLayers features
+//
+// if the object is a kind of relations it can have members:
+//  .members - Array of all members (which are geo_objects themselves)
+//  .member_roles - Array of roles of members (same index)
+//
+// Hooks geo_objects can call:
+//  'geo_object_change' - If something (geometry, id) has changed
 
 function geo_object() {
   this.type="default";
@@ -23,6 +33,14 @@ function geo_object() {
 
   // info
   this.info=function(chapters) {
+  }
+
+  // show
+  this.show=function() {
+  }
+
+  // hide
+  this.hide=function() {
   }
 
   // geo
