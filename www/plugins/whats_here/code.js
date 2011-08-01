@@ -81,6 +81,7 @@ function whats_here(lonlat) {
   }
 
   // constructor
+  this.id="whats_here="+lonlat.lon+","+lonlat.lat;
   this.request();
 }
 
