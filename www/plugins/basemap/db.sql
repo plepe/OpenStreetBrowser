@@ -5,14 +5,14 @@ insert into classify_hmatch values ( 'basemap_highway',
   '#highway_type=>motorway, #highway_subtype=>t1, #highway_level=>21'
 );
 insert into classify_hmatch values ( 'basemap_highway',
-  'highway=>trunk',
-  null,
-  '#highway_type=>motorway, #highway_subtype=>t2, #highway_level=>21'
-);
-insert into classify_hmatch values ( 'basemap_highway',
   'highway=>motorway_link',
   null,
-  '#highway_type=>motorway, #highway_subtype=>t3, #highway_level=>20'
+  '#highway_type=>motorway, #highway_subtype=>t2, #highway_level=>20'
+);
+insert into classify_hmatch values ( 'basemap_highway',
+  'highway=>trunk',
+  null,
+  '#highway_type=>motorway, #highway_subtype=>t3, #highway_level=>21'
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>trunk_link',
