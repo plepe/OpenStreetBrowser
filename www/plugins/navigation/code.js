@@ -147,7 +147,8 @@ function navigation_route(id) {
   }
 
   //changes route type
-  this.change_route_type=function(select) {
+  this.change_route_type=function() {
+    var select=document.getElementById("navigation_travel_with");
     this.travel_with=select.value;
 
     navigation_update_url();
@@ -427,10 +428,21 @@ function navigation_toolboxtext() {
   else {
     dom_create_append_text(td, navigation_current_route.destination.name());
   }
+
+  // travel with
+  var select=document.getElementById("navigation_travel_with");
+  for(var i=0; i<select.options.length; i++) {
+    var option=select.options[i];
+    option.selected=(option.value==navigation_current_route.travel_with);
+  }
 }
 
 function navigation_current_route_remove() {
   navigation_current_route.remove();
+}
+
+function navigation_current_route_change_route_type() {
+  navigation_current_route.change_route_type();
 }
 
 function navigation_init() {
@@ -460,7 +472,8 @@ function navigation_init() {
   table.id="navigation_points";
 
   var select=dom_create_append(this.toolbox_content, "select");
-  select.onchange=navigation_current_route.change_route_type.bind(navigation_current_route, select);
+  select.onchange=navigation_current_route_change_route_type;
+  select.id="navigation_travel_with";
 
   for(var i=0; i<navigation_cloudmade_travelwith.length; i++) {
     var option=dom_create_append(select, "option");
