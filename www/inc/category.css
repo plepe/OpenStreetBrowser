@@ -98,10 +98,11 @@ span.category_tools {
   float: right;
   margin-right: 2px;
   margin-top: 3px;
-}
-span.category_tools,
-img.category_tools {
   cursor:pointer;
+}
+img.category_tools {
+  width: 8px;
+  height: 10px;
 }
 
 span.category_old_version {
