@@ -718,7 +718,7 @@
 .roads_rail[railway=tram] {
   line-color: #707070;
 }
-.roads_extcas[highway_type=railway][highway_sub_type=t2],
+.roads_extract[highway_type=railway][highway_sub_type=t2],
 .roads_rail[railway=rail] {
   line-color: #404040;
 }
