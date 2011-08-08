@@ -1,5 +1,9 @@
 <?
 include "../../conf.php";
+$tiles_list=array(
+  "base"=>"/tiles/basemap_base/%zoom/%x/%y.png",
+  "pt"=>"/tiles/render_route_overlay_pt/%zoom/%x/%y.png",
+);
 ?>
 <html>
 <head>
@@ -7,6 +11,21 @@ include "../../conf.php";
 <body>
 <form action='tiles.php' method='get'>
 Paste range (e.g. '10 632-635 352-355') here:
+<select name='tiles'>
+<?
+$tiles=$_REQUEST['tiles'];
+if(!$tiles)
+  $tiles="base";
+
+foreach($tiles_list as $l=>$l_def) {
+  print "  <option";
+  if($l==$tiles) {
+    print " selected";
+  }
+  print ">$l</option>\n";
+}
+?>
+</select>
 <input name='range' value=''>
 </form>
 
@@ -27,7 +46,8 @@ if($_REQUEST['range']) {
   print "<div style='white-space: nowrap;'>\n";
   for($y=$y1; $y<=$y2; $y++) {
     for($x=$x1; $x<=$x2; $x++) {
-      print "<img src='/tiles/basemap_base/$zoom/$x/$y.png' width='256' height='256'>";
+      $url=strtr($tiles_list[$tiles], array("%zoom"=>$zoom, "%x"=>$x, "%y"=>$y));
+      print "<img src='$url' width='256' height='256'>";
     }
     print "<br/>";
   }
