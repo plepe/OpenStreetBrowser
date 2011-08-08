@@ -7,7 +7,7 @@ insert into classify_hmatch values ( 'basemap_highway',
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>motorway_link',
   null,
-  '#highway_type=>motorway, #highway_subtype=>t2, #highway_level=>20'
+  '#highway_type=>motorway, #highway_subtype=>t2, #highway_level=>9'
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>trunk',
@@ -17,7 +17,7 @@ insert into classify_hmatch values ( 'basemap_highway',
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>trunk_link',
   null,
-  '#highway_type=>motorway, #highway_subtype=>t4, #highway_level=>20'
+  '#highway_type=>motorway, #highway_subtype=>t4, #highway_level=>9'
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>primary',
@@ -27,7 +27,7 @@ insert into classify_hmatch values ( 'basemap_highway',
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>primary_link',
   null,
-  '#highway_type=>major, #highway_subtype=>t2, #highway_level=>12'
+  '#highway_type=>major, #highway_subtype=>t2, #highway_level=>8'
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>secondary',
