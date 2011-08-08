@@ -722,13 +722,16 @@
 .roads_rail[railway=rail] {
   line-color: #404040;
 }
-.roads_extract[highway_type=railway][highway_sub_type=t2][zoom>=6][zoom<8],
+.roads_extract[highway_type=railway][highway_sub_type=t2][zoom>=5][zoom<6],
 .roads_rail[railway=tram][zoom>=11][zoom<13] {
   line-width: 0.5;
 }
-.roads_extract[highway_type=railway][highway_sub_type=t2][zoom>=8][zoom<10],
+.roads_extract[highway_type=railway][highway_sub_type=t2][zoom>=6][zoom<9],
 .roads_rail[railway=tram][zoom>=13][zoom<15] {
   line-width: 1;
+}
+.roads_extract[highway_type=railway][highway_sub_type=t2][zoom>=9][zoom<10] {
+  line-width: 1.25;
 }
 .roads_rail[railway=tram][tracks=single][zoom>=15] {
   line-pattern-file: url('img/tram_single.png');
