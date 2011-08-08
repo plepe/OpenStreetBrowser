@@ -209,7 +209,9 @@
 	    from osm_line_extract
 	    where osm_way &amp;&amp; !bbox!
 	    offset 0) as t1
-	    order by cast(osm_tags->'#highway_level' as int) asc
+	    order by
+	      coalesce(cast(osm_tags->'#highway_extract_level' as int),
+	               cast(osm_tags->'#highway_level' as int)) asc
 	) as line_extract
       </Parameter>
       <Parameter name="estimate_extent">false</Parameter>
