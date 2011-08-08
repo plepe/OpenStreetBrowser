@@ -910,17 +910,25 @@
   text-fill: #000000;
   text-size: 5;
 }
-.roads_extract[highway_type=waterway][highway_sub_type=t1][zoom>=5][zoom<8],
-.roads_extract[highway_type=waterway][highway_sub_type=t2][zoom>=6][zoom<9],
+.roads_extract[highway_type=waterway][highway_sub_type=t1][zoom>=5][zoom<6],
+.roads_extract[highway_type=waterway][highway_sub_type=t2][zoom>=5][zoom<6],
 .roads_extcas[highway_type=waterway][highway_sub_type=t3][zoom>=10][zoom<11] {
   line-width: 0.5;
 }
-.roads_extract[highway_type=waterway][highway_sub_type=t1][zoom>=8][zoom<10],
-.roads_extract[highway_type=waterway][highway_sub_type=t2][zoom>=9][zoom<10],
+.roads_extract[highway_type=waterway][highway_sub_type=t1][zoom>=6][zoom<7],
+.roads_extract[highway_type=waterway][highway_sub_type=t2][zoom>=6][zoom<7],
 .roads_extcas[highway_type=waterway][highway_sub_type=t2][zoom>=10][zoom<11],
 .roads_casing[highway_type=waterway][highway_sub_type=t2][zoom>=11][zoom<12],
 .roads_casing[highway_type=waterway][highway_sub_type=t3][zoom>=12][zoom<14] {
   line-width: 1;
+}
+.roads_extract[highway_type=waterway][highway_sub_type=t1][zoom>=7][zoom<8],
+.roads_extract[highway_type=waterway][highway_sub_type=t2][zoom>=7][zoom<8] {
+  line-width: 1.5;
+}
+.roads_extract[highway_type=waterway][highway_sub_type=t1][zoom>=8][zoom<10],
+.roads_extract[highway_type=waterway][highway_sub_type=t2][zoom>=8][zoom<10] {
+  line-width: 2;
 }
 .roads_extcas[highway_type=waterway][highway_sub_type=t1][zoom>=10][zoom<11],
 .roads_casing[highway_type=waterway][highway_sub_type=t1][zoom>=11][zoom<14],
