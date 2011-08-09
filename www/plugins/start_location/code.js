@@ -45,7 +45,7 @@ function start_location_activate() {
     text += "<input type=\"radio\" name=\"start_value\" id=\"savedview\" value=\"savedview\"><label for=\"savedview\">"+lang("start_location:savedview")+"</label></br>";
   }
   text += "<input type=\"radio\" name=\"start_value\" id=\"startnormal\" value=\"startnormal\"><label for=\"startnormal\">"+lang("start_location:startnormal")+"</label></br>";
-  text += "</br><input type=\"button\" name=\"start\" value=\"ok\" onclick=\"start_location_options()\"><input type=\"checkbox\" name=\"start_save\" id=\"save\" value=\"save\"><label for=\"save\">"+lang("start_location:remember")+"</label></br></form>";
+  text += "</br><input type=\"button\" name=\"start\" value=\""+lang("ok")+"\" onclick=\"start_location_options()\"><input type=\"checkbox\" name=\"start_save\" id=\"save\" value=\"save\"><label for=\"save\">"+lang("start_location:remember")+"</label></br></form>";
 
   start_location_toolbox.content.innerHTML=text;
 

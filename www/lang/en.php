@@ -19,6 +19,7 @@
 $lang_str["general_info"]="General Information";
 $lang_str["yes"]="yes";
 $lang_str["no"]="no";
+$lang_str["ok"]="Ok";
 $lang_str["save"]=array("Save");
 $lang_str["cancel"]=array("Cancel");
 $lang_str["longitude"]=array("Longitude", "Longitudes");
