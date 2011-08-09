@@ -1,5 +1,6 @@
 <?
-#$lang_str["contour:name"]="Contourshading";
+$lang_str["contour:name"]="Название контура";
+
 
 
 

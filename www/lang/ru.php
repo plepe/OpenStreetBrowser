@@ -9,7 +9,7 @@
 //
 //  Optionally you can define the Gender (F, M, N) of this word, e.g. the
 //  German translation for office:
-//  $lang_str["office"]=array(N, "Büro", "Büros");
+//  $lang_str["office"]=array(N, "Buro", "Buros");
 //
 //  If a Singular/Plural form is not
 //  suitable/necessary you can ignore the array, e.g.
@@ -19,16 +19,16 @@
 $lang_str["general_info"]="Общая информация";
 $lang_str["yes"]="Да";
 $lang_str["no"]="Нет";
-$lang_str["save"]=array("Сохранить");
-$lang_str["cancel"]=array("Отмена");
-$lang_str["longitude"]=array("F", "Долгота", "Долготы");
-$lang_str["latitude"]=array("F", "Широта", "Широты");
+$lang_str["save"]="Сохранить";
+$lang_str["cancel"]="Отмена";
+$lang_str["longitude"]="Долготы";
+$lang_str["latitude"]="Широты";
 $lang_str["noname"]="(неизвестно)";
 $lang_str["info_back"]="Возврат к обзору";
 $lang_str["info_zoom"]="Приближение";
-$lang_str["nothing_found"]=array("Не найдено");
-$lang_str["loading"]=array("Загрузка...");
-#$lang_str["more"]="more";
+$lang_str["nothing_found"]="Не найдено";
+$lang_str["loading"]="Загрузка...";
+$lang_str["more"]="Ещё";
 
 // Headings
 $lang_str["head:general_info"]="Общая информация";
@@ -53,13 +53,13 @@ $lang_str["head:routing"]="Направления движения";
 $lang_str["head:search"]="Поиск";
 $lang_str["head:actions"]=array("N", "Действие", "Действия");
 $lang_str["head:location"]="Местоположение";
-#$lang_str["head:tags"]=array("Tag", "Tags");
-#$lang_str["head:whats_here"]="What's here?";
+$lang_str["head:tags"]=array("M", "Тег", "Теги");
+$lang_str["head:whats_here"]="Что тут?";
 
 $lang_str["action_browse"]="просмотреть в OSM";
 $lang_str["action_edit"]="править в OSM";
 
-$lang_str["geo_click_pos"]=array("Кликните на карте на участок, на котором находитесь");
+$lang_str["geo_click_pos"]="Кликните на карте на участок, на котором находитесь";
 $lang_str["geo_set_pos"]="Определить моё местоположение";
 $lang_str["geo_change_pos"]="Задать моё местоположение";
 
@@ -107,41 +107,41 @@ $lang_str["overlay:draggable"]="Отметки";
 
 $lang_str["wikipedia:read_more"]="Прочесть ещё";
 
-#$lang_str["user:no_auth"]="Username or password wrong!";
-#$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
-#$lang_str["user:create_user"]="Create a new user:";
-#$lang_str["user:username"]="Username";
-#$lang_str["user:email"]="E-mail address";
-#$lang_str["user:password"]="Password";
-#$lang_str["user:password_verify"]="Verify password";
-#$lang_str["user:old_password"]="Old password";
-#$lang_str["user:no_username"]="Please supply a username!";
-#$lang_str["user:password_no_match"]="Passwords do not match!";
-#$lang_str["user:full_name"]="Full name";
-#$lang_str["user:user_exists"]="Username already exists";
-#$lang_str["user:login"]="Login";
-#$lang_str["user:logged_in_as"]="Logged in as ";
-#$lang_str["user:logout"]="Logout";
+$lang_str["user:no_auth"]="Неправильный пароль или имя пользователя!";
+$lang_str["user:login_text"]="Входим в OpenStreetBrowser:";
+$lang_str["user:create_user"]="Создать нового пользователя:";
+$lang_str["user:username"]="Имя пользователя";
+$lang_str["user:email"]="E-mail адрес";
+$lang_str["user:password"]="Пароль";
+$lang_str["user:password_verify"]="Проверить пароль";
+$lang_str["user:old_password"]="Старый пароль";
+$lang_str["user:no_username"]="Пожалуйста, укажите имя пользователя!";
+$lang_str["user:password_no_match"]="Пароли не совпадают!";
+$lang_str["user:full_name"]="Полное имя";
+$lang_str["user:user_exists"]="Пользователь уже существует";
+$lang_str["user:login"]="Войти";
+$lang_str["user:logged_in_as"]="Вы вошли как ";
+$lang_str["user:logout"]="Выйти";
 
-#$lang_str["error"]="An error occured: ";
-#$lang_str["error:not_logged_in"]="you are not logged in";
+$lang_str["error"]="Ошибка: ";
+$lang_str["error:not_logged_in"]="Вы не вошли в систему";
 
-#$lang_str["more_categories"]="More categories";
-#$lang_str["category:status"]="Status";
-#$lang_str["category:data_status"]="Status";
-#$lang_str["category:old_version"]="A new version of this category is being prepared.";
-#$lang_str["category:not_compiled"]="New category is being prepared.";
+$lang_str["more_categories"]="Больше категорий";
+$lang_str["category:status"]="Статус";
+$lang_str["category:data_status"]="Статус";
+$lang_str["category:old_version"]="Готовится новая версия этой категории.";
+$lang_str["category:not_compiled"]="Новая категория была подготовлена.";
 
-#$lang_str["category_rule_tag:match"]="Match";
-#$lang_str["category_rule_tag:description"]="Description";
+$lang_str["category_rule_tag:match"]="Заголовок";
+$lang_str["category_rule_tag:description"]="Описание";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
-$lang_str["basemap:mapnik"]="Стандарт (Mapnik)";
-$lang_str["basemap:osmarender"]="Стандарт (OsmaRender)";
+$lang_str["basemap:mapnik"]="Mapnik";
+$lang_str["basemap:osmarender"]="OsmaRender";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
 if(function_exists("lang"))
-#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Объект не найден</h1>Объектов с ID \"%s\" не найдено. Это может быть связано с одной (или более) из следующих причин: <ul><li>Не правильный ID.</li><li>Объект был определен сайтами сторонних производителей и не является (пока) доступным в OpenStreetBrowser.</li><li>Объект находится вне поддерживается области.</li><li>Ссылка по которой Вы сюда пришли оказалась старой и объект уже был удалён из OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Немецкий";
@@ -154,5 +154,6 @@ $lang_str["lang:fr"]="Французский";
 $lang_str["lang:uk"]="Украинский";
 $lang_str["lang:ru"]="Русский";
 $lang_str["lang:ja"]="Японский";
-#$lang_str["lang:hu"]="Hungarian";
+$lang_str["lang:hu"]="Венгерский";
+
 

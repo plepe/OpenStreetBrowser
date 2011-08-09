@@ -52,8 +52,9 @@ $lang_str["head:graves"]="Wichtige Gräber";
 $lang_str["head:routing"]="Routenplanung";
 $lang_str["head:search"]="Suche";
 $lang_str["head:actions"]="Aktionen";
-#$lang_str["head:location"]="Location";
+$lang_str["head:location"]=array(M,"Ort", "Orte");
 $lang_str["head:tags"]=array("Tag", "Tags");
+$lang_str["head:whats_here"]="Was ist hier?";
 
 $lang_str["action_browse"]="In OSM ansehen";
 $lang_str["action_edit"]="Auf OSM editieren";
@@ -106,33 +107,33 @@ $lang_str["overlay:draggable"]="Markierungen";
 
 $lang_str["wikipedia:read_more"]="weiterlesen";
 
-#$lang_str["user:no_auth"]="Username or password wrong!";
-#$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
-#$lang_str["user:create_user"]="Create a new user:";
-#$lang_str["user:username"]="Username";
-#$lang_str["user:email"]="E-mail address";
-#$lang_str["user:password"]="Password";
-#$lang_str["user:password_verify"]="Verify password";
-#$lang_str["user:old_password"]="Old password";
-#$lang_str["user:no_username"]="Please supply a username!";
-#$lang_str["user:password_no_match"]="Passwords do not match!";
-#$lang_str["user:full_name"]="Full name";
-#$lang_str["user:user_exists"]="Username already exists";
+$lang_str["user:no_auth"]="Benutzername oder Passwort falsch!";
+$lang_str["user:login_text"]="Bei OpenStreetBrowser Anmelden:";
+$lang_str["user:create_user"]="Neuen Benutzer erstellen:";
+$lang_str["user:username"]="Benutzername";
+$lang_str["user:email"]="E-mail Adresse";
+$lang_str["user:password"]="Passwort";
+$lang_str["user:password_verify"]="Passwort bestätigen";
+$lang_str["user:old_password"]="Altes Passwort";
+$lang_str["user:no_username"]="Bitte einen Benutzernamen angeben!";
+$lang_str["user:password_no_match"]="Passwörter sind nicht identisch!";
+$lang_str["user:full_name"]="Vor- und Zuname";
+$lang_str["user:user_exists"]="Benutzername existiert bereits";
 $lang_str["user:login"]="Anmelden";
 $lang_str["user:logged_in_as"]="Angemeldet als ";
 $lang_str["user:logout"]="Abmelden";
 
-#$lang_str["error"]="An error occured: ";
-#$lang_str["error:not_logged_in"]="you are not logged in";
+$lang_str["error"]="Es ist ein Fehler aufgetreten: ";
+$lang_str["error:not_logged_in"]="Du bist nicht eingeloggt";
 
-#$lang_str["more_categories"]="More categories";
-#$lang_str["category:status"]="Status";
-#$lang_str["category:data_status"]="Status";
-#$lang_str["category:old_version"]="A new version of this category is being prepared.";
-#$lang_str["category:not_compiled"]="New category is being prepared.";
+$lang_str["more_categories"]="Mehr Kategorien";
+$lang_str["category:status"]="Status";
+$lang_str["category:data_status"]="Status";
+$lang_str["category:old_version"]="Eine neue Version dieser Kategorie wird vorbereitet.";
+$lang_str["category:not_compiled"]="Neue Kategorie wird vorbereitet.";
 
-#$lang_str["category_rule_tag:match"]="Match";
-#$lang_str["category_rule_tag:description"]="Description";
+$lang_str["category_rule_tag:match"]="Treffer";
+$lang_str["category_rule_tag:description"]="Beschreibung";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
@@ -140,7 +141,7 @@ $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
 if(function_exists("lang"))
-#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Objekt nicht gefunden</h1>Es konnte kein Objekt mit der ID \"%s\" gefunden werden. Dies kann einen (oder mehrere) der folgenden Gründe haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde durch Dritte identifiziert und ist (noch) nicht bei OpenStreetBrowser verfügbar.</li><li>Das Objekt liegt außerhalb des unterstützen Gebiets.</li><li>Der Link dem du gefolgt bist ist alt und das Objekt wurde zwischenzeitlich aus OpenStreetMap entfernt.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Deutsch";
@@ -153,5 +154,4 @@ $lang_str["lang:fr"]="Französisch";
 $lang_str["lang:uk"]="Ukrainisch";
 $lang_str["lang:ru"]="Russisch";
 $lang_str["lang:ja"]="Japanisch";
-#$lang_str["lang:hu"]="Hungarian";
-
+$lang_str["lang:hu"]="Ungarisch";
