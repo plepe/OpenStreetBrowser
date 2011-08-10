@@ -30,6 +30,7 @@ $lang_str["info_zoom"]="zoomen";
 $lang_str["nothing_found"]=array("nichts gefunden");
 $lang_str["loading"]="lade";
 $lang_str["more"]="mehr";
+$lang_str["unnamed"]="Namenlos";
 
 // Headings
 $lang_str["head:general_info"]="Allgemeine Informationen";
