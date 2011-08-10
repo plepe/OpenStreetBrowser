@@ -136,6 +136,8 @@ $lang_str["category:not_compiled"]="Neue Kategorie wird vorbereitet.";
 
 $lang_str["category_rule_tag:match"]="Treffer";
 $lang_str["category_rule_tag:description"]="Beschreibung";
+$lang_str["category_chooser:choose"]="Wähle eine Kategorie";
+$lang_str["category_chooser:new"]="Neue Kategorie anlegen";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";

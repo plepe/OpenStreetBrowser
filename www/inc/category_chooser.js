@@ -23,7 +23,7 @@ function category_chooser(callback) {
     var ret="";
 
     dom_clean(this.win.content);
-    dom_create_append_text(this.win.content, "Choose a category:");
+    dom_create_append_text(this.win.content, lang("category_chooser:choose")+":");
     var ul=dom_create_append(this.win.content, "ul");
 
     for(var i=0; i<obs.length; i++) {
@@ -33,7 +33,7 @@ function category_chooser(callback) {
       var a=dom_create_append(li, "a");
       a.onclick=this.choose.bind(this, ob.getAttribute("id"));
 
-      var text=t("unnamed");
+      var text=lang("unnamed");
       if(ob.firstChild)
 	text=ob.firstChild.nodeValue;
 	
@@ -42,20 +42,20 @@ function category_chooser(callback) {
 
     var input=dom_create_append(this.win.content, "input");
     input.type="button";
-    input.value=t("New Category");
+    input.value=lang("category_chooser:new");
     input.onclick=this.create_category.bind(this);
 
     dom_create_append(this.win.content, "br");
 
     var input=dom_create_append(this.win.content, "input");
     input.type="button";
-    input.value=t("cancel");
+    input.value=lang("cancel");
     input.onclick=this.cancel.bind(this);
   }
 
   // constructor
   this.win=new win("category_chooser");
-  this.win.content.innerHTML="Loading ...";
+  this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
 
-  ajax_direct("categories.php", { todo: "list" }, this.load_callback.bind(this));
+  ajax_direct("categories.php", { todo: "list", lang: ui_lang }, this.load_callback.bind(this));
 }

@@ -136,6 +136,8 @@ $lang_str["category:not_compiled"]="New category is being prepared.";
 
 $lang_str["category_rule_tag:match"]="Match";
 $lang_str["category_rule_tag:description"]="Description";
+$lang_str["category_chooser:choose"]="Choose a category";
+$lang_str["category_chooser:new"]="New category";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
