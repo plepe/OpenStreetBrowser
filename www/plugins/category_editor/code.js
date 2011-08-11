@@ -67,7 +67,7 @@ function category_editor(id) {
 
   // new_rule
   this.new_rule=function() {
-    var el=new category_edit_rule(this);
+    var el=new category_editor_rule(this);
     this.rules.push(el);
 
     var div=document.createElement("div");
@@ -174,7 +174,7 @@ function category_editor(id) {
     var cur=cat_data.firstChild;
     while(cur) {
       if(cur.nodeName=="rule") {
-        var t=new category_edit_rule(this, cur);
+        var t=new category_editor_rule(this, cur);
 	this.rules.push(t);
       }
       cur=cur.nextSibling;
@@ -199,7 +199,7 @@ function category_editor(id) {
   }
 }
 
-function category_edit_rule(category, dom) {
+function category_editor_rule(category, dom) {
   // constructor
   this.icon=null;
   if(!dom) {
