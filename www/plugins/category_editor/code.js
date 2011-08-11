@@ -411,3 +411,10 @@ function category_editor_rule(category, dom) {
     return this.data[id];
   }
 }
+
+// start_editor
+function category_editor_win_show(win, category) {
+  new category_editor(category.id);
+}
+  
+register_hook("category_window_show", category_editor_win_show);

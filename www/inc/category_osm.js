@@ -31,11 +31,6 @@ function category_osm(id) {
     }
   }
 
-  // start_editor
-  this.start_editor=function() {
-    new category_editor(this.id);
-  }
-  
   // unhide_category
   this.on_unhide_category=function(div) {
     if(this.overlay)
@@ -55,15 +50,6 @@ function category_osm(id) {
 
     if(!div)
       return;
-
-    var span=dom_create_append(div.header, "span");
-    span.className="category_tools";
-    div.header.insertBefore(span, div.header.firstChild);
-    var img=dom_create_append(span, "img");
-    img.className="category_tools";
-    img.onclick=this.start_editor.bind(this);
-    img.src="img/info.png";
-    //dom_create_append_text(a, "edit");
 
     if(!this.result||!this.result.data)
       return;

@@ -137,4 +137,5 @@ $overlays_add=array(
 // doc - Documentation for plugins (file 'doc.txt' in directory)
 // creole - Creole Wiki Parser
 // win - Windowmanager
+// category_window - A window for category interaction (info, edit, ...)
 // category_editor - An editor for editing OSM categories
