@@ -1,2 +1,2 @@
 <?
-$lang_str['wikipedia_streetnames:head']="Street name";
+$lang_str['head:wikipedia_streetnames']="Street name";

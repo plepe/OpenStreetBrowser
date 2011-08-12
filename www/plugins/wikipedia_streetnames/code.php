@@ -35,7 +35,7 @@ function wikipedia_streetnames_info($info_ret, $object) {
 	$text=wikipedia_streetnames_parse($article, $object);
 	if($text) {
 	  $text.="<br>".lang("source").": <a class='external' href='".wikipedia_url($boundary, $res['page'], $res['lang'])."'>Wikipedia</a>\n";
-	  $info_ret[]=array("head"=>lang("wikipedia_streetnames:head"), "content"=>$text);
+	  $info_ret[]=array("head"=>"wikipedia_streetnames", "content"=>$text);
 	  return;
 	}
       }
