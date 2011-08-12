@@ -124,8 +124,9 @@ function wikipedia_info($info_ret, $object) {
   global $data_lang;
   $page=0;
 
-  if($text=cache_search($object->id, "wikipedia_info:$data_lang")) {
-    $ret.="$text<a class='external' href='$url' target='_blank'>".lang("read_more")."</a>";
+  if($data=cache_search($object->id, "wikipedia_info:$data_lang")) {
+    $data=unserialize($data);
+    $ret.="{$data['text']}<a class='external' href='{$data['url']}' target='_blank'>".lang("wikipedia:read_more")."</a>";
 
     $info_ret[]=array("head"=>"wikipedia", "content"=>$ret);
     return;
@@ -176,7 +177,7 @@ function wikipedia_info($info_ret, $object) {
 
   $text=wikipedia_get_abstract($object, $page, $lang);
 
-  cache_insert($object->id, "wikipedia_info:$data_lang", $text, "1 hour");
+  cache_insert($object->id, "wikipedia_info:$data_lang", serialize(array("text"=>$text, "url"=>$url)), "1 hour");
 
   if($text) {
     $ret.="$text<a class='external' style='line-height:2em;' href='$url' target='_blank'>".lang("wikipedia:read_more")."</a>";
