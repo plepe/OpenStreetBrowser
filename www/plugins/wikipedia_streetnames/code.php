@@ -5,8 +5,14 @@ function wikipedia_streetnames_parse($article, $object) {
   $article=explode("\n", $article);
   foreach($article as $line) {
     if(preg_match("/^\* *[']*([^']*)[']*[:,] *(.*)$/", $line, $m)) {
-      if($m[1]==$name) {
-	return wikipedia_parse($m[2]);
+      $parse_name=$m[1];
+      $parse_text=$m[2];
+
+      if(preg_match("/^\[\[([^\|]+\|)?([^\|]+)\]\]$/", $parse_name, $m))
+	$parse_name=$m[2];
+
+      if($parse_name==$name) {
+	return wikipedia_parse($parse_text);
       }
     }
   }
