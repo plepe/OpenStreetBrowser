@@ -65,6 +65,13 @@ function wikipedia_parse_lang($object, $page, $lang, $data_lang) {
   return;
 }
 
+function wikipedia_get_article($object, $page, $lang) {
+  $ret="";
+
+  ini_set("user_agent", "OpenStreetBrowser Wikipedia Parser");
+  return file_get_contents(wikipedia_action_url($object, $page, $lang, "raw"));
+}
+
 function wikipedia_get_abstract($object, $page, $lang) {
   ini_set("user_agent", "OpenStreetBrowser Wikipedia Parser");
   if(@$f=fopen(wikipedia_action_url($object, $page, $lang, "raw"), "r")) {
