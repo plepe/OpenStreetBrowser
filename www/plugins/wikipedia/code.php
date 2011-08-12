@@ -107,22 +107,14 @@ function wikipedia_get_abstract($object, $page, $lang) {
   return "<div class='wikipedia_abstract'>$img$text</div>";
 }
 
-function wikipedia_info($info_ret, $object) {
-  $ret="";
-  global $data_lang;
+function wikipedia_get_lang_page($object, $tag_prefix="wikipedia") {
   $page=0;
+  global $data_lang;
 
-  if($text=cache_search($object->id, "wikipedia_info:$data_lang")) {
-    $ret.="$text<a class='external' href='$url' target='_blank'>".lang("read_more")."</a>";
-
-    $info_ret[]=array("head"=>"wikipedia", "content"=>$ret);
-    return;
-  }
-
-  if($page=$object->tags->get("wikipedia:$data_lang")) {
+  if($page=$object->tags->get("{$tag_prefix}:{$data_lang}")) {
     $lang=$data_lang;
   }
-  elseif($page=$object->tags->get("wikipedia")) {
+  elseif($page=$object->tags->get($tag_prefix)) {
     if(preg_match("/^http:\/\/([a-z]*)\..*/", $page, $m)) {
       $lang=$m[1];
       $page=$m[0];
@@ -145,7 +137,7 @@ function wikipedia_info($info_ret, $object) {
     }
   }
   else {
-    $list=$object->tags->get_available_languages("wikipedia");
+    $list=$object->tags->get_available_languages($tag_prefix);
     $lang=array_keys($list);
     $lang=$lang[0];
     $page=$list[$lang];
@@ -157,7 +149,27 @@ function wikipedia_info($info_ret, $object) {
   }
 
   if(!$page)
+    return null;
+
+  return array("page"=>$page, "lang"=>$lang);
+}
+
+function wikipedia_info($info_ret, $object) {
+  $ret="";
+  global $data_lang;
+
+  if($text=cache_search($object->id, "wikipedia_info:$data_lang")) {
+    $ret.="$text<a class='external' href='$url' target='_blank'>".lang("read_more")."</a>";
+
+    $info_ret[]=array("head"=>"wikipedia", "content"=>$ret);
     return;
+  }
+
+  if(!($res=wikipedia_get_lang_page($object)))
+    return;
+
+  $lang=$res['lang'];
+  $page=$res['page'];
 
   if(!($url=wikipedia_url($object, $page, $lang)))
     return;
