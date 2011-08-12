@@ -1,6 +1,15 @@
 <?
 function wikipedia_streetnames_parse($article, $object) {
-  return $article;
+  $name=$object->tags->get("name");
+
+  $article=explode("\n", $article);
+  foreach($article as $line) {
+    if(preg_match("/^\* *[']*([^']*)[']*[:,] *(.*)$/", $line, $m)) {
+      if($m[1]==$name) {
+	return wikipedia_parse($m[2]);
+      }
+    }
+  }
 }
 
 function wikipedia_streetnames_info($info_ret, $object) {
@@ -18,8 +27,11 @@ function wikipedia_streetnames_info($info_ret, $object) {
     if($res) {
       if($article=wikipedia_get_article($boundary, $res['page'], $res['lang'])) {
 	$text=wikipedia_streetnames_parse($article, $object);
-	$info_ret[]=array("head"=>"streetname", "content"=>$text);
-	return;
+	if($text) {
+	  $text.="<br>".lang("source").": <a class='external' href='".wikipedia_url($boundary, $res['page'], $res['lang'])."'>Wikipedia</a>\n";
+	  $info_ret[]=array("head"=>lang("wikipedia_streetnames:head"), "content"=>$text);
+	  return;
+	}
       }
     }
   }
