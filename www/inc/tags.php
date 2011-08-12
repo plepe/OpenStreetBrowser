@@ -67,7 +67,7 @@ class tags {
     $list=array();
 
     foreach($this->data as $k=>$v) {
-      if(ereg("^$key:(.*)$", $k, $m)) {
+      if(ereg("^$key:([^:]*)$", $k, $m)) {
 	$list[$m[1]]=$v;
       }
     }
