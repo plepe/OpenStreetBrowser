@@ -37,7 +37,6 @@ $lang_str["head:routes"]="Útvonalak";
 #$lang_str["head:members"]="Members";
 $lang_str["head:address"]="Címek";
 #$lang_str["head:internal"]="OSM Internal";
-$lang_str["head:wikipedia"]="Wikipédia";
 $lang_str["head:housenumbers"]="Házszámok";
 $lang_str["head:roads"]="Utak";
 $lang_str["head:rails"]="Vasutak";

@@ -37,7 +37,6 @@ $lang_str["head:routes"]="Маршруты";
 $lang_str["head:members"]="Члены";
 $lang_str["head:address"]="Адреса";
 $lang_str["head:internal"]="База OSM";
-$lang_str["head:wikipedia"]="Википедия";
 $lang_str["head:housenumbers"]="Номера домов";
 $lang_str["head:roads"]="Дороги";
 $lang_str["head:rails"]="Железные дороги";

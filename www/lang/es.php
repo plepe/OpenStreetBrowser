@@ -37,7 +37,6 @@ $lang_str["head:routes"]="Rutas";
 $lang_str["head:members"]="Miembros";
 $lang_str["head:address"]="Direccion";
 #$lang_str["head:internal"]="OSM Internal";
-$lang_str["head:wikipedia"]="Wikipedia";
 #$lang_str["head:housenumbers"]="Housenumbers";
 $lang_str["head:roads"]="Calles";
 #$lang_str["head:rails"]="Railroads";

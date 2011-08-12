@@ -37,7 +37,6 @@ $lang_str["head:routes"]="Маршрути";
 $lang_str["head:members"]="Members";
 $lang_str["head:address"]="Адреси";
 $lang_str["head:internal"]="OSM Internal";
-$lang_str["head:wikipedia"]="Wikipedia";
 $lang_str["head:housenumbers"]="Нумерація будинків";
 $lang_str["head:roads"]="Дороги";
 $lang_str["head:rails"]="Залізниця";

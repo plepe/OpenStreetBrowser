@@ -37,7 +37,6 @@ $lang_str["head:routes"]="ルート";
 $lang_str["head:members"]="メンバー";
 $lang_str["head:address"]="住所";
 $lang_str["head:internal"]="OSM 内部";
-$lang_str["head:wikipedia"]="ウィキペディア";
 $lang_str["head:housenumbers"]="家番号";
 $lang_str["head:roads"]="道路";
 $lang_str["head:rails"]="鉄道";

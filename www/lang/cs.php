@@ -20,7 +20,6 @@ $lang_str["head:routes"]="Linky";
 $lang_str["head:members"]="Členové"; 
 $lang_str["head:address"]="Adresa"; 
 #$lang_str["head:internal"]="OSM Internal"; 
-$lang_str["head:wikipedia"]="Wikipedie"; 
 $lang_str["head:housenumbers"]="Čísla domů"; 
 $lang_str["head:roads"]="Cesty"; 
 $lang_str["head:rails"]="Železnice"; 
