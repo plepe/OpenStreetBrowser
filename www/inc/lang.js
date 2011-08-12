@@ -83,7 +83,7 @@ function lang_init() {
   if(!options_get("ui_lang"))
     options_set("ui_lang", ui_lang);
   if(!options_get("data_lang"))
-    options_set("data_lang", data_lang);
+    options_set("data_lang", "auto");
 }
 
 register_hook("options_change", lang_change);

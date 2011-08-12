@@ -39,6 +39,8 @@ function save_options() {
   options_set("autozoom", options_radio_get("autozoom"));
   options_set("ui_lang", options_select_get("ui_lang"));
   options_set("data_lang", options_select_get("data_lang"));
+  if(data_lang=="auto")
+    data_lang=ui_lang;
 
   close_options();
 }
@@ -151,13 +153,15 @@ function show_options() {
   ret+="<br/>\n";
 
   var ui_langs_x={};
-  l=new clone(language_list);
-  l[""]=t("lang:");
-
-  for(var i in l) {
+  l=[];
+  l[""]="";
+  l["auto"]=t("lang:auto");
+  for(var i in language_list) {
+    l[i]=language_list[i];
     if(lang("lang:"+i)!=l[i])
       l[i]+=" ("+lang("lang:"+i)+")";
   }
+  l[""]=t("lang:");
 
   ret+=options_select("data_lang", l);
   ret+="</p>\n";

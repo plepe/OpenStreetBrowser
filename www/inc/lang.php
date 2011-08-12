@@ -99,9 +99,9 @@ if($_REQUEST['param']['data_lang'])
 if(!$data_lang)
   $data_lang=$_COOKIE['data_lang'];
 if(!isset($data_lang))
-  $data_lang=lang_from_browser();
-if(!isset($data_lang))
-  $data_lang="";
+  $data_lang="auto";
+if($data_lang=="auto")
+  $data_lang=$ui_lang;
 
 function lang_init() {
   global $lang_str;

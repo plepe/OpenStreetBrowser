@@ -108,7 +108,8 @@ $lang_str["options:language_support"]=array("Language Support");
 $lang_str["help:language_support"]=array("You can choose your prefered languages with this options. The first option changes the language of the user interface. The second option changes the data language. Date of many geographic objects has been translated to several languages. If no translation is available or \"Local language\" was chosen, the main language of the object is displayed.");
 $lang_str["options:ui_lang"]=array("Interface language");
 $lang_str["options:data_lang"]=array("Data language");
-$lang_str["lang:"]=array("Local language");
+$lang_str["lang:"]="Local language";
+$lang_str["lang:auto"]="Same as interface language";
 
 $lang_str["overlay:data"]=array("Data");
 $lang_str["overlay:draggable"]=array("Markers");
