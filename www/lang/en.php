@@ -107,8 +107,6 @@ $lang_str["lang:"]=array("Local language");
 $lang_str["overlay:data"]=array("Data");
 $lang_str["overlay:draggable"]=array("Markers");
 
-$lang_str["wikipedia:read_more"]="read more";
-
 $lang_str["user:no_auth"]="Username or password wrong!";
 $lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
 $lang_str["user:create_user"]="Create a new user:";

@@ -105,7 +105,6 @@ $lang_str["lang:"]="Місцева мова";
 $lang_str["overlay:data"]="Дані";
 $lang_str["overlay:draggable"]="Маркери";
 
-$lang_str["wikipedia:read_more"]="докладніше";
 
 #$lang_str["user:no_auth"]="Username or password wrong!";
 #$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";

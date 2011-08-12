@@ -105,7 +105,6 @@ $lang_str["lang:"]=array("Helyi nyelv");
 $lang_str["overlay:data"]=array("Adat");
 $lang_str["overlay:draggable"]=array("Jelölők");
 
-$lang_str["wikipedia:read_more"]="több információ";
 
 $lang_str["user:no_auth"]="Rossz felhasználói név vagy jelszó!";
 $lang_str["user:login_text"]="Beszállás az OpenStreetBrowserbe:";

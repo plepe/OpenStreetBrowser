@@ -105,7 +105,6 @@ $lang_str["lang:"]=array("Místní jazyk");
 $lang_str["overlay:data"]=array("Data");
 $lang_str["overlay:draggable"]=array("Značky");
 
-$lang_str["wikipedia:read_more"]="číst více";
 
 #$lang_str["user:no_auth"]="Username or password wrong!";
 #$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";

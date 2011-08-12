@@ -105,7 +105,6 @@ $lang_str["lang:"]="ブラウザの設定言語";
 $lang_str["overlay:data"]="データ";
 $lang_str["overlay:draggable"]="マーカー";
 
-$lang_str["wikipedia:read_more"]="もっと見る";
 
 #$lang_str["user:no_auth"]="Username or password wrong!";
 #$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";

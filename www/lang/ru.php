@@ -105,7 +105,6 @@ $lang_str["lang:"]="Определить язык автоматически";
 $lang_str["overlay:data"]="Данные";
 $lang_str["overlay:draggable"]="Отметки";
 
-$lang_str["wikipedia:read_more"]="Прочесть ещё";
 
 $lang_str["user:no_auth"]="Неправильный пароль или имя пользователя!";
 $lang_str["user:login_text"]="Входим в OpenStreetBrowser:";
