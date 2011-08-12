@@ -1,5 +1,8 @@
 <?
 function wikipedia_parse($text) {
+  while(eregi("^(.*)\[\[[A-Za-z]+:([^\[]*)\]\](.*)", $text, $m)) {
+    $text=$m[1].$m[3];
+  }
   while(eregi("^(.*)\[\[([^\|\]*\|)?([^\[\|]*)\]\](.*)", $text, $m)) {
     $text=$m[1].$m[3].$m[4];
   }
@@ -106,9 +109,12 @@ function wikipedia_get_abstract($object, $page, $lang) {
 	$url=strtr("http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img", array(" "=>"_"));
 	$img="<img src='$url' align='left' class='wikipedia_image'>\n";
       }
-      elseif($inside==0 && !ereg("^[\|\}\{\[\!]", $r)) {
-	$text.=wikipedia_parse($r);
-	$enough=1;
+      elseif($inside==0) {
+	$t=wikipedia_parse($r);
+	if(!preg_match("/^ *$/", $t)) {
+	  $text.=$t;
+	  $enough=1;
+	}
       }
 
       $r=fgets($f);
