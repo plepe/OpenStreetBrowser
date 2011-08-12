@@ -84,6 +84,7 @@ $overlays_add=array(
 // marker - set markers on the map
 // marker_list - Show list of visible markers as category
 // wikipedia - write some information of objects where we know about wikipedia
+// wikipedia_streetnames - Parse info about streetnames from Wikipedia
 // navigation - navigation on the map
 // layer_chooser - show possible base maps and general overlays in options
 // toolbox - provide a toolbox interface (for other plugins)
