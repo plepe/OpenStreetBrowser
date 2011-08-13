@@ -29,7 +29,7 @@ function wikipedia_streetnames_info($info_ret, $object) {
   while($elem=pg_fetch_assoc($res)) {
     $boundary=load_object($elem['osm_id']);
 
-    $res=wikipedia_get_lang_page($boundary, "wikipedia:streetnames");
+    $res=wikipedia_get_lang_page($boundary, "wikipedia:street_names");
     if($res) {
       if($article=wikipedia_get_article($boundary, $res['page'], $res['lang'])) {
 	$text=wikipedia_streetnames_parse($article, $object);
