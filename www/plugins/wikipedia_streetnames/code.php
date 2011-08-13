@@ -14,6 +14,7 @@ function wikipedia_streetnames_parse($article, $object) {
 }
 
 function wikipedia_streetnames_info($info_ret, $object) {
+  global $data_lang;
   $text="";
 
   if(!$object->tags->get("highway"))
@@ -23,15 +24,25 @@ function wikipedia_streetnames_info($info_ret, $object) {
   while($elem=pg_fetch_assoc($res)) {
     $boundary=load_object($elem['osm_id']);
 
-    $res=wikipedia_get_lang_page($boundary, "wikipedia:street_names");
-    if($res) {
-      if($article=wikipedia_get_article($boundary, $res['page'], $res['lang'])) {
-	$text.=wikipedia_streetnames_parse($article, $object);
-	if($text) {
-	  $text.="<br>".lang("source").": <a class='external' href='".wikipedia_url($boundary, $res['page'], $res['lang'])."'>Wikipedia</a>\n";
-	  $info_ret[]=array("head"=>"wikipedia_streetnames", "content"=>$text);
-	  return;
-	}
+    $data=cache_search($boundary->id, "wikipedia:street_names:$data_lang");
+    if($data) {
+      $data=unserialize($data);
+    }
+    else {
+      $data=wikipedia_get_lang_page($boundary, "wikipedia:street_names");
+      $article=wikipedia_get_article($boundary, $data['page'], $data['lang']);
+      $data['article']=$article;
+
+      cache_insert($boundary->id, "wikipedia:street_names:$data_lang", 
+        serialize($data), "1 hour");
+    }
+
+    if($data['article']) {
+      $text.=wikipedia_streetnames_parse($data['article'], $object);
+      if($text) {
+	$text.="<br>".lang("source").": <a class='external' href='".wikipedia_url($boundary, $data['page'], $data['lang'])."'>Wikipedia</a>\n";
+	$info_ret[]=array("head"=>"wikipedia_streetnames", "content"=>$text);
+	return;
       }
     }
   }
