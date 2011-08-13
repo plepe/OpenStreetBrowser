@@ -4,15 +4,10 @@ function wikipedia_streetnames_parse($article, $object) {
 
   $article=explode("\n", $article);
   foreach($article as $line) {
-    if(preg_match("/^\* *[']*([^']*)[']*[:,] *(.*)$/", $line, $m)) {
-      $parse_name=$m[1];
-      $parse_text=$m[2];
-
-      if(preg_match("/^\[\[([^\|]+\|)?([^\|]+)\]\]$/", $parse_name, $m))
-	$parse_name=$m[2];
-
-      if($parse_name==$name) {
-	return wikipedia_parse($parse_text);
+    if(strpos($line, $name)) {
+      $line=wikipedia_parse($line);
+      if(preg_match("/^\* $name( \(.*\))?(,|:| - | – )/", $line, $m)) {
+	return substr($line, 2);
       }
     }
   }
@@ -21,7 +16,6 @@ function wikipedia_streetnames_parse($article, $object) {
 function wikipedia_streetnames_info($info_ret, $object) {
   $text="";
 
-//$text=print_r($object, 1);
   if(!$object->tags->get("highway"))
     return;
 
@@ -32,7 +26,7 @@ function wikipedia_streetnames_info($info_ret, $object) {
     $res=wikipedia_get_lang_page($boundary, "wikipedia:street_names");
     if($res) {
       if($article=wikipedia_get_article($boundary, $res['page'], $res['lang'])) {
-	$text=wikipedia_streetnames_parse($article, $object);
+	$text.=wikipedia_streetnames_parse($article, $object);
 	if($text) {
 	  $text.="<br>".lang("source").": <a class='external' href='".wikipedia_url($boundary, $res['page'], $res['lang'])."'>Wikipedia</a>\n";
 	  $info_ret[]=array("head"=>"wikipedia_streetnames", "content"=>$text);
