@@ -7,6 +7,12 @@ create table osm_boundary (
   primary key(osm_id)
 );
 select AddGeometryColumn('osm_boundary', 'osm_way', 900913, 'LINESTRING', 2);
+
+drop table if exists osm_boundary_update;
+create table osm_boundary_update (
+  id		bigint		not null,
+  osm_id	text		not null
+);
  
 select assemble_boundary(id) from
   (select way_id as id from way_tags where k='boundary' and v in ('administrative', 'political')
