@@ -103,31 +103,43 @@ if(!isset($data_lang))
 if($data_lang=="auto")
   $data_lang=$ui_lang;
 
+function lang_load($lang, $loaded=array()) {
+  global $lang_str;
+  global $plugins_list;
+
+  $lang_str=array();
+
+  @include_once("lang/{$lang}.php");
+  @include_once("lang/tags_{$lang}.php");
+  foreach($plugins_list as $plugin=>$dummy) {
+    @include_once("plugins/$plugin/lang_{$lang}.php");
+  }
+  $loaded[]=$lang;
+
+  if(!isset($base_language))
+    $base_language="en";
+  if(in_array($base_language, $loaded))
+    return;
+
+  $save_lang_str=$lang_str;
+  lang_load($base_language, $loaded);
+  $lang_str=array_merge($lang_str, $save_lang_str);
+}
+
 function lang_init() {
   global $lang_str;
   global $ui_lang;
   global $ui_langs;
   global $data_lang;
   global $language_list;
-  global $plugins_list;
   global $design_hidden;
+
+  lang_load($ui_lang);
 
   // Define a language string for every language
   foreach($language_list as $abbr=>$lang) {
     $lang_str["lang:".$abbr]=$lang;
     $lang_str["lang_native:".$abbr]=$lang;
-  }
-
-  @include_once("lang/en.php");
-  @include_once("lang/tags_en.php");
-  if($ui_lang&&($ui_lang!="en")) {
-    @include_once("lang/{$ui_lang}.php");
-    @include_once("lang/tags_{$ui_lang}.php");
-  }
-
-  foreach($plugins_list as $plugin=>$dummy) {
-    @include_once("plugins/$plugin/lang_en.php");
-    @include_once("plugins/$plugin/lang_{$ui_lang}.php");
   }
 
   if(!$design_hidden)

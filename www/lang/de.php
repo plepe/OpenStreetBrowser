@@ -15,6 +15,8 @@
 //  suitable/necessary you can ignore the array, e.g.
 //  $lang_str["help"]="Help";
 
+$base_language="en";
+
 // General
 $lang_str["general_info"]="Allgemeine Informationen";
 $lang_str["yes"]="ja";
