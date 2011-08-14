@@ -5,3 +5,4 @@ $lang_str["marker:add_marker"]="добавить маркер";
 $lang_str["marker:place"]="разместить маркер на этом объекте";
 
 
+

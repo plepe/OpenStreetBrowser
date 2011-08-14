@@ -4,3 +4,4 @@ $lang_str["measure_obj:length"]="Longitud: %s";
 $lang_str["measure_obj:area"]="Área: %s";
 
 
+

@@ -9,7 +9,7 @@
 //
 //  Optionally you can define the Gender (F, M, N) of this word, e.g. the
 //  German translation for office:
-//  $lang_str["office"]=array(N, "Buro", "Buros");
+//  $lang_str["office"]=array(N, "Büro", "Büros");
 //
 //  If a Singular/Plural form is not
 //  suitable/necessary you can ignore the array, e.g.
@@ -19,6 +19,7 @@
 $lang_str["general_info"]="Общая информация";
 $lang_str["yes"]="Да";
 $lang_str["no"]="Нет";
+#$lang_str["ok"]="Ok";
 $lang_str["save"]="Сохранить";
 $lang_str["cancel"]="Отмена";
 $lang_str["longitude"]="Долготы";
@@ -29,6 +30,7 @@ $lang_str["info_zoom"]="Приближение";
 $lang_str["nothing_found"]="Не найдено";
 $lang_str["loading"]="Загрузка...";
 $lang_str["more"]="Ещё";
+#$lang_str["unnamed"]="unnamed";
 
 // Headings
 $lang_str["head:general_info"]="Общая информация";
@@ -88,7 +90,7 @@ $lang_str["main:donate"]="Помочь проекту";
 $lang_str["main:licence"]="Информация о карте: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> авторы | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Стефан Плепелти</a> и <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">другие</a>";
 $lang_str["main:permalink"]="Ссылка";
 
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Объект не найден</h1>Не найдено объектов соответствующих ID \"%s\". Это могло произойти по таким причинам:<ul><li>Неверный ID.</li><li>Объект был идентифицирован сайтом третьей стороны и (пока что) не добавлен в OpenStreetMap.</li><li>Объект находится не в зоне покрытия карты.</li><li>Ссылка, которая Вас сюда привела не является актуальной для OpenStreetMap.</li></ul>";
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Объект не найден</h1>Объектов с ID \"%s\" не найдено. Это может быть связано с одной (или более) из следующих причин: <ul><li>Не правильный ID.</li><li>Объект был определен сайтами сторонних производителей и не является (пока) доступным в OpenStreetBrowser.</li><li>Объект находится вне поддерживается области.</li><li>Ссылка по которой Вы сюда пришли оказалась старой и объект уже был удалён из OpenStreetMap.</li></ul>";
 
 $lang_str["options:autozoom"]="Автомасштабирование";
 $lang_str["help:autozoom"]="При выборе объекта, карта сфокусируется на нём, текущие настройки приближения могут измениться. С помощью этой функции Вы можете выбрать режим отображения.";
@@ -134,14 +136,15 @@ $lang_str["category:not_compiled"]="Новая категория была по�
 
 $lang_str["category_rule_tag:match"]="Заголовок";
 $lang_str["category_rule_tag:description"]="Описание";
+#$lang_str["category_chooser:choose"]="Choose a category";
+#$lang_str["category_chooser:new"]="New category";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Mapnik";
 $lang_str["basemap:osmarender"]="OsmaRender";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
-if(function_exists("lang"))
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Объект не найден</h1>Объектов с ID \"%s\" не найдено. Это может быть связано с одной (или более) из следующих причин: <ul><li>Не правильный ID.</li><li>Объект был определен сайтами сторонних производителей и не является (пока) доступным в OpenStreetBrowser.</li><li>Объект находится вне поддерживается области.</li><li>Ссылка по которой Вы сюда пришли оказалась старой и объект уже был удалён из OpenStreetMap.</li></ul>";
+#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Немецкий";
@@ -155,5 +158,3 @@ $lang_str["lang:uk"]="Украинский";
 $lang_str["lang:ru"]="Русский";
 $lang_str["lang:ja"]="Японский";
 $lang_str["lang:hu"]="Венгерский";
-
-

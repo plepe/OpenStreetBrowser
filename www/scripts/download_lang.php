@@ -17,6 +17,7 @@ $languages=array(
   "es"=>"Spanish",
   "cs"=>"Czech",
   "hu"=>"Hungarian",
+  "ast"=>"Asturian",
 );
 
 function rewrite_str($str) {

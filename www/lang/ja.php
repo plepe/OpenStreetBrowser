@@ -19,6 +19,7 @@
 $lang_str["general_info"]="General Information";
 $lang_str["yes"]="はい";
 $lang_str["no"]="いいえ";
+#$lang_str["ok"]="Ok";
 #$lang_str["save"]=array("Save");
 #$lang_str["cancel"]=array("Cancel");
 #$lang_str["longitude"]=array("Longitude", "Longitudes");
@@ -29,6 +30,7 @@ $lang_str["info_zoom"]="ズーム";
 #$lang_str["nothing_found"]=array("nothing found");
 $lang_str["loading"]="読み込み中";
 #$lang_str["more"]="more";
+#$lang_str["unnamed"]="unnamed";
 
 // Headings
 $lang_str["head:general_info"]="全般的な情報";
@@ -134,14 +136,15 @@ $lang_str["wikipedia:read_more"]="もっと見る";
 
 #$lang_str["category_rule_tag:match"]="Match";
 #$lang_str["category_rule_tag:description"]="Description";
+#$lang_str["category_chooser:choose"]="Choose a category";
+#$lang_str["category_chooser:new"]="New category";
 
 #$lang_str["basemap:osb"]="OpenStreetBrowser";
 #$lang_str["basemap:mapnik"]="Standard (Mapnik)";
 #$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 #$lang_str["basemap:cyclemap"]="CycleMap";
 
-if(function_exists("lang"))
-#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \\"%s\\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
+#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
 #$lang_str["lang:de"]="German";
@@ -155,6 +158,7 @@ if(function_exists("lang"))
 #$lang_str["lang:ru"]="Russian";
 #$lang_str["lang:ja"]="Japanese";
 #$lang_str["lang:hu"]="Hungarian";
+
 
 
 // The following $lang_str are not defined in www/lang/en.php and might be 
@@ -373,4 +377,3 @@ $lang_str["tag:amenity=restaurant"]="レストラン";
 $lang_str["tag:amenity=pub"]=array("パブ", "パブ");
 $lang_str["tag:highway"]=array("道路", "道路");
 $lang_str["tag:religion=christian"]="キリスト教";
-

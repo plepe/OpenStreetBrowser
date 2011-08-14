@@ -54,7 +54,7 @@ $lang_str["head:graves"]="Wichtige Gräber";
 $lang_str["head:routing"]="Routenplanung";
 $lang_str["head:search"]="Suche";
 $lang_str["head:actions"]="Aktionen";
-$lang_str["head:location"]=array(M,"Ort", "Orte");
+$lang_str["head:location"]=array("M", "Ort", "Orte");
 $lang_str["head:tags"]=array("Tag", "Tags");
 $lang_str["head:whats_here"]="Was ist hier?";
 
@@ -90,7 +90,7 @@ $lang_str["main:donate"]="Spende";
 $lang_str["main:licence"]="Kartendaten: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>-Mitwirkende | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> und <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">Mitwirkende</a>";
 $lang_str["main:permalink"]="Permalink";
 
-$lang_str["help:no_object"]="Ein Objekt mit der ID \"%s\" konnte nicht gefunden werden. Das kann eine (oder mehrere) der folgenden Ursachen haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde von einer anderen Applikation identifiziert und ist im OpenStreetBrowser (noch) nicht verfügbar</li><li>Das Objekt liegt ausserhalb des unterstützten Gebiets</li><li>Der Link, dem Du gefolgt bist, war alt und das Objekt wurde inzwischen aus der OpenStreetMap gelöscht.</li>";
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Objekt nicht gefunden</h1>Es konnte kein Objekt mit der ID \"%s\" gefunden werden. Dies kann einen (oder mehrere) der folgenden Gründe haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde durch Dritte identifiziert und ist (noch) nicht bei OpenStreetBrowser verfügbar.</li><li>Das Objekt liegt außerhalb des unterstützen Gebiets.</li><li>Der Link dem du gefolgt bist ist alt und das Objekt wurde zwischenzeitlich aus OpenStreetMap entfernt.</li></ul>";
 
 $lang_str["options:autozoom"]="Autozoomverhalten";
 $lang_str["help:autozoom"]="Wenn ein Objekt ausgewählt wird, schwenkt der Kartenausschnitt zu dem Objekt, auch der Zoomlevel wird angepasst. Mit dieser Option kann zwischen verschiedenen Modi gewählt werden.";
@@ -144,8 +144,7 @@ $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
-if(function_exists("lang"))
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Objekt nicht gefunden</h1>Es konnte kein Objekt mit der ID \"%s\" gefunden werden. Dies kann einen (oder mehrere) der folgenden Gründe haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde durch Dritte identifiziert und ist (noch) nicht bei OpenStreetBrowser verfügbar.</li><li>Das Objekt liegt außerhalb des unterstützen Gebiets.</li><li>Der Link dem du gefolgt bist ist alt und das Objekt wurde zwischenzeitlich aus OpenStreetMap entfernt.</li></ul>";
+#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Deutsch";

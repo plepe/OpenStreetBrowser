@@ -7,3 +7,4 @@ $lang_str["start_location:lastview"]="last view";
 $lang_str["start_location:savedview"]="last permalink";
 $lang_str["start_location:startnormal"]="keep view";
 $lang_str["start_location:remember"]="remember decision";
+

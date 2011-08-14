@@ -19,6 +19,7 @@
 $lang_str["general_info"]="Información General";
 $lang_str["yes"]="si";
 $lang_str["no"]="no";
+#$lang_str["ok"]="Ok";
 $lang_str["save"]=array("Guardar");
 $lang_str["cancel"]=array("Cancelar");
 $lang_str["longitude"]=array("Longitud", "Longitudes");
@@ -29,6 +30,7 @@ $lang_str["info_zoom"]="zoom";
 #$lang_str["nothing_found"]=array("nothing found");
 $lang_str["loading"]=array("Cargando...");
 $lang_str["more"]="más";
+#$lang_str["unnamed"]="unnamed";
 
 // Headings
 $lang_str["head:general_info"]="Información General";
@@ -134,6 +136,8 @@ $lang_str["category:data_status"]="Estatus";
 
 #$lang_str["category_rule_tag:match"]="Match";
 $lang_str["category_rule_tag:description"]="Descripción";
+#$lang_str["category_chooser:choose"]="Choose a category";
+#$lang_str["category_chooser:new"]="New category";
 
 #$lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Estándar (Mapnik)";
@@ -154,5 +158,3 @@ $lang_str["basemap:osmarender"]="Estándar (OsmaRender)";
 #$lang_str["lang:ru"]="Russian";
 #$lang_str["lang:ja"]="Japanese";
 #$lang_str["lang:hu"]="Hungarian";
-
-
