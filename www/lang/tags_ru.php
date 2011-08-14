@@ -192,7 +192,7 @@ $lang_str["tag:place=islet"]=array("M", "Островок", "Островки");
 
 // population
 $lang_str["tag:population"]="Население";
-$tag_type["population"]=array("count", "чел.");
+$tag_type["population"]=array("count");
 
 // power
 $lang_str["tag:power"]="Энергетика";
@@ -304,7 +304,7 @@ $lang_str["tag:vending"]="Торговые автоматы";
 
 // voltage
 $lang_str["tag:voltage"]="Напряжение";
-$tag_type["voltage"]=array("number", "V", "В");
+$tag_type["voltage"]=array("number", "V", "V");
 
 // wires
 $lang_str["tag:wires"]="Провода";
@@ -313,6 +313,7 @@ $tag_type["wires"]=array("count");
 // website
 $lang_str["tag:website"]=array("M", "Сайт", "Сайты");
 $tag_type["website"]=array("link");
+
 
 
 

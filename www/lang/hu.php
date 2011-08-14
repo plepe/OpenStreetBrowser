@@ -19,6 +19,7 @@
 $lang_str["general_info"]="Általános információ";
 $lang_str["yes"]="igen";
 $lang_str["no"]="nem";
+#$lang_str["ok"]="Ok";
 $lang_str["save"]=array("Mentés");
 $lang_str["cancel"]=array("Mégse");
 #$lang_str["longitude"]=array("Longitude", "Longitudes");
@@ -29,6 +30,7 @@ $lang_str["info_zoom"]="nagyítás";
 $lang_str["nothing_found"]=array("nincs találat");
 $lang_str["loading"]=array("Betöltés...");
 $lang_str["more"]="több";
+#$lang_str["unnamed"]="unnamed";
 
 // Headings
 $lang_str["head:general_info"]="Általános információ";
@@ -78,7 +80,7 @@ $lang_str["list_leisure_sport_tourism"]="Szabadidő, sport és turizmus";
 $lang_str["map_key:head"]="Térképmagyarázat";
 $lang_str["map_key:zoom"]="Nagyítási színt";
 
-#$lang_str["grave_is_on"]="A sírok be vannak kapcsolva";
+#$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:map_key"]="Térképmagyarázat";
 $lang_str["main:options"]="Beállítások";
@@ -96,7 +98,7 @@ $lang_str["options:autozoom:move"]=array("Ugrás az objektumhoz (gyorsabb)");
 $lang_str["options:autozoom:stay"]=array("Ne legyen automatikus térkép-elmozdítás");
 
 $lang_str["options:language_support"]=array("Nyelv-támogatás");
-$lang_str["help:language_support"]=array( 'Itt kiválaszthatod a kedvenc nyelvedet. Az első pont a menük nyelvét, a második pedig a térképadatok nyelvét befolyásolja. Sok térképelem mindenféle nyelvre le van fordítva. Ha az elem nincs lefordítva, vagy a "Helyi nyelv" van kiválasztva, akkor az elem fő nyelve jelenik meg.' );
+$lang_str["help:language_support"]=array("Itt kiválaszthatod a kedvenc nyelvedet. Az első pont a menük nyelvét, a második pedig a térképadatok nyelvét befolyásolja. Sok térképelem mindenféle nyelvre le van fordítva. Ha az elem nincs lefordítva, vagy a \"Helyi nyelv\" van kiválasztva, akkor az elem fő nyelve jelenik meg.");
 $lang_str["options:ui_lang"]=array("Menünyelv");
 $lang_str["options:data_lang"]=array("Adatnyelv");
 $lang_str["lang:"]=array("Helyi nyelv");
@@ -132,14 +134,15 @@ $lang_str["category:not_compiled"]="Új kategória készül elő.";
 
 $lang_str["category_rule_tag:match"]="Illeszkedés";
 $lang_str["category_rule_tag:description"]="Leírás";
+#$lang_str["category_chooser:choose"]="Choose a category";
+#$lang_str["category_chooser:new"]="New category";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Eredeti (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
-if(function_exists("lang"))
-#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \\"%s\\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
+#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Német";
@@ -153,5 +156,3 @@ $lang_str["lang:uk"]="Ukrán";
 $lang_str["lang:ru"]="Orosz";
 $lang_str["lang:ja"]="Japán";
 $lang_str["lang:hu"]="Magyar";
-
-

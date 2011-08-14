@@ -19,6 +19,7 @@
 $lang_str["general_info"]="Information générale";
 $lang_str["yes"]="oui";
 $lang_str["no"]="non";
+#$lang_str["ok"]="Ok";
 $lang_str["save"]=array("Sauvegarde");
 $lang_str["cancel"]=array("Annuler");
 $lang_str["longitude"]=array("Longitude", "Longitudes");
@@ -29,6 +30,7 @@ $lang_str["info_zoom"]="zoom";
 $lang_str["nothing_found"]=array("n'a rien trouvé");
 $lang_str["loading"]="chargement";
 #$lang_str["more"]="more";
+#$lang_str["unnamed"]="unnamed";
 
 // Headings
 $lang_str["head:general_info"]="Information générale";
@@ -132,14 +134,15 @@ $lang_str["overlay:draggable"]="Repères";
 
 #$lang_str["category_rule_tag:match"]="Match";
 #$lang_str["category_rule_tag:description"]="Description";
+#$lang_str["category_chooser:choose"]="Choose a category";
+#$lang_str["category_chooser:new"]="New category";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
-if(function_exists("lang"))
-#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \\"%s\\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
+#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Allemand";
@@ -153,6 +156,7 @@ $lang_str["lang:uk"]="Ukrainien";
 $lang_str["lang:ru"]="Russe";
 $lang_str["lang:ja"]="Japonais";
 #$lang_str["lang:hu"]="Hungarian";
+
 
 
 // The following $lang_str are not defined in www/lang/en.php and might be 
