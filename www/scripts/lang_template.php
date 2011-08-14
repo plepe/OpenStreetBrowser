@@ -4,6 +4,7 @@ require "../../conf.php";
 require "../inc/sql.php";
 require "../inc/tags.php";
 $ui_lang=$_GET['ui_lang'];
+$deprecated=array();
 
 function lang() {
 }
@@ -21,6 +22,7 @@ function template_lang_file($src, $dst) {
   global $count_done;
   global $count_missing;
   global $root_path;
+  global $deprecated;
 
   $lang_str=array();
   if(file_exists("$root_path/$src"))
@@ -46,6 +48,7 @@ function template_lang_file($src, $dst) {
     $f=fopen("$root_path/$src", "r");
     while($r=fgets($f)) {
       if(eregi("^( *)\\\$lang_str\[['\"]([^\"]*)['\"]\]", $r, $m)) {
+	$found=false;
 	if($l=$lang_str_dst[$m[2]]) {
 	  print "$m[1]\$lang_str[\"$m[2]\"]=";
 	  print esc($l);
@@ -54,8 +57,21 @@ function template_lang_file($src, $dst) {
 	  unset($lang_str_dst[$m[2]]);
 
 	  $count_done++;
+	  $found=true;
 	}
-	else {
+	if(!$found) foreach($deprecated as $file=>$file_deprecated) {
+	  if($l=$file_deprecated[$m[2]]) {
+	    print "$m[1]\$lang_str[\"$m[2]\"]=";
+	    print esc($l);
+	    print ";\n";
+
+	    unset($deprecated[$file][$m[2]]);
+
+	    $count_done++;
+	    $found=true;
+	  }
+	}
+	if(!$found){
 	  print "#$m[1]\$lang_str[\"$m[2]\"]=";
 	  print esc($lang_str_src[$m[2]]);
 	  print ";\n";
@@ -70,15 +86,32 @@ function template_lang_file($src, $dst) {
     fclose($f);
   }
   
+  print "</syntaxhighlight>\n";
+  print "\n";
+
   if(sizeof($lang_str_dst)) {
-    print "\n";
-    print "// The following \$lang_str are not defined in $src and might be \n";
-    print "// deprecated/mislocated/wrong:\n";
-    foreach($lang_str_dst as $k=>$v) {
-      print "\$lang_str[\"$k\"]=".esc($v).";\n";
+    $deprecated["File: $dst"]=$lang_str_dst;
+  }
+}
+
+function print_deprecated() {
+  global $deprecated;
+
+  if((sizeof($deprecated)==0)||
+     (array_sum(array_map("sizeof", $deprecated))==0))
+    return;
+
+  print "==== Deprecated strings ====\n";
+  print "// The following \$lang_str were not defined and might be deprecated or wrong:\n";
+
+  foreach($deprecated as $file=>$lang_str_dst) {
+    if(sizeof($lang_str_dst)) {
+      print "===== $file =====\n";
+      foreach($lang_str_dst as $k=>$v) {
+	print "\$lang_str[\"$k\"]=".esc($v).";\n";
+      }
     }
   }
-  print "</syntaxhighlight>\n";
 
   print "\n";
 }
@@ -198,6 +231,8 @@ $res=sql_query("select * from category_current", $db_central);
 while($elem=pg_fetch_assoc($res)) {
   template_lang_category($elem['category_id'], $elem['version']);
 }
+
+print_deprecated();
 
 print "==== Statistics ====\n";
 print "* Done: $count_done\n";
