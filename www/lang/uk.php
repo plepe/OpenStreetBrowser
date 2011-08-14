@@ -19,6 +19,7 @@
 $lang_str["general_info"]="Загальна інформація";
 $lang_str["yes"]="yes";
 $lang_str["no"]="no";
+#$lang_str["ok"]="Ok";
 #$lang_str["save"]=array("Save");
 #$lang_str["cancel"]=array("Cancel");
 #$lang_str["longitude"]=array("Longitude", "Longitudes");
@@ -29,6 +30,7 @@ $lang_str["info_zoom"]="наблизити";
 #$lang_str["nothing_found"]=array("nothing found");
 $lang_str["loading"]="завантаження";
 #$lang_str["more"]="more";
+#$lang_str["unnamed"]="unnamed";
 
 // Headings
 $lang_str["head:general_info"]="Загальна інформація";
@@ -37,7 +39,6 @@ $lang_str["head:routes"]="Маршрути";
 $lang_str["head:members"]="Members";
 $lang_str["head:address"]="Адреси";
 $lang_str["head:internal"]="OSM Internal";
-$lang_str["head:wikipedia"]="Wikipedia";
 $lang_str["head:housenumbers"]="Нумерація будинків";
 $lang_str["head:roads"]="Дороги";
 $lang_str["head:rails"]="Залізниця";
@@ -90,14 +91,6 @@ $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
-#$lang_str["start:choose"]=array("Choose map view");
-#$lang_str["start:geolocation"]=array("get geolocation");
-#$lang_str["start:lastview"]=array("last view");
-#$lang_str["start:savedview"]=array("last permalink");
-#$lang_str["start:startnormal"]=array("keep view");
-#$lang_str["start:remember"]=array("remember decision");
-#$lang_str["start:edit"]=array("edit...");
-
 $lang_str["options:autozoom"]="Автозум";
 $lang_str["help:autozoom"]="При виборі обєкту на мапі, точка огляду змінюється так, щоб вмістити весь обєкт. Масштаб при цьому теж може змінитись. З цією опцією ви можете вибрати один з наступних режимів:";
 $lang_str["options:autozoom:pan"]="Плавно переміститись в обрану точку (ефектніше)";
@@ -113,7 +106,6 @@ $lang_str["lang:"]="Місцева мова";
 $lang_str["overlay:data"]="Дані";
 $lang_str["overlay:draggable"]="Маркери";
 
-$lang_str["wikipedia:read_more"]="докладніше";
 
 #$lang_str["user:no_auth"]="Username or password wrong!";
 #$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
@@ -142,13 +134,14 @@ $lang_str["wikipedia:read_more"]="докладніше";
 
 #$lang_str["category_rule_tag:match"]="Match";
 #$lang_str["category_rule_tag:description"]="Description";
+#$lang_str["category_chooser:choose"]="Choose a category";
+#$lang_str["category_chooser:new"]="New category";
 
 #$lang_str["basemap:osb"]="OpenStreetBrowser";
 #$lang_str["basemap:mapnik"]="Standard (Mapnik)";
 #$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 #$lang_str["basemap:cyclemap"]="CycleMap";
 
-if(function_exists("lang"))
 #$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
@@ -163,6 +156,8 @@ if(function_exists("lang"))
 #$lang_str["lang:ru"]="Russian";
 #$lang_str["lang:ja"]="Japanese";
 #$lang_str["lang:hu"]="Hungarian";
+
+
 
 // The following $lang_str are not defined in www/lang/en.php and might be 
 // deprecated/mislocated/wrong:
@@ -380,4 +375,3 @@ $lang_str["tag:amenity=restaurant"]=array("ресторан", "ресторан"
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
 $lang_str["tag:highway"]=array("Highway", "Highways");
 $lang_str["tag:religion=christian"]="християнська";
-

@@ -39,21 +39,29 @@ function measure_obj_info(chapter, ob) {
     }
   }
 
+  var found=false;
+
+  ret+="<ul>\n";
   if(length) {
+    found=true;
     var x=units_format_length(length)
-    ret+=lang("measure_obj:length", 0, x)+"<br>\n";
+    ret+="<li>"+lang("measure_obj:length", 0, x)+"</li>\n";
   }
   
   if(area) {
+    found=true;
     var x=units_format_area(area)
-    ret+=lang("measure_obj:area", 0, x)+"<br>\n";
+    ret+="<li>"+lang("measure_obj:area", 0, x)+"</li>\n";
   }
+  ret+="</ul>\n";
   
-  chapter.push({
-    head: lang("measure_obj:head"),
-    weight: 1,
-    content: ret
-  });
+  if(found) {
+    chapter.push({
+      head: lang("measure_obj:head"),
+      weight: 1,
+      content: ret
+    });
+  }
 }
 
 register_hook("info", measure_obj_info);

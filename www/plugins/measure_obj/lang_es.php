@@ -1,5 +1,7 @@
 <?
-#$lang_str["measure_obj:head"]="Measurements";
-#$lang_str["measure_obj:length"]="Length: %s";
-#$lang_str["measure_obj:area"]="Area: %s";
+$lang_str["measure_obj:head"]="Medidas";
+$lang_str["measure_obj:length"]="Longitud: %s";
+$lang_str["measure_obj:area"]="Área: %s";
+
+
 

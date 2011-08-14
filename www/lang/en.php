@@ -25,6 +25,7 @@
 $lang_str["general_info"]="General Information";
 $lang_str["yes"]="yes";
 $lang_str["no"]="no";
+$lang_str["ok"]="Ok";
 $lang_str["save"]=array("Save");
 $lang_str["cancel"]=array("Cancel");
 $lang_str["longitude"]=array("Longitude", "Longitudes");
@@ -36,6 +37,7 @@ $lang_str["nothing_found"]=array("nothing found");
 $lang_str["loading"]=array("Loading...");
 $lang_str["more"]="more";
 $lang_str["source"]="Source";
+$lang_str["unnamed"]="unnamed";
 
 // Headings
 $lang_str["head:general_info"]="General Information";
@@ -44,7 +46,6 @@ $lang_str["head:routes"]="Routes";
 $lang_str["head:members"]="Members";
 $lang_str["head:address"]="Address";
 $lang_str["head:internal"]="OSM Internal";
-$lang_str["head:wikipedia"]="Wikipedia";
 $lang_str["head:housenumbers"]="Housenumbers";
 $lang_str["head:roads"]="Roads";
 $lang_str["head:rails"]="Railroads";
@@ -61,6 +62,7 @@ $lang_str["head:search"]="Search";
 $lang_str["head:actions"]=array("Action", "Actions");
 $lang_str["head:location"]="Location";
 $lang_str["head:tags"]=array("Tag", "Tags");
+$lang_str["head:whats_here"]="What's here?";
 
 $lang_str["action_browse"]="browse in OSM";
 $lang_str["action_edit"]="edit in OSM";
@@ -96,14 +98,6 @@ $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
-$lang_str["start:choose"]=array("Choose map view");
-$lang_str["start:geolocation"]=array("get geolocation");
-$lang_str["start:lastview"]=array("last view");
-$lang_str["start:savedview"]=array("last permalink");
-$lang_str["start:startnormal"]=array("keep view");
-$lang_str["start:remember"]=array("remember decision");
-$lang_str["start:edit"]=array("edit...");
-
 $lang_str["options:autozoom"]=array("Autozoom behaviour");
 $lang_str["help:autozoom"]=array("When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.");
 $lang_str["options:autozoom:pan"]=array("Pan to current object (nicer)");
@@ -119,8 +113,6 @@ $lang_str["lang:auto"]="Same as interface language";
 
 $lang_str["overlay:data"]=array("Data");
 $lang_str["overlay:draggable"]=array("Markers");
-
-$lang_str["wikipedia:read_more"]="read more";
 
 $lang_str["user:no_auth"]="Username or password wrong!";
 $lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
@@ -149,13 +141,14 @@ $lang_str["category:not_compiled"]="New category is being prepared.";
 
 $lang_str["category_rule_tag:match"]="Match";
 $lang_str["category_rule_tag:description"]="Description";
+$lang_str["category_chooser:choose"]="Choose a category";
+$lang_str["category_chooser:new"]="New category";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
-if(function_exists("lang"))
 #$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
@@ -170,4 +163,4 @@ $lang_str["lang:uk"]="Ukrainian";
 $lang_str["lang:ru"]="Russian";
 $lang_str["lang:ja"]="Japanese";
 $lang_str["lang:hu"]="Hungarian";
-
+$lang_str["lang:ast"]="Asturian";

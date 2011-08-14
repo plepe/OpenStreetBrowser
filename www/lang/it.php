@@ -19,6 +19,7 @@
 $lang_str["general_info"]="General Information";
 $lang_str["yes"]="yes";
 $lang_str["no"]="no";
+#$lang_str["ok"]="Ok";
 #$lang_str["save"]=array("Save");
 #$lang_str["cancel"]=array("Cancel");
 #$lang_str["longitude"]=array("Longitude", "Longitudes");
@@ -29,6 +30,7 @@ $lang_str["info_zoom"]="zoom";
 #$lang_str["nothing_found"]=array("nothing found");
 $lang_str["loading"]="loading";
 #$lang_str["more"]="more";
+#$lang_str["unnamed"]="unnamed";
 
 // Headings
 $lang_str["head:general_info"]="General Information";
@@ -37,7 +39,6 @@ $lang_str["head:routes"]="Routes";
 $lang_str["head:members"]="Members";
 $lang_str["head:address"]="Address";
 $lang_str["head:internal"]="OSM Internal";
-$lang_str["head:wikipedia"]="Wikipedia";
 $lang_str["head:housenumbers"]="Housenumbers";
 $lang_str["head:roads"]="Roads";
 $lang_str["head:rails"]="Railroads";
@@ -90,14 +91,6 @@ $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
-#$lang_str["start:choose"]=array("Choose map view");
-#$lang_str["start:geolocation"]=array("get geolocation");
-#$lang_str["start:lastview"]=array("last view");
-#$lang_str["start:savedview"]=array("last permalink");
-#$lang_str["start:startnormal"]=array("keep view");
-#$lang_str["start:remember"]=array("remember decision");
-#$lang_str["start:edit"]=array("edit...");
-
 $lang_str["options:autozoom"]="Menu selezione zoom";
 $lang_str["help:autozoom"]="Se un oggetto è selezionato la mappa potrebbe subire ingrandimenti oppure spostamenti. Con le seguenti opzioni è possibile scegliere:";
 $lang_str["options:autozoom:pan"]="muoviti al punto selezonato";
@@ -113,7 +106,6 @@ $lang_str["lang:"]="Lingua del tuo browser";
 #$lang_str["overlay:data"]=array("Data");
 #$lang_str["overlay:draggable"]=array("Markers");
 
-$lang_str["wikipedia:read_more"]="read more";
 
 #$lang_str["user:no_auth"]="Username or password wrong!";
 #$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
@@ -142,13 +134,14 @@ $lang_str["wikipedia:read_more"]="read more";
 
 #$lang_str["category_rule_tag:match"]="Match";
 #$lang_str["category_rule_tag:description"]="Description";
+#$lang_str["category_chooser:choose"]="Choose a category";
+#$lang_str["category_chooser:new"]="New category";
 
 #$lang_str["basemap:osb"]="OpenStreetBrowser";
 #$lang_str["basemap:mapnik"]="Standard (Mapnik)";
 #$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 #$lang_str["basemap:cyclemap"]="CycleMap";
 
-if(function_exists("lang"))
 #$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
@@ -163,6 +156,8 @@ if(function_exists("lang"))
 #$lang_str["lang:ru"]="Russian";
 #$lang_str["lang:ja"]="Japanese";
 #$lang_str["lang:hu"]="Hungarian";
+
+
 
 // The following $lang_str are not defined in www/lang/en.php and might be 
 // deprecated/mislocated/wrong:

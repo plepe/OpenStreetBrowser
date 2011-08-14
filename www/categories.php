@@ -78,7 +78,9 @@ switch($_GET[todo]) {
     print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
     print "<result>\n";
     foreach($list as $k=>$v) {
-      print "  <category id='$k'>".strtr($v->get_lang("name"), $make_valid)."</category>\n";
+      if(!$v->get("hide")) { // put better filters here
+	print "  <category id='$k'>".strtr($v->get_lang("name"), $make_valid)."</category>\n";
+      }
     }
     print "</result>\n";
 

@@ -1,10 +1,10 @@
 <?
 unset($debug_list);
 
-function debug($text) {
+function debug($text, $category) {
   global $debug_list;
 
-  $debug_list[]=$text;
+  $debug_list[]="$category: $text";
 }
 
 function debug_write($xml) {

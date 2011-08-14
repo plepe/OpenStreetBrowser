@@ -32,157 +32,157 @@
 //  (e.g. "100.000 m" or "2010-12-24").
 
 // accomodation
-#$lang_str["tag:accomodation"]="Accomodation";
+$lang_str["tag:accomodation"]="Agospiamientu";
 
 // address
-#$lang_str["tag:address"]="Address";
+$lang_str["tag:address"]="Direición";
 
 // addr:housenumber
-#$lang_str["tag:addr:housenumber"]="Housenumber";
+$lang_str["tag:addr:housenumber"]="Númberu de portal";
 
 // admin_level
-#$lang_str["tag:admin_level=2"]="Country Border";
-#$lang_str["tag:admin_level=3"]="Divisions";
-#$lang_str["tag:admin_level=4"]="State Border";
-#$lang_str["tag:admin_level=5"]="Community Border";
-#$lang_str["tag:admin_level=6"]="County Border";
-#$lang_str["tag:admin_level=8"]="Town/Municipality Border";
-#$lang_str["tag:admin_level=10"]="Subdivisions of Cities";
+$lang_str["tag:admin_level=2"]="Frontera de país";
+$lang_str["tag:admin_level=3"]="Divisiones";
+$lang_str["tag:admin_level=4"]="Frontera d'estáu";
+$lang_str["tag:admin_level=5"]="Llende de comunidá";
+$lang_str["tag:admin_level=6"]="Llende de condáu";
+$lang_str["tag:admin_level=8"]="Llende de ciudá/conceyu";
+$lang_str["tag:admin_level=10"]="Subdivisiones de ciudaes";
 
 // amenity
-#$lang_str["tag:amenity"]="Amenity";
-#$lang_str["tag:amenity=cinema"]=array("Cinema", "Cinemas");
-#$lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
-#$lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
+$lang_str["tag:amenity"]="Infraestructura";
+$lang_str["tag:amenity=cinema"]=array("Cine", "Cines");
+$lang_str["tag:amenity=restaurant"]=array("Restaurante", "Restaurantes");
+$lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
 
 // building
-#$lang_str["tag:building=yes"]="Buildings";
-#$lang_str["tag:building=default"]="Buildings";
-#$lang_str["tag:building=worship"]="Religious Buildings";
-#$lang_str["tag:building=road_amenities"]="Facilities for Transportation (Stations, Terminals, Toll Booths, ...)";
-#$lang_str["tag:building=nature_building"]="Natural Buildings (e.g. Barriers)";
-#$lang_str["tag:building=industrial"]="Industrial Buildings";
-#$lang_str["tag:building=education"]="Educational Buildings";
-#$lang_str["tag:building=shop"]="Shops";
-#$lang_str["tag:building=public"]="Public Buildings";
-#$lang_str["tag:building=military"]="Military Buildings";
-#$lang_str["tag:building=historic"]="Historical Buildings";
-#$lang_str["tag:building=emergency"]="Buildings of emergency facilities";
-#$lang_str["tag:building=health"]="Buildings of health services";
-#$lang_str["tag:building=communication"]="Buildings for communication";
-#$lang_str["tag:building=residential"]="Residential Buildings";
-#$lang_str["tag:building=culture"]="Cultural Buildings";
-#$lang_str["tag:building=tourism"]="Touristic Buildings";
-#$lang_str["tag:building=sport"]="Buildings for sport activities";
+$lang_str["tag:building=yes"]="Edificios";
+$lang_str["tag:building=default"]="Edificios";
+$lang_str["tag:building=worship"]="Edificios religiosos";
+$lang_str["tag:building=road_amenities"]="Instalaciones de tresporte (Estaciones, Terminales, Cabines de peaxes, ...)";
+$lang_str["tag:building=nature_building"]="Construcciones naturales (p.ex. Barreres)";
+$lang_str["tag:building=industrial"]="Edificios industriales";
+$lang_str["tag:building=education"]="Edificios educativos";
+$lang_str["tag:building=shop"]="Tiendes";
+$lang_str["tag:building=public"]="Edificios públicos";
+$lang_str["tag:building=military"]="Edificios militares";
+$lang_str["tag:building=historic"]="Edificios históricos";
+$lang_str["tag:building=emergency"]="Edificios de servicios d'emerxencia";
+$lang_str["tag:building=health"]="Edificios de servicios sanitarios";
+$lang_str["tag:building=communication"]="Edificios de comunicaciones";
+$lang_str["tag:building=residential"]="Edificios de viviendes";
+$lang_str["tag:building=culture"]="Edificios culturales";
+$lang_str["tag:building=tourism"]="Edificios turísticos";
+$lang_str["tag:building=sport"]="Edificios p'actividaes deportives";
 
 // cables
-#$lang_str["tag:cables"]="Cables";
+$lang_str["tag:cables"]="Cables";
 
 // cuisine
-#$lang_str["tag:cuisine"]="Cuisine";
-#$lang_str["tag:cuisine=regional"]="regional";
+$lang_str["tag:cuisine"]="Cocina";
+$lang_str["tag:cuisine=regional"]="rexonal";
 
 // description
-#$lang_str["tag:description"]="Description";
+$lang_str["tag:description"]="Descripción";
 
 // domination
-#$lang_str["tag:domination"]="Domination";
+$lang_str["tag:domination"]="Dominiu";
 
 // food
-#$lang_str["tag:food"]="Serves food";
+$lang_str["tag:food"]="Sirve de comer";
 
 // highway
-#$lang_str["tag:highway"]=array("Highway", "Highways");
-#$lang_str["tag:highway=motorway"]="Motorway";
-#$lang_str["tag:highway=trunk"]="Trunk Road";
-#$lang_str["tag:highway=primary"]="Primary Road";
-#$lang_str["tag:highway=secondary"]="Secondary Road";
-#$lang_str["tag:highway=tertiary"]="Tertiary Road";
-#$lang_str["tag:highway=minor"]="Minor Road";
-#$lang_str["tag:highway=service"]="Service Road";
-#$lang_str["tag:highway=pedestrian"]="Pedestrian Zone";
-#$lang_str["tag:highway=track"]="Track";
-#$lang_str["tag:highway=path"]="Path";
+$lang_str["tag:highway"]=array("Carretera", "Carreteres");
+$lang_str["tag:highway=motorway"]="Autopista";
+$lang_str["tag:highway=trunk"]="Carretera nacional";
+$lang_str["tag:highway=primary"]="Carretera primaria";
+$lang_str["tag:highway=secondary"]="Carretera secundaria";
+$lang_str["tag:highway=tertiary"]="Carretera terciaria";
+$lang_str["tag:highway=minor"]="Carretera menor";
+$lang_str["tag:highway=service"]="Carretera de serviciu";
+$lang_str["tag:highway=pedestrian"]="Zona peatonal";
+$lang_str["tag:highway=track"]="Pista";
+$lang_str["tag:highway=path"]="Camín";
 
 // is_in
-#$lang_str["tag:is_in"]="Is in";
+$lang_str["tag:is_in"]="Ta en";
 
 // landuse
-#$lang_str["tag:landuse=park"]="Park";
-#$lang_str["tag:landuse=education"]="Area of educational facilities";
-#$lang_str["tag:landuse=tourism"]="Area of touristic facilities";
-#$lang_str["tag:landuse=garden"]="Farms, Plantages, Gardens";
-#$lang_str["tag:landuse=industrial"]="Industrial and Railway Areas";
-#$lang_str["tag:landuse=sport"]="Areas of sport facilities";
-#$lang_str["tag:landuse=cemetery"]="Cemeteries";
-#$lang_str["tag:landuse=residental"]="Residental areas";
-#$lang_str["tag:landuse=nature_reserve"]="Nature Reserves";
-#$lang_str["tag:landuse=historic"]="Areas with historical value";
-#$lang_str["tag:landuse=emergency"]="Areas of emergency facilities";
-#$lang_str["tag:landuse=health"]="Areas of health facilities";
-#$lang_str["tag:landuse=public"]="Areas for public services";
-#$lang_str["tag:landuse=water"]="Water Areas";
+$lang_str["tag:landuse=park"]="Parque";
+$lang_str["tag:landuse=education"]="Área d'instalaciones educatives";
+$lang_str["tag:landuse=tourism"]="Área d'instalaciones turístiques";
+$lang_str["tag:landuse=garden"]="Caseríes, plantaciones, xardinos";
+$lang_str["tag:landuse=industrial"]="Árees industriales y ferroviaries";
+$lang_str["tag:landuse=sport"]="Árees d'instalaciones deportives";
+$lang_str["tag:landuse=cemetery"]="Cementerios";
+$lang_str["tag:landuse=residental"]="Árees de viviendes";
+$lang_str["tag:landuse=nature_reserve"]="Reserves naturales";
+$lang_str["tag:landuse=historic"]="Árees con valor históricu";
+$lang_str["tag:landuse=emergency"]="Árees d'instalaciones d'emerxencia";
+$lang_str["tag:landuse=health"]="Árees d'instalaciones sanitaries";
+$lang_str["tag:landuse=public"]="Árees de servicios públicos";
+$lang_str["tag:landuse=water"]="Árees acuátiques";
 // the following tags are deprecated
-#$lang_str["tag:landuse=natural|sub_type=t0"]="Woods and Forest";
-#$lang_str["tag:landuse=natural|sub_type=t1"]="Wetland";
-#$lang_str["tag:landuse=natural|sub_type=t2"]="Glaciers";
-#$lang_str["tag:landuse=natural|sub_type=t3"]="Screes, Heaths";
-#$lang_str["tag:landuse=natural|sub_type=t4"]="Mud";
-#$lang_str["tag:landuse=natural|sub_type=t5"]="Beaches";
+$lang_str["tag:landuse=natural|sub_type=t0"]="Viesca y forestal";
+$lang_str["tag:landuse=natural|sub_type=t1"]="Humedal";
+$lang_str["tag:landuse=natural|sub_type=t2"]="Glaciares";
+$lang_str["tag:landuse=natural|sub_type=t3"]="Lleres, grandes";
+$lang_str["tag:landuse=natural|sub_type=t4"]="Llamuerga";
+$lang_str["tag:landuse=natural|sub_type=t5"]="Playes";
 
 // leisure
-#$lang_str["tag:leisure=sports_centre"]="Sport Centre";
-#$lang_str["tag:leisure=golf_course"]="Golf Course";
-#$lang_str["tag:leisure=stadium"]="Stadium";
-#$lang_str["tag:leisure=track"]="Track";
-#$lang_str["tag:leisure=pitch"]="Pitche";
-#$lang_str["tag:leisure=water_park"]="Water Park";
-#$lang_str["tag:leisure=marina"]="Marina";
-#$lang_str["tag:leisure=slipway"]="Slipway";
-#$lang_str["tag:leisure=fishing"]="Fishing";
-#$lang_str["tag:leisure=nature_reserve"]="Nature Reserve";
-#$lang_str["tag:leisure=park"]="Leisure Park";
-#$lang_str["tag:leisure=playground"]="Playground";
-#$lang_str["tag:leisure=garden"]="Garden";
-#$lang_str["tag:leisure=common"]="Common";
-#$lang_str["tag:leisure=ice_rink"]="Ice Rink";
-#$lang_str["tag:leisure=miniature_golf"]="Miniature Golf";
-#$lang_str["tag:leisure=swimming_pool"]="Swimming Pool";
+$lang_str["tag:leisure=sports_centre"]="Centru deportivu";
+$lang_str["tag:leisure=golf_course"]="Campu de golf";
+$lang_str["tag:leisure=stadium"]="Estadiu";
+$lang_str["tag:leisure=track"]="Pista";
+$lang_str["tag:leisure=pitch"]="Campu";
+$lang_str["tag:leisure=water_park"]="Parque acuáticu";
+$lang_str["tag:leisure=marina"]="Puertu deportivu";
+$lang_str["tag:leisure=slipway"]="Rampla de botadura";
+$lang_str["tag:leisure=fishing"]="Piesca";
+$lang_str["tag:leisure=nature_reserve"]="Reserva natural";
+$lang_str["tag:leisure=park"]="Parque";
+$lang_str["tag:leisure=playground"]="Xuegos infantiles";
+$lang_str["tag:leisure=garden"]="Xardín";
+$lang_str["tag:leisure=common"]="Campu comunal";
+$lang_str["tag:leisure=ice_rink"]="Pista de xelu";
+$lang_str["tag:leisure=miniature_golf"]="Minigolf";
+$lang_str["tag:leisure=swimming_pool"]="Piscina";
 #$lang_str["tag:leisure=beach_resort"]="Beach Resort";
 #$lang_str["tag:leisure=bird_hide"]="Bird Hide";
-#$lang_str["tag:leisure=sport"]="Other Sport";
+$lang_str["tag:leisure=sport"]="Otros deportes";
 
 // name
-#$lang_str["tag:name"]=array("Name", "Namen");
+$lang_str["tag:name"]=array("Nome", "Nomes");
 
 // network
-#$lang_str["tag:network"]="Network";
+$lang_str["tag:network"]="Rede";
 
 // note
-#$lang_str["tag:note"]="Note";
+$lang_str["tag:note"]="Nota";
 
 // old_name
-#$lang_str["tag:old_name"]="Old Name(s)";
+$lang_str["tag:old_name"]="Nome(s) antiguu";
 
 // opening_hours
-#$lang_str["tag:opening_hours"]="Opening hours";
+$lang_str["tag:opening_hours"]="Hores d'apertura";
 
 // operator
-#$lang_str["tag:operator"]="Operator";
+$lang_str["tag:operator"]="Operador";
 
 // place
-#$lang_str["tag:place"]="Place";
-#$lang_str["tag:place=continent"]=array("Continent", "Continents");
-#$lang_str["tag:place=country"]=array("Country", "Countries");
-#$lang_str["tag:place=state"]=array("State", "States");
-#$lang_str["tag:place=region"]=array("Region", "Regions");
-#$lang_str["tag:place=county"]=array("County", "Counties");
-#$lang_str["tag:place=city"]=array("City", "Cities");
+$lang_str["tag:place"]="Llugar";
+$lang_str["tag:place=continent"]=array("Continente", "Continentes");
+$lang_str["tag:place=country"]=array("País", "Países");
+$lang_str["tag:place=state"]=array("Estáu", "Estaos");
+$lang_str["tag:place=region"]=array("Rexón", "Rexones");
+$lang_str["tag:place=county"]=array("Condáu", "Condaos");
+$lang_str["tag:place=city"]=array("Ciudá", "Ciudaes");
 #$lang_str["tag:place=town"]="Town";
-#$lang_str["tag:place=village"]=array("Village", "Villages");
-#$lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
-#$lang_str["tag:place=locality"]=array("Locality", "Localities");
-#$lang_str["tag:place=island"]=array("Island", "Islands");
+$lang_str["tag:place=village"]=array("Villa", "Villes");
+$lang_str["tag:place=suburb"]=array("Barriu", "Barrios");
+$lang_str["tag:place=locality"]=array("Llocalida", "Llocalidaes");
+$lang_str["tag:place=island"]=array("Islla", "Islles");
 #$lang_str["tag:place=islet"]=array("Islet", "Islets");
 // the following tags are deprecated
 #$lang_str["tag:place=city;population>1000000"]=array("City, > 1 Mio Inhabitants", "Cities, > 1 Mio Inhabitants");
@@ -313,6 +313,8 @@ $tag_type["wires"]=array("count");
 // website
 #$lang_str["tag:website"]="Website";
 $tag_type["website"]=array("link");
+
+
 
 
 

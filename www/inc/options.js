@@ -89,7 +89,7 @@ function options_select(key, values) {
     ret+="  <option style=\"background-image: url('img/lang/"+values_keys[i]+".png');\" value='"+values_keys[i]+"'";
     if(current_value==values_keys[i])
       ret+=" selected='selected'";
-    ret+=">"+t(values[values_keys[i]])+"</option>\n";
+    ret+=">"+values[values_keys[i]]+"</option>\n";
   }
 
   ret+="</select>\n";

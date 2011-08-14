@@ -9,8 +9,3 @@ plugins_dir=/usr/local/lib/mapnik/input
 font_dir=/usr/local/lib/mapnik/fonts
 font_dir_recurse=1
 
-[base]
-URI=/tiles/base/
-XML=/home/osm/render/base.xml
-HOST=dev.openstreetbrowser.org
-

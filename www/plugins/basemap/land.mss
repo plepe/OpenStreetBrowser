@@ -72,13 +72,10 @@ Map {
   polygon-fill: #ccb18b;
 }
 .landuse_extract[landuse=natural0][landuse_sub_type=t0][zoom>=5][zoom<10],
-.landuse[landuse=natural0][landuse_sub_type=t0][zoom>=10][zoom<14] {
-  polygon-fill: #8dc56c;
+.landuse[landuse=natural0][landuse_sub_type=t0][zoom>=10] {
+  polygon-fill: #72c063;
 }
 .landuse_extract[landuse=nature_reserve][zoom>=5][zoom<10] {
-}
-.landuse[landuse=natural0][landuse_sub_type=t0][zoom>=14] {
-  polygon-pattern-file: url('img/forest.png');
 }
 .landuse_extract[landuse=natural0][landuse_sub_type=t1][zoom>=5][zoom<10],
 .landuse[landuse=natural0][landuse_sub_type=t1][zoom>=10] {

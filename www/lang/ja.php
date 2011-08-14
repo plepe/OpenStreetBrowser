@@ -19,6 +19,7 @@
 $lang_str["general_info"]="General Information";
 $lang_str["yes"]="はい";
 $lang_str["no"]="いいえ";
+#$lang_str["ok"]="Ok";
 #$lang_str["save"]=array("Save");
 #$lang_str["cancel"]=array("Cancel");
 #$lang_str["longitude"]=array("Longitude", "Longitudes");
@@ -28,6 +29,8 @@ $lang_str["info_back"]="概要に戻る";
 $lang_str["info_zoom"]="ズーム";
 #$lang_str["nothing_found"]=array("nothing found");
 $lang_str["loading"]="読み込み中";
+#$lang_str["more"]="more";
+#$lang_str["unnamed"]="unnamed";
 
 // Headings
 $lang_str["head:general_info"]="全般的な情報";
@@ -36,7 +39,6 @@ $lang_str["head:routes"]="ルート";
 $lang_str["head:members"]="メンバー";
 $lang_str["head:address"]="住所";
 $lang_str["head:internal"]="OSM 内部";
-$lang_str["head:wikipedia"]="ウィキペディア";
 $lang_str["head:housenumbers"]="家番号";
 $lang_str["head:roads"]="道路";
 $lang_str["head:rails"]="鉄道";
@@ -52,6 +54,8 @@ $lang_str["head:routing"]="ルーティング";
 $lang_str["head:search"]="検索";
 $lang_str["head:actions"]="操作";
 #$lang_str["head:location"]="Location";
+#$lang_str["head:tags"]=array("Tag", "Tags");
+#$lang_str["head:whats_here"]="What's here?";
 
 $lang_str["action_browse"]="OSM で見る";
 $lang_str["action_edit"]="OSM で編集";
@@ -87,14 +91,6 @@ $lang_str["main:permalink"]="パーマリンク";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>オブジェクトがみつかりません</h1>ID \"%s\" のオブジェクトが見つかりません。次のいずれかの理由でしょう:<ul><li>IDが間違っている。</li><li>オブジェクトがまだサードパーティサイトに認識されておらず、OpenStreetBrowserでは(まだ)利用できない。</li><li>オブジェクトはサポート外のエリアにある。</li><li>リンクが古く、オブジェクトはOpenStreetMapから削除されている。</li></ul>";
 
-#$lang_str["start:choose"]=array("Choose map view");
-#$lang_str["start:geolocation"]=array("get geolocation");
-#$lang_str["start:lastview"]=array("last view");
-#$lang_str["start:savedview"]=array("last permalink");
-#$lang_str["start:startnormal"]=array("keep view");
-#$lang_str["start:remember"]=array("remember decision");
-#$lang_str["start:edit"]=array("edit...");
-
 $lang_str["options:autozoom"]="オートズームの挙動";
 $lang_str["help:autozoom"]="オブジェクトを選択すると、閲覧ポートはそのオブジェクトにパンし、ズームレベルも切り替えられます。このオプションで異なるモード間を選択できます。";
 $lang_str["options:autozoom:pan"]="現在のオブジェクトにパン(精度優先)";
@@ -110,12 +106,43 @@ $lang_str["lang:"]="ブラウザの設定言語";
 $lang_str["overlay:data"]="データ";
 $lang_str["overlay:draggable"]="マーカー";
 
-$lang_str["wikipedia:read_more"]="もっと見る";
+
+#$lang_str["user:no_auth"]="Username or password wrong!";
+#$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
+#$lang_str["user:create_user"]="Create a new user:";
+#$lang_str["user:username"]="Username";
+#$lang_str["user:email"]="E-mail address";
+#$lang_str["user:password"]="Password";
+#$lang_str["user:password_verify"]="Verify password";
+#$lang_str["user:old_password"]="Old password";
+#$lang_str["user:no_username"]="Please supply a username!";
+#$lang_str["user:password_no_match"]="Passwords do not match!";
+#$lang_str["user:full_name"]="Full name";
+#$lang_str["user:user_exists"]="Username already exists";
+#$lang_str["user:login"]="Login";
+#$lang_str["user:logged_in_as"]="Logged in as ";
+#$lang_str["user:logout"]="Logout";
+
+#$lang_str["error"]="An error occured: ";
+#$lang_str["error:not_logged_in"]="you are not logged in";
+
+#$lang_str["more_categories"]="More categories";
+#$lang_str["category:status"]="Status";
+#$lang_str["category:data_status"]="Status";
+#$lang_str["category:old_version"]="A new version of this category is being prepared.";
+#$lang_str["category:not_compiled"]="New category is being prepared.";
+
+#$lang_str["category_rule_tag:match"]="Match";
+#$lang_str["category_rule_tag:description"]="Description";
+#$lang_str["category_chooser:choose"]="Choose a category";
+#$lang_str["category_chooser:new"]="New category";
 
 #$lang_str["basemap:osb"]="OpenStreetBrowser";
 #$lang_str["basemap:mapnik"]="Standard (Mapnik)";
 #$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 #$lang_str["basemap:cyclemap"]="CycleMap";
+
+#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
 #$lang_str["lang:de"]="German";
@@ -128,6 +155,9 @@ $lang_str["wikipedia:read_more"]="もっと見る";
 #$lang_str["lang:uk"]="Ukrainian";
 #$lang_str["lang:ru"]="Russian";
 #$lang_str["lang:ja"]="Japanese";
+#$lang_str["lang:hu"]="Hungarian";
+
+
 
 // The following $lang_str are not defined in www/lang/en.php and might be 
 // deprecated/mislocated/wrong:
@@ -345,4 +375,3 @@ $lang_str["tag:amenity=restaurant"]="レストラン";
 $lang_str["tag:amenity=pub"]=array("パブ", "パブ");
 $lang_str["tag:highway"]=array("道路", "道路");
 $lang_str["tag:religion=christian"]="キリスト教";
-

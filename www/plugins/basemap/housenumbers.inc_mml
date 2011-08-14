@@ -2,6 +2,9 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="geometry_field">osm_way</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(
@@ -17,6 +20,9 @@
     <Datasource>
       <Parameter name="type">postgis</Parameter>
       <Parameter name="dbname">%DB_NAME%</Parameter>
+      <Parameter name="host">%DB_HOST%</Parameter>
+      <Parameter name="user">%DB_USER%</Parameter>
+      <Parameter name="password">%DB_PASS%</Parameter>
       <Parameter name="geometry_field">geo</Parameter>
       <Parameter name="srid">900913</Parameter>
       <Parameter name="table">(

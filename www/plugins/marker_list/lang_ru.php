@@ -1,4 +1,6 @@
 <?
-#$lang_str["marker_list:title"]="Marker List";
-#$lang_str["marker_list:empty_text"]="No markers in view port, add markers from context menu";
+$lang_str["marker_list:title"]="Список маркеров";
+$lang_str["marker_list:empty_text"]="Нет маркеров в окне просмотра, добавление маркеров из контекстного меню";
+
+
 

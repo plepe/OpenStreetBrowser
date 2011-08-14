@@ -81,22 +81,26 @@ function lang_from_browser($avail_langs=null) {
   return $chosen_lang;
 }
 
-$ui_lang=$_REQUEST['ui_lang'];
-if(!$ui_lang)
-  $lang=$_REQUEST['lang'];
-if($_REQUEST['param']['ui_lang'])
+if(isset($_REQUEST['ui_lang']))
+  $ui_lang=$_REQUEST['ui_lang'];
+if(!isset($ui_lang)&&
+   array_key_exists('param', $_REQUEST)&&
+   array_key_exists('ui_lang', $_REQUEST['param']))
   $ui_lang=$_REQUEST['param']['ui_lang'];
-if(!$ui_lang)
+if(!isset($ui_lang)&&array_key_exists('ui_lang', $_COOKIE))
   $ui_lang=$_COOKIE['ui_lang'];
-if(!$ui_lang)
+if(!isset($ui_lang))
   $ui_lang=lang_from_browser($ui_langs);
 if(!$ui_lang)
   $ui_lang="en";
 
-$data_lang=$_REQUEST['data_lang'];
-if($_REQUEST['param']['data_lang'])
+if(isset($_REQUEST['data_lang']))
+  $data_lang=$_REQUEST['data_lang'];
+if(!isset($data_lang)&&
+   array_key_exists('param', $_REQUEST)&&
+   array_key_exists('data_lang', $_REQUEST['param']))
   $data_lang=$_REQUEST['param']['data_lang'];
-if(!$data_lang)
+if(!isset($data_lang)&&array_key_exists('data_lang', $_COOKIE))
   $data_lang=$_COOKIE['data_lang'];
 if(!isset($data_lang))
   $data_lang="auto";
@@ -146,6 +150,7 @@ function lang_init() {
     print "<script type='text/javascript' src='inc/lang.js'></script>\n";
 
   html_export_var(array("ui_lang"=>$ui_lang, "data_lang"=>$data_lang, "ui_langs"=>$ui_langs, "lang_str"=>$lang_str, "language_list"=>$language_list));
+  add_html_header("<meta http-equiv=\"content-language\" content=\"{$ui_lang}\">");
 }
 
 // DEPRECATED: include JS language file

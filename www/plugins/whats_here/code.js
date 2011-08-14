@@ -81,12 +81,13 @@ function whats_here(lonlat) {
   }
 
   // constructor
+  this.id="whats_here="+lonlat.lon+","+lonlat.lat;
   this.request();
 }
 
 function whats_here_view_click(event, pos) {
   // if contextmenu listens for left mouse button ignore
-  if(options_get("contextmenu_mouse_button")=="left")
+  if(options_get("contextmenu_mouse_button")!="right")
     return;
 
   var lonlat = pos.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));

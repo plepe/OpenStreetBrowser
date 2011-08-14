@@ -1,5 +1,8 @@
 <?
 function wikipedia_parse($text) {
+  while(eregi("^(.*)\[\[[A-Za-z]+:([^\[]*)\]\](.*)", $text, $m)) {
+    $text=$m[1].$m[3];
+  }
   while(eregi("^(.*)\[\[([^\|\]*\|)?([^\[\|]*)\]\](.*)", $text, $m)) {
     $text=$m[1].$m[3].$m[4];
   }
@@ -81,19 +84,29 @@ function wikipedia_get_abstract($object, $page, $lang) {
     $text=""; unset($img);
     $enough=0;
     $inside=0;
-    while(($r=fgets($f))&&(!$enough)) {
+    $r=fgets($f);
+    while(!$enough) {
   //    if(!$img&&eregi("\[\[Bild:([^\|\]]*)[\|\]]", $r, $m)) {
       $r=chop($r);
+
       if(($r=="")||
 	 (preg_match("/^<!--/", $r))
 	) {
       }
 
-      elseif(ereg("\{\{(.*)", $r)) {
-        $inside=1;
+      elseif(ereg("(.*)\{\{(.*)\}\}(.*)", $r, $m)) {
+	$r=$m[1].$m[3];
+	continue;
       }
-      elseif(ereg("\}\}(.*)", $r)) {
-        $inside=0;
+      elseif(eregi("(.*)<(.*)>(.*)", $r, $m)) {
+	$r=$m[1].$m[3];
+	continue;
+      }
+      elseif(ereg("(.*)\{(\{|\|)(.*)", $r, $m)) {
+        $inside++;
+      }
+      elseif(ereg("(\}|\|)\}(.*)", $r, $m)) {
+        $inside--;
       }
 
       elseif(!$img&&eregi("\[\[.*:([^\|]*\.(png|jpg|gif))", $r, $m)) {
@@ -106,10 +119,15 @@ function wikipedia_get_abstract($object, $page, $lang) {
 	$url=strtr("http://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/$img/100px-$img", array(" "=>"_"));
 	$img="<img src='$url' align='left' class='wikipedia_image'>\n";
       }
-      elseif($inside==0 && !ereg("^[\|\}\{\[\!]", $r)) {
-	$text.=wikipedia_parse($r);
-	$enough=1;
+      elseif($inside==0) {
+	$t=wikipedia_parse($r);
+	if(!preg_match("/^ *$/", $t)) {
+	  $text.=$t;
+	  $enough=1;
+	}
       }
+
+      $r=fgets($f);
     }
     fclose($f);
   }
@@ -168,8 +186,9 @@ function wikipedia_info($info_ret, $object) {
   $ret="";
   global $data_lang;
 
-  if($text=cache_search($object->id, "wikipedia_info:$data_lang")) {
-    $ret.="$text<a class='external' href='$url' target='_blank'>".lang("read_more")."</a>";
+  if($data=cache_search($object->id, "wikipedia_info:$data_lang")) {
+    $data=unserialize($data);
+    $ret.="{$data['text']}<a class='external' href='{$data['url']}' target='_blank'>".lang("wikipedia:read_more")."</a>";
 
     $info_ret[]=array("head"=>"wikipedia", "content"=>$ret);
     return;
@@ -186,7 +205,7 @@ function wikipedia_info($info_ret, $object) {
 
   $text=wikipedia_get_abstract($object, $page, $lang);
 
-  cache_insert($object->id, "wikipedia_info:$data_lang", $text, "1 hour");
+  cache_insert($object->id, "wikipedia_info:$data_lang", serialize(array("text"=>$text, "url"=>$url)), "1 hour");
 
   if($text) {
     $ret.="$text<a class='external' style='line-height:2em;' href='$url' target='_blank'>".lang("wikipedia:read_more")."</a>";

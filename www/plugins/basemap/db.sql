@@ -5,19 +5,19 @@ insert into classify_hmatch values ( 'basemap_highway',
   '#highway_type=>motorway, #highway_subtype=>t1, #highway_level=>21'
 );
 insert into classify_hmatch values ( 'basemap_highway',
-  'highway=>trunk',
-  null,
-  '#highway_type=>motorway, #highway_subtype=>t2, #highway_level=>21'
-);
-insert into classify_hmatch values ( 'basemap_highway',
   'highway=>motorway_link',
   null,
-  '#highway_type=>motorway, #highway_subtype=>t3, #highway_level=>20'
+  '#highway_type=>motorway, #highway_subtype=>t2, #highway_level=>9'
+);
+insert into classify_hmatch values ( 'basemap_highway',
+  'highway=>trunk',
+  null,
+  '#highway_type=>motorway, #highway_subtype=>t3, #highway_level=>21'
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>trunk_link',
   null,
-  '#highway_type=>motorway, #highway_subtype=>t4, #highway_level=>20'
+  '#highway_type=>motorway, #highway_subtype=>t4, #highway_level=>9'
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>primary',
@@ -27,7 +27,7 @@ insert into classify_hmatch values ( 'basemap_highway',
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>primary_link',
   null,
-  '#highway_type=>major, #highway_subtype=>t2, #highway_level=>12'
+  '#highway_type=>major, #highway_subtype=>t2, #highway_level=>8'
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>secondary',
@@ -119,43 +119,49 @@ insert into classify_hmatch values ( 'basemap_highway',
 insert into classify_hmatch values ( 'basemap_highway',
   'railway=>tram',
   null,
-  '#highway_type=>railway, #highway_subtype=>t1, #highway_level=>1',
+  '#highway_type=>railway, #highway_subtype=>t1, #highway_level=>1, #highway_extract_level=>16',
   -1
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'railway=>light_rail',
   null,
-  '#highway_type=>railway, #highway_subtype=>t1, #highway_level=>1',
+  '#highway_type=>railway, #highway_subtype=>t1, #highway_level=>1, #highway_extract_level=>16',
   -1
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'railway=>narrow_gauge',
   null,
-  '#highway_type=>railway, #highway_subtype=>t1, #highway_level=>1',
+  '#highway_type=>railway, #highway_subtype=>t1, #highway_level=>1, #highway_extract_level=>15',
+  -1
+);
+insert into classify_hmatch values ( 'basemap_highway',
+  'railway=>rail, usage=>main',
+  null,
+  '#highway_type=>railway, #highway_subtype=>t2, #highway_level=>1, #highway_extract_level=>18',
   -1
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'railway=>rail',
   null,
-  '#highway_type=>railway, #highway_subtype=>t2, #highway_level=>1',
+  '#highway_type=>railway, #highway_subtype=>t2, #highway_level=>1, #highway_extract_level=>17',
   -1
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'railway=>subway',
   null,
-  '#highway_type=>railway, #highway_subtype=>t2, #highway_level=>1',
+  '#highway_type=>railway, #highway_subtype=>t2, #highway_level=>1, #highway_extract_level=>17',
   -1
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'railway=>preserved',
   null,
-  '#highway_type=>railway, #highway_subtype=>t2, #highway_level=>1',
+  '#highway_type=>railway, #highway_subtype=>t2, #highway_level=>1, #highway_extract_level=>1',
   -1
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'railway=>monorail',
   null,
-  '#highway_type=>railway, #highway_subtype=>t2, #highway_level=>1',
+  '#highway_type=>railway, #highway_subtype=>t2, #highway_level=>1, #highway_extract_level=>17',
   -1
 );
 insert into classify_hmatch values ( 'basemap_highway',

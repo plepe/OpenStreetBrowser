@@ -17,6 +17,7 @@ $languages=array(
   "es"=>"Spanish",
   "cs"=>"Czech",
   "hu"=>"Hungarian",
+  "ast"=>"Asturian",
 );
 
 function rewrite_str($str) {
@@ -71,7 +72,7 @@ function parse($lang, $wikipage) {
 	$file=$m[2];
       }
 
-      if($w) {
+      if(isset($w)) {
 	fclose($w);
 	unset($w);
       }
@@ -112,12 +113,12 @@ function parse($lang, $wikipage) {
 	}
       }
 
-      if($w)
+      if(isset($w))
 	fwrite($w, $r);
     }
   }
 
-  if($w)
+  if(isset($w))
     fclose($w);
 }
 

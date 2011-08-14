@@ -21,6 +21,7 @@ $base_language="en";
 $lang_str["general_info"]="Allgemeine Informationen";
 $lang_str["yes"]="ja";
 $lang_str["no"]="nein";
+$lang_str["ok"]="Ok";
 $lang_str["save"]=array("Speichern");
 $lang_str["cancel"]=array("Abbrechen");
 $lang_str["longitude"]=array("Longitude", "Longituden");
@@ -32,6 +33,7 @@ $lang_str["nothing_found"]=array("nichts gefunden");
 $lang_str["loading"]="lade";
 $lang_str["more"]="mehr";
 $lang_str["source"]="Quelle";
+$lang_str["unnamed"]="Namenlos";
 
 // Headings
 $lang_str["head:general_info"]="Allgemeine Informationen";
@@ -40,7 +42,6 @@ $lang_str["head:routes"]="Routen";
 $lang_str["head:members"]="Mitglieder";
 $lang_str["head:address"]="Adresse";
 $lang_str["head:internal"]="Interne OSM-Daten";
-$lang_str["head:wikipedia"]="Wikipedia";
 $lang_str["head:housenumbers"]="Hausnummern";
 $lang_str["head:roads"]="Straßen";
 $lang_str["head:rails"]="Eisenbahnstrecken";
@@ -55,8 +56,9 @@ $lang_str["head:graves"]="Wichtige Gräber";
 $lang_str["head:routing"]="Routenplanung";
 $lang_str["head:search"]="Suche";
 $lang_str["head:actions"]="Aktionen";
-#$lang_str["head:location"]="Location";
+$lang_str["head:location"]=array("M", "Ort", "Orte");
 $lang_str["head:tags"]=array("Tag", "Tags");
+$lang_str["head:whats_here"]="Was ist hier?";
 
 $lang_str["action_browse"]="In OSM ansehen";
 $lang_str["action_edit"]="Auf OSM editieren";
@@ -90,15 +92,7 @@ $lang_str["main:donate"]="Spende";
 $lang_str["main:licence"]="Kartendaten: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>-Mitwirkende | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> und <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">Mitwirkende</a>";
 $lang_str["main:permalink"]="Permalink";
 
-$lang_str["help:no_object"]="Ein Objekt mit der ID \"%s\" konnte nicht gefunden werden. Das kann eine (oder mehrere) der folgenden Ursachen haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde von einer anderen Applikation identifiziert und ist im OpenStreetBrowser (noch) nicht verfügbar</li><li>Das Objekt liegt ausserhalb des unterstützten Gebiets</li><li>Der Link, dem Du gefolgt bist, war alt und das Objekt wurde inzwischen aus der OpenStreetMap gelöscht.</li>";
-
-$lang_str["start:choose"]=array("Wähle einen Kartenausschnitt");
-$lang_str["start:geolocation"]=array("automatische Geolokalisierung");
-$lang_str["start:lastview"]=array("letzter Kartenausschnitt");
-$lang_str["start:savedview"]=array("letzter Permalink");
-$lang_str["start:startnormal"]=array("behalte Ansicht");
-$lang_str["start:remember"]=array("Auswahl merken");
-$lang_str["start:edit"]=array("editieren...");
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Objekt nicht gefunden</h1>Es konnte kein Objekt mit der ID \"%s\" gefunden werden. Dies kann einen (oder mehrere) der folgenden Gründe haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde durch Dritte identifiziert und ist (noch) nicht bei OpenStreetBrowser verfügbar.</li><li>Das Objekt liegt außerhalb des unterstützen Gebiets.</li><li>Der Link dem du gefolgt bist ist alt und das Objekt wurde zwischenzeitlich aus OpenStreetMap entfernt.</li></ul>";
 
 $lang_str["options:autozoom"]="Autozoomverhalten";
 $lang_str["help:autozoom"]="Wenn ein Objekt ausgewählt wird, schwenkt der Kartenausschnitt zu dem Objekt, auch der Zoomlevel wird angepasst. Mit dieser Option kann zwischen verschiedenen Modi gewählt werden.";
@@ -116,42 +110,41 @@ $lang_str["lang:auto"]="Gleich wie Anwendungssprache";
 $lang_str["overlay:data"]="Data";
 $lang_str["overlay:draggable"]="Markierungen";
 
-$lang_str["wikipedia:read_more"]="weiterlesen";
-
-#$lang_str["user:no_auth"]="Username or password wrong!";
-#$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
-#$lang_str["user:create_user"]="Create a new user:";
-#$lang_str["user:username"]="Username";
-#$lang_str["user:email"]="E-mail address";
-#$lang_str["user:password"]="Password";
-#$lang_str["user:password_verify"]="Verify password";
-#$lang_str["user:old_password"]="Old password";
-#$lang_str["user:no_username"]="Please supply a username!";
-#$lang_str["user:password_no_match"]="Passwords do not match!";
-#$lang_str["user:full_name"]="Full name";
-#$lang_str["user:user_exists"]="Username already exists";
+$lang_str["user:no_auth"]="Benutzername oder Passwort falsch!";
+$lang_str["user:login_text"]="Bei OpenStreetBrowser Anmelden:";
+$lang_str["user:create_user"]="Neuen Benutzer erstellen:";
+$lang_str["user:username"]="Benutzername";
+$lang_str["user:email"]="E-mail Adresse";
+$lang_str["user:password"]="Passwort";
+$lang_str["user:password_verify"]="Passwort bestätigen";
+$lang_str["user:old_password"]="Altes Passwort";
+$lang_str["user:no_username"]="Bitte einen Benutzernamen angeben!";
+$lang_str["user:password_no_match"]="Passwörter sind nicht identisch!";
+$lang_str["user:full_name"]="Vor- und Zuname";
+$lang_str["user:user_exists"]="Benutzername existiert bereits";
 $lang_str["user:login"]="Anmelden";
 $lang_str["user:logged_in_as"]="Angemeldet als ";
 $lang_str["user:logout"]="Abmelden";
 
-#$lang_str["error"]="An error occured: ";
-#$lang_str["error:not_logged_in"]="you are not logged in";
+$lang_str["error"]="Es ist ein Fehler aufgetreten: ";
+$lang_str["error:not_logged_in"]="Du bist nicht eingeloggt";
 
-#$lang_str["more_categories"]="More categories";
-#$lang_str["category:status"]="Status";
-#$lang_str["category:data_status"]="Status";
-#$lang_str["category:old_version"]="A new version of this category is being prepared.";
-#$lang_str["category:not_compiled"]="New category is being prepared.";
+$lang_str["more_categories"]="Mehr Kategorien";
+$lang_str["category:status"]="Status";
+$lang_str["category:data_status"]="Status";
+$lang_str["category:old_version"]="Eine neue Version dieser Kategorie wird vorbereitet.";
+$lang_str["category:not_compiled"]="Neue Kategorie wird vorbereitet.";
 
-#$lang_str["category_rule_tag:match"]="Match";
-#$lang_str["category_rule_tag:description"]="Description";
+$lang_str["category_rule_tag:match"]="Treffer";
+$lang_str["category_rule_tag:description"]="Beschreibung";
+$lang_str["category_chooser:choose"]="Wähle eine Kategorie";
+$lang_str["category_chooser:new"]="Neue Kategorie anlegen";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
-if(function_exists("lang"))
 #$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
 // please finish this list, see list.php for full list of languages
@@ -165,5 +158,4 @@ $lang_str["lang:fr"]="Französisch";
 $lang_str["lang:uk"]="Ukrainisch";
 $lang_str["lang:ru"]="Russisch";
 $lang_str["lang:ja"]="Japanisch";
-#$lang_str["lang:hu"]="Hungarian";
-
+$lang_str["lang:hu"]="Ungarisch";
