@@ -15,3 +15,4 @@ $lang_str["navigation:destination"]="destination";
 $lang_str["navigation:instructions"]="Instructions";
 
 $lang_str["navigation:reverse"]="reverse";
+$lang_str["navigation:go"]="go";

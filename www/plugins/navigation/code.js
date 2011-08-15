@@ -125,7 +125,7 @@ function navigation_route(id) {
     }
     param.push(this.destination.id());
 
-    return param.join(":");
+    return "navigation="+param.join(":");
   }
 
   // geo
@@ -469,7 +469,7 @@ function navigation_update_url() {
   if(!id)
     return;
 
-  location.hash="#navigation="+id;
+  location.hash="#"+id;
 }
 
 var nav=new navigation_cloudmade();
@@ -617,6 +617,11 @@ function navigation_current_route_reverse() {
   navigation_current_route.reverse();
 }
 
+function navigation_current_route_go() {
+  if(navigation_current_route)
+    location.hash="#"+navigation_current_route.id();
+}
+
 function navigation_init() {
   navigation_toolbox=new toolbox({
     icon: "plugins/navigation/icon.png",
@@ -658,8 +663,8 @@ function navigation_init() {
   dom_create_append_text(button, lang("navigation:reverse"));
 
   var button=dom_create_append(this.toolbox_content, "button");
-  button.onclick=navigation_current_route_remove;//.bind(navigation_current_route, button);
-  dom_create_append_text(button, lang("navigation:remove"));
+  button.onclick=navigation_current_route_go;
+  dom_create_append_text(button, lang("navigation:go"));
 
   //var text = "<img src='plugins/navigation/icon_home.png' onclick='alert(home.lon + \"|\" + home.lat)'> <span id='navigation_hometext'></span><br/><img src='plugins/navigation/icon_via.png'> <span id='navigation_viatext' style='display:inline-block; padding-top:7px;'></span><br/><img src='plugins/navigation/icon_destination.png'> <span id='navigation_destinationtext'></span><br/><br/>
 
@@ -669,7 +674,7 @@ function navigation_init() {
 function navigation_search_object(ret, id) {
   var m;
   if(m=id.match("^navigation=(.*)$")) {
-    if(navigation_current_route.id()!=m[1]) {
+    if(navigation_current_route.id()!=id) {
       navigation_current_route.remove();
       navigation_current_route=new navigation_route(m[1]);
 
