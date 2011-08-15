@@ -92,7 +92,6 @@ function navigation_point(lon, lat, style) {
   var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
   var geo = new OpenLayers.Geometry.Point(pos.lon, pos.lat);
   this.feature = new OpenLayers.Feature.Vector(geo, 0, style);
-  this.show();
   this.feature.ob=this;
 }
 
@@ -175,6 +174,14 @@ function navigation_route(id) {
     for(var i=0; i<this.members.length; i++) {
       this.members[i].hide();
     }
+  }
+
+  this.info_show=function() {
+    this.show();
+  }
+
+  this.info_hide=function() {
+    this.hide();
   }
 
   /*
