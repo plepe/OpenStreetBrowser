@@ -114,16 +114,16 @@ function navigation_route(id) {
   this.id=function() {
     var param=[];
 
-    if(!(navigation_current_route.home && navigation_current_route.destination)) {
+    if(!(this.home && this.destination)) {
       return;
     }
 
-    param.push(navigation_current_route.travel_with);
-    param.push(navigation_current_route.home.id());
-    for(var i=0; i<navigation_current_route.via.length; i++) {
-      param.push(navigation_current_route.via[i].id());
+    param.push(this.travel_with);
+    param.push(this.home.id());
+    for(var i=0; i<this.via.length; i++) {
+      param.push(this.via[i].id());
     }
-    param.push(navigation_current_route.destination.id());
+    param.push(this.destination.id());
 
     return param.join(":");
   }
