@@ -291,19 +291,37 @@ function navigation_route(id) {
     switch(pos) {
       case "home":
 	this.home.remove();
-	this.home=points[1];
-	this.via=points.slice(2, -1);
-	this.destination=points[points.length-1];
+	if(points.length<=2) {
+	  this.home=null;
+	  this.via=[];
+	}
+	else {
+	  this.home=points[1];
+	  this.via=points.slice(2, -1);
+	  this.destination=points[points.length-1];
+	}
 	break;
       case "destination":
 	this.destination.remove();
-	this.via=points.slice(1, -2);
-	this.destination=points[points.length-2];
+	if(points.length<=2) {
+	  this.via=[];
+	  this.destination=null;
+	}
+	else {
+	  this.via=points.slice(1, -2);
+	  this.destination=points[points.length-2];
+        }
 	break;
       default:
 	this.via[pos].remove();
-	this.via=points.slice(1, pos+1).concat(points.slice(pos+2, -1));
-	this.destination=points[points.length-1];
+	if(points.length<=2) {
+	  // this shouldn't happen, but you never know
+	  this.via=[];
+	}
+	else {
+	  this.via=points.slice(1, pos+1).concat(points.slice(pos+2, -1));
+	  this.destination=points[points.length-1];
+	}
 	break;
     }
 
