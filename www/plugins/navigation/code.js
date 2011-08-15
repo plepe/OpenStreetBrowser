@@ -247,6 +247,7 @@ function navigation_route(id) {
       this.home.remove();
     }
     this.home=point;
+    point.show();
 
     this.update();
   }
@@ -257,6 +258,7 @@ function navigation_route(id) {
       this.destination.remove();
     }
     this.destination=point;
+    point.show();
 
     this.update();
   }
@@ -264,6 +266,7 @@ function navigation_route(id) {
   //adds a via point to the via array
   this.add_via=function(point) {
     this.via.push(point);
+    point.show();
 
     this.update();
   }
