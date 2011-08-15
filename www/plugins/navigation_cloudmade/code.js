@@ -47,6 +47,10 @@ var navigation_cloudmade_travelwith=[
 ];
 
 function navigation_cloudmade() {
+  this.inheritFrom=geo_object;
+  this.inheritFrom();
+  this.type="navigation_cloudmade";
+
   // get_route
   this.get_route=function(param, _callback) {
     var route=new navigate_cloudmade_route();
