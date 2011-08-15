@@ -325,6 +325,8 @@ function navigation_route(id) {
 	break;
     }
 
+    if((!this.home)||(!this.destination))
+      this.calculated_route.remove();
     this.update();
     navigation_update_url();
   }
