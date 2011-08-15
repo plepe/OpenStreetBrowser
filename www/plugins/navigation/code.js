@@ -267,6 +267,16 @@ function navigation_route(id) {
     this.via.splice(i, 1);
   }
 
+  //remove a navigation point
+  this.remove_points=function(pos) {
+    alert(pos);
+  }
+
+  //remove a navigation point
+  this.exchange_points=function(pos) {
+    alert(pos);
+  }
+
   // show_route
   this.show_route=function(route) {
     if(this.calculated_route)
@@ -375,6 +385,14 @@ function navigation_update_url() {
 
 var nav=new navigation_cloudmade();
 
+function navigation_remove_points(pos) {
+  navigation_current_route.remove_points(pos);
+}
+
+function navigation_exchange_points(pos) {
+  navigation_current_route.exchange_points(pos);
+}
+
 function navigation_toolboxtext() {
   var utm=new OpenLayers.Projection("EPSG:4326");
 
@@ -408,7 +426,10 @@ function navigation_toolboxtext() {
   var td=dom_create_append(tr, "td");
   td.rowSpan=2;
   td.className="remove";
-  td.innerHTML="X";
+
+  var img=dom_create_append(td, "img");
+  img.src="plugins/navigation/remove.png";
+  img.onclick=navigation_remove_points.bind(this, "home");
 
   var td=dom_create_append(tr, "td");
   td.className="exchange_placeholder";
@@ -417,7 +438,10 @@ function navigation_toolboxtext() {
   var td=dom_create_append(tr, "td");
   td.rowSpan=2;
   td.className="exchange";
-  td.innerHTML=")";
+
+  var img=dom_create_append(td, "img");
+  img.src="plugins/navigation/exchange.png";
+  img.onclick=navigation_exchange_points.bind(this, "home");
 
   // via
   if(navigation_current_route.via.length) {
@@ -438,13 +462,19 @@ function navigation_toolboxtext() {
       var td=dom_create_append(tr, "td");
       td.rowSpan=2;
       td.className="remove";
-      td.innerHTML="X";
+
+      var img=dom_create_append(td, "img");
+      img.src="plugins/navigation/remove.png";
+      img.onclick=navigation_remove_points.bind(this, i);
 
       var tr=dom_create_append(nav_table, "tr");
       var td=dom_create_append(tr, "td");
       td.rowSpan=2;
       td.className="exchange";
-      td.innerHTML=")";
+
+      var img=dom_create_append(td, "img");
+      img.src="plugins/navigation/exchange.png";
+      img.onclick=navigation_exchange_points.bind(this, i);
     }
   }
 
@@ -469,7 +499,10 @@ function navigation_toolboxtext() {
   var td=dom_create_append(tr, "td");
   td.rowSpan=2;
   td.className="remove";
-  td.innerHTML="X";
+
+  var img=dom_create_append(td, "img");
+  img.src="plugins/navigation/remove.png";
+  img.onclick=navigation_remove_points.bind(this, "destination");
 
   var tr=dom_create_append(nav_table, "tr");
   var td=dom_create_append(tr, "td");
