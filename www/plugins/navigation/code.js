@@ -55,6 +55,11 @@ function navigation_point(lon, lat, style) {
     return this.feature.geometry;
   }
 
+  // set_style
+  this.set_style=function(style) {
+    this.feature.style=style;
+  }
+
   // hide
   this.hide=function() {
     drag_layer.unselect(this.feature);
@@ -218,14 +223,17 @@ function navigation_route(id) {
       this.member_roles.push("route");
     }
     if(this.home) {
+      this.home.set_style(home_style);
       this.members.push(this.home);
       this.member_roles.push("home");
     }
     for(var i=0; i<this.via.length; i++) {
+      this.via[i].set_style(via_style);
       this.members.push(this.via[i]);
       this.member_roles.push("via");
     }
     if(this.destination) {
+      this.destination.set_style(destination_style);
       this.members.push(this.destination);
       this.member_roles.push("destination");
     }
