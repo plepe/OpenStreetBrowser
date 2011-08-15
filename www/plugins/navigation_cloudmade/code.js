@@ -27,7 +27,7 @@
 //   .vectors                       - Array of OpenLayers Vectors of the route
 //   .text                          - Holds the original GPX-File
 //   .dom                           - Holds a DOM representation of GPX
-//   .show()                        - Show route on drag_layer
+//   .show()                        - Show route on vector_layer
 //   .hide()                        - Hide route
 
 var navigation_cloudmade_travelwith=[
@@ -143,12 +143,12 @@ function navigate_cloudmade_route() {
 
   // show
   this.show=function() {
-    drag_layer.addFeatures(this.vectors);
+    vector_layer.addFeatures(this.vectors);
   }
 
   // hide
   this.hide=function() {
-    drag_layer.removeFeatures(this.vectors);
+    vector_layer.removeFeatures(this.vectors);
   }
 
   // remove 
