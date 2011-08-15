@@ -392,16 +392,32 @@ function navigation_toolboxtext() {
 
   var td=dom_create_append(tr, "td");
   td.className="icon";
+  td.rowSpan=2;
   var img=dom_create_append(td, "img");
   img.src="plugins/navigation/icon_home.png";
 
   var td=dom_create_append(tr, "td");
+  td.rowSpan=2;
   if(!navigation_current_route.home) {
     dom_create_append_text(td, lang("navigation:home"));
   }
   else {
     dom_create_append_text(td, navigation_current_route.home.name());
   }
+
+  var td=dom_create_append(tr, "td");
+  td.rowSpan=2;
+  td.className="remove";
+  td.innerHTML="X";
+
+  var td=dom_create_append(tr, "td");
+  td.className="exchange_placeholder";
+
+  var tr=dom_create_append(nav_table, "tr");
+  var td=dom_create_append(tr, "td");
+  td.rowSpan=2;
+  td.className="exchange";
+  td.innerHTML=")";
 
   // via
   if(navigation_current_route.via.length) {
@@ -410,12 +426,25 @@ function navigation_toolboxtext() {
 
       var td=dom_create_append(tr, "td");
       td.className="icon";
+      td.rowSpan=2;
       var img=dom_create_append(td, "img");
       img.src="plugins/navigation/icon_via.png";
 
       var td=dom_create_append(tr, "td");
+      td.rowSpan=2;
       var div=dom_create_append(td, "div");
       dom_create_append_text(div, navigation_current_route.via[i].name());
+
+      var td=dom_create_append(tr, "td");
+      td.rowSpan=2;
+      td.className="remove";
+      td.innerHTML="X";
+
+      var tr=dom_create_append(nav_table, "tr");
+      var td=dom_create_append(tr, "td");
+      td.rowSpan=2;
+      td.className="exchange";
+      td.innerHTML=")";
     }
   }
 
@@ -423,17 +452,28 @@ function navigation_toolboxtext() {
   var tr=dom_create_append(nav_table, "tr");
 
   var td=dom_create_append(tr, "td");
+  td.rowSpan=2;
   td.className="icon";
   var img=dom_create_append(td, "img");
   img.src="plugins/navigation/icon_destination.png";
 
   var td=dom_create_append(tr, "td");
+  td.rowSpan=2;
   if(!navigation_current_route.destination) {
     dom_create_append_text(td, lang("navigation:destination"));
   }
   else {
     dom_create_append_text(td, navigation_current_route.destination.name());
   }
+
+  var td=dom_create_append(tr, "td");
+  td.rowSpan=2;
+  td.className="remove";
+  td.innerHTML="X";
+
+  var tr=dom_create_append(nav_table, "tr");
+  var td=dom_create_append(tr, "td");
+  td.className="exchange_placeholder";
 
   // travel with
   var select=document.getElementById("navigation_travel_with");

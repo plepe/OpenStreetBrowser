@@ -10,3 +10,14 @@ table#navigation_points td.icon {
   width: 20px;
   text-align: left;
 }
+table#navigation_points td.remove {
+  width: 16px;
+  text-align: center;
+}
+table#navigation_points td.exchange {
+  width: 16px;
+  text-align: center;
+}
+table#navigation_points td.exchange_placeholder {
+  height: 5px;
+}
