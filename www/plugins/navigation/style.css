@@ -1,0 +1,12 @@
+table#navigation_points {
+  border: none;
+  border-collapse: collapse;
+  width: 100%;
+}
+table#navigation_points td {
+  border: none;
+}
+table#navigation_points td.icon {
+  width: 20px;
+  text-align: left;
+}

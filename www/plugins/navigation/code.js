@@ -391,6 +391,7 @@ function navigation_toolboxtext() {
   var tr=dom_create_append(nav_table, "tr");
 
   var td=dom_create_append(tr, "td");
+  td.className="icon";
   var img=dom_create_append(td, "img");
   img.src="plugins/navigation/icon_home.png";
 
@@ -403,19 +404,16 @@ function navigation_toolboxtext() {
   }
 
   // via
-  var tr=dom_create_append(nav_table, "tr");
-
-  var td=dom_create_append(tr, "td");
-  var img=dom_create_append(td, "img");
-  img.src="plugins/navigation/icon_via.png";
-
-  var td=dom_create_append(tr, "td");
-  if(navigation_current_route.via.length==0) {
-    var div=dom_create_append(td, "div");
-    dom_create_append_text(div, lang("navigation:via"));
-  }
-  else {
+  if(navigation_current_route.via.length) {
     for(var i=0; i<navigation_current_route.via.length; i++) {
+      var tr=dom_create_append(nav_table, "tr");
+
+      var td=dom_create_append(tr, "td");
+      td.className="icon";
+      var img=dom_create_append(td, "img");
+      img.src="plugins/navigation/icon_via.png";
+
+      var td=dom_create_append(tr, "td");
       var div=dom_create_append(td, "div");
       dom_create_append_text(div, navigation_current_route.via[i].name());
     }
@@ -425,6 +423,7 @@ function navigation_toolboxtext() {
   var tr=dom_create_append(nav_table, "tr");
 
   var td=dom_create_append(tr, "td");
+  td.className="icon";
   var img=dom_create_append(td, "img");
   img.src="plugins/navigation/icon_destination.png";
 
