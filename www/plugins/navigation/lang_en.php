@@ -13,3 +13,5 @@ $lang_str["navigation:via"]="via";
 $lang_str["navigation:destination"]="destination";
 
 $lang_str["navigation:instructions"]="Instructions";
+
+$lang_str["navigation:reverse"]="reverse";

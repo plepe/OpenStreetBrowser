@@ -158,13 +158,14 @@ function navigation_route(id) {
     navigation_update_url();
   }
 
-  //inverts route
-  this.invert=function(button){
+  // reverse
+  this.reverse=function(button){
     var temp=this.home;
     this.home=this.destination;
     this.destination=temp;
     this.via.reverse();
 
+    this.update();
     navigation_toolboxtext();
     navigation_update_url();
   }
@@ -612,6 +613,10 @@ function navigation_current_route_change_route_type() {
   navigation_current_route.change_route_type();
 }
 
+function navigation_current_route_reverse() {
+  navigation_current_route.reverse();
+}
+
 function navigation_init() {
   navigation_toolbox=new toolbox({
     icon: "plugins/navigation/icon.png",
@@ -649,8 +654,8 @@ function navigation_init() {
   }
 
   var button=dom_create_append(this.toolbox_content, "button");
-  button.onclick=navigation_current_route.invert.bind(navigation_current_route, button);
-  dom_create_append_text(button, lang("navigation:invert"));
+  button.onclick=navigation_current_route_reverse;
+  dom_create_append_text(button, lang("navigation:reverse"));
 
   var button=dom_create_append(this.toolbox_content, "button");
   button.onclick=navigation_current_route_remove;//.bind(navigation_current_route, button);
