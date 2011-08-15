@@ -269,12 +269,69 @@ function navigation_route(id) {
 
   //remove a navigation point
   this.remove_points=function(pos) {
-    alert(pos);
+    var points=[];
+    if(this.home)
+      points.push(this.home);
+    for(var i=0; i<this.via.length; i++)
+      points.push(this.via[i]);
+    if(this.destination)
+      points.push(this.destination);
+
+    switch(pos) {
+      case "home":
+	this.home.remove();
+	this.home=points[1];
+	this.via=points.slice(2, -1);
+	this.destination=points[points.length-1];
+	break;
+      case "destination":
+	this.destination.remove();
+	this.via=points.slice(1, -2);
+	this.destination=points[points.length-2];
+	break;
+      default:
+	this.via[pos].remove();
+	this.via=points.slice(1, pos+1).concat(points.slice(pos+2, -1));
+	this.destination=points[points.length-1];
+	break;
+    }
+
+    this.update();
+    navigation_update_url();
   }
 
   //remove a navigation point
   this.exchange_points=function(pos) {
-    alert(pos);
+    var points=[];
+    if(this.home)
+      points.push(this.home);
+    for(var i=0; i<this.via.length; i++)
+      points.push(this.via[i]);
+    if(this.destination)
+      points.push(this.destination);
+
+    switch(pos) {
+      case "home":
+	var p;
+	p=points[0];
+        points[0]=points[1];
+	points[1]=p;
+        break;
+      default:
+	var p;
+	p=points[pos+1];
+        points[pos+1]=points[pos+2];
+	points[pos+2]=p;
+    }
+
+    this.home=points[0];
+    this.via=[];
+    for(var i=1; i<points.length-1; i++)
+      this.via.push(points[i]);
+    this.destination=points[points.length-1];
+
+    this.update();
+    navigation_update_url();
   }
 
   // show_route
