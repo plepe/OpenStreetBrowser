@@ -161,6 +161,28 @@ function navigate_cloudmade_route() {
   }
 
   // print_instructions
+  this.print_key_data=function(div) {
+    var ext=this.dom.getElementsByTagName("extensions");
+    if(!ext.length)
+      return;
+    ext=ext[0];
+
+    var ul=dom_create_append(div, "ul");
+
+    // Distance
+    var d=ext.getElementsByTagName("distance");
+    var li=dom_create_append(ul, "li");
+    dom_create_append_text(li, lang("routing_distance")+": "+
+                           units_format_length(d[0].textContent));
+
+    // Time
+    var d=ext.getElementsByTagName("time");
+    var li=dom_create_append(ul, "li");
+    dom_create_append_text(li, lang("routing_time")+": "+
+                           units_format_time(d[0].textContent));
+  }
+
+  // print_instructions
   this.print_instructions=function(div) {
     var rtes=this.dom.getElementsByTagName("rte");
     if(!rtes.length) {

@@ -140,11 +140,20 @@ function navigation_route(id) {
   this.info=function(chapters) {
     this.calculate_route();
 
+    this.key_data=document.createElement("div");
+    this.key_data.innerHTML="<img src=\"img/ajax_loader.gif\" /> "+lang("loading");
+
+    chapters.push({
+      head: "key_data",
+      content: this.key_data,
+      weight: 1
+    });
+
     this.instructions=document.createElement("div");
     this.instructions.innerHTML="<img src=\"img/ajax_loader.gif\" /> "+lang("loading");
 
     chapters.push({
-      head: lang("navigation:instructions"),
+      head: "instructions",
       content: this.instructions,
       weight: 1
     });
@@ -372,6 +381,12 @@ function navigation_route(id) {
       this.calculated_route.hide();
 
     this.calculated_route=route;
+
+    if(this.key_data) {
+      dom_clean(this.key_data);
+
+      this.calculated_route.print_key_data(this.key_data);
+    }
 
     if(this.instructions) {
       dom_clean(this.instructions);
