@@ -426,16 +426,17 @@ function navigation_route(id) {
   this.travel_with=navigation_cloudmade_travelwith[0].id;
 
   if(id) {
-    id=id.split(":");
+    m=id.match(/^navigation=(.*)$/);
+    params=m[1].split(":");
 
-    this.travel_with=id[0];
-    var latlon=id[1].split(",");
+    this.travel_with=params[0];
+    var latlon=params[1].split(",");
     this.set_home(new navigation_point(latlon[1], latlon[0], home_style));
-    for(var i=2; i<id.length-1; i++) {
-      var latlon=id[i].split(",");
+    for(var i=2; i<params.length-1; i++) {
+      var latlon=params[i].split(",");
       this.add_via(new navigation_point(latlon[1], latlon[0], via_style));
     }
-    var latlon=id[i].split(",");
+    var latlon=params[i].split(",");
     this.set_destination(new navigation_point(latlon[1], latlon[0], destination_style));
   }
 
@@ -676,7 +677,7 @@ function navigation_search_object(ret, id) {
   if(m=id.match("^navigation=(.*)$")) {
     if(navigation_current_route.id()!=id) {
       navigation_current_route.remove();
-      navigation_current_route=new navigation_route(m[1]);
+      navigation_current_route=new navigation_route(id);
 
       navigation_toolboxtext();
     }
