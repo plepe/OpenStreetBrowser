@@ -9,7 +9,7 @@ function toggle_mapkey() {
   if(map_key.className=='map_key_hidden') {
     map.className='map_with_mapkey';
     map_key.className='map_key';
-    check_mapkey();
+    map_key_check();
   }
   else {
     map.className='map';
@@ -40,10 +40,10 @@ function display_mapkey(response) {
     mapkey_overlays[overlays[i].getAttribute("value")]=1;
   }
 
-  check_mapkey();
+  map_key_check();
 }
 
-function check_mapkey() {
+function map_key_check() {
   var map_key=document.getElementById("map_key");
   var new_mapkey_overlays=[];
   var overlays_changed=0;
@@ -61,3 +61,5 @@ function check_mapkey() {
 
 function map_key_init() {
 }
+
+register_hook("view_changed", map_key_check);

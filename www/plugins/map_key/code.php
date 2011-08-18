@@ -303,11 +303,11 @@ class map_key {
         $param=implode("&", $p);
 
 	if($geom["poly"])
-	  $ret.="<div><embed width='30' type='image/svg+xml' src='mapkey_polygon.php?$param' /></div>";
+	  $ret.="<div><embed width='30' type='image/svg+xml' src='plugins/map_key/symbol_polygon.php?$param' /></div>";
 	elseif($geom["line"])
-	  $ret.="<div><embed width='30' type='image/svg+xml' src='mapkey_line.php?$param' /></div>";
+	  $ret.="<div><embed width='30' type='image/svg+xml' src='plugins/map_key/symbol_line.php?$param' /></div>";
 	elseif($geom["point"])
-	  $ret.="<div><embed width='30' type='image/svg+xml' src='mapkey_point.php?$param' /></div>";
+	  $ret.="<div><embed width='30' type='image/svg+xml' src='plugins/map_key/symbol_point.php?$param' /></div>";
         $ret.="</td><td>\n";
         $ret.=lang("$options[prefix]$depend");
         $ret.="</td></tr>\n";
