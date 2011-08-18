@@ -2,7 +2,7 @@ var mapkey_zoom=-1;
 var mapkey_request=0;
 var mapkey_overlays=[];
 
-function toggle_mapkey() {
+function map_key_toggle() {
   var map=document.getElementById("map");
   var map_key=document.getElementById("map_key");
 

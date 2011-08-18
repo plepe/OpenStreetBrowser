@@ -83,7 +83,6 @@ $lang_str["map_key:zoom"]="Stupeň přiblížení";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
-$lang_str["main:map_key"]="Legenda";
 $lang_str["main:options"]="Nastavení";
 #$lang_str["main:about"]="About";
 $lang_str["main:donate"]="Sponzorovat";

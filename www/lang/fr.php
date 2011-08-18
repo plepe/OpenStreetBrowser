@@ -82,7 +82,6 @@ $lang_str["map_key:zoom"]="Niveau de Zoom";
 
 $lang_str["grave_is_on"]="Moulin à vent";
 
-$lang_str["main:map_key"]="Couche Carto";
 $lang_str["main:options"]="Options";
 $lang_str["main:about"]="À Propos de";
 $lang_str["main:donate"]="Donner";

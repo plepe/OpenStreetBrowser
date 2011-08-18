@@ -83,7 +83,6 @@ $lang_str["map_key:zoom"]="Nivel de zoom";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
-$lang_str["main:map_key"]="Símbolos del mapa";
 $lang_str["main:options"]="Opciones";
 $lang_str["main:about"]="Tocante a";
 $lang_str["main:donate"]="Donativos";

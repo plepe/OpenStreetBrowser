@@ -97,7 +97,6 @@ $menu_list[]=array(0,
   "</form></div>\n");
 
 $main_links=array(
-  array(-5, "<a href='javascript:toggle_mapkey()'>".lang("main:map_key")."</a>"),
   array(0, "<a href='javascript:show_options()'>".lang("main:options")."</a>"),
   array(1, "<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'>".lang("main:about")."</a>"),
   array(5, "<a href='javascript:time_count_do_beg()'>".lang("main:donate")."</a>")

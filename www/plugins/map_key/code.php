@@ -487,3 +487,9 @@ class map_key {
   }
 
 }
+
+function map_key_main_links($links) {
+  $links[]=array(-5, "<a href='javascript:map_key_toggle()'>".lang("main:map_key")."</a>");
+}
+
+register_hook("main_links", "map_key_main_links");
