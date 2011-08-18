@@ -36,13 +36,14 @@ function classes_match($value1, $operator, $value2) {
 
 function load_classes($file, $bounds) {
   global $class_info;
+  global $root_path;
 
 //  if(!is_array($keys))
 //    $keys=array($keys);
   if(!$class_info)
     $class_info=array();
 
-  $f=fopen("../render/$file.mss", "r");
+  $f=fopen("$root_path/www/plugins/basemap/$file.mss", "r");
   $this_style_query=array();
   $mode=0;
 
@@ -155,7 +156,6 @@ function load_classes($file, $bounds) {
     }
   }
 
-//print_r($class_info);
   $values=array();
 }
 
@@ -328,7 +328,9 @@ class map_key {
     load_classes("boundaries", $bounds);
     load_classes("water", $bounds);
     load_classes("places", $bounds);
+    load_classes("buildings", $bounds);
     load_classes("amenities", $bounds);
+    load_classes("housenumbers", $bounds);
 
     if($bounds[overlays][ch])
       load_classes("overlay_ch", $bounds);
@@ -349,6 +351,8 @@ class map_key {
 //    $ret.=$this->show_mss("land", array("buildings"), "Buildings", $bounds);
     $ret.="<h4>".lang("head:places")."</h4>\n";
     $ret.="<table>\n";
+    $ret.=$this->show_mss(array("places_high"), 
+      array("place"=>"*"), $bounds);
     $ret.=$this->show_mss(array("places_db"), 
       array("place"=>"*"), $bounds);
     $ret.="</table>\n";
@@ -357,10 +361,10 @@ class map_key {
     $ret.="<table>\n";
 //    $ret.=$this->show_mss(array("roads_casing", "roads_fill", "roads_rail"), 
 //      array("highway_type"=>"=rail", "railway"=>array("=tram", "=rail"), "tracks"=>"=single"), $bounds);
-    $ret.=$this->show_mss(array("roads_extract"), 
-      array("highway_type"=>array("=motorway", "=trunk", "=primary", "=secondary", "=tertiary", "=minor", "=service", "=pedestrian", "=track", "=path", "=aero_run", "=aero_taxi")), $bounds);
+    $ret.=$this->show_mss(array("roads_extcas", "roads_extract"), 
+      array("highway_type"=>array("=motorway", "=major", "=minor", "=service", "=pedestrian", "=path", "=aeroway"), "highway_sub_type"=>"*"), $bounds);
     $ret.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
-      array("highway_type"=>array("=motorway", "=major", "=minor", "=service", "=pedestrian", "=path", "=aero", "=aero"), "sub_type"=>"*"), $bounds);
+      array("highway_type"=>array("=motorway", "=major", "=minor", "=service", "=pedestrian", "=path", "=aeroway"), "highway_sub_type"=>"*"), $bounds);
     $ret.=$this->show_mss(array("square_casing", "square_fill"), 
       array("type"=>"*"), $bounds, array("prefix"=>"square_"));
     $ret.="</table>\n";
@@ -368,7 +372,9 @@ class map_key {
     $ret.="<h4>".lang("head:rails")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("roads_extract"), 
-      array("highway_type"=>"=rail"), $bounds);
+      array("highway_type"=>"=railway", "highway_sub_type"=>"*"), $bounds);
+    $ret.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
+      array("highway_type"=>"=railway", "highway_sub_type"=>"*"), $bounds);
     $ret.=$this->show_mss(array("roads_rail"), 
       array("railway"=>"*", "tracks"=>"*"), $bounds);
     $ret.="</table>\n";
@@ -378,9 +384,9 @@ class map_key {
 //    $ret.=$this->show_mss(array("roads_casing", "roads_fill", "roads_rail"), 
 //      array("highway_type"=>"=rail", "railway"=>array("=tram", "=rail"), "tracks"=>"=single"), $bounds);
     $ret.=$this->show_mss(array("roads_extract"), 
-      array("highway_type"=>array("=power", "=pipeline")), $bounds);
+      array("highway_type"=>array("=power", "=pipeline"), "highway_sub_type"=>"*"), $bounds);
     $ret.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
-      array("highway_type"=>array("=power", "=pipeline"), "sub_type"=>"*"), $bounds);
+      array("highway_type"=>array("=power", "=pipeline"), "highway_sub_type"=>"*"), $bounds);
     $ret.="</table>\n";
 
     $ret.="<h4>".lang("head:borders")."</h4>\n";
@@ -409,22 +415,16 @@ class map_key {
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("buildings"), 
       array("building"=>"*"), $bounds, array("geom"=>array("poly"=>1)));
-    $ret.=$this->show_mss(array("amenity"), 
-      array("type"=>"*", "sub_type"=>"*"), $bounds);
-    $ret.="</table>\n";
-
-    $ret.="<h4>".lang("head:power")."</h4>\n";
-    $ret.="<table>\n";
-    $ret.=$this->show_mss(array("power_point"), 
-      array("power_type"=>"*"), $bounds);
-    $ret.=$this->show_mss(array("power_line"), 
-      array("power_type"=>"*"), $bounds);
+//    $ret.=$this->show_mss(array("amenity"), 
+//      array("type"=>"*", "sub_type"=>"*"), $bounds);
     $ret.="</table>\n";
 
     $ret.="<h4>".lang("head:housenumbers")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("housenumbers"), 
       array(), $bounds, array("prefix"=>"housenumber"));
+    $ret.=$this->show_mss(array("housenumber_lines"), 
+      array(), $bounds, array("prefix"=>"housenumber_lines"));
     $ret.="</table>\n";
 
     if($bounds[overlays][pt]) {
