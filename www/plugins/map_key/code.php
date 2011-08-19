@@ -284,11 +284,24 @@ class map_key {
       $p=array();
       $geom=$default_geom;
 
-      foreach($s as $s1) {
+      foreach($s as $index=>$s1) {
         if($s1["line-width"])
           $geom["line"]=1;
-        if($s1["line-pattern-file"])
+        if($s1["line-pattern-file"]) {
+	  if(preg_match("/^url\('(.*)'\)$/", $s1['line-pattern-file'], $m))
+	    $s[$index]['line-pattern-file']="{$options['img_base_path']}/$m[1]";
           $geom["line"]=1;
+	}
+        if($s1["polygon-pattern-file"]) {
+	  if(preg_match("/^url\('(.*)'\)$/", $s1['polygon-pattern-file'], $m))
+	    $s[$index]['polygon-pattern-file']="{$options['img_base_path']}/$m[1]";
+          $geom["poly"]=1;
+	}
+        if($s1["point-file"]) {
+	  if(preg_match("/^url\('(.*)'\)$/", $s1['point-file'], $m))
+	    $s[$index]['point-file']="{$options['img_base_path']}/$m[1]";
+          $geom["point"]=1;
+	}
         if($s1["polygon-fill"])
           $geom["poly"]=1;
         if($s1["point-file"])
@@ -352,9 +365,9 @@ class map_key {
     $ret.="<h4>".lang("head:places")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("places_high"), 
-      array("place"=>"*"), $bounds);
+      array("place"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("places_db"), 
-      array("place"=>"*"), $bounds);
+      array("place"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     $ret.="</table>\n";
 
     $ret.="<h4>".lang("head:roads")."</h4>\n";
@@ -362,21 +375,21 @@ class map_key {
 //    $ret.=$this->show_mss(array("roads_casing", "roads_fill", "roads_rail"), 
 //      array("highway_type"=>"=rail", "railway"=>array("=tram", "=rail"), "tracks"=>"=single"), $bounds);
     $ret.=$this->show_mss(array("roads_extcas", "roads_extract"), 
-      array("highway_type"=>array("=motorway", "=major", "=minor", "=service", "=pedestrian", "=path", "=aeroway"), "highway_sub_type"=>"*"), $bounds);
+      array("highway_type"=>array("=motorway", "=major", "=minor", "=service", "=pedestrian", "=path", "=aeroway"), "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
-      array("highway_type"=>array("=motorway", "=major", "=minor", "=service", "=pedestrian", "=path", "=aeroway"), "highway_sub_type"=>"*"), $bounds);
+      array("highway_type"=>array("=motorway", "=major", "=minor", "=service", "=pedestrian", "=path", "=aeroway"), "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("square_casing", "square_fill"), 
-      array("type"=>"*"), $bounds, array("prefix"=>"square_"));
+      array("type"=>"*"), $bounds, array("prefix"=>"square_", "img_base_path"=>"plugins/basemap"));
     $ret.="</table>\n";
 
     $ret.="<h4>".lang("head:rails")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("roads_extract"), 
-      array("highway_type"=>"=railway", "highway_sub_type"=>"*"), $bounds);
+      array("highway_type"=>"=railway", "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
-      array("highway_type"=>"=railway", "highway_sub_type"=>"*"), $bounds);
+      array("highway_type"=>"=railway", "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("roads_rail"), 
-      array("railway"=>"*", "tracks"=>"*"), $bounds);
+      array("railway"=>"*", "tracks"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     $ret.="</table>\n";
 
     $ret.="<h4>".lang("head:goods")."</h4>\n";
@@ -384,37 +397,37 @@ class map_key {
 //    $ret.=$this->show_mss(array("roads_casing", "roads_fill", "roads_rail"), 
 //      array("highway_type"=>"=rail", "railway"=>array("=tram", "=rail"), "tracks"=>"=single"), $bounds);
     $ret.=$this->show_mss(array("roads_extract"), 
-      array("highway_type"=>array("=power", "=pipeline"), "highway_sub_type"=>"*"), $bounds);
+      array("highway_type"=>array("=power", "=pipeline"), "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
-      array("highway_type"=>array("=power", "=pipeline"), "highway_sub_type"=>"*"), $bounds);
+      array("highway_type"=>array("=power", "=pipeline"), "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     $ret.="</table>\n";
 
     $ret.="<h4>".lang("head:borders")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("world1"), 
-      array(), $bounds, array("prefix"=>"admin_level=2"));
+      array(), $bounds, array("prefix"=>"admin_level=2", "img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("admin"), 
-      array("admin_level"=>array("=2", "=3", "=4", "=5", "=6", "=8", "=10")), $bounds);
+      array("admin_level"=>array("=2", "=3", "=4", "=5", "=6", "=8", "=10")), $bounds, array("img_base_path"=>"plugins/basemap"));
     $ret.="</table>\n";
 
     $ret.="<h4>".lang("head:landuse")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("landuse_extract"), 
-      array("landuse"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1)));
+      array("landuse"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("landuse_extract"), 
-      array("landuse"=>"=natural", "sub_type"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1)));
+      array("landuse"=>"=natural", "sub_type"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("landuse"), 
-      array("landuse"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1)));
+      array("landuse"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("landuse"), 
-      array("landuse"=>"=natural", "sub_type"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1)));
+      array("landuse"=>"=natural", "sub_type"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("waterarea"), 
-      array("landuse"=>"=water"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1)));
+      array("landuse"=>"=water"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
     $ret.="</table>\n";
     
     $ret.="<h4>".lang("head:buildings")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("buildings"), 
-      array("building"=>"*"), $bounds, array("geom"=>array("poly"=>1)));
+      array("building"=>"*"), $bounds, array("geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
 //    $ret.=$this->show_mss(array("amenity"), 
 //      array("type"=>"*", "sub_type"=>"*"), $bounds);
     $ret.="</table>\n";
@@ -422,9 +435,9 @@ class map_key {
     $ret.="<h4>".lang("head:housenumbers")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("housenumbers"), 
-      array(), $bounds, array("prefix"=>"housenumber"));
+      array(), $bounds, array("prefix"=>"housenumber", "img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("housenumber_lines"), 
-      array(), $bounds, array("prefix"=>"housenumber_lines"));
+      array(), $bounds, array("prefix"=>"housenumber_lines"), array("img_base_path"=>"plugins/basemap"));
     $ret.="</table>\n";
 
     if($bounds[overlays][pt]) {

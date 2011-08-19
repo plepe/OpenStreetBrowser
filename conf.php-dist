@@ -39,6 +39,9 @@ $overlays=array("culture"=>"overlay_culture", "gastro"=>"overlay_food", "service
 // $root_path - where is all stuff
 $root_path="/home/osm";
 
+// $www_path - path of the www-directory as accessible from the interwebs
+$www_path="http://www.openstreetbrowser.org/";
+
 // $lists_dir - saves available categories (has to be writeable for www)
 $lists_dir="$root_path/data/lists";
 

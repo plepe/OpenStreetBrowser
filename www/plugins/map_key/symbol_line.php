@@ -1,4 +1,5 @@
 <?
+include "../../../conf.php";
 Header("content-type: image/svg+xml");
 print '<?xml version="1.0" encoding="utf-8" ?>';
 ?>
@@ -46,11 +47,8 @@ foreach($_REQUEST[param] as $v) {
 }
 
 foreach($pattern as $i=>$p) {
-  if(eregi("url\(\'(.*)\'\)", $p, $m)) {
-    $p=$m[1];
-    $s=getimagesize("render_$p");
-    print "<pattern id='pattern$i' width='$s[0]' height='$s[1]' patternUnits='userSpaceOnUse'><image width='$s[0]' height='$s[1]' xlink:href='render_$p' /></pattern>\n";
-  }
+  $s=getimagesize("$root_path/www/$p");
+  print "<pattern id='pattern$i' width='$s[0]' height='$s[1]' patternUnits='userSpaceOnUse'><image width='$s[0]' height='$s[1]' xlink:href='$www_path/$p' /></pattern>\n";
 }
 ?>
 </defs>
