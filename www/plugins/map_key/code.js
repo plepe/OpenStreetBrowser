@@ -1,6 +1,22 @@
 var mapkey_zoom=-1;
 var mapkey_request=0;
 var mapkey_overlays=[];
+var map_key_list={};
+
+function map_key_entry(id) {
+  this.visibility=function() {
+    return false;
+  }
+
+  // constructor
+  this.type="map_key_entry";
+  this.id=id;
+  map_key_list[id]=this;
+}
+
+function map_key_remove(id) {
+  delete(map_key_list[id]);
+}
 
 function map_key_toggle() {
   var map=document.getElementById("map");
@@ -17,19 +33,16 @@ function map_key_toggle() {
   }
 }
 
-function display_mapkey(response) {
+function map_key_display(response) {
   mapkey_request=0;
+  var ret=response.return_value;
+
+  text=weight_sort(ret.list);
+
   var map_key=document.getElementById("map_key");
-  var data=response.responseXML;
-
-  var text_node=data.getElementsByTagName("text");
-
-  if(text_node) {
-    if(!text_node[0])
-      show_msg("Returned data invalid", response.responseText);
-    var text=get_content(text_node[0]);
-    map_key.innerHTML=text;
-  }
+  map_key.innerHTML=
+    lang("map_key:head")+" ("+lang("map_key:zoom")+" "+ret.param.zoom+")"+
+    text.join("<br>\n");
 
   var zoom=data.getElementsByTagName("zoom");
   mapkey_zoom=zoom[0].getAttribute("value");
@@ -45,7 +58,6 @@ function display_mapkey(response) {
 
 function map_key_check() {
   var map_key=document.getElementById("map_key");
-  var new_mapkey_overlays=[];
   var overlays_changed=0;
 
   if(mapkey_request)
@@ -53,8 +65,16 @@ function map_key_check() {
 
   if(map_key.className=='map_key') {
     if((mapkey_zoom!=map.zoom)||(overlays_changed)) {
+      // list of visible entries
+      var list=[];
+      for(var i in map_key_list) {
+	if(map_key_list[i].visibility())
+	  list.push(i);
+      }
+
+      // send request for map key info
       mapkey_request=1;
-      ajax("get_mapkey", { "zoom": map.zoom, "overlays": new_mapkey_overlays }, display_mapkey);
+      ajax("map_key", { "zoom": map.zoom, "entries": list }, map_key_display);
     }
   }
 }

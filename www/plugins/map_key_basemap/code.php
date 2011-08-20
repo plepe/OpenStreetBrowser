@@ -1,6 +1,12 @@
 <?
-class map_key_basemap extends map_key_entry {
+class map_key_basemap extends map_key_cascadenik {
+  function __construct() {
+    parent::__construct("basemap");
+  }
+
   function show_info($bounds) {
+    global $class_info;
+
     load_classes("roads", $bounds);
     load_classes("road_features", $bounds);
     load_classes("land", $bounds);
@@ -94,5 +100,14 @@ class map_key_basemap extends map_key_entry {
 //    $ret.=$this->show_mss("land", array("world1", "world", "coastpoly", "landuse"), "Landuse", $bounds);
 //    $ret.=$this->show_mss("water", array("waterarea", "water"), "Water", $bounds);
 //    $ret.=$this->show_mss("land", array("buildings"), "Buildings", $bounds);
+
+    return $ret;
   }
 }
+
+function map_key_basemap_map_key($list, $entries) {
+  $key=new map_key_basemap();
+  $list[]=array(-10, $key);
+}
+
+register_hook("map_key", "map_key_basemap_map_key");
