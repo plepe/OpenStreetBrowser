@@ -125,3 +125,6 @@ $overlays_add=array(
 // contextmenu - Include a contextmenu on right click
 // mem_check - Checks memory usage and restarts renderd if too high
 // map_key - Shows a map key for the basemap at the current zoom level
+// map_key_cascadenik - Map key variant for cascadenik files
+// map_key_basemap - Map key for the basemap
+// map_key_overlay_pt - Map key for the overlay public transportation
