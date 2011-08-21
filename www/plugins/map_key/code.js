@@ -1,6 +1,5 @@
 var map_key_zoom=-1;
 var map_key_request=0;
-var mapkey_overlays=[];
 var map_key_list={};
 var map_key_shown=[];
 
@@ -46,17 +45,10 @@ function map_key_display(response) {
 
   map_key_zoom=ret.param.zoom;
   map_key_shown=ret.param.entries;
-
-  mapkey_overlays=[];
-  var overlays=data.getElementsByTagName("overlay");
-  for(var i=0; i<overlays.length; i++) {
-    mapkey_overlays[overlays[i].getAttribute("value")]=1;
-  }
 }
 
 function map_key_check() {
   var map_key=document.getElementById("map_key");
-  var overlays_changed=0;
 
   if(map_key_request)
     map_key_request.abort();
