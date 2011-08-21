@@ -2,6 +2,9 @@ var overlays_layers={};
 
 function overlays_register(id, overlay) {
   overlays_layers[id]=overlay;
+  overlay.id=id;
+
+  overlay.events.register("visibilitychanged", overlay, overlays_visibility_change);
 
   map.addLayer(overlay);
 
