@@ -1,5 +1,5 @@
 var map_key_zoom=-1;
-var mapkey_request=0;
+var map_key_request=0;
 var mapkey_overlays=[];
 var map_key_list={};
 var map_key_shown=[];
@@ -35,7 +35,6 @@ function map_key_toggle() {
 }
 
 function map_key_display(response) {
-  mapkey_request=0;
   var ret=response.return_value;
 
   text=weight_sort(ret.list);
@@ -53,16 +52,14 @@ function map_key_display(response) {
   for(var i=0; i<overlays.length; i++) {
     mapkey_overlays[overlays[i].getAttribute("value")]=1;
   }
-
-  map_key_check();
 }
 
 function map_key_check() {
   var map_key=document.getElementById("map_key");
   var overlays_changed=0;
 
-  if(mapkey_request)
-    return;
+  if(map_key_request)
+    map_key_request.abort();
 
   if(map_key.className=='map_key') {
     // list of visible entries
@@ -75,10 +72,9 @@ function map_key_check() {
     // only load new map key if either the zoom level changed or different
     // entries needs to be shown
     if((map_key_zoom!=map.zoom)||(map_key_shown.join(",")!=list.join(","))) {
-      mapkey_request=1;
-
       // send request for map key info
-      ajax("map_key", { "zoom": map.zoom, "entries": list }, map_key_display);
+      map_key_request=ajax("map_key", { "zoom": map.zoom, "entries": list },
+        map_key_display);
     }
   }
 }
