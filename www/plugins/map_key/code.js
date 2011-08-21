@@ -36,6 +36,8 @@ function map_key_toggle() {
 function map_key_display(response) {
   var ret=response.return_value;
 
+  call_hooks("map_key", ret.list, ret.param.zoom, ret.param.entries);
+
   text=weight_sort(ret.list);
 
   var map_key=document.getElementById("map_key");
