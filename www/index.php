@@ -126,7 +126,6 @@ foreach($menu_list as $entry) {
 <div class="map" id="map"></div>
 
 <div class="shadow"></div>
-<div class="map_key_hidden" id="map_key"></div>
 <div id="licence"><?=lang("main:licence")?></div>
 <?
 call_hooks("html_done", null);

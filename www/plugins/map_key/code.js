@@ -1,3 +1,4 @@
+var map_key; // div for the map key
 var map_key_zoom=-1;
 var map_key_request=0;
 var map_key_list={};
@@ -20,7 +21,6 @@ function map_key_remove(id) {
 
 function map_key_toggle() {
   var map=document.getElementById("map");
-  var map_key=document.getElementById("map_key");
 
   if(map_key.className=='map_key_hidden') {
     map.className='map_with_mapkey';
@@ -40,7 +40,6 @@ function map_key_display(response) {
 
   text=weight_sort(ret.list);
 
-  var map_key=document.getElementById("map_key");
   map_key.innerHTML=
     lang("map_key:head")+" ("+lang("map_key:zoom")+" "+ret.param.zoom+")"+
     text.join("<br>\n");
@@ -50,8 +49,6 @@ function map_key_display(response) {
 }
 
 function map_key_check() {
-  var map_key=document.getElementById("map_key");
-
   if(map_key_request)
     map_key_request.abort();
 
@@ -74,7 +71,11 @@ function map_key_check() {
 }
 
 function map_key_init() {
+  map_key=dom_create_append(document.body, "div");
+  map_key.id="map_key";
+  map_key.className="map_key_hidden";
 }
 
 register_hook("view_changed", map_key_check);
 register_hook("overlays_visibility_change", map_key_check);
+register_hook("init", map_key_init);
