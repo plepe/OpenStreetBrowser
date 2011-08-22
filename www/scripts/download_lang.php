@@ -47,10 +47,12 @@ function parse($lang, $wikipage) {
   global $root_path;
   global $lang_cat_list;
   $deprecated=false;
+  $emptyline=0;
 
   $f=fopen("http://wiki.openstreetmap.org/w/index.php?title=OpenStreetBrowser/Languages/$wikipage&action=raw", "r");
   unset($file);
   while($r=fgets($f)) {
+    $r=trim($r);
     if(eregi("=== Deprecated strings ===", $r)) {
       $deprecated=true;
     }
@@ -97,6 +99,8 @@ function parse($lang, $wikipage) {
           }
         }
       }
+
+      $emptyline=0;
     }
     elseif(eregi("<\/?syntaxhigh", $r)) {
     }
@@ -104,7 +108,7 @@ function parse($lang, $wikipage) {
       if(eregi("^(.*)\\\$lang_str\[\"([^\"]*)\"\]\s*=\s*\"(.*)\";", $r, $m)) {
 	$str=rewrite_str($m[2]);
 	if($file_type==1)
-	  $r="$m[1]\$lang_str[\"$str\"]=\"".strtr($m[3], array("\""=>"\\\""))."\";\n";
+	  $r="$m[1]\$lang_str[\"$str\"]=\"".strtr($m[3], array("\""=>"\\\""))."\";";
 	else {
 	  if(substr($m[1], 0, 1)!="#")
 	    $lang_cat_list[$lang][$str]=$m[3];
@@ -119,15 +123,25 @@ function parse($lang, $wikipage) {
 
 	$str=rewrite_str($m[2]);
 	if($file_type==1)
-	  $r="$m[1]\$lang_str[\"$str\"]=array(\"".implode("\", \"", $m[3])."\");\n";
+	  $r="$m[1]\$lang_str[\"$str\"]=array(\"".implode("\", \"", $m[3])."\");";
 	else {
 	  if(substr($m[1], 0, 1)!="#")
 	    $lang_cat_list[$lang][$str]=$m[3];
 	}
       }
 
-      if(isset($w))
-	fwrite($w, $r);
+      if($r=="") {
+        $emptyline++;
+      }
+      elseif(isset($w)) {
+        while($emptyline>0) {
+          fwrite($w, "\n");
+          $emptyline--;
+        }
+
+	fwrite($w, "$r\n");
+      }
+
     }
   }
 
