@@ -142,8 +142,6 @@ $lang_str["overlay:draggable"]="マーカー";
 #$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 #$lang_str["basemap:cyclemap"]="CycleMap";
 
-#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
-
 // please finish this list, see list.php for full list of languages
 #$lang_str["lang:de"]="German";
 #$lang_str["lang:bg"]="Bulgarian";

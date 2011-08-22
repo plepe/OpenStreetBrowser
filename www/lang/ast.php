@@ -144,8 +144,6 @@ $lang_str["basemap:mapnik"]="Estándar (Mapnik)";
 $lang_str["basemap:osmarender"]="Estándar (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Nun s'alcontró l'oxetu</h1>Nun se pudo alcontrar l'oxetu cola ID \"%s\". Esto puede ser por una (o más) de les razones darréu:<ul><li>La ID ta enquivocada.</li><li>L'oxetu ta identificáu pol sitiu d'un terceru y (entá) nun ta disponible nel OpenStreetBrowser.</li><li>L'oxetu ta fuera del área con sofitu.</li><li>L'enllaz que siguisti ye antiguu y l'oxetu se desanició d'OpenStreetMap.</li></ul>";
-
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Alemán";
 $lang_str["lang:bg"]="Búlgaru";
