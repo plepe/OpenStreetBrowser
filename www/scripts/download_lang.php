@@ -46,11 +46,15 @@ function rewrite_str($str) {
 function parse($lang, $wikipage) {
   global $root_path;
   global $lang_cat_list;
+  $deprecated=false;
 
   $f=fopen("http://wiki.openstreetmap.org/w/index.php?title=OpenStreetBrowser/Languages/$wikipage&action=raw", "r");
   unset($file);
   while($r=fgets($f)) {
-    if(eregi("==== (File|Category): ?(.*) ====", $r, $m)) {
+    if(eregi("=== Deprecated strings ===", $r)) {
+      $deprecated=true;
+    }
+    else if(eregi("==== (File|Category): ?(.*) ====", $r, $m)) {
       if($m[2]=="Statistics") {
 	if($w) {
 	  print "Done\n";
@@ -79,10 +83,19 @@ function parse($lang, $wikipage) {
 
       if($file_type==1) {
 	print "Writing to $file\n";
-	if(!($w=fopen("$root_path/$file", "w"))) {
-	  print "Can't write to file $file\n";
-	  exit;
-	}
+        if($deprecated) {
+          if(!($w=fopen("$root_path/$file", "a"))) {
+            print "Can't write to file $file\n";
+            exit;
+          }
+          fwrite($w, "// The following \$lang_str were not defined in the English language file and might be deprecated or wrong:\n");
+        }
+	else {
+          if(!($w=fopen("$root_path/$file", "w"))) {
+            print "Can't write to file $file\n";
+            exit;
+          }
+        }
       }
     }
     elseif(eregi("<\/?syntaxhigh", $r)) {
