@@ -22,14 +22,14 @@ function map_key_remove(id) {
 function map_key_toggle() {
   var map=document.getElementById("map");
 
-  if(map_key.className=='map_key_hidden') {
-    map.className='map_with_mapkey';
-    map_key.className='map_key';
+  if(!has_css_class(map_key, 'shown')) {
+    add_css_class(map, 'with_map_key');
+    add_css_class(map_key, 'shown');
     map_key_check();
   }
   else {
-    map.className='map';
-    map_key.className='map_key_hidden';
+    del_css_class(map, 'with_map_key');
+    del_css_class(map_key, 'shown');
   }
 }
 
@@ -52,7 +52,7 @@ function map_key_check() {
   if(map_key_request)
     map_key_request.abort();
 
-  if(map_key.className=='map_key') {
+  if(has_css_class(map_key, 'shown')) {
     // list of visible entries
     var list=[];
     for(var i in map_key_list) {
@@ -73,7 +73,6 @@ function map_key_check() {
 function map_key_init() {
   map_key=dom_create_append(document.body, "div");
   map_key.id="map_key";
-  map_key.className="map_key_hidden";
 }
 
 register_hook("view_changed", map_key_check);

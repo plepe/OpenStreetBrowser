@@ -1,16 +1,11 @@
-.map_with_mapkey {
-  position: absolute;
-  left: 270px;
+.map.with_map_key {
   right: 250px;
-  top: 0px;
-  bottom: 0px;
-  border-left:1px solid #999;
-  height:100%;
 }
-.map_key_hidden {
+#map_key {
   display: none;
 }
-.map_key {
+#map_key.shown {
+  display: block;
   position: absolute;
   width: 249px;
   right: 0px;
