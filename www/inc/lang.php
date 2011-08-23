@@ -28,6 +28,8 @@ function lang() {
   elseif(!$lang_str[$key]) {
     if(ereg("/(.*)$", $key, $m))
       $key=$m[1];
+    elseif(preg_match("/^tag:([^=]*=.*)$/", $key, $m))
+      $key=$m[1];
 
     return $key.(sizeof($params)?" ".implode(", ", $params):"");
   }

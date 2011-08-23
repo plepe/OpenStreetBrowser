@@ -32,7 +32,7 @@ function lang_element(str, count) {
 
   debug(str, "language string missing");
 
-  if(l=str.match(/^tag:[^=]*=(.*)$/))
+  if(l=str.match(/^tag:([^=]*=.*)$/))
     return l[1];
 
   if(l=str.match(/^[^:]*:(.*)$/))
