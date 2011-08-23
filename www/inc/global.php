@@ -65,7 +65,10 @@ function html_var_to_js($v) {
       break;
     case "array":
       $ar_keys=array_keys($v);
-      if(($ar_keys[0]=="0")&&($ar_keys[sizeof($ar_keys)-1]==(string)(sizeof($ar_keys)-1))) {
+      if(!sizeof($ar_keys)) {
+        return "new Array()";
+      }
+      elseif(($ar_keys[0]=="0")&&($ar_keys[sizeof($ar_keys)-1]==(string)(sizeof($ar_keys)-1))) {
         $ret1=array();
         foreach($v as $k1=>$v1) {
           $ret1[]=html_var_to_js($v1);
