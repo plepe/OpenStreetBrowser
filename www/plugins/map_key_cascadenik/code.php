@@ -160,11 +160,11 @@ class map_key_cascadenik extends map_key_entry {
         $param=implode("&", $p);
 
 	if($geom["poly"])
-	  $ret.="<div><embed width='30' type='image/svg+xml' src='plugins/map_key/symbol_polygon.php?$param' /></div>";
+	  $ret.="<div><embed width='30' height='12' type='image/svg+xml' src='plugins/map_key/symbol_polygon.php?$param' /></div>";
 	elseif($geom["line"])
-	  $ret.="<div><embed width='30' type='image/svg+xml' src='plugins/map_key/symbol_line.php?$param' /></div>";
+	  $ret.="<div><embed width='30' height='12' type='image/svg+xml' src='plugins/map_key/symbol_line.php?$param' /></div>";
 	elseif($geom["point"])
-	  $ret.="<div><embed width='30' type='image/svg+xml' src='plugins/map_key/symbol_point.php?$param' /></div>";
+	  $ret.="<div><embed width='30' height='30' type='image/svg+xml' src='plugins/map_key/symbol_point.php?$param' /></div>";
         $ret.="</td><td>\n";
 
         // Compile tag-text
