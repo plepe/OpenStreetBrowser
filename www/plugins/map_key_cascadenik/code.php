@@ -1,8 +1,11 @@
 <?
+$map_key_cascadenik_aliases=array();
 
 class map_key_cascadenik extends map_key_entry {
   function show_mss($classes, $keys, $bounds, $options=array()) { 
     global $class_info;
+    global $map_key_cascadenik_aliases;
+
 //    print_r($class_info);
     if($options[geom])
       $default_geom=$options[geom];
@@ -158,7 +161,16 @@ class map_key_cascadenik extends map_key_entry {
 	elseif($geom["point"])
 	  $ret.="<div><embed width='30' type='image/svg+xml' src='plugins/map_key/symbol_point.php?$param' /></div>";
         $ret.="</td><td>\n";
-        $ret.=lang("$options[prefix]$depend");
+
+        // Compile tag-text
+        if(!($tag=$map_key_cascadenik_aliases[$depend]))
+          $tag=$depend;
+        $tag=explode("|", $tag);
+        for($i=0; $i<sizeof($tag); $i++)
+          $tag[$i]=lang("tag:{$tag[$i]}");
+        $tag=implode(", ", $tag);
+
+        $ret.=$tag;
         $ret.="</td></tr>\n";
       }
     }
@@ -206,6 +218,7 @@ function classes_match($value1, $operator, $value2) {
 }
 
 function load_classes($file, $bounds) {
+  global $map_key_cascadenik_aliases;
   global $class_info;
   global $root_path;
 
@@ -222,6 +235,12 @@ function load_classes($file, $bounds) {
   while($r=fgets($f)) {
     $r=trim($r);
     $notdone=2;
+    if(preg_match("/^alias ([^ ]*) (.*)$/", $r, $m)) {
+      $map_key_cascadenik_aliases[$m[1]]=$m[2];
+
+      continue;
+    }
+
     while($notdone) {
 //	$ret.="r is =$r= $mode $notdone<br>\n";
       $notdone=0;
