@@ -33,6 +33,18 @@ function map_key_toggle() {
   }
 }
 
+function map_key_format(map_key_def) {
+  if(typeof map_key_def=="string") {
+    var div=document.createElement("div");
+    div.innerHTML=map_key_def;
+    return div;
+  }
+
+  if(is_dom(map_key_def)) {
+    return map_key_def;
+  }
+}
+
 function map_key_display(response) {
   var ret=response.return_value;
 
@@ -41,8 +53,12 @@ function map_key_display(response) {
   text=weight_sort(ret.list);
 
   map_key.innerHTML=
-    lang("map_key:head")+" ("+lang("map_key:zoom")+" "+ret.param.zoom+")"+
-    text.join("<br>\n");
+    lang("map_key:head")+" ("+lang("map_key:zoom")+" "+ret.param.zoom+")";
+
+  for(var i=0; i<text.length; i++) {
+    var div=map_key_format(text[i]);
+    map_key.appendChild(div);
+  }
 
   map_key_zoom=ret.param.zoom;
   map_key_shown=ret.param.entries;
