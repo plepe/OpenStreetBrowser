@@ -25,11 +25,11 @@ function lang() {
     }
     $l=implode(", ", $key_exp);
   }
-  elseif(!$lang_str[$key]) {
+  elseif(!isset($lang_str[$key])) {
     if(ereg("/(.*)$", $key, $m))
       $key=$m[1];
     elseif(preg_match("/^tag:([^><=!]*)(=|>|<|>=|<=|!=)([^><=!].*)$/", $key, $m)) {
-      if($lang_str["tag:{$m[1]}"])
+      if(isset($lang_str["tag:{$m[1]}"]))
         $key=lang("tag:{$m[1]}")."{$m[2]}{$m[3]}";
       else
         $key="{$m[1]}{$m[2]}{$m[3]}";
