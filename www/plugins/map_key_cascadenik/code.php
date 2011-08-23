@@ -78,7 +78,7 @@ class map_key_cascadenik extends map_key_entry {
 //	    $ds[]=$d[$k];
 //	}
 //	$d=$ds;
-        sort($d);
+        //rsort($d);
         $d_key=implode("|", $d);
         for($i=0; $i<pow(2, sizeof($d)); $i++) {
           $d1=array();
@@ -287,7 +287,7 @@ function load_classes($file, $bounds) {
 //		$ds[]=$dep_list[$k];
 //	    }
 //	    $dep_list=$ds;
-            sort($dep_list);
+            //rsort($dep_list);
 	    $dep_list=implode("|", $dep_list);
 	    if(!$class_info[$q[0]]["styles"][$dep_list][$q[2]])
 	      $class_info[$q[0]]["styles"][$dep_list][$q[2]]=array();
