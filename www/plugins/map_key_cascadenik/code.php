@@ -1,10 +1,12 @@
 <?
 $map_key_cascadenik_aliases=array();
+$map_key_cascadenik_hide=array();
 
 class map_key_cascadenik extends map_key_entry {
   function show_mss($classes, $keys, $bounds, $options=array()) { 
     global $class_info;
     global $map_key_cascadenik_aliases;
+    global $map_key_cascadenik_hide;
 
 //    print_r($class_info);
     if($options[geom])
@@ -149,6 +151,9 @@ class map_key_cascadenik extends map_key_entry {
           $geom["point"]=1;
       }
 
+      if($map_key_cascadenik_hide[$depend])
+        continue;
+
       if(sizeof($geom)) {
         $ret.="<tr><td>\n";
         build_request($s, "param", &$p);
@@ -219,6 +224,7 @@ function classes_match($value1, $operator, $value2) {
 
 function load_classes($file, $bounds) {
   global $map_key_cascadenik_aliases;
+  global $map_key_cascadenik_hide;
   global $class_info;
   global $root_path;
 
@@ -235,9 +241,14 @@ function load_classes($file, $bounds) {
   while($r=fgets($f)) {
     $r=trim($r);
     $notdone=2;
+
     if(preg_match("/^alias ([^ ]*) (.*)$/", $r, $m)) {
       $map_key_cascadenik_aliases[$m[1]]=$m[2];
+      continue;
+    }
 
+    if(preg_match("/^hide ([^ ]*)$/", $r, $m)) {
+      $map_key_cascadenik_hide[$m[1]]=true;
       continue;
     }
 
