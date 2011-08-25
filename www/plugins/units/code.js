@@ -1,5 +1,6 @@
 // return formated string for value
 function units_format_length(val) {
+  val=parseFloat(val);
   if(val>45000) {
     return lang("units:km", 0, (val/1000).toFixed(0));
   }
@@ -21,6 +22,7 @@ function units_format_length(val) {
 
 // return formated string for value
 function units_format_area(val) {
+  val=parseFloat(val);
   if(val>90000000) {
     return lang("units:km2", 0, (val/1000000).toFixed(0));
   }
@@ -51,6 +53,7 @@ function units_format_area(val) {
 
 // return formated string for time (in seconds)
 function units_format_time(val) {
+  val=parseFloat(val);
   if(val>6*86400)
     return lang("units:day", 0, (val/86400).toFixed(0));
   if(val>2*86400)
