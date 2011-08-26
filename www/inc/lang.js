@@ -85,6 +85,43 @@ function lang_change(key, value) {
   }
 }
 
+/**
+ * format tag(s) for display
+ * @param string|array string(s) to translate
+ * @param int count of strings
+ * @param hash options to configure display
+ */
+function lang_tags_format(str, count, options) {
+  var ret;
+
+  // if array than iterate through str and join as string
+  if(typeof str=="object") {
+    ret=[];
+    for(var i=0; i<str.length; i++)
+      ret.push(lang_tags_format(str[i], count, options));
+
+    return ret.join(", ");
+  }
+
+  // default values
+  if(typeof count=="undefined")
+    count=1;
+
+  // if it matches as a tag-string than process each of them
+  var m;
+  if(m=str.match(/^([^><=!]*)(=|>|<|>=|<=|!=)([^><=!].*)$/)) {
+    if(m[2]=="=")
+      m[2]=": ";
+
+    ret=lang(m[1], count)+m[2]+lang(m[1]+"="+m[3], count);
+
+    return ret;
+  }
+
+  // it doesn't match as tag-string -> just translate
+  return lang(str);
+}
+
 function lang_init() {
   if(!options_get("ui_lang"))
     options_set("ui_lang", ui_lang);

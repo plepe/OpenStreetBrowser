@@ -29,11 +29,12 @@ function lang() {
     if(ereg("/(.*)$", $key, $m))
       $key=$m[1];
     elseif(preg_match("/^tag:([^><=!]*)(=|>|<|>=|<=|!=)([^><=!].*)$/", $key, $m)) {
-      if(isset($lang_str["tag:{$m[1]}"]))
-        $key=lang("tag:{$m[1]}")."{$m[2]}{$m[3]}";
-      else
-        $key="{$m[1]}{$m[2]}{$m[3]}";
+      $key=$m[3];
     }
+    elseif(preg_match("/^tag:([^><=!]*)$/", $key, $m)) {
+      $key=$m[1];
+    }
+
 
     return $key.(sizeof($params)?" ".implode(", ", $params):"");
   }
@@ -145,6 +146,41 @@ function lang_init() {
 
   html_export_var(array("ui_lang"=>$ui_lang, "data_lang"=>$data_lang, "ui_langs"=>$ui_langs, "lang_str"=>$lang_str, "language_list"=>$language_list));
   add_html_header("<meta http-equiv=\"content-language\" content=\"{$ui_lang}\">");
+}
+
+/**
+ * format tag(s) for display
+ * @param string|array string(s) to translate
+ * @param int count of strings
+ * @param hash options to configure display
+ * @return string formatted tags
+ */
+function lang_tags_format($str, $count, $options) {
+  // if array than iterate through str and join as string
+  if(is_array($str)) {
+    $ret=array();
+    foreach($str as $s)
+      $ret[]=lang_tags_format($s, $count, $options);
+
+    return implode(", ", $ret);
+  }
+
+  // default values
+  if(!isset($count))
+    $count=1;
+
+  // if it matches as a tag-string than process each of them
+  if(preg_match("/^([^><=!]*)(=|>|<|>=|<=|!=)([^><=!].*)$/", $str, $m)) {
+    if($m[2]=="=")
+      $m[2]=": ";
+
+    $ret=lang($m[1], $count).$m[2].lang("$m[1]=$m[3]", $count);
+
+    return $ret;
+  }
+
+  // it doesn't match as tag-string -> just translate
+  return lang($str);
 }
 
 // DEPRECATED: include JS language file
