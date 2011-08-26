@@ -2,6 +2,14 @@
 $map_key_cascadenik_aliases=array();
 $map_key_cascadenik_hide=array();
 
+/*
+  options:
+    name_explode - translate each of the keys by its own (default: true)
+    name_prefix - use prefix for translating keys (default: "tag:"), e.g.
+                  "tag:highway=road"
+    geom - force geometry type (default: auto)
+    img_base_path - base_path for images (like patterns)
+*/
 class map_key_cascadenik extends map_key_entry {
   function show_mss($classes, $keys, $bounds, $options=array()) { 
     global $class_info;
@@ -167,15 +175,22 @@ class map_key_cascadenik extends map_key_entry {
 	  $ret.="<div><embed width='30' height='30' type='image/svg+xml' src='plugins/map_key/symbol_point.php?$param' /></div>";
         $ret.="</td><td>\n";
 
-        // Compile tag-text
-        if(!($tag=$map_key_cascadenik_aliases[$depend]))
-          $tag=$depend;
-        $tag=explode("|", $tag);
-        for($i=0; $i<sizeof($tag); $i++)
-          $tag[$i]=lang("tag:{$tag[$i]}");
-        $tag=implode(", ", $tag);
+        // Compile name
+        if(!isset($options['name_prefix']))
+          $options['name_prefix']="tag:";
+        if(!($name=$map_key_cascadenik_aliases[$depend]))
+          $name=$depend;
+        if((!isset($options['name_explode'])||($options['name_explode']))) {
+          $name=explode("|", $name);
+          for($i=0; $i<sizeof($name); $i++)
+            $name[$i]=lang("{$options['name_prefix']}{$name[$i]}");
+          $name=implode(", ", $name);
+        }
+        else {
+          $name=lang("{$options['name_prefix']}{$name}");
+        }
+        $ret.=$name;
 
-        $ret.=$tag;
         $ret.="</td></tr>\n";
       }
     }
