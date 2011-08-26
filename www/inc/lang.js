@@ -1,6 +1,6 @@
 var lang_str={};
 var lang_tags_format_options_default={
-  str_join: ", ", value_separator: ": "
+  str_join: ", ", value_separator: ": ", count: 1
 };
 
 function change_language() {
@@ -91,17 +91,15 @@ function lang_change(key, value) {
 /**
  * format tag(s) for display
  * @param string|array string(s) to translate
- * @param int count of strings
  *   str_join: string which is used to join strings (default: ", ")
  *   value_separator: string which is used to join key and value (default: ": ")
+ *   count: count of strings (for singular/plural) (default: 1)
  * @param hash options to configure display
  */
 function lang_tags_format(str, count, options) {
   var ret;
 
   // default values
-  if(typeof count=="undefined")
-    count=1;
   if(typeof options=="undefined")
     options={};
   options=array_merge(lang_tags_format_options_default, options);

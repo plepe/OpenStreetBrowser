@@ -4,7 +4,7 @@ define("F", 1);
 define("M", 2);
 define("N", 3);
 $lang_tags_format_options_default=array(
-  "str_join"=>", ", "value_separator"=>": ",
+  "str_join"=>", ", "value_separator"=>": ", "count"=>1, 
 );
 
 function lang() {
@@ -154,18 +154,16 @@ function lang_init() {
 /**
  * format tag(s) for display
  * @param string|array string(s) to translate
- * @param int count of strings
  * @param hash options to configure display
  *   str_join: string which is used to join strings (default: ", ")
  *   value_separator: string which is used to join key and value (default: ": ")
+ *   count: count of strings (for singular/plural) (default: 1)
  * @return string formatted tags
  */
-function lang_tags_format($str, $count, $options) {
+function lang_tags_format($str, $options) {
   global $lang_tags_format_options_default;
 
   // default values
-  if(!isset($count))
-    $count=1;
   if(!$options)
     $options=array();
   $options=array_merge($lang_tags_format_options_default, $options);
@@ -174,7 +172,7 @@ function lang_tags_format($str, $count, $options) {
   if(is_array($str)) {
     $ret=array();
     foreach($str as $s)
-      $ret[]=lang_tags_format($s, $count, $options);
+      $ret[]=lang_tags_format($s, $options);
 
     return implode($options['str_join'], $ret);
   }
@@ -184,7 +182,7 @@ function lang_tags_format($str, $count, $options) {
     if($m[2]=="=")
       $m[2]=$options['value_separator'];
 
-    $ret=lang($m[1], $count).$m[2].lang("$m[1]=$m[3]", $count);
+    $ret=lang($m[1], $options['count']).$m[2].lang("$m[1]=$m[3]", $options['count']);
 
     return $ret;
   }
