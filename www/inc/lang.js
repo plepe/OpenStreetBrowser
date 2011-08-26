@@ -21,7 +21,7 @@ function lang_element(str, count) {
         i=0;
 
       // if a Gender is defined, shift values
-      if(typeof(l[0]=="number"))
+      if(typeof(l[0])=="number")
         i++;
 
       return l[i];
