@@ -1,5 +1,5 @@
 /*
-alias landuse=water|landuse_sub_type=t0 landuse=water
+hide  landuse=water|landuse_sub_type=t0
 hide  landuse=water|landuse_sub_type=t1
 hide  landuse=water|landuse_sub_type=t2
 hide  landuse=water|landuse_sub_type=t3
@@ -76,8 +76,12 @@ hide  landuse=public|landuse_sub_type=t1
 hide  landuse=public|landuse_sub_type=t2
 hide  landuse=public|landuse_sub_type=t3
 */
-Map {
+Map,
   map-bgcolor: #7eb9e3;
+}
+/* .Map is fake, just for map key */
+.Map {
+  polygon-fill: #7eb9e3;
 }
 .world1[zoom<5] {
   polygon-fill: #f2efd9;
