@@ -242,12 +242,12 @@ function load_classes($file, $bounds) {
     $r=trim($r);
     $notdone=2;
 
-    if(preg_match("/^alias ([^ ]*) (.*)$/", $r, $m)) {
+    if(preg_match("/^alias\s+([^ ]*)\s+(.*)$/", $r, $m)) {
       $map_key_cascadenik_aliases[$m[1]]=$m[2];
       continue;
     }
 
-    if(preg_match("/^hide ([^ ]*)$/", $r, $m)) {
+    if(preg_match("/^hide\s+([^ ]*)$/", $r, $m)) {
       $map_key_cascadenik_hide[$m[1]]=true;
       continue;
     }
