@@ -47,9 +47,9 @@ class map_key_basemap extends map_key_cascadenik {
 
     $ret1="";
     $ret1.=$this->show_mss(array("roads_extract"), 
-      array("highway_type"=>"=railway", "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
-    $ret1.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
-      array("highway_type"=>"=railway", "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
+      array("highway_type"=>array("=railway"), "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
+//    $ret1.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
+//      array("highway_type"=>array("=railway"), "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     $ret1.=$this->show_mss(array("roads_rail"), 
       array("railway"=>"*", "tracks"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     if($ret1!="") {
