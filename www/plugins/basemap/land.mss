@@ -1,3 +1,81 @@
+/*
+alias landuse=water|landuse_sub_type=t0 map_key_basemap:landuse=water
+hide  landuse=water|landuse_sub_type=t1
+hide  landuse=water|landuse_sub_type=t2
+hide  landuse=water|landuse_sub_type=t3
+alias landuse=land|landuse_sub_type=t0 map_key_basemap:landuse=land
+hide  landuse=land|landuse_sub_type=t1
+hide  landuse=land|landuse_sub_type=t2
+hide  landuse=land|landuse_sub_type=t3
+alias landuse=park|landuse_sub_type=t0 map_key_basemap:landuse=park
+hide  landuse=park|landuse_sub_type=t1
+hide  landuse=park|landuse_sub_type=t2
+hide  landuse=park|landuse_sub_type=t3
+alias landuse=water|landuse_sub_type=t0 map_key_basemap:landuse=water
+hide  landuse=water|landuse_sub_type=t1
+hide  landuse=water|landuse_sub_type=t2
+hide  landuse=water|landuse_sub_type=t3
+alias landuse=education|landuse_sub_type=t0 map_key_basemap:landuse=education
+hide  landuse=education|landuse_sub_type=t1
+hide  landuse=education|landuse_sub_type=t2
+hide  landuse=education|landuse_sub_type=t3
+alias landuse=tourism|landuse_sub_type=t0 map_key_basemap:landuse=tourism
+hide  landuse=tourism|landuse_sub_type=t1
+hide  landuse=tourism|landuse_sub_type=t2
+hide  landuse=tourism|landuse_sub_type=t3
+alias landuse=garden|landuse_sub_type=t0 map_key_basemap:landuse=garden
+hide  landuse=garden|landuse_sub_type=t1
+hide  landuse=garden|landuse_sub_type=t2
+hide  landuse=garden|landuse_sub_type=t3
+alias landuse=shop|landuse_sub_type=t0 map_key_basemap:landuse=shop
+hide  landuse=shop|landuse_sub_type=t1
+hide  landuse=shop|landuse_sub_type=t2
+hide  landuse=shop|landuse_sub_type=t3
+alias landuse=industrial|landuse_sub_type=t0 map_key_basemap:landuse=industrial
+alias landuse=industrial|landuse_sub_type=t1 map_key_basemap:landuse=military
+hide  landuse=industrial|landuse_sub_type=t2
+hide  landuse=industrial|landuse_sub_type=t3
+alias landuse=sport|landuse_sub_type=t0 map_key_basemap:landuse=sport
+alias landuse=sport|landuse_sub_type=t1 map_key_basemap:landuse=piste
+hide  landuse=sport|landuse_sub_type=t2
+hide  landuse=sport|landuse_sub_type=t3
+alias landuse=cemetery|landuse_sub_type=t0 map_key_basemap:landuse=cemetery
+hide  landuse=cemetery|landuse_sub_type=t1
+hide  landuse=cemetery|landuse_sub_type=t2
+hide  landuse=cemetery|landuse_sub_type=t3
+alias landuse=residential|landuse_sub_type=t0 map_key_basemap:landuse=residential
+hide  landuse=residential|landuse_sub_type=t1
+hide  landuse=residential|landuse_sub_type=t2
+hide  landuse=residential|landuse_sub_type=t3
+alias landuse=natural0|landuse_sub_type=t0 map_key_basemap:landuse=natural_forest
+alias landuse=natural0|landuse_sub_type=t1 map_key_basemap:landuse=natural_wetland
+alias landuse=natural0|landuse_sub_type=t2 map_key_basemap:landuse=natural_glacier
+alias landuse=natural0|landuse_sub_type=t3 map_key_basemap:landuse=natural_scree
+alias landuse=natural1|landuse_sub_type=t0 map_key_basemap:landuse=natural_mud
+alias landuse=natural1|landuse_sub_type=t1 map_key_basemap:landuse=natural_beach
+alias landuse=natural1|landuse_sub_type=t2 map_key_basemap:landuse=natural_rock
+hide  landuse=natural1|landuse_sub_type=t3
+alias landuse=nature_reserve|landuse_sub_type=t0 map_key_basemap:landuse=nature_reserve
+hide  landuse=nature_reserve|landuse_sub_type=t1
+hide  landuse=nature_reserve|landuse_sub_type=t2
+hide  landuse=nature_reserve|landuse_sub_type=t3
+alias landuse=historic|landuse_sub_type=t0 map_key_basemap:landuse=historic
+hide  landuse=historic|landuse_sub_type=t1
+hide  landuse=historic|landuse_sub_type=t2
+hide  landuse=historic|landuse_sub_type=t3
+alias landuse=emergency|landuse_sub_type=t0 map_key_basemap:landuse=emergency
+hide  landuse=emergency|landuse_sub_type=t1
+hide  landuse=emergency|landuse_sub_type=t2
+hide  landuse=emergency|landuse_sub_type=t3
+alias landuse=health|landuse_sub_type=t0 map_key_basemap:landuse=health
+hide  landuse=health|landuse_sub_type=t1
+hide  landuse=health|landuse_sub_type=t2
+hide  landuse=health|landuse_sub_type=t3
+alias landuse=public|landuse_sub_type=t0 map_key_basemap:landuse=public
+hide  landuse=public|landuse_sub_type=t1
+hide  landuse=public|landuse_sub_type=t2
+hide  landuse=public|landuse_sub_type=t3
+*/
 Map {
   map-bgcolor: #7eb9e3;
 }

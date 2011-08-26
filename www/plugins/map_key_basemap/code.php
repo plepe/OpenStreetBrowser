@@ -68,13 +68,9 @@ class map_key_basemap extends map_key_cascadenik {
     $ret.="<h4>".lang("head:landuse")."</h4>\n";
     $ret.="<table>\n";
     $ret.=$this->show_mss(array("landuse_extract"), 
-      array("landuse"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
-    $ret.=$this->show_mss(array("landuse_extract"), 
-      array("landuse"=>"=natural", "sub_type"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
+      array("landuse"=>"*", "landuse_sub_type"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("landuse"), 
-      array("landuse"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
-    $ret.=$this->show_mss(array("landuse"), 
-      array("landuse"=>"=natural", "sub_type"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
+      array("landuse"=>"*", "landuse_sub_type"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
     $ret.=$this->show_mss(array("waterarea"), 
       array("landuse"=>"=water"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap"));
     $ret.="</table>\n";
