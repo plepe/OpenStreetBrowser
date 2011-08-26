@@ -43,7 +43,7 @@ foreach($_REQUEST[param] as $v) {
       case "point-file": 
 	$show[point]=true;
 	$s=getimagesize("$root_path/www/$s_v");
-	$point=array($p, $s[0], $s[1]);
+	$point=array($s_v, $s[0], $s[1]);
 	if($s[1]/2>$shift)
 	  $shift=$s[1]/2;
 	break;
