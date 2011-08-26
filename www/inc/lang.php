@@ -3,6 +3,9 @@ include "lang/list.php";
 define("F", 1);
 define("M", 2);
 define("N", 3);
+$lang_tags_format_options_default=array(
+  "str_join"=>", ", "value_separator"=>": ",
+);
 
 function lang() {
   global $lang_str;
@@ -153,26 +156,33 @@ function lang_init() {
  * @param string|array string(s) to translate
  * @param int count of strings
  * @param hash options to configure display
+ *   str_join: string which is used to join strings (default: ", ")
+ *   value_separator: string which is used to join key and value (default: ": ")
  * @return string formatted tags
  */
 function lang_tags_format($str, $count, $options) {
+  global $lang_tags_format_options_default;
+
+  // default values
+  if(!isset($count))
+    $count=1;
+  if(!$options)
+    $options=array();
+  $options=array_merge($lang_tags_format_options_default, $options);
+
   // if array than iterate through str and join as string
   if(is_array($str)) {
     $ret=array();
     foreach($str as $s)
       $ret[]=lang_tags_format($s, $count, $options);
 
-    return implode(", ", $ret);
+    return implode($options['str_join'], $ret);
   }
-
-  // default values
-  if(!isset($count))
-    $count=1;
 
   // if it matches as a tag-string than process each of them
   if(preg_match("/^([^><=!]*)(=|>|<|>=|<=|!=)([^><=!].*)$/", $str, $m)) {
     if($m[2]=="=")
-      $m[2]=": ";
+      $m[2]=$options['value_separator'];
 
     $ret=lang($m[1], $count).$m[2].lang("$m[1]=$m[3]", $count);
 

@@ -1,4 +1,7 @@
 var lang_str={};
+var lang_tags_format_options_default={
+  str_join: ", ", value_separator: ": "
+};
 
 function change_language() {
   var ob=document.getElementById("lang_select_form");
@@ -89,10 +92,19 @@ function lang_change(key, value) {
  * format tag(s) for display
  * @param string|array string(s) to translate
  * @param int count of strings
+ *   str_join: string which is used to join strings (default: ", ")
+ *   value_separator: string which is used to join key and value (default: ": ")
  * @param hash options to configure display
  */
 function lang_tags_format(str, count, options) {
   var ret;
+
+  // default values
+  if(typeof count=="undefined")
+    count=1;
+  if(typeof options=="undefined")
+    options={};
+  options=array_merge(lang_tags_format_options_default, options);
 
   // if array than iterate through str and join as string
   if(typeof str=="object") {
@@ -100,18 +112,14 @@ function lang_tags_format(str, count, options) {
     for(var i=0; i<str.length; i++)
       ret.push(lang_tags_format(str[i], count, options));
 
-    return ret.join(", ");
+    return ret.join(options.str_join);
   }
-
-  // default values
-  if(typeof count=="undefined")
-    count=1;
 
   // if it matches as a tag-string than process each of them
   var m;
   if(m=str.match(/^([^><=!]*)(=|>|<|>=|<=|!=)([^><=!].*)$/)) {
     if(m[2]=="=")
-      m[2]=": ";
+      m[2]=options.value_separator;
 
     ret=lang(m[1], count)+m[2]+lang(m[1]+"="+m[3], count);
 
