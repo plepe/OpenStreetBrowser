@@ -19,9 +19,9 @@ class map_key_basemap extends map_key_cascadenik {
 
     $ret1="";
     $ret1.=$this->show_mss(array("places_high"), 
-      array("place"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
+      array("place"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap", "tags_format"=>array("prefix"=>"tag:", "override"=>array("place"=>array("no_key"=>true)))));
     $ret1.=$this->show_mss(array("places_db"), 
-      array("place"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
+      array("place"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap", "tags_format"=>array("prefix"=>"tag:", "override"=>array("place"=>array("no_key"=>true)))));
     if($ret1!="") {
       $ret.="<h4>".lang("head:places")."</h4>\n";
       $ret.="<table>\n";
