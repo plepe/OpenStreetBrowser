@@ -220,12 +220,14 @@ $lang_str["tag:religion"]="Religion";
 $lang_str["tag:religion=christian"]=array("christian");
 
 // route
+$lang_str["tag:route"]="Route";
 $lang_str["tag:route=train"]="Train";
 $lang_str["tag:route=railway"]="Railway";
 $lang_str["tag:route=rail"]="Railway";
 $lang_str["tag:route=light_rail"]="Light Rail";
 $lang_str["tag:route=subway"]="Subway";
 $lang_str["tag:route=tram"]="Tram";
+$lang_str["tag:route=tram_bus"]="Tram and Bus";
 $lang_str["tag:route=trolley"]="Trolley";
 $lang_str["tag:route=trolleybus"]="Trolley";
 $lang_str["tag:route=bus"]="Bus";
