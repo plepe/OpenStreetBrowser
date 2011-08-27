@@ -69,8 +69,7 @@ $lang_str["list_info"]="Выберите категорию для поиска 
 $lang_str["list_leisure_sport_tourism"]="Отдых, туризм и спорт";
 
 // Mapkey
-$lang_str["map_key:head"]="Обозначения на карте";
-$lang_str["map_key:zoom"]="Уровень приближения";
+$lang_str['zoom']="Уровень приближения";
 
 #$lang_str["grave_is_on"]="Grave is on";
 

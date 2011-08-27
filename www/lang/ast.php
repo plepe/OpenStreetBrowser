@@ -69,8 +69,7 @@ $lang_str["list_info"]="Escueyi una categoría pa ver el conteníu del mapa o ca
 $lang_str["list_leisure_sport_tourism"]="Recréu, deporte y turismu";
 
 // Mapkey
-$lang_str["map_key:head"]="Símbolos del mapa";
-$lang_str["map_key:zoom"]="Nivel de zoom";
+$lang_str['zoom']="Nivel de zoom";
 
 #$lang_str["grave_is_on"]="Grave is on";
 

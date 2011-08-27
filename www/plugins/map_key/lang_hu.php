@@ -1,3 +1,2 @@
 <?
-
-$lang_str["main:map_key"]="Térképmagyarázat";
+$lang_str["map_key:name"]="Térképmagyarázat";

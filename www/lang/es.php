@@ -69,8 +69,7 @@ $lang_str["routing_time"]="Tiempo";
 #$lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
 
 // Mapkey
-#$lang_str["map_key:head"]="Map key";
-$lang_str["map_key:zoom"]="Nivel de Zoom";
+$lang_str['zoom']="Nivel de Zoom";
 
 #$lang_str["grave_is_on"]="Grave is on";
 

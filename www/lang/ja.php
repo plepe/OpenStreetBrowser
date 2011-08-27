@@ -69,8 +69,7 @@ $lang_str["list_info"]="カテゴリを選択してマップの内容をブラ�
 $lang_str["list_leisure_sport_tourism"]="レジャー、スポート＆観光";
 
 // Mapkey
-$lang_str["map_key:head"]="マップキー";
-$lang_str["map_key:zoom"]="ズームレベル";
+$lang_str['zoom']="ズームレベル";
 
 $lang_str["grave_is_on"]="Grave is on";
 

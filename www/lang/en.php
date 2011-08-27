@@ -31,6 +31,7 @@ $lang_str["nothing_found"]=array("nothing found");
 $lang_str["loading"]=array("Loading...");
 $lang_str["more"]="more";
 $lang_str["unnamed"]="unnamed";
+$lang_str['zoom']="Zoom level";
 
 // Headings
 $lang_str["head:general_info"]="General Information";
@@ -69,8 +70,6 @@ $lang_str["list_info"]="Choose a category to browse map content or click on an o
 $lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
 
 // Mapkey
-$lang_str["map_key:head"]="Map key";
-$lang_str["map_key:zoom"]="Zoom level";
 
 $lang_str["grave_is_on"]="Grave is on";
 

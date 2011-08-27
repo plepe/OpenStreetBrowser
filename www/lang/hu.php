@@ -69,8 +69,7 @@ $lang_str["list_info"]="Válassz ki egy kategóriát, ami megjelenik a térképe
 $lang_str["list_leisure_sport_tourism"]="Szabadidő, sport és turizmus";
 
 // Mapkey
-$lang_str["map_key:head"]="Térképmagyarázat";
-$lang_str["map_key:zoom"]="Nagyítási színt";
+$lang_str['zoom']="Nagyítási színt";
 
 #$lang_str["grave_is_on"]="Grave is on";
 

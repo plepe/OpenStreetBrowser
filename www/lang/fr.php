@@ -69,8 +69,7 @@ $lang_str["list_info"]="Choose a category to browse map content or click on an o
 $lang_str["list_leisure_sport_tourism"]="Loisir, Sport et Tourisme";
 
 // Mapkey
-$lang_str["map_key:head"]="Couche Carto";
-$lang_str["map_key:zoom"]="Niveau de Zoom";
+$lang_str['zoom']="Niveau de Zoom";
 
 $lang_str["grave_is_on"]="Moulin à vent";
 

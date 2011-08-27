@@ -69,8 +69,7 @@ $lang_str["list_info"]="Vyber kategorii pro prohlížení obsahu mapy nebo klikn
 $lang_str["list_leisure_sport_tourism"]="Odpočinek, Sport and Turismus";
 
 // Mapkey
-$lang_str["map_key:head"]="Legenda";
-$lang_str["map_key:zoom"]="Stupeň přiblížení";
+$lang_str['zoom']="Stupeň přiblížení";
 
 #$lang_str["grave_is_on"]="Grave is on";
 

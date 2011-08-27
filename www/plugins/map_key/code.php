@@ -30,7 +30,7 @@ class map_key_entry {
 }
 
 function map_key_main_links($links) {
-  $links[]=array(-5, "<a href='javascript:map_key_toggle()'>".lang("main:map_key")."</a>");
+  $links[]=array(-5, "<a href='javascript:map_key_toggle()'>".lang("map_key:name")."</a>");
 }
 
 function map_key_export() {

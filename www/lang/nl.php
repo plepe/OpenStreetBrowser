@@ -70,8 +70,7 @@ $lang_str["list_info"]="Kies een categorie om de kaartinhoud door te bladeren of
 $lang_str["list_leisure_sport_tourism"]="Vrije tijd, Sport and Toerisme";
 
 // Mapkey
-$lang_str["map_key:head"]="Legenda";
-$lang_str["map_key:zoom"]="Zoomniveau";
+$lang_str['zoom']="Zoomniveau";
 
 $lang_str["grave_is_on"]="Grave is on";
 

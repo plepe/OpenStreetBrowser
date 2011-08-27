@@ -1,3 +1,2 @@
 <?
-
-$lang_str["main:map_key"]="Обозначения на карте";
+$lang_str["map_key:name"]="Обозначения на карте";

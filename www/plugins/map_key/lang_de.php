@@ -1,3 +1,2 @@
 <?
-
-$lang_str["main:map_key"]="Legende";
+$lang_str["map_key:name"]="Legende";

@@ -69,8 +69,7 @@ $lang_str["list_info"]="Choose a category to browse map content or click on an o
 $lang_str["list_leisure_sport_tourism"]="Дозвілля, Спорт та Туризм";
 
 // Mapkey
-$lang_str["map_key:head"]="Map key";
-$lang_str["map_key:zoom"]="Zoom level";
+$lang_str['zoom']="Zoom level";
 
 $lang_str["grave_is_on"]="Grave is on";
 

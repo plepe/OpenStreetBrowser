@@ -1,3 +1,2 @@
 <?
-
-$lang_str["main:map_key"]="Couche Carto";
+$lang_str["map_key:name"]="Couche Carto";

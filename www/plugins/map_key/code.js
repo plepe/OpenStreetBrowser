@@ -53,7 +53,7 @@ function map_key_display(response) {
   text=weight_sort(ret.list);
 
   map_key.innerHTML=
-    lang("map_key:head")+" ("+lang("map_key:zoom")+" "+ret.param.zoom+")";
+    lang("map_key:name")+" ("+lang("zoom")+" "+ret.param.zoom+")";
 
   for(var i=0; i<text.length; i++) {
     var div=map_key_format(text[i]);

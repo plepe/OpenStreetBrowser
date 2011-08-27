@@ -69,8 +69,7 @@ $lang_str["list_info"]="Wähle eine Kategorie, um den Karteninhalt zu durchstöb
 $lang_str["list_leisure_sport_tourism"]="Freizeit, Sport und Tourismus";
 
 // Mapkey
-$lang_str["map_key:head"]="Legende";
-$lang_str["map_key:zoom"]="Zoomstufe";
+$lang_str['zoom']="Zoomstufe";
 
 #$lang_str["grave_is_on"]="Grave is on";
 

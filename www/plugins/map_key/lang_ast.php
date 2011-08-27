@@ -1,3 +1,2 @@
 <?
-
-$lang_str["main:map_key"]="Símbolos del mapa";
+$lang_str["map_key:name"]="Símbolos del mapa";
