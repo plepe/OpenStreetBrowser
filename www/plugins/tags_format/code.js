@@ -1,5 +1,5 @@
 var lang_tags_format_options_default={
-  str_join: ", ", value_separator: ": ", count: 1
+  str_join: ", ", value_separator: ": ", count: 1, prefix: "tag:"
 };
 
 /**
@@ -15,6 +15,7 @@ var lang_tags_format_options_default={
  *   str_join: string which is used to join strings (default: ", ")
  *   value_separator: string which is used to join key and value (default: ": ")
  *   count: count of strings (for singular/plural) (default: 1)
+ *   prefix: lang-prefix for keys (default: "tag:")
  *   override: override options for specified keys. e.g.:
  *     { 'highway': { 'value_separator': "==", ... }, ...}
  * @return string formatted tags
@@ -53,10 +54,10 @@ function _tags_format_single(data, options) {
   if(data.op=="=")
     data.op="";
 
-  ret=lang(data.k, options.count)+
+  ret=lang(options.prefix+data.k, options.count)+
     options['value_separator']+
     data.op+
-    lang(data.k+"="+data.v, options.count);
+    lang(options.prefix+data.k+"="+data.v, options.count);
 
   return ret;
 }
