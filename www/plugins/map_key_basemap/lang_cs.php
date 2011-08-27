@@ -27,7 +27,7 @@ $lang_str['map_key_basemap:landuse=garden']="Farmy, Sady, Zahrady";
 $lang_str['map_key_basemap:landuse=industrial']="Průmyslové a železniční oblasti";
 $lang_str['map_key_basemap:landuse=sport']="Oblasti sportovních zařízení";
 $lang_str['map_key_basemap:landuse=cemetery']="Hřbitovy";
-$lang_str['map_key_basemap:landuse=residental']="Obytné oblasti";
+$lang_str['map_key_basemap:landuse=residential']="Obytné oblasti";
 $lang_str['map_key_basemap:landuse=nature_reserve']="Přírodní rezervace";
 $lang_str['map_key_basemap:landuse=historic']="Oblasti historické hodnoty";
 $lang_str['map_key_basemap:landuse=emergency']="Oblasti zařízení pohotovosti";

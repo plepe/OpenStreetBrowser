@@ -27,7 +27,7 @@ $lang_str['map_key_basemap:landuse=garden']="Kwekerijen, Plantages, Tuinen";
 $lang_str['map_key_basemap:landuse=industrial']="Industriegebied en Spoorwegemplacement";
 $lang_str['map_key_basemap:landuse=sport']="Gebieden met sport faciliteiten";
 $lang_str['map_key_basemap:landuse=cemetery']="Begraafplaatsen";
-$lang_str['map_key_basemap:landuse=residental']="Woongebied";
+$lang_str['map_key_basemap:landuse=residential']="Woongebied";
 $lang_str['map_key_basemap:landuse=nature_reserve']="Natuurreservaten";
 $lang_str['map_key_basemap:landuse=historic']="Gebieden van historische waarde";
 $lang_str['map_key_basemap:landuse=emergency']="Gebieden met noodfaciliteiten";

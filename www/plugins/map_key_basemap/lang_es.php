@@ -27,7 +27,7 @@ $lang_str['map_key_basemap:landuse=park']="Parque";
 #$lang_str['map_key_basemap:landuse=industrial']="Industrial and Railway Areas";
 #$lang_str['map_key_basemap:landuse=sport']="Areas of sport facilities";
 $lang_str['map_key_basemap:landuse=cemetery']="Cementerios";
-$lang_str['map_key_basemap:landuse=residental']="Áreas residenciales";
+$lang_str['map_key_basemap:landuse=residential']="Áreas residenciales";
 $lang_str['map_key_basemap:landuse=nature_reserve']="Reservas naturales";
 $lang_str['map_key_basemap:landuse=historic']="Áreas con valor histórico";
 #$lang_str['map_key_basemap:landuse=emergency']="Areas of emergency facilities";

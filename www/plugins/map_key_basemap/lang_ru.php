@@ -27,7 +27,7 @@ $lang_str['map_key_basemap:landuse=garden']="Фермы, плантации, с�
 $lang_str['map_key_basemap:landuse=industrial']="Промышленные и железнодорожные территории";
 $lang_str['map_key_basemap:landuse=sport']="Территории спортивных сооружений";
 $lang_str['map_key_basemap:landuse=cemetery']="Кладбища";
-$lang_str['map_key_basemap:landuse=residental']="Жилые районы";
+$lang_str['map_key_basemap:landuse=residential']="Жилые районы";
 $lang_str['map_key_basemap:landuse=nature_reserve']="Заповедники";
 $lang_str['map_key_basemap:landuse=historic']="Места исторического значения";
 $lang_str['map_key_basemap:landuse=emergency']="Районы скорой помощи";

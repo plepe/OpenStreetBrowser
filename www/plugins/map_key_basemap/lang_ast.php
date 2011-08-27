@@ -27,7 +27,7 @@ $lang_str['map_key_basemap:landuse=garden']="Caseríes, plantaciones, xardinos";
 $lang_str['map_key_basemap:landuse=industrial']="Árees industriales y ferroviaries";
 $lang_str['map_key_basemap:landuse=sport']="Árees d'instalaciones deportives";
 $lang_str['map_key_basemap:landuse=cemetery']="Cementerios";
-$lang_str['map_key_basemap:landuse=residental']="Árees de viviendes";
+$lang_str['map_key_basemap:landuse=residential']="Árees de viviendes";
 $lang_str['map_key_basemap:landuse=nature_reserve']="Reserves naturales";
 $lang_str['map_key_basemap:landuse=historic']="Árees con valor históricu";
 $lang_str['map_key_basemap:landuse=emergency']="Árees d'instalaciones d'emerxencia";
