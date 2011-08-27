@@ -106,7 +106,6 @@ $lang_str["lang:"]=array("Idioma local");
 #$lang_str["overlay:data"]=array("Data");
 #$lang_str["overlay:draggable"]=array("Markers");
 
-
 $lang_str["user:no_auth"]="Usuario o contraseña equivocados!";
 #$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
 $lang_str["user:create_user"]="Crear nuevo usuario:";
@@ -154,3 +153,4 @@ $lang_str["basemap:osmarender"]="Estándar (OsmaRender)";
 #$lang_str["lang:ru"]="Russian";
 #$lang_str["lang:ja"]="Japanese";
 #$lang_str["lang:hu"]="Hungarian";
+#$lang_str["lang:ast"]="Asturian";

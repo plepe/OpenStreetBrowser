@@ -7,4 +7,3 @@ $lang_str["start_location:lastview"]="cabera vista";
 $lang_str["start_location:savedview"]="caberu enllaz permanente";
 $lang_str["start_location:startnormal"]="guardar vista";
 $lang_str["start_location:remember"]="recordar decisión";
-

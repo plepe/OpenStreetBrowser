@@ -313,8 +313,3 @@ $tag_type["wires"]=array("count");
 // website
 $lang_str["tag:website"]="Webseite";
 $tag_type["website"]=array("link");
-
-
-
-
-

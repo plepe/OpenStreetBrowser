@@ -7,4 +7,3 @@ $lang_str["start_location:lastview"]=array("utolsó nézet");
 $lang_str["start_location:savedview"]=array("utolsó állandó hivatkozás");
 $lang_str["start_location:startnormal"]=array("nézet megtartása");
 $lang_str["start_location:remember"]=array("emlékezés a beállításokra");
-

@@ -7,9 +7,3 @@ $lang_str["search:nominatim"]="recherche fournie par";
 $lang_str["search:field"]="Recherche...";
 $lang_str["search:tip"]="e.g. 'Montréal', 'Rue Papineau, 'boite postale près du Jardin botanique',...";
 $lang_str["search:clear"]="Effacer le champ de recherche";
-
-
-
-
-
-

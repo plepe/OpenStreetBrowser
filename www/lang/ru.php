@@ -106,7 +106,6 @@ $lang_str["lang:"]="Определить язык автоматически";
 $lang_str["overlay:data"]="Данные";
 $lang_str["overlay:draggable"]="Отметки";
 
-
 $lang_str["user:no_auth"]="Неправильный пароль или имя пользователя!";
 $lang_str["user:login_text"]="Входим в OpenStreetBrowser:";
 $lang_str["user:create_user"]="Создать нового пользователя:";
@@ -154,3 +153,4 @@ $lang_str["lang:uk"]="Украинский";
 $lang_str["lang:ru"]="Русский";
 $lang_str["lang:ja"]="Японский";
 $lang_str["lang:hu"]="Венгерский";
+#$lang_str["lang:ast"]="Asturian";

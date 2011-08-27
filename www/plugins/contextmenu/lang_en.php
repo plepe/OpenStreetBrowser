@@ -4,4 +4,3 @@ $lang_str["contextmenu:help"]="Should the context menu appear after click with t
 
 $lang_str["options:contextmenu_mouse_button:right"]="Right Mouse Button";
 $lang_str["options:contextmenu_mouse_button:left"]="Left Mouse Button";
-

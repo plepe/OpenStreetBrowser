@@ -39,7 +39,6 @@ $lang_str["head:routes"]="Rutes";
 $lang_str["head:members"]="Miembros";
 $lang_str["head:address"]="Direición";
 $lang_str["head:internal"]="OSM Internu";
-$lang_str["head:wikipedia"]="Wikipedia";
 $lang_str["head:housenumbers"]="Númberos de portal";
 $lang_str["head:roads"]="Carreteres";
 $lang_str["head:rails"]="Ferrocarriles";
@@ -90,7 +89,7 @@ $lang_str["main:donate"]="Donativos";
 $lang_str["main:licence"]="Datos del mapa: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> collaboradores de <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> y <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">collaboradores</a>";
 $lang_str["main:permalink"]="Enllaz permanente";
 
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Nun s'alcontró l'oxetu</h1>Nun se pudo alcontrar l'oxetu cola ID \"%s\". Esto puede ser por una (o más) de les razones darréu:<ul><li>La ID ta enquivocada.</li><li>L'oxetu ta identificáu pol sitiu d'un terceru y (entá) nun ta disponible nel OpenStreetBrowser.</li><li>L'oxetu ta fuera del área con sofitu.<li><li>L'enllaz que siguisti ye antiguu y l'oxetu se desanició d'OpenStreetMap.</li></ul>";
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Nun s'alcontró l'oxetu</h1>Nun se pudo alcontrar l'oxetu cola ID \"%s\". Esto puede ser por una (o más) de les razones darréu:<ul><li>La ID ta enquivocada.</li><li>L'oxetu ta identificáu pol sitiu d'un terceru y (entá) nun ta disponible nel OpenStreetBrowser.</li><li>L'oxetu ta fuera del área con sofitu.</li><li>L'enllaz que siguisti ye antiguu y l'oxetu se desanició d'OpenStreetMap.</li></ul>";
 
 $lang_str["options:autozoom"]=array("Comportamientu del zoom automáticu");
 $lang_str["help:autozoom"]=array("Al escoyer un oxetu, el visor muevese al mesmu, y el nivel de zoom tamién puede camudar. Con esta opción puedes  escoyer ente diferentes moos.");
@@ -106,8 +105,6 @@ $lang_str["lang:"]=array("Llingua llocal");
 
 $lang_str["overlay:data"]=array("Datos");
 $lang_str["overlay:draggable"]=array("Marques");
-
-$lang_str["wikipedia:read_more"]="lleer más";
 
 $lang_str["user:no_auth"]="Nome d'usuariu o contraseña enquivocaos";
 $lang_str["user:login_text"]="Coneutase a OpenStreetBrowser:";

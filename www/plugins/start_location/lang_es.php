@@ -7,10 +7,7 @@
 $lang_str["start_location:savedview"]=array("último enlace permanente");
 #$lang_str["start_location:startnormal"]="keep view";
 #$lang_str["start_location:remember"]="remember decision";
-
-// The following $lang_str are not defined in www/plugins/start_location/lang_en.php and might be 
-// deprecated/mislocated/wrong:
+// The following $lang_str were not defined in the English language file and might be deprecated or wrong:
 $lang_str["start__locationlocation:geolocation"]=array("obtener ubicación");
 $lang_str["start__locationlocation:lastview"]=array("última vista");
 $lang_str["start__locationlocation:remember"]=array("recordar decisión");
-

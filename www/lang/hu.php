@@ -106,7 +106,6 @@ $lang_str["lang:"]=array("Helyi nyelv");
 $lang_str["overlay:data"]=array("Adat");
 $lang_str["overlay:draggable"]=array("Jelölők");
 
-
 $lang_str["user:no_auth"]="Rossz felhasználói név vagy jelszó!";
 $lang_str["user:login_text"]="Beszállás az OpenStreetBrowserbe:";
 $lang_str["user:create_user"]="Új felhasználó:";
@@ -154,3 +153,4 @@ $lang_str["lang:uk"]="Ukrán";
 $lang_str["lang:ru"]="Orosz";
 $lang_str["lang:ja"]="Japán";
 $lang_str["lang:hu"]="Magyar";
+#$lang_str["lang:ast"]="Asturian";

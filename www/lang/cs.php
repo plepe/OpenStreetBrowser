@@ -39,7 +39,6 @@ $lang_str["head:routes"]="Linky";
 $lang_str["head:members"]="Členové";
 $lang_str["head:address"]="Adresa";
 #$lang_str["head:internal"]="OSM Internal";
-$lang_str["head:wikipedia"]="Wikipedie";
 $lang_str["head:housenumbers"]="Čísla domů";
 $lang_str["head:roads"]="Cesty";
 $lang_str["head:rails"]="Železnice";
@@ -85,14 +84,14 @@ $lang_str["map_key:zoom"]="Stupeň přiblížení";
 
 $lang_str["main:map_key"]="Legenda";
 $lang_str["main:options"]="Nastavení";
-#$lang_str["main:about"]="About";
+$lang_str["main:about"]="O Projektu";
 $lang_str["main:donate"]="Sponzorovat";
-#$lang_str["main:licence"]="Map Data: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributors | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">contributors</a>";
-#$lang_str["main:permalink"]="Permalink";
+$lang_str["main:licence"]="Data na mapě: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> přispěvatelé | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> a <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">přispěvatelé</a>";
+$lang_str["main:permalink"]="Trvalý odkaz";
 
-#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>Nebyl nalezen žádný objekt s ID \"%s\". Toto nastalo z jednoho z (nebo více) následujících důvodů:<ul><li>ID je špatné.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>Objekt je mimo podporovanou oblast.</li><li>Váš odkaz je starý a objekt už byl pravděpodobně vymazán z OpenStreetMap.</li></ul>";
 
-#$lang_str["options:autozoom"]=array("Autozoom behaviour");
+$lang_str["options:autozoom"]=array("Chování autozoomu");
 #$lang_str["help:autozoom"]=array("When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.");
 #$lang_str["options:autozoom:pan"]=array("Pan to current object (nicer)");
 #$lang_str["options:autozoom:move"]=array("Move to current object (faster)");
@@ -106,7 +105,6 @@ $lang_str["lang:"]=array("Místní jazyk");
 
 $lang_str["overlay:data"]=array("Data");
 $lang_str["overlay:draggable"]=array("Značky");
-
 
 $lang_str["user:no_auth"]="Špatné uživatelské jméno nebo heslo!";
 $lang_str["user:login_text"]="Přihlásit se do OpenStreetBrowseru:";
@@ -133,10 +131,10 @@ $lang_str["category:data_status"]="Stav";
 $lang_str["category:old_version"]="Připravuje se nová verze této kategorie.";
 $lang_str["category:not_compiled"]="Připravuje se nová kategorie.";
 
-#$lang_str["category_rule_tag:match"]="Shoda";
-#$lang_str["category_rule_tag:description"]="Popis";
-#$lang_str["category_chooser:choose"]="Vyberte kategorii";
-#$lang_str["category_chooser:new"]="Nová kategorie";
+$lang_str["category_rule_tag:match"]="Shoda";
+$lang_str["category_rule_tag:description"]="Popis";
+$lang_str["category_chooser:choose"]="Vyberte kategorii";
+$lang_str["category_chooser:new"]="Nová kategorie";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
@@ -155,3 +153,6 @@ $lang_str["lang:uk"]="Ukrajinština";
 $lang_str["lang:ru"]="Ruština";
 $lang_str["lang:ja"]="Japonština";
 $lang_str["lang:hu"]="Maďarština";
+$lang_str["lang:ast"]="Asturština";
+// The following $lang_str were not defined in the English language file and might be deprecated or wrong:
+$lang_str["head:wikipedia"]="Wikipedie";
