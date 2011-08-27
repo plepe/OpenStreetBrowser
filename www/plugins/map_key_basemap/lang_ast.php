@@ -34,9 +34,9 @@ $lang_str['map_key_basemap:landuse=emergency']="Árees d'instalaciones d'emerxen
 $lang_str['map_key_basemap:landuse=health']="Árees d'instalaciones sanitaries";
 $lang_str['map_key_basemap:landuse=public']="Árees de servicios públicos";
 $lang_str['map_key_basemap:landuse=water']="Árees acuátiques";
-$lang_str['map_key_basemap:landuse=natural|sub_type=t0']="Viesca y forestal";
-$lang_str['map_key_basemap:landuse=natural|sub_type=t1']="Humedal";
-$lang_str['map_key_basemap:landuse=natural|sub_type=t2']="Glaciares";
-$lang_str['map_key_basemap:landuse=natural|sub_type=t3']="Lleres, grandes";
-$lang_str['map_key_basemap:landuse=natural|sub_type=t4']="Llamuerga";
-$lang_str['map_key_basemap:landuse=natural|sub_type=t5']="Playes";
+$lang_str['map_key_basemap:landuse=natural_forest']="Viesca y forestal";
+$lang_str['map_key_basemap:landuse=natural_wetland']="Humedal";
+$lang_str['map_key_basemap:landuse=natural_glacier']="Glaciares";
+$lang_str['map_key_basemap:landuse=natural_scree']="Lleres, grandes";
+$lang_str['map_key_basemap:landuse=natural_mud']="Llamuerga";
+$lang_str['map_key_basemap:landuse=natural_beach']="Playes";

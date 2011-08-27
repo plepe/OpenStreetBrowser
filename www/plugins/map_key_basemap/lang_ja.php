@@ -34,9 +34,9 @@
 #$lang_str['map_key_basemap:landuse=health']="Areas of health facilities";
 #$lang_str['map_key_basemap:landuse=public']="Areas for public services";
 #$lang_str['map_key_basemap:landuse=water']="Water Areas";
-#$lang_str['map_key_basemap:landuse=natural|sub_type=t0']="Woods and Forest";
-#$lang_str['map_key_basemap:landuse=natural|sub_type=t1']="Wetland";
-#$lang_str['map_key_basemap:landuse=natural|sub_type=t2']="Glaciers";
-#$lang_str['map_key_basemap:landuse=natural|sub_type=t3']="Screes, Heaths";
-#$lang_str['map_key_basemap:landuse=natural|sub_type=t4']="Mud";
-#$lang_str['map_key_basemap:landuse=natural|sub_type=t5']="Beaches";
+#$lang_str['map_key_basemap:landuse=natural_forest']="Woods and Forest";
+#$lang_str['map_key_basemap:landuse=natural_wetland']="Wetland";
+#$lang_str['map_key_basemap:landuse=natural_glacier']="Glaciers";
+#$lang_str['map_key_basemap:landuse=natural_scree']="Screes, Heaths";
+#$lang_str['map_key_basemap:landuse=natural_mud']="Mud";
+#$lang_str['map_key_basemap:landuse=natural_beach']="Beaches";

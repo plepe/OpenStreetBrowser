@@ -34,9 +34,9 @@ $lang_str['map_key_basemap:landuse=emergency']="Oblasti zařízení pohotovosti"
 $lang_str['map_key_basemap:landuse=health']="Oblast zdravotnických zařízení";
 $lang_str['map_key_basemap:landuse=public']="Oblast veřejných služeb";
 $lang_str['map_key_basemap:landuse=water']="Vodní plochy";
-#$lang_str['map_key_basemap:landuse=natural|sub_type=t0']="Woods and Forest";
-$lang_str['map_key_basemap:landuse=natural|sub_type=t1']="Mokřiny";
-$lang_str['map_key_basemap:landuse=natural|sub_type=t2']="Ledovce";
-#$lang_str['map_key_basemap:landuse=natural|sub_type=t3']="Screes, Heaths";
-$lang_str['map_key_basemap:landuse=natural|sub_type=t4']="Bláto";
-$lang_str['map_key_basemap:landuse=natural|sub_type=t5']="Pláže";
+#$lang_str['map_key_basemap:landuse=natural_forest']="Woods and Forest";
+$lang_str['map_key_basemap:landuse=natural_wetland']="Mokřiny";
+$lang_str['map_key_basemap:landuse=natural_glacier']="Ledovce";
+#$lang_str['map_key_basemap:landuse=natural_scree']="Screes, Heaths";
+$lang_str['map_key_basemap:landuse=natural_mud']="Bláto";
+$lang_str['map_key_basemap:landuse=natural_beach']="Pláže";
