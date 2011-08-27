@@ -42,7 +42,7 @@ function map_key_export() {
   }
 
   $export=json_encode($export);
-  //print "<script type='text/javascript'>\nmap_key_list=$export;\n</script>\n";
+  print "<script type='text/javascript'>\nmap_key_list=$export;\n</script>\n";
 }
 
 function ajax_map_key($param) {
@@ -78,4 +78,4 @@ function ajax_map_key($param) {
 }
 
 register_hook("main_links", "map_key_main_links");
-register_hook("html_done", "map_key_export");
+//register_hook("html_done", "map_key_export");

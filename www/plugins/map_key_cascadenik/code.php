@@ -1,8 +1,21 @@
 <?
+$map_key_cascadenik_aliases=array();
+$map_key_cascadenik_hide=array();
 
+/*
+  options:
+    name_explode - translate each of the keys by its own (default: true)
+    name_prefix - use prefix for translating keys (default: "tag:"), e.g.
+                  "tag:highway=road"
+    geom - force geometry type (default: auto)
+    img_base_path - base_path for images (like patterns)
+*/
 class map_key_cascadenik extends map_key_entry {
   function show_mss($classes, $keys, $bounds, $options=array()) { 
     global $class_info;
+    global $map_key_cascadenik_aliases;
+    global $map_key_cascadenik_hide;
+
 //    print_r($class_info);
     if($options[geom])
       $default_geom=$options[geom];
@@ -78,7 +91,7 @@ class map_key_cascadenik extends map_key_entry {
 //	    $ds[]=$d[$k];
 //	}
 //	$d=$ds;
-        sort($d);
+        //rsort($d);
         $d_key=implode("|", $d);
         for($i=0; $i<pow(2, sizeof($d)); $i++) {
           $d1=array();
@@ -146,19 +159,43 @@ class map_key_cascadenik extends map_key_entry {
           $geom["point"]=1;
       }
 
+      if($map_key_cascadenik_hide[$depend])
+        continue;
+
       if(sizeof($geom)) {
         $ret.="<tr><td>\n";
         build_request($s, "param", &$p);
         $param=implode("&", $p);
 
 	if($geom["poly"])
-	  $ret.="<div><embed width='30' type='image/svg+xml' src='plugins/map_key/symbol_polygon.php?$param' /></div>";
+	  $ret.="<div><embed width='30' height='12' type='image/svg+xml' src='plugins/map_key/symbol_polygon.php?$param' /></div>";
 	elseif($geom["line"])
-	  $ret.="<div><embed width='30' type='image/svg+xml' src='plugins/map_key/symbol_line.php?$param' /></div>";
+	  $ret.="<div><embed width='30' height='12' type='image/svg+xml' src='plugins/map_key/symbol_line.php?$param' /></div>";
 	elseif($geom["point"])
-	  $ret.="<div><embed width='30' type='image/svg+xml' src='plugins/map_key/symbol_point.php?$param' /></div>";
+	  $ret.="<div><embed width='30' height='30' type='image/svg+xml' src='plugins/map_key/symbol_point.php?$param' /></div>";
         $ret.="</td><td>\n";
-        $ret.=lang("$options[prefix]$depend");
+
+        // Compile name
+        if(!isset($options['name_prefix']))
+          $options['name_prefix']="tag:";
+        if(!($name=$map_key_cascadenik_aliases[$depend]))
+          $name=$depend;
+        if(isset($options['tags_format'])) {
+          $options['tags_format']['prefix']=$options['name_prefix'];
+          $name=explode("|", $name);
+          $name=tags_format($name, $options['tags_format']);
+        }
+        else if((!isset($options['name_explode'])||($options['name_explode']))) {
+          $name=explode("|", $name);
+          for($i=0; $i<sizeof($name); $i++)
+            $name[$i]=lang("{$options['name_prefix']}{$name[$i]}");
+          $name=implode(", ", $name);
+        }
+        else {
+          $name=lang("{$options['name_prefix']}{$name}");
+        }
+        $ret.=$name;
+
         $ret.="</td></tr>\n";
       }
     }
@@ -206,6 +243,8 @@ function classes_match($value1, $operator, $value2) {
 }
 
 function load_classes($file, $bounds) {
+  global $map_key_cascadenik_aliases;
+  global $map_key_cascadenik_hide;
   global $class_info;
   global $root_path;
 
@@ -222,6 +261,17 @@ function load_classes($file, $bounds) {
   while($r=fgets($f)) {
     $r=trim($r);
     $notdone=2;
+
+    if(preg_match("/^alias\s+([^ ]*)\s+(.*)$/", $r, $m)) {
+      $map_key_cascadenik_aliases[$m[1]]=$m[2];
+      continue;
+    }
+
+    if(preg_match("/^hide\s+([^ ]*)$/", $r, $m)) {
+      $map_key_cascadenik_hide[$m[1]]=true;
+      continue;
+    }
+
     while($notdone) {
 //	$ret.="r is =$r= $mode $notdone<br>\n";
       $notdone=0;
@@ -287,7 +337,7 @@ function load_classes($file, $bounds) {
 //		$ds[]=$dep_list[$k];
 //	    }
 //	    $dep_list=$ds;
-            sort($dep_list);
+            //rsort($dep_list);
 	    $dep_list=implode("|", $dep_list);
 	    if(!$class_info[$q[0]]["styles"][$dep_list][$q[2]])
 	      $class_info[$q[0]]["styles"][$dep_list][$q[2]]=array();

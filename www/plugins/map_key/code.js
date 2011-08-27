@@ -1,7 +1,8 @@
-var mapkey_zoom=-1;
-var mapkey_request=0;
-var mapkey_overlays=[];
+var map_key; // div for the map key
+var map_key_zoom=-1;
+var map_key_request=0;
 var map_key_list={};
+var map_key_shown=[];
 
 function map_key_entry(id) {
   this.visibility=function() {
@@ -20,66 +21,76 @@ function map_key_remove(id) {
 
 function map_key_toggle() {
   var map=document.getElementById("map");
-  var map_key=document.getElementById("map_key");
 
-  if(map_key.className=='map_key_hidden') {
-    map.className='map_with_mapkey';
-    map_key.className='map_key';
+  if(!has_css_class(map_key, 'shown')) {
+    add_css_class(map, 'with_map_key');
+    add_css_class(map_key, 'shown');
     map_key_check();
   }
   else {
-    map.className='map';
-    map_key.className='map_key_hidden';
+    del_css_class(map, 'with_map_key');
+    del_css_class(map_key, 'shown');
+  }
+}
+
+function map_key_format(map_key_def) {
+  if(typeof map_key_def=="string") {
+    var div=document.createElement("div");
+    div.innerHTML=map_key_def;
+    return div;
+  }
+
+  if(is_dom(map_key_def)) {
+    return map_key_def;
   }
 }
 
 function map_key_display(response) {
-  mapkey_request=0;
   var ret=response.return_value;
+
+  call_hooks("map_key", ret.list, ret.param.zoom, ret.param.entries);
 
   text=weight_sort(ret.list);
 
-  var map_key=document.getElementById("map_key");
   map_key.innerHTML=
-    lang("map_key:head")+" ("+lang("map_key:zoom")+" "+ret.param.zoom+")"+
-    text.join("<br>\n");
+    lang("map_key:head")+" ("+lang("map_key:zoom")+" "+ret.param.zoom+")";
 
-  var zoom=data.getElementsByTagName("zoom");
-  mapkey_zoom=zoom[0].getAttribute("value");
-
-  mapkey_overlays=[];
-  var overlays=data.getElementsByTagName("overlay");
-  for(var i=0; i<overlays.length; i++) {
-    mapkey_overlays[overlays[i].getAttribute("value")]=1;
+  for(var i=0; i<text.length; i++) {
+    var div=map_key_format(text[i]);
+    map_key.appendChild(div);
   }
 
-  map_key_check();
+  map_key_zoom=ret.param.zoom;
+  map_key_shown=ret.param.entries;
 }
 
 function map_key_check() {
-  var map_key=document.getElementById("map_key");
-  var overlays_changed=0;
+  if(map_key_request)
+    map_key_request.abort();
 
-  if(mapkey_request)
-    return;
+  if(has_css_class(map_key, 'shown')) {
+    // list of visible entries
+    var list=[];
+    for(var i in map_key_list) {
+      if(map_key_list[i].visibility())
+	list.push(i);
+    }
 
-  if(map_key.className=='map_key') {
-    if((mapkey_zoom!=map.zoom)||(overlays_changed)) {
-      // list of visible entries
-      var list=[];
-      for(var i in map_key_list) {
-	if(map_key_list[i].visibility())
-	  list.push(i);
-      }
-
+    // only load new map key if either the zoom level changed or different
+    // entries needs to be shown
+    if((map_key_zoom!=map.zoom)||(map_key_shown.join(",")!=list.join(","))) {
       // send request for map key info
-      mapkey_request=1;
-      ajax("map_key", { "zoom": map.zoom, "entries": list }, map_key_display);
+      map_key_request=ajax("map_key", { "zoom": map.zoom, "entries": list },
+        map_key_display);
     }
   }
 }
 
 function map_key_init() {
+  map_key=dom_create_append(document.body, "div");
+  map_key.id="map_key";
 }
 
 register_hook("view_changed", map_key_check);
+register_hook("overlays_visibility_change", map_key_check);
+register_hook("init", map_key_init);

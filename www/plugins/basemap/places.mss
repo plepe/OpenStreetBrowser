@@ -1,3 +1,8 @@
+/*
+alias place=city_large place=city|population>=1000000
+alias place=city_medium place=city|population>=200000
+alias place=town_large place=town|population>=30000
+*/
 .places_high name,
 .places_high name_en,
 .places_db name,
