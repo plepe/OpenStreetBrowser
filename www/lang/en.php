@@ -153,4 +153,5 @@ $lang_str["lang:uk"]="Ukrainian";
 $lang_str["lang:ru"]="Russian";
 $lang_str["lang:ja"]="Japanese";
 $lang_str["lang:hu"]="Hungarian";
+$lang_str["lang:nl"]="Dutch";
 $lang_str["lang:ast"]="Asturian";

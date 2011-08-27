@@ -17,6 +17,7 @@ $languages=array(
   "es"=>"Spanish",
   "cs"=>"Czech",
   "hu"=>"Hungarian",
+  "nl"=>"Dutch",
   "ast"=>"Asturian",
 );
 

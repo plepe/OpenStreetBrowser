@@ -153,3 +153,4 @@ $lang_str["lang:uk"]="Ukrainisch";
 $lang_str["lang:ru"]="Russisch";
 $lang_str["lang:ja"]="Japanisch";
 $lang_str["lang:hu"]="Ungarisch";
+$lang_str["lang:nl"]="Niederländisch";
