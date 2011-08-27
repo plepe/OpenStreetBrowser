@@ -81,27 +81,3 @@ function ajax_details($param, $xml) {
   objects_to_xml($load_xml, $xml, $osm, 1);
 
 }
-
-function ajax_get_mapkey($param, $xml) {
-  $mapkey=new map_key();
-  $ret=$mapkey->show_info($param);
-  $text=$xml->createTextNode($ret);
-
-  $ret=$xml->createElement("result");
-  $value=$xml->createElement("text");
-  $value->appendChild($text);
-  $ret->appendChild($value);
-  $xml->appendChild($ret);
-
-  $value=$xml->createElement("zoom");
-  $ret->appendChild($value);
-  $value->setAttribute("value", $param[zoom]);
-
-  if($param[overlays])
-    foreach($param[overlays] as $p=>$dummy) {
-      $value=$xml->createElement("overlay");
-      $ret->appendChild($value);
-      $value->setAttribute("value", $p);
-    }
-
-}

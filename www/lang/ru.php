@@ -82,7 +82,6 @@ $lang_str["map_key:zoom"]="Уровень приближения";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
-$lang_str["main:map_key"]="Обозначения на карте";
 $lang_str["main:options"]="Настройки";
 $lang_str["main:about"]="Информация";
 $lang_str["main:donate"]="Помочь проекту";

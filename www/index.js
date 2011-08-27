@@ -55,7 +55,6 @@ function zoom_to_feature() {
 }
 
 function hide() {
-  //var map_key=document.getElementById("map_key");
   var details=document.getElementById("details");
   var map=document.getElementById("map");
 
@@ -141,14 +140,6 @@ function redraw() {
   if(x=="") {
     category_list_hash_changed();
     view_changed(null);
-  }
-  else if(x=="mapkey") {
-    hide();
-    //var info=document.getElementById("map_key");
-    var map_div=document.getElementById("map");
-
-    info.className="info";
-//    map_div.className="map";
   }
   else if(x.substr(0, 7)=="search_") {
     first_load=0;
@@ -242,7 +233,6 @@ function view_changed(event) {
   view_changed_last=new Date().getTime();
 
   view_changed_timer=setTimeout("view_changed_delay()", 300);
-  check_mapkey();
 
   call_hooks("view_changed", event);
 }
@@ -300,7 +290,6 @@ function init() {
   map.events.register("click", map, view_click);
 
   overlays_init();
-  map_key_init();
 
   data_dir=new git_master();
 

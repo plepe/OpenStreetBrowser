@@ -95,13 +95,20 @@ $menu_list[]=array(0,
   "<form id='details_content' class='details' action='javascript:details_content_submit()'>\n".
   list_template().
   "</form></div>\n");
+
+$main_links=array(
+  array(0, "<a href='javascript:show_options()'>".lang("main:options")."</a>"),
+  array(1, "<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'>".lang("main:about")."</a>"),
+  array(5, "<a href='javascript:time_count_do_beg()'>".lang("main:donate")."</a>")
+);
+call_hooks("main_links", &$main_links);
+$main_links=weight_sort($main_links);
+$main_links=implode(" |\n", $main_links);
+
 $menu_list[]=array(5,
   "<div id='options'>\n".
-  "<span id='user_info'>{$current_user->login_info()}</span><br/>\n".
-  "<a href='javascript:toggle_mapkey()'>".lang("main:map_key")."</a> |\n".
-  "<a href='javascript:show_options()'>".lang("main:options")."</a> |\n".
-  "<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'>".lang("main:about")."</a> |\n".
-  "<a href='javascript:time_count_do_beg()'>".lang("main:donate")."</a>\n".
+  "<div id='user_info'>{$current_user->login_info()}</div>\n".
+  "<div id='main_links'>{$main_links}</div>\n".
   "</div>\n");
 
 call_hooks("menu_show", &$menu_list);

@@ -82,7 +82,6 @@ $lang_str["map_key:zoom"]="Nagyítási színt";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
-$lang_str["main:map_key"]="Térképmagyarázat";
 $lang_str["main:options"]="Beállítások";
 $lang_str["main:about"]="Névjegy";
 $lang_str["main:donate"]="Támogatás";
