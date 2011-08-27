@@ -38,7 +38,10 @@ $lang_str["tag:accomodation"]="Accomodation";
 $lang_str["tag:address"]="Address";
 
 // addr:housenumber
-$lang_str["tag:addr:housenumber"]="Housenumber";
+$lang_str["tag:addr:housenumber"]=array("Housenumber", "Housenumbers");
+
+// addr:interpolation
+$lang_str["tag:addr:interpolation"]="Interpolated housenumbers";
 
 // admin_level
 $lang_str["tag:admin_level=2"]="Country Border";

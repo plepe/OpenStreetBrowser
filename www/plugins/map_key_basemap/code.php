@@ -115,9 +115,9 @@ class map_key_basemap extends map_key_cascadenik {
 
     $ret1="";
     $ret1.=$this->show_mss(array("housenumbers"), 
-      array(), $bounds, array("prefix"=>"housenumber", "img_base_path"=>"plugins/basemap"));
+      array(), $bounds, array("name_prefix"=>"tag:addr:housenumber", "img_base_path"=>"plugins/basemap"));
     $ret1.=$this->show_mss(array("housenumber_lines"), 
-      array(), $bounds, array("prefix"=>"housenumber_lines"), array("img_base_path"=>"plugins/basemap"));
+      array(), $bounds, array("name_prefix"=>"tag:addr:interpolation", "img_base_path"=>"plugins/basemap"));
     if($ret1!="") {
       $ret.="<h4>".lang("head:housenumbers")."</h4>\n";
       $ret.="<table>\n";
