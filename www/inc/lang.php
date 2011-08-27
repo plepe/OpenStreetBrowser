@@ -3,9 +3,6 @@ include "lang/list.php";
 define("F", 1);
 define("M", 2);
 define("N", 3);
-$lang_tags_format_options_default=array(
-  "str_join"=>", ", "value_separator"=>": ", "count"=>1, 
-);
 
 function lang() {
   global $lang_str;
@@ -149,46 +146,6 @@ function lang_init() {
 
   html_export_var(array("ui_lang"=>$ui_lang, "data_lang"=>$data_lang, "ui_langs"=>$ui_langs, "lang_str"=>$lang_str, "language_list"=>$language_list));
   add_html_header("<meta http-equiv=\"content-language\" content=\"{$ui_lang}\">");
-}
-
-/**
- * format tag(s) for display
- * @param string|array string(s) to translate
- * @param hash options to configure display
- *   str_join: string which is used to join strings (default: ", ")
- *   value_separator: string which is used to join key and value (default: ": ")
- *   count: count of strings (for singular/plural) (default: 1)
- * @return string formatted tags
- */
-function lang_tags_format($str, $options) {
-  global $lang_tags_format_options_default;
-
-  // default values
-  if(!$options)
-    $options=array();
-  $options=array_merge($lang_tags_format_options_default, $options);
-
-  // if array than iterate through str and join as string
-  if(is_array($str)) {
-    $ret=array();
-    foreach($str as $s)
-      $ret[]=lang_tags_format($s, $options);
-
-    return implode($options['str_join'], $ret);
-  }
-
-  // if it matches as a tag-string than process each of them
-  if(preg_match("/^([^><=!]*)(=|>|<|>=|<=|!=)([^><=!].*)$/", $str, $m)) {
-    if($m[2]=="=")
-      $m[2]=$options['value_separator'];
-
-    $ret=lang($m[1], $options['count']).$m[2].lang("$m[1]=$m[3]", $options['count']);
-
-    return $ret;
-  }
-
-  // it doesn't match as tag-string -> just translate
-  return lang($str);
 }
 
 // DEPRECATED: include JS language file

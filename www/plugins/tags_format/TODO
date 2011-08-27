@@ -1,0 +1,6 @@
+
+
+ *  // override options
+  if($options['override']&&$options['override'][$data['k']])
+    $options=array_merge($options, $options['override'][$data['k']]]);
+
