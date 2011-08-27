@@ -56,16 +56,15 @@ function parse($lang, $wikipage) {
     if(eregi("=== Deprecated strings ===", $r)) {
       $deprecated=true;
     }
-    else if(eregi("==== (File|Category): ?(.*) ====", $r, $m)) {
-      if($m[2]=="Statistics") {
-	if($w) {
-	  print "Done\n";
-	  fclose($w);
-	  unset($w);
-	}
-	continue;
+    else if(eregi("==== Statistics ====", $r, $m)) {
+      if($w) {
+	print "Done\n";
+	fclose($w);
+	unset($w);
       }
-
+      continue;
+    }
+    else if(eregi("==== (File|Category): ?(.*) ====", $r, $m)) {
       if($m[1]=="File") {
 	$file_type=1;
 	$file=$m[2];
