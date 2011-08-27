@@ -40,3 +40,11 @@ $lang_str['map_key_basemap:landuse=public']="Áreas para servicios públicos";
 #$lang_str['map_key_basemap:landuse=natural_scree']="Screes, Heaths";
 #$lang_str['map_key_basemap:landuse=natural_mud']="Mud";
 #$lang_str['map_key_basemap:landuse=natural_beach']="Beaches";
+
+$lang_str['map_key_basemap:places']="Lugares";
+$lang_str['map_key_basemap:roads']="Calles";
+#$lang_str['map_key_basemap:rails']="Railroads";
+$lang_str['map_key_basemap:borders']="Fronteras";
+#$lang_str['map_key_basemap:landuse']="Landuse";
+$lang_str['map_key_basemap:buildings']="Edificios";
+#$lang_str['map_key_basemap:housenumbers']="Housenumbers";

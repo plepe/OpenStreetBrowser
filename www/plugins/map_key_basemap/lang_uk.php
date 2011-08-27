@@ -40,3 +40,11 @@
 #$lang_str['map_key_basemap:landuse=natural_scree']="Screes, Heaths";
 #$lang_str['map_key_basemap:landuse=natural_mud']="Mud";
 #$lang_str['map_key_basemap:landuse=natural_beach']="Beaches";
+
+$lang_str['map_key_basemap:places']="Місцевість";
+$lang_str['map_key_basemap:roads']="Дороги";
+$lang_str['map_key_basemap:rails']="Залізниця";
+$lang_str['map_key_basemap:borders']="Кордони";
+$lang_str['map_key_basemap:landuse']="Землевикористання";
+$lang_str['map_key_basemap:buildings']="Будівлі";
+$lang_str['map_key_basemap:housenumbers']="Нумерація будинків";

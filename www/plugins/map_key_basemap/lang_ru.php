@@ -40,3 +40,11 @@ $lang_str['map_key_basemap:landuse=water']="Водные территории";
 #$lang_str['map_key_basemap:landuse=natural_scree']="Screes, Heaths";
 #$lang_str['map_key_basemap:landuse=natural_mud']="Mud";
 #$lang_str['map_key_basemap:landuse=natural_beach']="Beaches";
+
+$lang_str['map_key_basemap:places']="Места";
+$lang_str['map_key_basemap:roads']="Дороги";
+$lang_str['map_key_basemap:rails']="Железные дороги";
+$lang_str['map_key_basemap:borders']="Границы";
+$lang_str['map_key_basemap:landuse']="Землепользования";
+$lang_str['map_key_basemap:buildings']="Здания";
+$lang_str['map_key_basemap:housenumbers']="Номера домов";

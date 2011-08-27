@@ -23,7 +23,7 @@ class map_key_basemap extends map_key_cascadenik {
     $ret1.=$this->show_mss(array("places_db"), 
       array("place"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap", "tags_format"=>array("prefix"=>"tag:", "override"=>array("place"=>array("no_key"=>true)))));
     if($ret1!="") {
-      $ret.="<h4>".lang("head:places")."</h4>\n";
+      $ret.="<h4>".lang("map_key_basemap:places")."</h4>\n";
       $ret.="<table>\n";
       $ret.=$ret1;
       $ret.="</table>\n";
@@ -39,7 +39,7 @@ class map_key_basemap extends map_key_cascadenik {
     $ret1.=$this->show_mss(array("square_casing", "square_fill"), 
       array("type"=>"*"), $bounds, array("name_prefix"=>"tag:highway=pedestrian", "img_base_path"=>"plugins/basemap"));
     if($ret1!="") {
-      $ret.="<h4>".lang("head:roads")."</h4>\n";
+      $ret.="<h4>".lang("map_key_basemap:roads")."</h4>\n";
       $ret.="<table>\n";
       $ret.=$ret1;
       $ret.="</table>\n";
@@ -53,7 +53,7 @@ class map_key_basemap extends map_key_cascadenik {
     $ret1.=$this->show_mss(array("roads_rail"), 
       array("railway"=>"*", "tracks"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     if($ret1!="") {
-      $ret.="<h4>".lang("head:rails")."</h4>\n";
+      $ret.="<h4>".lang("map_key_basemap:rails")."</h4>\n";
       $ret.="<table>\n";
       $ret.=$ret1;
       $ret.="</table>\n";
@@ -67,7 +67,7 @@ class map_key_basemap extends map_key_cascadenik {
     $ret1.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
       array("highway_type"=>array("=power", "=pipeline"), "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     if($ret1!="") {
-      $ret.="<h4>".lang("head:goods")."</h4>\n";
+      $ret.="<h4>".lang("map_key_basemap:goods")."</h4>\n";
       $ret.="<table>\n";
       $ret.=$ret1;
       $ret.="</table>\n";
@@ -79,7 +79,7 @@ class map_key_basemap extends map_key_cascadenik {
     $ret1.=$this->show_mss(array("admin"), 
       array("admin_level"=>array("=2", "=3", "=4", "=5", "=6", "=8", "=10")), $bounds, array("img_base_path"=>"plugins/basemap"));
     if($ret1!="") {
-      $ret.="<h4>".lang("head:borders")."</h4>\n";
+      $ret.="<h4>".lang("map_key_basemap:borders")."</h4>\n";
       $ret.="<table>\n";
       $ret.=$ret1;
       $ret.="</table>\n";
@@ -95,7 +95,7 @@ class map_key_basemap extends map_key_cascadenik {
     $ret1.=$this->show_mss(array("landuse"),
       array("landuse"=>"*", "landuse_sub_type"=>"*"), $bounds, array("prefix"=>"", "geom"=>array("poly"=>1), "img_base_path"=>"plugins/basemap", "name_prefix"=>"map_key_basemap:", "name_explode"=>false));
     if($ret1!="") {
-      $ret.="<h4>".lang("head:landuse")."</h4>\n";
+      $ret.="<h4>".lang("map_key_basemap:landuse")."</h4>\n";
       $ret.="<table>\n";
       $ret.=$ret1;
       $ret.="</table>\n";
@@ -107,7 +107,7 @@ class map_key_basemap extends map_key_cascadenik {
 //    $ret.=$this->show_mss(array("amenity"), 
 //      array("type"=>"*", "sub_type"=>"*"), $bounds);
     if($ret1!="") {
-      $ret.="<h4>".lang("head:buildings")."</h4>\n";
+      $ret.="<h4>".lang("map_key_basemap:buildings")."</h4>\n";
       $ret.="<table>\n";
       $ret.=$ret1;
       $ret.="</table>\n";
@@ -119,7 +119,7 @@ class map_key_basemap extends map_key_cascadenik {
     $ret1.=$this->show_mss(array("housenumber_lines"), 
       array(), $bounds, array("name_prefix"=>"tag:addr:interpolation", "img_base_path"=>"plugins/basemap"));
     if($ret1!="") {
-      $ret.="<h4>".lang("head:housenumbers")."</h4>\n";
+      $ret.="<h4>".lang("map_key_basemap:housenumbers")."</h4>\n";
       $ret.="<table>\n";
       $ret.=$ret1;
       $ret.="</table>\n";

@@ -40,3 +40,11 @@ $lang_str['map_key_basemap:landuse=natural_glacier']="Ledovce";
 #$lang_str['map_key_basemap:landuse=natural_scree']="Screes, Heaths";
 $lang_str['map_key_basemap:landuse=natural_mud']="Bláto";
 $lang_str['map_key_basemap:landuse=natural_beach']="Pláže";
+
+$lang_str['map_key_basemap:places']="Místa";
+$lang_str['map_key_basemap:roads']="Cesty";
+$lang_str['map_key_basemap:rails']="Železnice";
+$lang_str['map_key_basemap:borders']="Hranice";
+$lang_str['map_key_basemap:landuse']="Využití krajiny";
+$lang_str['map_key_basemap:buildings']="Budovy";
+$lang_str['map_key_basemap:housenumbers']="Čísla domů";

@@ -40,3 +40,11 @@ $lang_str['map_key_basemap:building=sport']="Immeubles, Activités sportives";
 #$lang_str['map_key_basemap:landuse=natural_scree']="Screes, Heaths";
 #$lang_str['map_key_basemap:landuse=natural_mud']="Mud";
 #$lang_str['map_key_basemap:landuse=natural_beach']="Beaches";
+
+$lang_str['map_key_basemap:places']="Lieux";
+$lang_str['map_key_basemap:roads']="Route";
+$lang_str['map_key_basemap:rails']="Chemins de fer";
+$lang_str['map_key_basemap:borders']="Frontières";
+$lang_str['map_key_basemap:landuse']="Utilisation du sol";
+$lang_str['map_key_basemap:buildings']="Immeubles";
+$lang_str['map_key_basemap:housenumbers']="no. Addresse";

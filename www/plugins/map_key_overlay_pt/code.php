@@ -4,7 +4,7 @@ class map_key_basemap extends map_key_entry {
     if($bounds[overlays][pt]) {
       load_classes("overlay_pt", $bounds);
 
-      $ret.="<h4>".lang("head:pt")."</h4>\n";
+      $ret.="<h4>".lang("map_key_overlay_pt:pt")."</h4>\n";
       $ret.="<table>\n";
 
       $ret.=$this->show_mss(array("routes", "routestext"), 

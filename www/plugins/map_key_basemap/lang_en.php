@@ -45,3 +45,12 @@ $lang_str['map_key_basemap:landuse=natural_scree']="Screes, Heaths";
 $lang_str['map_key_basemap:landuse=natural_mud']="Mud";
 $lang_str['map_key_basemap:landuse=natural_beach']="Beaches";
 $lang_str['map_key_basemap:landuse=natural_rock']="Rocks, Cliffs";
+
+// heads
+$lang_str['map_key_basemap:places']="Places";
+$lang_str['map_key_basemap:roads']="Roads";
+$lang_str['map_key_basemap:rails']="Railroads";
+$lang_str['map_key_basemap:borders']="Borders";
+$lang_str['map_key_basemap:landuse']="Landuse";
+$lang_str['map_key_basemap:buildings']="Buildings";
+$lang_str['map_key_basemap:housenumbers']="Housenumbers";

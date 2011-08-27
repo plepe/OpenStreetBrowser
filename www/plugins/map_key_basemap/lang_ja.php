@@ -40,3 +40,11 @@
 #$lang_str['map_key_basemap:landuse=natural_scree']="Screes, Heaths";
 #$lang_str['map_key_basemap:landuse=natural_mud']="Mud";
 #$lang_str['map_key_basemap:landuse=natural_beach']="Beaches";
+
+$lang_str['map_key_basemap:places']="場所";
+$lang_str['map_key_basemap:roads']="道路";
+$lang_str['map_key_basemap:rails']="鉄道";
+$lang_str['map_key_basemap:borders']="境界";
+$lang_str['map_key_basemap:landuse']="利用区画";
+$lang_str['map_key_basemap:buildings']="建物";
+$lang_str['map_key_basemap:housenumbers']="家番号";

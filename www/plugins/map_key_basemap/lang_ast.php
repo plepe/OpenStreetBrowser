@@ -40,3 +40,11 @@ $lang_str['map_key_basemap:landuse=natural_glacier']="Glaciares";
 $lang_str['map_key_basemap:landuse=natural_scree']="Lleres, grandes";
 $lang_str['map_key_basemap:landuse=natural_mud']="Llamuerga";
 $lang_str['map_key_basemap:landuse=natural_beach']="Playes";
+
+$lang_str['map_key_basemap:places']="Llugares";
+$lang_str['map_key_basemap:roads']="Carreteres";
+$lang_str['map_key_basemap:rails']="Ferrocarriles";
+$lang_str['map_key_basemap:borders']="Fronteres";
+$lang_str['map_key_basemap:landuse']="Usu del terrén";
+$lang_str['map_key_basemap:buildings']="Edificios";
+$lang_str['map_key_basemap:housenumbers']="Númberos de portal";

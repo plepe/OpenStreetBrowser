@@ -40,3 +40,11 @@ $lang_str['map_key_basemap:landuse=park']="Park";
 #$lang_str['map_key_basemap:landuse=natural_scree']="Screes, Heaths";
 #$lang_str['map_key_basemap:landuse=natural_mud']="Mud";
 #$lang_str['map_key_basemap:landuse=natural_beach']="Beaches";
+
+$lang_str['map_key_basemap:places']="Helyek";
+$lang_str['map_key_basemap:roads']="Utak";
+$lang_str['map_key_basemap:rails']="Vasutak";
+$lang_str['map_key_basemap:borders']="Határok";
+$lang_str['map_key_basemap:landuse']="Területfunkciók";
+$lang_str['map_key_basemap:buildings']="Épületek";
+$lang_str['map_key_basemap:housenumbers']="Házszámok";
