@@ -56,26 +56,6 @@ $lang_str["tag:amenity=cinema"]=array("Bioscoop", "Bioscopen");
 $lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
 $lang_str["tag:amenity=pub"]=array("Kroeg", "Kroegen");
 
-// building
-$lang_str["tag:building=yes"]="Buildings";
-$lang_str["tag:building=default"]="Gebouwen";
-$lang_str["tag:building=worship"]="Gebedshuizen";
-$lang_str["tag:building=road_amenities"]="Faciliteiten voor Transport (Stations, Terminals, Tolhuisjes, ...)";
-$lang_str["tag:building=nature_building"]="Natuurlijke gebouwen (bijv. Barrières)";
-$lang_str["tag:building=industrial"]="Industriële gebouwen";
-$lang_str["tag:building=education"]="Onderwijs gebouwen";
-$lang_str["tag:building=shop"]="Winkels";
-$lang_str["tag:building=public"]="Openbare gebouwen";
-$lang_str["tag:building=military"]="Militaire gebouwen";
-$lang_str["tag:building=historic"]="Historische gebouwen";
-$lang_str["tag:building=emergency"]="Gebouwen voor hulpdiensten";
-$lang_str["tag:building=health"]="Gebouwen voor gezondheidszorg";
-$lang_str["tag:building=communication"]="Gebouwen voor communicatie";
-$lang_str["tag:building=residential"]="Woningen";
-$lang_str["tag:building=culture"]="Culturele gebouwen";
-$lang_str["tag:building=tourism"]="Touristische gebouwen";
-$lang_str["tag:building=sport"]="Gebouwen voor sportactiviteiten";
-
 // cables
 $lang_str["tag:cables"]="Kabels";
 
@@ -107,29 +87,6 @@ $lang_str["tag:highway=path"]="Pad";
 
 // is_in
 $lang_str["tag:is_in"]="Ligt in";
-
-// landuse
-$lang_str["tag:landuse=park"]="Park";
-$lang_str["tag:landuse=education"]="Gebied met educatieve faciliteiten";
-$lang_str["tag:landuse=tourism"]="Gebieden met toeristische faciliteiten";
-$lang_str["tag:landuse=garden"]="Kwekerijen, Plantages, Tuinen";
-$lang_str["tag:landuse=industrial"]="Industriegebied en Spoorwegemplacement";
-$lang_str["tag:landuse=sport"]="Gebieden met sport faciliteiten";
-$lang_str["tag:landuse=cemetery"]="Begraafplaatsen";
-$lang_str["tag:landuse=residental"]="Woongebied";
-$lang_str["tag:landuse=nature_reserve"]="Natuurreservaten";
-$lang_str["tag:landuse=historic"]="Gebieden van historische waarde";
-$lang_str["tag:landuse=emergency"]="Gebieden met noodfaciliteiten";
-$lang_str["tag:landuse=health"]="Gebieden voor gezondheidszorg";
-$lang_str["tag:landuse=public"]="Gebieden voor openbare diensten";
-$lang_str["tag:landuse=water"]="Watergebieden";
-// the following tags are deprecated
-#$lang_str["tag:landuse=natural|sub_type=t0"]="Woods and Forest";
-#$lang_str["tag:landuse=natural|sub_type=t1"]="Wetland";
-#$lang_str["tag:landuse=natural|sub_type=t2"]="Glaciers";
-#$lang_str["tag:landuse=natural|sub_type=t3"]="Screes, Heaths";
-#$lang_str["tag:landuse=natural|sub_type=t4"]="Mud";
-#$lang_str["tag:landuse=natural|sub_type=t5"]="Beaches";
 
 // leisure
 $lang_str["tag:leisure=sports_centre"]="Sportcentrum";

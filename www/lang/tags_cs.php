@@ -55,26 +55,6 @@ $lang_str["tag:amenity=cinema"]=array("Kino", "Kina");
 $lang_str["tag:amenity=restaurant"]=array("Restaurace", "Restaurace");
 $lang_str["tag:amenity=pub"]=array("Hospoda", "Hospody");
 
-// building
-$lang_str["tag:building=yes"]="Budovy";
-$lang_str["tag:building=default"]="Budovy";
-$lang_str["tag:building=worship"]="Náboženské budovy";
-$lang_str["tag:building=road_amenities"]="Budovy související s dopravou (Stanice, Terminály, Budky pro výběr mýtného, ...)";
-$lang_str["tag:building=nature_building"]="Přírodní budovy (např. Překážky)";
-$lang_str["tag:building=industrial"]="Průmyslové budovy";
-$lang_str["tag:building=education"]="Vzdělávací budovy";
-$lang_str["tag:building=shop"]="Obchody";
-$lang_str["tag:building=public"]="Veřejné budovy";
-$lang_str["tag:building=military"]="Vojenské budovy";
-$lang_str["tag:building=historic"]="Historické budovy";
-$lang_str["tag:building=emergency"]="Budovy zařízení pohotovostních složek";
-$lang_str["tag:building=health"]="Budovy zdravotní péče";
-$lang_str["tag:building=communication"]="Komunikační budovy";
-$lang_str["tag:building=residential"]="Obytné budovy";
-$lang_str["tag:building=culture"]="Kulturní budovy";
-$lang_str["tag:building=tourism"]="Turistické budovy";
-$lang_str["tag:building=sport"]="Budovy sportovních aktivit";
-
 // cables
 $lang_str["tag:cables"]="Kabely";
 
@@ -106,29 +86,6 @@ $lang_str["tag:highway=path"]="Stezka";
 
 // is_in
 $lang_str["tag:is_in"]="Je v";
-
-// landuse
-$lang_str["tag:landuse=park"]="Park";
-$lang_str["tag:landuse=education"]="Oblasti vzdělávacích zařízení";
-$lang_str["tag:landuse=tourism"]="Oblasti turistických zařízení";
-$lang_str["tag:landuse=garden"]="Farmy, Sady, Zahrady";
-$lang_str["tag:landuse=industrial"]="Průmyslové a železniční oblasti";
-$lang_str["tag:landuse=sport"]="Oblasti sportovních zařízení";
-$lang_str["tag:landuse=cemetery"]="Hřbitovy";
-$lang_str["tag:landuse=residental"]="Obytné oblasti";
-$lang_str["tag:landuse=nature_reserve"]="Přírodní rezervace";
-$lang_str["tag:landuse=historic"]="Oblasti historické hodnoty";
-$lang_str["tag:landuse=emergency"]="Oblasti zařízení pohotovosti";
-$lang_str["tag:landuse=health"]="Oblast zdravotnických zařízení";
-$lang_str["tag:landuse=public"]="Oblast veřejných služeb";
-$lang_str["tag:landuse=water"]="Vodní plochy";
-// the following tags are deprecated
-#$lang_str["tag:landuse=natural|sub_type=t0"]="Woods and Forest";
-$lang_str["tag:landuse=natural|sub_type=t1"]="Mokřiny";
-$lang_str["tag:landuse=natural|sub_type=t2"]="Ledovce";
-#$lang_str["tag:landuse=natural|sub_type=t3"]="Screes, Heaths";
-$lang_str["tag:landuse=natural|sub_type=t4"]="Bláto";
-$lang_str["tag:landuse=natural|sub_type=t5"]="Pláže";
 
 // leisure
 $lang_str["tag:leisure=sports_centre"]="Sportovní centrum";

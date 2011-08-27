@@ -55,26 +55,6 @@ $lang_str["tag:amenity=cinema"]=array("Cinéma", "Cinémas");
 $lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
 
-// building
-$lang_str["tag:building=yes"]="Immeubles";
-$lang_str["tag:building=default"]="Immeubles";
-$lang_str["tag:building=worship"]="Lieux de culte";
-$lang_str["tag:building=road_amenities"]="Équipements de transport (Gares, Terminaux, Postes de péage, ...)";
-$lang_str["tag:building=nature_building"]="Barrière naturelle";
-$lang_str["tag:building=industrial"]="Immeubles industriels";
-$lang_str["tag:building=education"]="Établissements scolaire";
-$lang_str["tag:building=shop"]="Boutiques";
-$lang_str["tag:building=public"]="Immeubles publics";
-$lang_str["tag:building=military"]="Immeubles militaires";
-$lang_str["tag:building=historic"]="Immeubles Historiques";
-$lang_str["tag:building=emergency"]="Immbeubles : Services d'urgence";
-$lang_str["tag:building=health"]="Immeubles : Services de santé";
-$lang_str["tag:building=communication"]="Immeubles : Services de télécommunication";
-$lang_str["tag:building=residential"]="Immeubles résidentiels";
-$lang_str["tag:building=culture"]="Immeubles : Services culturels";
-$lang_str["tag:building=tourism"]="Immeubles, Services touristiques";
-$lang_str["tag:building=sport"]="Immeubles, Activités sportives";
-
 // cables
 $lang_str["tag:cables"]="Cables";
 
@@ -106,29 +86,6 @@ $lang_str["tag:highway=path"]="Piste (Pied, Vélo, Équitation)";
 
 // is_in
 $lang_str["tag:is_in"]="Est compris dans";
-
-// landuse
-#$lang_str["tag:landuse=park"]="Park";
-#$lang_str["tag:landuse=education"]="Area of educational facilities";
-#$lang_str["tag:landuse=tourism"]="Area of touristic facilities";
-#$lang_str["tag:landuse=garden"]="Farms, Plantages, Gardens";
-#$lang_str["tag:landuse=industrial"]="Industrial and Railway Areas";
-#$lang_str["tag:landuse=sport"]="Areas of sport facilities";
-#$lang_str["tag:landuse=cemetery"]="Cemeteries";
-#$lang_str["tag:landuse=residental"]="Residental areas";
-#$lang_str["tag:landuse=nature_reserve"]="Nature Reserves";
-#$lang_str["tag:landuse=historic"]="Areas with historical value";
-#$lang_str["tag:landuse=emergency"]="Areas of emergency facilities";
-#$lang_str["tag:landuse=health"]="Areas of health facilities";
-#$lang_str["tag:landuse=public"]="Areas for public services";
-#$lang_str["tag:landuse=water"]="Water Areas";
-// the following tags are deprecated
-#$lang_str["tag:landuse=natural|sub_type=t0"]="Woods and Forest";
-#$lang_str["tag:landuse=natural|sub_type=t1"]="Wetland";
-#$lang_str["tag:landuse=natural|sub_type=t2"]="Glaciers";
-#$lang_str["tag:landuse=natural|sub_type=t3"]="Screes, Heaths";
-#$lang_str["tag:landuse=natural|sub_type=t4"]="Mud";
-#$lang_str["tag:landuse=natural|sub_type=t5"]="Beaches";
 
 // leisure
 $lang_str["tag:leisure=sports_centre"]="Centre sportif";

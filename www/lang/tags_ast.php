@@ -55,26 +55,6 @@ $lang_str["tag:amenity=cinema"]=array("Cine", "Cines");
 $lang_str["tag:amenity=restaurant"]=array("Restaurante", "Restaurantes");
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
 
-// building
-$lang_str["tag:building=yes"]="Edificios";
-$lang_str["tag:building=default"]="Edificios";
-$lang_str["tag:building=worship"]="Edificios relixosos";
-$lang_str["tag:building=road_amenities"]="Instalaciones de tresporte (Estaciones, Terminales, Cabines de peaxes, ...)";
-$lang_str["tag:building=nature_building"]="Construcciones naturales (p.ex. Barreres)";
-$lang_str["tag:building=industrial"]="Edificios industriales";
-$lang_str["tag:building=education"]="Edificios educativos";
-$lang_str["tag:building=shop"]="Tiendes";
-$lang_str["tag:building=public"]="Edificios públicos";
-$lang_str["tag:building=military"]="Edificios militares";
-$lang_str["tag:building=historic"]="Edificios históricos";
-$lang_str["tag:building=emergency"]="Edificios de servicios d'emerxencia";
-$lang_str["tag:building=health"]="Edificios de servicios sanitarios";
-$lang_str["tag:building=communication"]="Edificios de comunicaciones";
-$lang_str["tag:building=residential"]="Edificios de viviendes";
-$lang_str["tag:building=culture"]="Edificios culturales";
-$lang_str["tag:building=tourism"]="Edificios turísticos";
-$lang_str["tag:building=sport"]="Edificios p'actividaes deportives";
-
 // cables
 $lang_str["tag:cables"]="Cables";
 
@@ -106,29 +86,6 @@ $lang_str["tag:highway=path"]="Camín";
 
 // is_in
 $lang_str["tag:is_in"]="Ta en";
-
-// landuse
-$lang_str["tag:landuse=park"]="Parque";
-$lang_str["tag:landuse=education"]="Área d'instalaciones educatives";
-$lang_str["tag:landuse=tourism"]="Área d'instalaciones turístiques";
-$lang_str["tag:landuse=garden"]="Caseríes, plantaciones, xardinos";
-$lang_str["tag:landuse=industrial"]="Árees industriales y ferroviaries";
-$lang_str["tag:landuse=sport"]="Árees d'instalaciones deportives";
-$lang_str["tag:landuse=cemetery"]="Cementerios";
-$lang_str["tag:landuse=residental"]="Árees de viviendes";
-$lang_str["tag:landuse=nature_reserve"]="Reserves naturales";
-$lang_str["tag:landuse=historic"]="Árees con valor históricu";
-$lang_str["tag:landuse=emergency"]="Árees d'instalaciones d'emerxencia";
-$lang_str["tag:landuse=health"]="Árees d'instalaciones sanitaries";
-$lang_str["tag:landuse=public"]="Árees de servicios públicos";
-$lang_str["tag:landuse=water"]="Árees acuátiques";
-// the following tags are deprecated
-$lang_str["tag:landuse=natural|sub_type=t0"]="Viesca y forestal";
-$lang_str["tag:landuse=natural|sub_type=t1"]="Humedal";
-$lang_str["tag:landuse=natural|sub_type=t2"]="Glaciares";
-$lang_str["tag:landuse=natural|sub_type=t3"]="Lleres, grandes";
-$lang_str["tag:landuse=natural|sub_type=t4"]="Llamuerga";
-$lang_str["tag:landuse=natural|sub_type=t5"]="Playes";
 
 // leisure
 $lang_str["tag:leisure=sports_centre"]="Centru deportivu";
