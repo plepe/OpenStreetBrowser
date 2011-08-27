@@ -217,7 +217,12 @@ $lang_str["tag:real_ale"]="Real ale offered";
 
 // religion
 $lang_str["tag:religion"]="Religion";
-$lang_str["tag:religion=christian"]=array("christian");
+$lang_str["tag:religion=christian"]="christian";
+$lang_str["tag:religion=buddhist"]="buddhist";
+$lang_str["tag:religion=hindu"]="hindu";
+$lang_str["tag:religion=jewish"]="jewish";
+$lang_str["tag:religion=muslim"]="muslim";
+$lang_str["tag:religion=multifaith"]="multifaith";
 
 // route
 $lang_str["tag:route"]="Route";
