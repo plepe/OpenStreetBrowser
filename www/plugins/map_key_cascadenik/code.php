@@ -180,7 +180,12 @@ class map_key_cascadenik extends map_key_entry {
           $options['name_prefix']="tag:";
         if(!($name=$map_key_cascadenik_aliases[$depend]))
           $name=$depend;
-        if((!isset($options['name_explode'])||($options['name_explode']))) {
+        if(isset($options['tags_format'])) {
+          $options['tags_format']['prefix']=$options['name_prefix'];
+          $name=explode("|", $name);
+          $name=tags_format($name, $options['tags_format']);
+        }
+        else if((!isset($options['name_explode'])||($options['name_explode']))) {
           $name=explode("|", $name);
           for($i=0; $i<sizeof($name); $i++)
             $name[$i]=lang("{$options['name_prefix']}{$name[$i]}");
