@@ -15,6 +15,8 @@ var lang_tags_format_options_default={
  *   str_join: string which is used to join strings (default: ", ")
  *   value_separator: string which is used to join key and value (default: ": ")
  *   count: count of strings (for singular/plural) (default: 1)
+ *   override: override options for specified keys. e.g.:
+ *     { 'highway': { 'value_separator': "==", ... }, ...}
  * @return string formatted tags
  */
 function tags_format(data, options) {
@@ -44,6 +46,9 @@ function tags_format(data, options) {
  */
 function _tags_format_single(data, options) {
   var ret;
+
+  if(options.override&&options.override[data.k])
+    options=array_merge(options, options.override[data.k]);
 
   if(data.op=="=")
     data.op="";

@@ -17,6 +17,8 @@ $tags_format_options_default=array(
  *   str_join: string which is used to join strings (default: ", ")
  *   value_separator: string which is used to join key and value (default: ": ")
  *   count: count of strings (for singular/plural) (default: 1)
+ *   override: override options for specified keys. e.g.:
+ *     array('highway'=>array("value_separator"=>"==", ...), ...)
  * @return string formatted tags
  */
 function tags_format($data, $options=array()) {
@@ -46,6 +48,9 @@ function tags_format($data, $options=array()) {
  * @return string formated string
  */
 function _tags_format_single($data, $options) {
+  if($options['override']&&$options['override'][$data['k']])
+    $options=array_merge($options, $options['override'][$data['k']]);
+
   if($data['op']=="=")
     $data['op']="";
 
