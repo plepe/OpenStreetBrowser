@@ -306,8 +306,16 @@ function init() {
   }
 
   //setTimeout("call_hooks(\"post_init\")", 2000);
+  window_resize();
 }
 
+function window_resize() {
+  var options=document.getElementById("options");
+  var details=document.getElementById("details");
+
+  var h=options.offsetHeight;
+  details.style.bottom=(h+2)+"px";
+}
 
 function add_funs(arr) {
   arr.search=function(needle) {

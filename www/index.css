@@ -83,8 +83,7 @@ input#search {
 }
 div#options{
   position: absolute;
-  height: 25px;
-  bottom: 10px;
+  bottom: 1px;
   width: 250px;
   left: 10px;
 }
