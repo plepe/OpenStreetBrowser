@@ -184,30 +184,7 @@ function osm_object(dom) {
       });
     vector_layer.addFeatures(this.info_features);
 
-    this.info_features_extent=new OpenLayers.Bounds();
-    for(var i=0; i<this.info_features.length; i++) {
-      this.info_features_extent.extend(this.info_features[i].geometry.getBounds());
-    }
-
-    this.zoom_to_feature();
-  }
-
-  // zoom_to_feature
-  this.zoom_to_feature=function() {
-     var zoom=map.getZoomForExtent(this.info_features_extent);
-    if(zoom>15)
-      zoom=15;
-
-    var center;
-    if(this.tags.get("#geo:center")) {
-      center=new postgis(this.tags.get("#geo:center")).geo();
-      if(center[0]&&center[0].geometry)
-	pan_to_highlight(center[0].geometry.x, center[0].geometry.y, zoom);
-    }
-    else {
-      center=this.info_features_extent.getCenterPixel();
-      pan_to_highlight(center.x, center.y, zoom);
-    }
+    this.geo_zoom_to();
   }
 
   // info_show

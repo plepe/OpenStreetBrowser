@@ -27,10 +27,30 @@
 //   .vectors                       - Array of OpenLayers Vectors of the route
 //   .text                          - Holds the original GPX-File
 //   .dom                           - Holds a DOM representation of GPX
-//   .show()                        - Show route on drag_layer
+//   .show()                        - Show route on vector_layer
 //   .hide()                        - Hide route
 
+var navigation_cloudmade_travelwith=[
+  { id: "car",
+    type: "car"
+  },
+  { id: "car_shortest",
+    type: "car",
+    modifier: "shortest"
+  },
+  { id: "bicycle",
+    type: "bicycle"
+  },
+  { id: "foot",
+    type: "foot"
+  }
+];
+
 function navigation_cloudmade() {
+  this.inheritFrom=geo_object;
+  this.inheritFrom();
+  this.type="navigation_cloudmade";
+
   // get_route
   this.get_route=function(param, _callback) {
     var route=new navigate_cloudmade_route();
@@ -62,6 +82,24 @@ function navigation_cloudmade() {
 	var t=p.transform(map.getProjectionObject(), utm);
 	param.transit_points[i]={ lat: t.y, lon: t.x };
       }
+
+    if(param.travel_with) {
+      var tw;
+      for(var i=0; i<navigation_cloudmade_travelwith.length; i++) {
+	if(navigation_cloudmade_travelwith[i].id==param.travel_with)
+	  tw=navigation_cloudmade_travelwith[i];
+      }
+
+      if(!tw) {
+	alert("navigation_cloudmade :: travel with wrong");
+	return;
+      }
+
+      param.route_type=tw.type;
+      if(tw.modifier)
+	param.route_type_modifier=tw.modifier;
+      delete(param.travel_with);
+    }
 
     route.param=param;
     ajax_direct("plugins/navigation_cloudmade/call.php", param, this.recv.bind(this, route));
@@ -102,19 +140,69 @@ function navigate_cloudmade_route() {
     this.vectors=[new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString(points), null, { strokeWidth: 3, strokeColor: '#0000ff' })];
   }
 
+  // geo
+  this.geo=function() {
+    return this.vectors;
+  }
+
   // show
   this.show=function() {
-    drag_layer.addFeatures(this.vectors);
+    vector_layer.addFeatures(this.vectors);
   }
 
   // hide
   this.hide=function() {
-    drag_layer.removeFeatures(this.vectors);
+    vector_layer.removeFeatures(this.vectors);
   }
 
   // remove 
   this.remove=function() {
     this.hide();
+  }
+
+  // print_instructions
+  this.print_key_data=function(div) {
+    var ext=this.dom.getElementsByTagName("extensions");
+    if(!ext.length)
+      return;
+    ext=ext[0];
+
+    var ul=dom_create_append(div, "ul");
+
+    // Distance
+    var d=ext.getElementsByTagName("distance");
+    var li=dom_create_append(ul, "li");
+    dom_create_append_text(li, lang("routing_distance")+": "+
+                           units_format_length(d[0].textContent));
+
+    // Time
+    var d=ext.getElementsByTagName("time");
+    var li=dom_create_append(ul, "li");
+    dom_create_append_text(li, lang("routing_time")+": "+
+                           units_format_time(d[0].textContent));
+  }
+
+  // print_instructions
+  this.print_instructions=function(div) {
+    var rtes=this.dom.getElementsByTagName("rte");
+    if(!rtes.length) {
+      alert("No route instructions found");
+      return;
+    }
+
+    var ul=dom_create_append(div, "ul");
+
+    var pts=rtes[0].getElementsByTagName("rtept");
+    for(var i=0; i<pts.length; i++) {
+      var pt=pts[i];
+
+      var desc=pt.getElementsByTagName("desc");
+      if(desc.length) {
+	var li=dom_create_append(ul, "li");
+
+	dom_create_append_text(li, desc[0].firstChild.nodeValue);
+      }
+    }
   }
 
   // constructor
