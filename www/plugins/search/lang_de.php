@@ -7,9 +7,3 @@ $lang_str["search:nominatim"]="Suche bereitgestellt von";
 $lang_str["search:field"]="Suchen...";
 $lang_str["search:tip"]="z.B. 'Berlin', 'Goethestraße', 'Kneipe in München',...";
 $lang_str["search:clear"]="Suchfeld löschen";
-
-
-
-
-
-

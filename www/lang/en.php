@@ -38,6 +38,7 @@ $lang_str["loading"]=array("Loading...");
 $lang_str["more"]="more";
 $lang_str["source"]="Source";
 $lang_str["unnamed"]="unnamed";
+$lang_str['zoom']="Zoom level";
 
 // Headings
 $lang_str["head:general_info"]="General Information";
@@ -46,14 +47,6 @@ $lang_str["head:routes"]="Routes";
 $lang_str["head:members"]="Members";
 $lang_str["head:address"]="Address";
 $lang_str["head:internal"]="OSM Internal";
-$lang_str["head:housenumbers"]="Housenumbers";
-$lang_str["head:roads"]="Roads";
-$lang_str["head:rails"]="Railroads";
-$lang_str["head:places"]="Places";
-$lang_str["head:borders"]="Borders";
-$lang_str["head:landuse"]="Landuse";
-$lang_str["head:buildings"]="Buildings";
-$lang_str["head:pt"]="Public Transportation";
 $lang_str["head:services"]="Services";
 $lang_str["head:culture"]="Culture";
 $lang_str["head:graves"]="Important Graves";
@@ -84,12 +77,9 @@ $lang_str["list_info"]="Choose a category to browse map content or click on an o
 $lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
 
 // Mapkey
-$lang_str["map_key:head"]="Map key";
-$lang_str["map_key:zoom"]="Zoom level";
 
 $lang_str["grave_is_on"]="Grave is on";
 
-$lang_str["main:map_key"]="Map Key";
 $lang_str["main:options"]="Options";
 $lang_str["main:about"]="About";
 $lang_str["main:donate"]="Donate";
@@ -149,8 +139,6 @@ $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
-#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
-
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="German";
 $lang_str["lang:bg"]="Bulgarian";
@@ -163,4 +151,5 @@ $lang_str["lang:uk"]="Ukrainian";
 $lang_str["lang:ru"]="Russian";
 $lang_str["lang:ja"]="Japanese";
 $lang_str["lang:hu"]="Hungarian";
+$lang_str["lang:nl"]="Dutch";
 $lang_str["lang:ast"]="Asturian";

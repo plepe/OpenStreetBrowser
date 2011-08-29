@@ -38,7 +38,15 @@ $lang_str["tag:accomodation"]="Accomodation";
 $lang_str["tag:address"]="Address";
 
 // addr:housenumber
-$lang_str["tag:addr:housenumber"]="Housenumber";
+$lang_str["tag:addr:housenumber"]=array("Housenumber", "Housenumbers");
+
+// addr:interpolation
+$lang_str["tag:addr:interpolation"]="Interpolated housenumbers";
+
+// aeroway
+$lang_str["tag:aeroway"]="Aeroway";
+$lang_str["tag:aeroway=runway"]="Runway";
+$lang_str["tag:aeroway=taxiway"]="Taxiway";
 
 // admin_level
 $lang_str["tag:admin_level=2"]="Country Border";
@@ -54,26 +62,6 @@ $lang_str["tag:amenity"]="Amenity";
 $lang_str["tag:amenity=cinema"]=array("Cinema", "Cinemas");
 $lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
-
-// building
-$lang_str["tag:building=yes"]="Buildings";
-$lang_str["tag:building=default"]="Buildings";
-$lang_str["tag:building=worship"]="Religious Buildings";
-$lang_str["tag:building=road_amenities"]="Facilities for Transportation (Stations, Terminals, Toll Booths, ...)";
-$lang_str["tag:building=nature_building"]="Natural Buildings (e.g. Barriers)";
-$lang_str["tag:building=industrial"]="Industrial Buildings";
-$lang_str["tag:building=education"]="Educational Buildings";
-$lang_str["tag:building=shop"]="Shops";
-$lang_str["tag:building=public"]="Public Buildings";
-$lang_str["tag:building=military"]="Military Buildings";
-$lang_str["tag:building=historic"]="Historical Buildings";
-$lang_str["tag:building=emergency"]="Buildings of emergency facilities";
-$lang_str["tag:building=health"]="Buildings of health services";
-$lang_str["tag:building=communication"]="Buildings for communication";
-$lang_str["tag:building=residential"]="Residential Buildings";
-$lang_str["tag:building=culture"]="Cultural Buildings";
-$lang_str["tag:building=tourism"]="Touristic Buildings";
-$lang_str["tag:building=sport"]="Buildings for sport activities";
 
 // cables
 $lang_str["tag:cables"]="Cables";
@@ -94,41 +82,30 @@ $lang_str["tag:food"]="Serves food";
 // highway
 $lang_str["tag:highway"]=array("Highway", "Highways");
 $lang_str["tag:highway=motorway"]="Motorway";
+$lang_str["tag:highway=motorway_link"]="Motorway Link";
 $lang_str["tag:highway=trunk"]="Trunk Road";
+$lang_str["tag:highway=trunk_link"]="Trunk Road Link";
 $lang_str["tag:highway=primary"]="Primary Road";
+$lang_str["tag:highway=primary_link"]="Primary Road Link";
 $lang_str["tag:highway=secondary"]="Secondary Road";
 $lang_str["tag:highway=tertiary"]="Tertiary Road";
 $lang_str["tag:highway=minor"]="Minor Road";
+$lang_str["tag:highway=road"]="Road";
+$lang_str["tag:highway=residential"]="Residential Road";
+$lang_str["tag:highway=unclassified"]="Unclassified Road";
 $lang_str["tag:highway=service"]="Service Road";
 $lang_str["tag:highway=pedestrian"]="Pedestrian Zone";
+$lang_str["tag:highway=living_street"]="Living Street";
+$lang_str["tag:highway=path"]="Path";
+$lang_str["tag:highway=cycleway"]="Cycleway";
+$lang_str["tag:highway=footway"]="Footway";
+$lang_str["tag:highway=bridleway"]="Bridleway";
 $lang_str["tag:highway=track"]="Track";
 $lang_str["tag:highway=path"]="Path";
+$lang_str["tag:highway=steps"]="Steps";
 
 // is_in
 $lang_str["tag:is_in"]="Is in";
-
-// landuse
-$lang_str["tag:landuse=park"]="Park";
-$lang_str["tag:landuse=education"]="Area of educational facilities";
-$lang_str["tag:landuse=tourism"]="Area of touristic facilities";
-$lang_str["tag:landuse=garden"]="Farms, Plantages, Gardens";
-$lang_str["tag:landuse=industrial"]="Industrial and Railway Areas";
-$lang_str["tag:landuse=sport"]="Areas of sport facilities";
-$lang_str["tag:landuse=cemetery"]="Cemeteries";
-$lang_str["tag:landuse=residental"]="Residental areas";
-$lang_str["tag:landuse=nature_reserve"]="Nature Reserves";
-$lang_str["tag:landuse=historic"]="Areas with historical value";
-$lang_str["tag:landuse=emergency"]="Areas of emergency facilities";
-$lang_str["tag:landuse=health"]="Areas of health facilities";
-$lang_str["tag:landuse=public"]="Areas for public services";
-$lang_str["tag:landuse=water"]="Water Areas";
-// the following tags are deprecated
-$lang_str["tag:landuse=natural|sub_type=t0"]="Woods and Forest";
-$lang_str["tag:landuse=natural|sub_type=t1"]="Wetland";
-$lang_str["tag:landuse=natural|sub_type=t2"]="Glaciers";
-$lang_str["tag:landuse=natural|sub_type=t3"]="Screes, Heaths";
-$lang_str["tag:landuse=natural|sub_type=t4"]="Mud";
-$lang_str["tag:landuse=natural|sub_type=t5"]="Beaches";
 
 // leisure
 $lang_str["tag:leisure=sports_centre"]="Sport Centre";
@@ -151,6 +128,19 @@ $lang_str["tag:leisure=swimming_pool"]="Swimming Pool";
 $lang_str["tag:leisure=beach_resort"]="Beach Resort";
 $lang_str["tag:leisure=bird_hide"]="Bird Hide";
 $lang_str["tag:leisure=sport"]="Other Sport";
+
+// man_made
+$lang_str['tag:man_made']="Artificial structures";
+$lang_str['tag:man_made=pipeline']=array("Pipeline", "Pipelines");
+
+// man_made - type
+$lang_str['tag:type']="Type";
+$lang_str['tag:type=gas']="Gas";
+$lang_str['tag:type=heat']="Heat";
+$lang_str['tag:type=hot_water']="Hot Water";
+$lang_str['tag:type=oil']="Oil";
+$lang_str['tag:type=sewage']="Sewage";
+$lang_str['tag:type=water']="Water";
 
 // name
 $lang_str["tag:name"]=array("Name", "Namen");
@@ -184,11 +174,6 @@ $lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
 $lang_str["tag:place=locality"]=array("Locality", "Localities");
 $lang_str["tag:place=island"]=array("Island", "Islands");
 $lang_str["tag:place=islet"]=array("Islet", "Islets");
-// the following tags are deprecated
-$lang_str["tag:place=city;population>1000000"]=array("City, > 1 Mio Inhabitants", "Cities, > 1 Mio Inhabitants");
-$lang_str["tag:place=city;population>200000"]=array("City, > 200.000 Inhabitants", "Cities, > 200.000 Inhabitants");
-#$lang_str["tag:place=town"]="Town";
-$lang_str["tag:place=town;population>30000"]=array("Town, > 30.000 Inhabitants", "Towns, > 30.000 Inhabitants");
 
 // population
 $lang_str["tag:population"]="Population";
@@ -198,6 +183,7 @@ $tag_type["population"]=array("count");
 $lang_str["tag:power"]="Power";
 $lang_str["tag:power=generator"]="Power Generator";
 $lang_str["tag:power=line"]="Power Line";
+$lang_str["tag:power=minor_line"]="Minor Power Line";
 $lang_str["tag:power=tower"]="Power Tower";
 $lang_str["tag:power=pole"]="Power Pole";
 $lang_str["tag:power=station"]="Power Station";
@@ -220,20 +206,33 @@ $lang_str["tag:power_source=wind"]="Wind";
 $lang_str["tag:power_source=photovoltaic"]="Photovoltaic";
 $lang_str["tag:power_source=solar-thermal"]="Solar Thermal";
 
+// railway
+$lang_str["tag:railway"]="Railway";
+$lang_str["tag:railway=rail"]=array("Rail Track", "Rail Tracks");
+$lang_str["tag:railway=tram"]=array("Tram Track", "Tram Tracks");
+$lang_str["tag:railway=platform"]=array("Platform", "Platforms");
+
 // real_ale
 $lang_str["tag:real_ale"]="Real ale offered";
 
 // religion
 $lang_str["tag:religion"]="Religion";
-$lang_str["tag:religion=christian"]=array("christian");
+$lang_str["tag:religion=christian"]="christian";
+$lang_str["tag:religion=buddhist"]="buddhist";
+$lang_str["tag:religion=hindu"]="hindu";
+$lang_str["tag:religion=jewish"]="jewish";
+$lang_str["tag:religion=muslim"]="muslim";
+$lang_str["tag:religion=multifaith"]="multifaith";
 
 // route
+$lang_str["tag:route"]="Route";
 $lang_str["tag:route=train"]="Train";
 $lang_str["tag:route=railway"]="Railway";
 $lang_str["tag:route=rail"]="Railway";
 $lang_str["tag:route=light_rail"]="Light Rail";
 $lang_str["tag:route=subway"]="Subway";
 $lang_str["tag:route=tram"]="Tram";
+$lang_str["tag:route=tram_bus"]="Tram and Bus";
 $lang_str["tag:route=trolley"]="Trolley";
 $lang_str["tag:route=trolleybus"]="Trolley";
 $lang_str["tag:route=bus"]="Bus";
@@ -299,6 +298,12 @@ $lang_str["tag:sport=team_handball"]="Handball";
 $lang_str["tag:sport=tennis"]="Tennis";
 $lang_str["tag:sport=volleyball"]="Volleyball";
 
+// tracks
+$lang_str["tag:tracks"]="Tracks";
+$lang_str["tag:tracks=single"]="Single";
+$lang_str["tag:tracks=double"]="Double";
+$lang_str["tag:tracks=multiple"]="Multiple";
+
 // vending
 $lang_str["tag:vending"]="Vending";
 
@@ -313,8 +318,3 @@ $tag_type["wires"]=array("count");
 // website
 $lang_str["tag:website"]="Website";
 $tag_type["website"]=array("link");
-
-
-
-
-

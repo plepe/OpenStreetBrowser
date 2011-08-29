@@ -55,26 +55,6 @@ $lang_str["tag:amenity=cinema"]=array("M", "Кинотеатр", "Кинотеа
 $lang_str["tag:amenity=restaurant"]=array("M", "Ресторан", "Рестораны");
 $lang_str["tag:amenity=pub"]=array("M", "Паб", "Пабы");
 
-// building
-$lang_str["tag:building=yes"]="Постройки";
-$lang_str["tag:building=default"]="Постройки";
-$lang_str["tag:building=worship"]="Культовые места";
-$lang_str["tag:building=road_amenities"]="Услуги для транспорта (станции, терминалы, пункты сбора дорожной пошлины, ...)";
-#$lang_str["tag:building=nature_building"]="Natural Buildings (e.g. Barriers)";
-$lang_str["tag:building=industrial"]="Промышленные здания";
-$lang_str["tag:building=education"]="Учебные корпуса";
-$lang_str["tag:building=shop"]="Магазины";
-$lang_str["tag:building=public"]="Общественные здания";
-$lang_str["tag:building=military"]="Военные здания";
-$lang_str["tag:building=historic"]="Исторические постройки";
-$lang_str["tag:building=emergency"]="Здания скорой помощи";
-$lang_str["tag:building=health"]="Здания медицинских услуг";
-$lang_str["tag:building=communication"]="Здания для услуг связи";
-$lang_str["tag:building=residential"]="Жилые здания";
-$lang_str["tag:building=culture"]="Культурные сооружения";
-$lang_str["tag:building=tourism"]="Туристические постройки";
-$lang_str["tag:building=sport"]="Спортивные сооружения";
-
 // cables
 $lang_str["tag:cables"]="Кабели";
 
@@ -106,29 +86,6 @@ $lang_str["tag:highway=path"]="Пешеходная дорожка";
 
 // is_in
 $lang_str["tag:is_in"]="находится в";
-
-// landuse
-$lang_str["tag:landuse=park"]="Парк";
-$lang_str["tag:landuse=education"]="Район учебных заведений";
-$lang_str["tag:landuse=tourism"]="Область туристических объектов";
-$lang_str["tag:landuse=garden"]="Фермы, плантации, сады";
-$lang_str["tag:landuse=industrial"]="Промышленные и железнодорожные территории";
-$lang_str["tag:landuse=sport"]="Территории спортивных сооружений";
-$lang_str["tag:landuse=cemetery"]="Кладбища";
-$lang_str["tag:landuse=residental"]="Жилые районы";
-$lang_str["tag:landuse=nature_reserve"]="Заповедники";
-$lang_str["tag:landuse=historic"]="Места исторического значения";
-$lang_str["tag:landuse=emergency"]="Районы скорой помощи";
-$lang_str["tag:landuse=health"]="Место оказания врачебных услуг";
-$lang_str["tag:landuse=public"]="Области государственных служб";
-$lang_str["tag:landuse=water"]="Водные территории";
-// the following tags are deprecated
-#$lang_str["tag:landuse=natural|sub_type=t0"]="Woods and Forest";
-#$lang_str["tag:landuse=natural|sub_type=t1"]="Wetland";
-#$lang_str["tag:landuse=natural|sub_type=t2"]="Glaciers";
-#$lang_str["tag:landuse=natural|sub_type=t3"]="Screes, Heaths";
-#$lang_str["tag:landuse=natural|sub_type=t4"]="Mud";
-#$lang_str["tag:landuse=natural|sub_type=t5"]="Beaches";
 
 // leisure
 $lang_str["tag:leisure=sports_centre"]="Спортивный центр";
@@ -313,8 +270,3 @@ $tag_type["wires"]=array("count");
 // website
 $lang_str["tag:website"]=array("M", "Сайт", "Сайты");
 $tag_type["website"]=array("link");
-
-
-
-
-

@@ -1,4 +1,5 @@
 <?
+include "../../../conf.php";
 Header("content-type: image/svg+xml");
 print '<?xml version="1.0" encoding="utf-8" ?>';
 ?>
@@ -15,28 +16,40 @@ print '<?xml version="1.0" encoding="utf-8" ?>';
  ]]></style>
  <defs>
 <?
-$pattern=array();
 $css="";
-$horiz=0;
+$shift=0;
+$pattern=array();
 foreach($_REQUEST[param] as $v) {
 //  if($k=="stroke")
 //    $v="#$v";
 //  $css.="$k: $v; ";
   $css="";
   $show=false;
+
+  if((!$v["polygon-fill"])&&(!$v["polygon-pattern-file"]))
+    $css[]="fill: none";
+
   foreach($v as $s_k=>$s_v) {
     $s_v=stripslashes($s_v);
     switch($s_k) {
-      case "line-width": $css[]="stroke-width: $s_v"; $show=true; break;
+      case "line-width": 
+        $css[]="stroke-width: $s_v"; $show=true; 
+	if($s_v/2>$shift)
+	  $shift=$s_v/2;
+	break;
       case "line-color": $css[]="stroke: $s_v"; break;
       case "line-pattern-file": 
         $css[]="stroke: url(#pattern".sizeof($pattern).")"; $show=true; 
         $pattern[]=$s_v;
-	$horiz=1;
 	break;
       case "line-dasharray": $css[]="stroke-dasharray: $s_v"; break;
       case "line-cap": $css[]="stroke-linecap: $s_v"; break;
       case "line-join": $css[]="stroke-linejoin: $s_v"; break;
+      case "polygon-fill": $css[]="fill: $s_v"; $show=true; break;
+      case "polygon-pattern-file": 
+        $css[]="fill: url(#pattern".sizeof($pattern).")"; $show=true; 
+        $pattern[]=$s_v;
+	break;
     }
   }
 
@@ -46,20 +59,16 @@ foreach($_REQUEST[param] as $v) {
 }
 
 foreach($pattern as $i=>$p) {
-  if(eregi("url\(\'(.*)\'\)", $p, $m)) {
-    $p=$m[1];
-    $s=getimagesize("render_$p");
-    print "<pattern id='pattern$i' width='$s[0]' height='$s[1]' patternUnits='userSpaceOnUse'><image width='$s[0]' height='$s[1]' xlink:href='render_$p' /></pattern>\n";
-  }
+  $s=getimagesize("$root_path/www/$p");
+  print "<pattern id='pattern$i' width='$s[0]' height='$s[1]' patternUnits='userSpaceOnUse'><image width='$s[0]' height='$s[1]' xlink:href='$www_path/$p' /></pattern>\n";
 }
 ?>
 </defs>
 <?
+
+$shift+=1;
 foreach($list_css as $css) {
-  if($horiz)
-    print "<line x1='4' y1='6' x2='38' y2='6' style=\"$css;\" />\n";
-  else
-    print "<line x1='4' y1='4' x2='38' y2='15' style=\"$css;\" />\n";
+  print "<rect x='$shift' y='$shift' height='15' width='37' style='$css' />\n";
 }
 ?>
 </svg>

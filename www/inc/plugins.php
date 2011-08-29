@@ -72,7 +72,7 @@ function plugins_html_head($plugin) {
     if(file_exists("$plugins_dir/$plugin/style.css"))
       $plugins_include_files[$plugin][]="style.css";
 
-    if($plugins_include_files[$plugin])
+    if(isset($plugins_include_files[$plugin]))
       foreach($plugins_include_files[$plugin] as $file) {
 	if(preg_match("/\.js$/", $file))
 	  $str.="<script type='text/javascript' src='plugins/$plugin/$file'></script>\n";

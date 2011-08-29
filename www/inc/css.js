@@ -36,3 +36,15 @@ function del_css_class(dom_ob, cl) {
 
   return classes;
 }
+
+/**
+ * has_css_class - checks if a DOM object has class x set
+ * @param object dom_ob A dom object which is to be queried
+ * @param text class Name of the class to look for
+ * @return bool true if the class is set
+ */
+function has_css_class(dom_ob, cl) {
+  var classes=dom_ob.className.split(" ");
+
+  return array_search(cl, classes)!==false;
+}

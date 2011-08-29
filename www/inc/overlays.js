@@ -84,6 +84,9 @@ function overlay(id, _tags) {
   map.addLayer(this.layer);
   overlays_list[this.id]=this;
 
+  this.layer.id=this.id;
+  this.layer.events.register("visibilitychanged", this.layer, overlays_visibility_change);
+
   this.maxExtent=new OpenLayers.Bounds(-20037508.3427892,-20037508.3427892,20037508.3427892,20037508.3427892);
   this.tileSize={w: 256, h: 256};
 }
@@ -203,6 +206,10 @@ function layers_reorder() {
   for(var i=0; i<list_overlays.length; i++) {
     map.setLayerIndex(list_overlays[i], i+list_basemaps.length);
   }
+}
+
+function overlays_visibility_change(event) {
+  call_hooks("overlays_visibility_change", null, event.object);
 }
 
 register_hook("unselect_all", overlays_unselect);

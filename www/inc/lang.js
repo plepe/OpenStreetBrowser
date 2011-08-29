@@ -21,7 +21,7 @@ function lang_element(str, count) {
         i=0;
 
       // if a Gender is defined, shift values
-      if(typeof(l[0]=="number"))
+      if(typeof(l[0])=="number")
         i++;
 
       return l[i];
@@ -32,8 +32,12 @@ function lang_element(str, count) {
 
   debug(str, "language string missing");
 
-  if(l=str.match(/^tag:[^=]*=(.*)$/))
+  if(l=str.match(/^tag:([^><=!]*)(=|>|<|>=|<=|!=)([^><=!].*)$/)) {
+    return l[3];
+  }
+  else if(l=str.match(/^tag:([^><=!]*)$/)) {
     return l[1];
+  }
 
   if(l=str.match(/^[^:]*:(.*)$/))
     return l[1];

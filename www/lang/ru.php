@@ -39,14 +39,6 @@ $lang_str["head:routes"]="Маршруты";
 $lang_str["head:members"]="Члены";
 $lang_str["head:address"]="Адреса";
 $lang_str["head:internal"]="База OSM";
-$lang_str["head:housenumbers"]="Номера домов";
-$lang_str["head:roads"]="Дороги";
-$lang_str["head:rails"]="Железные дороги";
-$lang_str["head:places"]="Места";
-$lang_str["head:borders"]="Границы";
-$lang_str["head:landuse"]="Землепользования";
-$lang_str["head:buildings"]="Здания";
-$lang_str["head:pt"]="Общественный транспорт";
 $lang_str["head:services"]="Услуги";
 $lang_str["head:culture"]="Культура";
 $lang_str["head:graves"]="Места погребения";
@@ -77,12 +69,10 @@ $lang_str["list_info"]="Выберите категорию для поиска 
 $lang_str["list_leisure_sport_tourism"]="Отдых, туризм и спорт";
 
 // Mapkey
-$lang_str["map_key:head"]="Обозначения на карте";
-$lang_str["map_key:zoom"]="Уровень приближения";
+$lang_str['zoom']="Уровень приближения";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
-$lang_str["main:map_key"]="Обозначения на карте";
 $lang_str["main:options"]="Настройки";
 $lang_str["main:about"]="Информация";
 $lang_str["main:donate"]="Помочь проекту";
@@ -105,7 +95,6 @@ $lang_str["lang:"]="Определить язык автоматически";
 
 $lang_str["overlay:data"]="Данные";
 $lang_str["overlay:draggable"]="Отметки";
-
 
 $lang_str["user:no_auth"]="Неправильный пароль или имя пользователя!";
 $lang_str["user:login_text"]="Входим в OpenStreetBrowser:";
@@ -142,8 +131,6 @@ $lang_str["basemap:mapnik"]="Mapnik";
 $lang_str["basemap:osmarender"]="OsmaRender";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
-#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
-
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Немецкий";
 $lang_str["lang:bg"]="Болгарский";
@@ -156,3 +143,4 @@ $lang_str["lang:uk"]="Украинский";
 $lang_str["lang:ru"]="Русский";
 $lang_str["lang:ja"]="Японский";
 $lang_str["lang:hu"]="Венгерский";
+#$lang_str["lang:ast"]="Asturian";

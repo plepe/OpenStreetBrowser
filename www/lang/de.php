@@ -42,14 +42,6 @@ $lang_str["head:routes"]="Routen";
 $lang_str["head:members"]="Mitglieder";
 $lang_str["head:address"]="Adresse";
 $lang_str["head:internal"]="Interne OSM-Daten";
-$lang_str["head:housenumbers"]="Hausnummern";
-$lang_str["head:roads"]="Straßen";
-$lang_str["head:rails"]="Eisenbahnstrecken";
-$lang_str["head:places"]="Orte";
-$lang_str["head:borders"]="Grenzen";
-$lang_str["head:landuse"]="Landnutzung";
-$lang_str["head:buildings"]="Gebäude";
-$lang_str["head:pt"]="Öffentlicher Verkehr";
 $lang_str["head:services"]="Dienstleistungen";
 $lang_str["head:culture"]="Kultureinrichtungen";
 $lang_str["head:graves"]="Wichtige Gräber";
@@ -80,12 +72,10 @@ $lang_str["list_info"]="Wähle eine Kategorie, um den Karteninhalt zu durchstöb
 $lang_str["list_leisure_sport_tourism"]="Freizeit, Sport und Tourismus";
 
 // Mapkey
-$lang_str["map_key:head"]="Legende";
-$lang_str["map_key:zoom"]="Zoomstufe";
+$lang_str['zoom']="Zoomstufe";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
-$lang_str["main:map_key"]="Legende";
 $lang_str["main:options"]="Optionen";
 $lang_str["main:about"]="Impressum";
 $lang_str["main:donate"]="Spende";
@@ -145,8 +135,6 @@ $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
-#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
-
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Deutsch";
 $lang_str["lang:bg"]="Bulgarisch";
@@ -159,3 +147,5 @@ $lang_str["lang:uk"]="Ukrainisch";
 $lang_str["lang:ru"]="Russisch";
 $lang_str["lang:ja"]="Japanisch";
 $lang_str["lang:hu"]="Ungarisch";
+$lang_str["lang:nl"]="Niederländisch";
+#$lang_str["lang:ast"]="Asturian";

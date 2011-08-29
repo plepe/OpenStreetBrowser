@@ -39,14 +39,6 @@ $lang_str["head:routes"]="Útvonalak";
 #$lang_str["head:members"]="Members";
 $lang_str["head:address"]="Címek";
 #$lang_str["head:internal"]="OSM Internal";
-$lang_str["head:housenumbers"]="Házszámok";
-$lang_str["head:roads"]="Utak";
-$lang_str["head:rails"]="Vasutak";
-$lang_str["head:places"]="Helyek";
-$lang_str["head:borders"]="Határok";
-$lang_str["head:landuse"]="Területfunkciók";
-$lang_str["head:buildings"]="Épületek";
-$lang_str["head:pt"]="Tömegközlekedés";
 $lang_str["head:services"]="Szolgáltatás";
 $lang_str["head:culture"]="Kultúra";
 $lang_str["head:graves"]="Fontos sírok";
@@ -77,12 +69,10 @@ $lang_str["list_info"]="Válassz ki egy kategóriát, ami megjelenik a térképe
 $lang_str["list_leisure_sport_tourism"]="Szabadidő, sport és turizmus";
 
 // Mapkey
-$lang_str["map_key:head"]="Térképmagyarázat";
-$lang_str["map_key:zoom"]="Nagyítási színt";
+$lang_str['zoom']="Nagyítási színt";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
-$lang_str["main:map_key"]="Térképmagyarázat";
 $lang_str["main:options"]="Beállítások";
 $lang_str["main:about"]="Névjegy";
 $lang_str["main:donate"]="Támogatás";
@@ -105,7 +95,6 @@ $lang_str["lang:"]=array("Helyi nyelv");
 
 $lang_str["overlay:data"]=array("Adat");
 $lang_str["overlay:draggable"]=array("Jelölők");
-
 
 $lang_str["user:no_auth"]="Rossz felhasználói név vagy jelszó!";
 $lang_str["user:login_text"]="Beszállás az OpenStreetBrowserbe:";
@@ -142,8 +131,6 @@ $lang_str["basemap:mapnik"]="Eredeti (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
 
-#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
-
 // please finish this list, see list.php for full list of languages
 $lang_str["lang:de"]="Német";
 $lang_str["lang:bg"]="Bulgár";
@@ -156,3 +143,4 @@ $lang_str["lang:uk"]="Ukrán";
 $lang_str["lang:ru"]="Orosz";
 $lang_str["lang:ja"]="Japán";
 $lang_str["lang:hu"]="Magyar";
+#$lang_str["lang:ast"]="Asturian";

@@ -1,4 +1,5 @@
 <?
+include "../../../conf.php";
 Header("content-type: image/svg+xml");
 print '<?xml version="1.0" encoding="utf-8" ?>';
 ?>
@@ -15,7 +16,6 @@ print '<?xml version="1.0" encoding="utf-8" ?>';
  ]]></style>
  <defs>
 <?
-print_r($_REQUEST);
 $list_css=array();
 $list_dy=array();
 $shift=0;
@@ -41,14 +41,11 @@ foreach($_REQUEST[param] as $v) {
 	  $shift-=$s_v+$v["text-size"]*0.6;
 	break;
       case "point-file": 
-	if(eregi("url\(\'(.*)\'\)", $s_v, $m)) {
-	  $show[point]=true;
-	  $p=$m[1];
-	  $s=getimagesize("render_$p");
-	  $point=array($p, $s[0], $s[1]);
-	  if($s[1]/2>$shift)
-	    $shift=$s[1]/2;
-	}
+	$show[point]=true;
+	$s=getimagesize("$root_path/www/$s_v");
+	$point=array($s_v, $s[0], $s[1]);
+	if($s[1]/2>$shift)
+	  $shift=$s[1]/2;
 	break;
       case "text-face-name": 
 	switch($s_v) {
@@ -83,7 +80,7 @@ foreach($list_show as $i=>$show) {
   if($show[text])
     print "<text x='15' y='".($shift+$dy)."' style=\"$css;\">Text</text>\n";
   if($show[point]) {
-    print "<image x='".round(15-$point[1]/2)."' y='".round($shift)."' width='$point[1]' height='$point[2]' xlink:href='render_$point[0]' />\n";
+    print "<image x='".round(15-$point[1]/2)."' y='".round($shift)."' width='$point[1]' height='$point[2]' xlink:href='$www_path/$point[0]' />\n";
   }
 }
 ?>

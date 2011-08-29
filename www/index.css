@@ -71,28 +71,6 @@ input#search {
   border-left:1px solid #999;
   height:100%;
 }
-.map_with_mapkey {
-  position: absolute;
-  left: 270px;
-  right: 250px;
-  top: 0px;
-  bottom: 0px;
-  border-left:1px solid #999;
-  height:100%;
-}
-.map_key_hidden {
-  display: none;
-}
-.map_key {
-  position: absolute;
-  width: 249px;
-  right: 0px;
-  top: 0px;
-  bottom: 0px;
-  border-left:1px solid #999;
-  height:100%;
-  overflow: auto;
-}
 .info {
   position: absolute;
   width: 250px;
@@ -105,8 +83,7 @@ input#search {
 }
 div#options{
   position: absolute;
-  height: 25px;
-  bottom: 10px;
+  bottom: 1px;
   width: 250px;
   left: 10px;
 }

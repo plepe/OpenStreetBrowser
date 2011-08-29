@@ -32,67 +32,47 @@
 //  (e.g. "100.000 m" or "2010-12-24").
 
 // accomodation
-#$lang_str["tag:accomodation"]="Accomodation";
+$lang_str["tag:accomodation"]="宿泊";
 
 // address
-#$lang_str["tag:address"]="Address";
+$lang_str["tag:address"]="住所";
 
 // addr:housenumber
 #$lang_str["tag:addr:housenumber"]="Housenumber";
 
 // admin_level
-#$lang_str["tag:admin_level=2"]="Country Border";
-#$lang_str["tag:admin_level=3"]="Divisions";
-#$lang_str["tag:admin_level=4"]="State Border";
-#$lang_str["tag:admin_level=5"]="Community Border";
-#$lang_str["tag:admin_level=6"]="County Border";
-#$lang_str["tag:admin_level=8"]="Town/Municipality Border";
-#$lang_str["tag:admin_level=10"]="Subdivisions of Cities";
+$lang_str["tag:admin_level=2"]="国境";
+$lang_str["tag:admin_level=3"]="行政区分(未使用)";
+$lang_str["tag:admin_level=4"]="道州境界";
+$lang_str["tag:admin_level=5"]="コミュニティ境界(未使用)";
+$lang_str["tag:admin_level=6"]="都道府県境";
+$lang_str["tag:admin_level=8"]="市町村境";
+$lang_str["tag:admin_level=10"]="町名・街区";
 
 // amenity
-#$lang_str["tag:amenity"]="Amenity";
-#$lang_str["tag:amenity=cinema"]=array("Cinema", "Cinemas");
-#$lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
-#$lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
-
-// building
-#$lang_str["tag:building=yes"]="Buildings";
-#$lang_str["tag:building=default"]="Buildings";
-#$lang_str["tag:building=worship"]="Religious Buildings";
-#$lang_str["tag:building=road_amenities"]="Facilities for Transportation (Stations, Terminals, Toll Booths, ...)";
-#$lang_str["tag:building=nature_building"]="Natural Buildings (e.g. Barriers)";
-#$lang_str["tag:building=industrial"]="Industrial Buildings";
-#$lang_str["tag:building=education"]="Educational Buildings";
-#$lang_str["tag:building=shop"]="Shops";
-#$lang_str["tag:building=public"]="Public Buildings";
-#$lang_str["tag:building=military"]="Military Buildings";
-#$lang_str["tag:building=historic"]="Historical Buildings";
-#$lang_str["tag:building=emergency"]="Buildings of emergency facilities";
-#$lang_str["tag:building=health"]="Buildings of health services";
-#$lang_str["tag:building=communication"]="Buildings for communication";
-#$lang_str["tag:building=residential"]="Residential Buildings";
-#$lang_str["tag:building=culture"]="Cultural Buildings";
-#$lang_str["tag:building=tourism"]="Touristic Buildings";
-#$lang_str["tag:building=sport"]="Buildings for sport activities";
+$lang_str["tag:amenity"]="生活環境";
+$lang_str["tag:amenity=cinema"]=array("映画館", "映画館");
+$lang_str["tag:amenity=restaurant"]="レストラン";
+$lang_str["tag:amenity=pub"]=array("パブ", "パブ");
 
 // cables
-#$lang_str["tag:cables"]="Cables";
+$lang_str["tag:cables"]="ケーブル数";
 
 // cuisine
-#$lang_str["tag:cuisine"]="Cuisine";
+$lang_str["tag:cuisine"]="料理";
 #$lang_str["tag:cuisine=regional"]="regional";
 
 // description
-#$lang_str["tag:description"]="Description";
+$lang_str["tag:description"]="説明";
 
 // domination
-#$lang_str["tag:domination"]="Domination";
+$lang_str["tag:domination"]="宗派";
 
 // food
-#$lang_str["tag:food"]="Serves food";
+$lang_str["tag:food"]="食事つき";
 
 // highway
-#$lang_str["tag:highway"]=array("Highway", "Highways");
+$lang_str["tag:highway"]=array("道路", "道路");
 #$lang_str["tag:highway=motorway"]="Motorway";
 #$lang_str["tag:highway=trunk"]="Trunk Road";
 #$lang_str["tag:highway=primary"]="Primary Road";
@@ -105,84 +85,61 @@
 #$lang_str["tag:highway=path"]="Path";
 
 // is_in
-#$lang_str["tag:is_in"]="Is in";
-
-// landuse
-#$lang_str["tag:landuse=park"]="Park";
-#$lang_str["tag:landuse=education"]="Area of educational facilities";
-#$lang_str["tag:landuse=tourism"]="Area of touristic facilities";
-#$lang_str["tag:landuse=garden"]="Farms, Plantages, Gardens";
-#$lang_str["tag:landuse=industrial"]="Industrial and Railway Areas";
-#$lang_str["tag:landuse=sport"]="Areas of sport facilities";
-#$lang_str["tag:landuse=cemetery"]="Cemeteries";
-#$lang_str["tag:landuse=residental"]="Residental areas";
-#$lang_str["tag:landuse=nature_reserve"]="Nature Reserves";
-#$lang_str["tag:landuse=historic"]="Areas with historical value";
-#$lang_str["tag:landuse=emergency"]="Areas of emergency facilities";
-#$lang_str["tag:landuse=health"]="Areas of health facilities";
-#$lang_str["tag:landuse=public"]="Areas for public services";
-#$lang_str["tag:landuse=water"]="Water Areas";
-// the following tags are deprecated
-#$lang_str["tag:landuse=natural|sub_type=t0"]="Woods and Forest";
-#$lang_str["tag:landuse=natural|sub_type=t1"]="Wetland";
-#$lang_str["tag:landuse=natural|sub_type=t2"]="Glaciers";
-#$lang_str["tag:landuse=natural|sub_type=t3"]="Screes, Heaths";
-#$lang_str["tag:landuse=natural|sub_type=t4"]="Mud";
-#$lang_str["tag:landuse=natural|sub_type=t5"]="Beaches";
+$lang_str["tag:is_in"]="Is in";
 
 // leisure
-#$lang_str["tag:leisure=sports_centre"]="Sport Centre";
-#$lang_str["tag:leisure=golf_course"]="Golf Course";
-#$lang_str["tag:leisure=stadium"]="Stadium";
-#$lang_str["tag:leisure=track"]="Track";
-#$lang_str["tag:leisure=pitch"]="Pitche";
-#$lang_str["tag:leisure=water_park"]="Water Park";
-#$lang_str["tag:leisure=marina"]="Marina";
-#$lang_str["tag:leisure=slipway"]="Slipway";
-#$lang_str["tag:leisure=fishing"]="Fishing";
-#$lang_str["tag:leisure=nature_reserve"]="Nature Reserve";
-#$lang_str["tag:leisure=park"]="Leisure Park";
-#$lang_str["tag:leisure=playground"]="Playground";
-#$lang_str["tag:leisure=garden"]="Garden";
-#$lang_str["tag:leisure=common"]="Common";
-#$lang_str["tag:leisure=ice_rink"]="Ice Rink";
-#$lang_str["tag:leisure=miniature_golf"]="Miniature Golf";
-#$lang_str["tag:leisure=swimming_pool"]="Swimming Pool";
-#$lang_str["tag:leisure=beach_resort"]="Beach Resort";
-#$lang_str["tag:leisure=bird_hide"]="Bird Hide";
-#$lang_str["tag:leisure=sport"]="Other Sport";
+$lang_str["tag:leisure=sports_centre"]="スポーツセンター";
+$lang_str["tag:leisure=golf_course"]="ゴルフコース";
+$lang_str["tag:leisure=stadium"]="スタジアム";
+$lang_str["tag:leisure=track"]="トラック";
+$lang_str["tag:leisure=pitch"]="競技場";
+$lang_str["tag:leisure=water_park"]="Water Park";
+$lang_str["tag:leisure=marina"]="マリーナ";
+$lang_str["tag:leisure=slipway"]="スリップウェイ";
+$lang_str["tag:leisure=fishing"]="釣り";
+$lang_str["tag:leisure=nature_reserve"]="自然保護区域";
+$lang_str["tag:leisure=park"]="レジャーパーク";
+$lang_str["tag:leisure=playground"]="遊び場";
+$lang_str["tag:leisure=garden"]="庭園";
+$lang_str["tag:leisure=common"]="共有地";
+$lang_str["tag:leisure=ice_rink"]="アイスリンク";
+$lang_str["tag:leisure=miniature_golf"]="ミニゴルフ";
+$lang_str["tag:leisure=swimming_pool"]="プール";
+$lang_str["tag:leisure=beach_resort"]="ビーチリゾート";
+$lang_str["tag:leisure=bird_hide"]="バードウォッチング小屋";
+$lang_str["tag:leisure=sport"]="その他スポーツ";
 
 // name
-#$lang_str["tag:name"]=array("Name", "Namen");
+$lang_str["tag:name"]=array("名前", "名前");
 
 // network
-#$lang_str["tag:network"]="Network";
+$lang_str["tag:network"]="ネットワーク";
 
 // note
-#$lang_str["tag:note"]="Note";
+$lang_str["tag:note"]="メモ";
 
 // old_name
-#$lang_str["tag:old_name"]="Old Name(s)";
+$lang_str["tag:old_name"]="旧名";
 
 // opening_hours
-#$lang_str["tag:opening_hours"]="Opening hours";
+$lang_str["tag:opening_hours"]="営業時間";
 
 // operator
-#$lang_str["tag:operator"]="Operator";
+$lang_str["tag:operator"]="管理者";
 
 // place
-#$lang_str["tag:place"]="Place";
-#$lang_str["tag:place=continent"]=array("Continent", "Continents");
-#$lang_str["tag:place=country"]=array("Country", "Countries");
-#$lang_str["tag:place=state"]=array("State", "States");
-#$lang_str["tag:place=region"]=array("Region", "Regions");
-#$lang_str["tag:place=county"]=array("County", "Counties");
-#$lang_str["tag:place=city"]=array("City", "Cities");
-#$lang_str["tag:place=town"]="Town";
-#$lang_str["tag:place=village"]=array("Village", "Villages");
-#$lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
-#$lang_str["tag:place=locality"]=array("Locality", "Localities");
-#$lang_str["tag:place=island"]=array("Island", "Islands");
+$lang_str["tag:place"]="場所";
+$lang_str["tag:place=continent"]="大陸";
+$lang_str["tag:place=country"]="国";
+$lang_str["tag:place=state"]="州";
+$lang_str["tag:place=region"]="地方";
+$lang_str["tag:place=county"]="郡";
+$lang_str["tag:place=city"]="都市";
+$lang_str["tag:place=town"]="町";
+$lang_str["tag:place=village"]="村";
+$lang_str["tag:place=suburb"]="近郊(未使用)";
+$lang_str["tag:place=locality"]="地域の通称";
+$lang_str["tag:place=island"]="島";
 #$lang_str["tag:place=islet"]=array("Islet", "Islets");
 // the following tags are deprecated
 #$lang_str["tag:place=city;population>1000000"]=array("City, > 1 Mio Inhabitants", "Cities, > 1 Mio Inhabitants");
@@ -191,130 +148,125 @@
 #$lang_str["tag:place=town;population>30000"]=array("Town, > 30.000 Inhabitants", "Towns, > 30.000 Inhabitants");
 
 // population
-#$lang_str["tag:population"]="Population";
+$lang_str["tag:population"]="人口";
 $tag_type["population"]=array("count");
 
 // power
 #$lang_str["tag:power"]="Power";
-#$lang_str["tag:power=generator"]="Power Generator";
-#$lang_str["tag:power=line"]="Power Line";
-#$lang_str["tag:power=tower"]="Power Tower";
-#$lang_str["tag:power=pole"]="Power Pole";
-#$lang_str["tag:power=station"]="Power Station";
-#$lang_str["tag:power=sub_station"]="Power Substation";
+$lang_str["tag:power=generator"]="発電所";
+$lang_str["tag:power=line"]="電力線";
+$lang_str["tag:power=tower"]="送電塔";
+$lang_str["tag:power=pole"]="電柱";
+$lang_str["tag:power=station"]="変電所";
+$lang_str["tag:power=sub_station"]="小規模変電所";
 
 // power_source
-#$lang_str["tag:power_source"]="Power source";
-#$lang_str["tag:power_source=biofuel"]="Biofuel";
-#$lang_str["tag:power_source=oil"]="Oil";
-#$lang_str["tag:power_source=coal"]="Coal";
-#$lang_str["tag:power_source=gas"]="Gas";
-#$lang_str["tag:power_source=waste"]="Waste";
-#$lang_str["tag:power_source=hydro"]="Hydro";
-#$lang_str["tag:power_source=tidal"]="Tidal";
-#$lang_str["tag:power_source=wave"]="Wave";
-#$lang_str["tag:power_source=geothermal"]="Geothermal";
-#$lang_str["tag:power_source=nuclear"]="Nuclear";
-#$lang_str["tag:power_source=fusion"]="Fusion";
-#$lang_str["tag:power_source=wind"]="Wind";
-#$lang_str["tag:power_source=photovoltaic"]="Photovoltaic";
-#$lang_str["tag:power_source=solar-thermal"]="Solar Thermal";
+$lang_str["tag:power_source"]="電力源";
+$lang_str["tag:power_source=biofuel"]="バイオ燃料";
+$lang_str["tag:power_source=oil"]="石油";
+$lang_str["tag:power_source=coal"]="石炭";
+$lang_str["tag:power_source=gas"]="ガス";
+$lang_str["tag:power_source=waste"]="廃棄物";
+$lang_str["tag:power_source=hydro"]="水素";
+$lang_str["tag:power_source=tidal"]="潮流";
+$lang_str["tag:power_source=wave"]="波";
+$lang_str["tag:power_source=geothermal"]="地熱";
+$lang_str["tag:power_source=nuclear"]="原子力";
+$lang_str["tag:power_source=fusion"]="核融合";
+$lang_str["tag:power_source=wind"]="風力";
+$lang_str["tag:power_source=photovoltaic"]="太陽電池";
+$lang_str["tag:power_source=solar-thermal"]="太陽熱";
 
 // real_ale
-#$lang_str["tag:real_ale"]="Real ale offered";
+$lang_str["tag:real_ale"]="Real ale offered";
 
 // religion
-#$lang_str["tag:religion"]="Religion";
-#$lang_str["tag:religion=christian"]=array("christian");
+$lang_str["tag:religion"]="宗教";
+$lang_str["tag:religion=christian"]="キリスト教";
 
 // route
-#$lang_str["tag:route=train"]="Train";
-#$lang_str["tag:route=railway"]="Railway";
-#$lang_str["tag:route=rail"]="Railway";
-#$lang_str["tag:route=light_rail"]="Light Rail";
-#$lang_str["tag:route=subway"]="Subway";
-#$lang_str["tag:route=tram"]="Tram";
-#$lang_str["tag:route=trolley"]="Trolley";
-#$lang_str["tag:route=trolleybus"]="Trolley";
-#$lang_str["tag:route=bus"]="Bus";
-#$lang_str["tag:route=minibus"]="Minibus";
-#$lang_str["tag:route=ferry"]="Ferry";
-#$lang_str["tag:route=road"]="Road";
-#$lang_str["tag:route=bicycle"]="Bicycle";
-#$lang_str["tag:route=hiking"]="Hiking";
-#$lang_str["tag:route=mtb"]="Mountainbike";
+$lang_str["tag:route=train"]="列車";
+$lang_str["tag:route=railway"]="鉄道";
+$lang_str["tag:route=rail"]="鉄道";
+$lang_str["tag:route=light_rail"]="ライトレール";
+$lang_str["tag:route=subway"]="地下鉄";
+$lang_str["tag:route=tram"]="路面電車";
+$lang_str["tag:route=trolley"]="トローリー";
+$lang_str["tag:route=trolleybus"]="トローリーバス";
+$lang_str["tag:route=bus"]="バス";
+$lang_str["tag:route=minibus"]="ミニバス";
+$lang_str["tag:route=ferry"]="フェリー";
+$lang_str["tag:route=road"]="道路";
+$lang_str["tag:route=bicycle"]="自転車";
+$lang_str["tag:route=hiking"]="ハイキング";
+$lang_str["tag:route=mtb"]="マウンテンバイク";
 
 // route_type
 // the following tags are deprecated
-#$lang_str["tag:route_type"]="Route type";
+$lang_str["tag:route_type"]="ルート種別";
 
 // shop
-#$lang_str["tag:shop"]="Shop";
+$lang_str["tag:shop"]="店";
 
 // sport
 #$lang_str["tag:sport"]="Sport";
-#$lang_str["tag:sport=9pin"]="9pin Bowling";
-#$lang_str["tag:sport=10pin"]="10pin Bowling";
-#$lang_str["tag:sport=archery"]="Archery";
-#$lang_str["tag:sport=athletics"]="Athletics";
-#$lang_str["tag:sport=australian_football"]="Australian Football";
-#$lang_str["tag:sport=baseball"]="Baseball";
-#$lang_str["tag:sport=basketball"]="Basketball";
-#$lang_str["tag:sport=beachvolleyball"]="Beachvolleyball";
-#$lang_str["tag:sport=boules"]="Boules";
-#$lang_str["tag:sport=bowls"]="Bowls";
-#$lang_str["tag:sport=canoe"]="Canoe";
-#$lang_str["tag:sport=chess"]="Chess";
-#$lang_str["tag:sport=climbing"]="Climbing";
-#$lang_str["tag:sport=cricket"]="Cricket";
-#$lang_str["tag:sport=cricket_nets"]="Cricket Nets";
-#$lang_str["tag:sport=croquet"]="Croquet";
-#$lang_str["tag:sport=cycling"]="Cycling";
-#$lang_str["tag:sport=diving"]="Diving";
-#$lang_str["tag:sport=dog_racing"]="Dog Racing";
-#$lang_str["tag:sport=equestrian"]="Equestrian";
-#$lang_str["tag:sport=football"]="Football";
-#$lang_str["tag:sport=golf"]="Golf";
-#$lang_str["tag:sport=gymnastics"]="Gymnastics";
-#$lang_str["tag:sport=hockey"]="Hockey";
-#$lang_str["tag:sport=horse_racing"]="Horse Racing";
-#$lang_str["tag:sport=korfball"]="Korfball";
-#$lang_str["tag:sport=motor"]="Motor";
-#$lang_str["tag:sport=multi"]="Multi";
-#$lang_str["tag:sport=orienteering"]="Orienteering";
-#$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
-#$lang_str["tag:sport=paragliding"]="Paragliding";
-#$lang_str["tag:sport=pelota"]="Pelota";
-#$lang_str["tag:sport=racquet"]="Racquet";
-#$lang_str["tag:sport=rowing"]="Rowing";
-#$lang_str["tag:sport=rugby"]="Rugby";
-#$lang_str["tag:sport=shooting"]="Shooting";
-#$lang_str["tag:sport=skating"]="Skating";
-#$lang_str["tag:sport=skateboard"]="Skateboard";
-#$lang_str["tag:sport=skiing"]="Skiing";
-#$lang_str["tag:sport=soccer"]="Soccer";
-#$lang_str["tag:sport=swimming"]="Swimming";
-#$lang_str["tag:sport=table_tennis"]="Table Tennis";
-#$lang_str["tag:sport=team_handball"]="Handball";
-#$lang_str["tag:sport=tennis"]="Tennis";
-#$lang_str["tag:sport=volleyball"]="Volleyball";
+$lang_str["tag:sport=9pin"]="9ピンボウリング";
+$lang_str["tag:sport=10pin"]="10ピンボウリング";
+$lang_str["tag:sport=archery"]="アーチェリー";
+$lang_str["tag:sport=athletics"]="アスレチックス";
+$lang_str["tag:sport=australian_football"]="オージーフットボール";
+$lang_str["tag:sport=baseball"]="野球";
+$lang_str["tag:sport=basketball"]="バスケットボール";
+$lang_str["tag:sport=beachvolleyball"]="ビーチバレー";
+$lang_str["tag:sport=boules"]="金属ボールゲーム";
+$lang_str["tag:sport=bowls"]="ローンボウリング";
+$lang_str["tag:sport=canoe"]="カヌー";
+$lang_str["tag:sport=chess"]="チェス";
+$lang_str["tag:sport=climbing"]="登山";
+$lang_str["tag:sport=cricket"]="クリケット";
+$lang_str["tag:sport=cricket_nets"]="クリケットのネット";
+$lang_str["tag:sport=croquet"]="クロッケー";
+$lang_str["tag:sport=cycling"]="サイクリング";
+$lang_str["tag:sport=diving"]="ダイビング";
+$lang_str["tag:sport=dog_racing"]="ドッグレース";
+$lang_str["tag:sport=equestrian"]="馬術";
+$lang_str["tag:sport=football"]="フットボール";
+$lang_str["tag:sport=golf"]="ゴルフ";
+$lang_str["tag:sport=gymnastics"]="ジム";
+$lang_str["tag:sport=hockey"]="ホッケー";
+$lang_str["tag:sport=horse_racing"]="競馬";
+$lang_str["tag:sport=korfball"]="コーフボール";
+$lang_str["tag:sport=motor"]="自動車";
+$lang_str["tag:sport=multi"]="複合競技";
+$lang_str["tag:sport=orienteering"]="オリエンテーリング";
+$lang_str["tag:sport=paddle_tennis"]="パドルテニス";
+$lang_str["tag:sport=paragliding"]="パラグライダー";
+$lang_str["tag:sport=pelota"]="Pelota(ボール)";
+$lang_str["tag:sport=racquet"]="ラケット";
+$lang_str["tag:sport=rowing"]="ボート";
+$lang_str["tag:sport=rugby"]="ラグビー";
+$lang_str["tag:sport=shooting"]="射撃";
+$lang_str["tag:sport=skating"]="スケート";
+$lang_str["tag:sport=skateboard"]="スケートボード";
+$lang_str["tag:sport=skiing"]="スキー";
+$lang_str["tag:sport=soccer"]="サッカー";
+$lang_str["tag:sport=swimming"]="水泳";
+$lang_str["tag:sport=table_tennis"]="テーブルテニス";
+$lang_str["tag:sport=team_handball"]="ハンドボール";
+$lang_str["tag:sport=tennis"]="テニス";
+$lang_str["tag:sport=volleyball"]="バレーボール";
 
 // vending
-#$lang_str["tag:vending"]="Vending";
+$lang_str["tag:vending"]="自販機";
 
 // voltage
-#$lang_str["tag:voltage"]="Voltage";
+$lang_str["tag:voltage"]="電圧";
 $tag_type["voltage"]=array("number", "V", "V");
 
 // wires
-#$lang_str["tag:wires"]="Wires";
+$lang_str["tag:wires"]="ワイヤー数";
 $tag_type["wires"]=array("count");
 
 // website
-#$lang_str["tag:website"]="Website";
+$lang_str["tag:website"]="Webサイト";
 $tag_type["website"]=array("link");
-
-
-
-
-

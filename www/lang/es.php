@@ -39,14 +39,6 @@ $lang_str["head:routes"]="Rutas";
 $lang_str["head:members"]="Miembros";
 $lang_str["head:address"]="Direccion";
 #$lang_str["head:internal"]="OSM Internal";
-#$lang_str["head:housenumbers"]="Housenumbers";
-$lang_str["head:roads"]="Calles";
-#$lang_str["head:rails"]="Railroads";
-$lang_str["head:places"]="Lugares";
-$lang_str["head:borders"]="Fronteras";
-#$lang_str["head:landuse"]="Landuse";
-$lang_str["head:buildings"]="Edificios";
-$lang_str["head:pt"]="Transporte Público";
 $lang_str["head:services"]="Servicios";
 $lang_str["head:culture"]="Cultura";
 $lang_str["head:graves"]="Tumbas Importantes";
@@ -77,12 +69,10 @@ $lang_str["routing_time"]="Tiempo";
 #$lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
 
 // Mapkey
-#$lang_str["map_key:head"]="Map key";
-$lang_str["map_key:zoom"]="Nivel de Zoom";
+$lang_str['zoom']="Nivel de Zoom";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
-#$lang_str["main:map_key"]="Map Key";
 $lang_str["main:options"]="Opciones";
 $lang_str["main:about"]="Acerca de...";
 $lang_str["main:donate"]="Donar";
@@ -105,7 +95,6 @@ $lang_str["lang:"]=array("Idioma local");
 
 #$lang_str["overlay:data"]=array("Data");
 #$lang_str["overlay:draggable"]=array("Markers");
-
 
 $lang_str["user:no_auth"]="Usuario o contraseña equivocados!";
 #$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
@@ -142,8 +131,6 @@ $lang_str["basemap:mapnik"]="Estándar (Mapnik)";
 $lang_str["basemap:osmarender"]="Estándar (OsmaRender)";
 #$lang_str["basemap:cyclemap"]="CycleMap";
 
-#$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
-
 // please finish this list, see list.php for full list of languages
 #$lang_str["lang:de"]="German";
 #$lang_str["lang:bg"]="Bulgarian";
@@ -156,3 +143,4 @@ $lang_str["basemap:osmarender"]="Estándar (OsmaRender)";
 #$lang_str["lang:ru"]="Russian";
 #$lang_str["lang:ja"]="Japanese";
 #$lang_str["lang:hu"]="Hungarian";
+#$lang_str["lang:ast"]="Asturian";
