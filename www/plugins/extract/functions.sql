@@ -7,8 +7,8 @@ declare
   osm_way   alias for $3;
   result hstore:=null;
 begin
-  if ( coalesce(osm_tags->E'place', '') in (E'continent', E'country', E'state', E'city', E'county', E'region', E'town', E'island')) then
-    result:=E'"icon_text"=>"[name];[ref];[operator]", "name"=>"Important Places", "match"=>"place=continent;country;state;city;county;region;town;island", "description"=>"", "icon"=>"", "importance"=>"urban", "type"=>"point", "rule_id"=>"4da682ca817a4"'::hstore;
+  if ( coalesce(osm_tags->E'place', '') in (E'continent', E'country', E'state', E'city', E'county', E'region', E'town', E'island', E'ocean', E'sea')) then
+    result:=E'"icon_text"=>"[name];[ref];[operator]", "name"=>"Important Places", "match"=>"place=continent;country;state;city;county;region;town;island;ocean;sea", "description"=>"", "icon"=>"", "importance"=>"urban", "type"=>"point", "rule_id"=>"4da682ca817a4"'::hstore;
   end if;
 
   if result is not null then
@@ -62,7 +62,7 @@ DECLARE
   num_rows  int;
   match text;
 BEGIN
-  match:='((osm_tags @> E''"place"=>"continent"''::hstore) or (osm_tags @> E''"place"=>"country"''::hstore) or (osm_tags @> E''"place"=>"state"''::hstore) or (osm_tags @> E''"place"=>"city"''::hstore) or (osm_tags @> E''"place"=>"county"''::hstore) or (osm_tags @> E''"place"=>"region"''::hstore) or (osm_tags @> E''"place"=>"town"''::hstore) or (osm_tags @> E''"place"=>"island"''::hstore))';
+  match:='((osm_tags @> E''"place"=>"continent"''::hstore) or (osm_tags @> E''"place"=>"country"''::hstore) or (osm_tags @> E''"place"=>"state"''::hstore) or (osm_tags @> E''"place"=>"city"''::hstore) or (osm_tags @> E''"place"=>"county"''::hstore) or (osm_tags @> E''"place"=>"region"''::hstore) or (osm_tags @> E''"place"=>"town"''::hstore) or (osm_tags @> E''"place"=>"island"''::hstore) or (osm_tags @> E''"place"=>"ocean"''::hstore) or (osm_tags @> E''"place"=>"sea"''::hstore))';
 
   execute 'insert into osm_point_extract ( '
     || 'select * '
