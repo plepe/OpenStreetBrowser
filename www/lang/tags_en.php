@@ -174,6 +174,8 @@ $lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
 $lang_str["tag:place=locality"]=array("Locality", "Localities");
 $lang_str["tag:place=island"]=array("Island", "Islands");
 $lang_str["tag:place=islet"]=array("Islet", "Islets");
+$lang_str["tag:place=ocean"]=array("Ocean", "Oceans");
+$lang_str["tag:place=sea"]=array("Sea", "Seas");
 
 // population
 $lang_str["tag:population"]="Population";

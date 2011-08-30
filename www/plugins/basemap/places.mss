@@ -253,3 +253,56 @@ alias place=town_large place=town|population>=30000
   point-allow-overlap: true;
   text-dy: 16;
 }
+
+.places_high[place=ocean][zoom>=2][zoom<6] name {
+  text-face-name: "DejaVu Sans Oblique";
+  text-avoid-edges: true;
+  text-halo-radius: 1;
+  text-fill: #156299;
+  text-halo-fill: #7eb9e3;
+}
+.places_high[place=ocean][zoom>=2][zoom<3] name {
+  text-size: 8;
+}
+.places_high[place=ocean][zoom>=3][zoom<5] name {
+  text-size: 10;
+}
+.places_high[place=ocean][zoom>=5][zoom<6] name {
+  text-size: 13;
+}
+
+.places_high[place=sea][zoom>=4][zoom<10] name {
+  text-face-name: "DejaVu Sans Oblique";
+  text-avoid-edges: true;
+  text-halo-radius: 1;
+  text-fill: #156299;
+  text-halo-fill: #7eb9e3;
+  text-dy: -1;
+}
+.places_high[place=sea][zoom>=4][zoom<10] name_en {
+  text-face-name: "DejaVu Sans Oblique";
+  text-avoid-edges: true;
+  text-halo-radius: 1;
+  text-fill: #156299;
+  text-halo-fill: #7eb9e3;
+  text-dy: 1;
+}
+.places_high[place=sea][zoom>=4][zoom<5] name {
+  text-size: 9;
+}
+.places_high[place=sea][zoom>=4][zoom<5] name_en {
+  text-size: 7;
+}
+.places_high[place=sea][zoom>=5][zoom<8] name {
+  text-size: 11;
+}
+.places_high[place=sea][zoom>=5][zoom<8] name_en {
+  text-size: 10;
+}
+.places_high[place=sea][zoom>=8][zoom<10] name {
+  text-size: 13;
+}
+.places_high[place=sea][zoom>=8][zoom<10] name_en {
+  text-size: 11;
+}
+
