@@ -233,7 +233,8 @@ Map {
   text-size: 10;
 }
 .area_text[type=water] name {
-  text-fill: #000000;
+  text-face-name: "DejaVu Sans Oblique";
+  text-fill: #156299;
   text-halo-fill: #7eb9e3;
 }
 .area_text[type=pedestrian] name {

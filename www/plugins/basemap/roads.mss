@@ -1005,8 +1005,9 @@ hide highway_type=power|highway_sub_type=t5
 .roads_text[highway_type=waterway]
 {
   text-spacing: 300;
+  text-face-name: "DejaVu Sans Oblique";
+  text-fill: #156299;
   text-halo-fill: #7eb9e3;
-  text-fill: #000000;
 }
 .roads_text[highway_type=waterway][highway_sub_type=t1][zoom>=12][zoom<13] name,
 .roads_text[highway_type=waterway][highway_sub_type=t2][zoom>=13][zoom<15] name,
