@@ -26,14 +26,20 @@ $scale_text=array("global"=>4, "international"=>8, "national"=>10, "regional"=>1
 include_once "categories_sql.php";
 $default_style=array(
   "point|icon_style"=>"allow_overlap: true;",
-  "point|icon_label_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: true; halo_fill: #ffffff; halo_radius: 1;",
-  "line_text_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;",
-  "point|icon_text_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1",
-  "line|icon_label_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; spacing: 200; placement: line; halo_fill: #ffffff; halo_radius: 1;",
-  "line|icon_text_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; placement: point; halo_fill: #ffffff; halo_radius: 1;",
-  "line_text_style"=>"face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;",
+  "point|icon_label_style"=>"fontset_name: book; fill: #000000; size: 8; allow_overlap: true; halo_fill: #ffffff; halo_radius: 1;",
+  "line_text_style"=>"fontset_name: book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;",
+  "point|icon_text_style"=>"fontset_name: book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1",
+  "line|icon_label_style"=>"fontset_name: book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; spacing: 200; placement: line; halo_fill: #ffffff; halo_radius: 1;",
+  "line|icon_text_style"=>"fontset_name: book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; placement: point; halo_fill: #ffffff; halo_radius: 1;",
+  "line_text_style"=>"fontset_name: book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;",
   "line_style"=>"stroke-width: 2; stroke: #7f7f7f;",
   "polygon_style"=>"fill-opacity: 0.5; fill: #7f7f7f;",
+);
+
+$categories_fontsets=array(
+  "book"=>array("DejaVu Sans Book", "unifont Medium"),
+  "bold"=>array("DejaVu Sans Bold", "unifont Medium"),
+  "oblique"=>array("DejaVu Sans Oblique", "unifont Medium"),
 );
 
 function category_version() {
@@ -441,7 +447,7 @@ function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance
   $sym->setAttribute("name", "line_type");
   $sym->setAttribute("placement", "line");
 
-  $style=new css("face_name: DejaVu Sans Book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;");
+  $style=new css("fontset_name: book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;");
   $style->apply($global_tags->get("display_style"));
   $style->apply($tags->get("display_style"));
   $style->style['size']-=2;
@@ -507,6 +513,25 @@ function mapnik_get_layer($dom, $name, $sql, $shape_type="") {
   return $layer;
 }
 
+function categories_insert_fontsets($map, $dom) {
+  global $categories_fontsets;
+
+  foreach($categories_fontsets as $name=>$fonts) {
+    // insert fontset clauses
+    $fontset=$dom->createElement("FontSet");
+    $fontset=$map->appendChild($fontset);
+    $fontset->setAttribute("name", $name);
+
+    // insert list of possible face names to each fontset
+    foreach($fonts as $font) {
+      $f=dom_create_append($fontset, "Font", $dom);
+      $f->setAttribute("face_name", $font);
+
+      $font_replace[$font]=$name;
+    }
+  }
+}
+
 function build_mapnik_style($id, $data, $global_tags) {
   global $importance_levels;
   global $postgis_tables;
@@ -522,6 +547,9 @@ function build_mapnik_style($id, $data, $global_tags) {
   $map=$dom->createElement("Map");
   $map->setAttribute("srs", "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over");
   $dom->appendChild($map);
+
+  categories_insert_fontsets($map, $dom);
+
   $ret=array();
   $columns=array();
   foreach($data as $importance=>$data1) if($importance!="_") {
