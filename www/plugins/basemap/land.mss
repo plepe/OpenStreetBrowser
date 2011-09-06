@@ -211,6 +211,7 @@ Map {
   polygon-fill: #f0dba5;
 }
 
+.area_text_extract name,
 .area_text name {
   text-face-name: "DejaVu Sans Book";
   text-avoid-edges: true;
@@ -218,6 +219,14 @@ Map {
   text-wrap-width: 20;
   text-max-char-angle-delta: 20;
 }
+.area_text_extract[way_area>=600000000][zoom>=6] name,
+.area_text_extract[way_area>=300000000][zoom>=7] name,
+.area_text_extract[way_area>=150000000][zoom>=8] name,
+.area_text_extract[way_area>=75000000][zoom>=9] name,
+.area_text_extract[way_area>=37500000][zoom>=10] name,
+.area_text_extract[way_area>=20000000][zoom>=11] name,
+.area_text_extract[way_area>=10000000][zoom>=12] name,
+.area_text_extract[way_area>=5000000][zoom>=13] name,
 .area_text[way_area>=150000][zoom>=14] name {
   text-size: 10;
 }
@@ -230,6 +239,7 @@ Map {
 .area_text[way_area<10000][zoom>=17] name {
   text-size: 10;
 }
+.area_text_extract[type=water] name,
 .area_text[type=water] name {
   text-face-name: "DejaVu Sans Oblique";
   text-fill: #156299;
@@ -243,6 +253,7 @@ Map {
   text-fill: #303030;
   text-halo-radius: 0;
 }
+.area_text_extract[type=park] name,
 .area_text[type=park] name {
   text-fill: #000000;
   text-halo-fill: #9ce69c;
