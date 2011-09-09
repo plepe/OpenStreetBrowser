@@ -71,14 +71,12 @@ function wikipedia_parse_lang($object, $page, $lang, $data_lang) {
 function wikipedia_get_abstract($object, $page, $lang) {
   ini_set("user_agent", "OpenStreetBrowser Wikipedia Parser");
   if(@$f=fopen(wikipedia_action_url($object, $page, $lang, "raw"), "r")) {
-    $text=""; unset($img);
+    $text=""; $img="";
     $enough=0;
     $inside=0;
     $r=fgets($f);
     while(!$enough) {
   //    if(!$img&&eregi("\[\[Bild:([^\|\]]*)[\|\]]", $r, $m)) {
-      $r=chop($r);
-
       if(($r=="")||
 	 (preg_match("/^<!--/", $r))
 	) {
@@ -117,7 +115,12 @@ function wikipedia_get_abstract($object, $page, $lang) {
 	}
       }
 
+      // read next line
       $r=fgets($f);
+      $r=trim($r);
+      // end of file ... break loop
+      if(!$r)
+	break;
     }
     fclose($f);
   }
