@@ -24,10 +24,14 @@ function category_rule_match(dom, cat, rule) {
       if(title.length==1)
 	title=title[0];
       else {
+	var gender_shift=0;
+	if(title.length==3)
+	  gender_shift=1;
+
 	if(this.id_split.length>1)
-	  title=title[1];
+	  title=title[1+gender_shift];
 	else
-	  title=title[0];
+	  title=title[0+gender_shift];
       }
     }
     else
