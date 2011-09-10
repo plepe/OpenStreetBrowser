@@ -22,25 +22,7 @@ $languages=array(
 );
 
 function rewrite_str($str) {
-  if($str=="head_action")
-    return "head:actions";
-  if(eregi("^head_(.*)$", $str, $m))
-    return "head:$m[1]";
-  if($str=="read_more")
-    return "wikipedia:read_more";
-  if(eregi("^map_key_(.*)$", $str, $m))
-    return "map_key:$m[1]";
-  if(eregi("^yes/(.*)$", $str, $m))
-    return "$m[1]";
-  if(eregi("^highway_type_(.*)$", $str, $m))
-    return "tag:highway=$m[1]";
-  if(eregi("^admin_level=(.*)$", $str, $m))
-    return "tag:admin_level=$m[1]";
-  if(eregi("^tag\/(.*)$", $str, $m))
-    return "tag:$m[1]";
-  if(eregi("^tag_(.*)\/(.*)$", $str, $m))
-    return "tag:$m[1]=$m[2]";
-
+  // Currently no need to rewrite strings
   return $str;
 }
 
