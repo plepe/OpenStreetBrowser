@@ -74,6 +74,9 @@ $basemaps=array(
   "mapnik"=>"mapnik",
 );
 
+// Base URL for category tiles
+$category_tiles_url="http://tiles-category.openstreetbrowser.org/tiles/";
+
 // You can define additional overlays here (needs plugin 'overlays' enabled)
 $overlays_add=array(
 //  "foo"=>array("http://foo.bar/tiles/", array("numZoomLevels"=>19)),

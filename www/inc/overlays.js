@@ -1,6 +1,7 @@
 var drag_feature;
 var drag_layer;
 var overlays_list={};
+var category_tiles_url;
 
 function overlay(id, _tags) {
   // show
@@ -45,7 +46,7 @@ function overlay(id, _tags) {
     var y = Math.round ((this.layer.maxExtent.top - bounds.top) / (res * this.layer.tileSize.h));
     var z = map.getZoom();
 
-    var path = "tiles/"+ this.id + "/" + z + "/" + x + "/" + y + ".png?"+ this.version;
+    var path = category_tiles_url + this.id + "/" + z + "/" + x + "/" + y + ".png?"+ this.version;
     
     return path;
   }
@@ -150,6 +151,10 @@ function check_overlays(data) {
 }
 
 function overlays_init() {
+  // default value for tiles url
+  if(!category_tiles_url)
+    category_tiles_url="tiles/";
+
   vector_layer=new OpenLayers.Layer.Vector(t("overlay:data"), { weight: 10 });
   vector_layer.setOpacity(0.7);
   drag_layer=new OpenLayers.Layer.Vector(t("overlay:draggable"), { weight: 11 });

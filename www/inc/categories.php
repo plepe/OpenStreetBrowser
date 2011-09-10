@@ -996,8 +996,12 @@ function categories_has_saved($id) {
 
 function categories_init() {
   global $default_categories;
+  global $category_tiles_url;
+
   if(isset($default_categories))
     html_export_var(array("default_categories"=>$default_categories));
+  if(isset($category_tiles_url))
+    html_export_var(array("category_tiles_url"=>$category_tiles_url));
 }
 
 function categories_mcp_start() {
