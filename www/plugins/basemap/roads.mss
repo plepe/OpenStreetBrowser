@@ -1000,6 +1000,14 @@ hide highway_type=power|highway_sub_type=t5
 }
 
 /* Barrier */
+/* Mapkey:
+alias highway_type=barrier|highway_sub_type=t1 barrier=city_wall
+alias highway_type=barrier|highway_sub_type=t2 barrier=wall|barrier=retaining_wall
+alias highway_type=barrier|highway_sub_type=t3 barrier=fence
+alias highway_type=barrier|highway_sub_type=t4 barrier=hedge
+hide highway_type=barrier|highway_sub_type=t5
+hide highway_type=barrier|highway_sub_type=t6
+*/
 .roads_fill[highway_type=barrier][highway_sub_type=t1] {
   line-color: #584e22;
 }

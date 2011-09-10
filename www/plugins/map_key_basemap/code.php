@@ -114,6 +114,16 @@ class map_key_basemap extends map_key_cascadenik {
     }
 
     $ret1="";
+    $ret1.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
+      array("highway_type"=>array("=barrier"), "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
+    if($ret1!="") {
+      $ret.="<h4>".lang("map_key_basemap:barrier")."</h4>\n";
+      $ret.="<table>\n";
+      $ret.=$ret1;
+      $ret.="</table>\n";
+    }
+
+    $ret1="";
     $ret1.=$this->show_mss(array("housenumbers"), 
       array(), $bounds, array("name_prefix"=>"tag:addr:housenumber", "img_base_path"=>"plugins/basemap"));
     $ret1.=$this->show_mss(array("housenumber_lines"), 
