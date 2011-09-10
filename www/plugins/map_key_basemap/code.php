@@ -17,6 +17,8 @@ class map_key_basemap extends map_key_cascadenik {
     load_classes("amenities", $bounds);
     load_classes("housenumbers", $bounds);
 
+    $ret="<h2>".lang("head:map_key_basemap")."</h2>\n";
+
     $ret1="";
     $ret1.=$this->show_mss(array("places_high"), 
       array("place"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap", "tags_format"=>array("prefix"=>"tag:", "override"=>array("place"=>array("no_key"=>true)))));

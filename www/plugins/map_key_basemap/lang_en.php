@@ -1,4 +1,6 @@
 <?
+$lang_str['head:map_key_basemap']="Basemap";
+
 // building
 $lang_str["map_key_basemap:building=yes"]="Buildings";
 $lang_str["map_key_basemap:building=default"]="Buildings";
