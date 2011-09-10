@@ -87,34 +87,34 @@ insert into classify_hmatch values ( 'basemap_highway',
   '#highway_type=>service, #highway_subtype=>t2, #highway_level=>2'
 );
 insert into classify_hmatch values ( 'basemap_highway',
-  'highway=>path',
-  null,
-  '#highway_type=>path, #highway_level=>2'
-);
-insert into classify_hmatch values ( 'basemap_highway',
-  'highway=>cycleway',
-  null,
-  '#highway_type=>path, #highway_level=>2'
-);
-insert into classify_hmatch values ( 'basemap_highway',
-  'highway=>footway',
-  null,
-  '#highway_type=>path, #highway_level=>2'
-);
-insert into classify_hmatch values ( 'basemap_highway',
-  'highway=>bridleway',
-  null,
-  '#highway_type=>path, #highway_level=>2'
-);
-insert into classify_hmatch values ( 'basemap_highway',
   'highway=>steps',
   null,
   '#highway_type=>path, #highway_subtype=>t1, #highway_level=>2'
 );
 insert into classify_hmatch values ( 'basemap_highway',
+  'highway=>cycleway',
+  null,
+  '#highway_type=>path, #highway_subtype=>t2, #highway_level=>2'
+);
+insert into classify_hmatch values ( 'basemap_highway',
+  'highway=>footway',
+  null,
+  '#highway_type=>path, #highway_subtype=>t2, #highway_level=>2'
+);
+insert into classify_hmatch values ( 'basemap_highway',
+  'highway=>bridleway',
+  null,
+  '#highway_type=>path, #highway_subtype=>t2, #highway_level=>2'
+);
+insert into classify_hmatch values ( 'basemap_highway',
   'railway=>platform',
   null,
-  '#highway_type=>path, #highway_level=>2'
+  '#highway_type=>path, #highway_subtype=>t2, #highway_level=>2'
+);
+insert into classify_hmatch values ( 'basemap_highway',
+  'highway=>path',
+  null,
+  '#highway_type=>path, #highway_subtype=>t3, #highway_level=>2'
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'railway=>tram',

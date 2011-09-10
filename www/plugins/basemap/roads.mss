@@ -11,8 +11,9 @@ alias highway_type=minor|highway_sub_type=t1 highway=road|highway=unclassified|h
 alias highway_type=pedestrian|highway_sub_type=t1 highway=pedestrian|highway=living_street
 alias highway_type=service|highway_sub_type=t1 highway=service
 alias highway_type=service|highway_sub_type=t2 highway=track
-alias highway_type=path|highway_sub_type=t1 highway=path|highway=cycleway|highway=footway|highway=bridleway|railway=platform
-alias highway_type=path|highway_sub_type=t2 highway=steps
+alias highway_type=path|highway_sub_type=t1 highway=steps
+alias highway_type=path|highway_sub_type=t2 highway=cycleway|highway=footway|highway=bridleway|railway=platform
+alias highway_type=path|highway_sub_type=t3 highway=path
 alias highway_type=railway|highway_sub_type=t2 railway=rail
 alias highway_type=aeroway|highway_sub_type=t1 aeroway=runway
 alias highway_type=aeroway|highway_sub_type=t2 aeroway=taxiway
@@ -38,7 +39,6 @@ hide highway_type=pedestrian|highway_sub_type=t3
 hide highway_type=pedestrian|highway_sub_type=t4
 hide highway_type=pedestrian|highway_sub_type=t5
 hide highway_type=pedestrian|highway_sub_type=t6
-hide highway_type=path|highway_sub_type=t3
 hide highway_type=path|highway_sub_type=t4
 hide highway_type=path|highway_sub_type=t5
 hide highway_type=path|highway_sub_type=t6
