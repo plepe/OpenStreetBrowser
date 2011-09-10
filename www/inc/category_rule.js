@@ -21,24 +21,6 @@ function category_rule_match(dom, cat, rule) {
       li.style.listStyleImage="url('"+x.icon_url()+"')";
     }
 
-    // Get the name of the match or use the 'match'-string
-    if(this.rule.tags.get_lang("name", ui_lang)) {
-      title=split_semicolon(this.rule.tags.get_lang("name", ui_lang));
-      if(title.length==1)
-	title=title[0];
-      else {
-	if(this.id_split.length>1)
-	  title=title[1];
-	else
-	  title=title[0];
-      }
-    }
-    else
-      title=this.rule.tags.get("match");
-
-    // Set name as tooltip
-    li.title=title;
-
     // in the li element create a link to the object
     var a=dom_create_append(li, "a");
     a.href="#"+this.id;
@@ -57,7 +39,7 @@ function category_rule_match(dom, cat, rule) {
     if(!x)
       x=t("unnamed");
     dom_create_append_text(a, x);
-    
+   
     // if the rule has a 'list_type'-tag append the parsed string in brackets
     var parse_str=this.rule.tags.get("list_type");
     if(parse_str) {
@@ -67,6 +49,27 @@ function category_rule_match(dom, cat, rule) {
         dom_create_append_text(li, x);
       }
     }
+
+    // Get the name of the match or use the 'match'-string
+    if(this.rule.tags.get_lang("name", ui_lang)) {
+      title=split_semicolon(this.rule.tags.get_lang("name", ui_lang));
+      if(title.length==1)
+	title=title[0];
+      else {
+	if(this.id_split.length>1)
+	  title=title[1];
+	else
+	  title=title[0];
+      }
+    }
+    else
+      title=this.rule.tags.get("match");
+
+    // Append name after link
+    dom_create_append_text(li, " ");
+    var s=dom_create_append(li, "span");
+    s.className="name";
+    dom_create_append_text(s, title);
   }
 
   // constructor

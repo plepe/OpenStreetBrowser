@@ -1,2 +1,7 @@
 li.category_rule_match {
 }
+li.category_rule_match .name {
+  font-style: italic;
+  font-size: 7pt;
+  color: #909090;
+}
