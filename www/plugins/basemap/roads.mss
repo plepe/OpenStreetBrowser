@@ -41,6 +41,7 @@ hide highway_type=pedestrian|highway_sub_type=t6
 hide highway_type=path|highway_sub_type=t3
 hide highway_type=path|highway_sub_type=t4
 hide highway_type=path|highway_sub_type=t5
+hide highway_type=path|highway_sub_type=t6
 hide highway_type=power|highway_sub_type=t2
 hide highway_type=power|highway_sub_type=t3
 hide highway_type=power|highway_sub_type=t4
