@@ -70,6 +70,11 @@ function category_rule_match(dom, cat, rule) {
     var s=dom_create_append(li, "span");
     s.className="name";
     dom_create_append_text(s, title);
+
+    // set description as tooltip
+    if(x=this.rule.tags.get_lang("description", ui_lang)) {
+      a.title=x;
+    }
   }
 
   // constructor
