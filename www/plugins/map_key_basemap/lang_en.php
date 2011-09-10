@@ -50,6 +50,7 @@ $lang_str['map_key_basemap:landuse=natural_rock']="Rocks, Cliffs";
 $lang_str['map_key_basemap:places']="Places";
 $lang_str['map_key_basemap:roads']="Roads";
 $lang_str['map_key_basemap:rails']="Railroads";
+$lang_str['map_key_basemap:pipe_power_lines']="Pipe- and Power Lines";
 $lang_str['map_key_basemap:borders']="Borders";
 $lang_str['map_key_basemap:landuse']="Landuse";
 $lang_str['map_key_basemap:buildings']="Buildings";

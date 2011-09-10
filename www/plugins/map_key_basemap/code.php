@@ -67,7 +67,7 @@ class map_key_basemap extends map_key_cascadenik {
     $ret1.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
       array("highway_type"=>array("=power", "=pipeline"), "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     if($ret1!="") {
-      $ret.="<h4>".lang("map_key_basemap:goods")."</h4>\n";
+      $ret.="<h4>".lang("map_key_basemap:pipe_power_lines")."</h4>\n";
       $ret.="<table>\n";
       $ret.=$ret1;
       $ret.="</table>\n";
