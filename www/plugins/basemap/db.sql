@@ -192,7 +192,12 @@ insert into classify_hmatch values ( 'basemap_highway',
 insert into classify_hmatch values ( 'basemap_highway',
   'barrier=>wall',
   null,
-  '#highway_type=>barrier, #highway_subtype=>t1, #highway_level=>0'
+  '#highway_type=>barrier, #highway_subtype=>t2, #highway_level=>0'
+);
+insert into classify_hmatch values ( 'basemap_highway',
+  'barrier=>retaining_wall',
+  null,
+  '#highway_type=>barrier, #highway_subtype=>t2, #highway_level=>0'
 );
 insert into classify_hmatch values ( 'basemap_highway',
   'barrier=>city_wall',
@@ -201,12 +206,17 @@ insert into classify_hmatch values ( 'basemap_highway',
   -1
 );
 insert into classify_hmatch values ( 'basemap_highway',
-  '',
-  'barrier',
-  '#highway_type=>barrier, #highway_level=>0',
-  -2
+  'barrier=>fence',
+  null,
+  '#highway_type=>barrier, #highway_subtype=>t3, #highway_level=>0',
+  -1
 );
--- more barrier=>*
+insert into classify_hmatch values ( 'basemap_highway',
+  'barrier=>hedge',
+  null,
+  '#highway_type=>barrier, #highway_subtype=>t4, #highway_level=>0',
+  -1
+);
 insert into classify_hmatch values ( 'basemap_highway',
   'natural=>cliff',
   null,
@@ -998,19 +1008,6 @@ insert into classify_hmatch values ('basemap_building',
   'amenity=>ferry_terminal',
   null,
   '#building=>road_amenities',
-  1
-);
-
-insert into classify_hmatch values ('basemap_building',
-  'barrier=>hedge',
-  null,
-  '#building=>nature_building',
-  1
-);
-insert into classify_hmatch values ('basemap_building',
-  'barrier=>fence',
-  null,
-  '#building=>nature_building',
   1
 );
 
