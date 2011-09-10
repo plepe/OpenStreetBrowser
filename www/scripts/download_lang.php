@@ -44,6 +44,15 @@ function rewrite_str($str) {
   return $str;
 }
 
+function print_value($v) {
+  if(sizeof($v)<=1)
+    return "\"$v[0]\"";
+  if(in_array($v[0], array("M", "F", "N")))
+    return "array($v[0], \"".implode("\", \"", array_splice($v, 1))."\")";
+  else
+    return "array(\"".implode("\", \"", $v)."\")";
+}
+
 function parse($lang, $wikipage) {
   global $root_path;
   global $lang_cat_list;
@@ -115,15 +124,26 @@ function parse($lang, $wikipage) {
 	}
       }
 
-      elseif(eregi("^(.*)\\\$lang_str\[\"([^\"]*)\"\]\s*=\s*array\( *\"(.*)\" *\);", $r, $m)) {
-	$m[3]=explode("\", \"", $m[3]);
+      elseif(eregi("^(.*)\\\$lang_str\[\"([^\"]*)\"\]\s*=\s*array\( *(.*) *\);", $r, $m)) {
+	if(preg_match("/\"?([MFN])\"?\s*,?\s*\"(.*)\"\s*,\s*\"(.*)\"/", $m[3], $m1)) {
+	  $m[3]=array($m1[1], $m1[2], $m1[3]);
+	}
+	elseif(preg_match("/\"(.*)\"\s*,\s*\"(.*)\"/", $m[3], $m1)) {
+	  $m[3]=array($m1[1], $m1[2]);
+	}
+	else {
+	  $m[3]=array($m[3]);
+	}
+
 	foreach($m[3] as $mk=>$mv) {
 	  $m[3][$mk]=strtr($mv, array("\""=>"\\\""));
 	}
 
 	$str=rewrite_str($m[2]);
-	if($file_type==1)
-	  $r="$m[1]\$lang_str[\"$str\"]=array(\"".implode("\", \"", $m[3])."\");";
+	if($file_type==1) {
+	  $s=print_value($m[3]);
+	  $r="$m[1]\$lang_str[\"$str\"]=$s;";
+	}
 	else {
 	  if(substr($m[1], 0, 1)!="#")
 	    $lang_cat_list[$lang][$str]=$m[3];
@@ -186,6 +206,10 @@ while($elem_all=pg_fetch_assoc($res_all)) {
 
   foreach($lang_cat_list[$category_id] as $tag=>$dummy) {
     foreach($dummy as $l=>$value) {
+      if(is_array($value)) {
+	$value=implode(";", $value);
+      }
+
       if($l==$lang)
 	$tags_cat["$tag"]=$value;
       else
@@ -207,6 +231,10 @@ while($elem_all=pg_fetch_assoc($res_all)) {
 
     foreach($lang_cat_list["$category_id:{$elem_rule['rule_id']}"] as $tag=>$dummy) {
       foreach($dummy as $l=>$value) {
+        if(is_array($value)) {
+	  $value=implode(";", $value);
+	}
+
 	if($l==$lang)
 	  $tags_rule["$tag"]=$value;
 	else
