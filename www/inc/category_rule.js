@@ -13,6 +13,7 @@ function category_rule_match(dom, cat, rule) {
     var li=dom_create_append(ul, "li");
     li.id=this.id;
     li.rule_id=this.rule.id;
+    li.className="category_rule_match";
 
     // Set an icon
     if(x=this.rule.tags.get("icon")) {
