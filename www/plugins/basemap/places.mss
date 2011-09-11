@@ -214,7 +214,7 @@ alias place=town_large place=town|population>=30000
   text-avoid-edges: false;
   text-halo-radius: 1;
   point-allow-overlap: true;
-  text-dy: 13;
+  text-dy: 14;
 }
 .places_high[place=city_large][zoom>=6][zoom<10] name,
 .places_high[place=city_medium][zoom>=8][zoom<10] name,
