@@ -460,6 +460,9 @@ function navigation_route(id) {
 
 function navigation_set_home(pos) {
   navigation_toolbox.activate(1);
+
+  if(!pos.lon)
+    pos=pos.lonlat();
   navigation_current_route.set_home(new navigation_point(pos.lon, pos.lat, home_style));
 
   navigation_update_url();
@@ -467,6 +470,9 @@ function navigation_set_home(pos) {
 
 function navigation_add_via(pos) {
   navigation_toolbox.activate(1);
+
+  if(!pos.lon)
+    pos=pos.lonlat();
   navigation_current_route.add_via(new navigation_point(pos.lon, pos.lat, via_style));
 
   navigation_update_url();
@@ -474,6 +480,9 @@ function navigation_add_via(pos) {
 
 function navigation_set_destination(pos) {
   navigation_toolbox.activate(1);
+
+  if(!pos.lon)
+    pos=pos.lonlat();
   navigation_current_route.set_destination(new navigation_point(pos.lon, pos.lat, destination_style));
 
   navigation_update_url();
@@ -707,7 +716,7 @@ function navigation_info(chapters, ob) {
   if(ob.geo_center()) {
     // set home
     var a=document.createElement("a");
-    a.onclick=navigation_set_home.bind(this, ob.geo_center());
+    a.onclick=navigation_set_home.bind(this, ob);
     dom_create_append_text(a, lang("navigation:set_home"));
 
     var entry={
@@ -720,7 +729,7 @@ function navigation_info(chapters, ob) {
 
     // set destination
     var a=document.createElement("a");
-    a.onclick=navigation_set_destination.bind(this, ob.geo_center());
+    a.onclick=navigation_set_destination.bind(this, ob);
     dom_create_append_text(a, lang("navigation:set_destination"));
 
     var entry={
