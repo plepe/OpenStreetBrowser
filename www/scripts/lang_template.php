@@ -2,6 +2,7 @@
 Header("Content-type: text/plain; charset=utf-8");
 require "../../conf.php";
 require "../inc/sql.php";
+require "../inc/functions.php";
 require "../inc/tags.php";
 $ui_lang=$_GET['ui_lang'];
 $deprecated=array();
@@ -116,24 +117,35 @@ function print_deprecated() {
   print "\n";
 }
 
+function print_category_entry_value($value) {
+  $v=split_semicolon($value);
+
+  if(sizeof($v)<=1)
+    return "\"$value\"";
+  if(in_array($v[0], array("M", "F", "N")))
+    return "array($v[0], \"".implode("\", \"", array_splice($v, 1))."\")";
+  else
+    return "array(\"".implode("\", \"", $v)."\")";
+}
+
 function print_category_entry($str, $tags, $cat_lang, $comment, $tag) {
   global $ui_lang;
   global $count_done;
   global $count_missing;
 
   if($cat_lang==$ui_lang) {
-    print "\$lang_str[\"$str\"]=\"{$tags["$tag"]}\";";
+    print "\$lang_str[\"$str\"]=".print_category_entry_value($tags[$tag]).";";
     if($tags["$tag"])
       $count_done++;
     else
       $count_missing++;
   }
   elseif($tags["$tag:$ui_lang"]) {
-    print "\$lang_str[\"$str\"]=\"{$tags["$tag:$ui_lang"]}\";";
+    print "\$lang_str[\"$str\"]=".print_category_entry_value($tags["$tag:$ui_lang"]).";";
     $count_done++;
   }
   else {
-    print "#\$lang_str[\"$str\"]=\"{$tags["$tag"]}\";";
+    print "#\$lang_str[\"$str\"]=".print_category_entry_value($tags[$tag]).";";
     $count_missing++;
   }
 
@@ -151,6 +163,7 @@ function template_lang_category($category, $version) {
   print "==== Category: $category ====\n";
   print "Version: $version\n";
   print "<syntaxhighlight lang=\"php\">\n";
+  print "// Please use the form =array([Gender,] \"Singular\", \"Plural\") where appropriate (see top of page for explanation)\n";
 
   $res=sql_query("select * from category where category_id='$category' and version='$version'", $db_central);
   $elem=pg_fetch_assoc($res);

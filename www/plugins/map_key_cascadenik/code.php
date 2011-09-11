@@ -361,7 +361,7 @@ function load_classes($file, $bounds) {
 
 	  $this_style_query=array();
 	}
-	elseif(eregi("^([^:;]*)[ \t]*:[ \t]*([^ ;]*);", $r, $m)) {
+	elseif(eregi("^([^:;]*)[ \t]*:[ \t]*([^;]*);", $r, $m)) {
 	  $r=trim(substr($r, strlen($m[0])));
 	  if($r) $notdone=1;
 

@@ -17,6 +17,8 @@ class map_key_basemap extends map_key_cascadenik {
     load_classes("amenities", $bounds);
     load_classes("housenumbers", $bounds);
 
+    $ret="<h2>".lang("head:map_key_basemap")."</h2>\n";
+
     $ret1="";
     $ret1.=$this->show_mss(array("places_high"), 
       array("place"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap", "tags_format"=>array("prefix"=>"tag:", "override"=>array("place"=>array("no_key"=>true)))));
@@ -67,7 +69,7 @@ class map_key_basemap extends map_key_cascadenik {
     $ret1.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
       array("highway_type"=>array("=power", "=pipeline"), "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
     if($ret1!="") {
-      $ret.="<h4>".lang("map_key_basemap:goods")."</h4>\n";
+      $ret.="<h4>".lang("map_key_basemap:pipe_power_lines")."</h4>\n";
       $ret.="<table>\n";
       $ret.=$ret1;
       $ret.="</table>\n";
@@ -108,6 +110,16 @@ class map_key_basemap extends map_key_cascadenik {
 //      array("type"=>"*", "sub_type"=>"*"), $bounds);
     if($ret1!="") {
       $ret.="<h4>".lang("map_key_basemap:buildings")."</h4>\n";
+      $ret.="<table>\n";
+      $ret.=$ret1;
+      $ret.="</table>\n";
+    }
+
+    $ret1="";
+    $ret1.=$this->show_mss(array("roads_casing_end", "roads_casing", "roads_fill"), 
+      array("highway_type"=>array("=barrier"), "highway_sub_type"=>"*"), $bounds, array("img_base_path"=>"plugins/basemap"));
+    if($ret1!="") {
+      $ret.="<h4>".lang("map_key_basemap:barrier")."</h4>\n";
       $ret.="<table>\n";
       $ret.=$ret1;
       $ret.="</table>\n";

@@ -31,6 +31,7 @@ $lang_str["nothing_found"]="Не найдено";
 $lang_str["loading"]="Загрузка...";
 $lang_str["more"]="Ещё";
 #$lang_str["unnamed"]="unnamed";
+$lang_str["zoom"]="Уровень приближения";
 
 // Headings
 $lang_str["head:general_info"]="Общая информация";
@@ -44,9 +45,9 @@ $lang_str["head:culture"]="Культура";
 $lang_str["head:graves"]="Места погребения";
 $lang_str["head:routing"]="Направления движения";
 $lang_str["head:search"]="Поиск";
-$lang_str["head:actions"]=array("N", "Действие", "Действия");
+$lang_str["head:actions"]=array(N, "Действие", "Действия");
 $lang_str["head:location"]="Местоположение";
-$lang_str["head:tags"]=array("M", "Тег", "Теги");
+$lang_str["head:tags"]=array(M, "Тег", "Теги");
 $lang_str["head:whats_here"]="Что тут?";
 
 $lang_str["action_browse"]="просмотреть в OSM";
@@ -69,7 +70,6 @@ $lang_str["list_info"]="Выберите категорию для поиска 
 $lang_str["list_leisure_sport_tourism"]="Отдых, туризм и спорт";
 
 // Mapkey
-$lang_str['zoom']="Уровень приближения";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
@@ -123,8 +123,8 @@ $lang_str["category:not_compiled"]="Новая категория была по�
 
 $lang_str["category_rule_tag:match"]="Заголовок";
 $lang_str["category_rule_tag:description"]="Описание";
-#$lang_str["category_chooser:choose"]="Choose a category";
-#$lang_str["category_chooser:new"]="New category";
+$lang_str["category_chooser:choose"]="Выбрать категорию";
+$lang_str["category_chooser:new"]="Новая категория";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Mapnik";
@@ -143,4 +143,5 @@ $lang_str["lang:uk"]="Украинский";
 $lang_str["lang:ru"]="Русский";
 $lang_str["lang:ja"]="Японский";
 $lang_str["lang:hu"]="Венгерский";
-#$lang_str["lang:ast"]="Asturian";
+$lang_str["lang:nl"]="Голландский";
+$lang_str["lang:ast"]="Австрийский";

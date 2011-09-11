@@ -22,18 +22,19 @@ $lang_str["general_info"]="Allgemeine Informationen";
 $lang_str["yes"]="ja";
 $lang_str["no"]="nein";
 $lang_str["ok"]="Ok";
-$lang_str["save"]=array("Speichern");
-$lang_str["cancel"]=array("Abbrechen");
+$lang_str["save"]="Speichern";
+$lang_str["cancel"]="Abbrechen";
 $lang_str["longitude"]=array("Longitude", "Longituden");
 $lang_str["latitude"]=array("Latitude", "Latituden");
 $lang_str["noname"]="(kein Name)";
 $lang_str["info_back"]="zur Übersicht";
 $lang_str["info_zoom"]="zoomen";
-$lang_str["nothing_found"]=array("nichts gefunden");
+$lang_str["nothing_found"]="nichts gefunden";
 $lang_str["loading"]="lade";
 $lang_str["more"]="mehr";
 $lang_str["source"]="Quelle";
 $lang_str["unnamed"]="Namenlos";
+$lang_str["zoom"]="Zoomstufe";
 
 // Headings
 $lang_str["head:general_info"]="Allgemeine Informationen";
@@ -48,14 +49,14 @@ $lang_str["head:graves"]="Wichtige Gräber";
 $lang_str["head:routing"]="Routenplanung";
 $lang_str["head:search"]="Suche";
 $lang_str["head:actions"]="Aktionen";
-$lang_str["head:location"]=array("M", "Ort", "Orte");
+$lang_str["head:location"]=array(M, "Ort", "Orte");
 $lang_str["head:tags"]=array("Tag", "Tags");
 $lang_str["head:whats_here"]="Was ist hier?";
 
 $lang_str["action_browse"]="In OSM ansehen";
 $lang_str["action_edit"]="Auf OSM editieren";
 
-$lang_str["geo_click_pos"]=array("Klicke auf deine Position auf der Karte");
+$lang_str["geo_click_pos"]="Klicke auf deine Position auf der Karte";
 $lang_str["geo_set_pos"]="Meine Position festlegen";
 $lang_str["geo_change_pos"]="Meine Position ändern";
 
@@ -72,7 +73,6 @@ $lang_str["list_info"]="Wähle eine Kategorie, um den Karteninhalt zu durchstöb
 $lang_str["list_leisure_sport_tourism"]="Freizeit, Sport und Tourismus";
 
 // Mapkey
-$lang_str['zoom']="Zoomstufe";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
@@ -148,4 +148,4 @@ $lang_str["lang:ru"]="Russisch";
 $lang_str["lang:ja"]="Japanisch";
 $lang_str["lang:hu"]="Ungarisch";
 $lang_str["lang:nl"]="Niederländisch";
-#$lang_str["lang:ast"]="Asturian";
+$lang_str["lang:ast"]="Asturisch";

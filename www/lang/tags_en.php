@@ -54,6 +54,8 @@ $lang_str["tag:admin_level=3"]="Divisions";
 $lang_str["tag:admin_level=4"]="State Border";
 $lang_str["tag:admin_level=5"]="Community Border";
 $lang_str["tag:admin_level=6"]="County Border";
+$lang_str["tag:admin_level=7"]="";
+$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Town/Municipality Border";
 $lang_str["tag:admin_level=10"]="Subdivisions of Cities";
 
@@ -62,6 +64,14 @@ $lang_str["tag:amenity"]="Amenity";
 $lang_str["tag:amenity=cinema"]=array("Cinema", "Cinemas");
 $lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
+
+// barrier
+$lang_str['tag:barrier']=array("Barrier", "Barriers");
+$lang_str['tag:barrier=city_wall']=array("City wall", "City walls");
+$lang_str['tag:barrier=wall']=array("Wall", "Walls");
+$lang_str['tag:barrier=retaining_wall']=array("Retaining Wall", "Retaining Walls");
+$lang_str['tag:barrier=fence']=array("Fence", "Fences");
+$lang_str['tag:barrier=hedge']=array("Hedge", "Hedges");
 
 // cables
 $lang_str["tag:cables"]="Cables";
@@ -130,17 +140,17 @@ $lang_str["tag:leisure=bird_hide"]="Bird Hide";
 $lang_str["tag:leisure=sport"]="Other Sport";
 
 // man_made
-$lang_str['tag:man_made']="Artificial structures";
-$lang_str['tag:man_made=pipeline']=array("Pipeline", "Pipelines");
+$lang_str["tag:man_made"]="Artificial structures";
+$lang_str["tag:man_made=pipeline"]=array("Pipeline", "Pipelines");
 
 // man_made - type
-$lang_str['tag:type']="Type";
-$lang_str['tag:type=gas']="Gas";
-$lang_str['tag:type=heat']="Heat";
-$lang_str['tag:type=hot_water']="Hot Water";
-$lang_str['tag:type=oil']="Oil";
-$lang_str['tag:type=sewage']="Sewage";
-$lang_str['tag:type=water']="Water";
+$lang_str["tag:type"]="Type";
+$lang_str["tag:type=gas"]="Gas";
+$lang_str["tag:type=heat"]="Heat";
+$lang_str["tag:type=hot_water"]="Hot Water";
+$lang_str["tag:type=oil"]="Oil";
+$lang_str["tag:type=sewage"]="Sewage";
+$lang_str["tag:type=water"]="Water";
 
 // name
 $lang_str["tag:name"]=array("Name", "Namen");
@@ -171,6 +181,7 @@ $lang_str["tag:place=city"]=array("City", "Cities");
 $lang_str["tag:place=town"]="Town";
 $lang_str["tag:place=village"]=array("Village", "Villages");
 $lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
+$lang_str["tag:place=hamlet"]=array("Hamlet", "Hamlets");
 $lang_str["tag:place=locality"]=array("Locality", "Localities");
 $lang_str["tag:place=island"]=array("Island", "Islands");
 $lang_str["tag:place=islet"]=array("Islet", "Islets");

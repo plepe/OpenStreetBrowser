@@ -20,17 +20,18 @@ $lang_str["general_info"]="Información General";
 $lang_str["yes"]="si";
 $lang_str["no"]="no";
 #$lang_str["ok"]="Ok";
-$lang_str["save"]=array("Guardar");
-$lang_str["cancel"]=array("Cancelar");
+$lang_str["save"]="Guardar";
+$lang_str["cancel"]="Cancelar";
 $lang_str["longitude"]=array("Longitud", "Longitudes");
 $lang_str["latitude"]=array("Latitud", "Latitudes");
 $lang_str["noname"]="(sin_nombre)";
 #$lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";
-#$lang_str["nothing_found"]=array("nothing found");
-$lang_str["loading"]=array("Cargando...");
+#$lang_str["nothing_found"]="nothing found";
+$lang_str["loading"]="Cargando...";
 $lang_str["more"]="más";
 #$lang_str["unnamed"]="unnamed";
+$lang_str["zoom"]="Nivel de Zoom";
 
 // Headings
 $lang_str["head:general_info"]="Información General";
@@ -52,7 +53,7 @@ $lang_str["head:whats_here"]="Qué hay aquí?";
 $lang_str["action_browse"]="ver en OSM";
 $lang_str["action_edit"]="editar en OSM";
 
-#$lang_str["geo_click_pos"]=array("Click on your position on the map");
+#$lang_str["geo_click_pos"]="Click on your position on the map";
 $lang_str["geo_set_pos"]="Fijar mi posición";
 $lang_str["geo_change_pos"]="Cambiar mi posición";
 
@@ -69,7 +70,6 @@ $lang_str["routing_time"]="Tiempo";
 #$lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
 
 // Mapkey
-$lang_str['zoom']="Nivel de Zoom";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
@@ -81,20 +81,20 @@ $lang_str["main:permalink"]="Enlace Permanente";
 
 #$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
-#$lang_str["options:autozoom"]=array("Autozoom behaviour");
-#$lang_str["help:autozoom"]=array("When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.");
-#$lang_str["options:autozoom:pan"]=array("Pan to current object (nicer)");
-#$lang_str["options:autozoom:move"]=array("Move to current object (faster)");
-#$lang_str["options:autozoom:stay"]=array("Never change viewport automatically");
+#$lang_str["options:autozoom"]="Autozoom behaviour";
+#$lang_str["help:autozoom"]="When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.";
+#$lang_str["options:autozoom:pan"]="Pan to current object (nicer)";
+#$lang_str["options:autozoom:move"]="Move to current object (faster)";
+#$lang_str["options:autozoom:stay"]="Never change viewport automatically";
 
-#$lang_str["options:language_support"]=array("Language Support");
-#$lang_str["help:language_support"]=array("You can choose your prefered languages with this options. The first option changes the language of the user interface. The second option changes the data language. Date of many geographic objects has been translated to several languages. If no translation is available or \"Local language\" was chosen, the main language of the object is displayed.");
-$lang_str["options:ui_lang"]=array("Idioma de interfaz");
-$lang_str["options:data_lang"]=array("Idioma de datos");
-$lang_str["lang:"]=array("Idioma local");
+#$lang_str["options:language_support"]="Language Support";
+#$lang_str["help:language_support"]="You can choose your prefered languages with this options. The first option changes the language of the user interface. The second option changes the data language. Date of many geographic objects has been translated to several languages. If no translation is available or \"Local language\" was chosen, the main language of the object is displayed.";
+$lang_str["options:ui_lang"]="Idioma de interfaz";
+$lang_str["options:data_lang"]="Idioma de datos";
+$lang_str["lang:"]="Idioma local";
 
-#$lang_str["overlay:data"]=array("Data");
-#$lang_str["overlay:draggable"]=array("Markers");
+#$lang_str["overlay:data"]="Data";
+#$lang_str["overlay:draggable"]="Markers";
 
 $lang_str["user:no_auth"]="Usuario o contraseña equivocados!";
 #$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
@@ -143,4 +143,5 @@ $lang_str["basemap:osmarender"]="Estándar (OsmaRender)";
 #$lang_str["lang:ru"]="Russian";
 #$lang_str["lang:ja"]="Japanese";
 #$lang_str["lang:hu"]="Hungarian";
+#$lang_str["lang:nl"]="Dutch";
 #$lang_str["lang:ast"]="Asturian";

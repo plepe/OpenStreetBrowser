@@ -11,8 +11,9 @@ alias highway_type=minor|highway_sub_type=t1 highway=road|highway=unclassified|h
 alias highway_type=pedestrian|highway_sub_type=t1 highway=pedestrian|highway=living_street
 alias highway_type=service|highway_sub_type=t1 highway=service
 alias highway_type=service|highway_sub_type=t2 highway=track
-alias highway_type=path|highway_sub_type=t1 highway=path|highway=cycleway|highway=footway|highway=bridleway|railway=platform
-alias highway_type=path|highway_sub_type=t2 highway=steps
+alias highway_type=path|highway_sub_type=t1 highway=steps
+alias highway_type=path|highway_sub_type=t2 highway=cycleway|highway=footway|highway=bridleway|railway=platform
+alias highway_type=path|highway_sub_type=t3 highway=path
 alias highway_type=railway|highway_sub_type=t2 railway=rail
 alias highway_type=aeroway|highway_sub_type=t1 aeroway=runway
 alias highway_type=aeroway|highway_sub_type=t2 aeroway=taxiway
@@ -38,9 +39,9 @@ hide highway_type=pedestrian|highway_sub_type=t3
 hide highway_type=pedestrian|highway_sub_type=t4
 hide highway_type=pedestrian|highway_sub_type=t5
 hide highway_type=pedestrian|highway_sub_type=t6
-hide highway_type=path|highway_sub_type=t3
 hide highway_type=path|highway_sub_type=t4
 hide highway_type=path|highway_sub_type=t5
+hide highway_type=path|highway_sub_type=t6
 hide highway_type=power|highway_sub_type=t2
 hide highway_type=power|highway_sub_type=t3
 hide highway_type=power|highway_sub_type=t4
@@ -102,10 +103,6 @@ hide highway_type=power|highway_sub_type=t5
 .roads_extract[highway_type=waterway] {
   line-color: #7eb9e3;
 }
-.roads_casing_end[highway_type=barrier],
-.roads_casing[highway_type=barrier],
-.roads_extcas[highway_type=barrier]
-{ line-color: #000000; }
 .roads_casing_end[highway_type=service][highway_sub_type=t2],
 .roads_casing[highway_type=service][highway_sub_type=t2],
 .roads_extcas[highway_type=service][highway_sub_type=t2]
@@ -189,8 +186,6 @@ hide highway_type=power|highway_sub_type=t5
 .roads_extract[highway_type=railway][highway_sub_type=t2],
 .roads_fill[highway_type=railway][highway_sub_type=t2]
 { line-color: #b7b8cc; }
-.roads_fill[highway_type=barrier]
-{ line-color: #bf685c; }
 .roads_fill[highway_type=natural][highway_sub_type=t1][zoom>=12] /* natural=cliff */
 { line-pattern-file: url('img/cliff.png'); }
 .roads_fill[highway_type=service][highway_sub_type=t2]
@@ -844,20 +839,6 @@ hide highway_type=power|highway_sub_type=t5
 .roads_rail[railway=rail][tunnel=yes][tracks=multiple][zoom>=15] {
   line-pattern-file: url('img/rail_tunnel_double2.png');
 }
-.roads_casing_end[highway_type=barrier][zoom>=14][zoom<17],
-.roads_casing[highway_type=barrier][zoom>=14][zoom<17] {
-  line-width: 2;
-}
-.roads_fill[highway_type=barrier][zoom>=14][zoom<17] {
-  line-width: 1;
-}
-.roads_casing_end[highway_type=barrier][zoom>=17],
-.roads_casing[highway_type=barrier][zoom>=17] {
-  line-width: 4;
-}
-.roads_fill[highway_type=barrier][zoom>=17] {
-  line-width: 3;
-}
 .roads_extract[highway_type=power][highway_sub_type=t1][zoom>=5][zoom<8],
 .roads_extract[highway_type=power][highway_sub_type=t2][zoom>=8][zoom<10],
 .roads_fill[highway_type=power][highway_sub_type=t3][zoom>=11][zoom<13],
@@ -1018,4 +999,48 @@ hide highway_type=power|highway_sub_type=t5
 .roads_text[highway_type=waterway][highway_sub_type=t2][zoom>=15] name,
 .roads_text[highway_type=waterway][highway_sub_type=t3][zoom>=17] name {
   text-size: 10;
+}
+
+/* Barrier */
+/* Mapkey:
+alias highway_type=barrier|highway_sub_type=t1 barrier=city_wall
+alias highway_type=barrier|highway_sub_type=t2 barrier=wall|barrier=retaining_wall
+alias highway_type=barrier|highway_sub_type=t3 barrier=fence
+alias highway_type=barrier|highway_sub_type=t4 barrier=hedge
+hide highway_type=barrier|highway_sub_type=t5
+hide highway_type=barrier|highway_sub_type=t6
+*/
+.roads_fill[highway_type=barrier][highway_sub_type=t1] {
+  line-color: #584e22;
+}
+.roads_fill[highway_type=barrier][highway_sub_type=t2] {
+  line-color: #584e22;
+}
+.roads_fill[highway_type=barrier][highway_sub_type=t3] {
+  line-color: #584e22;
+  line-dasharray: 3, 3;
+}
+.roads_fill[highway_type=barrier][highway_sub_type=t4] {
+  line-color: #1a802a;
+}
+.roads_fill[highway_type=barrier][zoom>=15][zoom<16] {
+  line-width: 0.4;
+}
+.roads_fill[highway_type=barrier][zoom>=16][zoom<18] {
+  line-width: 0.8;
+}
+.roads_fill[highway_type=barrier][zoom>=18] {
+  line-width: 1;
+}
+.roads_fill[highway_type=barrier][highway_sub_type=t1][zoom>=11][zoom<13] {
+  line-width: 0.5;
+}
+.roads_fill[highway_type=barrier][highway_sub_type=t1][zoom>=13][zoom<15] {
+  line-width: 1;
+}
+.roads_fill[highway_type=barrier][highway_sub_type=t1][zoom>=15][zoom<17] {
+  line-width: 2;
+}
+.roads_fill[highway_type=barrier][highway_sub_type=t1][zoom>=17] {
+  line-width: 3;
 }

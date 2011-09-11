@@ -15,3 +15,22 @@
   height:100%;
   overflow: auto;
 }
+#map_key h1 {
+  font-size: 10pt;
+  font-weight: bold;
+  padding-left: 0px;
+  border-bottom: 1px dotted #999999;
+}
+#map_key h2 {
+  font-size: 10pt;
+  font-weight: bold;
+  padding-left: 0px;
+}
+#map_key h4 {
+  font-size: 9pt;
+  font-weight: bold;
+}
+#map_key h4 {
+  font-size: 8pt;
+  font-weight: bold;
+}

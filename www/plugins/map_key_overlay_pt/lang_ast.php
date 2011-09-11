@@ -1,3 +1,3 @@
 <?
 
-$lang_str['map_key_overlay_pt:pt']="Tresporte públicu";
+$lang_str["map_key_overlay_pt:pt"]="Tresporte públicu";

@@ -3,6 +3,7 @@ include "../../conf.php";
 $tiles_list=array(
   "base"=>"/tiles/basemap_base/%zoom/%x/%y.png",
   "pt"=>"/tiles/render_route_overlay_pt/%zoom/%x/%y.png",
+  "test"=>"/tiles/test/%zoom/%x/%y.png",
 );
 ?>
 <html>

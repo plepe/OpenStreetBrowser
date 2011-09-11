@@ -20,17 +20,18 @@ $lang_str["general_info"]="General Information";
 $lang_str["yes"]="はい";
 $lang_str["no"]="いいえ";
 #$lang_str["ok"]="Ok";
-#$lang_str["save"]=array("Save");
-#$lang_str["cancel"]=array("Cancel");
+#$lang_str["save"]="Save";
+#$lang_str["cancel"]="Cancel";
 #$lang_str["longitude"]=array("Longitude", "Longitudes");
 #$lang_str["latitude"]=array("Latitude", "Latitudes");
 $lang_str["noname"]="(無名)";
 $lang_str["info_back"]="概要に戻る";
 $lang_str["info_zoom"]="ズーム";
-#$lang_str["nothing_found"]=array("nothing found");
+#$lang_str["nothing_found"]="nothing found";
 $lang_str["loading"]="読み込み中";
 #$lang_str["more"]="more";
 #$lang_str["unnamed"]="unnamed";
+$lang_str["zoom"]="ズームレベル";
 
 // Headings
 $lang_str["head:general_info"]="全般的な情報";
@@ -52,7 +53,7 @@ $lang_str["head:actions"]="操作";
 $lang_str["action_browse"]="OSM で見る";
 $lang_str["action_edit"]="OSM で編集";
 
-#$lang_str["geo_click_pos"]=array("Click on your position on the map");
+#$lang_str["geo_click_pos"]="Click on your position on the map";
 $lang_str["geo_set_pos"]="自分の位置をセット";
 $lang_str["geo_change_pos"]="自分の位置を変更";
 
@@ -69,7 +70,6 @@ $lang_str["list_info"]="カテゴリを選択してマップの内容をブラ�
 $lang_str["list_leisure_sport_tourism"]="レジャー、スポート＆観光";
 
 // Mapkey
-$lang_str['zoom']="ズームレベル";
 
 $lang_str["grave_is_on"]="Grave is on";
 
@@ -143,6 +143,7 @@ $lang_str["overlay:draggable"]="マーカー";
 #$lang_str["lang:ru"]="Russian";
 #$lang_str["lang:ja"]="Japanese";
 #$lang_str["lang:hu"]="Hungarian";
+#$lang_str["lang:nl"]="Dutch";
 #$lang_str["lang:ast"]="Asturian";
 // The following $lang_str were not defined in the English language file and might be deprecated or wrong:
 $lang_str["search_field"]="検索...";

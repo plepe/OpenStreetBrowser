@@ -15,7 +15,8 @@ function category_rule_match(dom, cat, rule) {
 
     if(x=this.rule.tags.get("icon")) {
       x=get_icon(x);
-      li.style.listStyleImage="url('"+x.icon_url()+"')";
+      if(x)
+	li.style.listStyleImage="url('"+x.icon_url()+"')";
     }
 
     if(this.rule.tags.get_lang("name", ui_lang)) {
@@ -23,10 +24,14 @@ function category_rule_match(dom, cat, rule) {
       if(title.length==1)
 	title=title[0];
       else {
+	var gender_shift=0;
+	if(title.length==3)
+	  gender_shift=1;
+
 	if(this.id_split.length>1)
-	  title=title[1];
+	  title=title[1+gender_shift];
 	else
-	  title=title[0];
+	  title=title[0+gender_shift];
       }
     }
     else
