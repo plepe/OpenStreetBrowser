@@ -82,5 +82,29 @@ function geo_object() {
     pan_to_highlight(center.x, center.y, zoom);
   }
 
+  // lonlat
+  this.lonlat=function() {
+    var geo;
 
+    geo=this.geo_center();
+    if(!geo)
+      geo=this.geo();
+
+    if(!geo)
+      alert("Could not get geometry of empty object");
+
+    // check validity
+    if((geo.length<1)||(!geo[0].geometry)) {
+      alert("Could not get geometry of object");
+      return;
+    }
+
+    // calculate lat/lon of object
+    var poi=geo[0].geometry.getCentroid()
+	      .transform(map.getProjectionObject(),
+			 new OpenLayers.Projection("EPSG:4326"));
+
+    // return lon, lat
+    return { lon: poi.x, lat: poi.y };
+  }
 }
