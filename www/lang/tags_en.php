@@ -54,6 +54,8 @@ $lang_str["tag:admin_level=3"]="Divisions";
 $lang_str["tag:admin_level=4"]="State Border";
 $lang_str["tag:admin_level=5"]="Community Border";
 $lang_str["tag:admin_level=6"]="County Border";
+$lang_str["tag:admin_level=7"]="";
+$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Town/Municipality Border";
 $lang_str["tag:admin_level=10"]="Subdivisions of Cities";
 
@@ -179,6 +181,7 @@ $lang_str["tag:place=city"]=array("City", "Cities");
 $lang_str["tag:place=town"]="Town";
 $lang_str["tag:place=village"]=array("Village", "Villages");
 $lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
+$lang_str["tag:place=hamlet"]=array("Hamlet", "Hamlets");
 $lang_str["tag:place=locality"]=array("Locality", "Localities");
 $lang_str["tag:place=island"]=array("Island", "Islands");
 $lang_str["tag:place=islet"]=array("Islet", "Islets");
@@ -226,6 +229,11 @@ $lang_str["tag:real_ale"]="Real ale offered";
 // religion
 $lang_str["tag:religion"]="Religion";
 $lang_str["tag:religion=christian"]="christian";
+$lang_str["tag:religion=buddhist"]="buddhist";
+$lang_str["tag:religion=hindu"]="hindu";
+$lang_str["tag:religion=jewish"]="jewish";
+$lang_str["tag:religion=muslim"]="muslim";
+$lang_str["tag:religion=multifaith"]="multifaith";
 
 // route
 $lang_str["tag:route"]="Route";
