@@ -1,6 +1,6 @@
 <?
-#$lang_str["contextmenu:head"]="Context Menu";
-#$lang_str["contextmenu:help"]="Should the context menu appear after click with the left or the right mousebutton?";
+$lang_str["contextmenu:head"]="Kontextmenü";
+$lang_str["contextmenu:help"]="Soll das Kontextmenü nach Klick mit der linken oder rechten Maustaste erscheinen?";
 
-#$lang_str["options:contextmenu_mouse_button:right"]="Right Mouse Button";
-#$lang_str["options:contextmenu_mouse_button:left"]="Left Mouse Button";
+$lang_str["options:contextmenu_mouse_button:right"]="Rechte Maustaste";
+$lang_str["options:contextmenu_mouse_button:left"]="Linke Maustaste";

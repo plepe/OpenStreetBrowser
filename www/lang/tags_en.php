@@ -138,17 +138,17 @@ $lang_str["tag:leisure=bird_hide"]="Bird Hide";
 $lang_str["tag:leisure=sport"]="Other Sport";
 
 // man_made
-$lang_str['tag:man_made']="Artificial structures";
-$lang_str['tag:man_made=pipeline']=array("Pipeline", "Pipelines");
+$lang_str["tag:man_made"]="Artificial structures";
+$lang_str["tag:man_made=pipeline"]=array("Pipeline", "Pipelines");
 
 // man_made - type
-$lang_str['tag:type']="Type";
-$lang_str['tag:type=gas']="Gas";
-$lang_str['tag:type=heat']="Heat";
-$lang_str['tag:type=hot_water']="Hot Water";
-$lang_str['tag:type=oil']="Oil";
-$lang_str['tag:type=sewage']="Sewage";
-$lang_str['tag:type=water']="Water";
+$lang_str["tag:type"]="Type";
+$lang_str["tag:type=gas"]="Gas";
+$lang_str["tag:type=heat"]="Heat";
+$lang_str["tag:type=hot_water"]="Hot Water";
+$lang_str["tag:type=oil"]="Oil";
+$lang_str["tag:type=sewage"]="Sewage";
+$lang_str["tag:type=water"]="Water";
 
 // name
 $lang_str["tag:name"]=array("Name", "Namen");
@@ -226,11 +226,6 @@ $lang_str["tag:real_ale"]="Real ale offered";
 // religion
 $lang_str["tag:religion"]="Religion";
 $lang_str["tag:religion=christian"]="christian";
-$lang_str["tag:religion=buddhist"]="buddhist";
-$lang_str["tag:religion=hindu"]="hindu";
-$lang_str["tag:religion=jewish"]="jewish";
-$lang_str["tag:religion=muslim"]="muslim";
-$lang_str["tag:religion=multifaith"]="multifaith";
 
 // route
 $lang_str["tag:route"]="Route";

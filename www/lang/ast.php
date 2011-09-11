@@ -20,17 +20,18 @@ $lang_str["general_info"]="Información Xeneral";
 $lang_str["yes"]="si";
 $lang_str["no"]="non";
 $lang_str["ok"]="Aceutar";
-$lang_str["save"]=array("Guardar");
-$lang_str["cancel"]=array("Encaboxar");
+$lang_str["save"]="Guardar";
+$lang_str["cancel"]="Encaboxar";
 $lang_str["longitude"]=array("Llonxitú", "Llonxitúes");
 $lang_str["latitude"]=array("Llatitú", "Llatitúes");
 $lang_str["noname"]="(ensin nome)";
 $lang_str["info_back"]="dir a vista xeneral";
 $lang_str["info_zoom"]="zoom";
-$lang_str["nothing_found"]=array("nun s'alcontró");
-$lang_str["loading"]=array("Cargando...");
+$lang_str["nothing_found"]="nun s'alcontró";
+$lang_str["loading"]="Cargando...";
 $lang_str["more"]="más";
 $lang_str["unnamed"]="ensin nome";
+$lang_str["zoom"]="Nivel de zoom";
 
 // Headings
 $lang_str["head:general_info"]="Información Xeneral";
@@ -52,7 +53,7 @@ $lang_str["head:whats_here"]="¿Qué hai equí?";
 $lang_str["action_browse"]="ver en OSM";
 $lang_str["action_edit"]="editar en OSM";
 
-$lang_str["geo_click_pos"]=array("Calca na to posición nel mapa");
+$lang_str["geo_click_pos"]="Calca na to posición nel mapa";
 $lang_str["geo_set_pos"]="Conseñar la mio posición";
 $lang_str["geo_change_pos"]="Camudar la mio posición";
 
@@ -69,7 +70,6 @@ $lang_str["list_info"]="Escueyi una categoría pa ver el conteníu del mapa o ca
 $lang_str["list_leisure_sport_tourism"]="Recréu, deporte y turismu";
 
 // Mapkey
-$lang_str['zoom']="Nivel de zoom";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
@@ -81,20 +81,20 @@ $lang_str["main:permalink"]="Enllaz permanente";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Nun s'alcontró l'oxetu</h1>Nun se pudo alcontrar l'oxetu cola ID \"%s\". Esto puede ser por una (o más) de les razones darréu:<ul><li>La ID ta enquivocada.</li><li>L'oxetu ta identificáu pol sitiu d'un terceru y (entá) nun ta disponible nel OpenStreetBrowser.</li><li>L'oxetu ta fuera del área con sofitu.</li><li>L'enllaz que siguisti ye antiguu y l'oxetu se desanició d'OpenStreetMap.</li></ul>";
 
-$lang_str["options:autozoom"]=array("Comportamientu del zoom automáticu");
-$lang_str["help:autozoom"]=array("Al escoyer un oxetu, el visor muevese al mesmu, y el nivel de zoom tamién puede camudar. Con esta opción puedes  escoyer ente diferentes moos.");
-$lang_str["options:autozoom:pan"]=array("Dir al oxetu actual (más guapo)");
-$lang_str["options:autozoom:move"]=array("Mover al oxetu actual (más rápido)");
-$lang_str["options:autozoom:stay"]=array("Nun camudar el visor automáticamente nunca");
+$lang_str["options:autozoom"]="Comportamientu del zoom automáticu";
+$lang_str["help:autozoom"]="Al escoyer un oxetu, el visor muevese al mesmu, y el nivel de zoom tamién puede camudar. Con esta opción puedes  escoyer ente diferentes moos.";
+$lang_str["options:autozoom:pan"]="Dir al oxetu actual (más guapo)";
+$lang_str["options:autozoom:move"]="Mover al oxetu actual (más rápido)";
+$lang_str["options:autozoom:stay"]="Nun camudar el visor automáticamente nunca";
 
-$lang_str["options:language_support"]=array("Sofitu de llingües");
-$lang_str["help:language_support"]=array("Puedes escoyer les tos llingües preferíes con estes opciones. La primer opción camuda la llingua de la interfaz d'usuariu. La segunda opción camuda la llingua de los datos. Los datos de munchos oxetos xeográficos tan traducíos a delles llingües. Si nun hai traducción disponible o si s'escueye \"Llingua llocal\", s'amuesa na llingua principal del oxetu.");
-$lang_str["options:ui_lang"]=array("Llingua de la interfaz");
-$lang_str["options:data_lang"]=array("Llingua de los datos");
-$lang_str["lang:"]=array("Llingua llocal");
+$lang_str["options:language_support"]="Sofitu de llingües";
+$lang_str["help:language_support"]="Puedes escoyer les tos llingües preferíes con estes opciones. La primer opción camuda la llingua de la interfaz d'usuariu. La segunda opción camuda la llingua de los datos. Los datos de munchos oxetos xeográficos tan traducíos a delles llingües. Si nun hai traducción disponible o si s'escueye \"Llingua llocal\", s'amuesa na llingua principal del oxetu.";
+$lang_str["options:ui_lang"]="Llingua de la interfaz";
+$lang_str["options:data_lang"]="Llingua de los datos";
+$lang_str["lang:"]="Llingua llocal";
 
-$lang_str["overlay:data"]=array("Datos");
-$lang_str["overlay:draggable"]=array("Marques");
+$lang_str["overlay:data"]="Datos";
+$lang_str["overlay:draggable"]="Marques";
 
 $lang_str["user:no_auth"]="Nome d'usuariu o contraseña enquivocaos";
 $lang_str["user:login_text"]="Coneutase a OpenStreetBrowser:";
@@ -143,4 +143,5 @@ $lang_str["lang:uk"]="Ucraín";
 $lang_str["lang:ru"]="Rusu";
 $lang_str["lang:ja"]="Xaponés";
 $lang_str["lang:hu"]="Húngaru";
+#$lang_str["lang:nl"]="Dutch";
 $lang_str["lang:ast"]="Asturianu";

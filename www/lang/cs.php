@@ -20,17 +20,18 @@ $lang_str["general_info"]="Základní informace";
 $lang_str["yes"]="ano";
 $lang_str["no"]="ne";
 #$lang_str["ok"]="Ok";
-$lang_str["save"]=array("Uložit");
-$lang_str["cancel"]=array("Zrušit");
-$lang_str["longitude"]=array("F", "Zeměpisná délka", "Zeměpisné délky");
-$lang_str["latitude"]=array("F", "Zeměpisná šířka", "Zeměpisné šířky");
+$lang_str["save"]="Uložit";
+$lang_str["cancel"]="Zrušit";
+$lang_str["longitude"]=array(F, "Zeměpisná délka", "Zeměpisné délky");
+$lang_str["latitude"]=array(F, "Zeměpisná šířka", "Zeměpisné šířky");
 $lang_str["noname"]="(bezejmenný)";
 $lang_str["info_back"]="zpět na přehled";
 $lang_str["info_zoom"]="přiblížení";
-$lang_str["nothing_found"]=array("nic nenalezeno");
-$lang_str["loading"]=array("Načítání...");
+$lang_str["nothing_found"]="nic nenalezeno";
+$lang_str["loading"]="Načítání...";
 $lang_str["more"]="více";
 $lang_str["unnamed"]="nepojmenováno";
+$lang_str["zoom"]="Stupeň přiblížení";
 
 // Headings
 $lang_str["head:general_info"]="Základní informace";
@@ -44,7 +45,7 @@ $lang_str["head:culture"]="Kultura";
 #$lang_str["head:graves"]="Important Graves";
 $lang_str["head:routing"]="Hledání trasy";
 $lang_str["head:search"]="Vyhledávání";
-$lang_str["head:actions"]=array("F", "Akce", "Akce");
+$lang_str["head:actions"]=array(F, "Akce", "Akce");
 $lang_str["head:location"]="Umístění";
 $lang_str["head:tags"]=array("Tag", "Tagy");
 $lang_str["head:whats_here"]="Co je zde?";
@@ -52,7 +53,7 @@ $lang_str["head:whats_here"]="Co je zde?";
 $lang_str["action_browse"]="prohlížet v OSM";
 $lang_str["action_edit"]="editovat v OSM";
 
-$lang_str["geo_click_pos"]=array("Klikněte na vaši pozici na mapě");
+$lang_str["geo_click_pos"]="Klikněte na vaši pozici na mapě";
 $lang_str["geo_set_pos"]="Nastavit moji pozici";
 $lang_str["geo_change_pos"]="Změnit moji pozici";
 
@@ -69,7 +70,6 @@ $lang_str["list_info"]="Vyber kategorii pro prohlížení obsahu mapy nebo klikn
 $lang_str["list_leisure_sport_tourism"]="Odpočinek, Sport and Turismus";
 
 // Mapkey
-$lang_str['zoom']="Stupeň přiblížení";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
@@ -81,20 +81,20 @@ $lang_str["main:permalink"]="Trvalý odkaz";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>Nebyl nalezen žádný objekt s ID \"%s\". Toto nastalo z jednoho z (nebo více) následujících důvodů:<ul><li>ID je špatné.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>Objekt je mimo podporovanou oblast.</li><li>Váš odkaz je starý a objekt už byl pravděpodobně vymazán z OpenStreetMap.</li></ul>";
 
-$lang_str["options:autozoom"]=array("Chování autozoomu");
-#$lang_str["help:autozoom"]=array("When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.");
-#$lang_str["options:autozoom:pan"]=array("Pan to current object (nicer)");
-#$lang_str["options:autozoom:move"]=array("Move to current object (faster)");
-#$lang_str["options:autozoom:stay"]=array("Never change viewport automatically");
+$lang_str["options:autozoom"]="Chování autozoomu";
+#$lang_str["help:autozoom"]="When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.";
+#$lang_str["options:autozoom:pan"]="Pan to current object (nicer)";
+#$lang_str["options:autozoom:move"]="Move to current object (faster)";
+#$lang_str["options:autozoom:stay"]="Never change viewport automatically";
 
-$lang_str["options:language_support"]=array("Jazyková podpora");
-$lang_str["help:language_support"]=array("Touto volbou můžeš vybrat své preferované jazyky. První volba změní jazyk uživatelského rozhraní. Druhá volba změní jazyk dat. Popis mnoha geografických objektů byl přeložen do různých jazyků. Jestliže překlad není dostupný nebo byl vybrán \"místní jazyk\" , popis bude zobrazen v hlavním jazyku objektu.");
-$lang_str["options:ui_lang"]=array("Jazyk rozhraní");
-$lang_str["options:data_lang"]=array("Jazyk dat");
-$lang_str["lang:"]=array("Místní jazyk");
+$lang_str["options:language_support"]="Jazyková podpora";
+$lang_str["help:language_support"]="Touto volbou můžeš vybrat své preferované jazyky. První volba změní jazyk uživatelského rozhraní. Druhá volba změní jazyk dat. Popis mnoha geografických objektů byl přeložen do různých jazyků. Jestliže překlad není dostupný nebo byl vybrán \"místní jazyk\" , popis bude zobrazen v hlavním jazyku objektu.";
+$lang_str["options:ui_lang"]="Jazyk rozhraní";
+$lang_str["options:data_lang"]="Jazyk dat";
+$lang_str["lang:"]="Místní jazyk";
 
-$lang_str["overlay:data"]=array("Data");
-$lang_str["overlay:draggable"]=array("Značky");
+$lang_str["overlay:data"]="Data";
+$lang_str["overlay:draggable"]="Značky";
 
 $lang_str["user:no_auth"]="Špatné uživatelské jméno nebo heslo!";
 $lang_str["user:login_text"]="Přihlásit se do OpenStreetBrowseru:";
@@ -143,6 +143,7 @@ $lang_str["lang:uk"]="Ukrajinština";
 $lang_str["lang:ru"]="Ruština";
 $lang_str["lang:ja"]="Japonština";
 $lang_str["lang:hu"]="Maďarština";
+$lang_str["lang:nl"]="Holandština";
 $lang_str["lang:ast"]="Asturština";
 // The following $lang_str were not defined in the English language file and might be deprecated or wrong:
 $lang_str["head:wikipedia"]="Wikipedie";

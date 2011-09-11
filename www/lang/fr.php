@@ -20,17 +20,18 @@ $lang_str["general_info"]="Information générale";
 $lang_str["yes"]="oui";
 $lang_str["no"]="non";
 #$lang_str["ok"]="Ok";
-$lang_str["save"]=array("Sauvegarde");
-$lang_str["cancel"]=array("Annuler");
+$lang_str["save"]="Sauvegarde";
+$lang_str["cancel"]="Annuler";
 $lang_str["longitude"]=array("Longitude", "Longitudes");
 $lang_str["latitude"]=array("Latitude", "Latitudes");
 $lang_str["noname"]="(aucun nom)";
 $lang_str["info_back"]="retour à la Vue d'ensemble";
 $lang_str["info_zoom"]="zoom";
-$lang_str["nothing_found"]=array("n'a rien trouvé");
+$lang_str["nothing_found"]="n'a rien trouvé";
 $lang_str["loading"]="chargement";
 #$lang_str["more"]="more";
 #$lang_str["unnamed"]="unnamed";
+$lang_str["zoom"]="Niveau de Zoom";
 
 // Headings
 $lang_str["head:general_info"]="Information générale";
@@ -52,7 +53,7 @@ $lang_str["head:location"]="Emplacement";
 $lang_str["action_browse"]="visualiser dans OSM";
 $lang_str["action_edit"]="éditer dans OSM";
 
-#$lang_str["geo_click_pos"]=array("Click on your position on the map");
+#$lang_str["geo_click_pos"]="Click on your position on the map";
 #$lang_str["geo_set_pos"]="Set my position";
 #$lang_str["geo_change_pos"]="Change my position";
 
@@ -69,7 +70,6 @@ $lang_str["list_info"]="Choose a category to browse map content or click on an o
 $lang_str["list_leisure_sport_tourism"]="Loisir, Sport et Tourisme";
 
 // Mapkey
-$lang_str['zoom']="Niveau de Zoom";
 
 $lang_str["grave_is_on"]="Moulin à vent";
 
@@ -88,7 +88,7 @@ $lang_str["options:autozoom:move"]="Se déplace vers l'objet courant (+ rapide)"
 $lang_str["options:autozoom:stay"]="Ne jamais modifier la fenêtre automatiquement";
 
 $lang_str["options:language_support"]="Langue supportée";
-$lang_str["help:language_support"]=array("Vous pouvez sélectionner votre langue préférée avec ces options. La première option modifie la langue de l'interface. La deuxième  option modifie la langue des données. À date, de nombreux objets géographiques ont été traduits dans plusieurs langues. Si aucune traduction n'est disponible ou que l'option \"Langue locale\" est sélectionnée, la langue principale de l'objet est affichée.");
+$lang_str["help:language_support"]="Vous pouvez sélectionner votre langue préférée avec ces options. La première option modifie la langue de l'interface. La deuxième  option modifie la langue des données. À date, de nombreux objets géographiques ont été traduits dans plusieurs langues. Si aucune traduction n'est disponible ou que l'option \"Langue locale\" est sélectionnée, la langue principale de l'objet est affichée.";
 $lang_str["options:ui_lang"]="Langue de l'Interface";
 $lang_str["options:data_lang"]="Langue des données";
 $lang_str["lang:"]="Langue locale";
@@ -143,6 +143,7 @@ $lang_str["lang:uk"]="Ukrainien";
 $lang_str["lang:ru"]="Russe";
 $lang_str["lang:ja"]="Japonais";
 #$lang_str["lang:hu"]="Hungarian";
+#$lang_str["lang:nl"]="Dutch";
 #$lang_str["lang:ast"]="Asturian";
 // The following $lang_str were not defined in the English language file and might be deprecated or wrong:
 $lang_str["search_field"]="Recherche...";
