@@ -38,7 +38,7 @@ $lang_str["tag:accomodation"]="宿泊";
 $lang_str["tag:address"]="住所";
 
 // addr:housenumber
-#$lang_str["tag:addr:housenumber"]=array("Housenumber", "Housenumbers");
+$lang_str["tag:addr:housenumber"]="家番号";
 
 // addr:interpolation
 #$lang_str["tag:addr:interpolation"]="Interpolated housenumbers";
@@ -68,7 +68,7 @@ $lang_str["tag:cables"]="ケーブル数";
 
 // cuisine
 $lang_str["tag:cuisine"]="料理";
-#$lang_str["tag:cuisine=regional"]="regional";
+$lang_str["tag:cuisine=regional"]="地域料理";
 
 // description
 $lang_str["tag:description"]="説明";
@@ -173,6 +173,7 @@ $lang_str["tag:place=village"]="村";
 $lang_str["tag:place=suburb"]="近郊(未使用)";
 $lang_str["tag:place=locality"]="地域の通称";
 $lang_str["tag:place=island"]="島";
+$lang_str["tag:place=hamlet"]="小村(未使用)";
 #$lang_str["tag:place=islet"]=array("Islet", "Islets");
 
 // population
