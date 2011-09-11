@@ -27,8 +27,9 @@ function rewrite_str($str) {
 }
 
 function print_value($v) {
-  if(sizeof($v)<=1)
+  if(sizeof($v)<=1) {
     return "\"$v[0]\"";
+  }
   if(in_array($v[0], array("M", "F", "N")))
     return "array($v[0], \"".implode("\", \"", array_splice($v, 1))."\")";
   else
@@ -113,8 +114,11 @@ function parse($lang, $wikipage) {
 	elseif(preg_match("/\"(.*)\"\s*,\s*\"(.*)\"/", $m[3], $m1)) {
 	  $m[3]=array($m1[1], $m1[2]);
 	}
+	elseif(preg_match("/\"(.*)\"/", $m[3], $m1)) {
+	  $m[3]=array($m1[1]);
+	}
 	else {
-	  $m[3]=array($m[3]);
+	  print "Can't parse \"$m[3]\"\n";
 	}
 
 	foreach($m[3] as $mk=>$mv) {
