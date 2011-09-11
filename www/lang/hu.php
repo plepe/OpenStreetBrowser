@@ -20,17 +20,18 @@ $lang_str["general_info"]="Általános információ";
 $lang_str["yes"]="igen";
 $lang_str["no"]="nem";
 #$lang_str["ok"]="Ok";
-$lang_str["save"]=array("Mentés");
-$lang_str["cancel"]=array("Mégse");
+$lang_str["save"]="Mentés";
+$lang_str["cancel"]="Mégse";
 #$lang_str["longitude"]=array("Longitude", "Longitudes");
 #$lang_str["latitude"]=array("Latitude", "Latitudes");
 $lang_str["noname"]="(névtelen)";
 $lang_str["info_back"]="vissza a főmenübe";
 $lang_str["info_zoom"]="nagyítás";
-$lang_str["nothing_found"]=array("nincs találat");
-$lang_str["loading"]=array("Betöltés...");
+$lang_str["nothing_found"]="nincs találat";
+$lang_str["loading"]="Betöltés...";
 $lang_str["more"]="több";
 #$lang_str["unnamed"]="unnamed";
+$lang_str["zoom"]="Nagyítási színt";
 
 // Headings
 $lang_str["head:general_info"]="Általános információ";
@@ -52,7 +53,7 @@ $lang_str["head:whats_here"]="Mi van itt?";
 $lang_str["action_browse"]="böngészés az OSM-ben";
 $lang_str["action_edit"]="szerkesztés az OSM-ben";
 
-$lang_str["geo_click_pos"]=array("Kattints a saját pozíciódra");
+$lang_str["geo_click_pos"]="Kattints a saját pozíciódra";
 $lang_str["geo_set_pos"]="Saját pozícióm beállítása";
 $lang_str["geo_change_pos"]="Saját pozícióm választása";
 
@@ -69,7 +70,6 @@ $lang_str["list_info"]="Válassz ki egy kategóriát, ami megjelenik a térképe
 $lang_str["list_leisure_sport_tourism"]="Szabadidő, sport és turizmus";
 
 // Mapkey
-$lang_str['zoom']="Nagyítási színt";
 
 #$lang_str["grave_is_on"]="Grave is on";
 
@@ -81,20 +81,20 @@ $lang_str["main:permalink"]="Állandó hivatkozás";
 
 #$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
-$lang_str["options:autozoom"]=array("Automatikus nagyítás beállításai");
-$lang_str["help:autozoom"]=array("Egy objektum kiválasztásakor a térkép odaugrik, és esetleg a nagyítás is változik. Ezzel a beállítási lehetőséggel különböz ő viselkedési módok között választhatsz.");
-$lang_str["options:autozoom:pan"]=array("Mozgás az objektumhoz (szebb)");
-$lang_str["options:autozoom:move"]=array("Ugrás az objektumhoz (gyorsabb)");
-$lang_str["options:autozoom:stay"]=array("Ne legyen automatikus térkép-elmozdítás");
+$lang_str["options:autozoom"]="Automatikus nagyítás beállításai";
+$lang_str["help:autozoom"]="Egy objektum kiválasztásakor a térkép odaugrik, és esetleg a nagyítás is változik. Ezzel a beállítási lehetőséggel különböz ő viselkedési módok között választhatsz.";
+$lang_str["options:autozoom:pan"]="Mozgás az objektumhoz (szebb)";
+$lang_str["options:autozoom:move"]="Ugrás az objektumhoz (gyorsabb)";
+$lang_str["options:autozoom:stay"]="Ne legyen automatikus térkép-elmozdítás";
 
-$lang_str["options:language_support"]=array("Nyelv-támogatás");
-$lang_str["help:language_support"]=array("Itt kiválaszthatod a kedvenc nyelvedet. Az első pont a menük nyelvét, a második pedig a térképadatok nyelvét befolyásolja. Sok térképelem mindenféle nyelvre le van fordítva. Ha az elem nincs lefordítva, vagy a \"Helyi nyelv\" van kiválasztva, akkor az elem fő nyelve jelenik meg.");
-$lang_str["options:ui_lang"]=array("Menünyelv");
-$lang_str["options:data_lang"]=array("Adatnyelv");
-$lang_str["lang:"]=array("Helyi nyelv");
+$lang_str["options:language_support"]="Nyelv-támogatás";
+$lang_str["help:language_support"]="Itt kiválaszthatod a kedvenc nyelvedet. Az első pont a menük nyelvét, a második pedig a térképadatok nyelvét befolyásolja. Sok térképelem mindenféle nyelvre le van fordítva. Ha az elem nincs lefordítva, vagy a \"Helyi nyelv\" van kiválasztva, akkor az elem fő nyelve jelenik meg.";
+$lang_str["options:ui_lang"]="Menünyelv";
+$lang_str["options:data_lang"]="Adatnyelv";
+$lang_str["lang:"]="Helyi nyelv";
 
-$lang_str["overlay:data"]=array("Adat");
-$lang_str["overlay:draggable"]=array("Jelölők");
+$lang_str["overlay:data"]="Adat";
+$lang_str["overlay:draggable"]="Jelölők";
 
 $lang_str["user:no_auth"]="Rossz felhasználói név vagy jelszó!";
 $lang_str["user:login_text"]="Beszállás az OpenStreetBrowserbe:";
@@ -143,4 +143,5 @@ $lang_str["lang:uk"]="Ukrán";
 $lang_str["lang:ru"]="Orosz";
 $lang_str["lang:ja"]="Japán";
 $lang_str["lang:hu"]="Magyar";
+#$lang_str["lang:nl"]="Dutch";
 #$lang_str["lang:ast"]="Asturian";

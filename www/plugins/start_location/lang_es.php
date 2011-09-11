@@ -2,12 +2,8 @@
 #$lang_str["start_location:name"]="Map Position";
 
 #$lang_str["start_location:choose"]="Choose map view";
-#$lang_str["start_location:geolocation"]="get geolocation";
-#$lang_str["start_location:lastview"]="last view";
-$lang_str["start_location:savedview"]=array("último enlace permanente");
+$lang_str["start_location:geolocation"]="obtener ubicación";
+$lang_str["start_location:lastview"]="última vista";
+$lang_str["start_location:savedview"]="último enlace permanente";
 #$lang_str["start_location:startnormal"]="keep view";
-#$lang_str["start_location:remember"]="remember decision";
-// The following $lang_str were not defined in the English language file and might be deprecated or wrong:
-$lang_str["start_location:geolocation"]=array("obtener ubicación");
-$lang_str["start_location:lastview"]=array("última vista");
-$lang_str["start_location:remember"]=array("recordar decisión");
+$lang_str["start_location:remember"]="recordar decisión";

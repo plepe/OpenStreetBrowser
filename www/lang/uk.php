@@ -20,17 +20,18 @@ $lang_str["general_info"]="Загальна інформація";
 $lang_str["yes"]="yes";
 $lang_str["no"]="no";
 #$lang_str["ok"]="Ok";
-#$lang_str["save"]=array("Save");
-#$lang_str["cancel"]=array("Cancel");
+#$lang_str["save"]="Save";
+#$lang_str["cancel"]="Cancel";
 #$lang_str["longitude"]=array("Longitude", "Longitudes");
 #$lang_str["latitude"]=array("Latitude", "Latitudes");
 $lang_str["noname"]="(без імені)";
 $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="наблизити";
-#$lang_str["nothing_found"]=array("nothing found");
+#$lang_str["nothing_found"]="nothing found";
 $lang_str["loading"]="завантаження";
 #$lang_str["more"]="more";
 #$lang_str["unnamed"]="unnamed";
+$lang_str["zoom"]="Zoom level";
 
 // Headings
 $lang_str["head:general_info"]="Загальна інформація";
@@ -52,7 +53,7 @@ $lang_str["head:actions"]="Actions";
 $lang_str["action_browse"]="перегляд в OSM";
 $lang_str["action_edit"]="редагувати в OSM";
 
-#$lang_str["geo_click_pos"]=array("Click on your position on the map");
+#$lang_str["geo_click_pos"]="Click on your position on the map";
 $lang_str["geo_set_pos"]="Встановити моє місцезнаходження";
 $lang_str["geo_change_pos"]="Змінити моє місцезнаходження";
 
@@ -69,7 +70,6 @@ $lang_str["list_info"]="Choose a category to browse map content or click on an o
 $lang_str["list_leisure_sport_tourism"]="Дозвілля, Спорт та Туризм";
 
 // Mapkey
-$lang_str['zoom']="Zoom level";
 
 $lang_str["grave_is_on"]="Grave is on";
 
@@ -143,6 +143,7 @@ $lang_str["overlay:draggable"]="Маркери";
 #$lang_str["lang:ru"]="Russian";
 #$lang_str["lang:ja"]="Japanese";
 #$lang_str["lang:hu"]="Hungarian";
+#$lang_str["lang:nl"]="Dutch";
 #$lang_str["lang:ast"]="Asturian";
 // The following $lang_str were not defined in the English language file and might be deprecated or wrong:
 $lang_str["search_field"]="Пошук...";

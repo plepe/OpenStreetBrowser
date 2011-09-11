@@ -40,6 +40,14 @@ $lang_str["tag:address"]="Adres";
 // addr:housenumber
 $lang_str["tag:addr:housenumber"]="Huisnummer";
 
+// addr:interpolation
+$lang_str["tag:addr:interpolation"]="Geïnterpoleerde huisnummers";
+
+// aeroway
+$lang_str["tag:aeroway"]="Luchthaven";
+$lang_str["tag:aeroway=runway"]="Startbaan";
+$lang_str["tag:aeroway=taxiway"]="Taxibaan";
+
 // admin_level
 $lang_str["tag:admin_level=2"]="Landsgrens";
 #$lang_str["tag:admin_level=3"]="Divisions";
@@ -48,7 +56,6 @@ $lang_str["tag:admin_level=4"]="Provinciegrens";
 $lang_str["tag:admin_level=6"]="Regiogrens";
 $lang_str["tag:admin_level=8"]="Gemeentegrens";
 $lang_str["tag:admin_level=10"]="Woonplaatsgrens";
-$lang_str["tag:admin_level=11"]="Wijkgrens";
 
 // amenity
 $lang_str["tag:amenity"]="Voorzieningen";
@@ -75,15 +82,27 @@ $lang_str["tag:food"]="Serveert eten";
 // highway
 $lang_str["tag:highway"]=array("Weg", "Wegen");
 $lang_str["tag:highway=motorway"]="Autosnelweg";
+$lang_str["tag:highway=motorway_link"]="Autosnelwegverbinding";
 $lang_str["tag:highway=trunk"]="Autoweg";
+$lang_str["tag:highway=trunk_link"]="Autowegverbinding";
 $lang_str["tag:highway=primary"]="Provinciale weg";
+$lang_str["tag:highway=primary_link"]="Verbindingsweg";
 $lang_str["tag:highway=secondary"]="Secundaire weg";
 $lang_str["tag:highway=tertiary"]="Tertiare weg";
 $lang_str["tag:highway=minor"]="Kleine weg";
+$lang_str["tag:highway=road"]="Weg (classificatie onbekend)";
+$lang_str["tag:highway=residential"]="Woonstraat";
+$lang_str["tag:highway=unclassified"]="Ongeclassificeerde weg";
 $lang_str["tag:highway=service"]="Toegangsweg";
 $lang_str["tag:highway=pedestrian"]="Voetgangersgebied";
+$lang_str["tag:highway=living_street"]="Woonerf";
+$lang_str["tag:highway=path"]="Pad";
+$lang_str["tag:highway=cycleway"]="Fietspad";
+$lang_str["tag:highway=footway"]="Voetpad";
+$lang_str["tag:highway=bridleway"]="Ruiterpad";
 $lang_str["tag:highway=track"]="Veldweg";
 $lang_str["tag:highway=path"]="Pad";
+$lang_str["tag:highway=steps"]="Trappen";
 
 // is_in
 $lang_str["tag:is_in"]="Ligt in";
@@ -109,6 +128,19 @@ $lang_str["tag:leisure=swimming_pool"]="Zwembad";
 #$lang_str["tag:leisure=beach_resort"]="Beach Resort";
 $lang_str["tag:leisure=bird_hide"]="Vogelkijkhut";
 $lang_str["tag:leisure=sport"]="Andere sport";
+
+// man_made
+$lang_str["tag:man_made"]="Kunstmatige constructies";
+$lang_str["tag:man_made=pipeline"]=array("Pijpleiding", "Pijpleidingen");
+
+// man_made - type
+$lang_str["tag:type"]="Soort";
+$lang_str["tag:type=gas"]="Gas";
+$lang_str["tag:type=heat"]="Stadsverwarming";
+$lang_str["tag:type=hot_water"]="Heet water";
+$lang_str["tag:type=oil"]="Olie";
+$lang_str["tag:type=sewage"]="Rioolwater";
+$lang_str["tag:type=water"]="Water";
 
 // name
 $lang_str["tag:name"]=array("Naam", "Namen");
@@ -142,11 +174,6 @@ $lang_str["tag:place=suburb"]=array("Buitenwijk", "Buitenwijken");
 $lang_str["tag:place=locality"]=array("Lokaliteit", "Lokaliteiten");
 $lang_str["tag:place=island"]=array("Eiland", "Eilanden");
 $lang_str["tag:place=islet"]=array("Eilandje", "Eilandjes");
-// the following tags are deprecated
-#$lang_str["tag:place=city;population>1000000"]=array("City, > 1 Mio Inhabitants", "Cities, > 1 Mio Inhabitants");
-#$lang_str["tag:place=city;population>200000"]=array("City, > 200.000 Inhabitants", "Cities, > 200.000 Inhabitants");
-#$lang_str["tag:place=town"]="Town";
-#$lang_str["tag:place=town;population>30000"]=array("Town, > 30.000 Inhabitants", "Towns, > 30.000 Inhabitants");
 
 // population
 $lang_str["tag:population"]="Bevolking";
@@ -155,11 +182,12 @@ $tag_type["population"]=array("count");
 // power
 $lang_str["tag:power"]="Stroomvoorziening";
 $lang_str["tag:power=generator"]="Elektriciteitsgenerator";
-$lang_str["tag:power=line"]="Elektriciteitsleiding";
+$lang_str["tag:power=line"]="Hoogspanningsleiding";
+$lang_str["tag:power=minor_line"]="Electriciteitsleiding";
 $lang_str["tag:power=tower"]="Hoogspanningsmast";
 $lang_str["tag:power=pole"]="Elektriciteitspaal";
 $lang_str["tag:power=station"]="Verdeelstation";
-$lang_str["tag:power=sub_station"]="Klein verdeelstation";
+$lang_str["tag:power=sub_station"]="Transformatorstation";
 
 // power_source
 $lang_str["tag:power_source"]="Energiebron";
@@ -178,20 +206,33 @@ $lang_str["tag:power_source=wind"]="Wind";
 $lang_str["tag:power_source=photovoltaic"]="Fotovoltaïsch";
 $lang_str["tag:power_source=solar-thermal"]="Thermische zonne-energie";
 
+// railway
+$lang_str["tag:railway"]="Spoorweg";
+$lang_str["tag:railway=rail"]=array("Spoorbaan", "Spoorbanen");
+$lang_str["tag:railway=tram"]=array("Trambaan", "Trambanen");
+$lang_str["tag:railway=platform"]=array("Perron", "Perrons");
+
 // real_ale
 $lang_str["tag:real_ale"]="Real Ale aangeboden";
 
 // religion
 $lang_str["tag:religion"]="Religie";
-$lang_str["tag:religion=christian"]=array("christelijk");
+$lang_str["tag:religion=christian"]="Christelijk";
+$lang_str["tag:religion=buddhist"]="Boeddhistisch";
+$lang_str["tag:religion=hindu"]="Hindoe";
+$lang_str["tag:religion=jewish"]="Joods";
+$lang_str["tag:religion=muslim"]="Moslim";
+$lang_str["tag:religion=multifaith"]="Multireligieus";
 
 // route
+#$lang_str["tag:route"]="Route";
 $lang_str["tag:route=train"]="Trein";
 $lang_str["tag:route=railway"]="Spoorweg";
 $lang_str["tag:route=rail"]="Spoorweg";
 $lang_str["tag:route=light_rail"]="Sneltram";
 $lang_str["tag:route=subway"]="Metro";
 $lang_str["tag:route=tram"]="Tram";
+$lang_str["tag:route=tram_bus"]="Tram en Bus";
 $lang_str["tag:route=trolley"]="Trolley";
 $lang_str["tag:route=trolleybus"]="Trolley";
 $lang_str["tag:route=bus"]="Bus";
@@ -256,6 +297,12 @@ $lang_str["tag:sport=table_tennis"]="Tafeltennis";
 $lang_str["tag:sport=team_handball"]="Handbal";
 $lang_str["tag:sport=tennis"]="Tennis";
 $lang_str["tag:sport=volleyball"]="Volleybal";
+
+// tracks
+$lang_str["tag:tracks"]="Sportbanen";
+$lang_str["tag:tracks=single"]="Enkelvoudig";
+$lang_str["tag:tracks=double"]="Dubbelvoudig";
+$lang_str["tag:tracks=multiple"]="Meervoudig";
 
 // vending
 $lang_str["tag:vending"]="Automaat";

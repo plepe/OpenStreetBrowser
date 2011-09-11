@@ -1,3 +1,3 @@
 <?
 
-$lang_str['map_key_overlay_pt:pt']="Громадський транспорт";
+$lang_str["map_key_overlay_pt:pt"]="Громадський транспорт";

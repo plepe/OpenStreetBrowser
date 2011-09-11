@@ -40,6 +40,14 @@ $lang_str["tag:address"]="Adresa";
 // addr:housenumber
 $lang_str["tag:addr:housenumber"]="Číslo popisné";
 
+// addr:interpolation
+$lang_str["tag:addr:interpolation"]="Interpolovaná P.S.Č";
+
+// aeroway
+$lang_str["tag:aeroway"]="Vzdušná cesta";
+$lang_str["tag:aeroway=runway"]="Ranvej";
+#$lang_str["tag:aeroway=taxiway"]="Taxiway";
+
 // admin_level
 $lang_str["tag:admin_level=2"]="Státní hranice";
 #$lang_str["tag:admin_level=3"]="Divisions";
@@ -74,15 +82,27 @@ $lang_str["tag:food"]="Podává jídlo";
 // highway
 $lang_str["tag:highway"]=array("Pozemní komunikace", "Pozemní komunikace");
 $lang_str["tag:highway=motorway"]="Dálnice";
+$lang_str["tag:highway=motorway_link"]="Nájezdová nebo sjezdová rampa dálnice";
 $lang_str["tag:highway=trunk"]="Rychlostní komunikace";
+$lang_str["tag:highway=trunk_link"]="Nájezdová nebo sjezdová rampa rychl. komunikace";
 $lang_str["tag:highway=primary"]="Silnice I. třídy";
+#$lang_str["tag:highway=primary_link"]="Nájezdová nebo sjezdová rampa (I. tř.)";
 $lang_str["tag:highway=secondary"]="Silnice II. třídy";
 $lang_str["tag:highway=tertiary"]="Silnice III. třídy";
 $lang_str["tag:highway=minor"]="Vedlejší cesta";
+#$lang_str["tag:highway=road"]="Road";
+$lang_str["tag:highway=residential"]="Ulice";
+$lang_str["tag:highway=unclassified"]="Nezařazená komunikace";
 $lang_str["tag:highway=service"]="Účelová komunikace";
 $lang_str["tag:highway=pedestrian"]="Pěší zóna";
+$lang_str["tag:highway=living_street"]="Obytná zóna";
+$lang_str["tag:highway=path"]="Stezka";
+$lang_str["tag:highway=cycleway"]="Cyklostezka";
+$lang_str["tag:highway=footway"]="Chodník";
+$lang_str["tag:highway=bridleway"]="Cesta pro koně";
 $lang_str["tag:highway=track"]="Lesní/Polní cesta";
 $lang_str["tag:highway=path"]="Stezka";
+$lang_str["tag:highway=steps"]="Schody";
 
 // is_in
 $lang_str["tag:is_in"]="Je v";
@@ -94,20 +114,33 @@ $lang_str["tag:leisure=stadium"]="Stadion";
 $lang_str["tag:leisure=track"]="Dráha";
 $lang_str["tag:leisure=pitch"]="Hřiště";
 $lang_str["tag:leisure=water_park"]="Aquapark";
-#$lang_str["tag:leisure=marina"]="Marina";
+$lang_str["tag:leisure=marina"]="Přístav";
 $lang_str["tag:leisure=slipway"]="Slipway";
 $lang_str["tag:leisure=fishing"]="Rybaření";
 $lang_str["tag:leisure=nature_reserve"]="Přirodní rezervace";
-#$lang_str["tag:leisure=park"]="Leisure Park";
+$lang_str["tag:leisure=park"]="Park";
 $lang_str["tag:leisure=playground"]="Hřiště";
 $lang_str["tag:leisure=garden"]="Zahrada";
-#$lang_str["tag:leisure=common"]="Common";
+$lang_str["tag:leisure=common"]="Volně přístupná oblast";
 $lang_str["tag:leisure=ice_rink"]="Kluziště";
 $lang_str["tag:leisure=miniature_golf"]="Minigolf";
 $lang_str["tag:leisure=swimming_pool"]="Bazén";
 #$lang_str["tag:leisure=beach_resort"]="Beach Resort";
 #$lang_str["tag:leisure=bird_hide"]="Bird Hide";
 $lang_str["tag:leisure=sport"]="Jiný sport";
+
+// man_made
+$lang_str["tag:man_made"]="Umělé stavby";
+$lang_str["tag:man_made=pipeline"]=array("Potrubí", "Potrubí");
+
+// man_made - type
+$lang_str["tag:type"]="Typ";
+$lang_str["tag:type=gas"]="Plyn";
+$lang_str["tag:type=heat"]="Vytápění";
+$lang_str["tag:type=hot_water"]="Horká voda";
+$lang_str["tag:type=oil"]="Ropa";
+$lang_str["tag:type=sewage"]="Odpad";
+$lang_str["tag:type=water"]="Voda";
 
 // name
 $lang_str["tag:name"]=array("Jméno", "Jména");
@@ -128,10 +161,10 @@ $lang_str["tag:opening_hours"]="Otevírací doba";
 #$lang_str["tag:operator"]="Operator";
 
 // place
-$lang_str["tag:place"]="Místo";
+$lang_str["tag:place"]="Sídlo";
 $lang_str["tag:place=continent"]=array("Kontinent", "Kontinenty");
 $lang_str["tag:place=country"]=array("Stát", "Stát");
-#$lang_str["tag:place=state"]=array("State", "States");
+#$lang_str["tag:place=state"]=array("Země", "Země");
 $lang_str["tag:place=region"]=array("Region", "Regiony");
 $lang_str["tag:place=county"]=array("Kraj", "Kraje");
 $lang_str["tag:place=city"]=array("Město", "Města");
@@ -141,20 +174,16 @@ $lang_str["tag:place=suburb"]=array("Městská část", "Městské části");
 $lang_str["tag:place=locality"]=array("Lokalita", "Lokality");
 $lang_str["tag:place=island"]=array("Ostrov", "Ostrovy");
 $lang_str["tag:place=islet"]=array("Ostrůvek", "Ostrůvky");
-// the following tags are deprecated
-$lang_str["tag:place=city;population>1000000"]=array("Město, > 1 Mil. obyvatel", "Města, > 1 Mil. obyvatel");
-$lang_str["tag:place=city;population>200000"]=array("Město, > 200 000 obyvatel", "Města, > 200 000 obyvatel");
-$lang_str["tag:place=town"]="Město";
-$lang_str["tag:place=town;population>30000"]=array("Město, > 30 000 obyvatel", "Města, > 30 000 obyvatel");
 
 // population
 $lang_str["tag:population"]="Počet obyvatel";
-#$tag_type["population"]=array("count");
+$tag_type["population"]=array("count");
 
 // power
 $lang_str["tag:power"]="Elektrická síť";
 $lang_str["tag:power=generator"]="Elektrárna";
 $lang_str["tag:power=line"]="Elektrické vedení";
+$lang_str["tag:power=minor_line"]="Elektrické vedení NN";
 $lang_str["tag:power=tower"]="Stožár elektrického vedení";
 $lang_str["tag:power=pole"]="Sloup elektrického vedení";
 $lang_str["tag:power=station"]="Rozvodna VVN/VN";
@@ -177,20 +206,33 @@ $lang_str["tag:power_source=wind"]="Vítr";
 $lang_str["tag:power_source=photovoltaic"]="Solární články";
 $lang_str["tag:power_source=solar-thermal"]="Solární kolektory";
 
+// railway
+$lang_str["tag:railway"]="Železnice";
+$lang_str["tag:railway=rail"]=array("Železniční kolej", "Železniční koleje");
+$lang_str["tag:railway=tram"]=array("Tramvajová kolej", "Tramvajové koleje");
+$lang_str["tag:railway=platform"]=array("Nástupiště", "Nástupiště");
+
 // real_ale
 #$lang_str["tag:real_ale"]="Real ale offered";
 
 // religion
 $lang_str["tag:religion"]="Náboženství";
-$lang_str["tag:religion=christian"]=array("křesťanství");
+$lang_str["tag:religion=christian"]="křesťanství";
+$lang_str["tag:religion=buddhist"]="buddhismus";
+$lang_str["tag:religion=hindu"]="hinduismus";
+$lang_str["tag:religion=jewish"]="judaismus";
+$lang_str["tag:religion=muslim"]="islám";
+$lang_str["tag:religion=multifaith"]="více náboženství";
 
 // route
+$lang_str["tag:route"]="Dopravní trasy";
 $lang_str["tag:route=train"]="Vlak";
 $lang_str["tag:route=railway"]="Železnice";
 $lang_str["tag:route=rail"]="Železnice";
 $lang_str["tag:route=light_rail"]="Rychlodráha";
 $lang_str["tag:route=subway"]="Metro";
 $lang_str["tag:route=tram"]="Tramvaj";
+#$lang_str["tag:route=tram_bus"]="Tram and Bus";
 $lang_str["tag:route=trolley"]="Trolejbus";
 $lang_str["tag:route=trolleybus"]="Trolejbus";
 $lang_str["tag:route=bus"]="Autobus";
@@ -256,6 +298,12 @@ $lang_str["tag:sport=team_handball"]="Házená";
 $lang_str["tag:sport=tennis"]="Tenis";
 $lang_str["tag:sport=volleyball"]="Volejbal";
 
+// tracks
+$lang_str["tag:tracks"]="Počet kolejí";
+$lang_str["tag:tracks=single"]="Jedna";
+$lang_str["tag:tracks=double"]="Dvě";
+$lang_str["tag:tracks=multiple"]="Více";
+
 // vending
 #$lang_str["tag:vending"]="Vending";
 
@@ -271,8 +319,6 @@ $tag_type["wires"]=array("count");
 $lang_str["tag:website"]="Webová stránka";
 $tag_type["website"]=array("link");
 // The following $lang_str were not defined in the English language file and might be deprecated or wrong:
-$lang_str["tag:religion=buddhist"]=array("buddhismus");
-$lang_str["tag:religion=hindu"]=array("hinduismus");
-$lang_str["tag:religion=jewish"]=array("judaismus");
-$lang_str["tag:religion=muslim"]=array("islám");
-$lang_str["tag:religion=multifaith"]=array("více náboženství");
+$lang_str["tag:place=city;population>1000000"]=array("Město, > 1 Mil. obyvatel", "Města, > 1 Mil. obyvatel");
+$lang_str["tag:place=city;population>200000"]=array("Město, > 200 000 obyvatel", "Města, > 200 000 obyvatel");
+$lang_str["tag:place=town;population>30000"]=array("Město, > 30 000 obyvatel", "Města, > 30 000 obyvatel");

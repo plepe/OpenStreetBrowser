@@ -1,3 +1,3 @@
 <?
-#$lang_str["blog:header"]="What's new?";
-#$lang_str["blog:visit"]="Visit the blog";
+$lang_str["blog:header"]="Was ist neu?";
+$lang_str["blog:visit"]="Blog besuchen";

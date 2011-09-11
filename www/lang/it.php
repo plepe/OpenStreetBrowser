@@ -20,17 +20,18 @@ $lang_str["general_info"]="General Information";
 $lang_str["yes"]="yes";
 $lang_str["no"]="no";
 #$lang_str["ok"]="Ok";
-#$lang_str["save"]=array("Save");
-#$lang_str["cancel"]=array("Cancel");
+#$lang_str["save"]="Save";
+#$lang_str["cancel"]="Cancel";
 #$lang_str["longitude"]=array("Longitude", "Longitudes");
 #$lang_str["latitude"]=array("Latitude", "Latitudes");
 $lang_str["noname"]="(noname)";
 $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";
-#$lang_str["nothing_found"]=array("nothing found");
+#$lang_str["nothing_found"]="nothing found";
 $lang_str["loading"]="loading";
 #$lang_str["more"]="more";
 #$lang_str["unnamed"]="unnamed";
+$lang_str["zoom"]="Zoom level";
 
 // Headings
 $lang_str["head:general_info"]="General Information";
@@ -52,7 +53,7 @@ $lang_str["head:actions"]="Actions";
 $lang_str["action_browse"]="browse in OSM";
 $lang_str["action_edit"]="edit in OSM";
 
-#$lang_str["geo_click_pos"]=array("Click on your position on the map");
+#$lang_str["geo_click_pos"]="Click on your position on the map";
 $lang_str["geo_set_pos"]="Set my position";
 $lang_str["geo_change_pos"]="Change my position";
 
@@ -69,7 +70,6 @@ $lang_str["list_info"]="Choose a category to browse map content or click on an o
 $lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
 
 // Mapkey
-$lang_str['zoom']="Zoom level";
 
 $lang_str["grave_is_on"]="Grave is on";
 
@@ -93,8 +93,8 @@ $lang_str["options:ui_lang"]="Lingua interfaccia";
 $lang_str["options:data_lang"]="Lingua dati";
 $lang_str["lang:"]="Lingua del tuo browser";
 
-#$lang_str["overlay:data"]=array("Data");
-#$lang_str["overlay:draggable"]=array("Markers");
+#$lang_str["overlay:data"]="Data";
+#$lang_str["overlay:draggable"]="Markers";
 
 #$lang_str["user:no_auth"]="Username or password wrong!";
 #$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
@@ -143,6 +143,7 @@ $lang_str["lang:"]="Lingua del tuo browser";
 #$lang_str["lang:ru"]="Russian";
 #$lang_str["lang:ja"]="Japanese";
 #$lang_str["lang:hu"]="Hungarian";
+#$lang_str["lang:nl"]="Dutch";
 #$lang_str["lang:ast"]="Asturian";
 // The following $lang_str were not defined in the English language file and might be deprecated or wrong:
 $lang_str["search_field"]="Search...";
