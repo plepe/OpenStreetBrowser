@@ -251,5 +251,5 @@ alias place=town_large place=town|population>=30000
   text-avoid-edges: false;
   text-halo-radius: 1;
   point-allow-overlap: true;
-  text-dy: 16;
+  text-dy: 17;
 }
