@@ -1,4 +1,7 @@
 /*
+alias place=country_large place=country|population>20000000
+alias place=country_medium place=country|population>1000000
+alias place=country place=country|population<=1000000
 alias place=city_large place=city|population>=1000000
 alias place=city_medium place=city|population>=200000
 alias place=town_large place=town|population>=30000
@@ -105,7 +108,10 @@ alias place=town_large place=town|population>=30000
   point-allow-overlap: false;
   text-dy: 5;
 }
-.places_high[place=country][zoom>=7][zoom<10] name,
+.places_high[place=country_large][zoom>=6][zoom<9] name,
+.places_high[place=country_medium][zoom>=8][zoom<11] name,
+.places_high[place=country][zoom>=10][zoom<11] name,
+.places_db[place=country][zoom>=11][zoom<13] name,
 .places_high[place=state][zoom>=9][zoom<11] name,
 .places_db[place=state][zoom>=11][zoom<12] name,
 .places_db[place=region][zoom>=12][zoom<15] name
@@ -118,7 +124,9 @@ alias place=town_large place=town|population>=30000
   text-halo-radius: 2;
   point-allow-overlap: false;
 }
-.places_high[place=country][zoom>=7][zoom<10] name_en,
+.places_high[place=country_large][zoom>=6][zoom<9] name_en,
+.places_high[place=country_medium][zoom>=8][zoom<11] name_en,
+.places_high[place=country][zoom>=10][zoom<11] name_en,
 .places_high[place=state][zoom>=9][zoom<11] name_en,
 .places_db[place=state][zoom>=11][zoom<12] name_en,
 .places_db[place=region][zoom>=12][zoom<15] name_en
@@ -133,7 +141,9 @@ alias place=town_large place=town|population>=30000
   text-dy: 9;
 }
 
-.places_high[place=country][zoom>=4][zoom<7] name,
+.places_high[place=country_large][zoom>=4][zoom<6] name,
+.places_high[place=country_medium][zoom>=6][zoom<8] name,
+.places_high[place=country][zoom>=8][zoom<10] name,
 .places_high[place=state][zoom>=7][zoom<9] name,
 .places_high[place=region][zoom>=9][zoom<11] name,
 .places_db[place=region][zoom>=11][zoom<12] name
@@ -146,7 +156,9 @@ alias place=town_large place=town|population>=30000
   text-halo-radius: 1;
   point-allow-overlap: false;
 }
-.places_high[place=country][zoom>=4][zoom<7] name_en,
+.places_high[place=country_large][zoom>=4][zoom<6] name_en,
+.places_high[place=country_medium][zoom>=6][zoom<8] name_en,
+.places_high[place=country][zoom>=8][zoom<10] name_en,
 .places_high[place=state][zoom>=7][zoom<9] name_en,
 .places_high[place=region][zoom>=9][zoom<11] name_en,
 .places_db[place=region][zoom>=11][zoom<12] name_en
@@ -160,7 +172,9 @@ alias place=town_large place=town|population>=30000
   point-allow-overlap: false;
   text-dy: 6;
 }
-.places_high[place=country][zoom>=3][zoom<4] name
+.places_high[place=country_large][zoom>=2][zoom<4] name,
+.places_high[place=country_medium][zoom>=4][zoom<6] name,
+.places_high[place=country][zoom>=6][zoom<8] name
 {
   text-size: 8;
   text-placement: point;
@@ -170,7 +184,9 @@ alias place=town_large place=town|population>=30000
   text-halo-radius: 1;
   point-allow-overlap: false;
 }
-.places_high[place=country][zoom>=3][zoom<4] name_en
+.places_high[place=country_large][zoom>=2][zoom<4] name_en,
+.places_high[place=country_medium][zoom>=4][zoom<6] name_en,
+.places_high[place=country][zoom>=6][zoom<8] name_en
 {
   text-size: 6;
   text-placement: point;
