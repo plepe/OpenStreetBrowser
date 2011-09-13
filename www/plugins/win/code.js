@@ -16,6 +16,6 @@ function win(cl) {
   }
 }
 
-function window_close(id) {
+function win_close(id) {
   windows[id].close();
 }

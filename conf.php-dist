@@ -64,8 +64,8 @@ $renderd_files=array(
 // $default_categories - Define a list of categories which should automatically be loaded
 $default_categories=array();
 
-// List of plugins which should be loaded
-$plugins=array("measure", "favorites", "wikipedia");
+// List of plugins which should be loaded - do not delete current values
+$plugins=array("win");
 
 // Which basemaps should be loaded
 //   'mapnik', 'osmarender' and 'cyclemap' are predefined values
@@ -136,3 +136,4 @@ $overlays_add=array(
 // tags_format - Format tags to nice string
 // doc - Documentation for plugins (file 'doc.txt' in directory)
 // creole - Creole Wiki Parser
+// win - Windowmanager
