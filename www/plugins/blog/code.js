@@ -60,12 +60,8 @@ function blog_hide() {
 }
 
 function blog_create_win() {
-  blog_win=new win("blog_win");
+  blog_win=new win({ class: "blog_win", title: lang('blog:header') });
   blog_win.content;
-
-  var h1=dom_create_append(blog_win.content, "h1");
-  h1.className="blog";
-  dom_create_append_text(h1, lang('blog:header'));
 
   blog_content=dom_create_append(blog_win.content, "div");
   blog_content.className="blog_content";
