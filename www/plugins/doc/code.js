@@ -5,8 +5,11 @@ function doc_show_callback(win, ret) {
   }
 
   ret=ret.return_value;
+
   dom_clean(win.content);
-  dom_create_append_text(win.content, ret);
+
+  var content=creole(ret);
+  win.content.appendChild(content);
 }
 
 function doc_show(plugin) {
