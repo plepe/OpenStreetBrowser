@@ -120,7 +120,7 @@ function show_options() {
   if(options_win)
     return;
 
-  options_win=new win("options_win");
+  options_win=new win({ class: "options_win", title: lang("main:options") });
 
 
   // Every function which registers to this hooks should

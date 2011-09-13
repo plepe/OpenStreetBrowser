@@ -127,7 +127,7 @@ function login() {
     user_win.close();
   }
 
-  var user_win=new win("options_win");
+  var user_win=new win({ class: "options_win", title: lang("user:login") });
 
   // log in
   var head=document.createElement("h3");
