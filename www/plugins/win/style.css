@@ -1,3 +1,10 @@
 div.win_root {
   z-index: 10000;
 }
+div.win {
+  position: absolute;
+  background: white;
+  border: 1px solid black;
+  top: 50px;  /* top and left should be set by window manager */
+  left: 350px;
+}
