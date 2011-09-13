@@ -1,11 +1,21 @@
 var windows=[];
 var win_root;
 
+// valid options:
+//   class: class to add to the content-div
+//   title: title to show in the title bar
+
 function win(options) {
   // close
   this.close=function() {
     this.win.parentNode.removeChild(this.win);
     delete windows[this.id];
+  }
+
+  // set_title
+  this.set_title=function(title) {
+    var current=this.title_bar.firstChild;
+    current.textContent=title;
   }
 
   // check options
@@ -30,7 +40,7 @@ function win(options) {
   // Create title-bar
   this.title_bar=dom_create_append(this.win, "div");
   this.title_bar.className="win_title_bar";
-  dom_create_append_text(this.title_bar, "Foobar");
+  dom_create_append_text(this.title_bar, options.title?options.title:"Window");
   this.win.appendChild(this.title_bar);
   var close_button=dom_create_append(this.title_bar, "img");
   close_button.src="plugins/win/close.png";
