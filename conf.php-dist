@@ -134,3 +134,4 @@ $overlays_add=array(
 // map_key_basemap - Map key for the basemap
 // map_key_overlay_pt - Map key for the overlay public transportation
 // tags_format - Format tags to nice string
+// doc - Documentation for plugins (file 'doc.txt' in directory)
