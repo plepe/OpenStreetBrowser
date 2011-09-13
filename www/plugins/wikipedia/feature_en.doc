@@ -2,7 +2,7 @@
 For objects which have a reference to a Wikipedia page, an abstract (the first paragraph and the first image on the page) is displayed. If there's a translation of the Wikipedia page into the interface language, that version is used.
 
 == SYNTAX (Tag) ==
-* wikipedia:en=yes (name of object equals the name of the (en=English) wikipedia page)
-* wikipedia:en=Tower of London (name of the (en=English) wikipedia page)
-* wikipedia=en:Tower of London (name of the (en=English) wikipedia page)
-* wikipedia=http://en.wikipedia.org/wiki/Tower_of_London (full link)
+* [[osm:Key:wikipedia|wikipedia:en]]=yes (name of object equals the name of the (en=English) wikipedia page)
+* [[osm:Key:wikipedia|wikipedia:en]]=Tower of London (name of the (en=English) wikipedia page)
+* [[osm:Key:wikipedia|wikipedia]]=en:Tower of London (name of the (en=English) wikipedia page)
+* [[osm:Key:wikipedia|wikipedia]]=http://en.wikipedia.org/wiki/Tower_of_London (full link)
