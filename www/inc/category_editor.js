@@ -187,8 +187,8 @@ function category_editor(id) {
   this.id=id;
   if(!this.id)
     this.id="new";
-  this.win=new win("category_editor");
-  this.win.content.innerHTML="loading";
+  this.win=new win({ class: "category_editor", title: lang("category", 1) });
+  this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
 
   if(this.id!="new")
     this.load_def();
