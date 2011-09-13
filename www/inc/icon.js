@@ -93,7 +93,7 @@ function icon_editor(icon, callback) {
   if(!this.obj)
     return;
 
-  this.win=new win("icon_editor");
+  this.win=new win({ class: "icon_editor", title: lang("icon:editor") });
 
   var comment=dom_create_append(this.win.content, "div");
   dom_create_append_text(comment, "Upload Icon:");
@@ -155,7 +155,7 @@ function icon_chooser(current, callback) {
     delete(this.win);
   }
 
-  this.win=new win("edit_icon");
+  this.win=new win({ class: "edit_icon", title: lang("icon:editor") });
   this.win.content.innerHTML="Loading ...";
 
   var obj_list=icon_git.obj_list();
