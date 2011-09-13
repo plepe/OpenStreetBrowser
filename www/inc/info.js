@@ -138,6 +138,8 @@ function info(ob) {
           this.div_chapter[head].appendChild(data[i][j].content);
           data[i][j].content_node=data[i][j].content;
         }
+
+	call_hooks("info_show_chapter", this, this.ob, this.div_chapter[head], data[i][j]);
       }
     }
 
