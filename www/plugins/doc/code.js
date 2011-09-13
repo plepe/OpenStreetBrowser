@@ -24,7 +24,7 @@ function doc_show(plugin) {
   // content
   w.div_content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
 
-  ajax("doc_get", { plugin: plugin }, doc_show_callback.bind(this, w));
+  ajax("doc_get", { path: plugin }, doc_show_callback.bind(this, w));
 
   // close button
   w.div_interact=dom_create_append(w.content, "div");

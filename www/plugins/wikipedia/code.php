@@ -193,7 +193,7 @@ function wikipedia_info($info_ret, $object) {
     $data=unserialize($data);
     $ret.="{$data['text']}<a class='external' href='{$data['url']}' target='_blank'>".lang("wikipedia:read_more")."</a>";
 
-    $info_ret[]=array("head"=>"wikipedia", "content"=>$ret, "doc"=>"wikipedia");
+    $info_ret[]=array("head"=>"wikipedia", "content"=>$ret, "doc"=>"plugin:wikipedia/feature");
     return;
   }
 
@@ -214,7 +214,7 @@ function wikipedia_info($info_ret, $object) {
     $ret.="$text<a class='external' style='line-height:2em;' href='$url' target='_blank'>".lang("wikipedia:read_more")."</a>";
   }
 
-  $info_ret[]=array("head"=>"wikipedia", "content"=>$ret, "doc"=>"wikipedia");
+  $info_ret[]=array("head"=>"wikipedia", "content"=>$ret, "doc"=>"plugin:wikipedia/feature");
 }
 
 register_hook("info", "wikipedia_info");
