@@ -1,5 +1,10 @@
 <?
 function ajax_doc_get($param) {
-  sleep(4);
-  return print_r($param, 1);
+  global $root_path;
+  $path="$root_path/www/plugins/{$param['plugin']}/doc.txt";
+
+  if(!file_exists($path))
+    return "File not found";
+
+  return file_get_contents($path);
 }
