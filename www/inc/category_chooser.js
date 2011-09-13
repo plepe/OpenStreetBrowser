@@ -54,7 +54,7 @@ function category_chooser(callback) {
   }
 
   // constructor
-  this.win=new win("category_chooser");
+  this.win=new win({ class: "category_chooser", title: lang('category', 2)});
   this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
 
   ajax_direct("categories.php", { todo: "list", lang: ui_lang }, this.load_callback.bind(this));

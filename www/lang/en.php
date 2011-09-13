@@ -123,6 +123,7 @@ $lang_str["user:logout"]="Logout";
 $lang_str["error"]="An error occured: ";
 $lang_str["error:not_logged_in"]="you are not logged in";
 
+$lang_str['category']=array("Category", "Categories");
 $lang_str["more_categories"]="More categories";
 $lang_str["category:status"]="Status";
 $lang_str["category:data_status"]="Status";
