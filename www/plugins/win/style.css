@@ -8,3 +8,10 @@ div.win {
   top: 50px;  /* top and left should be set by window manager */
   left: 350px;
 }
+div.win_title_bar {
+  background: red;
+  height: 16px;
+}
+img.win_close_button {
+  float: right;
+}
