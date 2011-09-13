@@ -40,6 +40,7 @@ function win(options) {
 
   // Create div for content
   this.content=document.createElement("div");
+  this.content.className="content";
   add_css_class(this.content, options.class);
   this.win.appendChild(this.content);
 

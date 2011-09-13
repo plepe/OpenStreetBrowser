@@ -3,14 +3,24 @@ div.win_root {
 }
 div.win {
   position: absolute;
-  background: white;
-  border: 1px solid black;
+  background: #efefef;
+  border: 2px solid #999999;
   top: 50px;  /* top and left should be set by window manager */
   left: 350px;
 }
+div.win .content {
+  padding: 3px;
+  overflow: auto;
+}
 div.win_title_bar {
-  background: red;
+  background: #999999;
+  border-bottom: 1px solid #999999;
+  color: #efefef;
+  vertical-align: middle;
   height: 16px;
+  font-weight: bold;
+  padding-left: 2px;
+  font-size: 13px;
 }
 img.win_close_button {
   float: right;
