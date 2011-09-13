@@ -6,17 +6,34 @@ function doc_show_callback(win, ret) {
 
   ret=ret.return_value;
 
-  dom_clean(win.content);
+  dom_clean(win.div_content);
 
   var content=creole(ret);
-  win.content.appendChild(content);
+  win.div_content.appendChild(content);
+}
+
+function doc_close(w) {
+  w.close();
 }
 
 function doc_show(plugin) {
   var w=new win("doc_win");
-  w.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
+  w.div_content=dom_create_append(w.content, "div");
+  w.div_content.className="content";
+
+  // content
+  w.div_content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
 
   ajax("doc_get", { plugin: plugin }, doc_show_callback.bind(this, w));
+
+  // close button
+  w.div_interact=dom_create_append(w.content, "div");
+  w.div_interact.className="interact";
+
+  var input=dom_create_append(w.div_interact, "input");
+  input.type="button";
+  input.value="close";
+  input.onclick=doc_close.bind(this, w);
 }
 
 function doc_chapter(info, ob, div, data) {
