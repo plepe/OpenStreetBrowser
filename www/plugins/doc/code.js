@@ -1,5 +1,19 @@
+function doc_show_callback(win, ret) {
+  if(!ret.return_value) {
+    alert("doc: no value returned!");
+    return;
+  }
+
+  ret=ret.return_value;
+  dom_clean(win.content);
+  dom_create_append_text(win.content, ret);
+}
+
 function doc_show(plugin) {
-  alert(plugin);
+  var w=new win("doc_win");
+  w.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
+
+  ajax("doc_get", { plugin: plugin }, doc_show_callback.bind(this, w));
 }
 
 function doc_chapter(info, ob, div, data) {
