@@ -358,6 +358,9 @@ function category_osm(id) {
     if(this.visible()) {
       this.on_unhide_category();
     }
+
+    this.loaded=true;
+    call_hooks("category_loaded", this);
   }
 
   // get_rule
