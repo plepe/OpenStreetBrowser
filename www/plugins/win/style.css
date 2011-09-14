@@ -1,5 +1,6 @@
 div.win_root {
-  z-index: 10000;
+  position: absolute;
+  z-index: 10005;
 }
 div.win {
   position: absolute;
@@ -21,6 +22,11 @@ div.win_title_bar {
   font-weight: bold;
   padding-left: 2px;
   font-size: 13px;
+  cursor: default;
+  user-select: none;
+}
+div.win_title_bar_moving {
+  cursor: move;
 }
 img.win_close_button {
   float: right;

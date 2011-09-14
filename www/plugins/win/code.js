@@ -38,13 +38,13 @@ function win(options) {
 
   // mousedown
   this.mousedown=function(event) {
-    this.title_bar.style.cursor='move';
+    add_css_class(this.title_bar, "win_title_bar_moving");
     win_currentdrag=this;
   }
 
   // mouseup
   this.mouseup=function(event) {
-    this.title_bar.style.cursor='auto';
+    del_css_class(this.title_bar, "win_title_bar_moving");
     win_currentdrag=null;
   }
 
@@ -83,6 +83,7 @@ function win(options) {
   this.win.appendChild(this.title_bar);
   this.title_bar.onmousedown=this.mousedown.bind(this);
   this.title_bar.onmouseup=this.mouseup.bind(this);
+  this.title_bar.onselectstart=function() {};
 
   // Close Button
   var close_button=dom_create_append(this.title_bar, "img");
