@@ -2,4 +2,6 @@ div.category_editor {
   width: 500px;
   max-height: 400px;
   min-height: 60px;
+  overflow: auto;
+  padding: 3px;
 }
