@@ -1,9 +1,19 @@
 div.options_win {
   width: 500px;
-  min-height: 60px;
-  max-height: 400px;
+}
+div.options_parts {
+  height: 300px;
+  overflow: auto;
+  padding: 3px;
 }
 div.options_help {
   text-align: justify;
   font-style: italic;
+}
+form#options_form {
+  margin-bottom: 3px;
+}
+div.options_interact {
+  margin: 3px;
+  margin-top: 2px;
 }

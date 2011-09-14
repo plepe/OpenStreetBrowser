@@ -129,6 +129,7 @@ function show_options() {
   call_hooks("options_show", options_list);
 
   ret ="<form action='javascript:save_options()' id='options_form'>\n";
+  ret+="<div class='options_parts'>\n";
 
   options_list=weight_sort(options_list);
   for(var i=0; i<options_list.length; i++) {
@@ -166,8 +167,9 @@ function show_options() {
   ret+=options_select("data_lang", l);
   ret+="</p>\n";
 
-  ret+="<p><input type='submit' value='"+t("save")+"'>\n";
-  ret+="<input type='button' onClick='javascript:close_options()' value='"+t("cancel")+"'></p>\n";
+  ret+="</div>\n";
+  ret+="<div class='options_interact'><input type='submit' value='"+t("save")+"'>\n";
+  ret+="<input type='button' onClick='javascript:close_options()' value='"+t("cancel")+"'></div>\n";
   ret+="</form>\n";
 
   options_win.content.innerHTML=ret;
