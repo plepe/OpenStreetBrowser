@@ -40,6 +40,9 @@ function win(options) {
   this.mousedown=function(event) {
     add_css_class(this.title_bar, "win_title_bar_moving");
     win_currentdrag=this;
+
+    // Raise window to top
+    win_root.appendChild(this.win);
   }
 
   // mouseup
