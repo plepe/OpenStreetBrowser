@@ -1,10 +1,33 @@
 function category_window(category) {
+  // update
+  this.window_show=function() {
+    // Set window title
+    this.win.set_title(lang("category")+
+      " \""+category.tags.get_lang("name", ui_lang)+"\"");
+    
+    // Clean window
+    dom_clean(this.win.content);
+
+    // Call hooks to add content to window
+    call_hooks("category_window_show", this, category);
+  }
+
+  // remove
+  this.remove=function() {
+    unregister_hooks_object(this);
+  }
+
   // constructor
-  this.win=new win("category_window");
-  this.win.content.innerHTML="loading";
+  this.win=new win({ class: "category_window", title: lang("category") });
   this.category=category;
 
-  call_hooks("category_window_show", this, category);
+  if(this.category.loaded) {
+    this.window_show();
+  }
+  else {
+    this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
+    register_hook("category_loaded", this.window_show.bind(this), this);
+  }
 }
 
 function category_window_start_window(category) {
