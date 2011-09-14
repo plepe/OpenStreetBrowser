@@ -1,5 +1,23 @@
 var windows=[];
 var win_root;
+var win_mousemove_old;
+var win_mousepos;
+var win_currentdrag=null;
+
+function win_mousemove(event) {
+  var win_mouseold=win_mousepos;
+  win_mousepos={ x: event.clientX, y: event.clientY };
+
+  if(win_currentdrag) {
+    win_currentdrag.move({
+      x: win_mousepos.x-win_mouseold.x,
+      y: win_mousepos.y-win_mouseold.y
+    });
+  }
+
+  if(win_mousemove_old)
+    return win_mousemove_old(event);
+}
 
 // valid options:
 //   class: class to add to the content-div
@@ -18,6 +36,24 @@ function win(options) {
     current.textContent=title;
   }
 
+  // mousedown
+  this.mousedown=function(event) {
+    this.title_bar.style.cursor='move';
+    win_currentdrag=this;
+  }
+
+  // mouseup
+  this.mouseup=function(event) {
+    this.title_bar.style.cursor='auto';
+    win_currentdrag=null;
+  }
+
+  // move
+  this.move=function(m) {
+    this.win.style.top=(this.win.offsetTop+m.y)+"px";
+    this.win.style.left=(this.win.offsetLeft+m.x)+"px";
+  }
+
   // check options
   if(!options) {
     options={};
@@ -34,6 +70,9 @@ function win(options) {
   if(!win_root) {
     win_root=dom_create_append(document.body, "div");
     win_root.className="win_root";
+
+    win_mousemove_old=document.body.onmousemove;
+    document.body.onmousemove=win_mousemove;
   }
   win_root.appendChild(this.win);
 
@@ -42,6 +81,10 @@ function win(options) {
   this.title_bar.className="win_title_bar";
   dom_create_append_text(this.title_bar, options.title?options.title:"Window");
   this.win.appendChild(this.title_bar);
+  this.title_bar.onmousedown=this.mousedown.bind(this);
+  this.title_bar.onmouseup=this.mouseup.bind(this);
+
+  // Close Button
   var close_button=dom_create_append(this.title_bar, "img");
   close_button.src="plugins/win/close.png";
   close_button.alt="close";
