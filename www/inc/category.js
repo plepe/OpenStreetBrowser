@@ -156,7 +156,10 @@ function category(id) {
 
   // load_def - load definition
   this.load_def=function() {
+    // the default category is loaded instantly ... please adapt this
+    // in the real category
     this.loaded=true;
+    call_hooks("category_loaded", this);
   }
 
   // detach_div - remove category from div again
