@@ -17,6 +17,8 @@ function win_mousemove(event) {
 
   if(win_mousemove_old)
     return win_mousemove_old(event);
+  else
+    return 0;
 }
 
 // valid options:
