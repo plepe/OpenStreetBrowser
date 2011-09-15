@@ -83,9 +83,9 @@ alias place=town_large place=town|population>=30000
   text-avoid-edges: true;
   text-halo-radius: 1;
   point-allow-overlap: false;
-  text-dy: 6;
+  text-dy: 8;
 }
-.places_db[place=suburb][zoom>=11][zoom<13] name,
+.places_db[place=hamlet][zoom>=11][zoom<13] name,
 .places_db[place=locality][zoom>=15] name
 {
   text-size: 8;
@@ -96,7 +96,7 @@ alias place=town_large place=town|population>=30000
   text-halo-radius: 1;
   point-allow-overlap: false;
 }
-.places_db[place=hamlet][zoom>=13][zoom<15] name_en,
+.places_db[place=hamlet][zoom>=11][zoom<13] name_en,
 .places_db[place=locality][zoom>=15] name_en
 {
   text-size: 6;
@@ -138,7 +138,7 @@ alias place=town_large place=town|population>=30000
   text-avoid-edges: true;
   text-halo-radius: 2;
   point-allow-overlap: false;
-  text-dy: 9;
+  text-dy: 12;
 }
 
 .places_high[place=country_large][zoom>=4][zoom<6] name,
@@ -170,7 +170,7 @@ alias place=town_large place=town|population>=30000
   text-avoid-edges: true;
   text-halo-radius: 1;
   point-allow-overlap: false;
-  text-dy: 6;
+  text-dy: 8;
 }
 .places_high[place=country_large][zoom>=2][zoom<4] name,
 .places_high[place=country_medium][zoom>=4][zoom<6] name,
@@ -195,7 +195,7 @@ alias place=town_large place=town|population>=30000
   text-avoid-edges: true;
   text-halo-radius: 1;
   point-allow-overlap: false;
-  text-dy: 5;
+  text-dy: 6;
 }
 .places_high[place=city_large][zoom>=4][zoom<6] name,
 .places_high[place=city_medium][zoom>=6][zoom<8] name,
