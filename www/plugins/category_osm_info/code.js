@@ -1,5 +1,5 @@
 function category_osm_info_show(cat_win, category) {
-  var t=new tab({ name: lang("info") });
+  var t=new tab({ title: lang("info") });
   cat_win.tab_manager.register_tab(t);
 
   t.content.innerHTML="foo bar";
