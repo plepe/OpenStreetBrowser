@@ -37,6 +37,9 @@ function tab_manager(div) {
     this.header.appendChild(tab.header);
     this.content.appendChild(tab.content);
     tab.manager=this;
+
+    if(!this.active_tab)
+      this.activate(tab);
   }
 
   // show
