@@ -1,4 +1,4 @@
-function category_editor(id) {
+function category_editor(id, cat_win) {
   // editor
   this.init=function() {
     dom_clean(this.win.content);
@@ -187,8 +187,9 @@ function category_editor(id) {
   this.id=id;
   if(!this.id)
     this.id="new";
-  this.win=new win({ class: "category_editor", title: lang("category", 1) });
+  this.win=new tab({ class: "category_editor", title: lang("editor", 1) });
   this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
+  cat_win.tab_manager.register_tab(this.win);
 
   if(this.id!="new")
     this.load_def();
@@ -414,7 +415,7 @@ function category_editor_rule(category, dom) {
 
 // start_editor
 function category_editor_win_show(win, category) {
-  new category_editor(category.id);
+  new category_editor(category.id, win);
 }
   
 register_hook("category_window_show", category_editor_win_show);
