@@ -1,8 +1,8 @@
 div.category_window {
   width: 500px;
-}
-div.category_window_content {
-  overflow: auto;
   max-height: 300px;
   min-height: 50px;
+  overflow: auto;
+}
+div.category_window_content {
 }

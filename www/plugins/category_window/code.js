@@ -5,8 +5,9 @@ function category_window(category) {
     this.win.set_title(lang("category")+
       " \""+category.tags.get_lang("name", ui_lang)+"\"");
     
-    // Clean window
+    // Prepare window
     dom_clean(this.win.content);
+    this.tab_manager=new tab_manager(this.win.content);
 
     // Call hooks to add content to window
     call_hooks("category_window_show", this, category);
