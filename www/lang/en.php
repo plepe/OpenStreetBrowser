@@ -130,6 +130,7 @@ $lang_str["category:data_status"]="Status";
 $lang_str["category:old_version"]="A new version of this category is being prepared.";
 $lang_str["category:not_compiled"]="New category is being prepared.";
 
+$lang_str["category:new_rule"]="New Rule";
 $lang_str["category_rule_tag:match"]="Match";
 $lang_str["category_rule_tag:description"]="Description";
 $lang_str["category_chooser:choose"]="Choose a category";
