@@ -16,7 +16,7 @@ function tags_info_show_EXAMPLE(disp, tags) {
 }
 */
 
-function tags_info_show(disp, tags) {
+function tags_hide_show(disp, tags) {
   // Hide all #geo-tags
   for(var i in disp) {
     if((i=="#geo")||(i.match(/^#geo:/))) {
@@ -25,4 +25,4 @@ function tags_info_show(disp, tags) {
   }
 }
 
-register_hook("info_tags_show", tags_info_show);
+register_hook("info_tags_show", tags_hide_show);

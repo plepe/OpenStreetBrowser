@@ -108,7 +108,7 @@ $overlays_add=array(
 // contour - Contour Shading (DE/AT/CH only)
 // overlays - Additional overlays
 // cloudmade_basemap - Add the default cloudmade basemap
-// tags_info - Change display of tags in info
+// tags_hide - Hide tags from display in info (calcualated tags)
 // info_navigation - Navigate to currently shown info
 // whats_here - Query OSM objects under cursor
 // cascadenik - Automatically compile cascadenik-files in plugins
