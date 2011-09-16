@@ -109,6 +109,7 @@ $overlays_add=array(
 // overlays - Additional overlays
 // cloudmade_basemap - Add the default cloudmade basemap
 // tags_hide - Hide tags from display in info (calcualated tags)
+// tags_info - List all tags of an object in info
 // info_navigation - Navigate to currently shown info
 // whats_here - Query OSM objects under cursor
 // cascadenik - Automatically compile cascadenik-files in plugins
