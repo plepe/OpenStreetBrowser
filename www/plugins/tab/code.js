@@ -21,9 +21,9 @@ function tab(options) {
   if(!this.options)
     this.options={};
 
-  if(!this.options.name)
-    this.options.name=t("unnamed");
-  dom_create_append_text(this.header, this.options.name);
+  if(!this.options.title)
+    this.options.title=t("unnamed");
+  dom_create_append_text(this.header, this.options.title);
 
   if(!this.options.weight)
     this.options.weight=0;
