@@ -67,11 +67,11 @@ function tags(d) {
     data=d;
   }
 
-  this.info=function(chapters, lang) {
+  this.info=function(lang) {
     var ul=document.createElement("ul");
     var disp=new clone(data);
 
-    // See plugin Tags Info how to handle this hook
+    // See plugin Tags Hide how to handle this hook
     call_hooks("info_tags_show", disp, this);
 
     for(var key in disp) {
@@ -86,7 +86,7 @@ function tags(d) {
       }
     }
 
-    chapters.push({ head: 'tags', content: ul });
+    return ul;
   }
 
   this.xml=function(indent) {

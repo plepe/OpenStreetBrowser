@@ -72,8 +72,6 @@ function osm_object(dom) {
 
   // info
   this.info=function(chapters) {
-    this.tags.info(chapters);
-
     if(this.id_split.length==1) {
       var id=this.id.split("_");
       if(id[0]=="rel")
