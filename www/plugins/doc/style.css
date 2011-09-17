@@ -9,3 +9,6 @@
 }
 .doc_win .interact {
 }
+.doc_win a {
+  text-decoration: underline;
+}
