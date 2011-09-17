@@ -1,0 +1,8 @@
+= Wikipedia Street Names =
+There are lists for description of street names in towns, cities or district (like [[http://de.wikipedia.org/wiki/Liste_der_Stra%C3%9Fennamen_von_Wien%2FInnere_Stadt|Liste der Straßennamen von Wien/Innere Stadt]] for the inner district of Vienna). If the admin relation has a tag "[[osm:Key:wikipedia:street_names|wikipedia:street_names:XX]]=Page in Wikipedia" (in the former example [[#rel_910840|Wien, Innere Stadt]] and the current object has a [[osm:Key:highway|highway]]-Tag, the description will be taken and displayed here.
+
+== SYNTAX (Tag) ==
+* [[osm:Key:wikipedia:street_names|wikipedia:street_names:en]]=yes (name of object equals the name of the (en=English) wikipedia page)
+* [[osm:Key:wikipedia:street_names|wikipedia:street_names:en]]=Tower of London (name of the (en=English) wikipedia page)
+* [[osm:Key:wikipedia:street_names|wikipedia:street_names]]=en:Tower of London (name of the (en=English) wikipedia page)
+* [[osm:Key:wikipedia:street_names|wikipedia:street_names]]=http://en.wikipedia.org/wiki/Tower_of_London (full link)
