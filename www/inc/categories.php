@@ -788,6 +788,11 @@ function category_save($id, $content, $param=array()) {
     return array("status"=>"Could not load data");
   }
 
+  // Generate an id for new categories
+  if($id=="new") {
+    $id="cat_"+uniqid();
+  }
+
   // Calculate a new version ID
   $version=uniqid();
 
