@@ -53,17 +53,16 @@ switch($_GET[todo]) {
 
     print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
     print "<result>\n";
-    $version=category_version();
 
     if($status[status]!==true) {
-      print "  <status version='$version'";
+      print "  <status ";
       foreach($status as $ek=>$ev) {
 	print " $ek='$ev'";
       }
       print " />\n";
     }
     else {
-      print "  <status version='$version' status='ok' />\n";
+      print "  <status version='$status[version]' status='ok' />\n";
     }
     print "  <id>$status[id]</id>\n";
     print "</result>\n";
