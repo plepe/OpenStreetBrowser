@@ -84,11 +84,9 @@ Map {
   polygon-fill: #7eb9e3;
 }
 */
-.world1[zoom<5] {
+.coastpoly {
   polygon-fill: #f2efd9;
-}
-.coastpoly[zoom>=5] {
-  polygon-fill: #f2efd9;
+  polygon-gamma: 0.65;
 }
 .builtup[zoom<11] {
   polygon-fill: #ddd;
