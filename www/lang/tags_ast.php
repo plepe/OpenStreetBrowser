@@ -41,12 +41,12 @@ $lang_str["tag:address"]="Direición";
 $lang_str["tag:addr:housenumber"]="Númberu de portal";
 
 // addr:interpolation
-#$lang_str["tag:addr:interpolation"]="Interpolated housenumbers";
+$lang_str["tag:addr:interpolation"]="Númberos de casa entrepolaos";
 
 // aeroway
-#$lang_str["tag:aeroway"]="Aeroway";
-#$lang_str["tag:aeroway=runway"]="Runway";
-#$lang_str["tag:aeroway=taxiway"]="Taxiway";
+$lang_str["tag:aeroway"]="Víes aeroportuaries";
+$lang_str["tag:aeroway=runway"]="Pista";
+$lang_str["tag:aeroway=taxiway"]="Cai de rodaxe";
 
 // admin_level
 $lang_str["tag:admin_level=2"]="Frontera de país";
@@ -62,6 +62,14 @@ $lang_str["tag:amenity"]="Infraestructura";
 $lang_str["tag:amenity=cinema"]=array("Cine", "Cines");
 $lang_str["tag:amenity=restaurant"]=array("Restaurante", "Restaurantes");
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
+
+// barrier
+$lang_str["tag:barrier"]=array("Barrera", "Barreres");
+$lang_str["tag:barrier=city_wall"]=array("Muralla", "Muralles");
+$lang_str["tag:barrier=wall"]=array("Muria", "Muries");
+$lang_str["tag:barrier=retaining_wall"]=array("Muria d'encontu", "Muries d'encontu");
+$lang_str["tag:barrier=fence"]=array("Valla", "Valles");
+$lang_str["tag:barrier=hedge"]=array("Sebe", "Sebes");
 
 // cables
 $lang_str["tag:cables"]="Cables";
@@ -82,27 +90,27 @@ $lang_str["tag:food"]="Sirve de comer";
 // highway
 $lang_str["tag:highway"]=array("Carretera", "Carreteres");
 $lang_str["tag:highway=motorway"]="Autopista";
-#$lang_str["tag:highway=motorway_link"]="Motorway Link";
+$lang_str["tag:highway=motorway_link"]="Enllaz d'autopista";
 $lang_str["tag:highway=trunk"]="Carretera nacional";
-#$lang_str["tag:highway=trunk_link"]="Trunk Road Link";
+$lang_str["tag:highway=trunk_link"]="Enllaz de carretera nacional";
 $lang_str["tag:highway=primary"]="Carretera primaria";
-#$lang_str["tag:highway=primary_link"]="Primary Road Link";
+$lang_str["tag:highway=primary_link"]="Enllaz de carretera primaria";
 $lang_str["tag:highway=secondary"]="Carretera secundaria";
 $lang_str["tag:highway=tertiary"]="Carretera terciaria";
 $lang_str["tag:highway=minor"]="Carretera menor";
-#$lang_str["tag:highway=road"]="Road";
-#$lang_str["tag:highway=residential"]="Residential Road";
-#$lang_str["tag:highway=unclassified"]="Unclassified Road";
+$lang_str["tag:highway=road"]="Carretera";
+$lang_str["tag:highway=residential"]="Carretera residencial";
+$lang_str["tag:highway=unclassified"]="Carretera ensin clasificar";
 $lang_str["tag:highway=service"]="Carretera de serviciu";
 $lang_str["tag:highway=pedestrian"]="Zona peatonal";
-#$lang_str["tag:highway=living_street"]="Living Street";
+$lang_str["tag:highway=living_street"]="Cai residencial";
 $lang_str["tag:highway=path"]="Camín";
-#$lang_str["tag:highway=cycleway"]="Cycleway";
-#$lang_str["tag:highway=footway"]="Footway";
-#$lang_str["tag:highway=bridleway"]="Bridleway";
+$lang_str["tag:highway=cycleway"]="Vía pa bicicletes";
+$lang_str["tag:highway=footway"]="Senderu";
+$lang_str["tag:highway=bridleway"]="Vía pa caballeríes";
 $lang_str["tag:highway=track"]="Pista";
-#$lang_str["tag:highway=path"]="Path";
-#$lang_str["tag:highway=steps"]="Steps";
+$lang_str["tag:highway=path"]="Camín";
+$lang_str["tag:highway=steps"]="Escaleres";
 
 // is_in
 $lang_str["tag:is_in"]="Ta en";
@@ -130,17 +138,17 @@ $lang_str["tag:leisure=bird_hide"]="Observatoriu de páxaros";
 $lang_str["tag:leisure=sport"]="Otros deportes";
 
 // man_made
-#$lang_str["tag:man_made"]="Artificial structures";
-#$lang_str["tag:man_made=pipeline"]=array("Pipeline", "Pipelines");
+$lang_str["tag:man_made"]="Construcciones";
+$lang_str["tag:man_made=pipeline"]=array("Tubería", "Tuberíes");
 
 // man_made - type
-#$lang_str["tag:type"]="Type";
-#$lang_str["tag:type=gas"]="Gas";
-#$lang_str["tag:type=heat"]="Heat";
-#$lang_str["tag:type=hot_water"]="Hot Water";
-#$lang_str["tag:type=oil"]="Oil";
-#$lang_str["tag:type=sewage"]="Sewage";
-#$lang_str["tag:type=water"]="Water";
+$lang_str["tag:type"]="Triba";
+$lang_str["tag:type=gas"]="Gas";
+$lang_str["tag:type=heat"]="Calefacción";
+$lang_str["tag:type=hot_water"]="Agua caliente";
+$lang_str["tag:type=oil"]="Oleoductu";
+$lang_str["tag:type=sewage"]="Alcantarilláu";
+$lang_str["tag:type=water"]="Agua";
 
 // name
 $lang_str["tag:name"]=array("Nome", "Nomes");
@@ -182,8 +190,8 @@ $tag_type["population"]=array("count");
 // power
 $lang_str["tag:power"]="Enerxía";
 $lang_str["tag:power=generator"]="Xenerador eléctricu";
-$lang_str["tag:power=line"]="Llinia eléctrica";
-#$lang_str["tag:power=minor_line"]="Minor Power Line";
+$lang_str["tag:power=line"]="Llinia d'alta tensión";
+$lang_str["tag:power=minor_line"]="Llinia de baxa tensión";
 $lang_str["tag:power=tower"]="Torre d'alta tensión";
 $lang_str["tag:power=pole"]="Poste eléctricu";
 $lang_str["tag:power=station"]="Estación tresformadora";
@@ -207,10 +215,10 @@ $lang_str["tag:power_source=photovoltaic"]="Fotovoltaica";
 $lang_str["tag:power_source=solar-thermal"]="Térmica solar";
 
 // railway
-#$lang_str["tag:railway"]="Railway";
-#$lang_str["tag:railway=rail"]=array("Rail Track", "Rail Tracks");
-#$lang_str["tag:railway=tram"]=array("Tram Track", "Tram Tracks");
-#$lang_str["tag:railway=platform"]=array("Platform", "Platforms");
+$lang_str["tag:railway"]="Ferrocarril";
+$lang_str["tag:railway=rail"]=array("Vía de tren", "Víes de tren");
+$lang_str["tag:railway=tram"]=array("Vía de tranvía", "Víes de tranvía");
+$lang_str["tag:railway=platform"]=array("Andén", "Andenes");
 
 // real_ale
 $lang_str["tag:real_ale"]="Tien cerveza ale auténtica";
@@ -218,16 +226,21 @@ $lang_str["tag:real_ale"]="Tien cerveza ale auténtica";
 // religion
 $lang_str["tag:religion"]="Relixón";
 $lang_str["tag:religion=christian"]="cristiana";
+$lang_str["tag:religion=buddhist"]="budista";
+$lang_str["tag:religion=hindu"]="hindú";
+$lang_str["tag:religion=jewish"]="xudía";
+$lang_str["tag:religion=muslim"]="musulmana";
+$lang_str["tag:religion=multifaith"]="delles relixones";
 
 // route
-#$lang_str["tag:route"]="Route";
+$lang_str["tag:route"]="Ruta";
 $lang_str["tag:route=train"]="Tren";
 $lang_str["tag:route=railway"]="Ferrocarril";
 $lang_str["tag:route=rail"]="Ferrocarril";
 $lang_str["tag:route=light_rail"]="Tren llixeru";
 $lang_str["tag:route=subway"]="Metro";
 $lang_str["tag:route=tram"]="Tranvía";
-#$lang_str["tag:route=tram_bus"]="Tram and Bus";
+$lang_str["tag:route=tram_bus"]="Tranvía y bus";
 $lang_str["tag:route=trolley"]="Trolebús";
 $lang_str["tag:route=trolleybus"]="Trolebús";
 $lang_str["tag:route=bus"]="Autobús";
@@ -276,7 +289,7 @@ $lang_str["tag:sport=korfball"]="Korfball";
 $lang_str["tag:sport=motor"]="Motor";
 $lang_str["tag:sport=multi"]="Polideportivu";
 $lang_str["tag:sport=orienteering"]="Orientación";
-#$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
+$lang_str["tag:sport=paddle_tennis"]="Paddle";
 $lang_str["tag:sport=paragliding"]="Parapente";
 $lang_str["tag:sport=pelota"]="Pelota";
 $lang_str["tag:sport=racquet"]="Deportes de raqueta";
@@ -294,10 +307,10 @@ $lang_str["tag:sport=tennis"]="Tenis";
 $lang_str["tag:sport=volleyball"]="Voleibol";
 
 // tracks
-#$lang_str["tag:tracks"]="Tracks";
-#$lang_str["tag:tracks=single"]="Single";
-#$lang_str["tag:tracks=double"]="Double";
-#$lang_str["tag:tracks=multiple"]="Multiple";
+$lang_str["tag:tracks"]="Carriles";
+$lang_str["tag:tracks=single"]="Cenciellu";
+$lang_str["tag:tracks=double"]="Doble";
+$lang_str["tag:tracks=multiple"]="Múltiple";
 
 // vending
 $lang_str["tag:vending"]="Venta automática";

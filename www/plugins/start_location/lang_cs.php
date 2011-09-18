@@ -1,5 +1,5 @@
 <?
-#$lang_str["start_location:name"]="Map Position";
+$lang_str["start_location:name"]="Pozice mapy";
 
 $lang_str["start_location:choose"]="Zvol pohled na mapu";
 $lang_str["start_location:geolocation"]="získat souřadnice";

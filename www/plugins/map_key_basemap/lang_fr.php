@@ -1,4 +1,6 @@
 <?
+#$lang_str["head:map_key_basemap"]="Basemap";
+
 // building
 $lang_str["map_key_basemap:building=yes"]="Immeubles";
 $lang_str["map_key_basemap:building=default"]="Immeubles";
@@ -20,12 +22,16 @@ $lang_str["map_key_basemap:building=tourism"]="Immeubles, Services touristiques"
 $lang_str["map_key_basemap:building=sport"]="Immeubles, Activités sportives";
 
 // landuse
+#$lang_str["map_key_basemap:landuse=land"]="Land";
 $lang_str["map_key_basemap:landuse=park"]="Parc";
 $lang_str["map_key_basemap:landuse=education"]="Établissements scolaires";
 $lang_str["map_key_basemap:landuse=tourism"]="Zone de tourisme";
 $lang_str["map_key_basemap:landuse=garden"]="Fermes, Plantations, Jardins";
 $lang_str["map_key_basemap:landuse=industrial"]="Zones industrielles et ferroviaires";
 $lang_str["map_key_basemap:landuse=recreation_ground"]="Aires de Jeux";
+#$lang_str["map_key_basemap:landuse=shop"]="Shopping Areas";
+#$lang_str["map_key_basemap:landuse=military"]="Military Areas";
+#$lang_str["map_key_basemap:landuse=piste"]="Skiing Pistes";
 $lang_str["map_key_basemap:landuse=sport"]="Aires de Sports";
 $lang_str["map_key_basemap:landuse=cemetery"]="Cimetières";
 $lang_str["map_key_basemap:landuse=residential"]="Zones résidentielles";
@@ -41,12 +47,15 @@ $lang_str["map_key_basemap:landuse=natural_glacier"]="Glaciers";
 $lang_str["map_key_basemap:landuse=natural_scree"]="Éboulis, Landes";
 $lang_str["map_key_basemap:landuse=natural_mud"]="Terrain boueux, vase";
 $lang_str["map_key_basemap:landuse=natural_beach"]="Plages";
+#$lang_str["map_key_basemap:landuse=natural_rock"]="Rocks, Cliffs";
 
 // heads
 $lang_str["map_key_basemap:places"]="Lieux";
 $lang_str["map_key_basemap:roads"]="Route";
 $lang_str["map_key_basemap:rails"]="Chemins de fer";
+#$lang_str["map_key_basemap:pipe_power_lines"]="Pipe- and Power Lines";
 $lang_str["map_key_basemap:borders"]="Frontières";
 $lang_str["map_key_basemap:landuse"]="Utilisation du sol";
 $lang_str["map_key_basemap:buildings"]="Immeubles";
+#$lang_str["map_key_basemap:barrier"]="Barriers";
 $lang_str["map_key_basemap:housenumbers"]="no. Addresse";

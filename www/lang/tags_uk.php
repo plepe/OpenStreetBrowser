@@ -54,6 +54,8 @@ $lang_str["tag:admin_level=3"]="Divisions";
 $lang_str["tag:admin_level=4"]="State Border";
 $lang_str["tag:admin_level=5"]="Community Border";
 $lang_str["tag:admin_level=6"]="County Border";
+#$lang_str["tag:admin_level=7"]="";
+#$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Town/Municipality Border";
 $lang_str["tag:admin_level=10"]="Subdivisions of Cities";
 
@@ -62,6 +64,14 @@ $lang_str["tag:amenity"]="Amenity";
 $lang_str["tag:amenity=cinema"]=array("Cinema", "Cinemas");
 $lang_str["tag:amenity=restaurant"]=array("ресторан", "ресторан");
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
+
+// barrier
+#$lang_str["tag:barrier"]=array("Barrier", "Barriers");
+#$lang_str["tag:barrier=city_wall"]=array("City wall", "City walls");
+#$lang_str["tag:barrier=wall"]=array("Wall", "Walls");
+#$lang_str["tag:barrier=retaining_wall"]=array("Retaining Wall", "Retaining Walls");
+#$lang_str["tag:barrier=fence"]=array("Fence", "Fences");
+#$lang_str["tag:barrier=hedge"]=array("Hedge", "Hedges");
 
 // cables
 $lang_str["tag:cables"]="Cables";
@@ -171,6 +181,7 @@ $lang_str["tag:place=city"]="City";
 $lang_str["tag:place=town"]="Town";
 $lang_str["tag:place=village"]="Village";
 $lang_str["tag:place=suburb"]="Suburb";
+$lang_str["tag:place=hamlet"]="Hamlet";
 $lang_str["tag:place=locality"]="Locality";
 $lang_str["tag:place=island"]="Island";
 #$lang_str["tag:place=islet"]=array("Islet", "Islets");
@@ -218,6 +229,11 @@ $lang_str["tag:real_ale"]="Real ale offered";
 // religion
 $lang_str["tag:religion"]="Religion";
 $lang_str["tag:religion=christian"]="християнська";
+#$lang_str["tag:religion=buddhist"]="buddhist";
+#$lang_str["tag:religion=hindu"]="hindu";
+#$lang_str["tag:religion=jewish"]="jewish";
+#$lang_str["tag:religion=muslim"]="muslim";
+#$lang_str["tag:religion=multifaith"]="multifaith";
 
 // route
 #$lang_str["tag:route"]="Route";

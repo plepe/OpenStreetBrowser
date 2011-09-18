@@ -5,21 +5,7 @@ require "../inc/sql.php";
 require "../inc/tags.php";
 require "../inc/hooks.php";
 require "../inc/categories.php";
-
-$languages=array(
-  "en"=>"English",
-  "de"=>"German",
-  "fr"=>"French",
-  "ja"=>"Japanese",
-  "uk"=>"Ukrainian",
-  "it"=>"Italian",
-  "ru"=>"Russian",
-  "es"=>"Spanish",
-  "cs"=>"Czech",
-  "hu"=>"Hungarian",
-  "nl"=>"Dutch",
-  "ast"=>"Asturian",
-);
+require "../lang/list.php";
 
 function rewrite_str($str) {
   // Currently no need to rewrite strings
@@ -157,7 +143,7 @@ function parse($lang, $wikipage) {
 
 // read all categories
 $lang_cat_list=array();
-foreach($languages as $lang=>$wikipage) {
+foreach($languages_wiki as $lang=>$wikipage) {
   parse($lang, $wikipage);
 }
 

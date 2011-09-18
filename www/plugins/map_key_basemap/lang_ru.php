@@ -1,4 +1,6 @@
 <?
+#$lang_str["head:map_key_basemap"]="Basemap";
+
 // building
 $lang_str["map_key_basemap:building=yes"]="Постройки";
 $lang_str["map_key_basemap:building=default"]="Постройки";
@@ -50,7 +52,9 @@ $lang_str["map_key_basemap:landuse=natural_rock"]="Горы, обрывы";
 $lang_str["map_key_basemap:places"]="Места";
 $lang_str["map_key_basemap:roads"]="Дороги";
 $lang_str["map_key_basemap:rails"]="Рельсовые дороги";
+#$lang_str["map_key_basemap:pipe_power_lines"]="Pipe- and Power Lines";
 $lang_str["map_key_basemap:borders"]="Границы";
 $lang_str["map_key_basemap:landuse"]="Землепользования";
 $lang_str["map_key_basemap:buildings"]="Здания";
+#$lang_str["map_key_basemap:barrier"]="Barriers";
 $lang_str["map_key_basemap:housenumbers"]="Номера домов";

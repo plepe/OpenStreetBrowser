@@ -54,6 +54,8 @@ $lang_str["tag:admin_level=2"]="Landsgrens";
 $lang_str["tag:admin_level=4"]="Provinciegrens";
 #$lang_str["tag:admin_level=5"]="Community Border";
 $lang_str["tag:admin_level=6"]="Regiogrens";
+#$lang_str["tag:admin_level=7"]="";
+#$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Gemeentegrens";
 $lang_str["tag:admin_level=10"]="Woonplaatsgrens";
 
@@ -62,6 +64,14 @@ $lang_str["tag:amenity"]="Voorzieningen";
 $lang_str["tag:amenity=cinema"]=array("Bioscoop", "Bioscopen");
 $lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
 $lang_str["tag:amenity=pub"]=array("Kroeg", "Kroegen");
+
+// barrier
+#$lang_str["tag:barrier"]=array("Barrier", "Barriers");
+#$lang_str["tag:barrier=city_wall"]=array("City wall", "City walls");
+#$lang_str["tag:barrier=wall"]=array("Wall", "Walls");
+#$lang_str["tag:barrier=retaining_wall"]=array("Retaining Wall", "Retaining Walls");
+#$lang_str["tag:barrier=fence"]=array("Fence", "Fences");
+#$lang_str["tag:barrier=hedge"]=array("Hedge", "Hedges");
 
 // cables
 $lang_str["tag:cables"]="Kabels";
@@ -101,7 +111,7 @@ $lang_str["tag:highway=cycleway"]="Fietspad";
 $lang_str["tag:highway=footway"]="Voetpad";
 $lang_str["tag:highway=bridleway"]="Ruiterpad";
 $lang_str["tag:highway=track"]="Veldweg";
-$lang_str["tag:highway=path"]="Pad";
+#$lang_str["tag:highway=path"]="Path";
 $lang_str["tag:highway=steps"]="Trappen";
 
 // is_in
@@ -171,6 +181,7 @@ $lang_str["tag:place=city"]=array("Stad", "Steden");
 $lang_str["tag:place=town"]=array("Kleine stad", "Kleine steden");
 $lang_str["tag:place=village"]=array("Dorp", "Dorpen");
 $lang_str["tag:place=suburb"]=array("Buitenwijk", "Buitenwijken");
+#$lang_str["tag:place=hamlet"]=array("Hamlet", "Hamlets");
 $lang_str["tag:place=locality"]=array("Lokaliteit", "Lokaliteiten");
 $lang_str["tag:place=island"]=array("Eiland", "Eilanden");
 $lang_str["tag:place=islet"]=array("Eilandje", "Eilandjes");
