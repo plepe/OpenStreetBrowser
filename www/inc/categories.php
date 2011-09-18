@@ -874,7 +874,7 @@ function category_list($lang="en") {
   $ret=array();
 
   // get list of current categories
-  $res=sql_query("select * from category_current left join category on category_current.category_id=category.category_id and category_current.version=category.version");
+  $res=sql_query("select * from category_current left join category on category_current.version=category.version");
   while($elem=pg_fetch_assoc($res)) {
     $tags=new tags(parse_hstore($elem['tags']));
     $ret[$elem['category_id']]=$tags;
@@ -916,7 +916,7 @@ function category_load($id, $param=array()) {
   $pg_version=postgre_escape($version);
 
   // Get root of category
-  $res=sql_query("select * from category where category_id=$pg_id and version=$pg_version");
+  $res=sql_query("select * from category where version=$pg_version");
   if(!$elem=pg_fetch_assoc($res)) {
     return array('status'=>"'$id/$version': No such category/version");
   }
@@ -933,7 +933,7 @@ function category_load($id, $param=array()) {
   $tags->writeDOM($root, $dom);
 
   // Now process the rules
-  $res=sql_query("select * from category_rule where category_id=$pg_id and version=$pg_version");
+  $res=sql_query("select * from category_rule where version=$pg_version");
   while($elem=pg_fetch_assoc($res)) {
     // base
     $rule=$dom->createElement("rule");
