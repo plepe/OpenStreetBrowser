@@ -1,4 +1,6 @@
 <?
+$lang_str["head:map_key_basemap"]="Mapa base";
+
 // building
 $lang_str["map_key_basemap:building=yes"]="Edificios";
 $lang_str["map_key_basemap:building=default"]="Edificios";
@@ -20,16 +22,16 @@ $lang_str["map_key_basemap:building=tourism"]="Edificios turísticos";
 $lang_str["map_key_basemap:building=sport"]="Edificios p'actividaes deportives";
 
 // landuse
-#$lang_str["map_key_basemap:landuse=land"]="Land";
+$lang_str["map_key_basemap:landuse=land"]="Tierra";
 $lang_str["map_key_basemap:landuse=water"]="Árees acuátiques";
 $lang_str["map_key_basemap:landuse=park"]="Parque";
 $lang_str["map_key_basemap:landuse=education"]="Área d'instalaciones educatives";
 $lang_str["map_key_basemap:landuse=tourism"]="Área d'instalaciones turístiques";
 $lang_str["map_key_basemap:landuse=garden"]="Caseríes, plantaciones, xardinos";
-#$lang_str["map_key_basemap:landuse=shop"]="Shopping Areas";
+$lang_str["map_key_basemap:landuse=shop"]="Árees comerciales";
 $lang_str["map_key_basemap:landuse=industrial"]="Árees industriales y ferroviaries";
-#$lang_str["map_key_basemap:landuse=military"]="Military Areas";
-#$lang_str["map_key_basemap:landuse=piste"]="Skiing Pistes";
+$lang_str["map_key_basemap:landuse=military"]="Zones militares";
+$lang_str["map_key_basemap:landuse=piste"]="Pistes d'esquí";
 $lang_str["map_key_basemap:landuse=sport"]="Árees d'instalaciones deportives";
 $lang_str["map_key_basemap:landuse=cemetery"]="Cementerios";
 $lang_str["map_key_basemap:landuse=residential"]="Árees de viviendes";
@@ -44,13 +46,15 @@ $lang_str["map_key_basemap:landuse=natural_glacier"]="Glaciares";
 $lang_str["map_key_basemap:landuse=natural_scree"]="Lleres, grandes";
 $lang_str["map_key_basemap:landuse=natural_mud"]="Llamuerga";
 $lang_str["map_key_basemap:landuse=natural_beach"]="Playes";
-#$lang_str["map_key_basemap:landuse=natural_rock"]="Rocks, Cliffs";
+$lang_str["map_key_basemap:landuse=natural_rock"]="Roques, cantiles";
 
 // heads
 $lang_str["map_key_basemap:places"]="Llugares";
 $lang_str["map_key_basemap:roads"]="Carreteres";
 $lang_str["map_key_basemap:rails"]="Ferrocarriles";
+$lang_str["map_key_basemap:pipe_power_lines"]="Tuberíes y cables";
 $lang_str["map_key_basemap:borders"]="Fronteres";
 $lang_str["map_key_basemap:landuse"]="Usu del terrén";
 $lang_str["map_key_basemap:buildings"]="Edificios";
+$lang_str["map_key_basemap:barrier"]="Barreres";
 $lang_str["map_key_basemap:housenumbers"]="Númberos de portal";

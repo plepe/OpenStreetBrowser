@@ -1,4 +1,6 @@
 <?
+#$lang_str["head:map_key_basemap"]="Basemap";
+
 // building
 $lang_str["map_key_basemap:building=yes"]="Gebäude";
 $lang_str["map_key_basemap:building=default"]="Gebäude";
@@ -50,7 +52,9 @@ $lang_str["map_key_basemap:landuse=natural_rock"]="Felsen, Kliffe";
 $lang_str["map_key_basemap:places"]="Orte";
 $lang_str["map_key_basemap:roads"]="Straßen";
 $lang_str["map_key_basemap:rails"]="Eisenbahnstrecken";
+#$lang_str["map_key_basemap:pipe_power_lines"]="Pipe- and Power Lines";
 $lang_str["map_key_basemap:borders"]="Grenzen";
 $lang_str["map_key_basemap:landuse"]="Landnutzung";
 $lang_str["map_key_basemap:buildings"]="Gebäude";
+$lang_str["map_key_basemap:barrier"]="Barrieren";
 $lang_str["map_key_basemap:housenumbers"]="Hausnummern";

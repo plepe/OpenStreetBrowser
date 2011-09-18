@@ -19,7 +19,7 @@
 $lang_str["general_info"]="Základní informace";
 $lang_str["yes"]="ano";
 $lang_str["no"]="ne";
-#$lang_str["ok"]="Ok";
+$lang_str["ok"]="Potvrdit";
 $lang_str["save"]="Uložit";
 $lang_str["cancel"]="Zrušit";
 $lang_str["longitude"]=array(F, "Zeměpisná délka", "Zeměpisné délky");
@@ -82,10 +82,10 @@ $lang_str["main:permalink"]="Trvalý odkaz";
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>Nebyl nalezen žádný objekt s ID \"%s\". Toto nastalo z jednoho z (nebo více) následujících důvodů:<ul><li>ID je špatné.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>Objekt je mimo podporovanou oblast.</li><li>Váš odkaz je starý a objekt už byl pravděpodobně vymazán z OpenStreetMap.</li></ul>";
 
 $lang_str["options:autozoom"]="Chování autozoomu";
-#$lang_str["help:autozoom"]="When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.";
-#$lang_str["options:autozoom:pan"]="Pan to current object (nicer)";
-#$lang_str["options:autozoom:move"]="Move to current object (faster)";
-#$lang_str["options:autozoom:stay"]="Never change viewport automatically";
+$lang_str["help:autozoom"]="Poté, co vybereme objekt, se k němu pohled přiblíží, přičemž se může změnit úroveň zoomu. S touto možností si můžete vybrat mezi dvěma odlišnými styly.";
+$lang_str["options:autozoom:pan"]="Přeletět pohledem k danému objektu (hezčí)";
+$lang_str["options:autozoom:move"]="Přiblížit k danému objektu (rychlejší)";
+$lang_str["options:autozoom:stay"]="Nikdy neměnit pohled automaticky";
 
 $lang_str["options:language_support"]="Jazyková podpora";
 $lang_str["help:language_support"]="Touto volbou můžeš vybrat své preferované jazyky. První volba změní jazyk uživatelského rozhraní. Druhá volba změní jazyk dat. Popis mnoha geografických objektů byl přeložen do různých jazyků. Jestliže překlad není dostupný nebo byl vybrán \"místní jazyk\" , popis bude zobrazen v hlavním jazyku objektu.";

@@ -1,4 +1,6 @@
 <?
+#$lang_str["head:map_key_basemap"]="Basemap";
+
 // building
 #$lang_str["map_key_basemap:building=yes"]="Buildings";
 #$lang_str["map_key_basemap:building=default"]="Buildings";
@@ -50,7 +52,9 @@
 $lang_str["map_key_basemap:places"]="Місцевість";
 $lang_str["map_key_basemap:roads"]="Дороги";
 $lang_str["map_key_basemap:rails"]="Залізниця";
+#$lang_str["map_key_basemap:pipe_power_lines"]="Pipe- and Power Lines";
 $lang_str["map_key_basemap:borders"]="Кордони";
 $lang_str["map_key_basemap:landuse"]="Землевикористання";
 $lang_str["map_key_basemap:buildings"]="Будівлі";
+#$lang_str["map_key_basemap:barrier"]="Barriers";
 $lang_str["map_key_basemap:housenumbers"]="Нумерація будинків";
