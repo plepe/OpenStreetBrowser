@@ -788,11 +788,6 @@ function category_save($id, $content, $param=array()) {
     return array("status"=>"Could not load data");
   }
 
-  // Generate an id for new categories
-  if($id=="new") {
-    $id="cat_"+uniqid();
-  }
-
   // Calculate a new version ID
   $version=uniqid();
 
@@ -811,8 +806,32 @@ function category_save($id, $content, $param=array()) {
   if(!$old_version)
     $pg_old_version="null";
   else
-    $pg_old_version="Array['".postgre_escape($old_version)."']";
+    $pg_old_version="Array[".postgre_escape($old_version)."]";
   
+  // get id from old category
+  $res=sql_query("select * from category_current where version=".postgre_escape($old_version), $db_central);
+  if($elem=pg_fetch_assoc($res)) {
+    $id=$elem['category_id'];
+  }
+  else {
+    $id="cat_{$version}";
+  }
+
+  // check if we request an id from tags
+  if($new_id=$tags->get("id")) {
+    $res=sql_query("select * from category_current where category_id=".postgre_escape($new_id), $db_central);
+    if(($elem=pg_fetch_assoc($res))&&($elem['version']!=$old_version)) {
+      // already taken by another category - we should include a message
+      $tags->set("id:message", "ID '$new_id' has already been taken");
+    }
+    else {
+      $id=$new_id;
+    }
+  }
+
+  // add id to tags
+  $tags->set("id", $id);
+
   // write main tags to db
   $sql.="insert into category values (".
     postgre_escape($id).", ".
@@ -842,10 +861,12 @@ function category_save($id, $content, $param=array()) {
     $current=$current->nextSibling;
   }
 
-  // set current category version
-  $sql.="delete from category_current ".
-    "where category_id=".postgre_escape($id).";";
+  // delete old version from category_current
+  if($old_version)
+    $sql.="delete from category_current ".
+      "where version=".postgre_escape($old_version).";";
 
+  // set current category version
   $sql.="insert into category_current values (".
     postgre_escape($id).", ".
     "'$version', now());";
