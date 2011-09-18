@@ -808,13 +808,17 @@ function category_save($id, $content, $param=array()) {
 
   // and old version
   $old_version=$root->getAttribute("version");
+  if(!$old_version)
+    $pg_old_version="null";
+  else
+    $pg_old_version="Array['".postgre_escape($old_version)."']";
   
   // write main tags to db
   $sql.="insert into category values (".
     postgre_escape($id).", ".
     array_to_hstore($tags->data()).", ".
     "'$version', ".
-    "Array['$old_version'], ".
+    "$pg_old_version, ".
     array_to_hstore($version_tags->data()).
     ");";
 
