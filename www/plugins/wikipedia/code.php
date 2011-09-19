@@ -127,10 +127,11 @@ function wikipedia_get_abstract($object, $page, $lang) {
 
       // read next line
       $r=fgets($f);
-      $r=trim($r);
       // end of file ... break loop
       if(!$r)
 	break;
+
+      $r=trim($r);
     }
     fclose($f);
   }

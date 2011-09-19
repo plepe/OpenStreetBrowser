@@ -71,7 +71,7 @@ $lang_str["list_leisure_sport_tourism"]="Recréu, deporte y turismu";
 
 // Mapkey
 
-#$lang_str["grave_is_on"]="Grave is on";
+$lang_str["grave_is_on"]="Acentu grave activáu";
 
 $lang_str["main:options"]="Opciones";
 $lang_str["main:about"]="Tocante a";
@@ -79,7 +79,7 @@ $lang_str["main:donate"]="Donativos";
 $lang_str["main:licence"]="Datos del mapa: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> collaboradores de <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> y <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">collaboradores</a>";
 $lang_str["main:permalink"]="Enllaz permanente";
 
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Nun s'alcontró l'oxetu</h1>Nun se pudo alcontrar l'oxetu cola ID \"%s\". Esto puede ser por una (o más) de les razones darréu:<ul><li>La ID ta enquivocada.</li><li>L'oxetu ta identificáu pol sitiu d'un terceru y (entá) nun ta disponible nel OpenStreetBrowser.</li><li>L'oxetu ta fuera del área con sofitu.</li><li>L'enllaz que siguisti ye antiguu y l'oxetu se desanició d'OpenStreetMap.</li></ul>";
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Nun s'alcontró l'oxetu</h1>Nun se pudo alcontrar l'oxetu cola ID \"%s\". Esto pue ser por una (o más) de les razones darréu:<ul><li>La ID ta enquivocada.</li><li>L'oxetu ta identificáu pol sitiu d'un terceru y (entá) nun ta disponible nel OpenStreetBrowser.</li><li>L'oxetu ta fuera del área con sofitu.</li><li>L'enllaz que siguisti ye antiguu y l'oxetu se desanició d'OpenStreetMap.</li></ul>";
 
 $lang_str["options:autozoom"]="Comportamientu del zoom automáticu";
 $lang_str["help:autozoom"]="Al escoyer un oxetu, el visor muevese al mesmu, y el nivel de zoom tamién puede camudar. Con esta opción puedes  escoyer ente diferentes moos.";
@@ -121,7 +121,7 @@ $lang_str["category:data_status"]="Estáu";
 $lang_str["category:old_version"]="Ta preparándose una versión nueva d'esta categoría.";
 $lang_str["category:not_compiled"]="Ta preparándose una nueva categoría.";
 
-#$lang_str["category_rule_tag:match"]="Match";
+$lang_str["category_rule_tag:match"]="Concasa";
 $lang_str["category_rule_tag:description"]="Descripción";
 $lang_str["category_chooser:choose"]="Escueyi una categoría";
 $lang_str["category_chooser:new"]="Nueva categoría";
@@ -143,5 +143,5 @@ $lang_str["lang:uk"]="Ucraín";
 $lang_str["lang:ru"]="Rusu";
 $lang_str["lang:ja"]="Xaponés";
 $lang_str["lang:hu"]="Húngaru";
-#$lang_str["lang:nl"]="Dutch";
+$lang_str["lang:nl"]="Neerlandés";
 $lang_str["lang:ast"]="Asturianu";

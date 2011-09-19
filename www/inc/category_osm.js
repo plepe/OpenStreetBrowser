@@ -1,6 +1,6 @@
 var importance=[ "global", "international", "national", "regional", "urban", "suburban", "local" ];
 var category_tags_default=
-  { "name": "", "descprition": "", "lang": "en", "sub_categories": "" };
+  { "name": "", "descprition": "", "lang": "en", "sub_categories": "", "id": "" };
 var category_rule_tags_default=
   { "name": "", "match": "", "description": "", "icon": "", 
     "importance": "urban", "type": "polygon;point" };
@@ -358,6 +358,9 @@ function category_osm(id) {
     if(this.visible()) {
       this.on_unhide_category();
     }
+
+    this.loaded=true;
+    call_hooks("category_loaded", this);
   }
 
   // get_rule

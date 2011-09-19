@@ -803,13 +803,41 @@ function category_save($id, $content, $param=array()) {
 
   // and old version
   $old_version=$root->getAttribute("version");
+  if(!$old_version)
+    $pg_old_version="null";
+  else
+    $pg_old_version="Array[".postgre_escape($old_version)."]";
   
+  // get id from old category
+  $res=sql_query("select * from category_current where version=".postgre_escape($old_version), $db_central);
+  if($elem=pg_fetch_assoc($res)) {
+    $id=$elem['category_id'];
+  }
+  else {
+    $id="cat_{$version}";
+  }
+
+  // check if we request an id from tags
+  if($new_id=$tags->get("id")) {
+    $res=sql_query("select * from category_current where category_id=".postgre_escape($new_id), $db_central);
+    if(($elem=pg_fetch_assoc($res))&&($elem['version']!=$old_version)) {
+      // already taken by another category - we should include a message
+      $tags->set("id:message", "ID '$new_id' has already been taken");
+    }
+    else {
+      $id=$new_id;
+    }
+  }
+
+  // add id to tags
+  $tags->set("id", $id);
+
   // write main tags to db
   $sql.="insert into category values (".
     postgre_escape($id).", ".
     array_to_hstore($tags->data()).", ".
     "'$version', ".
-    "Array['$old_version'], ".
+    "$pg_old_version, ".
     array_to_hstore($version_tags->data()).
     ");";
 
@@ -833,10 +861,12 @@ function category_save($id, $content, $param=array()) {
     $current=$current->nextSibling;
   }
 
-  // set current category version
-  $sql.="delete from category_current ".
-    "where category_id=".postgre_escape($id).";";
+  // delete old version from category_current
+  if($old_version)
+    $sql.="delete from category_current ".
+      "where version=".postgre_escape($old_version).";";
 
+  // set current category version
   $sql.="insert into category_current values (".
     postgre_escape($id).", ".
     "'$version', now());";
@@ -869,7 +899,7 @@ function category_list($lang="en") {
   $ret=array();
 
   // get list of current categories
-  $res=sql_query("select * from category_current left join category on category_current.category_id=category.category_id and category_current.version=category.version");
+  $res=sql_query("select * from category_current left join category on category_current.version=category.version");
   while($elem=pg_fetch_assoc($res)) {
     $tags=new tags(parse_hstore($elem['tags']));
     $ret[$elem['category_id']]=$tags;
@@ -911,7 +941,7 @@ function category_load($id, $param=array()) {
   $pg_version=postgre_escape($version);
 
   // Get root of category
-  $res=sql_query("select * from category where category_id=$pg_id and version=$pg_version");
+  $res=sql_query("select * from category where version=$pg_version");
   if(!$elem=pg_fetch_assoc($res)) {
     return array('status'=>"'$id/$version': No such category/version");
   }
@@ -928,7 +958,7 @@ function category_load($id, $param=array()) {
   $tags->writeDOM($root, $dom);
 
   // Now process the rules
-  $res=sql_query("select * from category_rule where category_id=$pg_id and version=$pg_version");
+  $res=sql_query("select * from category_rule where version=$pg_version");
   while($elem=pg_fetch_assoc($res)) {
     // base
     $rule=$dom->createElement("rule");

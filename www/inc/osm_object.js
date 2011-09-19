@@ -38,7 +38,12 @@ function osm_object(dom) {
 
   // name
   this.name=function(param) {
-    return this.tags.get_lang("name");
+    var ret;
+    
+    if(ret=this.tags.parse("[ref] - [name];[name];[ref];[operator]"))
+      return ret;
+
+    return lang("unnamed");
   }
 
   // geo

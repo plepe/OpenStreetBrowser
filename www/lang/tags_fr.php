@@ -54,6 +54,8 @@ $lang_str["tag:admin_level=3"]="Limites territoriales";
 $lang_str["tag:admin_level=4"]="Limites, État / Province / Lander";
 $lang_str["tag:admin_level=5"]="Limites de Régions administratives";
 $lang_str["tag:admin_level=6"]="Limites des MRC (Québec)";
+$lang_str["tag:admin_level=7"]="Limites de Comtés";
+$lang_str["tag:admin_level=7.5"]="Limites, Agglomérations urbaines";
 $lang_str["tag:admin_level=8"]="Limites, Municipalités";
 $lang_str["tag:admin_level=10"]="Limites, Arrondissements municipaux";
 
@@ -62,6 +64,14 @@ $lang_str["tag:amenity"]="Équipement";
 $lang_str["tag:amenity=cinema"]=array("Cinéma", "Cinémas");
 $lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
+
+// barrier
+#$lang_str["tag:barrier"]=array("Barrier", "Barriers");
+#$lang_str["tag:barrier=city_wall"]=array("City wall", "City walls");
+#$lang_str["tag:barrier=wall"]=array("Wall", "Walls");
+#$lang_str["tag:barrier=retaining_wall"]=array("Retaining Wall", "Retaining Walls");
+#$lang_str["tag:barrier=fence"]=array("Fence", "Fences");
+#$lang_str["tag:barrier=hedge"]=array("Hedge", "Hedges");
 
 // cables
 $lang_str["tag:cables"]="Cables";
@@ -171,6 +181,7 @@ $lang_str["tag:place=city"]="Cité";
 $lang_str["tag:place=town"]="Ville";
 $lang_str["tag:place=village"]="Village";
 $lang_str["tag:place=suburb"]="banlieu";
+$lang_str["tag:place=hamlet"]="Hameau";
 $lang_str["tag:place=locality"]="Localité";
 $lang_str["tag:place=island"]="Île";
 $lang_str["tag:place=islet"]="Îlot";
@@ -218,6 +229,11 @@ $lang_str["tag:real_ale"]="Micros-Brasseries";
 // religion
 $lang_str["tag:religion"]="Religion";
 $lang_str["tag:religion=christian"]="chrétien";
+#$lang_str["tag:religion=buddhist"]="buddhist";
+#$lang_str["tag:religion=hindu"]="hindu";
+#$lang_str["tag:religion=jewish"]="jewish";
+#$lang_str["tag:religion=muslim"]="muslim";
+#$lang_str["tag:religion=multifaith"]="multifaith";
 
 // route
 #$lang_str["tag:route"]="Route";
@@ -313,6 +329,3 @@ $tag_type["wires"]=array("count");
 // website
 $lang_str["tag:website"]="Site Web";
 $tag_type["website"]=array("link");
-// The following $lang_str were not defined in the English language file and might be deprecated or wrong:
-$lang_str["tag:admin_level=7"]="Limites de Comtés";
-$lang_str["tag:admin_level=7.5"]="Limites, Agglomérations urbaines";

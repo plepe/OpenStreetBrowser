@@ -100,7 +100,11 @@ function category_editor(id) {
    
     ret="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
-    ret+="<category id=\""+this.id+"\" version=\""+this.version+"\">\n";
+    ret+="<category id=\""+this.id+"\" ";
+    if(this.version)
+      ret+="version=\""+this.version+"\"";
+    ret+=">\n";
+
     this.tags.editor_update();
     ret+=this.tags.xml("  ");
 

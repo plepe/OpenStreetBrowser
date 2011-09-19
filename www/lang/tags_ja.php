@@ -54,6 +54,8 @@ $lang_str["tag:admin_level=3"]="行政区分(未使用)";
 $lang_str["tag:admin_level=4"]="道州境界";
 $lang_str["tag:admin_level=5"]="コミュニティ境界(未使用)";
 $lang_str["tag:admin_level=6"]="都道府県境";
+#$lang_str["tag:admin_level=7"]="";
+#$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="市町村境";
 $lang_str["tag:admin_level=10"]="町名・街区";
 
@@ -62,6 +64,14 @@ $lang_str["tag:amenity"]="生活環境";
 $lang_str["tag:amenity=cinema"]=array("映画館", "映画館");
 $lang_str["tag:amenity=restaurant"]="レストラン";
 $lang_str["tag:amenity=pub"]=array("パブ", "パブ");
+
+// barrier
+#$lang_str["tag:barrier"]=array("Barrier", "Barriers");
+#$lang_str["tag:barrier=city_wall"]=array("City wall", "City walls");
+#$lang_str["tag:barrier=wall"]=array("Wall", "Walls");
+#$lang_str["tag:barrier=retaining_wall"]=array("Retaining Wall", "Retaining Walls");
+#$lang_str["tag:barrier=fence"]=array("Fence", "Fences");
+#$lang_str["tag:barrier=hedge"]=array("Hedge", "Hedges");
 
 // cables
 $lang_str["tag:cables"]="ケーブル数";
@@ -171,6 +181,7 @@ $lang_str["tag:place=city"]="都市";
 $lang_str["tag:place=town"]="町";
 $lang_str["tag:place=village"]="村";
 $lang_str["tag:place=suburb"]="近郊(未使用)";
+$lang_str["tag:place=hamlet"]="小村(未使用)";
 $lang_str["tag:place=locality"]="地域の通称";
 $lang_str["tag:place=island"]="島";
 $lang_str["tag:place=hamlet"]="小村(未使用)";
@@ -219,6 +230,11 @@ $lang_str["tag:real_ale"]="Real ale offered";
 // religion
 $lang_str["tag:religion"]="宗教";
 $lang_str["tag:religion=christian"]="キリスト教";
+#$lang_str["tag:religion=buddhist"]="buddhist";
+#$lang_str["tag:religion=hindu"]="hindu";
+#$lang_str["tag:religion=jewish"]="jewish";
+#$lang_str["tag:religion=muslim"]="muslim";
+#$lang_str["tag:religion=multifaith"]="multifaith";
 
 // route
 #$lang_str["tag:route"]="Route";

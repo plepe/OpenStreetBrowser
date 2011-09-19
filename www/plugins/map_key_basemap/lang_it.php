@@ -1,4 +1,6 @@
 <?
+#$lang_str["head:map_key_basemap"]="Basemap";
+
 // building
 #$lang_str["map_key_basemap:building=yes"]="Buildings";
 #$lang_str["map_key_basemap:building=default"]="Buildings";
@@ -50,7 +52,9 @@
 $lang_str["map_key_basemap:places"]="Places";
 $lang_str["map_key_basemap:roads"]="Roads";
 $lang_str["map_key_basemap:rails"]="Railroads";
+#$lang_str["map_key_basemap:pipe_power_lines"]="Pipe- and Power Lines";
 $lang_str["map_key_basemap:borders"]="Borders";
 $lang_str["map_key_basemap:landuse"]="Landuse";
 $lang_str["map_key_basemap:buildings"]="Buildings";
+#$lang_str["map_key_basemap:barrier"]="Barriers";
 $lang_str["map_key_basemap:housenumbers"]="Housenumbers";

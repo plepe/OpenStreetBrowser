@@ -54,6 +54,8 @@ $lang_str["tag:admin_level=2"]="Országhatár";
 #$lang_str["tag:admin_level=4"]="State Border";
 #$lang_str["tag:admin_level=5"]="Community Border";
 #$lang_str["tag:admin_level=6"]="County Border";
+#$lang_str["tag:admin_level=7"]="";
+#$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Város/község határa";
 $lang_str["tag:admin_level=10"]="Kerület";
 
@@ -62,6 +64,14 @@ $lang_str["tag:amenity"]="Vendéglátás";
 $lang_str["tag:amenity=cinema"]=array("Mozi", "Mozik");
 $lang_str["tag:amenity=restaurant"]=array("Étterem", "Éttermek");
 $lang_str["tag:amenity=pub"]=array("Kocsma", "Kocsmák");
+
+// barrier
+#$lang_str["tag:barrier"]=array("Barrier", "Barriers");
+#$lang_str["tag:barrier=city_wall"]=array("City wall", "City walls");
+#$lang_str["tag:barrier=wall"]=array("Wall", "Walls");
+#$lang_str["tag:barrier=retaining_wall"]=array("Retaining Wall", "Retaining Walls");
+#$lang_str["tag:barrier=fence"]=array("Fence", "Fences");
+#$lang_str["tag:barrier=hedge"]=array("Hedge", "Hedges");
 
 // cables
 $lang_str["tag:cables"]="Vezetékek";
@@ -171,6 +181,7 @@ $lang_str["tag:place=city"]=array("Város", "Városok");
 $lang_str["tag:place=town"]="Kisváros";
 $lang_str["tag:place=village"]=array("Falu", "Faluk");
 #$lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
+#$lang_str["tag:place=hamlet"]=array("Hamlet", "Hamlets");
 #$lang_str["tag:place=locality"]=array("Locality", "Localities");
 $lang_str["tag:place=island"]=array("Sziget", "Szigetek");
 #$lang_str["tag:place=islet"]=array("Islet", "Islets");

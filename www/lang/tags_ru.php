@@ -9,23 +9,23 @@
 //  entry is an array again to further specify its type, e.g.:
 //  $tag_type["width"]=array("number", "m", "in");
 //                ^             ^       ^    ^
-//                |             |       |    \-- предпочтительные единицы для этой местности
-//                |             |       \------- стандартные единицы этого тега
-//                |             \--------------- тип значения
-//                \----------------------------- тег
+//                |             |       |    \-- the preferred unit in this locale
+//                |             |       \------- the default unit for this tag
+//                |             \--------------- the type of the value
+//                \----------------------------- tag
 //
 //  This defines, that the default value for the tag width is a number, with
 //  its default unit m (for meter) and the preferred unit for this locale is
 //  in (for inch).
 //
-//  Типы значений:
-//  * text          по-умолчанию (например для religion, name)
-//  * number        числительное в единицах по-умолчанию или предпочтительных, следующих
-//                  на втором и третьем местах соответственно в строке (например для width,
+//  The following types are valid:
+//  * text          default (e.g. religion, name)
+//  * number        a value, with default unit and preferred unit as defined
+//                  by the second and third entry in this array (e.g. width,
 //                  voltage)
-//  * count         целое число (например для population)
-//  * date          дата
-//  * link          ссылка URL
+//  * count         an integer value (e.g. population)
+//  * date          a date
+//  * link          an Internet URL
 //
 //  NOTE: the $tag_type can already be defined, but it's not used yet.
 //  There might also be more tag types soon and a way to format the output
@@ -63,6 +63,14 @@ $lang_str["tag:amenity=cinema"]=array("Кинотеатр", "Кинотеатр�
 $lang_str["tag:amenity=restaurant"]=array("Ресторан", "Рестораны");
 $lang_str["tag:amenity=pub"]=array("Паб", "Пабы");
 
+// barrier
+#$lang_str["tag:barrier"]=array("Barrier", "Barriers");
+#$lang_str["tag:barrier=city_wall"]=array("City wall", "City walls");
+#$lang_str["tag:barrier=wall"]=array("Wall", "Walls");
+#$lang_str["tag:barrier=retaining_wall"]=array("Retaining Wall", "Retaining Walls");
+#$lang_str["tag:barrier=fence"]=array("Fence", "Fences");
+#$lang_str["tag:barrier=hedge"]=array("Hedge", "Hedges");
+
 // cables
 $lang_str["tag:cables"]="Кабели";
 
@@ -96,12 +104,12 @@ $lang_str["tag:highway=unclassified"]="Не классифицированная
 $lang_str["tag:highway=service"]="Служебная или внутридворовая дорога";
 $lang_str["tag:highway=pedestrian"]="Пешеходная зона";
 $lang_str["tag:highway=living_street"]="Жилая улица";
-$lang_str["tag:highway=path"]="Пешеходная дорожка";
+$lang_str["tag:highway=path"]="Тропа";
 $lang_str["tag:highway=cycleway"]="Велодорожка";
 $lang_str["tag:highway=footway"]="Пешеходная дорожка";
 $lang_str["tag:highway=bridleway"]="Дорога для верховой езды";
 $lang_str["tag:highway=track"]="Стихийная дорога";
-$lang_str["tag:highway=path"]="Тропа";
+#$lang_str["tag:highway=path"]="Path";
 $lang_str["tag:highway=steps"]="Ступени";
 
 // is_in
@@ -304,8 +312,7 @@ $lang_str["tag:vending"]="Торговые автоматы";
 
 // voltage
 $lang_str["tag:voltage"]="Напряжение";
-$tag_type["voltage"]=array("number", "V", "В");
-// в России принято писать 220 В а не 220 V
+$tag_type["voltage"]=array("number", "V", "V");
 
 // wires
 $lang_str["tag:wires"]="Провода";

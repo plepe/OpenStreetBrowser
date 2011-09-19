@@ -66,12 +66,12 @@ $lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
 
 // barrier
-$lang_str['tag:barrier']=array("Barrier", "Barriers");
-$lang_str['tag:barrier=city_wall']=array("City wall", "City walls");
-$lang_str['tag:barrier=wall']=array("Wall", "Walls");
-$lang_str['tag:barrier=retaining_wall']=array("Retaining Wall", "Retaining Walls");
-$lang_str['tag:barrier=fence']=array("Fence", "Fences");
-$lang_str['tag:barrier=hedge']=array("Hedge", "Hedges");
+$lang_str["tag:barrier"]=array("Barrier", "Barriers");
+$lang_str["tag:barrier=city_wall"]=array("City wall", "City walls");
+$lang_str["tag:barrier=wall"]=array("Wall", "Walls");
+$lang_str["tag:barrier=retaining_wall"]=array("Retaining Wall", "Retaining Walls");
+$lang_str["tag:barrier=fence"]=array("Fence", "Fences");
+$lang_str["tag:barrier=hedge"]=array("Hedge", "Hedges");
 
 // cables
 $lang_str["tag:cables"]="Cables";
@@ -111,7 +111,7 @@ $lang_str["tag:highway=cycleway"]="Cycleway";
 $lang_str["tag:highway=footway"]="Footway";
 $lang_str["tag:highway=bridleway"]="Bridleway";
 $lang_str["tag:highway=track"]="Track";
-$lang_str["tag:highway=path"]="Path";
+#$lang_str["tag:highway=path"]="Path";
 $lang_str["tag:highway=steps"]="Steps";
 
 // is_in

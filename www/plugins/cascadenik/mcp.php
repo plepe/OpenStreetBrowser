@@ -6,6 +6,36 @@ $cascadenik_fontsets=array(
   "oblique"=>array("DejaVu Sans Oblique", "unifont Medium"),
 );
 
+function cascadenik_style_reorder($file) {
+  $content=new DOMDocument();
+  $content->loadXML(file_get_contents($file));
+
+  print "Cascadenik:: Re-Ordering styles in Layers\n";
+
+  $layers=$content->getElementsByTagName("Layer");
+  for($i=0; $i<$layers->length; $i++) {
+    $layer=$layers->item($i);
+    printf("* %s\n", $layer->getAttribute("name"));
+
+    $style_list=array();
+    $styles=$layer->getElementsByTagName("StyleName");
+    for($j=0; $j<$styles->length; $j++) {
+      $style=$styles->item($j);
+      $style_name=$style->firstChild->textContent;
+      printf("  %s\n", $style_name);
+      $style_list[]=$style;
+    }
+
+    rsort($style_list);
+    foreach($style_list as $style) {
+      $layer->removeChild($style);
+      $layer->appendChild($style);
+    }
+  }
+
+  file_put_contents($file, $content->saveXML());
+}
+
 function cascadenik_set_fontsets($file) {
   global $cascadenik_fontsets;
   $font_replace=array();
@@ -63,6 +93,7 @@ function cascadenik_compile($file, $path=null) {
   system("cascadenik-compile.py $file $file_noext.xml");
 
   cascadenik_set_fontsets("$file_noext.xml");
+  cascadenik_style_reorder("$file_noext.xml");
 
   rename("$file_noext.xml", "$file_noext.mapnik");
 

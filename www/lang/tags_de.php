@@ -63,6 +63,14 @@ $lang_str["tag:amenity=cinema"]=array("Kino", "Kinos");
 $lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
 
+// barrier
+$lang_str["tag:barrier"]=array("Barriere", "Barrieren");
+$lang_str["tag:barrier=city_wall"]=array("Stadtmauer", "Stadtmauern");
+$lang_str["tag:barrier=wall"]=array("Mauer", "Mauern");
+$lang_str["tag:barrier=retaining_wall"]=array("Stützmauer", "Stützmauern");
+$lang_str["tag:barrier=fence"]=array("Zaun", "Zäune");
+$lang_str["tag:barrier=hedge"]=array("Hecke", "Hecken");
+
 // cables
 $lang_str["tag:cables"]="Stromkabel";
 
@@ -101,6 +109,7 @@ $lang_str["tag:highway=cycleway"]="Radweg";
 $lang_str["tag:highway=footway"]="Fußweg";
 $lang_str["tag:highway=bridleway"]="Reitweg";
 $lang_str["tag:highway=track"]="Feld-/Waldweg";
+$lang_str["tag:highway=path"]="Weg";
 $lang_str["tag:highway=steps"]="Stufen";
 
 // is_in
@@ -217,6 +226,11 @@ $lang_str["tag:real_ale"]="Richtiges Bier angeboten";
 // religion
 $lang_str["tag:religion"]="Religion";
 $lang_str["tag:religion=christian"]="christlich";
+$lang_str["tag:religion=buddhist"]="buddhistisch";
+#$lang_str["tag:religion=hindu"]="hindu";
+#$lang_str["tag:religion=jewish"]="jewish";
+$lang_str["tag:religion=muslim"]="muslimisch";
+#$lang_str["tag:religion=multifaith"]="multifaith";
 
 // route
 $lang_str["tag:route"]="Route";

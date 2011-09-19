@@ -1,4 +1,6 @@
 <?
+#$lang_str["head:map_key_basemap"]="Basemap";
+
 // building
 $lang_str["map_key_basemap:building=yes"]="Épületek";
 $lang_str["map_key_basemap:building=default"]="Épületek";
@@ -50,7 +52,9 @@ $lang_str["map_key_basemap:landuse=park"]="Park";
 $lang_str["map_key_basemap:places"]="Helyek";
 $lang_str["map_key_basemap:roads"]="Utak";
 $lang_str["map_key_basemap:rails"]="Vasutak";
+#$lang_str["map_key_basemap:pipe_power_lines"]="Pipe- and Power Lines";
 $lang_str["map_key_basemap:borders"]="Határok";
 $lang_str["map_key_basemap:landuse"]="Területfunkciók";
 $lang_str["map_key_basemap:buildings"]="Épületek";
+#$lang_str["map_key_basemap:barrier"]="Barriers";
 $lang_str["map_key_basemap:housenumbers"]="Házszámok";
