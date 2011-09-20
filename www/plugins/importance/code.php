@@ -40,6 +40,11 @@ function importance_text($value) {
   return $importance_levels[sizeof($importance_levels)-round(($value+5)/10.0)];
 }
 
+// returns translated importance string
+function importance_lang($text) {
+  return lang("importance:{$text}");
+}
+
 function importance_init() {
   global $importance_levels;
   global $importance_zoom;

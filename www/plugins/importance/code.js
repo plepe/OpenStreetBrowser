@@ -17,3 +17,7 @@ function importance_text(value) {
   return importance_levels[importance_levels.length-Math.round((value+5)/10.0)];
 }
 
+// returns translated importance string
+function importance_lang(text) {
+  return lang("importance:"+text);
+}
