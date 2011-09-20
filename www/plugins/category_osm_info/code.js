@@ -13,9 +13,32 @@ function category_osm_info_show(cat_win, category) {
     dom_create_append_text(div_desc, desc);
   }
 
+  // sort by importance
+  var imp_list={};
   for(var i=0; i<category.rules.length; i++) {
-    var div=dom_create_append(t.content, "div");
-    dom_create_append_text(div, category.rules[i].name());
+    var imp=category.rules[i].tags.get("importance");
+
+    if(imp) {
+      if(!imp_list[imp])
+	imp_list[imp]=[];
+
+      imp_list[imp].push(category.rules[i]);
+    }
+  }
+
+  // for each importance
+  for(var i=0; i<importance_levels.length; i++) {
+    if(imp_list[importance_levels[i]]) {
+      var h2=dom_create_append(t.content, "h2");
+      dom_create_append_text(h2, lang("importance:name")+": "+importance_lang(importance_levels[i]));
+
+      for(var j=0; j<imp_list[importance_levels[i]].length; j++) {
+	var rule=imp_list[importance_levels[i]][j];
+
+	var div=dom_create_append(t.content, "div");
+	dom_create_append_text(div, rule.name());
+      }
+    }
   }
 }
 
