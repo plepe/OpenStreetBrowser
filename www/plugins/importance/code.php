@@ -17,6 +17,29 @@ $importance_zoom=array(
   "local" 	  =>array("list"=>16, "icon"=>17, "label"=>18),
 );
 
+// returns a value for the passed text ... higher importance, higher value
+function importance_value($text) {
+  global $importance_levels;
+
+  $pos=array_search($text, $importance_levels);
+  if($pos===false)
+    return 0;
+
+  return (sizeof($importance_levels)-$pos)*10-5;
+}
+
+// returns a text for the passed value
+function importance_text($value) {
+  global $importance_levels;
+
+  if($value>=sizeof($importance_levels)*10)
+    return $importance_levels[0];
+  if($value<=0)
+    return $importance_levels[sizeof($importance_levels)-1];
+
+  return $importance_levels[sizeof($importance_levels)-round(($value+5)/10.0)];
+}
+
 function importance_init() {
   global $importance_levels;
   global $importance_zoom;
