@@ -1,4 +1,5 @@
 <?
+$lang_str["importance:name"]="Wichtigkeit";
 $lang_str["importance:global"]="global";
 $lang_str["importance:international"]="international";
 $lang_str["importance:national"]="national";
