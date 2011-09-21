@@ -24,14 +24,22 @@ function translation_show(data) {
       var d=data[i].list[str];
       var tr=dom_create_append(tab, "tr");
 
+      // column 1
       var td=dom_create_append(tr, "td");
-      dom_create_append_text(td, str);
+      var div_id=dom_create_append(td, "div");
+      dom_create_append_text(div_id, str);
+      if(d.help) {
+	var div_help=dom_create_append(td, "div");
+	dom_create_append_text(div_help, d.help);
+      }
 
+      // column 2
       var td=dom_create_append(tr, "td");
       var input=dom_create_append(td, "input");
       input.value=d.value;
       input.name=str;
 
+      // column 3
 //      var td=dom_create_append(tr, "td");
 //      dom_create_append_text(td, str);
     }
