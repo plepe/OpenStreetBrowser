@@ -1,7 +1,7 @@
 var translation_win;
 
 function translation_open() {
-  translation_win=new win({ title: lang("translation:name") });
+  translation_win=new win({ title: lang("translation:name"), class: 'translation_win' });
   ajax("translation_read", { lang: "en" }, translation_open_next1);
 }
 
