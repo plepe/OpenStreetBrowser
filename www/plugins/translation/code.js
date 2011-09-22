@@ -31,9 +31,20 @@ function translation_compare(data) {
     var td=tds[i];
 
     if(td.className=="compare") {
+      var value;
+
       dom_clean(td);
-      var value=data[td.file].list[td.key].value;
-      value=translation_to_value(value);
+
+      if((data[td.file])&&
+	 (data[td.file].list)&&
+	 (data[td.file].list[td.key])&&
+	 (data[td.file].list[td.key].value)) {
+	value=data[td.file].list[td.key].value;
+	value=translation_to_value(value);
+      }
+      else
+	value="";
+
       dom_create_append_text(td, value);
     }
   }
