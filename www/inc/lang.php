@@ -151,7 +151,6 @@ function lang_init() {
 
   // Define a language string for every language
   foreach($language_list as $abbr=>$lang) {
-    $lang_str["lang:".$abbr]=$lang;
     $lang_str["lang_native:".$abbr]=$lang;
   }
 
