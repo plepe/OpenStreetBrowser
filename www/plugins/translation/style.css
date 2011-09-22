@@ -1,8 +1,14 @@
 .translation_win {
   min-height: 50px;
-  max-height: 400px;
   min-width: 600px;
+}
+.translation_win .content {
+  min-height: 50px;
+  max-height: 300px;
   overflow: auto;
+}
+.translation_win form {
+  margin: 0px;
 }
 .translation_win table {
   width: 100%;

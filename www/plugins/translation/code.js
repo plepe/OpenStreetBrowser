@@ -54,10 +54,14 @@ function translation_to_value(value) {
 }
 
 function translation_show(data) {
+  dom_clean(translation_win.content);
+
   translation_form=dom_create_append(translation_win.content, "form");
   translation_form.action="javascript:translation_submit()";
 
-  var tab=dom_create_append(translation_form, "table");
+  var div=dom_create_append(translation_form, "div");
+  div.className="content";
+  var tab=dom_create_append(div, "table");
 
   // header
   var thead=dom_create_append(tab, "thead");
@@ -138,6 +142,7 @@ function translation_show(data) {
 function translation_open() {
   translation_win=new win({ title: lang("translation:name"), class: 'translation_win' });
   ajax("translation_read", { lang: ui_lang }, translation_open_next1);
+  translation_win.content.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+t("loading");
 }
 
 function translation_open_next1(ret) {
