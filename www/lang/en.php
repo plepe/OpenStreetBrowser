@@ -27,6 +27,7 @@ $lang_str["yes"]="yes";
 $lang_str["no"]="no";
 $lang_str["ok"]="Ok";
 $lang_str["save"]="Save";
+$lang_str["saved"]="Saved"; // for dialog boxes confirming saving
 $lang_str["cancel"]="Cancel";
 $lang_str["longitude"]=array("Longitude", "Longitudes");
 $lang_str["latitude"]=array("Latitude", "Latitudes");

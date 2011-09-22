@@ -23,6 +23,9 @@ function translation_submit() {
 
 function translation_save_next(ret) {
   ret=ret.return_value;
+
+  alert(lang("saved"));
+  translation_win.close();
 }
 
 function translation_compare(data) {
