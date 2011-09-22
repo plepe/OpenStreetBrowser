@@ -1,5 +1,6 @@
 var translation_win;
 var translation_form;
+var translation_compare_select;
 
 function translation_submit() {
   var changed={};
@@ -40,6 +41,10 @@ function translation_compare(data) {
 
 function translation_compare_recv(ret) {
   translation_compare(ret.return_value);
+}
+
+function translation_compare_change() {
+  ajax("translation_read", { lang: translation_compare_select.value }, translation_compare_recv);
 }
 
 function translation_to_value(value) {
@@ -136,7 +141,18 @@ function translation_show(data) {
   input.type="submit";
   input.value=lang("save");
 
-  ajax("translation_read", { lang: "en" }, translation_compare_recv);
+  // Choose compare language
+  dom_create_append_text(div, lang("translation:compare")+":");
+  translation_compare_select=dom_create_append(div, "select");
+  translation_compare_select.onchange=translation_compare_change;
+  for(var i=0; i<ui_langs.length; i++) {
+    var opt=dom_create_append(translation_compare_select, "option");
+    opt.value=ui_langs[i];
+    dom_create_append_text(opt, lang("lang:"+ui_langs[i]));
+    if(ui_langs[i]=="en")
+      opt.selected=true;
+  }
+  translation_compare_change();
 }
 
 function translation_open() {
