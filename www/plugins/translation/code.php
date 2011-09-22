@@ -82,6 +82,8 @@ function translation_print_value($v) {
   global $lang_genders;
   $repl=array("\""=>"\\\"", "\\"=>"\\\\");
 
+  if(is_array($v)&&(sizeof($v)==1))
+    $v=$v[0];
   if(is_string($v))
     return "\"".strtr($v, $repl)."\"";
 
@@ -114,7 +116,7 @@ function translation_write_file_php($lang, $f, $data) {
   $f_en=fopen("$translation_path/{$f}en.php", "r");
   $f_t=fopen($file, "w");
   while($r=fgets($f_en)) {
-    if(preg_match("/^(#?)\\\$lang_str\[\"([^\"]*)\"\]\s*=.*;(.*)/", $r, $m)) {
+    if(preg_match("/^(#?)\\\$lang_str\[[\"']([^\"']*)[\"']\]\s*=.*;(.*)/", $r, $m)) {
       if(!$lang_str[$m[2]]) {
 	fputs($f_t, "#$r");
       }

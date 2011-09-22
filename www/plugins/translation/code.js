@@ -13,7 +13,7 @@ function translation_submit() {
       if(!changed[el.file])
 	changed[el.file]={};
 
-      changed[el.file][el.name]=el.value;
+      changed[el.file][el.name]=split_semicolon(el.value);
     }
   }
 
@@ -78,10 +78,19 @@ function translation_show(data) {
       td.className="value";
 
       var input=dom_create_append(td, "input");
-      input.value=d.value;
-      input.orig_value=d.value;
       input.file=i;
       input.name=str;
+
+      var value=d.value;
+      if(!value)
+	value="";
+      else if(typeof value=="object") {
+	if(lang_genders[value[0]])
+	  value[0]=lang_genders[value[0]];
+	value=value.join(";");
+      }
+      input.value=value;
+      input.orig_value=value;
 
       // column 3
       var td=dom_create_append(tr, "td");
