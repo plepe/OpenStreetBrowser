@@ -77,6 +77,50 @@ function translation_to_value(value) {
   return value;
 }
 
+function translation_print_file_lang_str(file, data, tbody) {
+  if(!data.order)
+    return;
+
+  for(var j=0; j<data.order.length; j++) {
+    var str=data.order[j];
+    var d=data.list[str];
+    var tr=dom_create_append(tbody, "tr");
+
+    // column 1
+    var td=dom_create_append(tr, "td");
+    td.className="id_help";
+
+    var div_id=dom_create_append(td, "div");
+    div_id.className="id";
+    dom_create_append_text(div_id, str);
+
+    if(d.help) {
+      var div_help=dom_create_append(td, "div");
+      div_help.className="help";
+      dom_create_append_text(div_help, d.help);
+    }
+
+    // column 2
+    var td=dom_create_append(tr, "td");
+    td.className="value";
+
+    var input=dom_create_append(td, "input");
+    input.file=file;
+    input.name=str;
+
+    var value=translation_to_value(d.value);
+    input.value=value;
+    input.orig_value=value;
+
+    // column 3
+    var td=dom_create_append(tr, "td");
+    td.className="compare";
+    td.file=file;
+    td.key=str;
+    dom_create_append_text(td, "");
+  }
+}
+
 function translation_show(data) {
   dom_clean(translation_win.content);
 
@@ -113,44 +157,17 @@ function translation_show(data) {
     if(!data[i])
       continue;
 
-    if(data[i].order)
-    for(var j=0; j<data[i].order.length; j++) {
-      var str=data[i].order[j];
-      var d=data[i].list[str];
-      var tr=dom_create_append(tbody, "tr");
-
-      // column 1
-      var td=dom_create_append(tr, "td");
-      td.className="id_help";
-
-      var div_id=dom_create_append(td, "div");
-      div_id.className="id";
-      dom_create_append_text(div_id, str);
-
-      if(d.help) {
-	var div_help=dom_create_append(td, "div");
-	div_help.className="help";
-	dom_create_append_text(div_help, d.help);
-      }
-
-      // column 2
-      var td=dom_create_append(tr, "td");
-      td.className="value";
-
-      var input=dom_create_append(td, "input");
-      input.file=i;
-      input.name=str;
-
-      var value=translation_to_value(d.value);
-      input.value=value;
-      input.orig_value=value;
-
-      // column 3
-      var td=dom_create_append(tr, "td");
-      td.className="compare";
-      td.file=i;
-      td.key=str;
-      dom_create_append_text(td, "");
+    var mode=i.match(/^([^:]*):/);
+    switch(mode[1]) {
+      case "php":
+      case "category":
+        translation_print_file_lang_str(i, data[i], tbody);
+	break;
+      case "doc":
+        //translation_print_file_doc(i, data[i], tbody);
+	break;
+      default:
+        /* should not come here */
     }
   }
 
