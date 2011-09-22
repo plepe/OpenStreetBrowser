@@ -239,10 +239,11 @@ function translation_main_links($links) {
 }
 
 function ajax_translation_save($param) {
-  $lang="de";
   global $translation_path;
   global $current_user;
   translation_init();
+
+  $lang=$param['lang'];
 
   foreach($param['changed'] as $f=>$data) {
     if(preg_match("/^(php|doc|category):(.*)$/", $f, $m)) {
@@ -252,11 +253,14 @@ function ajax_translation_save($param) {
 
     switch($mode) {
       case "php":
-	return translation_write_file_php($lang, $file, $data);
+	translation_write_file_php($lang, $file, $data);
+	break;
       case "doc":
-	return translation_write_file_doc($lang, $file, $data);
+	translation_write_file_doc($lang, $file, $data);
+	break;
       case "category":
-	return translation_write_file_category($lang, $file, $data);
+	translation_write_file_category($lang, $file, $data);
+	break;
     }
   }
 
