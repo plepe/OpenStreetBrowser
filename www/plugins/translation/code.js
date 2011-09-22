@@ -41,9 +41,14 @@ function translation_compare(data) {
 
 function translation_compare_recv(ret) {
   translation_compare(ret.return_value);
+  dom_clean(translation_compare_select.nextSibling);
 }
 
 function translation_compare_change() {
+  var img=dom_create_append(translation_compare_select.nextSibling, "img");
+  img.className="loading";
+  img.src="img/ajax_loader.gif";
+
   ajax("translation_read", { lang: translation_compare_select.value }, translation_compare_recv);
 }
 
@@ -152,6 +157,9 @@ function translation_show(data) {
     if(ui_langs[i]=="en")
       opt.selected=true;
   }
+  // place holder for loading-indicator
+  dom_create_append(div, "span");
+  // request compare translation
   translation_compare_change();
 }
 
