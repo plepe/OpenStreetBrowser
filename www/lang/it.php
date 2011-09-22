@@ -14,6 +14,7 @@
 //  If a Singular/Plural form is not
 //  suitable/necessary you can ignore the array, e.g.
 //  $lang_str["help"]="Help";
+$lang_str["lang:current"]="Italiano"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
 // General
 $lang_str["general_info"]="General Information";

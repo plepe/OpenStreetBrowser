@@ -16,6 +16,7 @@
 //  $lang_str["help"]="Help";
 
 $lang_str["base_language"]="en";
+$lang_str["lang:current"]="Deutsch"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
 // General
 $lang_str["general_info"]="Allgemeine Informationen";

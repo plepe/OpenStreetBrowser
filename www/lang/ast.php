@@ -15,6 +15,7 @@
 //  suitable/necessary you can ignore the array, e.g.
 //  $lang_str["help"]="Help";
 $lang_str["base_language"]="es";
+$lang_str["lang:current"]="Asturianu"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
 // General
 $lang_str["general_info"]="Información Xeneral";
