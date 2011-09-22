@@ -14,6 +14,7 @@
 //  If a Singular/Plural form is not
 //  suitable/necessary you can ignore the array, e.g.
 //  $lang_str["help"]="Help";
+$lang_str["base_language"]="es";
 
 // General
 $lang_str["general_info"]="Información Xeneral";

@@ -128,13 +128,13 @@ function lang_load($lang, $loaded=array()) {
   }
   $loaded[]=$lang;
 
-  if(!isset($base_language))
-    $base_language="en";
-  if(in_array($base_language, $loaded))
+  if(!isset($lang_str['base_language']))
+    $lang_str['base_language']="en";
+  if(in_array($lang_str['base_language'], $loaded))
     return;
 
   $save_lang_str=$lang_str;
-  lang_load($base_language, $loaded);
+  lang_load($lang_str['base_language'], $loaded);
   $lang_str=array_merge($lang_str, $save_lang_str);
 }
 

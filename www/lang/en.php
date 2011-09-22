@@ -15,11 +15,7 @@
 //  suitable/necessary you can ignore the array, e.g.
 //  $lang_str["help"]="Help";
 
-// Set the language code for a base language which should be used if a string
-// has not been defined in this language. Usually you want to set it to 'en'
-// (English), but for example if you write a language file for a dialect, you
-// might want to set it to its standard language.
-#$base_language="en";
+#$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been defined in this language. Usually you want to set it to 'en' (English), but for example if you write a language file for a dialect, you might want to set it to its standard language.
 
 // General
 $lang_str["general_info"]="General Information";
