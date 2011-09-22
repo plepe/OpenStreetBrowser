@@ -136,6 +136,9 @@ function translation_write_file_php($lang, $f, $data) {
   }
   fclose($f_t);
   fclose($f_en);
+
+  chdir($translation_path);
+  system("git add $file");
 }
 
 function translation_read_file_doc($lang, $f) {
@@ -237,6 +240,8 @@ function translation_main_links($links) {
 
 function ajax_translation_save($param) {
   $lang="de";
+  global $translation_path;
+  global $current_user;
   translation_init();
 
   foreach($param['changed'] as $f=>$data) {
@@ -254,6 +259,12 @@ function ajax_translation_save($param) {
 	return translation_write_file_category($lang, $file, $data);
     }
   }
+
+  chdir($translation_path);
+  $author=$current_user->get_author();
+  $msg=strtr($param['msg'], array("\""=>"\\\""));
+  $p=popen("git commit --message=\"$msg\" --author=\"$author\"", "r");
+  pclose($p);
 }
 
 register_hook("main_links", "translation_main_links");

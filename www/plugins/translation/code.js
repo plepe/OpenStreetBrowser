@@ -18,7 +18,7 @@ function translation_submit() {
     }
   }
 
-  ajax("translation_save", { lang: ui_lang, changed: changed }, translation_save_next);
+  ajax("translation_save", { lang: ui_lang, changed: changed, msg: "Update translation ("+ui_lang+")" }, translation_save_next);
 }
 
 function translation_save_next(ret) {
