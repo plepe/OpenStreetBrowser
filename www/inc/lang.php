@@ -3,6 +3,7 @@ include "lang/list.php";
 define("F", 1);
 define("M", 2);
 define("N", 3);
+$lang_genders=array(1=>"F", 2=>"M", 3=>"N");
 
 function lang() {
   global $lang_str;
@@ -144,6 +145,7 @@ function lang_init() {
   global $data_lang;
   global $language_list;
   global $design_hidden;
+  global $lang_genders;
 
   lang_load($ui_lang);
 
@@ -156,7 +158,7 @@ function lang_init() {
   if(!$design_hidden)
     print "<script type='text/javascript' src='inc/lang.js'></script>\n";
 
-  html_export_var(array("ui_lang"=>$ui_lang, "data_lang"=>$data_lang, "ui_langs"=>$ui_langs, "lang_str"=>$lang_str, "language_list"=>$language_list));
+  html_export_var(array("ui_lang"=>$ui_lang, "data_lang"=>$data_lang, "ui_langs"=>$ui_langs, "lang_str"=>$lang_str, "language_list"=>$language_list, "lang_genders"=>$lang_genders));
   add_html_header("<meta http-equiv=\"content-language\" content=\"{$ui_lang}\">");
 }
 
