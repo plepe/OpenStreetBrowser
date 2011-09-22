@@ -17,7 +17,7 @@ function translation_submit() {
     }
   }
 
-  ajax("translation_save", { lang: "en", changed: changed }, translation_save_next);
+  ajax("translation_save", { lang: ui_lang, changed: changed }, translation_save_next);
 }
 
 function translation_save_next(ret) {
@@ -52,6 +52,9 @@ function translation_show(data) {
     th.colSpan=3;
     th.className="file";
     dom_create_append_text(th, i);
+
+    if(!data[i])
+      continue;
 
     if(data[i].order)
     for(var j=0; j<data[i].order.length; j++) {
@@ -108,7 +111,7 @@ function translation_show(data) {
 
 function translation_open() {
   translation_win=new win({ title: lang("translation:name"), class: 'translation_win' });
-  ajax("translation_read", { lang: "en" }, translation_open_next1);
+  ajax("translation_read", { lang: ui_lang }, translation_open_next1);
 }
 
 function translation_open_next1(ret) {

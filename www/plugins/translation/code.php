@@ -53,6 +53,7 @@ function ajax_translation_files_list() {
 function translation_read_file_php($lang, $f) {
   $ret=array();
   global $translation_path;
+  $file_en="$translation_path/{$f}en.php";
   $file="$translation_path/$f$lang.php";
 
   if(!file_exists($file))
@@ -60,11 +61,14 @@ function translation_read_file_php($lang, $f) {
 
   include "$file";
 
-  $f=fopen($file, "r");
+  $f=fopen($file_en, "r");
   while($r=fgets($f)) {
     if(preg_match("/^( *)\\\$lang_str\[['\"]([^\"]*)['\"]\]/", $r, $m)) {
       $found=false;
-      $ret[$m[2]]=array('value'=>$lang_str[$m[2]]);
+      if(isset($lang_str[$m[2]]))
+	$ret[$m[2]]=array('value'=>$lang_str[$m[2]]);
+      else
+	$ret[$m[2]]="";
       if(preg_match("/\\/\\/\s*(.*)$/", $r, $m1)) {
 	$ret[$m[2]]['help']=$m1[1];
       }
