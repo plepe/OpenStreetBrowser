@@ -24,6 +24,35 @@ function translation_save_next(ret) {
   ret=ret.return_value;
 }
 
+function translation_compare(data) {
+  var tds=translation_form.getElementsByTagName("td");
+  for(var i=0; i<tds.length; i++) {
+    var td=tds[i];
+
+    if(td.className=="compare") {
+      dom_clean(td);
+      var value=data[td.file].list[td.key].value;
+      value=translation_to_value(value);
+      dom_create_append_text(td, value);
+    }
+  }
+}
+
+function translation_compare_recv(ret) {
+  translation_compare(ret.return_value);
+}
+
+function translation_to_value(value) {
+  if(!value)
+    value="";
+  else if(typeof value=="object") {
+    if(lang_genders[value[0]])
+      value[0]=lang_genders[value[0]];
+    value=value.join(";");
+  }
+  return value;
+}
+
 function translation_show(data) {
   translation_form=dom_create_append(translation_win.content, "form");
   translation_form.action="javascript:translation_submit()";
@@ -84,21 +113,16 @@ function translation_show(data) {
       input.file=i;
       input.name=str;
 
-      var value=d.value;
-      if(!value)
-	value="";
-      else if(typeof value=="object") {
-	if(lang_genders[value[0]])
-	  value[0]=lang_genders[value[0]];
-	value=value.join(";");
-      }
+      var value=translation_to_value(d.value);
       input.value=value;
       input.orig_value=value;
 
       // column 3
       var td=dom_create_append(tr, "td");
       td.className="compare";
-      dom_create_append_text(td, "foo");
+      td.file=i;
+      td.key=str;
+      dom_create_append_text(td, "");
     }
   }
 
@@ -107,6 +131,8 @@ function translation_show(data) {
   var input=dom_create_append(div, "input");
   input.type="submit";
   input.value=lang("save");
+
+  ajax("translation_read", { lang: "en" }, translation_compare_recv);
 }
 
 function translation_open() {
