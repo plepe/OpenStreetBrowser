@@ -78,6 +78,60 @@ function translation_read_file_php($lang, $f) {
   );
 }
 
+function translation_print_value($v) {
+  global $lang_genders;
+  $repl=array("\""=>"\\\"", "\\"=>"\\\\");
+
+  if(is_string($v))
+    return "\"".strtr($v, $repl)."\"";
+
+  $ret="array(";
+  if($lang_genders[$v[0]]) {
+    $ret="array({$lang_genders[$v[0]]}, ";
+    array_shift($v);
+  }
+  elseif(in_array($v[0], array("M", "F", "N"))) {
+    $ret="array($v[0], ";
+    array_shift($v);
+  }
+
+  foreach($v as $vi=>$vv) {
+    $v[$vi]=strtr($vv, $repl);
+  }
+  $ret.="\"".implode("\", \"", $v)."\")";
+
+  return $ret;
+}
+
+function translation_write_file_php($lang, $f, $data) {
+  $lang_str=array();
+
+  global $translation_path;
+  $file="$translation_path/$f$lang.php";
+  include $file;
+  $lang_str=array_merge($lang_str, $data);
+
+  $f_en=fopen("$translation_path/{$f}en.php", "r");
+  $f_t=fopen($file, "w");
+  while($r=fgets($f_en)) {
+    if(preg_match("/^(#?)\\\$lang_str\[\"([^\"]*)\"\]\s*=.*;(.*)/", $r, $m)) {
+      if(!$lang_str[$m[2]]) {
+	fputs($f_t, "#$r");
+      }
+      else {
+	$value=translation_print_value($lang_str[$m[2]]);
+	$str="$m[1]\$lang_str[\"$m[2]\"]=$value;$m[4]\n";
+	fputs($f_t, $str);
+      }
+    }
+    else {
+      fputs($f_t, $r);
+    }
+  }
+  fclose($f_t);
+  fclose($f_en);
+}
+
 function translation_read_file_doc($lang, $f) {
   $ret=array();
   global $translation_path;
@@ -173,6 +227,27 @@ function ajax_translation_read($param) {
 
 function translation_main_links($links) {
   $links[]=array(5, "<a href='javascript:translation_open()'>".lang("translation:name")."</a>");
+}
+
+function ajax_translation_save($param) {
+  $lang="de";
+  translation_init();
+
+  foreach($param['changed'] as $f=>$data) {
+    if(preg_match("/^(php|doc|category):(.*)$/", $f, $m)) {
+      $mode=$m[1];
+      $file=$m[2];
+    }
+
+    switch($mode) {
+      case "php":
+	return translation_write_file_php($lang, $file, $data);
+      case "doc":
+	return translation_write_file_doc($lang, $file, $data);
+      case "category":
+	return translation_write_file_category($lang, $file, $data);
+    }
+  }
 }
 
 register_hook("main_links", "translation_main_links");

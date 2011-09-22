@@ -17,7 +17,11 @@ function translation_submit() {
     }
   }
 
-  alert(print_r(changed));
+  ajax("translation_save", { lang: "en", changed: changed }, translation_save_next);
+}
+
+function translation_save_next(ret) {
+  ret=ret.return_value;
 }
 
 function translation_show(data) {
