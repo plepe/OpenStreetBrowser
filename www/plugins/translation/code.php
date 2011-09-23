@@ -141,13 +141,27 @@ function translation_write_file_php($lang, $f, $data) {
   system("git add $file");
 }
 
+function translation_write_file_doc($lang, $f, $data) {
+  $lang_str=array();
+
+  global $translation_path;
+  $file="$translation_path/$f$lang.doc";
+
+  file_put_contents($file, $data);
+
+  chdir($translation_path);
+  system("git add $file");
+}
+
 function translation_read_file_doc($lang, $f) {
   $ret=array();
   global $translation_path;
   $file="$translation_path/$f$lang.doc";
 
   if(!file_exists($file))
-    return "";
+    return array(
+      'contents'=>"",
+    );
 
   return array(
     'contents'=>file_get_contents($file),

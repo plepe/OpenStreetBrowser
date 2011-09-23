@@ -8,7 +8,14 @@ function translation_submit() {
   for(var i=0; i<translation_form.elements.length; i++) {
     var el=translation_form.elements[i];
 
+    if(el.mode=="doc") {
+      if(el.value!=el.orig_value) {
+	changed[el.file]=el.value;
+      }
+    }
+    else
     if((el.name)&&
+       (el.value)&&
        (el.value!=el.orig_value)&&
        (!((el.value=="")&&(!el.orig_value)))) {
       if(!changed[el.file])
@@ -43,12 +50,19 @@ function translation_compare(data) {
 	 (data[td.file].list[td.key])&&
 	 (data[td.file].list[td.key].value)) {
 	value=data[td.file].list[td.key].value;
-	value=translation_to_value(value);
+	value=document.createTextNode(translation_to_value(value));
       }
       else
-	value="";
+      if((data[td.file])&&
+	 (data[td.file].contents)) {
+	value=document.createElement("textarea");
+	value.value=data[td.file].contents;
+	//dom_create_append_text(value, 
+      }
+      else
+	value=document.createTextNode("");
 
-      dom_create_append_text(td, value);
+      td.appendChild(value);
     }
   }
 }
@@ -121,6 +135,45 @@ function translation_print_file_lang_str(file, data, tbody) {
   }
 }
 
+function translation_print_file_doc(file, data, tbody) {
+  var tr=dom_create_append(tbody, "tr");
+
+  // column 1
+  var td=dom_create_append(tr, "td");
+  td.className="id_help";
+
+  if(data.help) {
+    var div_help=dom_create_append(td, "div");
+    div_help.className="help";
+    dom_create_append_text(div_help, data.help);
+  }
+
+  var div=dom_create_append(td, "div");
+  div.className="help";
+  dom_create_append_text(div, "You can use WikiCreole markup on this file");
+
+  // column 2
+  var td=dom_create_append(tr, "td");
+  td.className="value";
+
+  var input=dom_create_append(td, "textarea");
+  input.file=file;
+  input.mode="doc";
+  input.name=file;
+
+  input.value=data.contents;
+  input.orig_value=data.contents;
+
+  // column 3
+  var td=dom_create_append(tr, "td");
+  td.className="compare";
+  td.file=file;
+  td.name="_content_";
+
+  var input=dom_create_append(td, "textarea");
+  input.disabled=true;
+}
+
 function translation_show(data) {
   dom_clean(translation_win.content);
 
@@ -164,7 +217,7 @@ function translation_show(data) {
         translation_print_file_lang_str(i, data[i], tbody);
 	break;
       case "doc":
-        //translation_print_file_doc(i, data[i], tbody);
+        translation_print_file_doc(i, data[i], tbody);
 	break;
       default:
         /* should not come here */
