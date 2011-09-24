@@ -85,6 +85,36 @@ class translation {
     $this->lang=$lang;
   }
 
+  // update_language_list
+  function update_language_list() {
+    global $ui_langs;
+    global $language_list;
+    global $translation_path;
+
+    include "$translation_path/www/lang/{$this->lang}.php";
+    $language_list[$this->lang]=$lang_str['lang:current'];
+
+    $f=fopen("$translation_path/www/lang/list.php", "w");
+    fwrite($f, "<?\n");
+    fwrite($f, "// The UI has been translated to following languages\n");
+    $ui_langs[]=$this->lang;
+    $ui_langs=array_unique($ui_langs);
+    
+    fwrite($f, "\$ui_langs=array(\"".implode("\", \"", $ui_langs)."\");\n");
+    fwrite($f, "\n");
+    fwrite($f, "// A list of all languages we know about\n");
+    fwrite($f, "\$language_list=array(\n");
+    foreach($language_list as $li=>$ln) {
+      fwrite($f, "  \"$li\"=>\"$ln\",\n");
+    }
+    fwrite($f, ");\n");
+
+    fclose($f);
+
+    chdir($translation_path);
+    system("git add $translation_path/www/lang/list.php");
+  }
+
   // save
   function save($changed, $param) {
     global $translation_path;
@@ -112,6 +142,8 @@ class translation {
 	  break;
       }
     }
+
+    $this->update_language_list();
 
     chdir($translation_path);
     $author=$current_user->get_author();
