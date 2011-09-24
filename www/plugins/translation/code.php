@@ -131,13 +131,13 @@ class translation {
 
     $f=fopen($file_en, "r");
     while($r=fgets($f)) {
-      if(preg_match("/^( *)\\\$lang_str\[['\"]([^\"]*)['\"]\]/", $r, $m)) {
+      if(preg_match("/^ *(#?)\\\$lang_str\[[\"']([^\"']*)[\"']\]\s*=(.*);(.*)/", $r, $m)) {
 	$found=false;
 	if(isset($lang_str[$m[2]]))
 	  $ret[$m[2]]=array('value'=>$lang_str[$m[2]]);
 	else
 	  $ret[$m[2]]="";
-	if(preg_match("/\\/\\/\s*(.*)$/", $r, $m1)) {
+	if($m[4]&&(preg_match("/^\s*\/\/\s*(.*)/", $m[4], $m1))) {
 	  $ret[$m[2]]['help']=$m1[1];
 	}
       }
@@ -164,13 +164,13 @@ class translation {
     $f_en=fopen("$translation_path/{$f}en.php", "r");
     $f_t=fopen($file, "w");
     while($r=fgets($f_en)) {
-      if(preg_match("/^(#?)\\\$lang_str\[[\"']([^\"']*)[\"']\]\s*=.*;(.*)/", $r, $m)) {
+      if(preg_match("/^ *(#?)\\\$lang_str\[[\"']([^\"']*)[\"']\]\s*=(.*);(.*)/", $r, $m)) {
 	if(!$lang_str[$m[2]]) {
-	  fputs($f_t, "#$r");
+	  fputs($f_t, "#\$lang_str[\"$m[2]\"]=$m[3];$m[4]\n");
 	}
 	else {
 	  $value=translation_print_value($lang_str[$m[2]]);
-	  $str="$m[1]\$lang_str[\"$m[2]\"]=$value;$m[4]\n";
+	  $str="\$lang_str[\"$m[2]\"]=$value;$m[4]\n";
 	  fputs($f_t, $str);
 	}
       }
