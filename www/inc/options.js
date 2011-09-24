@@ -167,6 +167,10 @@ function show_options() {
   ret+=options_select("data_lang", l);
   ret+="</p>\n";
 
+  var add=[];
+  call_hooks("options_lang", add);
+  ret+=add.join(" |\n");
+
   ret+="</div>\n";
   ret+="<div class='options_interact'><input type='submit' value='"+t("save")+"'>\n";
   ret+="<input type='button' onClick='javascript:close_options()' value='"+t("cancel")+"'></div>\n";
