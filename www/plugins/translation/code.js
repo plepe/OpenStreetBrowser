@@ -277,3 +277,9 @@ function translation_open() {
 
 function translation_files_list() {
 }
+
+function translation_options(add) {
+  add.push("<a href='javascript:translation_open()'>"+lang("translation:improve")+"</a>");
+}
+
+register_hook("options_lang", translation_options);
