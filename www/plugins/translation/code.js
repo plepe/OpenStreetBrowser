@@ -264,15 +264,54 @@ function translation(l) {
     this.show(ret);
   }
 
+  // load
+  this.load=function() {
+    ajax("translation_read", { lang: this.lang }, this.load_callback.bind(this));
+    this.win.content.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+t("loading");
+  }
+
+  // ask_new_next
+  this.ask_new_next=function() {
+    this.lang=this.form.lang_code.value;
+
+    dom_clean(this.win);
+
+    this.load();
+  }
+
+  // ask_new
+  this.ask_new=function() {
+    this.form=dom_create_append(this.win.content, "form");
+    this.form.action="javascript:translation_submit()";
+    this.form.onsubmit=this.ask_new_next.bind(this);
+
+    dom_create_append_text(this.form, lang("translation:enter_lang_code"));
+    var input=dom_create_append(this.form, "input");
+    input.name="lang_code";
+
+    dom_create_append(this.form, "br");
+    var input=dom_create_append(this.form, "input");
+    input.type="submit";
+    input.value=lang("ok");
+  }
+
   // constructor
-  this.lang=l;
   this.win=new win({ title: lang("translation:name"), class: 'translation_win' });
-  ajax("translation_read", { lang: this.lang }, this.load_callback.bind(this));
-  this.win.content.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+t("loading");
+  if(!l) {
+    this.ask_new();
+  }
+  else {
+    this.lang=l;
+    this.load();
+  }
 }
 
 function translation_open() {
   new translation(ui_lang);
+}
+
+function translation_new() {
+  new translation();
 }
 
 function translation_files_list() {
@@ -280,6 +319,7 @@ function translation_files_list() {
 
 function translation_options(add) {
   add.push("<a href='javascript:translation_open()'>"+lang("translation:improve")+"</a>");
+  add.push("<a href='javascript:translation_new()'>"+lang("translation:new")+"</a>");
 }
 
 register_hook("options_lang", translation_options);
