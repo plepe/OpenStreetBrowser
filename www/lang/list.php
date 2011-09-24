@@ -2,23 +2,6 @@
 // The UI has been translated to following languages
 $ui_langs=array("en", "de", "it", "ja", "uk", "fr", "ru", "es", "cs", "hu", "nl", "ast");
 
-// This is the list of the names of the pages in the OSM-Wiki, e.g.
-// http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Languages/English
-$languages_wiki=array(
-  "en"=>"English",
-  "de"=>"German",
-  "fr"=>"French",
-  "ja"=>"Japanese",
-  "uk"=>"Ukrainian",
-  "it"=>"Italian",
-  "ru"=>"Russian",
-  "es"=>"Spanish",
-  "cs"=>"Czech",
-  "hu"=>"Hungarian",
-  "nl"=>"Dutch",
-  "ast"=>"Asturian",
-);
-
 // A list of all languages we know about
 $language_list=array(
   ""  =>"Local language",
@@ -58,7 +41,3 @@ $language_list=array(
   "uk"=>"украї́нська мо́ва",
   "ast"=>"Asturianu",
 );
-
-// Sources:
-// - Languages of European Union: http://publications.europa.eu/code/de/de-370200.htm
-// - Wikipedia
