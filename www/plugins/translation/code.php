@@ -127,9 +127,6 @@ class translation {
     $file_en="$translation_path/{$f}en.php";
     $file="$translation_path/$f{$this->lang}.php";
 
-    if(!file_exists($file))
-      return null;
-
     include "$file";
 
     $f=fopen($file_en, "r");
