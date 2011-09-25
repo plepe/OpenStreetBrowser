@@ -4,14 +4,9 @@ function category_osm_info_show(cat_win, category) {
 
   var div=dom_create_append(t.content, "div");
 
-  var h1=dom_create_append(div, "h1");
-  dom_create_append_text(h1, lang("category")+" \""+category.tags.get_lang("name", ui_lang)+"\"");
-
-  var desc;
-  if(desc=category.tags.get_lang("description", ui_lang)) {
-    var div_desc=dom_create_append(div, "div");
-    dom_create_append_text(div_desc, desc);
-  }
+  var div1=category.category_osm_info();
+  if(div1)
+    div.appendChild(div1);
 
   // sort by importance
   var imp_list={};
@@ -43,6 +38,26 @@ function category_osm_info_show(cat_win, category) {
     }
   }
 }
+
+function category_osm_info_cat_construct(ob) {
+  ob.category_osm_info=function() {
+    var div=document.createElement("div");
+    div.className="category_header";
+
+    var h1=dom_create_append(div, "h1");
+    dom_create_append_text(h1, lang("category")+" \""+this.tags.get_lang("name", ui_lang)+"\"");
+
+    var desc;
+    if(desc=this.tags.get_lang("description", ui_lang)) {
+      var div_desc=dom_create_append(div, "div");
+      div_desc.className="description";
+      dom_create_append_text(div_desc, desc);
+    }
+
+    return div;
+  }
+}
+
 
 function category_osm_info_rule_construct(ob) {
   ob.category_osm_info=function() {
@@ -76,4 +91,5 @@ function category_osm_info_rule_construct(ob) {
 }
 
 register_hook("category_window_show", category_osm_info_show);
+register_hook("category_construct", category_osm_info_cat_construct);
 register_hook("category_rule_construct", category_osm_info_rule_construct);
