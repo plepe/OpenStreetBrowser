@@ -150,6 +150,21 @@ function show_options() {
       str+=" ("+lang("lang:"+ui_langs[i])+")";
     ui_langs_x[ui_langs[i]]=str;
   }
+
+  // if ui_lang is set to a not defined UI lang add this option
+  if(!in_array(ui_langs, ui_lang)) {
+    var str="";
+    if(language_list[ui_lang])
+      str=language_list[ui_lang];
+    else
+      str=ui_lang;
+
+    if(lang("lang:"+ui_lang)!=str)
+      str+=" ("+lang("lang:"+ui_lang)+")";
+
+    ui_langs_x[ui_lang]=str;
+  }
+
   ret+=options_select("ui_lang", ui_langs_x);
   ret+="<br/>\n";
 
