@@ -1,7 +1,20 @@
 <?
 $make_valid=array("&"=>"&amp;", "\""=>"&quot;", "<"=>"&lt;", ">"=>"&gt;");
 
+class category_rule {
+  public $tags;
+  public $id;
+
+  function __construct($category, $data) {
+    $this->category=$category;
+    $this->id=$data['rule_id'];
+    $this->tags=new tags(parse_hstore($data['tags']));
+  }
+}
+
 class category {
+  public $rules;
+
   function __construct($id) {
     global $lists_dir;
     $this->id=$id;
@@ -33,6 +46,12 @@ class category {
 	"tags"=>$this->tags,
 	"version"=>0,
       ));
+    }
+
+    $this->rules=array();
+    $res=sql_query("select * from category_rule where version='{$this->data['_']['version']}'");
+    while($elem=pg_fetch_assoc($res)) {
+      $this->rules[$elem['rule_id']]=new category_rule($this, $elem);
     }
   }
 
