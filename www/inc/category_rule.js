@@ -7,7 +7,6 @@ function category_rule_match(dom, cat, rule) {
     var x;
     var name="";
     var add="";
-    var title="";
 
     // Create a 'li'-element for the match in the supplied ul
     var li=dom_create_append(ul, "li");
@@ -22,7 +21,6 @@ function category_rule_match(dom, cat, rule) {
 	li.style.listStyleImage="url('"+x.icon_url()+"')";
     }
 
-    // in the li element create a link to the object
     var a=dom_create_append(li, "a");
     a.href="#"+this.id;
     a.onmouseover=this.set_highlight.bind(this);
@@ -84,6 +82,35 @@ function category_rule_match(dom, cat, rule) {
 }
 
 function category_rule(category, dom) {
+  // title
+  this.name=function(count) {
+    var title="";
+
+    if(this.tags.get_lang("name", ui_lang)) {
+      title=split_semicolon(this.tags.get_lang("name", ui_lang));
+      if(title.length==1)
+	title=title[0];
+      else {
+	var gender_shift=0;
+	if(title.length==3)
+	  gender_shift=1;
+
+	if(count>1)
+	  title=title[1+gender_shift];
+	else
+	  title=title[0+gender_shift];
+      }
+    }
+    else if(this.tags.get("match")) {
+      title=this.tags.get("match");
+    }
+    else {
+      title=lang("category:new_rule");
+    }
+
+    return title;
+  }
+
   // constructor
   this.icon=null;
   if(!dom) {
@@ -114,4 +141,5 @@ function category_rule(category, dom) {
     return this.data[id];
   }
 
+  call_hooks("category_rule_construct", this);
 }

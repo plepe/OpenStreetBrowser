@@ -1,4 +1,4 @@
-function category_editor(id) {
+function category_editor(id, cat_win) {
   // editor
   this.init=function() {
     dom_clean(this.win.content);
@@ -67,7 +67,7 @@ function category_editor(id) {
 
   // new_rule
   this.new_rule=function() {
-    var el=new category_edit_rule(this);
+    var el=new category_editor_rule(this);
     this.rules.push(el);
 
     var div=document.createElement("div");
@@ -178,7 +178,7 @@ function category_editor(id) {
     var cur=cat_data.firstChild;
     while(cur) {
       if(cur.nodeName=="rule") {
-        var t=new category_edit_rule(this, cur);
+        var t=new category_editor_rule(this, cur);
 	this.rules.push(t);
       }
       cur=cur.nextSibling;
@@ -191,8 +191,9 @@ function category_editor(id) {
   this.id=id;
   if(!this.id)
     this.id="new";
-  this.win=new win({ class: "category_editor", title: lang("category", 1) });
+  this.win=new tab({ class: "category_editor", title: lang("category_editor:editor", 1) });
   this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
+  cat_win.tab_manager.register_tab(this.win);
 
   if(this.id!="new")
     this.load_def();
@@ -203,7 +204,7 @@ function category_editor(id) {
   }
 }
 
-function category_edit_rule(category, dom) {
+function category_editor_rule(category, dom) {
   // constructor
   this.icon=null;
   if(!dom) {
@@ -252,7 +253,7 @@ function category_edit_rule(category, dom) {
     else if(this.tags.get("match"))
       txt=this.tags.get("match");
     else
-      txt="New rule";
+      txt=lang("category:new_rule");
 
     dom_create_append_text(header, txt);
 
@@ -274,7 +275,7 @@ function category_edit_rule(category, dom) {
     dom_create_append(header, "br");
     var input=dom_create_append(header, "input");
     input.type="button";
-    input.value=t("expand");
+    input.value=lang("category_editor:expand");
   }
 
   this.choose_icon=function() {
@@ -316,14 +317,14 @@ function category_edit_rule(category, dom) {
 
       var input=dom_create_append(td, "input");
       input.type="button";
-      input.value=t("choose");
+      input.value=lang("category_editor:choose");
       input.onclick=this.choose_icon.bind(this);
 
       this.preview=dom_create_append(td, "span");
 
       var input=dom_create_append(td, "input");
       input.type="button";
-      input.value=t("edit");
+      input.value=lang("category_editor:edit");
       input.onclick=this.edit_icon.bind(this);
 
       tag.change(tag);
@@ -415,3 +416,10 @@ function category_edit_rule(category, dom) {
     return this.data[id];
   }
 }
+
+// start_editor
+function category_editor_win_show(win, category) {
+  new category_editor(category.id, win);
+}
+  
+register_hook("category_window_show", category_editor_win_show);

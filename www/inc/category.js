@@ -216,6 +216,8 @@ function category(id) {
 	this.sub_categories[i].attach_div(div.sub);
       }
     }
+
+    call_hooks("category_write_div", div, this);
   }
 
   // attach_div - show category in a div
@@ -271,4 +273,6 @@ function category(id) {
   this.version=0;
   this.divs=[];
   this.loaded=false;
+
+  call_hooks("category_construct", this);
 }
