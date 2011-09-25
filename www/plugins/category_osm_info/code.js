@@ -1,8 +1,11 @@
 function category_osm_info_show(cat_win, category) {
   var t=new tab({ title: lang("category_osm_info:info") });
   cat_win.tab_manager.register_tab(t);
+  t.content.innerHTML="<img src=\"img/ajax_loader.gif\" /> "+lang("loading");
 
-  var div=dom_create_append(t.content, "div");
+  var content=document.createElement("div");
+
+  var div=dom_create_append(content, "div");
 
   var div1=category.category_osm_info_head();
   if(div1)
@@ -32,9 +35,9 @@ function category_osm_info_show(cat_win, category) {
   // for each importance
   for(var i=0; i<importance_levels.length; i++) {
     if(imp_list[importance_levels[i]]) {
-      var h2=dom_create_append(t.content, "h2");
+      var h2=dom_create_append(content, "h2");
       dom_create_append_text(h2, lang("importance:name")+": "+importance_lang(importance_levels[i]));
-      var ul=dom_create_append(t.content, "ul");
+      var ul=dom_create_append(content, "ul");
 
       for(var j=0; j<imp_list[importance_levels[i]].length; j++) {
 	var rule=imp_list[importance_levels[i]][j];
@@ -45,6 +48,10 @@ function category_osm_info_show(cat_win, category) {
       }
     }
   }
+  
+  // show ...
+  dom_clean(t.content);
+  t.content.appendChild(content);
 }
 
 function category_osm_info_cat_construct(ob) {
