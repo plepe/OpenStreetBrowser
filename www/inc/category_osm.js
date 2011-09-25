@@ -325,9 +325,12 @@ function category_osm(id) {
 	delete(this.overlay);
       else if(!(this.overlay=get_overlay(this.id)))
 	this.overlay=new overlay(this.id);
-      this.overlay.register_category(this);
-      this.overlay.set_version(this.version);
-      this.overlay.set_name(this.tags.get_lang("name", ui_lang));
+
+      if(this.overlay) {
+	this.overlay.register_category(this);
+	this.overlay.set_version(this.version);
+	this.overlay.set_name(this.tags.get_lang("name", ui_lang));
+      }
     }
 
     // We still have received data ... process now
