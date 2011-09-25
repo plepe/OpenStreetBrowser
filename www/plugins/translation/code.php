@@ -184,6 +184,15 @@ class translation {
     }
     fclose($f);
 
+    // special code for www/lang/lang_*.php
+    if($base_file=="www/lang/lang_") {
+      global $language_list;
+      foreach($language_list as $lang=>$d) {
+	if((!isset($ret["lang:$lang"]))&&($lang!=""))
+	  $ret["lang:$lang"]=array();
+      }
+    }
+
     return array(
       'list'=>$ret,
       'order'=>array_keys($ret),
