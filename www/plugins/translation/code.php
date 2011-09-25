@@ -272,13 +272,16 @@ class translation {
     $orig_lang=$tags['lang'];
     if(!$orig_lang)
       $orig_lang="en";
+    $suffix="";
+    if($orig_lang!=$this->lang)
+      $suffix=":{$this->lang}";
 
     $ret["$category:name"]=array(
-      'value'=>$tags["name:{$this->lang}"],
+      'value'=>$tags["name{$suffix}"],
       'help'=>"Category name",
     );
     $ret["$category:description"]=array(
-      'value'=>$tags["description:{$this->lang}"],
+      'value'=>$tags["description{$suffix}"],
       'help'=>"Category description",
     );
 
@@ -288,11 +291,11 @@ class translation {
       $rule_id=$elem_rule['rule_id'];
 
       $ret["$category:$rule_id:name"]=array(
-	'value'=>($this->lang==$orig_lang?$tags["name"]:$tags["name:{$this->lang}"]),
+	'value'=>$tags["name{$suffix}"],
 	'help'=>"Match: {$tags['match']}",
       );
       $ret["$category:$rule_id:description"]=array(
-	'value'=>($lang==$orig_lang?$tags["description"]:$tags["description:{$this->lang}"]),
+	'value'=>$tags["description{$suffix}"],
       );
     }
 
