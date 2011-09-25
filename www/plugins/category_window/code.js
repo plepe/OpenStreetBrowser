@@ -36,6 +36,9 @@ function category_window_start_window(category) {
 }
 
 function category_window_write_div(div, category) {
+  if(category.id=="root")
+    return;
+
   // write_div
   var span=dom_create_append(div.header, "span");
   span.className="category_tools";
