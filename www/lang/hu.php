@@ -131,18 +131,3 @@ $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Eredeti (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
-
-// please finish this list, see list.php for full list of languages
-$lang_str["lang:de"]="Német";
-$lang_str["lang:bg"]="Bulgár";
-$lang_str["lang:cs"]="Cseh";
-$lang_str["lang:en"]="Angol";
-$lang_str["lang:es"]="Spanyol";
-$lang_str["lang:it"]="Olasz";
-$lang_str["lang:fr"]="Francia";
-$lang_str["lang:uk"]="Ukrán";
-$lang_str["lang:ru"]="Orosz";
-$lang_str["lang:ja"]="Japán";
-$lang_str["lang:hu"]="Magyar";
-#$lang_str["lang:nl"]="Dutch";
-#$lang_str["lang:ast"]="Asturian";

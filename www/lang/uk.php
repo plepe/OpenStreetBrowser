@@ -131,18 +131,3 @@ $lang_str["overlay:draggable"]="Маркери";
 #$lang_str["basemap:mapnik"]="Standard (Mapnik)";
 #$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 #$lang_str["basemap:cyclemap"]="CycleMap";
-
-// please finish this list, see list.php for full list of languages
-#$lang_str["lang:de"]="German";
-#$lang_str["lang:bg"]="Bulgarian";
-#$lang_str["lang:cs"]="Czech";
-#$lang_str["lang:en"]="English";
-#$lang_str["lang:es"]="Spanish";
-#$lang_str["lang:it"]="Italian";
-#$lang_str["lang:fr"]="French";
-#$lang_str["lang:uk"]="Ukrainian";
-#$lang_str["lang:ru"]="Russian";
-#$lang_str["lang:ja"]="Japanese";
-#$lang_str["lang:hu"]="Hungarian";
-#$lang_str["lang:nl"]="Dutch";
-#$lang_str["lang:ast"]="Asturian";

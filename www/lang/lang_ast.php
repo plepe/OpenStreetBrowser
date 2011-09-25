@@ -1,0 +1,14 @@
+<?
+$lang_str["lang:de"]="Alemán";
+$lang_str["lang:bg"]="Búlgaru";
+$lang_str["lang:cs"]="Checu";
+$lang_str["lang:en"]="Inglés";
+$lang_str["lang:es"]="Español";
+$lang_str["lang:it"]="Italianu";
+$lang_str["lang:fr"]="Francés";
+$lang_str["lang:uk"]="Ucraín";
+$lang_str["lang:ru"]="Rusu";
+$lang_str["lang:ja"]="Xaponés";
+$lang_str["lang:hu"]="Húngaru";
+$lang_str["lang:nl"]="Neerlandés";
+$lang_str["lang:ast"]="Asturianu";

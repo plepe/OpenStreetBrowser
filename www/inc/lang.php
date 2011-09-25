@@ -122,6 +122,7 @@ function lang_load($lang, $loaded=array()) {
   $lang_str=array();
 
   @include_once("lang/{$lang}.php");
+  @include_once("lang/lang_{$lang}.php");
   @include_once("lang/tags_{$lang}.php");
   foreach($plugins_list as $plugin=>$dummy) {
     @include_once("plugins/$plugin/lang_{$lang}.php");

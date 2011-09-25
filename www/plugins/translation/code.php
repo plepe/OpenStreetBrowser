@@ -53,6 +53,7 @@ function translation_files_list() {
 
   // $lang_str-Files and doc-Files
   $ret[]="php:www/lang/";
+  $ret[]="php:www/lang/lang_";
   $ret[]="php:www/lang/tags_";
   $d=opendir("$translation_path/www/plugins");
   while($f=readdir($d)) {
