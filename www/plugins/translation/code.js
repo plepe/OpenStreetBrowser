@@ -184,9 +184,7 @@ function translation(l) {
 
   // show
   this.show=function(data) {
-    dom_clean(this.win.content);
-
-    this.form=dom_create_append(this.win.content, "form");
+    this.form=document.createElement("form");
     this.form.action="javascript:translation_submit()";
     this.form.onsubmit=this.submit.bind(this);
 
@@ -255,6 +253,9 @@ function translation(l) {
     dom_create_append(div, "span");
     // request compare translation
     this.compare_change();
+
+    dom_clean(this.win.content);
+    this.win.content.appendChild(this.form);
   }
 
   // load_callback
