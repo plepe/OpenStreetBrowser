@@ -49,26 +49,11 @@ function category_rule_match(dom, cat, rule) {
       }
     }
 
-    // Get the name of the match or use the 'match'-string
-    if(this.rule.tags.get_lang("name", ui_lang)) {
-      title=split_semicolon(this.rule.tags.get_lang("name", ui_lang));
-      if(title.length==1)
-	title=title[0];
-      else {
-	if(this.id_split.length>1)
-	  title=title[1];
-	else
-	  title=title[0];
-      }
-    }
-    else
-      title=this.rule.tags.get("match");
-
-    // Append name after link
+    // Append rule name after link
     dom_create_append_text(li, " ");
     var s=dom_create_append(li, "span");
     s.className="name";
-    dom_create_append_text(s, title);
+    dom_create_append_text(s, this.rule.name());
 
     // set description as tooltip
     if(x=this.rule.tags.get_lang("description", ui_lang)) {
