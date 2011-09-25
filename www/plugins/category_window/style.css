@@ -1,8 +1,10 @@
 div.category_window {
   width: 500px;
-  max-height: 300px;
   min-height: 50px;
+}
+div.category_window .tab_content_active {
   overflow: auto;
+  max-height: 300px;
 }
 div.category_window_content {
 }
