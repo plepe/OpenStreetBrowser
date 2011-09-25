@@ -187,7 +187,7 @@ function category_editor(id, cat_win) {
   this.id=id;
   if(!this.id)
     this.id="new";
-  this.win=new tab({ class: "category_editor", title: lang("editor", 1) });
+  this.win=new tab({ class: "category_editor", title: lang("category_editor:editor", 1) });
   this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
   cat_win.tab_manager.register_tab(this.win);
 
@@ -249,7 +249,7 @@ function category_editor_rule(category, dom) {
     else if(this.tags.get("match"))
       txt=this.tags.get("match");
     else
-      txt="New rule";
+      txt=lang("category:new_rule");
 
     dom_create_append_text(header, txt);
 
@@ -271,7 +271,7 @@ function category_editor_rule(category, dom) {
     dom_create_append(header, "br");
     var input=dom_create_append(header, "input");
     input.type="button";
-    input.value=t("expand");
+    input.value=lang("category_editor:expand");
   }
 
   this.choose_icon=function() {
@@ -313,14 +313,14 @@ function category_editor_rule(category, dom) {
 
       var input=dom_create_append(td, "input");
       input.type="button";
-      input.value=t("choose");
+      input.value=lang("category_editor:choose");
       input.onclick=this.choose_icon.bind(this);
 
       this.preview=dom_create_append(td, "span");
 
       var input=dom_create_append(td, "input");
       input.type="button";
-      input.value=t("edit");
+      input.value=lang("category_editor:edit");
       input.onclick=this.edit_icon.bind(this);
 
       tag.change(tag);
