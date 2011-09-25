@@ -111,4 +111,5 @@ function category_rule(category, dom) {
     return this.data[id];
   }
 
+  call_hooks("category_rule_construct", this);
 }

@@ -273,4 +273,6 @@ function category(id) {
   this.version=0;
   this.divs=[];
   this.loaded=false;
+
+  call_hooks("category_construct", this);
 }
