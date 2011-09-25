@@ -144,7 +144,7 @@ class translation {
 	  $this->write_file_doc($file, $data);
 	  break;
 	case "category":
-	  $this->write_file_category($file, $data);
+	  $this->write_file_category($file, $data, $param);
 	  break;
       }
     }
@@ -307,6 +307,34 @@ class translation {
     );
   }
 
+  // write_file_category
+  function write_file_category($file, $data, $param) {
+    $file=explode(":", $file);
+    $cat=new category($file[0]);
+
+    $cat_lang=$cat->tags->get("lang");
+    if(!$cat_lang)
+      $cat_lang="en";
+    $suffix="";
+    if($cat_lang!=$this->lang)
+      $suffix=":{$this->lang}";
+
+    foreach($data as $path=>$str) {
+      $str=implode(";", $str);
+      $path=explode(":", $path);
+
+      if(sizeof($path)==2) {
+	$cat->tags->set("{$path[1]}{$suffix}", $str);
+      }
+      elseif(sizeof($path)==3) {
+	if($cat->rules[$path[1]])
+	  $cat->rules[$path[1]]->tags->set("{$path[2]}{$suffix}", $str);
+      }
+    }
+
+    $cat->save($param);
+  }
+
   // read_file
   function read_file($f) {
     global $translation_path;
@@ -341,7 +369,6 @@ class translation {
 } // class
 
 function ajax_translation_save($param) {
-  print_r($param);
   $t=new translation($param['lang']);
   return $t->save($param['changed'], $param);
 }
