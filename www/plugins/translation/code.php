@@ -161,11 +161,11 @@ class translation {
   }
 
   // read_file_php
-  function read_file_php($f) {
+  function read_file_php($base_file) {
     $ret=array();
     global $translation_path;
-    $file_en="$translation_path/{$f}en.php";
-    $file="$translation_path/$f{$this->lang}.php";
+    $file_en="$translation_path/{$base_file}en.php";
+    $file="$translation_path/{$base_file}{$this->lang}.php";
 
     include "$file";
 
@@ -176,7 +176,7 @@ class translation {
 	if(isset($lang_str[$m[2]]))
 	  $ret[$m[2]]=array('value'=>$lang_str[$m[2]]);
 	else
-	  $ret[$m[2]]="";
+	  $ret[$m[2]]=array();
 	if($m[4]&&(preg_match("/^\s*\/\/\s*(.*)/", $m[4], $m1))) {
 	  $ret[$m[2]]['help']=$m1[1];
 	}
