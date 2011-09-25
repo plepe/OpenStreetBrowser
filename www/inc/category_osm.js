@@ -1,6 +1,6 @@
 var importance=[ "global", "international", "national", "regional", "urban", "suburban", "local" ];
 var category_tags_default=
-  { "name": "", "descprition": "", "lang": "en", "sub_categories": "", "id": "" };
+  { "name": "", "description": "", "lang": "en", "sub_categories": "", "id": "" };
 var category_rule_tags_default=
   { "name": "", "match": "", "description": "", "icon": "", 
     "importance": "urban", "type": "polygon;point" };
