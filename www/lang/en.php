@@ -135,6 +135,7 @@ $lang_str["category_rule_tag:match"]="Match";
 $lang_str["category_rule_tag:description"]="Description";
 $lang_str["category_chooser:choose"]="Choose a category";
 $lang_str["category_chooser:new"]="New category";
+$lang_str["category:sub_category"]=array("Sub-category", "Sub-categories");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";

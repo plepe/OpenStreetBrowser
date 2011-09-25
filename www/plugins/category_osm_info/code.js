@@ -4,9 +4,17 @@ function category_osm_info_show(cat_win, category) {
 
   var div=dom_create_append(t.content, "div");
 
-  var div1=category.category_osm_info();
+  var div1=category.category_osm_info_head();
   if(div1)
     div.appendChild(div1);
+
+  var div1=category.category_osm_info_sub();
+  if(div1) {
+    var h2=dom_create_append(div, "h2");
+    dom_create_append_text(h2, lang("category:sub_category", 2));
+
+    div.appendChild(div1);
+  }
 
   // sort by importance
   var imp_list={};
@@ -40,7 +48,8 @@ function category_osm_info_show(cat_win, category) {
 }
 
 function category_osm_info_cat_construct(ob) {
-  ob.category_osm_info=function() {
+  // category_osm_info_head
+  ob.category_osm_info_head=function() {
     var div=document.createElement("div");
     div.className="category_header";
 
@@ -55,6 +64,44 @@ function category_osm_info_cat_construct(ob) {
     }
 
     return div;
+  }
+
+  // category_osm_info
+  ob.category_osm_info=function() {
+    var div=document.createElement("li");
+    div.className="category_header";
+
+    var h1=dom_create_append(div, "h3");
+    dom_create_append_text(h1, lang("category")+" \""+this.tags.get_lang("name", ui_lang)+"\"");
+
+    var desc;
+    if(desc=this.tags.get_lang("description", ui_lang)) {
+      var div_desc=dom_create_append(div, "div");
+      div_desc.className="description";
+      dom_create_append_text(div_desc, desc);
+    }
+
+    return div;
+  }
+
+  // category_osm_info_sub
+  ob.category_osm_info_sub=function() {
+    var list;
+    if(!(list=this.tags.get("sub_categories")))
+      return;
+
+    list=split_semicolon(list);
+
+    var ul=document.createElement("ul");
+    for(var i=0; i<list.length; i++) {
+      var ob=get_category("osm:"+list[i]);
+
+      var li=ob.category_osm_info();
+      if(li)
+	ul.appendChild(li);
+    }
+
+    return ul;
   }
 }
 
