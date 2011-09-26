@@ -64,6 +64,29 @@ function lang(str, count) {
   return vsprintf(el, vars);
 }
 
+function lang_dom(str, count) {
+  var el=lang_element(str, count);
+  var ret="";
+
+  if(arguments.length<=2) {
+    ret=el;
+  }
+  else {
+    var vars=[];
+    for(var i=2;i<arguments.length;i++) {
+      vars.push(arguments[i]);
+    }
+
+    ret=vsprintf(el, vars);
+  }
+
+  var dom=document.createElement("span");
+  dom.setAttribute("lang_str", str);
+  dom_create_append_text(dom, ret);
+  
+  return dom;
+}
+
 function t(str, count) {
   // TODO: write deprecation message to debug
 
