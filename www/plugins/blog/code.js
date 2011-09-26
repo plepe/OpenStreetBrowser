@@ -105,6 +105,18 @@ function blog_show_startup(data) {
   blog_show(rss);
 }
 
+function blog_show_menu(data) {
+  ajax_direct("plugins/blog/rss.php", null, blog_show_menu_next);
+  blog_create_win();
+}
+
+function blog_show_menu_next(data) {
+  var blog_rss=data.responseXML;
+  var rss=blog_read(blog_rss);
+
+  blog_show(rss);
+}
+
 function blog_init() {
   ajax_direct("plugins/blog/rss.php", null, blog_show_startup);
 }
