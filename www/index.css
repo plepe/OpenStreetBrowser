@@ -248,8 +248,9 @@ div.permalink {
   font-size: smaller;
   text-shadow: 0.1em 0.1em 0.1em #ffffff;
 } 
-td.help {
+.help {
   font-size: 8pt;
+  font-style: italic;
 }
 div.editor_category_rule {
   border: 1px solid black;
