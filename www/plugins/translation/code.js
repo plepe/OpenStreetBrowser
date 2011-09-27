@@ -296,6 +296,11 @@ function translation(l) {
     var input=dom_create_append(this.form, "input");
     input.name="lang_code";
 
+    // Enable plugin 'lang_preferred' to make this work
+    if((typeof lang_preferred_langs!="undefined")&&(lang_preferred_langs.length>0)) {
+      input.value=lang_preferred_langs[0];
+    }
+
     dom_create_append(this.form, "br");
     var input=dom_create_append(this.form, "input");
     input.type="submit";
