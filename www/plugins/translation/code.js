@@ -273,8 +273,14 @@ function translation(l) {
 
   // ask_new_next
   this.ask_new_next=function() {
-    this.lang=this.form.lang_code.value;
+    var lang=this.form.lang_code.value;
 
+    if(!lang_code_check(lang)) {
+      alert("Translation: Illegal language code");
+      return;
+    }
+
+    this.lang=lang;
     dom_clean(this.win);
 
     this.load();

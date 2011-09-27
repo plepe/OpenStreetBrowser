@@ -379,11 +379,17 @@ class translation {
 } // class
 
 function ajax_translation_save($param) {
+  if(!lang_code_check($param['lang']))
+    return false;
+
   $t=new translation($param['lang']);
   return $t->save($param['changed'], $param);
 }
 
 function ajax_translation_read($param) {
+  if(!lang_code_check($param['lang']))
+    return false;
+
   $t=new translation($param['lang']);
   return $t->read();
 }
