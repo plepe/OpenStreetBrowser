@@ -1410,3 +1410,8 @@ insert into classify_hmatch values ('basemap_area_text',
   null,
   '#area_text=>park'
 );
+insert into classify_hmatch values ('basemap_area_text',
+  'natural=>mountain_range',
+  null,
+  '#area_text=>mountain_range'
+);

@@ -255,3 +255,9 @@ Map {
   text-fill: #000000;
   text-halo-fill: #9ce69c;
 }
+.area_text_extract[type=mountain_range] name,
+.area_text[type=mountain_range] name {
+  text-face-name: "DejaVu Sans Oblique";
+  text-fill: #707070;
+  text-halo-fill: #a0a0a0;
+}
