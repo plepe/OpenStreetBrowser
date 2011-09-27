@@ -85,6 +85,10 @@ function lang_change(key, value) {
   }
 }
 
+function lang_code_check(lang) {
+  return lang.match(/^[a-z\-]+$/);
+}
+
 function lang_init() {
   if(!options_get("ui_lang"))
     options_set("ui_lang", ui_lang);

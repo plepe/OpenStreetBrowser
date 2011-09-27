@@ -139,6 +139,10 @@ function lang_load($lang, $loaded=array()) {
   $lang_str=array_merge($lang_str, $save_lang_str);
 }
 
+function lang_code_check($lang) {
+  return preg_match("/^[a-z\-]+$/", $lang);
+}
+
 function lang_init() {
   global $lang_str;
   global $ui_lang;
