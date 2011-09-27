@@ -166,6 +166,7 @@ class translation {
     global $translation_path;
     $file_en="$translation_path/{$base_file}en.php";
     $file="$translation_path/{$base_file}{$this->lang}.php";
+    $help_line=0;
 
     include "$file";
 
@@ -180,6 +181,10 @@ class translation {
 	if($m[4]&&(preg_match("/^\s*\/\/\s*(.*)/", $m[4], $m1))) {
 	  $ret[$m[2]]['help']=$m1[1];
 	}
+      }
+      elseif(preg_match("/^\/\/(.*)$/", $r, $m)) {
+	$ret["%$help_line"]=$m[1];
+	$help_line++;
       }
     }
     fclose($f);

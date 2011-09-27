@@ -105,6 +105,19 @@ function translation(l) {
       var d=data.list[str];
       var tr=dom_create_append(tbody, "tr");
 
+      // help string detected
+      if(str.match(/^%/)) {
+	var td=dom_create_append(tr, "td");
+	td.colSpan=3;
+	td.className="full_help";
+
+	var span=dom_create_append(td, "span");
+	span.className="help";
+	dom_create_append_text(span, d);
+
+	continue;
+      }
+
       // column 1
       var td=dom_create_append(tr, "td");
       td.className="id_help";
