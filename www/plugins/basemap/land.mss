@@ -219,24 +219,21 @@ Map {
   text-wrap-width: 20;
   text-max-char-angle-delta: 20;
 }
-.area_text_extract[way_area>=600000000][zoom>=6] name,
-.area_text_extract[way_area>=300000000][zoom>=7] name,
-.area_text_extract[way_area>=150000000][zoom>=8] name,
-.area_text_extract[way_area>=75000000][zoom>=9] name,
-.area_text_extract[way_area>=37500000][zoom>=10] name,
-.area_text_extract[way_area>=20000000][zoom>=11] name,
-.area_text_extract[way_area>=10000000][zoom>=12] name,
-.area_text_extract[way_area>=5000000][zoom>=13] name,
-.area_text[way_area>=150000][zoom>=14] name {
-  text-size: 10;
-}
-.area_text[way_area>=75000][way_area<150000][zoom>=15] name {
-  text-size: 10;
-}
-.area_text[way_area>=10000][way_area<75000][zoom>=16] name {
-  text-size: 10;
-}
-.area_text[way_area<10000][zoom>=17] name {
+.area_text_extract[way_area_k>=32000000][zoom=6] name,
+.area_text_extract[way_area_k>=8000000][zoom=7] name,
+.area_text_extract[way_area_k<400000000][way_area_k>=2000000][zoom=8] name,
+.area_text_extract[way_area_k<100000000][way_area_k>=500000][zoom=9] name,
+.area_text_extract[way_area_k<32000000][way_area_k>=125000][zoom=10] name,
+.area_text_extract[way_area_k<8000000][way_area_k>=32000][zoom=11] name,
+.area_text_extract[way_area_k<2000000][way_area_k>=8000][zoom=12] name,
+.area_text_extract[way_area_k<500000][way_area_k>=2000][zoom=13] name,
+/* the following zoom levels don't follow the exponential curve. when more
+ * objects are displayed this should be adapted too, to not clutter the map */
+.area_text[way_area<125000000][way_area>=150000][zoom=14] name,
+.area_text[way_area<32000000][way_area>=75000][zoom=15] name,
+.area_text[way_area<8000000][way_area>=10000][zoom=16] name,
+.area_text[way_area<2000000][zoom=17] name,
+.area_text[way_area<500000][zoom=18] name {
   text-size: 10;
 }
 .area_text_extract[type=water] name,

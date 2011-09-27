@@ -231,7 +231,7 @@
 	  osm_tags->'name' as "name",
 	  osm_tags->'#area_text' as "type",
 	  osm_way,
-	  ST_Area(osm_way) as "way_area"
+	  ST_Area(osm_way)/1000 as "way_area_k"
 	from (select
 	    osm_way,
 	    classify_hmatch(Array['basemap_area_text'],
