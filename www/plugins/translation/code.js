@@ -292,8 +292,17 @@ function translation(l) {
     this.form.action="javascript:translation_submit()";
     this.form.onsubmit=this.ask_new_next.bind(this);
 
-    dom_create_append_text(this.form, lang("translation:enter_lang_code"));
-    var input=dom_create_append(this.form, "input");
+    var table=dom_create_append(this.form, "table");
+    var tr=dom_create_append(table, "tr");
+    var td=dom_create_append(tr, "td");
+
+    dom_create_append_text(td, lang("translation:enter_lang_code")+":");
+    var help=dom_create_append(td, "div");
+    help.className="help";
+    dom_create_append_text(help, lang("translation:enter_lang_code_help"));
+
+    var td=dom_create_append(tr, "td");
+    var input=dom_create_append(td, "input");
     input.name="lang_code";
 
     // Enable plugin 'lang_preferred' to make this work
