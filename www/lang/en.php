@@ -106,6 +106,7 @@ $lang_str["user:login"]="Login";
 $lang_str["user:logged_in_as"]="Logged in as ";
 $lang_str["user:logout"]="Logout";
 
+$lang_str["attention"]="Attention: ";
 $lang_str["error"]="An error occured: ";
 $lang_str["error:not_logged_in"]="you are not logged in";
 

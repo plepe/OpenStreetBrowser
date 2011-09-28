@@ -128,6 +128,10 @@ class translation {
     global $current_user;
     translation_init();
 
+    // no user ... return
+    if($current_user->username=="")
+      return "error:not_logged_in";
+
     if(!$changed)
       return;
 
@@ -158,6 +162,8 @@ class translation {
     $p=popen("git commit --message=\"$msg\" --author=\"$author\"", "r");
     while($f=fgets($p)) /* do nothing */ ;
     pclose($p);
+
+    return true;
   }
 
   // read_file_php
@@ -389,9 +395,11 @@ class translation {
   }
 } // class
 
-function ajax_translation_save($param) {
+function ajax_translation_save($param, $xml, $postdata) {
   if(!lang_code_check($param['lang']))
     return false;
+
+  $param=array_merge($param, json_decode($postdata, true));
 
   $t=new translation($param['lang']);
   return $t->save($param['changed'], $param);
