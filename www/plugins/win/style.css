@@ -14,18 +14,23 @@ div.win {
 }
 div.win .content {
 }
-div.win_title_bar {
+table.win_title_bar {
   background: #999999;
   border-bottom: 1px solid #999999;
+  border-collapse: collapse;
+  height: 16px;
+  padding: 1px;
+  width: 100%;
+}
+table.win_title_bar td.title {
   color: #efefef;
   vertical-align: middle;
-  height: 16px;
-  font-weight: bold;
-  padding: 1px;
-  padding-left: 3px;
+  width: 100%;
   font-size: 13px;
+  padding-left: 3px;
   cursor: default;
   user-select: none;
+  font-weight: bold;
 }
 div.win_title_bar_moving {
   cursor: move;

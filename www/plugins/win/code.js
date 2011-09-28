@@ -34,7 +34,7 @@ function win(options) {
 
   // set_title
   this.set_title=function(title) {
-    var current=this.title_bar.firstChild;
+    var current=this.title.firstChild;
     current.textContent=title;
   }
 
@@ -82,16 +82,20 @@ function win(options) {
   win_root.appendChild(this.win);
 
   // Create title-bar
-  this.title_bar=dom_create_append(this.win, "div");
+  this.title_bar=dom_create_append(this.win, "table");
   this.title_bar.className="win_title_bar";
-  dom_create_append_text(this.title_bar, options.title?options.title:"Window");
-  this.win.appendChild(this.title_bar);
-  this.title_bar.onmousedown=this.mousedown.bind(this);
-  this.title_bar.onmouseup=this.mouseup.bind(this);
-  this.title_bar.onselectstart=function() {};
+  var tr=dom_create_append(this.title_bar, "tr");
+
+  this.title=dom_create_append(tr, "td");
+  this.title.className="title";
+  dom_create_append_text(this.title, options.title?options.title:"Window");
+  this.title.onmousedown=this.mousedown.bind(this);
+  this.title.onmouseup=this.mouseup.bind(this);
+  this.title.onselectstart=function() {};
 
   // Close Button
-  var close_button=dom_create_append(this.title_bar, "img");
+  var td=dom_create_append(tr, "td");
+  var close_button=dom_create_append(td, "img");
   close_button.src="plugins/win/close.png";
   close_button.alt="close";
   close_button.className="win_close_button";
