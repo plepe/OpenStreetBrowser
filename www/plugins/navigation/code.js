@@ -242,6 +242,7 @@ function navigation_info(chapters, ob) {
     // set home
     var a=document.createElement("a");
     a.onclick=navigation_set_home.bind(this, ob.geo_center());
+    a.href="#";
     dom_create_append_text(a, lang("navigation:set_home"));
 
     var entry={
@@ -255,6 +256,7 @@ function navigation_info(chapters, ob) {
     // set destination
     var a=document.createElement("a");
     a.onclick=navigation_set_destination.bind(this, ob.geo_center());
+    a.href="#";
     dom_create_append_text(a, lang("navigation:set_destination"));
 
     var entry={
