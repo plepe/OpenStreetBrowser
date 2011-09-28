@@ -741,6 +741,20 @@ function navigation_info(chapters, ob) {
     };
 
     chapters.push(entry);
+
+    // add via
+    var a=document.createElement("a");
+    a.onclick=navigation_add_via.bind(this, ob);
+    a.href="#";
+    dom_create_append_text(a, lang("navigation:add_via"));
+
+    var entry={
+      head: 'actions',
+      weight: 9,
+      content: [ a ]
+    };
+
+    chapters.push(entry);
   }
 }
 
