@@ -62,6 +62,10 @@ function navigation_point(lon, lat, style) {
 
   // hide
   this.hide=function() {
+    // already removed?
+    if(!this.feature.layer)
+      return;
+
     drag_layer.unselect(this.feature);
     drag_layer.removeFeatures([this.feature]);
   }
