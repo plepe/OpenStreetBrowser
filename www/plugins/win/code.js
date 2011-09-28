@@ -3,6 +3,7 @@ var win_root;
 var win_mousemove_old;
 var win_mousepos;
 var win_currentdrag=null;
+var win_oldmouseup;
 
 function win_mousemove(event) {
   var win_mouseold=win_mousepos;
@@ -90,7 +91,6 @@ function win(options) {
   this.title.className="title";
   dom_create_append_text(this.title, options.title?options.title:"Window");
   this.title.onmousedown=this.mousedown.bind(this);
-  this.title.onmouseup=this.mouseup.bind(this);
   this.title.onselectstart=function() {};
 
   // Close Button
@@ -114,3 +114,14 @@ function win(options) {
 function win_close(id) {
   windows[id].close();
 }
+
+function win_mouseup(event) {
+  if(win_currentdrag)
+    return win_currentdrag.mouseup(event);
+
+  if(win_oldmouseup)
+    return win_oldmouseup(event);
+}
+
+win_oldmouseup=window.onmouseup;
+window.onmouseup=win_mouseup;
