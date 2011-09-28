@@ -77,6 +77,10 @@ function cascadenik_set_fontsets($file) {
       $sym->removeAttribute("face_name");
       $sym->setAttribute("fontset_name", $font_replace[$face_name]);
     }
+
+    // as cascadenik ignores text-max-char-angle-delta, we just put it to
+    // any TextSymbolizer. Is there a reason why we wouldn't want that?
+    $sym->setAttribute("max_char_angle_delta", 10);
   }
 
   file_put_contents($file, $content->saveXML());
