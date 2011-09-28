@@ -395,9 +395,11 @@ class translation {
   }
 } // class
 
-function ajax_translation_save($param) {
+function ajax_translation_save($param, $xml, $postdata) {
   if(!lang_code_check($param['lang']))
     return false;
+
+  $param=array_merge($param, json_decode($postdata, true));
 
   $t=new translation($param['lang']);
   return $t->save($param['changed'], $param);

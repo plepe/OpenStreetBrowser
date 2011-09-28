@@ -37,7 +37,10 @@ function translation(l) {
       }
     }
 
-    ajax("translation_save", { lang: this.lang, changed: changed, msg: "Update translation ("+this.lang+")" }, this.save_next.bind(this));
+    var post_data={ changed: changed, msg: "Update translation ("+this.lang+")" };
+    post_data=json_encode(post_data);
+
+    ajax("translation_save", { lang: this.lang }, this.save_next.bind(this), post_data);
   }
 
   // save_next
