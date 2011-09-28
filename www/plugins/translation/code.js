@@ -44,7 +44,13 @@ function translation(l) {
   this.save_next=function(ret) {
     ret=ret.return_value;
 
-    alert(lang("saved"));
+    if(ret!==true) {
+      alert(lang(ret));
+    }
+    else {
+      alert(lang("saved"));
+    }
+
     this.win.close();
   }
 

@@ -158,6 +158,8 @@ class translation {
     $p=popen("git commit --message=\"$msg\" --author=\"$author\"", "r");
     while($f=fgets($p)) /* do nothing */ ;
     pclose($p);
+
+    return true;
   }
 
   // read_file_php
