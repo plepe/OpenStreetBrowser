@@ -45,7 +45,7 @@ function translation(l) {
     ret=ret.return_value;
 
     if(ret!==true) {
-      alert(lang(ret));
+      alert(lang("error")+lang(ret));
     }
     else {
       alert(lang("saved"));
@@ -75,6 +75,7 @@ function translation(l) {
 	if((data[td.file])&&
 	   (data[td.file].contents)) {
 	  value=document.createElement("textarea");
+	  value.disabled=true;
 	  value.value=data[td.file].contents;
 	  //dom_create_append_text(value, 
 	}
@@ -150,6 +151,10 @@ function translation(l) {
       input.value=value;
       input.orig_value=value;
 
+      // no user ... disable
+      if(current_user.username=="")
+	input.disabled=true;
+
       // column 3
       var td=dom_create_append(tr, "td");
       td.className="compare";
@@ -190,6 +195,10 @@ function translation(l) {
     input.value=data.contents;
     input.orig_value=data.contents;
 
+    // no user ... disable
+    if(current_user.username=="")
+      input.disabled=true;
+
     // column 3
     var td=dom_create_append(tr, "td");
     td.className="compare";
@@ -209,6 +218,13 @@ function translation(l) {
 
     var div=dom_create_append(this.form, "div");
     div.className="content";
+
+    if(current_user.username=="") {
+      var div_error=dom_create_append(div, "div");
+      div_error.className="error";
+      dom_create_append_text(div_error, lang("attention")+": "+lang("error:not_logged_in"));
+    }
+
     var tab=dom_create_append(div, "table");
 
     // header

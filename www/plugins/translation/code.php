@@ -128,6 +128,10 @@ class translation {
     global $current_user;
     translation_init();
 
+    // no user ... return
+    if($current_user->username=="")
+      return "error:not_logged_in";
+
     if(!$changed)
       return;
 
