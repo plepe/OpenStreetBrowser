@@ -266,6 +266,12 @@ div.editor_category_rule_list{
 a.external {
   font-style: italic;
 }
+div.error {
+  background: #ff0000;
+  padding: 1px;
+  margin: 2px;
+  color: #ffffff;
+}
 
 a.external:hover {
   text-decoration: underline;
