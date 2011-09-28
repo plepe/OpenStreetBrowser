@@ -215,9 +215,16 @@ class translation {
       return;
     $lang_str=array_merge($lang_str, $data);
 
-    $f_en=fopen("$translation_path/{$f}en.php", "r");
+    // Read whole file at once to avoid overwriting
+    $f_en=file_get_contents("$translation_path/{$f}en.php", "r");
+    $f_en=explode("\n", $f_en);
+
+    // Remove trailing new lines
+    while($f_en[sizeof($f_en)-1]=="")
+      $f_en=array_slice($f_en, 0, sizeof($f_en)-1);
+
     $f_t=fopen($file, "w");
-    while($r=fgets($f_en)) {
+    foreach($f_en as $r) {
       if(preg_match("/^ *(#?)\\\$lang_str\[[\"']([^\"']*)[\"']\]\s*=(.*);(.*)/", $r, $m)) {
 	if(!$lang_str[$m[2]]) {
 	  fputs($f_t, "#\$lang_str[\"$m[2]\"]=$m[3];$m[4]\n");
@@ -229,11 +236,10 @@ class translation {
 	}
       }
       else {
-	fputs($f_t, $r);
+	fputs($f_t, "$r\n");
       }
     }
     fclose($f_t);
-    fclose($f_en);
 
     chdir($translation_path);
     $p=popen("git add $file", "r");
