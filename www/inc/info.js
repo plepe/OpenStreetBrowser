@@ -90,6 +90,7 @@ function info(ob) {
 
     if(this.ob.geo_center()&&this.ob.zoom_to_feature) {
       var a=dom_create_append(actions, "a");
+      a.href="#";
       a.className="zoom";
       a.onclick=this.ob.zoom_to_feature.bind(this.ob);
       dom_create_append_text(a, lang("info_zoom"));
