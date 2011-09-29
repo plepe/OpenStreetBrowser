@@ -25,8 +25,8 @@ $lang_str["tag:admin_level=3"]="Divisions";
 $lang_str["tag:admin_level=4"]="State Border";
 $lang_str["tag:admin_level=5"]="Community Border";
 $lang_str["tag:admin_level=6"]="County Border";
-$lang_str["tag:admin_level=7"]="";
-$lang_str["tag:admin_level=7.5"]="";
+#$lang_str["tag:admin_level=7"]="";
+#$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Town/Municipality Border";
 $lang_str["tag:admin_level=10"]="Subdivisions of Cities";
 
@@ -302,3 +302,6 @@ $tag_type["wires"]=array("count");
 // website
 $lang_str["tag:website"]="Website";
 $tag_type["website"]=array("link");
+// The following $lang_str were not defined in the English language file and might be deprecated or wrong:
+$lang_str["tag:admin_level=7"]="";
+$lang_str["tag:admin_level=7.5"]="";

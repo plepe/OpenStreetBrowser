@@ -35,10 +35,13 @@ function marker_list_category(id) {
 
     new list(div.data, show_list, null, { empty_text: lang("marker_list:empty_text") });
   }
+
+  // constructor
+  this.tags.set("name", lang("marker_list:title"));
 }
 
 function marker_list_init() {
-  category_root.register_sub_category(new marker_list_category(lang("marker_list:title")));
+  category_root.register_sub_category(new marker_list_category("marker_list"));
 }
 
 register_hook("init", marker_list_init);

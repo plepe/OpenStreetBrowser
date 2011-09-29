@@ -38,6 +38,7 @@ function _category_list() {
 
     dom_clean(div.more);
     var more_cat=dom_create_append(div.more, "a");
+    more_cat.href="#";
     dom_create_append_text(more_cat, t("more_categories"));
     more_cat.onclick=this.choose_category.bind(this);
   }

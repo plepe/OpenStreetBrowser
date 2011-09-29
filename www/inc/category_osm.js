@@ -1,6 +1,6 @@
 var importance=[ "global", "international", "national", "regional", "urban", "suburban", "local" ];
 var category_tags_default=
-  { "name": "", "descprition": "", "lang": "en", "sub_categories": "", "id": "" };
+  { "name": "", "description": "", "lang": "en", "sub_categories": "", "id": "" };
 var category_rule_tags_default=
   { "name": "", "match": "", "description": "", "icon": "", 
     "importance": "urban", "type": "polygon;point" };
@@ -84,6 +84,7 @@ function category_osm(id) {
     dom_clean(div.more);
     if(!this.result.complete) {
       var a=dom_create_append(div.more, "a");
+      a.href="#";
       a.onclick=this.show_more.bind(this);
       dom_create_append_text(a, t("more"));
     }

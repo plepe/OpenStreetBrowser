@@ -31,6 +31,7 @@ function category_chooser(callback) {
 
       var li=dom_create_append(ul, "li");
       var a=dom_create_append(li, "a");
+      a.href="#";
       a.onclick=this.choose.bind(this, ob.getAttribute("id"));
 
       var text=lang("unnamed");

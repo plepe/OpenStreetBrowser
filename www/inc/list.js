@@ -63,6 +63,8 @@ function list(div, elements, request_more, options) {
     var a=dom_create_append(li, "a");
     if(element.href)
       a.href=element.href;
+    else
+      a.href="#";
 
     // title
     if(element.title)
@@ -108,6 +110,7 @@ function list(div, elements, request_more, options) {
       // more, done
 
       var a=dom_create_append(this.div_more, "a");
+      a.href="#";
       a.onclick=this.more.bind(this);
       dom_create_append_text(a, lang("more")+"...");
     }

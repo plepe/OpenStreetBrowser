@@ -1,5 +1,5 @@
 <?
-#$lang_str["search:name"]="Search";
+$lang_str["search:name"]="Recherche";
 $lang_str["search:process"]="rechercher";
 $lang_str["search:more"]="plus de résultats";
 $lang_str["search:results"]="Résultat de la recherche";

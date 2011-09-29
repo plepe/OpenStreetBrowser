@@ -20,7 +20,7 @@ $lang_str["lang:current"]="Français"; // The name of the current language in th
 $lang_str["general_info"]="Information générale";
 $lang_str["yes"]="oui";
 $lang_str["no"]="non";
-#$lang_str["ok"]="Ok";
+$lang_str["ok"]="Ok";
 $lang_str["save"]="Sauvegarde";
 $lang_str["cancel"]="Annuler";
 $lang_str["longitude"]=array("Longitude", "Longitudes");
@@ -30,8 +30,8 @@ $lang_str["info_back"]="retour à la Vue d'ensemble";
 $lang_str["info_zoom"]="zoom";
 $lang_str["nothing_found"]="n'a rien trouvé";
 $lang_str["loading"]="chargement";
-#$lang_str["more"]="more";
-#$lang_str["unnamed"]="unnamed";
+$lang_str["more"]="plus";
+$lang_str["unnamed"]="sans nom";
 $lang_str["zoom"]="Niveau de Zoom";
 
 // Headings
@@ -48,15 +48,15 @@ $lang_str["head:routing"]="Routage";
 $lang_str["head:search"]="Recherche";
 $lang_str["head:actions"]="Actions";
 $lang_str["head:location"]="Emplacement";
-#$lang_str["head:tags"]=array("Tag", "Tags");
-#$lang_str["head:whats_here"]="What's here?";
+$lang_str["head:tags"]=array("Balise", "Balises");
+$lang_str["head:whats_here"]="Qu'est-ce qui est ici?";
 
 $lang_str["action_browse"]="visualiser dans OSM";
 $lang_str["action_edit"]="éditer dans OSM";
 
-#$lang_str["geo_click_pos"]="Click on your position on the map";
-#$lang_str["geo_set_pos"]="Set my position";
-#$lang_str["geo_change_pos"]="Change my position";
+$lang_str["geo_click_pos"]="Cliquez sur votre localisation sur la carte";
+$lang_str["geo_set_pos"]="Définir ma localisation";
+$lang_str["geo_change_pos"]="Modifier ma localisation";
 
 $lang_str["routing_type_car"]="Voiture";
 $lang_str["routing_type_car_shortest"]="Voiture (Le plus court)";
@@ -97,35 +97,35 @@ $lang_str["lang:"]="Langue locale";
 $lang_str["overlay:data"]="Données";
 $lang_str["overlay:draggable"]="Repères";
 
-#$lang_str["user:no_auth"]="Username or password wrong!";
-#$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
-#$lang_str["user:create_user"]="Create a new user:";
-#$lang_str["user:username"]="Username";
-#$lang_str["user:email"]="E-mail address";
-#$lang_str["user:password"]="Password";
-#$lang_str["user:password_verify"]="Verify password";
-#$lang_str["user:old_password"]="Old password";
-#$lang_str["user:no_username"]="Please supply a username!";
-#$lang_str["user:password_no_match"]="Passwords do not match!";
-#$lang_str["user:full_name"]="Full name";
-#$lang_str["user:user_exists"]="Username already exists";
-#$lang_str["user:login"]="Login";
-#$lang_str["user:logged_in_as"]="Logged in as ";
-#$lang_str["user:logout"]="Logout";
+$lang_str["user:no_auth"]="Code usager ou mot de passe incorret!";
+$lang_str["user:login_text"]="Connexion à OpenStreetBrowser:";
+$lang_str["user:create_user"]="Ajouter un nouvel usager:";
+$lang_str["user:username"]="Code usager";
+$lang_str["user:email"]="Adresse de courriel";
+$lang_str["user:password"]="Mot de passe";
+$lang_str["user:password_verify"]="Vérifier le mot de passe";
+$lang_str["user:old_password"]="Ancien mot de passe";
+$lang_str["user:no_username"]="SVP fournir un code usager!";
+$lang_str["user:password_no_match"]="Les mots de passe diffèrent!";
+$lang_str["user:full_name"]="Nom complet";
+$lang_str["user:user_exists"]="le Code usager existe déjà";
+$lang_str["user:login"]="Connexion";
+$lang_str["user:logged_in_as"]="Connexion avec identifiant ";
+$lang_str["user:logout"]="Déconnexion";
 
-#$lang_str["error"]="An error occured: ";
-#$lang_str["error:not_logged_in"]="you are not logged in";
+$lang_str["error"]="Une erreur est survenue: ";
+$lang_str["error:not_logged_in"]="vous n'êtes pas connecté";
 
-#$lang_str["more_categories"]="More categories";
-#$lang_str["category:status"]="Status";
-#$lang_str["category:data_status"]="Status";
-#$lang_str["category:old_version"]="A new version of this category is being prepared.";
-#$lang_str["category:not_compiled"]="New category is being prepared.";
+$lang_str["more_categories"]="Plus de catégories";
+$lang_str["category:status"]="Statut";
+$lang_str["category:data_status"]="Statut";
+$lang_str["category:old_version"]="Une nouvelle version de cette catégorie est en préparation.";
+$lang_str["category:not_compiled"]="Une nouvelle catégorie est en préparation.";
 
-#$lang_str["category_rule_tag:match"]="Match";
-#$lang_str["category_rule_tag:description"]="Description";
-#$lang_str["category_chooser:choose"]="Choose a category";
-#$lang_str["category_chooser:new"]="New category";
+$lang_str["category_rule_tag:match"]="Correspondance";
+$lang_str["category_rule_tag:description"]="Description";
+$lang_str["category_chooser:choose"]="Choisissez une catégorie";
+$lang_str["category_chooser:new"]="Nouvelle catégorie";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";

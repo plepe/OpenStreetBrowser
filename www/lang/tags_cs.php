@@ -54,6 +54,8 @@ $lang_str["tag:admin_level=2"]="Státní hranice";
 $lang_str["tag:admin_level=4"]="Region";
 #$lang_str["tag:admin_level=5"]="Community Border";
 $lang_str["tag:admin_level=6"]="Kraj";
+#$lang_str["tag:admin_level=7"]="";
+#$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Hranice obce";
 $lang_str["tag:admin_level=10"]="Městské části";
 
@@ -166,7 +168,7 @@ $lang_str["tag:old_name"]="Staré jméno(-a)";
 $lang_str["tag:opening_hours"]="Otevírací doba";
 
 // operator
-#$lang_str["tag:operator"]="Operator";
+$lang_str["tag:operator"]="Provozovatel";
 
 // place
 $lang_str["tag:place"]="Sídlo";
@@ -179,6 +181,7 @@ $lang_str["tag:place=city"]=array("Město", "Města");
 $lang_str["tag:place=town"]="Město";
 $lang_str["tag:place=village"]=array("Vesnice", "Vesnice");
 $lang_str["tag:place=suburb"]=array("Městská část", "Městské části");
+$lang_str["tag:place=hamlet"]=array("Samota", "Samoty");
 $lang_str["tag:place=locality"]=array("Lokalita", "Lokality");
 $lang_str["tag:place=island"]=array("Ostrov", "Ostrovy");
 $lang_str["tag:place=islet"]=array("Ostrůvek", "Ostrůvky");
@@ -221,7 +224,7 @@ $lang_str["tag:railway=tram"]=array("Tramvajová kolej", "Tramvajové koleje");
 $lang_str["tag:railway=platform"]=array("Nástupiště", "Nástupiště");
 
 // real_ale
-#$lang_str["tag:real_ale"]="Real ale offered";
+$lang_str["tag:real_ale"]="Nabízen alkohol";
 
 // religion
 $lang_str["tag:religion"]="Náboženství";
