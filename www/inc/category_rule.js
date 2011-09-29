@@ -17,8 +17,10 @@ function category_rule_match(dom, cat, rule) {
     // Set an icon
     if(x=this.rule.tags.get("icon")) {
       x=get_icon(x);
-      if(x)
-	li.style.listStyleImage="url('"+x.icon_url()+"')";
+      if(x) {
+	add_css_class(li, "list-image");
+	li.style.backgroundImage="url('"+x.icon_url()+"')";
+      }
     }
 
     var a=dom_create_append(li, "a");

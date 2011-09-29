@@ -53,10 +53,12 @@ function list(div, elements, request_more, options) {
     // icon
     if(element.icon) {
       var x=get_icon(element.icon);
-      li.style.listStyleImage="url('"+x.icon_url()+"')";
+      add_css_class(li, "list-image");
+      li.style.backgroundImage="url('"+x.icon_url()+"')";
     }
     else if(element.icon_url) {
-      li.style.listStyleImage="url('"+element.icon_url+"')";
+      add_css_class(li, "list-image");
+      li.style.backgroundImage="url('"+element.icon_url+"')";
     }
 
     // href

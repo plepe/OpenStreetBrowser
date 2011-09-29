@@ -93,6 +93,9 @@ div.category_open
 div.category_open .data ul {
   margin-bottom: 0px;
 }
+div.category_open .data ul li {
+  min-height: 24px;
+}
 
 span.category_tools {
   float: right;
