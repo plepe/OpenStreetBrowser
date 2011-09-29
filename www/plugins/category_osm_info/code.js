@@ -119,8 +119,10 @@ function category_osm_info_rule_construct(ob) {
     var div=document.createElement("li");
 
     if(x=get_icon(this.tags.get("icon"))) {
-      if(x)
-	div.style.listStyleImage="url('"+x.icon_url()+"')";
+      if(x) {
+	add_css_class(div, "list-image");
+	div.style.backgroundImage="url('"+x.icon_url()+"')";
+      }
     }
 
     var h3=dom_create_append(div, "h3");
