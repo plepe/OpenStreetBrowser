@@ -1,3 +1,3 @@
 <?
-#$lang_str["marker_list:title"]="Marker List";
-#$lang_str["marker_list:empty_text"]="No markers in view port, add markers from context menu";
+$lang_str["marker_list:title"]="Liste des repères";
+$lang_str["marker_list:empty_text"]="Aucun repère dans la fenêtre, ajouter des repères à l'aide du menu contextuel";

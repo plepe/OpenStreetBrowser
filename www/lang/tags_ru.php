@@ -54,6 +54,8 @@ $lang_str["tag:admin_level=3"]="Границы Федеральных округ
 $lang_str["tag:admin_level=4"]="Границы субъектов";
 $lang_str["tag:admin_level=5"]="Границы объединённых районов и округов";
 $lang_str["tag:admin_level=6"]="Границы районов и округов";
+#$lang_str["tag:admin_level=7"]="";
+#$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Границы городов или районов городов";
 $lang_str["tag:admin_level=10"]="Границы территориальных органов";
 
@@ -64,11 +66,11 @@ $lang_str["tag:amenity=restaurant"]=array("Ресторан", "Ресторан�
 $lang_str["tag:amenity=pub"]=array("Паб", "Пабы");
 
 // barrier
-#$lang_str["tag:barrier"]=array("Barrier", "Barriers");
-#$lang_str["tag:barrier=city_wall"]=array("City wall", "City walls");
-#$lang_str["tag:barrier=wall"]=array("Wall", "Walls");
+$lang_str["tag:barrier"]=array("Преграда", "Преграды");
+$lang_str["tag:barrier=city_wall"]=array("Городская стена", "Городские стены");
+$lang_str["tag:barrier=wall"]=array("Стена", "Стены");
 #$lang_str["tag:barrier=retaining_wall"]=array("Retaining Wall", "Retaining Walls");
-#$lang_str["tag:barrier=fence"]=array("Fence", "Fences");
+$lang_str["tag:barrier=fence"]=array("Забор", "Заборы");
 #$lang_str["tag:barrier=hedge"]=array("Hedge", "Hedges");
 
 // cables
@@ -97,7 +99,7 @@ $lang_str["tag:highway=primary"]="Основная дорога (1-го уров
 $lang_str["tag:highway=primary_link"]="Выезд на основную дорогу 1-го уровня";
 $lang_str["tag:highway=secondary"]="Основная дорога (2-го уровня)";
 $lang_str["tag:highway=tertiary"]="Основная дорога (3-го уровня)";
-#$lang_str["tag:highway=minor"]="Minor Road";
+$lang_str["tag:highway=minor"]="Второстепенная дорога";
 $lang_str["tag:highway=road"]="Дорога с неопределённым типом";
 $lang_str["tag:highway=residential"]="Городская улица";
 $lang_str["tag:highway=unclassified"]="Не классифицированная дорога";
@@ -109,7 +111,7 @@ $lang_str["tag:highway=cycleway"]="Велодорожка";
 $lang_str["tag:highway=footway"]="Пешеходная дорожка";
 $lang_str["tag:highway=bridleway"]="Дорога для верховой езды";
 $lang_str["tag:highway=track"]="Стихийная дорога";
-#$lang_str["tag:highway=path"]="Path";
+$lang_str["tag:highway=path"]="Тропинка";
 $lang_str["tag:highway=steps"]="Ступени";
 
 // is_in
@@ -145,10 +147,10 @@ $lang_str["tag:man_made=pipeline"]=array("Трубопровод", "Трубоп
 $lang_str["tag:type"]="Тип";
 $lang_str["tag:type=gas"]="Газ";
 $lang_str["tag:type=heat"]="Тепло";
-#$lang_str["tag:type=hot_water"]="Hot Water";
-#$lang_str["tag:type=oil"]="Oil";
+$lang_str["tag:type=hot_water"]="Грячая вода";
+$lang_str["tag:type=oil"]="Масло";
 #$lang_str["tag:type=sewage"]="Sewage";
-#$lang_str["tag:type=water"]="Water";
+$lang_str["tag:type=water"]="Вода";
 
 // name
 $lang_str["tag:name"]=array(N, "Название", "Названия");
@@ -179,6 +181,7 @@ $lang_str["tag:place=city"]=array(M, "Город", "Города");
 $lang_str["tag:place=town"]=array(M, "Город", "Города");
 $lang_str["tag:place=village"]=array(F, "Деревня", "Деревни");
 $lang_str["tag:place=suburb"]=array(M, "Пригород", "Пригороды");
+$lang_str["tag:place=hamlet"]=array("Хутор", "Хутора");
 $lang_str["tag:place=locality"]=array(M, "Район", "Районы");
 $lang_str["tag:place=island"]=array(M, "Остров", "Острова");
 $lang_str["tag:place=islet"]=array(M, "Островок", "Островки");
@@ -226,6 +229,11 @@ $lang_str["tag:real_ale"]="Настоящий эль";
 // religion
 $lang_str["tag:religion"]=array(F, "Религия", "Религии");
 $lang_str["tag:religion=christian"]="Христианство";
+$lang_str["tag:religion=buddhist"]="Буддизм";
+#$lang_str["tag:religion=hindu"]="hindu";
+$lang_str["tag:religion=jewish"]="Иудаизм";
+$lang_str["tag:religion=muslim"]="Мусульманство";
+#$lang_str["tag:religion=multifaith"]="multifaith";
 
 // route
 $lang_str["tag:route"]="Маршрут";
@@ -235,7 +243,7 @@ $lang_str["tag:route=rail"]="Железная дорога";
 $lang_str["tag:route=light_rail"]="Железная дорога";
 $lang_str["tag:route=subway"]="Метро";
 $lang_str["tag:route=tram"]="Трамвай";
-#$lang_str["tag:route=tram_bus"]="Tram and Bus";
+$lang_str["tag:route=tram_bus"]="Трамвай и автобус";
 $lang_str["tag:route=trolley"]="Троллейбус";
 $lang_str["tag:route=trolleybus"]="Троллейбус";
 $lang_str["tag:route=bus"]="Автобус";

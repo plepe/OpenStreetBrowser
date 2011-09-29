@@ -54,6 +54,8 @@ $lang_str["tag:admin_level=3"]="Divisiones";
 $lang_str["tag:admin_level=4"]="Frontera d'estáu";
 $lang_str["tag:admin_level=5"]="Llende de comunidá";
 $lang_str["tag:admin_level=6"]="Llende de condáu";
+#$lang_str["tag:admin_level=7"]="";
+#$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Llende de ciudá/conceyu";
 $lang_str["tag:admin_level=10"]="Subdivisiones de ciudaes";
 
@@ -109,7 +111,7 @@ $lang_str["tag:highway=cycleway"]="Vía pa bicicletes";
 $lang_str["tag:highway=footway"]="Senderu";
 $lang_str["tag:highway=bridleway"]="Vía pa caballeríes";
 $lang_str["tag:highway=track"]="Pista";
-$lang_str["tag:highway=path"]="Camín";
+#$lang_str["tag:highway=path"]="Path";
 $lang_str["tag:highway=steps"]="Escaleres";
 
 // is_in
@@ -179,6 +181,7 @@ $lang_str["tag:place=city"]=array("Ciudá", "Ciudaes");
 $lang_str["tag:place=town"]=array("Villa", "Villes");
 $lang_str["tag:place=village"]=array("Pueblu", "Pueblos");
 $lang_str["tag:place=suburb"]=array("Barriu", "Barrios");
+#$lang_str["tag:place=hamlet"]=array("Hamlet", "Hamlets");
 $lang_str["tag:place=locality"]=array("Llugar", "Llugares");
 $lang_str["tag:place=island"]=array("Islla", "Islles");
 $lang_str["tag:place=islet"]=array("Castru (islla)", "Castros (islles)");
