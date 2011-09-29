@@ -1,5 +1,5 @@
 <?
-#$lang_str["head:map_key_basemap"]="Basemap";
+$lang_str["head:map_key_basemap"]="Basiskaart";
 
 // building
 $lang_str["map_key_basemap:building=yes"]="Buildings";
@@ -52,9 +52,9 @@ $lang_str["map_key_basemap:landuse=natural_rock"]="Rotsen, Kliffen";
 $lang_str["map_key_basemap:places"]="Places";
 $lang_str["map_key_basemap:roads"]="Wegen";
 $lang_str["map_key_basemap:rails"]="Spoorwegen";
-#$lang_str["map_key_basemap:pipe_power_lines"]="Pipe- and Power Lines";
+$lang_str["map_key_basemap:pipe_power_lines"]="Pijp- en Hoogspanningsleidingen";
 $lang_str["map_key_basemap:borders"]="Grenzen";
 $lang_str["map_key_basemap:landuse"]="Grondgebruik";
 $lang_str["map_key_basemap:buildings"]="Gebouwen";
-#$lang_str["map_key_basemap:barrier"]="Barriers";
+$lang_str["map_key_basemap:barrier"]="Barrières";
 $lang_str["map_key_basemap:housenumbers"]="Huisnummers";

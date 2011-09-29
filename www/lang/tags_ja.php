@@ -184,7 +184,6 @@ $lang_str["tag:place=suburb"]="近郊(未使用)";
 $lang_str["tag:place=hamlet"]="小村(未使用)";
 $lang_str["tag:place=locality"]="地域の通称";
 $lang_str["tag:place=island"]="島";
-$lang_str["tag:place=hamlet"]="小村(未使用)";
 #$lang_str["tag:place=islet"]=array("Islet", "Islets");
 
 // population

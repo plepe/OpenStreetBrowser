@@ -1,5 +1,5 @@
 <?
-#$lang_str["head:map_key_basemap"]="Basemap";
+$lang_str["head:map_key_basemap"]="Couche de base";
 
 // building
 $lang_str["map_key_basemap:building=yes"]="Immeubles";
@@ -22,16 +22,16 @@ $lang_str["map_key_basemap:building=tourism"]="Immeubles, Services touristiques"
 $lang_str["map_key_basemap:building=sport"]="Immeubles, Activités sportives";
 
 // landuse
-#$lang_str["map_key_basemap:landuse=land"]="Land";
+$lang_str["map_key_basemap:landuse=land"]="Terrain";
+$lang_str["map_key_basemap:landuse=water"]="Eau";
 $lang_str["map_key_basemap:landuse=park"]="Parc";
 $lang_str["map_key_basemap:landuse=education"]="Établissements scolaires";
 $lang_str["map_key_basemap:landuse=tourism"]="Zone de tourisme";
 $lang_str["map_key_basemap:landuse=garden"]="Fermes, Plantations, Jardins";
+$lang_str["map_key_basemap:landuse=shop"]="Zones commerciales";
 $lang_str["map_key_basemap:landuse=industrial"]="Zones industrielles et ferroviaires";
-$lang_str["map_key_basemap:landuse=recreation_ground"]="Aires de Jeux";
-#$lang_str["map_key_basemap:landuse=shop"]="Shopping Areas";
-#$lang_str["map_key_basemap:landuse=military"]="Military Areas";
-#$lang_str["map_key_basemap:landuse=piste"]="Skiing Pistes";
+$lang_str["map_key_basemap:landuse=military"]="Zones militaires";
+$lang_str["map_key_basemap:landuse=piste"]="Pistes de ski";
 $lang_str["map_key_basemap:landuse=sport"]="Aires de Sports";
 $lang_str["map_key_basemap:landuse=cemetery"]="Cimetières";
 $lang_str["map_key_basemap:landuse=residential"]="Zones résidentielles";
@@ -40,22 +40,23 @@ $lang_str["map_key_basemap:landuse=historic"]="Lieux historiques / patrimoniaux"
 $lang_str["map_key_basemap:landuse=emergency"]="Zones d'Urgence";
 $lang_str["map_key_basemap:landuse=health"]="Services de santé";
 $lang_str["map_key_basemap:landuse=public"]="Services publics";
-$lang_str["map_key_basemap:landuse=water"]="Eau";
 $lang_str["map_key_basemap:landuse=natural_forest"]="Boisés et Forêts";
 $lang_str["map_key_basemap:landuse=natural_wetland"]="Zones humides";
 $lang_str["map_key_basemap:landuse=natural_glacier"]="Glaciers";
 $lang_str["map_key_basemap:landuse=natural_scree"]="Éboulis, Landes";
 $lang_str["map_key_basemap:landuse=natural_mud"]="Terrain boueux, vase";
 $lang_str["map_key_basemap:landuse=natural_beach"]="Plages";
-#$lang_str["map_key_basemap:landuse=natural_rock"]="Rocks, Cliffs";
+$lang_str["map_key_basemap:landuse=natural_rock"]="Rochers, falaises";
 
 // heads
 $lang_str["map_key_basemap:places"]="Lieux";
 $lang_str["map_key_basemap:roads"]="Route";
 $lang_str["map_key_basemap:rails"]="Chemins de fer";
-#$lang_str["map_key_basemap:pipe_power_lines"]="Pipe- and Power Lines";
+$lang_str["map_key_basemap:pipe_power_lines"]="Pipelines et lignes électiques";
 $lang_str["map_key_basemap:borders"]="Frontières";
 $lang_str["map_key_basemap:landuse"]="Utilisation du sol";
 $lang_str["map_key_basemap:buildings"]="Immeubles";
-#$lang_str["map_key_basemap:barrier"]="Barriers";
-$lang_str["map_key_basemap:housenumbers"]="no. Addresse";
+$lang_str["map_key_basemap:barrier"]="Barrières";
+$lang_str["map_key_basemap:housenumbers"]="No. d'immeuble";
+// The following $lang_str were not defined in the English language file and might be deprecated or wrong:
+#$lang_str["map_key_basemap:landuse=recreation_ground"]="Aires de Jeux";

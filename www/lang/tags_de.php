@@ -54,6 +54,8 @@ $lang_str["tag:admin_level=2"]="Staat";
 $lang_str["tag:admin_level=4"]="Land";
 $lang_str["tag:admin_level=5"]="Regierungsbezirk";
 $lang_str["tag:admin_level=6"]="Kreis";
+#$lang_str["tag:admin_level=7"]="";
+#$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Stadt und Gemeinde";
 $lang_str["tag:admin_level=10"]="Stadtteil";
 
@@ -104,12 +106,12 @@ $lang_str["tag:highway=unclassified"]="Unklassifizierte Straße";
 $lang_str["tag:highway=service"]="Erschließungsstraße";
 $lang_str["tag:highway=pedestrian"]="Fußgängerzone";
 $lang_str["tag:highway=living_street"]="Verkehrsberuhigter Bereich";
-$lang_str["tag:highway=path"]="Pfad";
+$lang_str["tag:highway=path"]="Weg";
 $lang_str["tag:highway=cycleway"]="Radweg";
 $lang_str["tag:highway=footway"]="Fußweg";
 $lang_str["tag:highway=bridleway"]="Reitweg";
 $lang_str["tag:highway=track"]="Feld-/Waldweg";
-$lang_str["tag:highway=path"]="Weg";
+$lang_str["tag:highway=path"]="Weg/Pfad";
 $lang_str["tag:highway=steps"]="Stufen";
 
 // is_in
@@ -179,6 +181,7 @@ $lang_str["tag:place=city"]=array("Stadt", "Städte");
 $lang_str["tag:place=town"]=array("Kleinstadt", "Kleinstädte");
 $lang_str["tag:place=village"]=array("Dorf", "Dörfer");
 $lang_str["tag:place=suburb"]=array("Vorort", "Vororte");
+#$lang_str["tag:place=hamlet"]=array("Hamlet", "Hamlets");
 $lang_str["tag:place=locality"]=array("Lokalität", "Lokalitäten");
 $lang_str["tag:place=island"]=array("Insel", "Inseln");
 $lang_str["tag:place=islet"]=array("Inselchen", "Inselchen");
