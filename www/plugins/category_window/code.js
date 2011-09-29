@@ -47,7 +47,7 @@ function category_window_write_div(div, category) {
   var img=dom_create_append(span, "img");
   img.className="category_tools";
   img.onclick=category_window_start_window.bind(null, category);
-  img.src="plugins/category_window/info.png";
+  img.src="img/info.png";
 }
 
 register_hook("category_write_div", category_window_write_div);
