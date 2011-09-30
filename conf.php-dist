@@ -145,3 +145,4 @@ $overlays_add=array(
 // category_osm_info - Show info about an OSM Category
 // cateogory_history - Show history of a category
 // importance - Define values and functions for defining importance of objects
+// talk - Talk pages
