@@ -24,18 +24,18 @@ var last_params;
 // funcname       the name of the php-function. the php-function has to 
 //                be called "ajax_"+funcname
 // param          an associative array of parameters
+// postdata       (optional) data which should be posted to the server. it will
+//                be passed to the ajax_[funcname] function as third parameter.
 // callback       a function which will be called when the request ist 
 //                finished. if empty the call will be syncronous and the
 //                result will be returned
-// postdata       (optional) data which should be posted to the server. it will
-//                be passed to the ajax_[funcname] function as third parameter.
 //
 // return value/parameter to callback
 // response       the status of the request
 //  .responseText the response as plain text
 //  .responseXML  the response as DOMDocument (if valid XML)
 //  .return_value the return value of the function
-function ajax(funcname, param, callback, postdata) {
+function ajax(funcname, param, postdata, callback) {
   // private
   this.xmldata;
   // public
@@ -103,7 +103,11 @@ function ajax(funcname, param, callback, postdata) {
     ajax_build_request(param, "param", p);
     p=p.join("&");
 
-    if(!postdata)
+    if(typeof(postdata)=="function") {
+      callback=postdata;
+      postdata="";
+    }
+    else if(!postdata)
       postdata="";
 
     req.onreadystatechange = req_change;

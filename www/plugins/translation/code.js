@@ -40,7 +40,7 @@ function translation(l) {
     var post_data={ changed: changed, msg: "Update translation ("+this.lang+")" };
     post_data=json_encode(post_data);
 
-    ajax("translation_save", { lang: this.lang }, this.save_next.bind(this), post_data);
+    ajax("translation_save", { lang: this.lang }, post_data, this.save_next.bind(this));
   }
 
   // save_next
