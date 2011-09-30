@@ -204,7 +204,10 @@ function category(id) {
     div.header_name.href="#";
     div.header_name.className="header";
     div.header_name.onclick=this.toggle_open.bind(this, div);
-    dom_create_append_text(div.header_name, this.tags.get_lang("name", ui_lang));
+    var name=this.tags.get_lang("name", ui_lang);
+    if(!name)
+      name=lang("unnamed");
+    dom_create_append_text(div.header_name, name);
 
     if(div.open) {
       this.write_status(div);
