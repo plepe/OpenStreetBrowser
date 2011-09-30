@@ -25,10 +25,16 @@ function win_mousemove(event) {
 // valid options:
 //   class: class to add to the content-div
 //   title: title to show in the title bar
+//
+// event handler:
+//   onclose: Called when closing window
 
 function win(options) {
   // close
   this.close=function() {
+    if(this.onclose)
+      this.onclose();
+
     this.win.parentNode.removeChild(this.win);
     delete windows[this.id];
   }
