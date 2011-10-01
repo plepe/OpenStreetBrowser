@@ -16,10 +16,25 @@ function talk(page, div) {
     this.show_format();
   }
 
+  // save
+  this.save=function() {
+    var param={
+      page: this.page,
+      msg: "Update talk page",
+    };
+
+    ajax("talk_save", param, this.content, this.save_callback.bind(this));
+  }
+
+  // save_callback
+  this.save_callback=function(ret) {
+    alert(lang("saved"));
+  }
+
   // call_save
   this.call_save=function() {
     this.content=this.form.elements.content.value;
-    //this.save();
+    this.save();
 
     this.show_format();
   }
