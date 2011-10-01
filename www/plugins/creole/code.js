@@ -10,7 +10,10 @@ function creole_preprocess(div) {
   var as=div.getElementsByTagName("a");
   for(var i=0; i<as.length; i++) {
     var a=as[i];
-    if(m=a.href.match(/^([^:]*):(.*)$/)) {
+    if(m=a.href.match(/^(user|doc|talk):(.*)$/)) {
+      a.href="javascript:"+m[1]+"_show(\""+m[2]+"\")";
+    }
+    else if(m=a.href.match(/^([^:]*):(.*)$/)) {
       if(creole_interwiki_links[m[1]]) {
 	a.href=sprintf(creole_interwiki_links[m[1]], m[2]);
 	a.target="_new";
@@ -35,8 +38,8 @@ function creole_replace_save(txt) {
   var username=current_user.username;
   var repl={};
 
-  repl['~~~']="[[%user:"+username+"|"+username+"]]";
-  repl['~~~~']="[[%user:"+username+"|"+username+"]] ("+strftime("%Y-%m-%d %H:%M %Z")+")";
+  repl['~~~']="[[user:"+username+"|"+username+"]]";
+  repl['~~~~']="[[user:"+username+"|"+username+"]] ("+strftime("%Y-%m-%d %H:%M %Z")+")";
 
   txt=strtr(txt, repl);
 
