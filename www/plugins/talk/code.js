@@ -108,7 +108,7 @@ function talk(page, div) {
   this.load();
 }
 
-function talk_open_win(page) {
+function talk_show(page) {
   var w=new win({ class: "talk", title: "Talk "+page });
   var t=new talk(page, w.content);
   w.onclose=t.remove.bind(t);
