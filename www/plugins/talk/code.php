@@ -32,12 +32,18 @@ class talk {
     $tags=array_to_hstore($this->tags->data());
     $content=postgre_escape($this->content);
     $version_tags=array_to_hstore($param);
+    $page=postgre_escape($this->page);
 
     $parent="null";
     if($this->version)
       $parent=postgre_escape($this->version);
 
-    $sql="insert into talk values ($version, $tags, $content, $version_tags, $parent)";
+    $sql ="begin;\n";
+    $sql.="insert into talk values ($version, $tags, $content, $version_tags, $parent);\n";
+    $sql.="delete from talk_current where page=$page;\n";
+    $sql.="insert into talk_current values ($page, $version, now());\n";
+    $sql.="commit;";
+
     sql_query($sql, $db_central);
   }
 
