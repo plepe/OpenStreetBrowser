@@ -11,7 +11,7 @@ function talk(page, div) {
   // load_callback
   this.load_callback=function(ret) {
     ret=ret.return_value;
-    this.content=ret;
+    this.content=ret.content;
 
     this.show_format();
   }
