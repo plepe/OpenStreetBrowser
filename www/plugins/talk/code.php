@@ -26,17 +26,19 @@ class talk {
   }
 
   function save($param) {
+    global $db_central;
+
     $version=postgre_escape(uniqid());
-    $tags=postgre_escape(array_to_hstore($this->tags->data()));
-    $content=postgre_escape($content);
-    $version_tags=postgre_escape(array_to_hstore($param));
+    $tags=array_to_hstore($this->tags->data());
+    $content=postgre_escape($this->content);
+    $version_tags=array_to_hstore($param);
 
     $parent="null";
     if($this->version)
       $parent=postgre_escape($this->version);
 
     $sql="insert into talk values ($version, $tags, $content, $version_tags, $parent)";
-    sql_query($sql);
+    sql_query($sql, $db_central);
   }
 
   function export_json() {
@@ -56,17 +58,19 @@ function ajax_talk_load($param) {
   return $page->export_json();
 }
 
-function ajax_talk_save($param) {
+function ajax_talk_save($param, $xml, $postdata) {
+  global $current_user;
+
   $page=new talk($param['page']);
 
-  $page->content=$param['content'];
+  $page->content=$postdata;
   if($param['tags'])
     $page->tags->set_data($param['tags']);
 
   $version_tags=array();
   $version_tags['msg']=$param['msg'];
   $version_tags['user']=$current_user->username;
-  $version_tags['date']=Date();
+  $version_tags['date']=Date("c");
 
-  $page->save($version_tags);
+  return $page->save($version_tags);
 }
