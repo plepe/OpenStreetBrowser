@@ -1,5 +1,6 @@
 drop table if exists talk;
 create table talk (
+  page		text		not null,
   version	varchar(32)	not null,
   tags		hstore		default ''::hstore,
   content	text		default '',

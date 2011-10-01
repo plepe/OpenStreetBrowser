@@ -39,7 +39,7 @@ class talk {
       $parent=postgre_escape($this->version);
 
     $sql ="begin;\n";
-    $sql.="insert into talk values ($version, $tags, $content, $version_tags, $parent);\n";
+    $sql.="insert into talk values ($page, $version, $tags, $content, $version_tags, $parent);\n";
     $sql.="delete from talk_current where page=$page;\n";
     $sql.="insert into talk_current values ($page, $version, now());\n";
     $sql.="commit;";
