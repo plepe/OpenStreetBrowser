@@ -311,6 +311,10 @@ function login() {
   td.appendChild(input);
 }
 
+function user_show(user) {
+  alert("function not implemented");
+}
+
 function logout() {
   cookie_delete("auth_id");
   location.href=get_permalink();
