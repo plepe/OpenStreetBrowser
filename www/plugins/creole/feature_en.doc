@@ -1,0 +1,7 @@
+WikiCreole is a common wiki markup language (see the [[http://www.wikicreole.org/|WikiCreole Homepage]] for details). Check the [[http://www.wikicreole.org/attach/CheatSheet/creole_cheat_sheet.png|Cheat Sheet]] for possible markup tags.
+
+OpenStreetBrowser specific things:
+* Use "{{{~~~}}}" or "{{{~~~~}}}" to sign a statement on a talk page ({{{~~~}}} writes the name, {{{~~~~}}} includes the time of writing).
+* Use {{{[[osm:Linkname]]}}} to link to a Page in the OpenStreetMap Wiki (e.g. [[osm:tag:amenity=bar]]).
+* Use {{{[[talk:Talkpage]]}}} to link to a talk page.
+* Use e.g. {{{[[#node_240109189|Berlin]]}}} to link to an object in OpenStreetBrowser (e.g. [[#node_240109189|Berlin]]).
