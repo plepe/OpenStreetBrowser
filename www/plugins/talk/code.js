@@ -33,7 +33,7 @@ function talk(page, div) {
 
   // call_save
   this.call_save=function() {
-    this.content=this.form.elements.content.value;
+    this.content=creole_replace_save(this.form.elements.content.value);
     this.save();
 
     this.show_format();
@@ -72,6 +72,10 @@ function talk(page, div) {
     edit.className="talk_edit_content";
     edit.name="content";
     edit.value=this.content;
+
+    // advice
+    var div=dom_create_append(this.content_div, "div");
+    div.innerHTML=lang("creole:advice");
   }
 
   // show_format
