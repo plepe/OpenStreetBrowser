@@ -30,3 +30,15 @@ function creole(txt) {
 
   return div;
 }
+
+function creole_replace_save(txt) {
+  var username=current_user.username;
+  var repl={};
+
+  repl['~~~']="[[%user:"+username+"|"+username+"]]";
+  repl['~~~~']="[[%user:"+username+"|"+username+"]] ("+strftime("%Y-%m-%d %H:%M %Z")+")";
+
+  txt=strtr(txt, repl);
+
+  return txt;
+}
