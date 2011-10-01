@@ -41,10 +41,14 @@ function talk(page, div) {
 
   // show_edit
   this.show_edit=function() {
+    var active=true;
+    if(current_user.username=="")
+      active=false;
+
     dom_clean(this.tool_div);
 
     // no user ... disable
-    if(current_user.username=="") {
+    if(!active) {
       var div_error=dom_create_append(this.tool_div, "div");
       div_error.className="error";
       dom_create_append_text(div_error, lang("attention")+": "+lang("error:not_logged_in"));
@@ -54,8 +58,13 @@ function talk(page, div) {
     var input=dom_create_append(this.tool_div, "input");
     input.type="submit";
     input.value=lang("save");
-    if(current_user.username=="")
+    if(!active)
       input.disabled=true;
+
+    var input=dom_create_append(this.tool_div, "input");
+    input.type="button";
+    input.value=lang("cancel");
+    input.onclick=this.show_format.bind(this);
 
     // content
     dom_clean(this.content_div);
@@ -74,7 +83,9 @@ function talk(page, div) {
     input.onclick=this.show_edit.bind(this);
 
     dom_clean(this.content_div);
-    this.content_div.appendChild(creole(this.content));
+    var format=creole(this.content)
+    format.className="text";
+    this.content_div.appendChild(format);
   }
 
   // constructor
