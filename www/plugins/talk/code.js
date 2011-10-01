@@ -91,6 +91,8 @@ function talk(page, div) {
   // constructor
   this.page=page;
   this.div=div;
+  if(!this.div)
+    this.div=document.createElement("div");
 
   this.form=dom_create_append(this.div, "form");
   this.form.action="#";
@@ -107,3 +109,13 @@ function talk_open_win(page) {
   var t=new talk(page, w.content);
   w.onclose=t.remove.bind(t);
 }
+
+function talk_category_window_show(win, category) {
+  var _tab=new tab({ class: "talk", title: "Talk" });
+  var t=new talk("category:"+category.id);
+  _tab.content.appendChild(t.div);
+  win.tab_manager.register_tab(_tab);
+  _tab.onclose=t.remove.bind(t);
+}
+
+register_hook("category_window_show", talk_category_window_show);
