@@ -22,8 +22,14 @@ class talk {
   }
 
   function load() {
-    $id=postgre_escape($this->page);
-    $res=sql_query("select talk.* from talk_current join talk on talk_current.version=talk.version where talk_current.page=$id");
+    if($this->version) {
+      $id=postgre_escape($this->version);
+      $res=sql_query("select talk.* from talk where talk.version=$id");
+    }
+    else {
+      $id=postgre_escape($this->page);
+      $res=sql_query("select talk.* from talk_current join talk on talk_current.version=talk.version where talk_current.page=$id");
+    }
 
     if(!$elem=pg_fetch_assoc($res)) {
       debug("Could not load page '{$this->page}'", "talk");

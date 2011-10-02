@@ -5,7 +5,11 @@ function talk(param, div) {
 
   // load
   this.load=function() {
-    ajax("talk_load", { page: this.page }, this.load_callback.bind(this));
+    var param={ page: this.page };
+    if(this.version)
+      param.version=this.version;
+
+    ajax("talk_load", param, this.load_callback.bind(this));
   }
 
   // load_callback
@@ -145,6 +149,7 @@ function talk(param, div) {
   else
     this.page=param.page;
 
+  this.version=null;
   if(param.version)
     this.version=param.version;
 
@@ -166,7 +171,13 @@ function talk_show(param) {
   if(typeof(param)=="string") {
     param={ page: param };
   }
-  var w=new win({ class: "talk", title: "Talk "+param.page });
+
+  var title="Talk "+param.page;
+  if(param.version) {
+    title+=" (version "+param.version+")";
+  }
+
+  var w=new win({ class: "talk", title: title });
   var t=new talk(param, w.content);
   w.onclose=t.remove.bind(t);
 }
