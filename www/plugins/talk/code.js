@@ -39,6 +39,16 @@ function talk(page, div) {
     this.show_format();
   }
 
+  // show_history
+  this.show_history=function() {
+    ajax("talk_history", { page: this.page }, this.show_history_callback.bind(this));
+  }
+  
+  // show_history_callback
+  this.show_history_callback=function(ret) {
+    ret=ret.return_value;
+  }
+
   // show_edit
   this.show_edit=function() {
     var active=true;

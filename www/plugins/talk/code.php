@@ -47,6 +47,35 @@ class talk {
     sql_query($sql, $db_central);
   }
 
+  function history($start, $count) {
+    if(!isset($start))
+      $start=0;
+    if(!isset($count))
+      $count=10;
+
+    $ret=array();
+    $pos=0;
+    $version=$this->version;
+
+    while($version && ($pos<$start+$count)) {
+      $res=sql_query("select * from talk where talk.version=".
+                     postgre_escape($version));
+
+      if(!($current=pg_fetch_assoc($res)))
+	return $ret;
+
+      if($pos>=$start) {
+	$ret[$pos]['version']=$current['version'];
+	$ret[$pos]['version_tags']=parse_hstore($current['version_tags']);
+      }
+
+      $pos++;
+      $version=$current['parent'];
+    }
+
+    return $ret;
+  }
+
   function export_json() {
     $ret=array();
 
@@ -79,4 +108,10 @@ function ajax_talk_save($param, $xml, $postdata) {
   $version_tags['date']=Date("c");
 
   return $page->save($version_tags);
+}
+
+function ajax_talk_history($param) {
+  $page=new talk($param['page']);
+
+  return $page->history($param['start'], $param['count']);
 }
