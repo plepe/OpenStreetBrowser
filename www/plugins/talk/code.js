@@ -1,4 +1,4 @@
-function talk(page, div) {
+function talk(param, div) {
   // remove
   this.remove=function() {
   }
@@ -68,7 +68,7 @@ function talk(page, div) {
       var a=dom_create_append(li, "a");
       dom_create_append_text(a, e.version_tags.date);
       a.href="#";
-      a.onclick=talk_show.bind(this, this.page, e.version);
+      a.onclick=talk_show.bind(this, { page: this.page, version: e.version });
 
       dom_create_append_text(li, " by ");
 
@@ -138,7 +138,16 @@ function talk(page, div) {
   }
 
   // constructor
-  this.page=page;
+  if(typeof param=="string") {
+    this.page=param;
+    param={};
+  }
+  else
+    this.page=param.page;
+
+  if(param.version)
+    this.version=param.version;
+
   this.div=div;
   if(!this.div)
     this.div=document.createElement("div");
@@ -153,9 +162,12 @@ function talk(page, div) {
   this.load();
 }
 
-function talk_show(page) {
-  var w=new win({ class: "talk", title: "Talk "+page });
-  var t=new talk(page, w.content);
+function talk_show(param) {
+  if(typeof(param)=="string") {
+    param={ page: param };
+  }
+  var w=new win({ class: "talk", title: "Talk "+param.page });
+  var t=new talk(param, w.content);
   w.onclose=t.remove.bind(t);
 }
 

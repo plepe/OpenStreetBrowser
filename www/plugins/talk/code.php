@@ -3,10 +3,20 @@ class talk {
   public $page;
   public $tags;
   public $content;
-  public $version;
+  public $version=null;
 
-  function __construct($page) {
-    $this->page=$page;
+  function __construct($param) {
+    if(is_string($param)) {
+      $this->page=$param;
+      $param=array();
+    }
+    else {
+      $this->page=$param['page'];
+    }
+
+    if($param['version'])
+      $this->version=$param['version'];
+
     $this->tags=new tags();
     $this->load();
   }
@@ -89,7 +99,7 @@ class talk {
 }
 
 function ajax_talk_load($param) {
-  $page=new talk($param['page']);
+  $page=new talk($param);
   return $page->export_json();
 }
 
@@ -111,7 +121,7 @@ function ajax_talk_save($param, $xml, $postdata) {
 }
 
 function ajax_talk_history($param) {
-  $page=new talk($param['page']);
+  $page=new talk($param);
 
   return $page->history($param['start'], $param['count']);
 }
