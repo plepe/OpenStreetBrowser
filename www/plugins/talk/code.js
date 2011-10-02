@@ -41,12 +41,42 @@ function talk(page, div) {
 
   // show_history
   this.show_history=function() {
+    dom_clean(this.tool_div);
+
+    var input=dom_create_append(this.tool_div, "input");
+    input.type="button";
+    input.value=lang("show");
+    input.onclick=this.show_format.bind(this);
+
+    this.content_div.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
+
     ajax("talk_history", { page: this.page }, this.show_history_callback.bind(this));
   }
   
   // show_history_callback
   this.show_history_callback=function(ret) {
     ret=ret.return_value;
+
+    dom_clean(this.content_div);
+    dom_create_append(this.content_div, "ul");
+
+    for(var i in ret) {
+      var e=ret[i];
+
+      var li=dom_create_append(this.content_div, "li");
+
+      var a=dom_create_append(li, "a");
+      dom_create_append_text(a, e.version_tags.date);
+      a.href="#";
+      a.onclick=talk_show.bind(this, this.page, e.version);
+
+      dom_create_append_text(li, " by ");
+
+      // TODO: as soon as user_show() is implemented change to "a"
+      var a=dom_create_append(li, "span");
+      //a.href="javascript:user_show(\""+e.version_tags.user+"\")";
+      dom_create_append_text(a, e.version_tags.user);
+    }
   }
 
   // show_edit
@@ -95,6 +125,11 @@ function talk(page, div) {
     input.type="button";
     input.value=lang("edit");
     input.onclick=this.show_edit.bind(this);
+
+    var input=dom_create_append(this.tool_div, "input");
+    input.type="button";
+    input.value=lang("history");
+    input.onclick=this.show_history.bind(this);
 
     dom_clean(this.content_div);
     var format=creole(this.content)
