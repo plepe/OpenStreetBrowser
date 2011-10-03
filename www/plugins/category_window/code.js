@@ -1,6 +1,10 @@
 function category_window(category) {
   // update
-  this.window_show=function() {
+  this.window_show=function(loaded_category) {
+    // wrong category which has been loaded
+    if(this.category!=loaded_category)
+      return;
+
     // Set window title
     this.win.set_title(lang("category")+
       " \""+category.tags.get_lang("name", ui_lang)+"\"");
@@ -23,7 +27,7 @@ function category_window(category) {
   this.category=category;
 
   if(this.category.loaded) {
-    this.window_show();
+    this.window_show(this.category);
   }
   else {
     this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
