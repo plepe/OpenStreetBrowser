@@ -998,6 +998,7 @@ function category_history($id, $param=array(), $version=null) {
   $res=sql_query("select * from category where category_id=$sql_id", $db_central);
   while($elem=pg_fetch_assoc($res)) {
     $elem['parent_versions']=parse_array($elem['parent_versions']);
+    $elem['version_tags']=parse_hstore($elem['version_tags']);
     $list[$elem['version']]=$elem;
   }
 
