@@ -143,4 +143,5 @@ $overlays_add=array(
 // category_window - A window for category interaction (info, edit, ...)
 // category_editor - An editor for editing OSM categories
 // category_osm_info - Show info about an OSM Category
+// cateogory_history - Show history of a category
 // importance - Define values and functions for defining importance of objects
