@@ -190,4 +190,44 @@ function talk_category_window_show(win, category) {
   _tab.onclose=t.remove.bind(t);
 }
 
+function talk_browser() {
+  // show
+  this.show=function() {
+    dom_clean(this.win.content);
+    var ul=dom_create_append(this.win.content, "ul");
+
+    for(var i=0; i<this.data.length; i++) {
+      var d=this.data[i];
+
+      var li=dom_create_append(ul, "li");
+      var a=dom_create_append(li, "a");
+      a.href=sprintf("javascript:talk_show(\"%s\")", d.page);
+      dom_create_append_text(a, d.page);
+
+      var text=dom_create_append_text(li, sprintf(" (%s by %s)", d.version_tags.date, d.version_tags.user));
+    }
+  }
+
+  // load
+  this.load=function() {
+    ajax("talk_browser", {}, this.load_callback.bind(this));
+  }
+
+  // load_callback
+  this.load_callback=function(ret) {
+    this.data=ret.return_value;
+
+    this.show();
+  }
+
+  // constructor
+  this.win=new win({ class: "talk", title: lang("talk_browser:name") });
+  this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
+  this.load();
+}
+
+function talk_open_browser() {
+  new talk_browser();
+}
+
 register_hook("category_window_show", talk_category_window_show);
