@@ -1,4 +1,4 @@
-function category_editor(id, cat_win) {
+function category_editor(id, param, cat_win) {
   // editor
   this.init=function() {
     dom_clean(this.win.content);
@@ -158,6 +158,8 @@ function category_editor(id, cat_win) {
 
     if(version)
       param.version=version;
+    if(this.param.version)
+      param.version=this.param.version;
 
     ajax_direct("categories.php", param, this.load_def_callback.bind(this));
   }
@@ -191,6 +193,9 @@ function category_editor(id, cat_win) {
   this.id=id;
   if(!this.id)
     this.id="new";
+
+  this.param=param;
+
   this.win=new tab({ class: "category_editor", title: lang("category_editor:editor", 1) });
   this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
   cat_win.tab_manager.register_tab(this.win);
@@ -419,7 +424,7 @@ function category_editor_rule(category, dom) {
 
 // start_editor
 function category_editor_win_show(win, category) {
-  new category_editor(category.id, win);
+  new category_editor(category.id, category.param, win);
 }
   
 register_hook("category_window_show", category_editor_win_show);
