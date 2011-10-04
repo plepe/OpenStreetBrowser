@@ -1,4 +1,4 @@
-function category_history(id, cat_win) {
+function category_history(category, cat_win) {
   // show
   this.show=function() {
     var ret=this.data;
@@ -16,7 +16,7 @@ function category_history(id, cat_win) {
       if(!text)
 	text="?";
       dom_create_append_text(a, text);
-      a.href=sprintf("javascript:category_show(\"osm:%s\", { version: \"%s\" })", this.id, e.version);
+      a.href=sprintf("javascript:category_show(\"osm:%s\", { version: \"%s\" })", this.category.id, e.version);
 
       dom_create_append_text(li, " by ");
 
@@ -33,7 +33,7 @@ function category_history(id, cat_win) {
   // load
   this.load=function() {
     var param={
-      id: this.id
+      id: this.category.id
     };
 
     ajax("category_history", param, this.load_callback.bind(this));
@@ -46,9 +46,7 @@ function category_history(id, cat_win) {
   }
 
   // constructor
-  this.id=id;
-  if(!this.id)
-    this.id="new";
+  this.category=category;
   this.win=new tab({ class: "category_history", title: lang("category_history:name", 1) });
   this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
   this.content_div=this.win.content;
@@ -58,7 +56,7 @@ function category_history(id, cat_win) {
 
 // reacts on opening category window
 function category_history_win_show(win, category) {
-  new category_history(category.id, win);
+  new category_history(category, win);
 }
 
 register_hook("category_window_show", category_history_win_show);
