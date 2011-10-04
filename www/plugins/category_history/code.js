@@ -1,9 +1,4 @@
 function category_history(id, cat_win) {
-  // show_version
-  this.show_version=function(param) {
-    alert(print_r(param));
-  }
-
   // show
   this.show=function() {
     var ret=this.data;
@@ -21,8 +16,7 @@ function category_history(id, cat_win) {
       if(!text)
 	text="?";
       dom_create_append_text(a, text);
-      a.href="#";
-      a.onclick=this.show_version.bind(this, { page: this.id, version: e.version });
+      a.href=sprintf("javascript:category_show(\"osm:%s\", { version: \"%s\" })", this.id, e.version);
 
       dom_create_append_text(li, " by ");
 

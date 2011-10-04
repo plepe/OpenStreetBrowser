@@ -39,8 +39,8 @@ function category_window_start_window(category) {
   new category_window(category);
 }
 
-function category_show(id) {
-  new category_window(get_category(id));
+function category_show(id, param) {
+  new category_window(get_category(id, param));
 }
 
 function category_window_write_div(div, category) {
