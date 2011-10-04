@@ -11,6 +11,9 @@ function category_history(category, cat_win) {
 
       var li=dom_create_append(this.content_div, "li");
 
+      if(e.version==this.category.version)
+	li.className="current";
+
       var a=dom_create_append(li, "a");
       var text=e.version_tags.date;
       if(!text)
