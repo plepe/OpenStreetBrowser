@@ -1,7 +1,7 @@
 var categories={};
 var category_types={};
 
-function get_category(id) {
+function get_category(id, param) {
   var x=id.split(/:/);
 
   if(!category_types[x[0]]) {
@@ -9,11 +9,19 @@ function get_category(id) {
     return;
   }
 
-  if(categories[id])
-    return categories[id];
+  var sub_id="";
+  if(param)
+    sub_id=json_encode(param);
 
-  var ob=new category_types[x[0]](x[1]);
-  categories[id]=ob;
+  if(!categories[id])
+    categories[id]={};
+
+  if(categories[id][sub_id])
+    return categories[id][sub_id];
+
+  var ob=new category_types[x[0]](x[1], param);
+  categories[id][sub_id]=ob;
+
   return ob;
 }
 
