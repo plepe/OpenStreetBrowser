@@ -5,7 +5,7 @@ var category_rule_tags_default=
   { "name": "", "match": "", "description": "", "icon": "", 
     "importance": "urban", "type": "polygon;point" };
 
-function category_osm(id) {
+function category_osm(id, param) {
   this.inheritFrom=category;
   this.inheritFrom(id);
 
@@ -274,6 +274,8 @@ function category_osm(id) {
 
     if(version)
       param.version=version;
+    else if(this.param.version)
+      param.version=this.param.version;
 
     ajax_direct("categories.php", param, this.load_def_callback.bind(this));
   }
@@ -398,6 +400,9 @@ function category_osm(id) {
   }
 
   // constructor
+  if(!param)
+    param={};
+  this.param=param;
   this.rules=[];
   this.load_def();
   this.result={ state: "no" };
