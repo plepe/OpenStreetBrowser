@@ -5,9 +5,13 @@ function category_window(category) {
     if(this.category!=loaded_category)
       return;
 
+    var title=lang("category")+
+      " \""+category.tags.get_lang("name", ui_lang)+"\"";
+    if(this.category.param&&this.category.param.version)
+      title+=" (Version: "+this.category.param.version+")";
+
     // Set window title
-    this.win.set_title(lang("category")+
-      " \""+category.tags.get_lang("name", ui_lang)+"\"");
+    this.win.set_title(title);
     
     // Prepare window
     dom_clean(this.win.content);
