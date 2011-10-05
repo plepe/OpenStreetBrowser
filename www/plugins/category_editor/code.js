@@ -128,9 +128,24 @@ function category_editor(id, param, cat_win) {
     var stat=result.getElementsByTagName("status");
     var stat=stat[0];
 
+    var id=result.getElementsByTagName("id");
+    if(id.length>0)
+      id=id[0].textContent;
+    else
+      id=null;
+
     switch(stat.getAttribute("status")) {
       case "ok":
-	alert("Saved.");
+	var txt="";
+
+	if(id!=this.id) {
+	  txt+=sprintf("Category got a new ID '%s'\n", id);
+	}
+
+	txt+="Saved.";
+
+	alert(txt);
+
 	this.win.close();
 	this.win=null;
 	break;
