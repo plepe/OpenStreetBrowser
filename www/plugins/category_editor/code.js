@@ -8,9 +8,11 @@ function category_editor(id, param, cat_win) {
     }
 
     this.form=document.createElement("div");
+    this.form.className="category_editor";
     this.win.content.appendChild(this.form);
 
     this.form_content=dom_create_append(this.form, "div");
+    this.form_content.className="category_editor_content";
 
     this.view_form();
 
@@ -244,6 +246,7 @@ function category_editor(id, param, cat_win) {
     dom_clean(this.form_content);
 
     this.input_source=dom_create_append(this.form_content, "textarea");
+    this.input_source.className="view_source";
     this.input_source.name="xml";
     this.input_source.value=this.export_xml();
     this.input_source.onchange=this.input_source_change.bind(this);

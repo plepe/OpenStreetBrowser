@@ -1,7 +1,7 @@
 div.category_editor {
-  width: 500px;
-  max-height: 400px;
-  min-height: 60px;
-  overflow: auto;
   padding: 3px;
+}
+div.category_editor_content textarea.view_source {
+  width: 494px;
+  height: 250px;
 }
