@@ -140,6 +140,7 @@ $overlays_add=array(
 // win - Windowmanager
 // lang_preferred - Query preferred languages
 // translation - Translation system
+// category_chooser - List all available categories and add to list
 // category_window - A window for category interaction (info, edit, ...)
 // category_editor - An editor for editing OSM categories
 // category_osm_info - Show info about an OSM Category
