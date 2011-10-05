@@ -3,3 +3,8 @@ div.category_chooser {
   height: 300px;
   overflow: auto;
 }
+div.category_chooser ul li .category_id {
+  color: #909090;
+  font-size: 7pt;
+  font-style: italic;
+}

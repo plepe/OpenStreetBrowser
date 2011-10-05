@@ -30,6 +30,7 @@ function category_chooser(callback) {
       var ob=obs[i];
 
       var li=dom_create_append(ul, "li");
+
       var a=dom_create_append(li, "a");
       a.href="#";
       a.onclick=this.choose.bind(this, ob.getAttribute("id"));
@@ -39,6 +40,13 @@ function category_chooser(callback) {
 	text=ob.firstChild.nodeValue;
 	
       dom_create_append_text(a, text);
+
+      dom_create_append_text(li, " ");
+
+      var text=sprintf("%s", ob.getAttribute("id"));
+      var span=dom_create_append(li, "span");
+      span.className="category_id";
+      dom_create_append_text(span, text);
     }
 
     var input=dom_create_append(this.win.content, "input");
