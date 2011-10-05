@@ -81,13 +81,9 @@ function category_editor(id, param, cat_win) {
       rule.div.parentNode.removeChild(rule.div);
   }
 
-  // save
-  this.save=function() {
-    var ret="";
-   
-    ret="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-
-    ret+="<category id=\""+this.id+"\" ";
+  // export_xml
+  this.export_xml=function() {
+    ret ="<category id=\""+this.id+"\" ";
     if(this.version)
       ret+="version=\""+this.version+"\"";
     ret+=">\n";
@@ -104,6 +100,16 @@ function category_editor(id, param, cat_win) {
     }
 
     ret+="</category>\n";
+
+    return ret;
+  }
+
+  // save
+  this.save=function() {
+    var ret="";
+   
+    ret="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+    ret+=this.export_xml();
 
     ajax_post("categories.php", { todo: 'save', id: this.id }, ret, this.save_callback.bind(this));
   }
@@ -166,16 +172,17 @@ function category_editor(id, param, cat_win) {
     ajax_direct("categories.php", param, this.load_def_callback.bind(this));
   }
 
-  // load_def_callback
-  this.load_def_callback=function(response) {
-    var data=response.responseXML;
-    var cat_data=data.firstChild;
-
+  // read_dom
+  this.read_dom=function(dom) {
     this.tags=new tags();
     this.rules=[];
 
-    if(cat_data)
-      this.tags.readDOM(cat_data);
+    var cat_data=dom.getElementsByTagName("category");
+    if(cat_data.length==0)
+      return;
+    cat_data=cat_data[0];
+
+    this.tags.readDOM(cat_data);
 
     this.version=cat_data.getAttribute("version");
 
@@ -187,6 +194,13 @@ function category_editor(id, param, cat_win) {
       }
       cur=cur.nextSibling;
     }
+  }
+
+  // load_def_callback
+  this.load_def_callback=function(response) {
+    var data=response.responseXML;
+
+    this.read_dom(data);
 
     this.init();
   }
@@ -225,11 +239,35 @@ function category_editor(id, param, cat_win) {
     this.form_content.appendChild(input);
   }
 
+  // view_source
+  this.view_source=function() {
+    dom_clean(this.form_content);
+
+    this.input_source=dom_create_append(this.form_content, "textarea");
+    this.input_source.name="xml";
+    this.input_source.value=this.export_xml();
+    this.input_source.onchange=this.input_source_change.bind(this);
+  }
+
+  // input_source_change
+  this.input_source_change=function() {
+    var dom=parse_xml(this.input_source.value);
+    if(typeof dom=="string") {
+      alert(dom)
+      return;
+    }
+
+    this.read_dom(dom);
+  }
+
   // view_select_change
   this.view_select_change=function() {
     switch(this.view_select.value) {
       case "form":
         this.view_form();
+	break;
+      case "source":
+        this.view_source();
 	break;
     }
   }
