@@ -15,11 +15,18 @@ function category_history(category, cat_win) {
 	li.className="current";
 
       var a=dom_create_append(li, "a");
+      var text=e.version_tags.comment;
+      if(!text)
+	text="no message";
+      dom_create_append_text(a, text);
+      a.href=sprintf("javascript:category_show(\"osm:%s\", { version: \"%s\" })", this.category.id, e.version);
+
+      dom_create_append_text(li, " (");
+
       var text=e.version_tags.date;
       if(!text)
 	text="?";
-      dom_create_append_text(a, text);
-      a.href=sprintf("javascript:category_show(\"osm:%s\", { version: \"%s\" })", this.category.id, e.version);
+      dom_create_append_text(li, text);
 
       dom_create_append_text(li, " by ");
 
@@ -30,6 +37,7 @@ function category_history(category, cat_win) {
       if(!text)
 	text="?";
       dom_create_append_text(a, text);
+      dom_create_append_text(a, ")");
     }
   }
 
