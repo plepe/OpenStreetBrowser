@@ -10,37 +10,9 @@ function category_editor(id, param, cat_win) {
     this.form=document.createElement("div");
     this.win.content.appendChild(this.form);
 
-    var txt=document.createElement("div");
-    txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Category_Tags#Category'>Help</a>):\n";
-    this.form.appendChild(txt);
+    this.form_content=dom_create_append(this.form, "div");
 
-    var div=document.createElement("div");
-    this.tags.editor(div);
-    this.form.appendChild(div);
-
-    var sep=document.createElement("hr");
-    this.form.appendChild(sep);
-
-    this.div_rule_list=document.createElement("div");
-    this.div_rule_list.className="editor_category_rule_list";
-    this.form.appendChild(this.div_rule_list);
-
-    for(var i=0; i<this.rules.length; i++) {
-      var div=document.createElement("div");
-      this.div_rule_list.appendChild(div);
-      div.className="editor_category_rule";
-
-      this.rules[i].editor(div);
-    }
-
-    var input=document.createElement("input");
-    input.type="button";
-    input.value="New Rule";
-    input.onclick=this.new_rule.bind(this);
-    this.form.appendChild(input);
-
-    var sep=document.createElement("br");
-    this.form.appendChild(sep);
+    this.view_form();
 
     var input=document.createElement("input");
     input.type="button";
@@ -53,6 +25,21 @@ function category_editor(id, param, cat_win) {
     input.value="Cancel";
     input.onclick=this.cancel.bind(this);
     this.form.appendChild(input);
+
+    // view select
+    dom_create_append_text(this.form, "View: ");
+    this.view_select=document.createElement("select");
+
+    var opt=dom_create_append(this.view_select, "option");
+    opt.value="form";
+    dom_create_append_text(opt, "Form");
+
+    var opt=dom_create_append(this.view_select, "option");
+    opt.value="source";
+    dom_create_append_text(opt, "Source");
+
+    this.view_select.onchange=this.view_select_change.bind(this);
+    this.form.appendChild(this.view_select);
   }
 
   // get_rule
@@ -202,6 +189,49 @@ function category_editor(id, param, cat_win) {
     }
 
     this.init();
+  }
+
+  // view_form
+  this.view_form=function() {
+    dom_clean(this.form_content);
+
+    var txt=document.createElement("div");
+    txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Category_Tags#Category'>Help</a>):\n";
+    this.form_content.appendChild(txt);
+
+    var div=document.createElement("div");
+    this.tags.editor(div);
+    this.form_content.appendChild(div);
+
+    var sep=document.createElement("hr");
+    this.form_content.appendChild(sep);
+
+    this.div_rule_list=document.createElement("div");
+    this.div_rule_list.className="editor_category_rule_list";
+    this.form_content.appendChild(this.div_rule_list);
+
+    for(var i=0; i<this.rules.length; i++) {
+      var div=document.createElement("div");
+      this.div_rule_list.appendChild(div);
+      div.className="editor_category_rule";
+
+      this.rules[i].editor(div);
+    }
+
+    var input=document.createElement("input");
+    input.type="button";
+    input.value="New Rule";
+    input.onclick=this.new_rule.bind(this);
+    this.form_content.appendChild(input);
+  }
+
+  // view_select_change
+  this.view_select_change=function() {
+    switch(this.view_select.value) {
+      case "form":
+        this.view_form();
+	break;
+    }
   }
 
   // constructor
