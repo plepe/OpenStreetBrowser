@@ -775,7 +775,7 @@ function category_check_state() {
 //     'branch'=>'id of conflicting branch'
 //     'id'=>    'id of file'
 //   )
-function category_save($id, $content, $param=array()) {
+function category_save($request_id, $content, $param=array()) {
   global $db_central;
   global $current_user;
 
@@ -808,25 +808,22 @@ function category_save($id, $content, $param=array()) {
   else
     $pg_old_version="Array[".postgre_escape($old_version)."]";
   
-  // get id from old category
-  $res=sql_query("select * from category_current where version=".postgre_escape($old_version), $db_central);
-  if($elem=pg_fetch_assoc($res)) {
-    $id=$elem['category_id'];
-  }
-  else {
+  // check what we want as new id
+  $new_id=$tags->get("id");
+  if(!$new_id)
+    $new_id=$request_id;
+  if(!$new_id)
+    $new_id="cat_{$version}";
+
+  // is id available?
+  $res=sql_query("select * from category_current where category_id=".postgre_escape($new_id), $db_central);
+  if(($elem=pg_fetch_assoc($res))&&($elem['version']!=$old_version)) {
+    // already taken by another category - we should include a message
+    $tags->set("id:message", "ID '$new_id' has already been taken");
     $id="cat_{$version}";
   }
-
-  // check if we request an id from tags
-  if($new_id=$tags->get("id")) {
-    $res=sql_query("select * from category_current where category_id=".postgre_escape($new_id), $db_central);
-    if(($elem=pg_fetch_assoc($res))&&($elem['version']!=$old_version)) {
-      // already taken by another category - we should include a message
-      $tags->set("id:message", "ID '$new_id' has already been taken");
-    }
-    else {
-      $id=$new_id;
-    }
+  else {
+    $id=$new_id;
   }
 
   // add id to tags
