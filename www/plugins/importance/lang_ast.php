@@ -1,0 +1,9 @@
+<?
+$lang_str["importance:name"]="Importancia";
+$lang_str["importance:global"]="mundial";
+$lang_str["importance:international"]="internacional";
+$lang_str["importance:national"]="nacional";
+$lang_str["importance:regional"]="rexonal";
+$lang_str["importance:urban"]="urbana";
+$lang_str["importance:suburban"]="suburbana";
+$lang_str["importance:local"]="llocal";
