@@ -147,3 +147,4 @@ $overlays_add=array(
 // cateogory_history - Show history of a category
 // importance - Define values and functions for defining importance of objects
 // talk - Talk pages
+// recent_changes - Show recent changes in talk pages, categories, ...
