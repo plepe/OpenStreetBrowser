@@ -971,6 +971,33 @@ function category_load($id, $param=array()) {
   return $dom->saveXML();
 }
 
+function category_history_all($id, $param, $version) {
+  $pg_id=postgre_escape($id);
+  $list=array();
+
+  if(!$version) {
+    $res=sql_query("select * from category_current where category_id=$pg_id", $db_central);
+    $elem=pg_fetch_assoc($res);
+    $version=$elem['version'];
+  }
+
+  if($id)
+    $res=sql_query("select * from category where category_id=$pg_id", $db_central);
+  else {
+    $pg_version=postgre_escape($version);
+    $res=sql_query("select * from category where category_id=(select category_id from category first where first.version=$pg_version)", $db_central);
+  }
+
+  while($elem=pg_fetch_assoc($res)) {
+    $elem['category_id']=$elem['category_id'];
+    $elem['parent_versions']=parse_array($elem['parent_versions']);
+    $elem['version_tags']=parse_hstore($elem['version_tags']);
+    $list[$elem['version']]=$elem;
+  }
+
+  return array($list, $version);
+}
+
 // category_history()
 // returns history of a category
 //
@@ -984,26 +1011,23 @@ function category_history($id, $param=array(), $version=null) {
   global $db_central;
   $done=array();
 
-  $sql_id=postgre_escape($id);
-  $list=array();
-
-  if(!$version) {
-    $res=sql_query("select * from category_current where category_id=$sql_id", $db_central);
-    $elem=pg_fetch_assoc($res);
-    $version=$elem['version'];
-  }
-
-  $res=sql_query("select * from category where category_id=$sql_id", $db_central);
-  while($elem=pg_fetch_assoc($res)) {
-    $elem['parent_versions']=parse_array($elem['parent_versions']);
-    $elem['version_tags']=parse_hstore($elem['version_tags']);
-    $list[$elem['version']]=$elem;
-  }
+  $more=category_history_all($id, $param, $version);
+  $list=$more[0];
+  $version=$more[1];
 
   $ret=array();
   $last=$version;
   while($last) {
     $elem=null;
+
+    // if not part of list request more history entries
+    if(!isset($list[$last])) {
+      $more=category_history_all(null, $param, $last);
+
+      $list=$more[0];
+      $version=$more[1];
+    }
+
     if(isset($list[$last]))
       $elem=$list[$last];
 
