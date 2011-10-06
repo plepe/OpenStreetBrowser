@@ -93,6 +93,29 @@ switch($_GET[todo]) {
     print $content;
 
     break;
+  case "delete":
+    $status=category_delete($id);
+
+    Header("Content-Type: text/xml; charset=UTF-8");
+    ob_end_clean();
+
+    print "<?xml version='1.0' encoding='UTF-8' ?".">\n";
+    print "<result>\n";
+
+    if($status[status]!==true) {
+      print "  <status ";
+      foreach($status as $ek=>$ev) {
+	print " $ek='$ev'";
+      }
+      print " />\n";
+    }
+    else {
+      print "  <status version='$status[version]' status='ok' />\n";
+    }
+    print "  <id>$status[id]</id>\n";
+    print "</result>\n";
+
+    break;
   default:
     ob_end_clean();
     print "No valid 'todo'\n";

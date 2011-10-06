@@ -759,6 +759,44 @@ function category_check_state() {
   return true;
 }
 
+// function category_delete()
+// deletes a category
+// -> delete entry from 'category_current'
+// -> create a new entry (without rules) in 'category' with category_id ''
+//    and version_tags.category_id the old category_id
+function category_delete($category_id) {
+  global $db_central;
+
+  $pg_id=postgre_escape($category_id);
+
+  $res=sql_query("select * from category_current where category_id=$pg_id", $db_central);
+  $elem=pg_fetch_assoc($res);
+
+  if(!$elem) {
+    // category does not exist
+    return array("status"=>false);
+  }
+
+  $old_version=$elem['version']; $pg_old_version=postgre_escape($old_version);
+  $version=uniqid(); $pg_version=postgre_escape($version);
+
+  $version_tags=new tags();
+  $version_tags->set("user", $current_user->username);
+  $version_tags->set("date", Date("c"));
+  $version_tags->set("comment", "Delete category '$category_id'");
+  $version_tags->set("category_id", $category_id);
+  $pg_version_tags=array_to_hstore($version_tags->data());
+
+  $sql ="begin;";
+  $sql.="delete from category_current where category_id=$pg_id;";
+  $sql.="insert into category values ('', null, $pg_version, Array[$pg_old_version], $pg_version_tags);";
+  $sql.="commit;";
+
+  sql_query($sql, $db_central);
+
+  return array("status"=>true);
+}
+
 // function category_save()
 // saves a category and processes it
 //
