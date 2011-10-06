@@ -982,6 +982,7 @@ function category_load($id, $param=array()) {
 // array('status')
 function category_history($id, $param=array(), $version=null) {
   global $db_central;
+  $done=array();
 
   $sql_id=postgre_escape($id);
   $list=array();
@@ -1010,6 +1011,12 @@ function category_history($id, $param=array(), $version=null) {
       $last=null;
       continue;
     }
+
+    if(isset($done[$last])) {
+      debug("loop detected", "categories");
+      return $ret;
+    }
+    $done[$last]=true;
 
     $ret[]=$elem;
 
