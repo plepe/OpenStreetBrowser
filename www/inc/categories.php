@@ -1002,9 +1002,17 @@ function category_history($id, $param=array(), $version=null) {
   $ret=array();
   $last=$version;
   while($last) {
-    $elem=$list[$last];
+    $elem=null;
+    if(isset($list[$last]))
+      $elem=$list[$last];
+
+    if(!$elem) {
+      $last=null;
+      continue;
+    }
 
     $ret[]=$elem;
+
     if(sizeof($elem['parent_versions'])) {
       $last=$elem['parent_versions'][0];
     }
