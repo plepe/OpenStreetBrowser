@@ -24,8 +24,8 @@ function category_editor(id, param, cat_win) {
 
     var input=document.createElement("input");
     input.type="button";
-    input.value="Cancel";
-    input.onclick=this.cancel.bind(this);
+    input.value="Delete";
+    input.onclick=this.delete.bind(this);
     this.form.appendChild(input);
 
     // view select
@@ -159,6 +159,18 @@ function category_editor(id, param, cat_win) {
   this.cancel=function() {
     this.win.close();
     this.win=null;
+  }
+
+  // delete
+  this.delete=function() {
+    var param={ todo: "delete" };
+    param.id=this.id;
+
+    ajax_direct("categories.php", param, this.delete_callback.bind(this));
+  }
+
+  this.delete_callback=function() {
+    alert("Deleted");
   }
 
   // load_def
