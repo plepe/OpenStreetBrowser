@@ -132,22 +132,6 @@ function ajax_talk_history($param) {
   return $page->history($param['start'], $param['count']);
 }
 
-function ajax_talk_browser($param) {
-  $ret=array();
-
-  $res=sql_query("select talk_current.page, talk.version_tags from talk_current left join talk on talk_current.version=talk.version order by now desc limit 10");
-  while($elem=pg_fetch_assoc($res)) {
-    $elem['version_tags']=parse_hstore($elem['version_tags']);
-    $ret[]=$elem;
-  }
-
-  return $ret;
-}
-
-function talk_main_links($list) {
-  $list[]=array(0, "<a href='javascript:talk_open_browser()'>".lang("talk_browser:name")."</a>");
-}
-
 function talk_recent_changes($list) {
   $res=sql_query("select * from talk order by version_tags->'date' desc limit 10");
   while($elem=pg_fetch_assoc($res)) {
@@ -162,5 +146,4 @@ function talk_recent_changes($list) {
   }
 }
 
-register_hook("main_links", "talk_main_links");
 register_hook("recent_changes_load", "talk_recent_changes");
