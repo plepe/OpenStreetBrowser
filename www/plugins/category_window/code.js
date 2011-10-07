@@ -1,5 +1,9 @@
 function category_window(category) {
-  // update
+  this.close=function() {
+    this.win.close();
+  }
+
+  // window_show
   this.window_show=function(loaded_category) {
     // wrong category which has been loaded
     if(this.category!=loaded_category)
@@ -16,6 +20,7 @@ function category_window(category) {
     // Prepare window
     dom_clean(this.win.content);
     this.tab_manager=new tab_manager(this.win.content);
+    this.tab_manager.onclose=this.close.bind(this);
 
     // Call hooks to add content to window
     call_hooks("category_window_show", this, category);
