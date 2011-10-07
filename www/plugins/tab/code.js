@@ -9,6 +9,14 @@ function tab(options) {
     this.manager.deactivate(this);
   }
 
+  // close
+  this.close=function() {
+    if(this.onclose)
+      this.onclose();
+
+    this.manager.unregister_tab(this);
+  }
+
   // constructor
   this.content=document.createElement("div");
   this.content.className="tab_content";
@@ -40,6 +48,25 @@ function tab_manager(div) {
 
     if(!this.active_tab)
       this.activate(tab);
+  }
+
+  // unregister_tab
+  this.unregister_tab=function(tab) {
+    var p=parseInt(array_search(tab, this.tabs));
+
+    if(this.active_tab==tab) {
+      this.deactivate(tab);
+
+      if(p>=this.tabs.length-1)
+	this.activate(this.tabs[p-1]);
+      else
+	this.activate(this.tabs[p+1]);
+    }
+
+    this.header.removeChild(tab.header);
+    this.content.removeChild(tab.content);
+
+    this.tabs=array_remove(this.tabs, p);
   }
 
   // show
