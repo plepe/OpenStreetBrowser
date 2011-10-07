@@ -17,6 +17,11 @@ function tab(options) {
     this.manager.unregister_tab(this);
   }
 
+  // close all tabs
+  this.close_all=function() {
+    this.manager.close_all(this);
+  }
+
   // constructor
   this.content=document.createElement("div");
   this.content.className="tab_content";
@@ -105,6 +110,33 @@ function tab_manager(div) {
 
     tab.header.className="tab_header";
     tab.content.className="tab_content";
+  }
+
+  // close_all
+  this.close_all=function() {
+    for(var i=0; i<this.tabs.length; i++) {
+      if(this.tabs[i].onclose)
+        this.tabs[i].onclose();
+    }
+    delete(this.tabs);
+
+    dom_clean(this.header);
+    dom_clean(this.content);
+    if(this.div.parentNode) {
+      this.div.parentNode.removeChild(this.div);
+    }
+    else {
+      this.div.removeChild(this.header);
+      this.div.removeChild(this.content);
+    }
+
+    if(this.onclose)
+      this.onclose();
+  }
+
+  // close
+  this.close=function() {
+    this.close_all();
   }
   
   // constructor
