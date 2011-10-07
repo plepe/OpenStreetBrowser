@@ -35,6 +35,12 @@ function category_editor(id, param, cat_win) {
 
     var input=document.createElement("input");
     input.type="button";
+    input.value="Cancel";
+    input.onclick=this.cancel.bind(this);
+    this.form.appendChild(input);
+
+    var input=document.createElement("input");
+    input.type="button";
     input.value="Delete";
     input.onclick=this.delete.bind(this);
     this.form.appendChild(input);
@@ -152,7 +158,7 @@ function category_editor(id, param, cat_win) {
 
 	alert(txt);
 
-	this.win.close();
+	this.win.close_all();
 	this.win=null;
 	break;
       case "merge failed":
@@ -168,7 +174,7 @@ function category_editor(id, param, cat_win) {
 
   // cancel
   this.cancel=function() {
-    this.win.close();
+    this.win.close_all();
     this.win=null;
   }
 
