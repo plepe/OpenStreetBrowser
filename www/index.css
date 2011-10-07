@@ -272,6 +272,11 @@ div.error {
   margin: 2px;
   color: #ffffff;
 }
+div.warning {
+  border: 1px solid red;
+  padding: 2px;
+  font-style: italic;
+}
 
 a.external:hover {
   text-decoration: underline;
