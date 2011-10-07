@@ -11,6 +11,12 @@ function category_editor(id, param, cat_win) {
     this.form.className="category_editor";
     this.win.content.appendChild(this.form);
 
+    if(!this.id) {
+      var warning=dom_create_append(this.form, "div");
+      warning.className="warning";
+      dom_create_append_text(warning, lang("category_editor:new"));
+    }
+
     this.form_content=dom_create_append(this.form, "div");
     this.form_content.className="category_editor_content";
 
