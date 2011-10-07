@@ -6,6 +6,23 @@ function recent_changes() {
     return b-a;
   }
 
+  // show
+  this.show=function() {
+    var new_list=[];
+
+    for(var i=0; i<this.list.length; i++) {
+      var l=this.list[i];
+
+      new_list.push({
+	name: l.name+": "+l.msg,
+	type: l.date+" by "+l.user,
+	href: l.href
+      });
+    }
+
+    new list(this.win.content, new_list);
+  }
+
   // list_sort
   this.list_sort=function() {
     var tmp_list={};
@@ -52,8 +69,9 @@ function recent_changes() {
     ret=ret.return_value;
 
     this.list=this.list.concat(ret);
+
     this.list_sort();
-    alert(print_r(this.list));
+    this.show();
   }
 
   // constructor
