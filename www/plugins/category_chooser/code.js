@@ -13,7 +13,7 @@ function category_chooser(callback) {
   // create category
   this.create_category=function() {
     this.win.close();
-    new category_editor();
+    category_window_create_category();
   }
 
   // load_callback

@@ -47,6 +47,10 @@ function category_show(id, param) {
   new category_window(get_category(id, param));
 }
 
+function category_window_create_category() {
+  new category_window(new category_osm());
+}
+
 function category_window_write_div(div, category) {
   if(category.id=="root")
     return;
