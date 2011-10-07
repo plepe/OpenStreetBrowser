@@ -16,6 +16,11 @@ function category_editor(id, param, cat_win) {
       warning.className="warning";
       dom_create_append_text(warning, lang("category_editor:new"));
     }
+    if(this.version!=this.newest_version) {
+      var warning=dom_create_append(this.form, "div");
+      warning.className="warning";
+      dom_create_append_text(warning, lang("category_editor:not_newest"));
+    }
 
     this.form_content=dom_create_append(this.form, "div");
     this.form_content.className="category_editor_content";
@@ -205,6 +210,7 @@ function category_editor(id, param, cat_win) {
     this.tags.readDOM(cat_data);
 
     this.version=cat_data.getAttribute("version");
+    this.newest_version=cat_data.getAttribute("newest_version");
 
     var cur=cat_data.firstChild;
     while(cur) {
