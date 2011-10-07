@@ -289,8 +289,6 @@ function category_editor(id, param, cat_win) {
 
   // constructor
   this.id=id;
-  if(!this.id)
-    this.id="new";
 
   this.param=param;
 
@@ -298,7 +296,7 @@ function category_editor(id, param, cat_win) {
   this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
   cat_win.tab_manager.register_tab(this.win);
 
-  if(this.id!="new")
+  if(this.id)
     this.load_def();
   else {
     this.tags=new tags(category_tags_default);
