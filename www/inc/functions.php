@@ -127,3 +127,13 @@ function weight_sort($arr) {
 
   return $ret2;
 }
+
+// returns the first non-null value
+function coalesce() {
+  $args=func_get_args();
+
+  for($i=0; $i<sizeof($args); $i++) {
+    if($args[$i])
+      return $args[$i];
+  }
+}
