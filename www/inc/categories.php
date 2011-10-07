@@ -955,6 +955,8 @@ function category_list($lang="en") {
 // content as text
 // array('status')  on error
 function category_load($id, $param=array()) {
+  global $db_central;
+
   // Postgre-Escape id
   $pg_id=postgre_escape($id);
 
@@ -981,12 +983,17 @@ function category_load($id, $param=array()) {
     return array('status'=>"'$id/$version': No such category/version");
   }
 
+  $res=sql_query("select * from category_current where category_id='$id'", $db_central);
+  $newest=pg_fetch_assoc($res);
+
   // Prepare returning XML
   $dom=new DOMDocument();
   $root=$dom->createElement("category");
   $dom->appendChild($root);
   $root->setAttribute("id", $id);
   $root->setAttribute("version", $version);
+  if($newest)
+    $root->setAttribute("newest_version", $newest['version']);
 
   // process Tags
   $tags=new tags(parse_hstore($elem['tags']));
