@@ -1,35 +1,6 @@
 <?
-//  All tags should have translations in www/lang/tags_XX.php, with
-//  language strings like "tag:key" for the translation of the key and
-//  "tag:key=value" for the translation of the value. E.g.
-//  $lang_str["tag:amenity"]=array("Amenity", "Amenities");
-//  $lang_str["tag:amenity=bar"]=array("Bar", "Bars");
-//
-//  Furthermore you can describe the tags with the array $tag_type. Every
-//  entry is an array again to further specify its type, e.g.:
-//  $tag_type["width"]=array("number", "m", "in");
-//                ^             ^       ^    ^
-//                |             |       |    \-- the preferred unit in this locale
-//                |             |       \------- the default unit for this tag
-//                |             \--------------- the type of the value
-//                \----------------------------- tag
-//
-//  This defines, that the default value for the tag width is a number, with
-//  its default unit m (for meter) and the preferred unit for this locale is
-//  in (for inch).
-//
-//  The following types are valid:
-//  * text          default (e.g. religion, name)
-//  * number        a value, with default unit and preferred unit as defined
-//                  by the second and third entry in this array (e.g. width,
-//                  voltage)
-//  * count         an integer value (e.g. population)
-//  * date          a date
-//  * link          an Internet URL
-//
-//  NOTE: the $tag_type can already be defined, but it's not used yet.
-//  There might also be more tag types soon and a way to format the output
-//  (e.g. "100.000 m" or "2010-12-24").
+// All tags should have a translation, with language strings like "tag:key" for the translation of the key and "tag:key=value" for the translation of the value. E.g. tag:amenity "Amenity;Amenities" resp. tag:amenity=bar "Bar;Bars". You can also define the Gender like "F;Bar;Bars".
+// Currently there's no way to add a new tag in this editor. This should follow in some update hopefully soon.
 
 // accomodation
 $lang_str["tag:accomodation"]="Unterkunft";
@@ -54,6 +25,8 @@ $lang_str["tag:admin_level=2"]="Staat";
 $lang_str["tag:admin_level=4"]="Land";
 $lang_str["tag:admin_level=5"]="Regierungsbezirk";
 $lang_str["tag:admin_level=6"]="Kreis";
+#$lang_str["tag:admin_level=7"]="";
+#$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Stadt und Gemeinde";
 $lang_str["tag:admin_level=10"]="Stadtteil";
 
@@ -104,7 +77,7 @@ $lang_str["tag:highway=unclassified"]="Unklassifizierte Straße";
 $lang_str["tag:highway=service"]="Erschließungsstraße";
 $lang_str["tag:highway=pedestrian"]="Fußgängerzone";
 $lang_str["tag:highway=living_street"]="Verkehrsberuhigter Bereich";
-$lang_str["tag:highway=path"]="Pfad";
+$lang_str["tag:highway=path"]="Weg";
 $lang_str["tag:highway=cycleway"]="Radweg";
 $lang_str["tag:highway=footway"]="Fußweg";
 $lang_str["tag:highway=bridleway"]="Reitweg";
@@ -179,9 +152,12 @@ $lang_str["tag:place=city"]=array("Stadt", "Städte");
 $lang_str["tag:place=town"]=array("Kleinstadt", "Kleinstädte");
 $lang_str["tag:place=village"]=array("Dorf", "Dörfer");
 $lang_str["tag:place=suburb"]=array("Vorort", "Vororte");
+#$lang_str["tag:place=hamlet"]=array("Hamlet", "Hamlets");
 $lang_str["tag:place=locality"]=array("Lokalität", "Lokalitäten");
 $lang_str["tag:place=island"]=array("Insel", "Inseln");
 $lang_str["tag:place=islet"]=array("Inselchen", "Inselchen");
+#$lang_str["tag:place=ocean"]=array("Ocean", "Oceans");
+#$lang_str["tag:place=sea"]=array("Sea", "Seas");
 
 // population
 $lang_str["tag:population"]="Einwohner";
@@ -228,7 +204,7 @@ $lang_str["tag:religion"]="Religion";
 $lang_str["tag:religion=christian"]="christlich";
 $lang_str["tag:religion=buddhist"]="buddhistisch";
 #$lang_str["tag:religion=hindu"]="hindu";
-#$lang_str["tag:religion=jewish"]="jewish";
+$lang_str["tag:religion=jewish"]="jüdisch";
 $lang_str["tag:religion=muslim"]="muslimisch";
 #$lang_str["tag:religion=multifaith"]="multifaith";
 
