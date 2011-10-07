@@ -148,4 +148,19 @@ function talk_main_links($list) {
   $list[]=array(0, "<a href='javascript:talk_open_browser()'>".lang("talk_browser:name")."</a>");
 }
 
+function talk_recent_changes($list) {
+  $res=sql_query("select * from talk order by version_tags->'date' desc limit 10");
+  while($elem=pg_fetch_assoc($res)) {
+    $elem['version_tags']=parse_hstore($elem['version_tags']);
+
+    $entry=$elem['version_tags'];
+    $entry['name']=sprintf("%s \"%s\"", lang("talk:name", 1), $elem['page']);
+    $entry['plugin']="talk";
+    $entry['href']="javascript:talk_show({ page: \"{$elem['page']}\", version: \"{$elem['version']}\"})";
+
+    $list[]=$entry;
+  }
+}
+
 register_hook("main_links", "talk_main_links");
+register_hook("recent_changes_load", "talk_recent_changes");
