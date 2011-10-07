@@ -399,12 +399,24 @@ function category_osm(id, param) {
       rule.div.parentNode.removeChild(rule.div);
   }
 
+  this.init_new=function() {
+    // initialize new category
+    this.id="";
+    this.loaded=true;
+    this.tags=new tags(category_tags_default);
+    this.write_div();
+    call_hooks("category_loaded", this);
+  }
+
   // constructor
   if(!param)
     param={};
   this.param=param;
   this.rules=[];
-  this.load_def();
+  if(this.id)
+    this.load_def();
+  else
+    this.init_new();
   this.result={ state: "no" };
 }
 
