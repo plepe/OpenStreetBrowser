@@ -949,23 +949,29 @@ function category_list($lang="en") {
 // parameters:
 // $id     the if of the category
 // $param  optional parameters
-//   version    a certain version of that file
+//   version    a certain version of that file. 'newest' for most current version.
 //
 // return:
 // content as text
 // array('status')  on error
 function category_load($id, $param=array()) {
   global $db_central;
+  $db=null;
 
   // Postgre-Escape id
   $pg_id=postgre_escape($id);
 
+  // if requesting newest version use central database
+  if(isset($param['version'])&&($param['version']=="newest")) {
+    $db=$db_central;
+  }
+
   // if no version supplied, return current version
-  if(isset($param['version'])) {
+  if(isset($param['version'])&&($param['version']!="newest")) {
     $version=$param['version'];
   }
   else {
-    $res=sql_query("select * from category_current where category_id=$pg_id");
+    $res=sql_query("select * from category_current where category_id=$pg_id", $db);
     if(!$elem=pg_fetch_assoc($res)) {
       return array('status'=>"'$id': No such category");
     }
@@ -978,7 +984,7 @@ function category_load($id, $param=array()) {
   $pg_version=postgre_escape($version);
 
   // Get root of category
-  $res=sql_query("select * from category where version=$pg_version");
+  $res=sql_query("select * from category where version=$pg_version", $db);
   if(!$elem=pg_fetch_assoc($res)) {
     return array('status'=>"'$id/$version': No such category/version");
   }
@@ -1000,7 +1006,7 @@ function category_load($id, $param=array()) {
   $tags->writeDOM($root, $dom);
 
   // Now process the rules
-  $res=sql_query("select * from category_rule where version=$pg_version");
+  $res=sql_query("select * from category_rule where version=$pg_version", $db);
   while($elem=pg_fetch_assoc($res)) {
     // base
     $rule=$dom->createElement("rule");
