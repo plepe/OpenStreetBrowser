@@ -27,23 +27,25 @@ function category_editor(id, param, cat_win) {
 
     this.view_form();
 
-    var input=document.createElement("input");
-    input.type="button";
-    input.value="Save";
-    input.onclick=this.save.bind(this);
-    this.form.appendChild(input);
+    this.inputs={};
 
-    var input=document.createElement("input");
-    input.type="button";
-    input.value="Cancel";
-    input.onclick=this.cancel.bind(this);
-    this.form.appendChild(input);
+    this.inputs.save=document.createElement("input");
+    this.inputs.save.type="button";
+    this.inputs.save.value="Save";
+    this.inputs.save.onclick=this.save.bind(this);
+    this.form.appendChild(this.inputs.save);
 
-    var input=document.createElement("input");
-    input.type="button";
-    input.value="Delete";
-    input.onclick=this.delete.bind(this);
-    this.form.appendChild(input);
+    this.inputs.cancel=document.createElement("input");
+    this.inputs.cancel.type="button";
+    this.inputs.cancel.value="Cancel";
+    this.inputs.cancel.onclick=this.cancel.bind(this);
+    this.form.appendChild(this.inputs.cancel);
+
+    this.inputs.delete=document.createElement("input");
+    this.inputs.delete.type="button";
+    this.inputs.delete.value="Delete";
+    this.inputs.delete.onclick=this.delete.bind(this);
+    this.form.appendChild(this.inputs.delete);
 
     // view select
     dom_create_append_text(this.form, "View: ");
