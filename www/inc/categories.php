@@ -784,7 +784,7 @@ function category_delete($category_id) {
   $version_tags=new tags();
   $version_tags->set("user", $current_user->username);
   $version_tags->set("date", Date("c"));
-  $version_tags->set("comment", "Delete category '$category_id'");
+  $version_tags->set("msg", "Delete category '$category_id'");
   $pg_version_tags=array_to_hstore($version_tags->data());
   $pg_category_id=postgre_escape($category_id);
 
@@ -807,6 +807,7 @@ function category_delete($category_id) {
 // $param    additional params
 //    branch    the branch of a conflicting merge
 //    version   the version of the file last loaded
+//    msg       message describing changes
 //
 // return:
 //   array(
@@ -839,6 +840,7 @@ function category_save($request_id, $content, $param=array()) {
   $version_tags=new tags();
   $version_tags->set("user", $current_user->username);
   $version_tags->set("date", Date("c"));
+  $version_tags->set("msg", $param['msg']);
 
   // and old version
   $old_version=$root->getAttribute("version");
