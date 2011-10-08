@@ -11,7 +11,7 @@ function category_history_recent_changes($list) {
 
     $entry=$elem['version_tags'];
     $entry['name']=sprintf("%s \"%s\"", lang("category", 1), $t->get_lang("name"));
-    $entry['msg']=coalesce($elem['version_tags']['comment'], "no message");
+    $entry['msg']=coalesce($elem['version_tags']['msg'], "no message");
     $entry['plugin']="category";
     $entry['href']="javascript:category_show(\"osm:{$elem['category_id']}\", { version: \"{$elem['version']}\"})";
 
