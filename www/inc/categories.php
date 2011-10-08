@@ -766,6 +766,7 @@ function category_check_state() {
 //    and version_tags.category_id the old category_id
 function category_delete($category_id) {
   global $db_central;
+  global $current_user;
 
   $pg_id=postgre_escape($category_id);
 
