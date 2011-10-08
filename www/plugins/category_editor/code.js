@@ -27,6 +27,8 @@ function category_editor(id, param, cat_win) {
 
     this.view_form();
 
+    this.msg_div=dom_create_append(this.form, "div");
+
     this.inputs={};
 
     this.inputs.save=document.createElement("input");
@@ -127,12 +129,26 @@ function category_editor(id, param, cat_win) {
 
   // save
   this.save=function() {
+    dom_clean(this.msg_div);
+
+    var div=dom_create_append(this.msg_div, "div");
+    dom_create_append_text(div, "Please provide a description of your changes and press 'Save' again");
+
+    this.inputs.msg=dom_create_append(this.msg_div, "input");
+    this.inputs.msg.name="msg";
+    this.inputs.msg.focus();
+
+    this.inputs.save.onclick=this.save_next.bind(this);
+  }
+
+  // save_next
+  this.save_next=function() {
     var ret="";
    
     ret="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     ret+=this.export_xml();
 
-    ajax_post("categories.php", { todo: 'save', id: this.id }, ret, this.save_callback.bind(this));
+    ajax_post("categories.php", { todo: 'save', id: this.id, msg: this.inputs.msg.value }, ret, this.save_callback.bind(this));
   }
 
   // save_callback
@@ -182,6 +198,20 @@ function category_editor(id, param, cat_win) {
 
   // delete
   this.delete=function() {
+    dom_clean(this.msg_div);
+
+    var div=dom_create_append(this.msg_div, "div");
+    dom_create_append_text(div, "Please provide a description of your changes and press 'Delete' again");
+
+    this.inputs.msg=dom_create_append(this.msg_div, "input");
+    this.inputs.msg.name="msg";
+    this.inputs.msg.focus();
+
+    this.inputs.delete.onclick=this.delete_next.bind(this);
+  }
+
+  // delete
+  this.delete_next=function() {
     var param={ todo: "delete" };
     param.id=this.id;
 
@@ -190,6 +220,9 @@ function category_editor(id, param, cat_win) {
 
   this.delete_callback=function() {
     alert("Deleted");
+
+    this.win.close_all();
+    this.win=null;
   }
 
   // load_def
