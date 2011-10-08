@@ -785,12 +785,12 @@ function category_delete($category_id) {
   $version_tags->set("user", $current_user->username);
   $version_tags->set("date", Date("c"));
   $version_tags->set("comment", "Delete category '$category_id'");
-  $version_tags->set("category_id", $category_id);
   $pg_version_tags=array_to_hstore($version_tags->data());
+  $pg_category_id=postgre_escape($category_id);
 
   $sql ="begin;";
   $sql.="delete from category_current where category_id=$pg_id;";
-  $sql.="insert into category values ('', null, $pg_version, Array[$pg_old_version], $pg_version_tags);";
+  $sql.="insert into category values ($pg_category_id, null, $pg_version, Array[$pg_old_version], $pg_version_tags);";
   $sql.="commit;";
 
   sql_query($sql, $db_central);
