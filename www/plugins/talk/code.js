@@ -45,9 +45,9 @@ function talk(param, div) {
 
   // pre_save
   this.pre_save=function() {
-     dom_clean(this.msg_div);
+    dom_clean(this.msg_div);
 
-    dom_create_append_text(div, lang("editor:request_message", 0, lang("save")));
+    dom_create_append_text(this.msg_div, lang("editor:request_message", 0, lang("save")));
 
     this.inputs.msg=dom_create_append(this.msg_div, "input");
     this.inputs.msg.name="msg";
