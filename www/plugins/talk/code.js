@@ -84,16 +84,20 @@ function talk(param, div) {
       var li=dom_create_append(this.content_div, "li");
 
       var a=dom_create_append(li, "a");
-      dom_create_append_text(a, e.version_tags.date);
+      dom_create_append_text(a, e.version_tags.msg || ("no message"));
       a.href="#";
       a.onclick=talk_show.bind(this, { page: this.page, version: e.version });
 
+      dom_create_append_text(li, " (");
+      dom_create_append_text(li, e.version_tags.date);
       dom_create_append_text(li, " by ");
 
       // TODO: as soon as user_show() is implemented change to "a"
       var a=dom_create_append(li, "span");
       //a.href="javascript:user_show(\""+e.version_tags.user+"\")";
       dom_create_append_text(a, e.version_tags.user);
+
+      dom_create_append_text(li, ")");
     }
   }
 
