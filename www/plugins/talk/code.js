@@ -47,8 +47,7 @@ function talk(param, div) {
   this.pre_save=function() {
      dom_clean(this.msg_div);
 
-    var div=dom_create_append(this.msg_div, "div");
-    dom_create_append_text(div, "Please provide a description of your changes and press 'Save' again");
+    dom_create_append_text(div, lang("editor:request_message", 0, lang("save")));
 
     this.inputs.msg=dom_create_append(this.msg_div, "input");
     this.inputs.msg.name="msg";
@@ -113,7 +112,7 @@ function talk(param, div) {
     if(!active) {
       var div_error=dom_create_append(this.tool_div, "div");
       div_error.className="error";
-      dom_create_append_text(div_error, lang("attention")+": "+lang("error:not_logged_in"));
+      dom_create_append_text(div_error, lang("editor:not_logged_in"));
     }
 
     // tool_bar

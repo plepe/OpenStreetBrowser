@@ -3,14 +3,15 @@ function category_editor(id, param, cat_win) {
   this.init=function() {
     dom_clean(this.win.content);
 
-    if(!current_user.username) {
-      dom_create_append_text(this.win.content, t("You are not logged in. You cannot save your changes."));
-    }
-
     this.form=document.createElement("div");
     this.form.className="category_editor";
     this.win.content.appendChild(this.form);
 
+    if(!current_user.username) {
+      var warning=dom_create_append(this.form, "div");
+      warning.className="error";
+      dom_create_append_text(warning, lang("editor:not_logged_in"));
+    }
     if(!this.id) {
       var warning=dom_create_append(this.form, "div");
       warning.className="warning";
@@ -33,33 +34,33 @@ function category_editor(id, param, cat_win) {
 
     this.inputs.save=document.createElement("input");
     this.inputs.save.type="button";
-    this.inputs.save.value="Save";
+    this.inputs.save.value=lang("save");
     this.inputs.save.onclick=this.save.bind(this);
     this.form.appendChild(this.inputs.save);
 
     this.inputs.cancel=document.createElement("input");
     this.inputs.cancel.type="button";
-    this.inputs.cancel.value="Cancel";
+    this.inputs.cancel.value=lang("cancel");
     this.inputs.cancel.onclick=this.cancel.bind(this);
     this.form.appendChild(this.inputs.cancel);
 
     this.inputs.delete=document.createElement("input");
     this.inputs.delete.type="button";
-    this.inputs.delete.value="Delete";
+    this.inputs.delete.value=lang("delete");
     this.inputs.delete.onclick=this.delete.bind(this);
     this.form.appendChild(this.inputs.delete);
 
     // view select
-    dom_create_append_text(this.form, "View: ");
+    dom_create_append_text(this.form, lang("category_editor:view_mode")+": ");
     this.view_select=document.createElement("select");
 
     var opt=dom_create_append(this.view_select, "option");
     opt.value="form";
-    dom_create_append_text(opt, "Form");
+    dom_create_append_text(opt, lang("category_editor:view_mode:form"));
 
     var opt=dom_create_append(this.view_select, "option");
     opt.value="source";
-    dom_create_append_text(opt, "Source");
+    dom_create_append_text(opt, lang("category_editor:view_mode:source"));
 
     this.view_select.onchange=this.view_select_change.bind(this);
     this.form.appendChild(this.view_select);
@@ -132,7 +133,7 @@ function category_editor(id, param, cat_win) {
     dom_clean(this.msg_div);
 
     var div=dom_create_append(this.msg_div, "div");
-    dom_create_append_text(div, "Please provide a description of your changes and press 'Save' again");
+    dom_create_append_text(div, lang("editor:request_message", 0, lang("save")));
 
     this.inputs.msg=dom_create_append(this.msg_div, "input");
     this.inputs.msg.name="msg";
@@ -169,10 +170,11 @@ function category_editor(id, param, cat_win) {
 	var txt="";
 
 	if(id!=this.id) {
-	  txt+=sprintf("Category got a new ID '%s'\n", id);
+	  txt+=lang("category_editor:got_new_id", 0, id);
+	  txt+="\n";
 	}
 
-	txt+="Saved.";
+	txt+=lang("saved");
 
 	alert(txt);
 
@@ -183,7 +185,7 @@ function category_editor(id, param, cat_win) {
         this.resolve_conflict(stat.getAttribute("branch"), stat.getAttribute("version"));
 	break;
       case "error":
-	alert(t("error")+t("error:"+stat.getAttribute("error")));
+	alert(lang("error")+lang("error:"+stat.getAttribute("error")));
         break;
       default:
 	alert("Result of save: status "+stat.getAttribute("status"));
@@ -201,7 +203,7 @@ function category_editor(id, param, cat_win) {
     dom_clean(this.msg_div);
 
     var div=dom_create_append(this.msg_div, "div");
-    dom_create_append_text(div, "Please provide a description of your changes and press 'Delete' again");
+    dom_create_append_text(div, lang("editor:request_message", 0, lang("delete")));
 
     this.inputs.msg=dom_create_append(this.msg_div, "input");
     this.inputs.msg.name="msg";
@@ -277,7 +279,7 @@ function category_editor(id, param, cat_win) {
     dom_clean(this.form_content);
 
     var txt=document.createElement("div");
-    txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Category_Tags#Category'>Help</a>):\n";
+    txt.innerHTML=lang("category_editor:tags")+" (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Category_Tags#Category'>"+lang("help")+"</a>):\n";
     this.form_content.appendChild(txt);
 
     var div=document.createElement("div");
@@ -301,7 +303,7 @@ function category_editor(id, param, cat_win) {
 
     var input=document.createElement("input");
     input.type="button";
-    input.value="New Rule";
+    input.value=lang("category_editor:new_rule");
     input.onclick=this.new_rule.bind(this);
     this.form_content.appendChild(input);
   }
@@ -417,13 +419,13 @@ function category_editor_rule(category, dom) {
     if(this.tags.get_lang("description", ui_lang)) {
       dom_create_append(header, "br");
 
-      dom_create_append_text(header, t("category_rule_tag:description")+": "+this.tags.get_lang("description", ui_lang));
+      dom_create_append_text(header, lang("category_rule_tag:description")+": "+this.tags.get_lang("description", ui_lang));
     }
 
     if(this.tags.get("match")) {
       dom_create_append(header, "br");
 
-      dom_create_append_text(header, t("category_rule_tag:match")+": "+this.tags.get("match"));
+      dom_create_append_text(header, lang("category_rule_tag:match")+": "+this.tags.get("match"));
     }
 
     dom_create_append(header, "br");
@@ -471,14 +473,14 @@ function category_editor_rule(category, dom) {
 
       var input=dom_create_append(td, "input");
       input.type="button";
-      input.value=lang("category_editor:choose");
+      input.value=lang("choose");
       input.onclick=this.choose_icon.bind(this);
 
       this.preview=dom_create_append(td, "span");
 
       var input=dom_create_append(td, "input");
       input.type="button";
-      input.value=lang("category_editor:edit");
+      input.value=lang("edit");
       input.onclick=this.edit_icon.bind(this);
 
       tag.change(tag);
@@ -537,7 +539,7 @@ function category_editor_rule(category, dom) {
     this.content.appendChild(this.tags_editor);
 
     var txt=document.createElement("div");
-    txt.innerHTML="Tags (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Category_Tags#Rule'>Help</a>):\n";
+    txt.innerHTML=lang("category_editor:tags")+" (<a target='_new' href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Category_Tags#Rule'>"+lang("help")+"</a>):\n";
     this.tags_editor.appendChild(txt);
 
     this.tags.editor_on_change_key=this.editor_change_key.bind(this);
@@ -546,13 +548,13 @@ function category_editor_rule(category, dom) {
 
     var input=document.createElement("input");
     input.type="button";
-    input.value="Ok";
+    input.value=lang("ok");
     input.onclick=this.editor_toggle.bind(this);
     this.content.appendChild(input);
 
     var input=document.createElement("input");
     input.type="button";
-    input.value="Remove Rule";
+    input.value=lang("category_editor:remove_rule");
     input.onclick=this.remove.bind(this);
     this.content.appendChild(input);
   }
