@@ -24,7 +24,7 @@ function talk(param, div) {
   this.save=function() {
     var param={
       page: this.page,
-      msg: "Update talk page",
+      msg: this.inputs.msg.value
     };
 
     ajax("talk_save", param, this.content, this.save_callback.bind(this));
@@ -42,6 +42,20 @@ function talk(param, div) {
 
     this.show_format();
   }
+
+  // pre_save
+  this.pre_save=function() {
+     dom_clean(this.msg_div);
+
+    var div=dom_create_append(this.msg_div, "div");
+    dom_create_append_text(div, "Please provide a description of your changes and press 'Save' again");
+
+    this.inputs.msg=dom_create_append(this.msg_div, "input");
+    this.inputs.msg.name="msg";
+    this.inputs.msg.focus();
+
+    this.inputs.save.onclick=this.call_save.bind(this);
+ }
 
   // show_history
   this.show_history=function() {
@@ -99,11 +113,15 @@ function talk(param, div) {
     }
 
     // tool_bar
-    var input=dom_create_append(this.tool_div, "input");
-    input.type="submit";
-    input.value=lang("save");
+    this.msg_div=dom_create_append(this.tool_div, "div");
+    this.inputs={};
+
+    this.inputs.save=dom_create_append(this.tool_div, "input");
+    this.inputs.save.type="button";
+    this.inputs.save.value=lang("save");
+    this.inputs.save.onclick=this.pre_save.bind(this);
     if(!active)
-      input.disabled=true;
+      this.inputs.save.disabled=true;
 
     var input=dom_create_append(this.tool_div, "input");
     input.type="button";
