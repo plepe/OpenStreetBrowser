@@ -25,6 +25,7 @@ $lang_str["more"]="more";
 $lang_str["source"]="Source";
 $lang_str["unnamed"]="unnamed";
 $lang_str["zoom"]="Zoom level";
+$lang_str["no_message"]=array("no message", "no messages");
 
 // Headings
 $lang_str["head:general_info"]="General Information";

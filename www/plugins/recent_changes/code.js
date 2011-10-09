@@ -14,7 +14,7 @@ function recent_changes() {
       var l=this.list[i];
 
       new_list.push({
-	name: l.name+": "+l.msg,
+	name: l.name+": "+(l.msg || lang("no_message")),
 	type: l.date+" by "+l.user,
 	href: l.href
       });

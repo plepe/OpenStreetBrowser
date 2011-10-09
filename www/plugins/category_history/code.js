@@ -15,9 +15,7 @@ function category_history(category, cat_win) {
 	li.className="current";
 
       var a=dom_create_append(li, "a");
-      var text=e.version_tags.comment;
-      if(!text)
-	text="no message";
+      var text=e.version_tags.comment || lang("no_message");
       dom_create_append_text(a, text);
       a.href=sprintf("javascript:category_show(\"osm:%s\", { version: \"%s\" })", this.category.id, e.version);
 
