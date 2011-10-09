@@ -1,6 +1,10 @@
 function category_editor(id, param, cat_win) {
   // editor
   this.init=function() {
+    var active=true;
+    if(current_user.username=="")
+      active=false;
+
     dom_clean(this.win.content);
 
     this.form=document.createElement("div");
@@ -36,6 +40,8 @@ function category_editor(id, param, cat_win) {
     this.inputs.save.type="button";
     this.inputs.save.value=lang("save");
     this.inputs.save.onclick=this.save.bind(this);
+    if(!active)
+      this.inputs.save.disabled=true;
     this.form.appendChild(this.inputs.save);
 
     this.inputs.cancel=document.createElement("input");
@@ -48,6 +54,8 @@ function category_editor(id, param, cat_win) {
     this.inputs.delete.type="button";
     this.inputs.delete.value=lang("delete");
     this.inputs.delete.onclick=this.delete.bind(this);
+    if(!active)
+      this.inputs.delete.disabled=true;
     this.form.appendChild(this.inputs.delete);
 
     // view select
