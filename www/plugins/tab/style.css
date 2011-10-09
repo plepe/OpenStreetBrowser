@@ -7,28 +7,33 @@
   border-top: 1px solid #d0d0d0;
   padding-top: 1px;
   border-bottom: 1px solid black;
+  border-right: 1px solid black;
 }
 .tab_header {
   background: #d0d0d0;
-  border-top: 1px solid #d0d0d0;
-  padding-left: 3px;
-  padding-right: 3px;
+  border-top: 1px solid #000000;
+  padding-left: 4px;
+  padding-right: 4px;
   padding-top: 1px;
   cursor: pointer;
+  border-left: 1px solid #000000;
+  border-right: 1px solid #000000;
+  margin-left: 1px;
 }
 .tab_content {
   display: none;
 }
 .tab_header_active {
   border-left: 1px solid black;
-  border-right: 1px solid black;
   border-top: 1px solid black;
-  border-bottom: 1px solid #ffffff;
-  background: #ffffff;
-  padding-left: 2px;
-  padding-right: 2px;
+  border-right: 1px solid #000000;
+  margin-left: 1px;
+  border-bottom: 1px solid #efefef;
+  padding-left: 4px;
+  padding-right: 4px;
   padding-top: 1px;
   cursor: default;
+  background: #efefef;
 }
 .tab_content_active {
 }
