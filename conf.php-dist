@@ -148,3 +148,4 @@ $overlays_add=array(
 // importance - Define values and functions for defining importance of objects
 // talk - Talk pages
 // recent_changes - Show recent changes in talk pages, categories, ...
+// editor - Commonly used things for all editors (e.g. lang strings)
