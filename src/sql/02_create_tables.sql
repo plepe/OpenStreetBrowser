@@ -7,7 +7,7 @@ create table osm_point (
 );
 select AddGeometryColumn('osm_point', 'osm_way', 900913, 'POINT', 2);
  
-select * from assemble_point(id) from nodes;
+select assemble_point(id) from nodes;
  
 create index osm_point_tags on osm_point using gin(osm_tags);
 create index osm_point_way  on osm_point using gist(osm_way);
