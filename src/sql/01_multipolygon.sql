@@ -71,8 +71,8 @@ begin
     return null;
   end if;
 
-  if coalesce(array_upper($1, 1), 0)+coalesce(array_upper($2, 1), 0)>256 then
-    raise notice 'multipolygon consists of % (more then 256) ways ... ignore', coalesce(array_upper($1, 1), 0)+coalesce(array_upper($2, 1), 0);
+  if coalesce(array_upper($2, 1), 0)>256 then
+    raise notice 'multipolygon consists of % (more then 256) inner members ... ignore', coalesce(array_upper($1, 1), 0)+coalesce(array_upper($2, 1), 0);
     return null;
   end if;
 
