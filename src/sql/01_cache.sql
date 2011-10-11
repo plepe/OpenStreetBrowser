@@ -48,6 +48,7 @@ create index osm_cache_depend_id_type on osm_cache_depend(osm_id, cache_type);
 create index osm_cache_depend_depid on osm_cache_depend(depend_id);
 
 CREATE OR REPLACE FUNCTION cache_search(text, text) RETURNS text AS $$
+#variable_conflict use_variable
 DECLARE
   osm_id alias for $1;
   cache_type alias for $2;
@@ -70,6 +71,7 @@ END;
 $$ LANGUAGE plpgsql volatile;
 
 CREATE OR REPLACE FUNCTION cache_insert(text, text, text, text[], interval) RETURNS text AS $$
+#variable_conflict use_variable
 DECLARE
   osm_id   	alias for $1;
   cache_type 	alias for $2;
@@ -96,6 +98,7 @@ END;
 $$ LANGUAGE plpgsql volatile;
 
 CREATE OR REPLACE FUNCTION cache_insert(text, text, text) RETURNS text AS $$
+#variable_conflict use_variable
 DECLARE
 BEGIN
   return (select cache_insert($1, $2, $3, null::text[], null::interval));
@@ -103,6 +106,7 @@ END;
 $$ LANGUAGE plpgsql volatile;
 
 CREATE OR REPLACE FUNCTION cache_insert(text, text, text, text[]) RETURNS text AS $$
+#variable_conflict use_variable
 DECLARE
 BEGIN
   return (select cache_insert($1, $2, $3, $4, null::interval));
@@ -110,6 +114,7 @@ END;
 $$ LANGUAGE plpgsql volatile;
 
 CREATE OR REPLACE FUNCTION cache_insert(text, text, text, interval) RETURNS text AS $$
+#variable_conflict use_variable
 DECLARE
 BEGIN
   return (select cache_insert($1, $2, $3, null::text[], $4));
@@ -117,6 +122,7 @@ END;
 $$ LANGUAGE plpgsql volatile;
 
 CREATE OR REPLACE FUNCTION cache_insert(text, text, text, text) RETURNS text AS $$
+#variable_conflict use_variable
 DECLARE
 BEGIN
   return (select cache_insert($1, $2, $3, null::text[], cast($4 as interval)));
@@ -124,6 +130,7 @@ END;
 $$ LANGUAGE plpgsql volatile;
 
 CREATE OR REPLACE FUNCTION cache_remove(text) RETURNS bool AS $$
+#variable_conflict use_variable
 DECLARE
   depend_id alias for $1;
 BEGIN
@@ -144,6 +151,7 @@ END;
 $$ LANGUAGE plpgsql volatile;
 
 CREATE OR REPLACE FUNCTION cache_clean() RETURNS bool AS $$
+#variable_conflict use_variable
 DECLARE
 BEGIN
   raise notice 'called cache_clean()';
