@@ -38,11 +38,11 @@ psql -d gis -c "drop database gisold"
 psql -d gis -c "drop database gisnew"
 psql -d gis -c "create database gisnew"
 psql -d gisnew -c "create language plpgsql"
-psql -d gisnew -f /usr/share/postgresql/8.4/contrib/postgis.sql
-psql -d gisnew -f /usr/share/postgresql/8.4/contrib/_int.sql
-psql -d gisnew -f /usr/share/postgresql/8.4/contrib/hstore.sql
-psql -d gisnew -f /usr/share/postgresql/8.4/contrib/spatial_ref_sys.sql
-psql -d gisnew -f /usr/share/postgresql/8.4/contrib/btree_gist.sql
+psql  -f /usr/share/postgresql/9.0/contrib/postgis-1.5/postgis.sql
+psql  -f /usr/share/postgresql/9.0/contrib/_int.sql
+psql  -f /usr/share/postgresql/9.0/contrib/hstore.sql
+psql  -f /usr/share/postgresql/9.0/contrib/spatial_ref_sys.sql
+psql  -f /usr/share/postgresql/9.0/contrib/btree_gist.sql
 
 echo "= osmosis"
 echo "- init db for osmosis"
