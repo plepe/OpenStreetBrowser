@@ -46,12 +46,14 @@ psql -d gisnew -f /usr/share/postgresql/8.4/contrib/btree_gist.sql
 
 echo "= osmosis"
 echo "- init db for osmosis"
-psql $DB_NAME < $ROOT_PATH/src/pgsql_simple_schema.sql
-cd $ROOT_PATH/data/
-osmosis --read-xml $ROOT_PATH/data/europe.osm.bz2 --write-pgsql-dump
-cd pgimport
+psql $DB_NAME -f software/osmosis-latest/script/pgsimple_schema_0.6.sql
+psql $DB_NAME -f software/osmosis-latest/script/pgsimple_schema_0.6_action.sql
+#cd $ROOT_PATH/data/
+#osmosis --read-xml $ROOT_PATH/data/europe.osm.bz2 --write-pgsql-dump
+#cd pgimport
 echo "- load db from osmosis"
-psql $DB_NAME < $ROOT_PATH/src/pgsql_simple_load.sql
+#psql $DB_NAME < $ROOT_PATH/src/pgsql_simple_load.sql
+pbzip2 -p4 -c -d data/planet-latest.osm.bz2 | osmosis --read-xml file="-" --write-pgsimp user="$DB_USER" database="$DB_NAME" password="$DB_PASS"
 
 echo "finished import - next preprocess"
 # read
@@ -71,57 +73,6 @@ php $ROOT_PATH/src/wiki_data_conf.php
 php src/wiki_create_indexes.php | psql $DB_NAME
 
 export DB_NAME=gis
-
-echo "* Update style-sheet"
-export TMPDIR="/osm/`whoami`-style/`date +%Y%m%d-%H%M`"
-mkdir -p $TMPDIR
-echo "WIKI Style"
-cd $ROOT_PATH
-$ROOT_PATH/src/gen_mss_from_wiki.php
-echo "BASE"
-echo "Layers"
-cd $ROOT_PATH/render
-./gen_rotate_img.php
-./gen_layer.php template_base.mml > base.mml
-cascadenik-compile.py $ROOT_PATH/render/base.mml $ROOT_PATH/render/base_1.xml
-./mapnik_merge_layer.php base_1.xml > base_2.xml
-./mapnik_extract_datasource.php base_2.xml > base.xml
-echo "PT"
-cd $ROOT_PATH/render/img/rotate/src
-for i in *.svg ; do convert -background none $i ../`echo $i | sed "s/svg$/png/"` ; done
-cd $ROOT_PATH/render
-cascadenik-compile.py $ROOT_PATH/render/overlay_pt.mml > $ROOT_PATH/render/overlay_pt.xml
-$ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_pt.xml
-./create_rotate_style
-echo "CH"
-cascadenik-compile.py $ROOT_PATH/render/overlay_ch.mml > $ROOT_PATH/render/overlay_ch.xml
-$ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_ch.xml
-echo "CAR"
-render/gen_mml.php $ROOT_PATH/render/overlay_car > $ROOT_PATH/render/overlay_car_compiled.mml
-cascadenik-compile.py $ROOT_PATH/render/overlay_car_compiled.mml > $ROOT_PATH/render/overlay_car.xml
-$ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_car.xml
-
-echo "Other"
-cp $ROOT_PATH/render/overlay_services.template $ROOT_PATH/render/overlay_services.xml
-$ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_services.xml
-
-cp $ROOT_PATH/render/overlay_culture.template $ROOT_PATH/render/overlay_culture.xml
-$ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_culture.xml
-
-cp $ROOT_PATH/render/overlay_food.template $ROOT_PATH/render/overlay_food.xml
-$ROOT_PATH/src/update_xml $ROOT_PATH/render/overlay_food.xml
-
-cp $ROOT_PATH/render/shop.template $ROOT_PATH/render/shop.xml
-$ROOT_PATH/src/update_xml $ROOT_PATH/render/shop.xml
-
-cp $ROOT_PATH/render/agri_ind.template $ROOT_PATH/render/agri_ind.xml
-$ROOT_PATH/src/update_xml $ROOT_PATH/render/agri_ind.xml
-
-echo "=== Updated Style. Press key to continue"
-read
-
-echo "* SVN - Updating rest of code"
-svn update
 
 killall renderd
 
