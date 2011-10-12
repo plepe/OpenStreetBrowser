@@ -211,12 +211,19 @@ function talk_show(param) {
   w.onclose=t.remove.bind(t);
 }
 
-function talk_category_window_show(win, category) {
+// returns a tab with a talk page
+function talk_tab(param) {
   var _tab=new tab({ class: "talk", title: "Talk" });
-  var t=new talk("category:"+category.id);
+  var t=new talk(param);
   _tab.content.appendChild(t.div);
-  win.tab_manager.register_tab(_tab);
   _tab.onclose=t.remove.bind(t);
+
+  return _tab;
+}
+
+function talk_category_window_show(win, category) {
+  var _tab=talk_tab("category:"+category.id)
+  win.tab_manager.register_tab(_tab);
 }
 
 register_hook("category_window_show", talk_category_window_show);
