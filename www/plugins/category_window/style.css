@@ -4,7 +4,8 @@ div.category_window {
 }
 div.category_window .tab_content_active {
   overflow: auto;
-  max-height: 300px;
+  max-height: 400px;
+  min-height: 200px;
 }
 div.category_window_content {
 }
