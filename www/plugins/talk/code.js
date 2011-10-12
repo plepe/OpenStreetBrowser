@@ -219,8 +219,4 @@ function talk_category_window_show(win, category) {
   _tab.onclose=t.remove.bind(t);
 }
 
-function talk_open_browser() {
-  new talk_browser();
-}
-
 register_hook("category_window_show", talk_category_window_show);
