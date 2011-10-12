@@ -18,7 +18,22 @@ function doc_close(w) {
 
 function doc_show(plugin) {
   var w=new win({ "class": "doc_win", "title": lang("head:doc") });
-  w.div_content=dom_create_append(w.content, "div");
+
+  if(plugins_list.talk) {
+    // add tabs to window
+    var tabs=new tab_manager(w.content);
+    var doc_tab=new tab({ title: lang("head:doc") });
+    tabs.register_tab(doc_tab);
+    w.div_content=dom_create_append(doc_tab.content, "div");
+
+    // add tab talk
+    var _talk_tab=talk_tab(plugin);
+    tabs.register_tab(_talk_tab);
+  }
+  else {
+    w.div_content=dom_create_append(w.content, "div");
+  }
+
   w.div_content.className="content";
 
   // content
