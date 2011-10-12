@@ -50,13 +50,24 @@ function category_editor(id, param, cat_win) {
     this.inputs.cancel.onclick=this.cancel.bind(this);
     this.form.appendChild(this.inputs.cancel);
 
-    this.inputs.delete=document.createElement("input");
-    this.inputs.delete.type="button";
-    this.inputs.delete.value=lang("delete");
-    this.inputs.delete.onclick=this.delete.bind(this);
-    if(!active)
-      this.inputs.delete.disabled=true;
-    this.form.appendChild(this.inputs.delete);
+    if(this.version==this.newest_version) {
+      this.inputs.delete=document.createElement("input");
+      this.inputs.delete.type="button";
+      this.inputs.delete.value=lang("delete");
+      this.inputs.delete.onclick=this.delete.bind(this);
+      if(!active)
+	this.inputs.delete.disabled=true;
+      this.form.appendChild(this.inputs.delete);
+    }
+    else {
+      this.inputs.restore=document.createElement("input");
+      this.inputs.restore.type="button";
+      this.inputs.restore.value=lang("restore");
+      this.inputs.restore.onclick=this.restore.bind(this);
+      if(!active)
+	this.inputs.restore.disabled=true;
+      this.form.appendChild(this.inputs.restore);
+    }
 
     // view select
     dom_create_append_text(this.form, lang("category_editor:view_mode")+": ");
@@ -220,7 +231,7 @@ function category_editor(id, param, cat_win) {
     this.inputs.delete.onclick=this.delete_next.bind(this);
   }
 
-  // delete
+  // delete_next
   this.delete_next=function() {
     var param={ todo: "delete" };
     param.id=this.id;
@@ -228,8 +239,26 @@ function category_editor(id, param, cat_win) {
     ajax_direct("categories.php", param, this.delete_callback.bind(this));
   }
 
+  // delete_callback
   this.delete_callback=function() {
     alert("Deleted");
+
+    this.win.close_all();
+    this.win=null;
+  }
+
+  // restore
+  this.restore=function() {
+    var param={ todo: "restore" };
+    param.id=this.id;
+    param.version=this.version;
+
+    ajax_direct("categories.php", param, this.restore_callback.bind(this));
+  }
+
+  // restore_callback
+  this.restore_callback=function() {
+    alert("Restored");
 
     this.win.close_all();
     this.win=null;

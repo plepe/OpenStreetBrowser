@@ -1108,6 +1108,41 @@ function category_history($id, $param=array(), $version=null) {
   return $ret;
 }
 
+function category_restore($id, $param=array()) {
+  global $db_central;
+  global $current_user;
+
+  if(!isset($param['version']))
+    return false;
+
+  $cat=new category($id);
+  $newest=$cat->get_newest_version();
+
+  $pg_id=postgre_escape($id);
+  $pg_version=postgre_escape($param['version']);
+  $pg_newest=postgre_escape($newest);
+  $future=uniqid();
+  $pg_future=postgre_escape($future);
+
+  // compile version tags
+  $version_tags=new tags();
+  $version_tags->set("user", $current_user->username);
+  $version_tags->set("date", Date("c"));
+  $version_tags->set("msg", "Restore version '{$param['version]}'");
+  $pg_version_tags=array_to_hstore($version_tags->data());
+
+  $sql ="begin;";
+  $sql.="insert into category (select $pg_id, tags, $pg_future, Array[$pg_newest], $pg_version_tags  from category where version=$pg_version);";
+  $sql.="insert into category_rule (select $pg_id, rule_id, tags, $pg_future from category_rule where version=$pg_version);";
+  $sql.="delete from category_current where category_id=$pg_id;";
+  $sql.="insert into category_current values ($pg_id, $pg_future, now());";
+  $sql.="commit;";
+
+  sql_query($sql, $db_central);
+
+  return array("status"=>true, "version"=>$future);
+}
+
 function categories_has_saved($id) {
   print "Detect saving of $id -> compile\n";
   $cat=new category($id);
