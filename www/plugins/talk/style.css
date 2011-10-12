@@ -13,3 +13,8 @@ textarea.talk_edit_content {
   overflow: auto;
   max-height: 200px;
 }
+.talk .text_default {
+  overflow: auto;
+  max-height: 200px;
+  font-style: italic;
+}

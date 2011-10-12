@@ -157,8 +157,15 @@ function talk(param, div) {
     input.onclick=this.show_history.bind(this);
 
     dom_clean(this.content_div);
-    var format=creole(this.content)
-    format.className="text";
+    if(this.content) {
+      var format=creole(this.content)
+      format.className="text";
+    }
+    else {
+      var format=document.createElement("div");
+      format.className="text_default";
+      dom_create_append_text(format, lang("talk:default"));
+    }
     this.content_div.appendChild(format);
   }
 
@@ -177,6 +184,7 @@ function talk(param, div) {
   this.div=div;
   if(!this.div)
     this.div=document.createElement("div");
+  this.div.className="talk";
 
   this.form=dom_create_append(this.div, "form");
   this.form.action="#";
