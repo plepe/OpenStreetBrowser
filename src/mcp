@@ -31,20 +31,6 @@ $plugins[]="icon";
 plugins_init("mcp");
 call_hooks("mcp_start");
 
-function restart_renderd() {
-  global $apache2_reload_cmd;
-  global $root_path;
-
-  system("killall renderd");
-  gen_renderd_conf();
-  chdir($root_path);
-  if(!$apache2_reload_cmd)
-    $apache2_reload_cmd="sudo /etc/init.d/apache2 reload";
-  system($apache2_reload_cmd);
-  system("software/mod_tile/renderd");
-}
-register_hook("postgresql_restart_done", "restart_renderd");
-
 function compile($cat_id) {
   $x=new category($cat_id);
   $x->compile();
@@ -56,7 +42,7 @@ function mcp_process($todo) {
 
   switch($todo[0]) {
     case "restart":
-      restart_renderd();
+      call_hooks("mcp_restart");
       break;
     case "compile":
       compile($todo[1]);
@@ -93,7 +79,6 @@ mkdir($tmp_dir);
 pcntl_signal(SIGTERM, "mcp_sig_handler");
 pcntl_signal(SIGINT,  "mcp_sig_handler");
 
-restart_renderd();
 $mcp_next_clean_up=time()+15*60;
 
 while(1) {
