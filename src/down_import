@@ -47,7 +47,7 @@ function change_next() {
     1=>array("pipe", "w"),
     2=>array("pipe", "w"));
 
-  $command="osmosis --read-replication-interval workingDirectory=$working_dir --simplify-change --write-pgsql-change database={$db_central['name']} password={$db_central['passwd']}";
+  $command="osmosis --read-replication-interval workingDirectory=$working_dir --simplify-change --write-pgsimp-change database={$db_central['name']} password={$db_central['passwd']}";
 
   print "starting osmosis ".Date("r")."\n";
   $p=proc_open($command, $descriptors, $pipes, null, array("JAVACMD_OPTIONS"=>"-Xmx512M"));
