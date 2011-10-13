@@ -1128,7 +1128,7 @@ function category_restore($id, $param=array()) {
   $version_tags=new tags();
   $version_tags->set("user", $current_user->username);
   $version_tags->set("date", Date("c"));
-  $version_tags->set("msg", "Restore version '{$param['version]}'");
+  $version_tags->set("msg", "Restore version '{$param['version']}'");
   $pg_version_tags=array_to_hstore($version_tags->data());
 
   $sql ="begin;";
