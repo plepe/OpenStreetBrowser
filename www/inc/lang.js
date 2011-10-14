@@ -32,7 +32,12 @@ function lang_element(str, count) {
 
   debug(str, "language string missing");
 
-  if(l=str.match(/^tag:([^><=!]*)(=|>|<|>=|<=|!=)([^><=!].*)$/)) {
+  if((l=str.match(/^tag:([^=]+)=(.*)$/))&&(l=lang_str["tag:*="+l[2]])) {
+    // Boolean values, see:
+    // http://wiki.openstreetmap.org/wiki/Proposed_features/boolean_values
+    return l;
+  }
+  else if(l=str.match(/^tag:([^><=!]*)(=|>|<|>=|<=|!=)([^><=!].*)$/)) {
     return l[3];
   }
   else if(l=str.match(/^tag:([^><=!]*)$/)) {

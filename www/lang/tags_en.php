@@ -1,6 +1,10 @@
 <?
 // All tags should have a translation, with language strings like "tag:key" for the translation of the key and "tag:key=value" for the translation of the value. E.g. tag:amenity "Amenity;Amenities" resp. tag:amenity=bar "Bar;Bars". You can also define the Gender like "F;Bar;Bars".
 
+// *
+$lang_str["tag:*=yes"]="yes";
+$lang_str["tag:*=no"]="no";
+
 // accomodation
 $lang_str["tag:accomodation"]="Accomodation";
 
