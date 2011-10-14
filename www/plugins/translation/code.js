@@ -405,12 +405,12 @@ function translation(l) {
 
       var mode=i.match(/^([^:]*):/);
       switch(mode[1]) {
+	case "tags":
+	  this.print_file_tags(i, data[i], tbody);
+	  break;
 	case "php":
 	case "category":
-	  if(i=="php:www/lang/tags_")
-	    this.print_file_tags(i, data[i], tbody);
-	  else
-	    this.print_file_lang_str(i, data[i], tbody);
+	  this.print_file_lang_str(i, data[i], tbody);
 	  break;
 	case "doc":
 	  this.print_file_doc(i, data[i], tbody);

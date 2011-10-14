@@ -54,7 +54,7 @@ function translation_files_list() {
   // $lang_str-Files and doc-Files
   $ret[]="php:www/lang/";
   $ret[]="php:www/lang/lang_";
-  $ret[]="php:www/lang/tags_";
+  $ret[]="tags:www/lang/tags_";
   $d=opendir("$translation_path/www/plugins");
   while($f=readdir($d)) {
     $d1=opendir("$translation_path/www/plugins/$f");
@@ -136,7 +136,7 @@ class translation {
       return;
 
     foreach($changed as $f=>$data) {
-      if(preg_match("/^(php|doc|category):(.*)$/", $f, $m)) {
+      if(preg_match("/^(php|tags|doc|category):(.*)$/", $f, $m)) {
 	$mode=$m[1];
 	$file=$m[2];
       }
@@ -144,6 +144,9 @@ class translation {
       switch($mode) {
 	case "php":
 	  $this->write_file_php($file, $data);
+	  break;
+	case "tags":
+	  $this->write_file_tags($file, $data);
 	  break;
 	case "doc":
 	  $this->write_file_doc($file, $data);
@@ -245,6 +248,80 @@ class translation {
 	fputs($f_t, "$r\n");
       }
     }
+    fclose($f_t);
+
+    chdir($translation_path);
+    $p=popen("git add $file", "r");
+    while($f=fgets($p)) /* do nothing */ ;
+    pclose($p);
+  }
+
+  // write_file_tags
+  function write_file_tags($f, $data) {
+    global $translation_path;
+
+    // no changes? return ...
+    if(!is_array($data))
+      return;
+
+    // read default english tags
+    $lang_str=array();
+    $file="$translation_path/{$f}en.php";
+    include $file;
+    $lang_def=$lang_str;
+
+    // prepare $lang_str with empty strings from english
+    $lang_str=array();
+    foreach($lang_def as $k=>$v) {
+      $lang_str[$k]="";
+    }
+
+    // read old tags file in current language
+    $file="$translation_path/$f{$this->lang}.php";
+    include $file;
+
+    // add new strings to $lang_str
+    $lang_str=array_merge($lang_str, $data);
+
+    // Read whole file at once to avoid overwriting
+    $f_en=file_get_contents("$translation_path/{$f}en.php", "r");
+    $f_en=explode("\n", $f_en);
+
+    $f_t=fopen($file, "w");
+
+    // write until we reach first empty line (copy only comments)
+    $i=0;
+    while($f_en[$i]!="") {
+      fputs($f_t, "{$f_en[$i]}\n");
+      $i++;
+    }
+
+    // read all tag keys
+    $tag_keys=array();
+    foreach($lang_str as $k=>$v) {
+      if(preg_match("/^tag:([^=]+)(=.*)?$/", $k, $m)) {
+	if(!isset($tag_keys[$m[1]]))
+	  $tag_keys[$m[1]]=array();
+
+	$tag_keys[$m[1]][$k]=$v;
+      }
+    }
+
+    // go through all tag_keys and print all strings
+    foreach($tag_keys as $key=>$d) {
+      fputs($f_t, "\n// $key\n");
+      foreach($d as $k=>$v) {
+	if(!$v) {
+	  $value=translation_print_value($lang_def[$k]);
+	  fputs($f_t, "#\$lang_str[\"$k\"]=$value;\n");
+	}
+	else {
+	  $value=translation_print_value($v);
+	  fputs($f_t, "\$lang_str[\"$k\"]=$value;\n");
+	}
+      }
+    }
+
     fclose($f_t);
 
     chdir($translation_path);
@@ -366,13 +443,14 @@ class translation {
   function read_file($f) {
     global $translation_path;
 
-    if(preg_match("/^(php|doc|category):(.*)$/", $f, $m)) {
+    if(preg_match("/^(php|tags|doc|category):(.*)$/", $f, $m)) {
       $mode=$m[1];
       $file=$m[2];
     }
 
     switch($mode) {
       case "php":
+      case "tags":
 	return $this->read_file_php($file);
       case "doc":
 	return $this->read_file_doc($file);
