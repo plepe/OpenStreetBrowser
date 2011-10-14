@@ -83,9 +83,6 @@ $lang_str["tag:cuisine=regional"]="helyi";
 // description
 $lang_str["tag:description"]="Leírás";
 
-// domination
-#$lang_str["tag:domination"]="Domination";
-
 // food
 $lang_str["tag:food"]="Lehet ennivalót kapni";
 

@@ -83,9 +83,6 @@ $lang_str["tag:cuisine=regional"]="régionale";
 // description
 $lang_str["tag:description"]="Description";
 
-// domination
-$lang_str["tag:domination"]="Domination";
-
 // food
 $lang_str["tag:food"]="Servent aliments";
 

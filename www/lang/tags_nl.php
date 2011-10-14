@@ -83,9 +83,6 @@ $lang_str["tag:cuisine=regional"]="Regionaal";
 // description
 $lang_str["tag:description"]="Description";
 
-// domination
-$lang_str["tag:domination"]="Overheersing";
-
 // food
 $lang_str["tag:food"]="Serveert eten";
 

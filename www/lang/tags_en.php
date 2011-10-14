@@ -57,9 +57,6 @@ $lang_str["tag:cuisine=regional"]="regional";
 // description
 $lang_str["tag:description"]="Description";
 
-// domination
-$lang_str["tag:domination"]="Domination";
-
 // food
 $lang_str["tag:food"]="Serves food";
 
@@ -210,6 +207,9 @@ $lang_str["tag:religion=hindu"]="hindu";
 $lang_str["tag:religion=jewish"]="jewish";
 $lang_str["tag:religion=muslim"]="muslim";
 $lang_str["tag:religion=multifaith"]="multifaith";
+
+// denomination
+$lang_str["tag:denomination"]="Denomination";
 
 // route
 $lang_str["tag:route"]="Route";

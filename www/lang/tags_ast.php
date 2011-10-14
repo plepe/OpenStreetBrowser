@@ -54,9 +54,6 @@ $lang_str["tag:cuisine=regional"]="rexonal";
 // description
 $lang_str["tag:description"]="Descripción";
 
-// domination
-$lang_str["tag:domination"]="Dominiu";
-
 // food
 $lang_str["tag:food"]="Sirve de comer";
 

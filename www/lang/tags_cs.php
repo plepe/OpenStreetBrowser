@@ -83,9 +83,6 @@ $lang_str["tag:cuisine=regional"]="regionální";
 // description
 $lang_str["tag:description"]="Popis";
 
-// domination
-#$lang_str["tag:domination"]="Domination";
-
 // food
 $lang_str["tag:food"]="Podává jídlo";
 

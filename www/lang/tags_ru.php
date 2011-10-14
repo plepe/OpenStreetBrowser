@@ -83,9 +83,6 @@ $lang_str["tag:cuisine=regional"]="национальная кухня";
 // description
 $lang_str["tag:description"]=array(N, "Описание", "Описания");
 
-// domination
-$lang_str["tag:domination"]="Власти";
-
 // food
 $lang_str["tag:food"]="Продукты питания";
 

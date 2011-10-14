@@ -83,9 +83,6 @@ $lang_str["tag:cuisine=regional"]="地域料理";
 // description
 $lang_str["tag:description"]="説明";
 
-// domination
-$lang_str["tag:domination"]="宗派";
-
 // food
 $lang_str["tag:food"]="食事つき";
 
