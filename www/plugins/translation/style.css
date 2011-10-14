@@ -51,3 +51,6 @@
 .translation_win table td.full_help {
   border-bottom: 1px solid black;
 }
+.translation_win table tbody tr.tags_add {
+  border-bottom: 2px solid black;
+}

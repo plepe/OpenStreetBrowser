@@ -272,6 +272,7 @@ function translation(l) {
   // print_file_tags_prefix_end
   this.print_file_tags_prefix_end=function(file, prefix, tr) {
     tr.data={ file: file, prefix: prefix };
+    tr.className="tags_add";
 
     var td=dom_create_append(tr, "td");
     td.colSpan=3;
