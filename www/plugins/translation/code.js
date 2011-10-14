@@ -179,6 +179,54 @@ function translation(l) {
     }
   }
 
+  // print_file_tags_prefix_add
+  this.print_file_tags_prefix_add=function(type, prefix) {
+    alert(type+" "+prefix);
+  }
+
+  // print_file_tags_prefix_end
+  this.print_file_tags_prefix_end=function(file, prefix, tbody) {
+    var tr=dom_create_append(tbody, "tr");
+    tr.type="tags";
+    tr.prefix=prefix;
+
+    var td=dom_create_append(tr, "td");
+    td.colSpan=3;
+
+    var a=dom_create_append(td, "a");
+    a.href="#";
+    a.onclick=this.print_file_tags_prefix_add.bind(this, "tags", prefix);
+    dom_create_append_text(a, lang("translation:add_value", 0, prefix));
+  }
+
+  // print_file_tags
+  this.print_file_tags=function(file, data, tbody) {
+    var last_str_prefix;
+    if(!data.order)
+      return;
+
+    for(var j=0; j<data.order.length; j++) {
+      var str=data.order[j];
+      var d=data.list[str];
+
+      var str_prefix=str.match(/^(tag:[^=]+)=?/);
+      if(str_prefix)
+	str_prefix=str_prefix[1];
+      if((last_str_prefix)&&((!str_prefix)||(str_prefix!=last_str_prefix))) {
+	this.print_file_tags_prefix_end(file, last_str_prefix, tbody);
+      }
+
+      last_str_prefix=str_prefix;
+
+      // help string detected
+      if(str.match(/^%/)) {
+	this.print_file_lang_str_help(file, str, d, tbody);
+      }
+      else {
+	this.print_file_lang_str_single(file, str, d, tbody);
+      }
+    }
+  }
 
   // print_file_doc
   this.print_file_doc=function(file, data, tbody) {
@@ -272,7 +320,10 @@ function translation(l) {
       switch(mode[1]) {
 	case "php":
 	case "category":
-	  this.print_file_lang_str(i, data[i], tbody);
+	  if(i=="php:www/lang/tags_")
+	    this.print_file_tags(i, data[i], tbody);
+	  else
+	    this.print_file_lang_str(i, data[i], tbody);
 	  break;
 	case "doc":
 	  this.print_file_doc(i, data[i], tbody);
