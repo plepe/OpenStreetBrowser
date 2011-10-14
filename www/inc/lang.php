@@ -27,9 +27,7 @@ function lang() {
     $l=implode(", ", $key_exp);
   }
   elseif(!isset($lang_str[$key])) {
-    if(ereg("/(.*)$", $key, $m))
-      $key=$m[1];
-    elseif(preg_match("/^tag:([^><=!]*)(=|>|<|>=|<=|!=)([^><=!].*)$/", $key, $m)) {
+    if(preg_match("/^tag:([^><=!]*)(=|>|<|>=|<=|!=)([^><=!].*)$/", $key, $m)) {
       $key=$m[3];
     }
     elseif(preg_match("/^tag:([^><=!]*)$/", $key, $m)) {
