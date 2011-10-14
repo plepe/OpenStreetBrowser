@@ -105,6 +105,61 @@ function translation(l) {
     ajax("translation_read", { lang: this.compare_select.value }, this.compare_recv.bind(this));
   }
 
+  // print_file_lang_str_single
+  this.print_file_lang_str_single=function(file, str, d, tbody) {
+    var tr=dom_create_append(tbody, "tr");
+
+    // column 1
+    var td=dom_create_append(tr, "td");
+    td.className="id_help";
+
+    var div_id=dom_create_append(td, "div");
+    div_id.className="id";
+    dom_create_append_text(div_id, str);
+
+    if(d.help) {
+      var div_help=dom_create_append(td, "div");
+      div_help.className="help";
+      dom_create_append_text(div_help, d.help);
+    }
+
+    // column 2
+    var td=dom_create_append(tr, "td");
+    td.className="value";
+
+    var input=dom_create_append(td, "input");
+    input.file=file;
+    input.name=str;
+
+    var value=translation_to_value(d.value);
+    input.value=value;
+    input.orig_value=value;
+
+    // no user ... disable
+    if(current_user.username=="")
+      input.disabled=true;
+
+    // column 3
+    var td=dom_create_append(tr, "td");
+    td.className="compare";
+    td.file=file;
+    td.key=str;
+    dom_create_append_text(td, "");
+  }
+ 
+  // print_file_lang_str_help
+  this.print_file_lang_str_help=function(file, str, d, tbody) {
+    var tr=dom_create_append(tbody, "tr");
+
+    var td=dom_create_append(tr, "td");
+    td.colSpan=3;
+    td.className="full_help";
+
+    var span=dom_create_append(td, "span");
+    span.className="help";
+    dom_create_append_text(span, d);
+  }
+
   // print_file_lang_str
   this.print_file_lang_str=function(file, data, tbody) {
     if(!data.order)
@@ -113,57 +168,14 @@ function translation(l) {
     for(var j=0; j<data.order.length; j++) {
       var str=data.order[j];
       var d=data.list[str];
-      var tr=dom_create_append(tbody, "tr");
 
       // help string detected
       if(str.match(/^%/)) {
-	var td=dom_create_append(tr, "td");
-	td.colSpan=3;
-	td.className="full_help";
-
-	var span=dom_create_append(td, "span");
-	span.className="help";
-	dom_create_append_text(span, d);
-
-	continue;
+	this.print_file_lang_str_help(file, str, d, tbody);
       }
-
-      // column 1
-      var td=dom_create_append(tr, "td");
-      td.className="id_help";
-
-      var div_id=dom_create_append(td, "div");
-      div_id.className="id";
-      dom_create_append_text(div_id, str);
-
-      if(d.help) {
-	var div_help=dom_create_append(td, "div");
-	div_help.className="help";
-	dom_create_append_text(div_help, d.help);
+      else {
+	this.print_file_lang_str_single(file, str, d, tbody);
       }
-
-      // column 2
-      var td=dom_create_append(tr, "td");
-      td.className="value";
-
-      var input=dom_create_append(td, "input");
-      input.file=file;
-      input.name=str;
-
-      var value=translation_to_value(d.value);
-      input.value=value;
-      input.orig_value=value;
-
-      // no user ... disable
-      if(current_user.username=="")
-	input.disabled=true;
-
-      // column 3
-      var td=dom_create_append(tr, "td");
-      td.className="compare";
-      td.file=file;
-      td.key=str;
-      dom_create_append_text(td, "");
     }
   }
 
