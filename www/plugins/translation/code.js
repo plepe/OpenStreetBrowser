@@ -106,9 +106,7 @@ function translation(l) {
   }
 
   // print_file_lang_str_single
-  this.print_file_lang_str_single=function(file, str, d, tbody) {
-    var tr=dom_create_append(tbody, "tr");
-
+  this.print_file_lang_str_single=function(file, str, d, tr) {
     // column 1
     var td=dom_create_append(tr, "td");
     td.className="id_help";
@@ -148,9 +146,7 @@ function translation(l) {
   }
  
   // print_file_lang_str_help
-  this.print_file_lang_str_help=function(file, str, d, tbody) {
-    var tr=dom_create_append(tbody, "tr");
-
+  this.print_file_lang_str_help=function(file, str, d, tr) {
     var td=dom_create_append(tr, "td");
     td.colSpan=3;
     td.className="full_help";
@@ -169,33 +165,120 @@ function translation(l) {
       var str=data.order[j];
       var d=data.list[str];
 
+      var tr=dom_create_append(tbody, "tr");
+
       // help string detected
       if(str.match(/^%/)) {
-	this.print_file_lang_str_help(file, str, d, tbody);
+	this.print_file_lang_str_help(file, str, d, tr);
       }
       else {
-	this.print_file_lang_str_single(file, str, d, tbody);
+	this.print_file_lang_str_single(file, str, d, tr);
+      }
+    }
+  }
+
+  // print_file_lang_str_single_new_change
+  this.print_file_lang_str_single_new_change=function(input_new, input) {
+    input.name=input_new.data.prefix+input_new.value;
+  }
+
+  // print_file_lang_str_single_new
+  this.print_file_lang_str_single_new=function(file, str, d, tr) {
+    // column 1
+    var td=dom_create_append(tr, "td");
+    td.className="id_help";
+
+    var div_id=dom_create_append(td, "div");
+    div_id.className="id";
+    dom_create_append_text(div_id, str);
+
+    var input_new=dom_create_append(div_id, "input");
+    input_new.data={ prefix: str };
+
+    if(d.help) {
+      var div_help=dom_create_append(td, "div");
+      div_help.className="help";
+      dom_create_append_text(div_help, d.help);
+    }
+
+    // column 2
+    var td=dom_create_append(tr, "td");
+    td.className="value";
+
+    var input=dom_create_append(td, "input");
+    input.file=file;
+    input.name=str;
+
+    input_new.onchange=this.print_file_lang_str_single_new_change.bind(this, input_new, input);
+
+    var value=translation_to_value(d.value);
+    input.value=value;
+    input.orig_value=value;
+
+    // no user ... disable
+    if(current_user.username=="")
+      input.disabled=true;
+
+    // column 3
+    var td=dom_create_append(tr, "td");
+    td.className="compare";
+    td.file=file;
+    td.key=str;
+    dom_create_append_text(td, "");
+  }
+ 
+  // print_file_lang_str_help
+  this.print_file_lang_str_help=function(file, str, d, tr) {
+    var td=dom_create_append(tr, "td");
+    td.colSpan=3;
+    td.className="full_help";
+
+    var span=dom_create_append(td, "span");
+    span.className="help";
+    dom_create_append_text(span, d);
+  }
+
+  // print_file_lang_str
+  this.print_file_lang_str=function(file, data, tbody) {
+    if(!data.order)
+      return;
+
+    for(var j=0; j<data.order.length; j++) {
+      var str=data.order[j];
+      var d=data.list[str];
+
+      var tr=dom_create_append(tbody, "tr");
+
+      // help string detected
+      if(str.match(/^%/)) {
+	this.print_file_lang_str_help(file, str, d, tr);
+      }
+      else {
+	this.print_file_lang_str_single(file, str, d, tr);
       }
     }
   }
 
   // print_file_tags_prefix_add
-  this.print_file_tags_prefix_add=function(type, prefix) {
-    alert(type+" "+prefix);
+  this.print_file_tags_prefix_add=function(tr_next) {
+    var tr=document.createElement("tr");
+    tr_next.parentNode.insertBefore(tr, tr_next);
+
+    var str=tr_next.data.prefix+"=";
+    d={ };
+    this.print_file_lang_str_single_new(tr_next.data.file, str, d, tr);
   }
 
   // print_file_tags_prefix_end
-  this.print_file_tags_prefix_end=function(file, prefix, tbody) {
-    var tr=dom_create_append(tbody, "tr");
-    tr.type="tags";
-    tr.prefix=prefix;
+  this.print_file_tags_prefix_end=function(file, prefix, tr) {
+    tr.data={ file: file, prefix: prefix };
 
     var td=dom_create_append(tr, "td");
     td.colSpan=3;
 
     var a=dom_create_append(td, "a");
     a.href="#";
-    a.onclick=this.print_file_tags_prefix_add.bind(this, "tags", prefix);
+    a.onclick=this.print_file_tags_prefix_add.bind(this, tr);
     dom_create_append_text(a, lang("translation:add_value", 0, prefix));
   }
 
@@ -209,21 +292,25 @@ function translation(l) {
       var str=data.order[j];
       var d=data.list[str];
 
+      var tr=dom_create_append(tbody, "tr");
+
       var str_prefix=str.match(/^(tag:[^=]+)=?/);
       if(str_prefix)
 	str_prefix=str_prefix[1];
       if((last_str_prefix)&&((!str_prefix)||(str_prefix!=last_str_prefix))) {
-	this.print_file_tags_prefix_end(file, last_str_prefix, tbody);
+	this.print_file_tags_prefix_end(file, last_str_prefix, tr);
+
+	var tr=dom_create_append(tbody, "tr");
       }
 
       last_str_prefix=str_prefix;
 
       // help string detected
       if(str.match(/^%/)) {
-	this.print_file_lang_str_help(file, str, d, tbody);
+	this.print_file_lang_str_help(file, str, d, tr);
       }
       else {
-	this.print_file_lang_str_single(file, str, d, tbody);
+	this.print_file_lang_str_single(file, str, d, tr);
       }
     }
   }
@@ -288,10 +375,10 @@ function translation(l) {
       dom_create_append_text(div_error, lang("attention")+": "+lang("error:not_logged_in"));
     }
 
-    var tab=dom_create_append(div, "table");
+    this.table=dom_create_append(div, "table");
 
     // header
-    var thead=dom_create_append(tab, "thead");
+    var thead=dom_create_append(this.table, "thead");
     var tr=dom_create_append(thead, "tr");
     var th=dom_create_append(tr, "th");
     th.className="id_help";
@@ -305,7 +392,7 @@ function translation(l) {
     th.className="compare";
     dom_create_append_text(th, lang("translation:compare"));
 
-    var tbody=dom_create_append(tab, "tbody");
+    var tbody=dom_create_append(this.table, "tbody");
     for(var i in data) {
       var tr=dom_create_append(tbody, "tr");
       var th=dom_create_append(tr, "th");
