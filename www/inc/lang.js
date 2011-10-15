@@ -70,6 +70,21 @@ function t(str, count) {
   return lang(str, count);
 }
 
+// replace all {...} by their translations
+function lang_parse(str, count) {
+  var ret=str;
+  var m;
+
+  while(m=ret.match(/^(.*)\{([^\}]+)\}(.*)$/)) {
+    var args=arguments;
+    args[0]=m[2];
+
+    ret=m[1]+lang.apply(this, args)+m[3];
+  }
+
+  return ret;
+}
+
 function lang_change(key, value) {
   // When the UI language changed, we have to reload
   if(key=="ui_lang") {

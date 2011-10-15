@@ -65,6 +65,20 @@ function lang() {
   return vsprintf($l, $params);
 }
 
+// replace all {...} by their translations
+function lang_parse($str, $count=0) {
+  $ret=$str;
+
+  while(preg_match("/^(.*)\{([^\}]+)\}(.*)$/", $ret, $m)) {
+    $args=func_get_args();
+    $args[0]=$m[2];
+
+    $ret=$m[1].call_user_func_array("lang", $args).$m[3];
+  }
+
+  return $ret;
+}
+
 function lang_from_browser($avail_langs=null) {
   $max_q=-1;
   $chosen_lang="";
