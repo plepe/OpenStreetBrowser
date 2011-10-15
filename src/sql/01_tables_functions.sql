@@ -155,7 +155,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION assemble_line(bigint) RETURNS boolean AS $$
+CREATE OR REPLACE FUNCTION assemble_way(bigint) RETURNS boolean AS $$
 #variable_conflict use_variable
 DECLARE
   id alias for $1;
@@ -173,18 +173,30 @@ BEGIN
   -- get geometry
   geom:=way_get_geom(id);
 
-  -- raise notice 'assemble_line(%)', id;
-  if (IsClosed(geom)) and NPoints(geom)>3 then
-    return false;
-  end if;
+  if geom is null or (not ST_IsValid(geom)) then
+    -- raise notice 'assemble_way(%) -> not valid', id;
 
-  -- okay, insert
-  insert into osm_line
-    values (
-      'way_'||id,
-      tags,
-      geom
-    );
+    return false;
+  elsif (IsClosed(geom)) and NPoints(geom)>3 then
+    -- raise notice 'assemble_way(%) -> polygon', id;
+
+    insert into osm_polygon
+      values (
+	'way_'||id,
+	null,
+	tags,
+	ST_MakePolygon(geom)
+      );
+  else
+    -- raise notice 'assemble_way(%) -> line', id;
+
+    insert into osm_line
+      values (
+	'way_'||id,
+	tags,
+	geom
+      );
+  end if;
 
   return true;
 END;
@@ -231,47 +243,6 @@ BEGIN
       geom,
       members.ids,
       members.roles
-    );
-
-  return true;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE FUNCTION assemble_polygon(bigint) RETURNS boolean AS $$
-#variable_conflict use_variable
-DECLARE
-  id alias for $1;
-  geom geometry;
-  tags hstore;
-BEGIN
-  --raise notice 'assemble_polygon(%) start', id;
-  -- get tags
-  tags:=way_assemble_tags(id);
-
-  -- if no tags, return
-  if array_upper(akeys(tags), 1) is null then
-    --raise notice 'assemble_polygon(%) fail tags', id;
-    return false;
-  end if;
-
-  -- get geometry
-  geom:=way_get_geom(id);
-
-  -- check geometry
-  if geom is null or (not IsClosed(geom)) or (NPoints(geom)<=3) then
-    --raise notice 'assemble_polygon(%) fail geo', id;
-    return false;
-  end if;
-
-  -- raise notice 'assemble_polygon(%)', id;
-
-  -- okay, insert
-  insert into osm_polygon
-    values (
-      'way_'||id,
-      null,
-      tags,
-      ST_MakePolygon(geom)
     );
 
   return true;

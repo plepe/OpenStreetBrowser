@@ -149,12 +149,12 @@ BEGIN
 
   raise notice 'inserted to osm_point (%)', num_rows;
 
-  -- insert changed/created lines
+  -- insert changed/created lines and polygons
   select count(*) into num_rows from
     (select id from actions where data_type='W' and action not in ('D')) actions
-  where assemble_line(id);
+  where assemble_way(id);
 
-  raise notice 'inserted to osm_line (%)', num_rows;
+  raise notice 'inserted ways (osm_line, osm_polygon) (%)', num_rows;
 
   -- insert changed/created relations
   select count(*) into num_rows from 
@@ -162,13 +162,6 @@ BEGIN
   where assemble_rel(id);
 
   raise notice 'inserted to osm_rel (%)', num_rows;
-
-  -- insert changed/created polygons
-  select count(*) into num_rows from
-    (select id from actions where data_type='W' and action not in ('D')) actions
-  where assemble_polygon(id);
-
-  raise notice 'inserted to osm_polygon (ways) (%)', num_rows;
 
   -- insert changed/created multipolygons
   select count(*) into num_rows from

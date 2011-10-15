@@ -13,7 +13,7 @@ create index osm_point_tags on osm_point using gin(osm_tags);
 create index osm_point_way  on osm_point using gist(osm_way);
 create index osm_point_way_tags on osm_point using gist(osm_way, osm_tags);
 
--- line
+-- ways -> osm_line and osm_polygon
 drop table if exists osm_line;
 create table osm_line (
   osm_id		text		not null,
@@ -22,7 +22,19 @@ create table osm_line (
 );
 select AddGeometryColumn('osm_line', 'osm_way', 900913, 'LINESTRING', 2);
 
-select assemble_line(id) from ways;
+drop table if exists osm_polygon;
+create table osm_polygon (
+  osm_id		text		not null,
+  rel_id		text		null,
+  osm_tags		hstore		null,
+  primary key(osm_id)
+);
+select AddGeometryColumn('osm_polygon', 'osm_way', 900913, 'GEOMETRY', 2);
+alter table osm_polygon
+  add column	member_ids		text[]		null,
+  add column	member_roles		text[]		null;
+
+select assemble_way(id) from ways;
 
 create index osm_line_tags on osm_line using gin(osm_tags);
 create index osm_line_way  on osm_line using gist(osm_way);
@@ -46,28 +58,6 @@ create index osm_rel_tags on osm_rel using gin(osm_tags);
 create index osm_rel_way  on osm_rel using gist(osm_way);
 create index osm_rel_way_tags on osm_rel using gist(osm_way, osm_tags);
 create index osm_rel_members_idx on osm_rel using gin(member_ids);
-
--- polygon
-drop table if exists osm_polygon;
-create table osm_polygon (
-  osm_id		text		not null,
-  rel_id		text		null,
-  osm_tags		hstore		null,
-  primary key(osm_id)
-);
-select AddGeometryColumn('osm_polygon', 'osm_way', 900913, 'GEOMETRY', 2);
-alter table osm_polygon
-  add column	member_ids		text[]		null,
-  add column	member_roles		text[]		null;
-
-select assemble_polygon(id) from 
-  (select
-    ways.id, 
-    (select node_id from way_nodes where way_id=ways.id and sequence_id=0) as first_node,
-    (select node_id from way_nodes where way_id=ways.id order by sequence_id desc limit 1) as last_node
-    from ways) c
-  where
-    first_node=last_node;
 
 select
   assemble_multipolygon(relation_id)
