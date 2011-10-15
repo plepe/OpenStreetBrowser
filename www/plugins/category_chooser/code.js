@@ -38,6 +38,7 @@ function category_chooser(callback) {
       var text=lang("unnamed");
       if(ob.firstChild)
 	text=ob.firstChild.nodeValue;
+      text=lang_parse(text);
 	
       dom_create_append_text(a, text);
 
