@@ -39,6 +39,7 @@ function category_rule_match(dom, cat, rule) {
     x=this.tags.parse(parse_str, data_lang);
     if(!x)
       x=t("unnamed");
+    x=lang_parse(x);
     dom_create_append_text(a, x);
    
     // if the rule has a 'list_type'-tag append the parsed string in brackets
@@ -47,6 +48,7 @@ function category_rule_match(dom, cat, rule) {
       x=this.tags.parse(parse_str, data_lang);
       if(x) {
         x=" ("+x+")";
+	x=lang_parse(x);
         dom_create_append_text(li, x);
       }
     }
@@ -55,7 +57,10 @@ function category_rule_match(dom, cat, rule) {
     dom_create_append_text(li, " ");
     var s=dom_create_append(li, "span");
     s.className="name";
-    dom_create_append_text(s, this.rule.name());
+    var parse_str=this.rule.name();
+    var x=this.tags.parse(parse_str, data_lang);
+    x=lang_parse(x);
+    dom_create_append_text(s, x);
 
     // set description as tooltip
     if(x=this.rule.tags.get_lang("description", ui_lang)) {

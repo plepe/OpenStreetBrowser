@@ -212,7 +212,7 @@ function category(id) {
     div.header_name.href="#";
     div.header_name.className="header";
     div.header_name.onclick=this.toggle_open.bind(this, div);
-    dom_create_append_text(div.header_name, this.tags.get_lang("name", ui_lang));
+    dom_create_append_text(div.header_name, lang_parse(this.tags.get_lang("name", ui_lang)));
 
     if(div.open) {
       this.write_status(div);
