@@ -1,0 +1,135 @@
+// Coding standard
+/*
+
+CLASSES:
+// every obj has to define the following properties:
+//  .id   - an arbitrary string, identifying this object
+//  .type - type of object (e.g. "lang", "marker", "route")
+//
+// the following properties are optional, but should keep to the standard:
+//  .tags - A tags instance
+//  .dom() - Return a new dom object, see below
+
+// References to
+// 'this' should not save references to the dom-object, but rather should
+// the dom-object be passed to callback-function via bind as second
+// parameter after this. E.g.:
+//   var input=dom_create("input");
+//   input.onchange=this.value_change.bind(this, input, ...)
+
+// Requests to load data from server should not appear in the constructor
+// but rather the load() function, calling back to load_callback()
+
+// Functions returning dom-nodes should be called xyz_dom() and always return
+// new dom nodes, e.g.
+// this.name_dom=function() { ... }
+
+function test(...) {
+  // all functions
+  this.fun=function(...) {
+  }
+
+  // standard functions
+  this.dom=function(...) {
+    // returns a new dom-object
+    // this dom_object has:
+    // .ob          pointing to this
+    // .className   a class starting with the object name, e.g. "test_header"
+
+    // optional call a hook at end of dom-function
+    call_hook("test_dom", this, dom, ...)
+  }
+
+  // remove
+  this.remove=function(...) {
+    // clean up
+  }
+
+  // constructor
+  this.type="test";
+  this.id="foo";
+  ....
+
+  // if this function returns something it should save its return value as 
+  // this.value.
+  this.value=something;
+  return this.value;
+}
+
+function test_dom(...) {
+  var x=new test(...);
+  return x.dom();
+
+}
+
+// IF APPROPRIATE
+function test_html(...) {
+  var x=new test(...)
+  return x.html();
+}
+
+HOOKS:
+<name>_construct       After constructor an object can call '<name>_construct'
+                       with this as first parameter
+<name>_remove          Starting the remove() function object can call
+                       '<name>_remove'.
+
+// if the class constructor accepts an arbitrary number of arguments it
+// should be possible to pass the arguments array as first parameter to function creating that object, e.g. test_dom(...), e.g.:
+function test(a, b, c) {
+  // constructor
+  if(a.length) {
+    var b=a[1];
+    var c=a[2];
+    var a=a[0];
+  }
+}
+
+function test_dom(a, b, c) {
+  var x=new test(arguments);
+  return x.dom();
+}
+
+*/
+
+function test() {
+  // dom
+  this.dom=function() {
+    var x=dom_create("div");
+    dom_create_append_text(x, "foo");
+    return x;
+  }
+
+  return "foo";
+}
+
+// DELAYED LOAD - request e.g. dom before load is finished the ajax-request
+// should be saved as property .load_ajax, so function calls can register to
+// the finishing of load. They will be called as soon as the request is
+// finished or - if the request had already been finished - instanteneously.
+//
+// e.g.
+//   this.load=function() {
+//      this.load_ajax=
+//        new ajax("test_load", { ... }, this.load_callback.bind(this));
+//   }
+//
+//   this.load_callback=function(ret) {
+//     // do something
+//     this.loaded=true;
+//     call_hooks("test_loaded", this)
+//   }
+//
+//   // constructor
+//   this.loaded=false;
+
+// if e.g. a dom()-function is called, but data is not ready yet, 
+//   this.dom=function(...) {
+//     var div=dom_create("div");
+//     this.load_ajax.callback(this.dom_loaded.bind(this, div, ...));
+//     return div;
+//   }
+//
+//  this.dom_callback=function(div, ...) {
+//    dom_create_append_text(div, // something //);
+//  }
