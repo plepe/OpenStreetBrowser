@@ -149,3 +149,4 @@ $overlays_add=array(
 // talk - Talk pages
 // recent_changes - Show recent changes in talk pages, categories, ...
 // editor - Commonly used things for all editors (e.g. lang strings)
+// layer_inspect - Show date of rendering for all tiles
