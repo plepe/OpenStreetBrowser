@@ -1,3 +1,5 @@
+var layer_inspect_active=false;
+
 function layer_inspect_callback(ret) {
   ret=ret.return_value;
 
@@ -19,6 +21,9 @@ function layer_inspect_callback(ret) {
 }
 
 function layer_inspect_view_changed() {
+  if(!layer_inspect_active)
+    return;
+
   var inspect_div=basemaps.osb.div;
   var div=inspect_div.firstChild;
   var new_tiles=[];
@@ -50,8 +55,31 @@ function layer_inspect_view_changed() {
   }
 }
 
-function layer_inspect_activate(input) {
-  alert(input.checked);
+function layer_inspect_activate() {
+  layer_inspect_view_changed();
+}
+
+function layer_inspect_deactivate() {
+  var inspect_div=basemaps.osb.div;
+  var div=inspect_div.firstChild;
+
+  while(div) {
+    if(div.layer_inspect) {
+      div.removeChild(div.layer_inspect);
+      delete(div.layer_inspect);
+    }
+
+    div=div.nextSibling;
+  }
+}
+
+function layer_inspect_toggle(input) {
+  layer_inspect_active=input.checked;
+
+  if(layer_inspect_active)
+    layer_inspect_activate();
+  else
+    layer_inspect_deactivate();
 }
 
 function layer_inspect_init() {
@@ -60,7 +88,7 @@ function layer_inspect_init() {
 
   var input=dom_create_append(dom, "input");
   input.type="checkbox";
-  input.onchange=layer_inspect_activate.bind(this, input);
+  input.onchange=layer_inspect_toggle.bind(this, input);
   
   dom_create_append_text(dom, lang("layer_inspect:name"));
 
