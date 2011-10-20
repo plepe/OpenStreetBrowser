@@ -11,6 +11,13 @@ function sql_query($qry, &$conn=0) {
     exit;
   }
 
+  // check if connection was opened too long
+  if(isset($conn['date'])&&(time()-$conn['date']>3600)) {
+    $conn['date']=null;
+    pg_close($conn['connection']);
+    unset($conn['connection']);
+  }
+
   // If database connection has not been opened yet, open it
   if(!isset($conn['connection'])) {
     $conn['connection']=
@@ -19,6 +26,10 @@ function sql_query($qry, &$conn=0) {
     // Set a title for debugging
     if(!isset($conn['title']))
       $conn['title']=print_r($conn['connection'], 1);
+
+
+    // save time of connection start
+    $conn['date']=time();
   }
 
   // Do we want debug information?
