@@ -1,7 +1,10 @@
 var layer_inspect_active=false;
+var layer_inspect_request;
 
 function layer_inspect_callback(ret) {
   ret=ret.return_value;
+
+  layer_inspect_request=false;
 
   var inspect_div=map.baseLayer.div;
   var div=inspect_div.firstChild;
@@ -22,6 +25,8 @@ function layer_inspect_callback(ret) {
 
 function layer_inspect_view_changed() {
   if(!layer_inspect_active)
+    return;
+  if(layer_inspect_request)
     return;
 
   var inspect_div=map.baseLayer.div;
@@ -52,6 +57,7 @@ function layer_inspect_view_changed() {
 
   if(new_tiles.length) {
     ajax("layer_inspect", {}, json_encode(new_tiles), layer_inspect_callback);
+    layer_inspect_request=true;
   }
 }
 
