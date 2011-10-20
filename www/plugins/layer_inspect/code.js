@@ -50,4 +50,27 @@ function layer_inspect_view_changed() {
   }
 }
 
+function layer_inspect_activate(input) {
+  alert(input.checked);
+}
+
+function layer_inspect_init() {
+  var dom=document.createElement("div");
+  dom.className="layer_inspect_toolbox";
+
+  var input=dom_create_append(dom, "input");
+  input.type="checkbox";
+  input.onchange=layer_inspect_activate.bind(this, input);
+  
+  dom_create_append_text(dom, lang("layer_inspect:name"));
+
+  if(debug_toolbox_register) {
+    debug_toolbox_register({
+      weight: 0,
+      dom: dom
+    });
+  }
+}
+
+register_hook("init", layer_inspect_init);
 register_hook("view_changed_delay", layer_inspect_view_changed);
