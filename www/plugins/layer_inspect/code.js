@@ -24,15 +24,21 @@ function layer_inspect_view_changed() {
   var new_tiles=[];
 
   while(div) {
+    var src=null;
+    var imgs=div.getElementsByTagName("img");
+    if(imgs.length&&imgs[0].src) {
+      src=imgs[0].src;
+
     if(!div.layer_inspect) {
-      var imgs=div.getElementsByTagName("img");
-      if(imgs.length&&imgs[0].src) {
-	new_tiles.push(imgs[0].src);
+      div.layer_inspect=dom_create_append(div, "div");
+      div.layer_inspect.className="layer_inspect";
+    }
 
-	div.layer_inspect=dom_create_append(div, "div");
-	div.layer_inspect.className="layer_inspect";
+    if(div.layer_inspect.src!=src) {
+	div.layer_inspect.src=src;
+	new_tiles.push(src);
 
-	dom_create_append_text(div.layer_inspect, "");
+	dom_clean(div.layer_inspect);
       }
     }
 
