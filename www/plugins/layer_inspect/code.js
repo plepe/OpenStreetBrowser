@@ -3,7 +3,7 @@ var layer_inspect_active=false;
 function layer_inspect_callback(ret) {
   ret=ret.return_value;
 
-  var inspect_div=basemaps.osb.div;
+  var inspect_div=map.baseLayer.div;
   var div=inspect_div.firstChild;
 
   while(div) {
@@ -24,7 +24,7 @@ function layer_inspect_view_changed() {
   if(!layer_inspect_active)
     return;
 
-  var inspect_div=basemaps.osb.div;
+  var inspect_div=map.baseLayer.div;
   var div=inspect_div.firstChild;
   var new_tiles=[];
 
@@ -60,7 +60,7 @@ function layer_inspect_activate() {
 }
 
 function layer_inspect_deactivate() {
-  var inspect_div=basemaps.osb.div;
+  var inspect_div=map.baseLayer.div;
   var div=inspect_div.firstChild;
 
   while(div) {
