@@ -9,13 +9,27 @@ function debug_toolbox_register(param) {
   div.appendChild(param.dom);
 }
 
+function debug_toolbox_show() {
+  register_toolbox(debug_toolbox);
+}
+
+function debug_toolbox_hide() {
+  unregister_toolbox(debug_toolbox);
+}
+
 function debug_toolbox_init() {
   debug_toolbox=new toolbox({
     icon: "plugins/debug_toolbox/icon.png",
     icon_title: lang("debug_toolbox:name"),
     weight: 10,
   });
-  register_toolbox(debug_toolbox);
+ 
+  var r=options_get("debug_toolbox");
+  if(typeof r=="string")
+    r=r.split(/,/);
+
+  if(in_array("show", r))
+    debug_toolbox_show();
 }
 
 // options integration
@@ -40,6 +54,11 @@ function debug_toolbox_options_show(list) {
 function debug_toolbox_options_save() {
   var r=options_checkbox_get("debug_toolbox");
   options_set("debug_toolbox", r);
+
+  if(in_array("show", r))
+    debug_toolbox_show();
+  else
+    debug_toolbox_hide();
 }
 
 register_hook("init", debug_toolbox_init);
