@@ -6,6 +6,19 @@ function _toolbox_manager() {
     this.show_buttons();
   }
 
+  // unregister
+  this.unregister=function(toolbox) {
+    toolbox.manager=this;
+    var p=array_search(toolbox, this.toolboxes);
+    if(p!==false) {
+      var toolbox_buttons=document.getElementById("toolboxbuttons_table");
+      toolbox_buttons.rows[0].removeChild(toolbox.button);
+
+      this.toolboxes=array_remove(this.toolboxes, p);
+      this.show_buttons();
+    }
+  }
+
   // activate_toolbox
   this.activate_toolbox=function(index,force) {
     if(typeof index!="number") {
@@ -75,4 +88,8 @@ var toolbox_manager=new _toolbox_manager();
 
 function register_toolbox(toolbox) {
   return toolbox_manager.register(toolbox);
+}
+
+function unregister_toolbox(toolbox) {
+  return toolbox_manager.unregister(toolbox);
 }
