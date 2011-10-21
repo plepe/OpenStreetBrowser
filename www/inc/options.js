@@ -115,8 +115,6 @@ function options_select_get(key) {
 }
 
 function show_options() {
-  var ret;
-
   if(options_win)
     return;
 
@@ -128,21 +126,35 @@ function show_options() {
   var options_list=[];
   call_hooks("options_show", options_list);
 
-  ret ="<form action='javascript:save_options()' id='options_form'>\n";
-  ret+="<div class='options_parts'>\n";
+  var ret=document.createElement("form");
+  ret.action="javascript:save_options()";
+  ret.id="options_form";
+
+  var parts=dom_create_append(ret, "div");
+  parts.className="options_parts";
 
   options_list=weight_sort(options_list);
   for(var i=0; i<options_list.length; i++) {
-    ret+=options_list[i];
+    if(typeof options_list[i]=="string") {
+      var d=dom_create_append(parts, "div");
+      d.innerHTML=options_list[i];
+    }
+    else {
+      parts.appendChild(options_list[i]);
+    }
   }
 
-  ret+="<h4>"+t("options:autozoom")+"</h4>\n";
-  ret+="<div class='options_help'>"+t("help:autozoom")+"</div>\n";
-  ret+=options_radio("autozoom", [ "pan", "move", "stay" ]);
+  var ret1;
+  ret1 ="<h4>"+t("options:autozoom")+"</h4>\n";
+  ret1+="<div class='options_help'>"+t("help:autozoom")+"</div>\n";
+  ret1+=options_radio("autozoom", [ "pan", "move", "stay" ]);
+  var d=dom_create_append(parts, "div");
+  d.innerHTML=ret1;
 
-  ret+="<h4>"+t("options:language_support")+"</h4>\n";
-  ret+="<div class='options_help'>"+t("help:language_support")+"</div>\n";
-  ret+="<p>\n";
+  ret1 ="<h4>"+t("options:language_support")+"</h4>\n";
+  ret1+="<div class='options_help'>"+t("help:language_support")+"</div>\n";
+  ret1+="<p>\n";
+
   var ui_langs_x={};
   for(var i=0; i<ui_langs.length; i++) {
     var str=language_list[ui_langs[i]];
@@ -165,8 +177,8 @@ function show_options() {
     ui_langs_x[ui_lang]=str;
   }
 
-  ret+=options_select("ui_lang", ui_langs_x);
-  ret+="<br/>\n";
+  ret1+=options_select("ui_lang", ui_langs_x);
+  ret1+="<br/>\n";
 
   var ui_langs_x={};
   l=[];
@@ -179,19 +191,28 @@ function show_options() {
   }
   l[""]=t("lang:");
 
-  ret+=options_select("data_lang", l);
-  ret+="</p>\n";
+  ret1+=options_select("data_lang", l);
+  ret1+="</p>\n";
 
   var add=[];
   call_hooks("options_lang", add);
-  ret+=add.join(" |\n");
+  ret1+=add.join(" |\n");
+  var d=dom_create_append(parts, "div");
+  d.innerHTML=ret1;
 
-  ret+="</div>\n";
-  ret+="<div class='options_interact'><input type='submit' value='"+t("save")+"'>\n";
-  ret+="<input type='button' onClick='javascript:close_options()' value='"+t("cancel")+"'></div>\n";
-  ret+="</form>\n";
+  var d=dom_create_append(ret, "div");
+  d.className="options_interact";
 
-  options_win.content.innerHTML=ret;
+  var i=dom_create_append(d, "input");
+  i.type="submit";
+  i.value=lang("save");
+
+  var i=dom_create_append(d, "input");
+  i.type="button";
+  i.onclick=close_options;
+  i.value=lang("cancel");
+
+  options_win.content.appendChild(ret);
 }
 
 options_load();
