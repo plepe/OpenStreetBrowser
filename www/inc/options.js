@@ -51,6 +51,27 @@ function close_options() {
   delete options_win;
 }
 
+function options_checkbox(key, values) {
+  var ret="";
+
+  ret+="<p>\n";
+
+  var current_value=options_get(key);
+  if(typeof current_value=="string")
+    current_value=current_value.split(/,/);
+
+  for(var i=0; i<values.length; i++) {
+    ret+="  <input type='checkbox' name='"+key+"' id='"+values[i]+"' value='"+values[i]+"'";
+    if(in_array(values[i], current_value))
+      ret+=" checked='checked'";
+    ret+="/><label for='"+values[i]+"'>"+t("options:"+key+":"+values[i])+"</label><br/>\n";
+  }
+
+  ret+="</p>\n";
+  
+  return ret;
+}
+
 function options_radio(key, values) {
   var ret="";
 
@@ -106,6 +127,23 @@ function options_radio_get(key) {
   }
 
   return null;
+}
+
+function options_checkbox_get(key) {
+  var form=document.getElementById("options_form");
+  var ret=[];
+
+  if(!form.elements[key].length) {
+    if(form.elements[key].checked)
+      ret.push(form.elements[key].value);
+  }
+  else
+    for(var i=0; i<form.elements[key].length; i++) {
+      if(form.elements[key][i].checked)
+	ret.push(form.elements[key][i].value);
+    }
+
+  return ret;
 }
 
 function options_select_get(key) {
