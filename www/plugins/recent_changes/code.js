@@ -20,6 +20,7 @@ function recent_changes() {
       });
     }
 
+    dom_clean(this.win.content);
     new list(this.win.content, new_list);
   }
 
@@ -76,6 +77,7 @@ function recent_changes() {
 
   // constructor
   this.win=new win({ class: "recent_changes", title: lang("recent_changes:name") });
+  this.win.content.appendChild(ajax_indicator_dom());
   this.onclose=this.remove.bind(this);
   this.load();
 }
