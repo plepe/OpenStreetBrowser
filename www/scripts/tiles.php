@@ -44,6 +44,14 @@ if($_REQUEST['range']) {
 
   print "zoom: $zoom x: $x1-$x2 y: $y1-$y2\n";
 
+  foreach($tiles_list as $l=>$dummy) {
+    print "<a href='tiles.php?tiles=$l&range={$_REQUEST['range']}'>$l</a>\n";
+  }
+
+  $url=strtr("http://localhost/{$tiles_list[$tiles]}/status", array("%zoom"=>$zoom, "%x"=>$x1, "%y"=>$y1));
+  $status=file_get_contents($url, "r");
+  print "<div class='status'>$status</div>\n";
+
   print "<div style='white-space: nowrap;'>\n";
   for($y=$y1; $y<=$y2; $y++) {
     for($x=$x1; $x<=$x2; $x++) {
