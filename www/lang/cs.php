@@ -1,19 +1,8 @@
 <?
-// All untranslated strings have a # in front. When you translate a string
-// please remove this hash.
-
-//  Every language string looks like this:
-//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
-//  the first entry is the translation of the language string in Singular,
-//  the second the Plural form.
-//
-//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
-//  German translation for office:
-//  $lang_str["office"]=array(N, "Büro", "Büros");
-//
-//  If a Singular/Plural form is not
-//  suitable/necessary you can ignore the array, e.g.
-//  $lang_str["help"]="Help";
+// In this editor you can translate all strings. In the third column you can compare the strings to another language (set it in the select box on the bottom of the window). Please note that changes will not appear right away, they need to be imported by a developer.
+// Every language string can have a singular and plural variant by separating them by ";", e.g. "Restaurant;Restaurants". The first string is the singular form, the second the plural form.  Optionally you can define the Gender (F, M, N) for the word by prepending one of those characters, e.g. "N;Büro;Büros" (German for "office").
+// When translating a language variant (e.g. 'British English', code 'en-gb') please translate only strings which are different from the base language.
+#$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
 
 $lang_str["lang:current"]="Čeština"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
@@ -23,7 +12,14 @@ $lang_str["yes"]="ano";
 $lang_str["no"]="ne";
 $lang_str["ok"]="Potvrdit";
 $lang_str["save"]="Uložit";
+$lang_str["saved"]="Uloženo"; // for dialog boxes confirming saving
 $lang_str["cancel"]="Zrušit";
+$lang_str["show"]="Ukázat";
+$lang_str["edit"]="Upravit";
+$lang_str["delete"]="Smazat";
+$lang_str["history"]="Historie";
+$lang_str["choose"]="Vybrat";
+$lang_str["help"]="Nápověda";
 $lang_str["longitude"]=array(F, "Zeměpisná délka", "Zeměpisné délky");
 $lang_str["latitude"]=array(F, "Zeměpisná šířka", "Zeměpisné šířky");
 $lang_str["noname"]="(bezejmenný)";
@@ -32,8 +28,10 @@ $lang_str["info_zoom"]="přiblížení";
 $lang_str["nothing_found"]="nic nenalezeno";
 $lang_str["loading"]="Načítání...";
 $lang_str["more"]="více";
+$lang_str["source"]="Zdroj";
 $lang_str["unnamed"]="nepojmenováno";
 $lang_str["zoom"]="Stupeň přiblížení";
+$lang_str["no_message"]="beze zprávy";
 
 // Headings
 $lang_str["head:general_info"]="Základní informace";
@@ -94,6 +92,7 @@ $lang_str["help:language_support"]="Touto volbou můžeš vybrat své preferovan
 $lang_str["options:ui_lang"]="Jazyk rozhraní";
 $lang_str["options:data_lang"]="Jazyk dat";
 $lang_str["lang:"]="Místní jazyk";
+#$lang_str["lang:auto"]="Same as interface language";
 
 $lang_str["overlay:data"]="Data";
 $lang_str["overlay:draggable"]="Značky";
@@ -114,24 +113,25 @@ $lang_str["user:login"]="Přihlásit se";
 $lang_str["user:logged_in_as"]="Přihlášen jako ";
 $lang_str["user:logout"]="Odhlásit se";
 
+#$lang_str["attention"]="Attention: ";
 $lang_str["error"]="Objevila se chyba: ";
 $lang_str["error:not_logged_in"]="nejste přihlášen";
 
+$lang_str["category"]=array("Kategorie", "Kategorie");
 $lang_str["more_categories"]="Více kategorií";
 $lang_str["category:status"]="Stav";
 $lang_str["category:data_status"]="Stav";
 $lang_str["category:old_version"]="Připravuje se nová verze této kategorie.";
 $lang_str["category:not_compiled"]="Připravuje se nová kategorie.";
 
+$lang_str["category:new_rule"]="Nové pravidlo";
 $lang_str["category_rule_tag:match"]="Shoda";
 $lang_str["category_rule_tag:description"]="Popis";
 $lang_str["category_chooser:choose"]="Vyberte kategorii";
 $lang_str["category_chooser:new"]="Nová kategorie";
+$lang_str["category:sub_category"]=array("Podkategorie", "Podkategorie");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
-
-// The following $lang_str were not defined in the English language file and might be deprecated or wrong:
-$lang_str["head:wikipedia"]="Wikipedie";
