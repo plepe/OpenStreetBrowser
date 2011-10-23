@@ -61,7 +61,8 @@ function recent_changes() {
   // load
   this.load=function() {
     this.list=[];
-    ajax("recent_changes_load", null, this.load_callback.bind(this));
+    var x=new ajax("recent_changes_load", null, this.load_callback.bind(this));
+    this.win.content.appendChild(ajax_indicator_dom(x));
     call_hooks("recent_changes_load", this.list);
   }
 
@@ -77,7 +78,6 @@ function recent_changes() {
 
   // constructor
   this.win=new win({ class: "recent_changes", title: lang("recent_changes:name") });
-  this.win.content.appendChild(ajax_indicator_dom());
   this.onclose=this.remove.bind(this);
   this.load();
 }
