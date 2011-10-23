@@ -84,7 +84,7 @@ function info(ob) {
     this.buttons=new buttons();
     this.div.appendChild(this.buttons.dom());
 
-    var a=button_dom(lang_dom("info_back"), redraw);
+    var a=button_dom(lang_dom("info_back"), "#");
     this.buttons.add([ -5, a ]);
 
     var data=merge_chapters(this.chapters);
