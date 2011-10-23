@@ -22,29 +22,9 @@ CLASSES:
 
 // Functions returning dom-nodes should be called xyz_dom() and always return
 // new dom nodes, e.g.
-// this.name_dom=function() { ... }
+// class.prototype.name_dom=function() { ... }
 
 function test(...) {
-  // all functions
-  this.fun=function(...) {
-  }
-
-  // standard functions
-  this.dom=function(...) {
-    // returns a new dom-object
-    // this dom_object has:
-    // .ob          pointing to this
-    // .className   a class starting with the object name, e.g. "test_header"
-
-    // optional call a hook at end of dom-function
-    call_hook("test_dom", this, dom, ...)
-  }
-
-  // remove
-  this.remove=function(...) {
-    // clean up
-  }
-
   // constructor
   this.type="test";
   this.id="foo";
@@ -55,6 +35,26 @@ function test(...) {
   this.value=something;
   return this.value;
 }
+
+  // all functions
+  test.prototype.fun=function(...) {
+  }
+
+  // standard functions
+  test.prototype.dom=function(...) {
+    // returns a new dom-object
+    // this dom_object has:
+    // .ob          pointing to this
+    // .className   a class starting with the object name, e.g. "test_header"
+
+    // optional call a hook at end of dom-function
+    call_hook("test_dom", this, dom, ...)
+  }
+
+  // remove
+  test.prototype.remove=function(...) {
+    // clean up
+  }
 
 function test_dom(...) {
   var x=new test(...);
@@ -67,6 +67,20 @@ function test_html(...) {
   var x=new test(...)
   return x.html();
 }
+
+INHERITANCE:
+further_test.inherits_from(test);
+function further_test() {
+  // constructor
+  // the parent constructor gets called prior to this function
+}
+
+  // call parent function
+  further_test.fun=function() {
+    this.parent.fun.call(this); // call parent function
+  }
+
+Reference: http://phrogz.net/js/classes/OOPinJS2.html
 
 HOOKS:
 <name>_construct       After constructor an object can call '<name>_construct'
@@ -93,15 +107,15 @@ function test_dom(a, b, c) {
 */
 
 function test() {
+  return "foo";
+}
+
   // dom
-  this.dom=function() {
+  test.prototype.dom=function() {
     var x=dom_create("div");
     dom_create_append_text(x, "foo");
     return x;
   }
-
-  return "foo";
-}
 
 // DELAYED LOAD - request e.g. dom before load is finished the ajax-request
 // should be saved as property .load_ajax, so function calls can register to

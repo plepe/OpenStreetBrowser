@@ -1,3 +1,9 @@
+Function.prototype.inherits_from=function(parentClass) {
+  this.prototype = new parentClass;
+  this.prototype.constructor = this;
+  this.prototype.parent = parentClass.prototype;
+}
+
 function keys(ob) {
   var ret=[];
 
