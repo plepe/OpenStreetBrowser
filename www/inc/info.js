@@ -80,20 +80,17 @@ function info(ob) {
     var h1=dom_create_append(this.div, "h1");
     dom_create_append_text(h1, this.ob.name());
 
-    // interaction
-    var actions=dom_create_append(this.div, "div");
-    var a=dom_create_append(actions, "a");
-    a.className="zoom";
-    a.href="#";
-    a.onclick=redraw;
-    dom_create_append_text(a, lang("info_back"));
+    // buttons
+    this.buttons=new buttons();
+    this.div.appendChild(this.buttons.dom());
+
+    var a=button_dom(lang_dom("info_back"), redraw);
+    this.buttons.add([ -5, a ]);
 
     if(this.ob.geo_center()) {
-      var a=dom_create_append(actions, "a");
-      a.href="#";
-      a.className="zoom";
-      a.onclick=this.ob.geo_zoom_to.bind(this.ob);
-      dom_create_append_text(a, lang("info_zoom"));
+      var a=button_dom(lang_dom("info_zoom",
+                       this.ob.geo_zoom_to.bind(this.ob)));
+      this.buttons.add([ 0, a ]);
     }
 
     var data=merge_chapters(this.chapters);
