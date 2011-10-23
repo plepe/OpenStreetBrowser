@@ -1,5 +1,5 @@
 var options_win;
-var options_list=[ "autozoom" ];
+var options_list=[ ];
 var options_values={};
 
 function options_set(key, value) {
@@ -35,8 +35,6 @@ function save_options() {
   var form=document.getElementById("options_form");
 
   call_hooks("options_save", null);
-
-  options_set("autozoom", options_radio_get("autozoom"));
 
   close_options();
 }
@@ -177,13 +175,6 @@ function show_options() {
       parts.appendChild(options_list[i]);
     }
   }
-
-  var ret1;
-  ret1 ="<h4>"+t("options:autozoom")+"</h4>\n";
-  ret1+="<div class='options_help'>"+t("help:autozoom")+"</div>\n";
-  ret1+=options_radio("autozoom", [ "pan", "move", "stay" ]);
-  var d=dom_create_append(parts, "div");
-  d.innerHTML=ret1;
 
   var d=dom_create_append(ret, "div");
   d.className="options_interact";

@@ -153,3 +153,4 @@ $overlays_add=array(
 // debug_toolbox - Show a toolbox with debug options
 // lang_chooser - A more accessible chooser for languages
 // ajax_indicator - A indicator to show activity while an ajax-action is active
+// autozoom - Automatic zoom to current object
