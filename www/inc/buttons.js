@@ -1,6 +1,19 @@
 // constructor button
+
+/**
+ * create a button
+ * @param text string: place text via innerHTML, dom: append text as child
+ * @param callback string: set as href for a link, closure: call after onclick
+ */
 function button(text, callback) {
-  this.span=document.createElement("span");
+  if(typeof callback=="string") {
+    this.span=document.createElement("a");
+    this.span.href=callback;
+  }
+  else {
+    this.span=document.createElement("span");
+    this.span.onclick=callback;
+  }
   this.span.ob=this;
   this.span.className="button";
 
@@ -9,7 +22,6 @@ function button(text, callback) {
   else
     this.span.innerHTML=text;
 
-  this.span.onclick=callback;
 }
 
 // button.dom
