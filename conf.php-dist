@@ -152,3 +152,4 @@ $overlays_add=array(
 // layer_inspect - Show date of rendering for all tiles
 // debug_toolbox - Show a toolbox with debug options
 // lang_chooser - A more accessible chooser for languages
+// ajax_indicator - A indicator to show activity while an ajax-action is active
