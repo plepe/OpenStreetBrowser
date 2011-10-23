@@ -16,7 +16,7 @@ ajax_indicator.prototype.dom=function() {
 
   dom_create_append_text(span, " ");
 
-  dom_create_append_text(span, lang("loading"));
+  span.appendChild(lang_dom("loading"));
 
   return span;
 }
