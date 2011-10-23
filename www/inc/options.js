@@ -37,10 +37,6 @@ function save_options() {
   call_hooks("options_save", null);
 
   options_set("autozoom", options_radio_get("autozoom"));
-  options_set("ui_lang", options_select_get("ui_lang"));
-  options_set("data_lang", options_select_get("data_lang"));
-  if(data_lang=="auto")
-    data_lang=ui_lang;
 
   close_options();
 }
@@ -186,55 +182,6 @@ function show_options() {
   ret1 ="<h4>"+t("options:autozoom")+"</h4>\n";
   ret1+="<div class='options_help'>"+t("help:autozoom")+"</div>\n";
   ret1+=options_radio("autozoom", [ "pan", "move", "stay" ]);
-  var d=dom_create_append(parts, "div");
-  d.innerHTML=ret1;
-
-  ret1 ="<h4>"+t("options:language_support")+"</h4>\n";
-  ret1+="<div class='options_help'>"+t("help:language_support")+"</div>\n";
-  ret1+="<p>\n";
-
-  var ui_langs_x={};
-  for(var i=0; i<ui_langs.length; i++) {
-    var str=language_list[ui_langs[i]];
-    if(lang("lang:"+ui_langs[i])!=str)
-      str+=" ("+lang("lang:"+ui_langs[i])+")";
-    ui_langs_x[ui_langs[i]]=str;
-  }
-
-  // if ui_lang is set to a not defined UI lang add this option
-  if(!in_array(ui_langs, ui_lang)) {
-    var str="";
-    if(language_list[ui_lang])
-      str=language_list[ui_lang];
-    else
-      str=ui_lang;
-
-    if(lang("lang:"+ui_lang)!=str)
-      str+=" ("+lang("lang:"+ui_lang)+")";
-
-    ui_langs_x[ui_lang]=str;
-  }
-
-  ret1+=options_select("ui_lang", ui_langs_x);
-  ret1+="<br/>\n";
-
-  var ui_langs_x={};
-  l=[];
-  l[""]="";
-  l["auto"]=t("lang:auto");
-  for(var i in language_list) {
-    l[i]=language_list[i];
-    if(lang("lang:"+i)!=l[i])
-      l[i]+=" ("+lang("lang:"+i)+")";
-  }
-  l[""]=t("lang:");
-
-  ret1+=options_select("data_lang", l);
-  ret1+="</p>\n";
-
-  var add=[];
-  call_hooks("options_lang", add);
-  ret1+=add.join(" |\n");
   var d=dom_create_append(parts, "div");
   d.innerHTML=ret1;
 
