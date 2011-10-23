@@ -151,3 +151,4 @@ $overlays_add=array(
 // editor - Commonly used things for all editors (e.g. lang strings)
 // layer_inspect - Show date of rendering for all tiles
 // debug_toolbox - Show a toolbox with debug options
+// lang_chooser - A more accessible chooser for languages
