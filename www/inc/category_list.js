@@ -7,17 +7,6 @@ function _category_list() {
   this.inheritFrom=category;
   this.inheritFrom("root");
 
-  // choose_category
-  this.choose_category=function() {
-    new category_chooser(this.choose_category_callback.bind(this));
-  }
-
-  // choose_category_callback
-  this.choose_category_callback=function(id) {
-    this.sub_categories.push(id);
-    this.write_div();
-  }
-  
   // attach_div
   this.inherit_attach_div=this.attach_div;
   this.attach_div=function(parent_div) {
@@ -36,11 +25,15 @@ function _category_list() {
     if(!div)
       return;
 
+    var list=[];
+    call_hooks("category_list_more", list, this);
+
     dom_clean(div.more);
-    var more_cat=dom_create_append(div.more, "a");
-    more_cat.href="#";
-    dom_create_append_text(more_cat, t("more_categories"));
-    more_cat.onclick=this.choose_category.bind(this);
+    list=weight_sort(list);
+
+    for(var i=0; i<list.length; i++) {
+      div.more.appendChild(list[i]);
+    }
   }
 
   // shall_request_data
@@ -110,6 +103,13 @@ function _category_list() {
   register_hook("view_changed_delay", this.shall_reload.bind(this));
   this.tags.set("name", t("list_info"));
 }
+
+  // choose_category_callback
+  _category_list.prototype.add_category=function(id) {
+    this.sub_categories.push(id);
+    this.write_div();
+  }
+
 
 function category_list_init() {
   category_root=new _category_list();

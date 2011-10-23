@@ -1,4 +1,4 @@
-function category_chooser(callback) {
+function category_chooser(category_list) {
   // cancel
   this.cancel=function() {
     this.win.close();
@@ -6,7 +6,7 @@ function category_chooser(callback) {
 
   // choose
   this.choose=function(id) {
-    callback("osm:"+id);
+    category_list.add_category("osm:"+id);
     this.win.close();
   }
 
@@ -69,3 +69,19 @@ function category_chooser(callback) {
   var x=new ajax_direct("categories.php", { todo: "list", lang: ui_lang }, this.load_callback.bind(this));
   this.win.content.appendChild(ajax_indicator_dom(x));
 }
+
+function category_chooser_open(category_list) {
+  new category_chooser(category_list);
+}
+
+function category_chooser_list_more(list, category_list) {
+  var span=document.createElement("span");
+  var more_cat=dom_create_append(span, "a");
+  more_cat.href="#";
+  more_cat.appendChild(lang_dom("more_categories"));
+  more_cat.onclick=category_chooser_open.bind(this, category_list);
+
+  list.push([ -5, span ]);
+}
+
+register_hook("category_list_more", category_chooser_list_more);
