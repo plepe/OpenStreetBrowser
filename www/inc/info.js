@@ -87,12 +87,6 @@ function info(ob) {
     var a=button_dom(lang_dom("info_back"), redraw);
     this.buttons.add([ -5, a ]);
 
-    if(this.ob.geo_center()) {
-      var a=button_dom(lang_dom("info_zoom",
-                       this.ob.geo_zoom_to.bind(this.ob)));
-      this.buttons.add([ 0, a ]);
-    }
-
     var data=merge_chapters(this.chapters);
 
     this.div_chapter={};
