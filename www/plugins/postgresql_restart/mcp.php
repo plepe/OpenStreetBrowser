@@ -1,13 +1,18 @@
 <?
 function postgresql_restart_do($conn) {
+  global $postgresql_restart_cmd;
+
   debug("Restarting PostgreSQL server", "postgresql_restart");
 
   // if not localhost connection, ignore
   if($conn['host']!="localhost")
     return;
 
+  if(!$postgresql_restart_cmd)
+    $postgresql_restart_cmd="sudo /etc/init.d/postgresql restart";
+
   // restart via sudo
-  system("sudo /etc/init.d/postgresql restart");
+  system($postgresql_restart_cmd);
 
   // try to connect (again)
   $conn['connection']=
