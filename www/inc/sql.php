@@ -63,6 +63,30 @@ function sql_query($qry, &$conn=0) {
 
   // There was an error - call hooks to inform about error
   if($res===false) {
+    // if postgresql connection died ...
+    if(pg_connection_status($conn['connection'])==PGSQL_CONNECTION_BAD) {
+      debug("sql connection died", "sql");
+      pg_close($conn['connection']);
+      unset($conn['connection']);
+
+      call_hooks("sql_connection_failed", &$conn);
+
+      // if connection is back, retry query
+      if(isset($conn['connection'])&&
+         (pg_connection_status($conn['connection'])==PGSQL_CONNECTION_OK)) {
+        $res=pg_query($conn['connection'], $qry);
+
+        if($res!==false) {
+          debug("sql retry successful", "sql");
+          return $res;
+        }
+      }
+      else {
+        print "sql connection died\n";
+        exit;
+      }
+    }
+
     $error=pg_last_error();
     call_hooks("sql_error", &$db, $qry, $error);
 
