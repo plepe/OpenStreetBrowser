@@ -16,6 +16,11 @@ function gen_renderd_conf() {
   $template=file_get_contents("$root_path/src/renderd.conf.template");
   fwrite($conf, $template);
 
+  if(file_exists("$root_path/data/renderd.conf.local")) {
+    $template=file_get_contents("$root_path/data/renderd.conf.local");
+    fwrite($conf, $template);
+  }
+
   foreach(category_list() as $f=>$tags) {
     print "check state of category '$f'\n";
     $category=new category($f);
