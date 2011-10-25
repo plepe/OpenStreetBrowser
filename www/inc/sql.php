@@ -12,6 +12,10 @@ function sql_connect(&$conn) {
 
     // save time of connection start
     $conn['date']=time();
+
+    // inform other modules about successful database connection
+    if($conn['connection'])
+      call_hooks("sql_connect", $conn);
   }
 }
 
