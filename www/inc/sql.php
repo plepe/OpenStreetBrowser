@@ -6,6 +6,19 @@ function sql_connect(&$conn) {
     $conn['connection']=
       pg_connect("dbname={$conn['name']} user={$conn['user']} password={$conn['passwd']} host={$conn['host']}");
 
+    // check for successful connection
+    if(!$conn['connection']) {
+      debug("db connection failed", "sql");
+
+      call_hooks("sql_connection_failed", &$conn);
+
+      // still no valid connection - exit
+      if(!$conn['connection']) {
+        print "db connection failed\n";
+        exit;
+      }
+    }
+
     // Set a title for debugging
     if(!isset($conn['title']))
       $conn['title']=print_r($conn['connection'], 1);
