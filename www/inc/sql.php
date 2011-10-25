@@ -61,9 +61,15 @@ function sql_query($qry, &$conn=0) {
   // Query
   $res=pg_query($conn['connection'], $qry);
 
-  // If we want debug information AND we have an error, tell about it
-  if(isset($conn['debug'])&&($conn['debug'])&&($res===false))
-    debug("CONN {$conn['title']}: ".pg_last_error());
+  // There was an error - call hooks to inform about error
+  if($res===false) {
+    $error=pg_last_error();
+    call_hooks("sql_error", &$db, $qry, $error);
+
+    // If we want debug information AND we have an error, tell about it
+    if(isset($conn['debug'])&&($conn['debug']))
+      debug("CONN {$conn['title']}: ".pg_last_error(), "sql");
+  }
 
   return $res;
 }
