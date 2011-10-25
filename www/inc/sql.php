@@ -1,4 +1,20 @@
 <?
+function sql_connect(&$conn) {
+  // If database connection has not been opened yet, open it
+  if(!isset($conn['connection'])) {
+    // connect
+    $conn['connection']=
+      pg_connect("dbname={$conn['name']} user={$conn['user']} password={$conn['passwd']} host={$conn['host']}");
+
+    // Set a title for debugging
+    if(!isset($conn['title']))
+      $conn['title']=print_r($conn['connection'], 1);
+
+    // save time of connection start
+    $conn['date']=time();
+  }
+}
+
 function sql_query($qry, &$conn=0) {
   global $db;
 
@@ -18,19 +34,8 @@ function sql_query($qry, &$conn=0) {
     unset($conn['connection']);
   }
 
-  // If database connection has not been opened yet, open it
-  if(!isset($conn['connection'])) {
-    $conn['connection']=
-      pg_connect("dbname={$conn['name']} user={$conn['user']} password={$conn['passwd']} host={$conn['host']}");
-
-    // Set a title for debugging
-    if(!isset($conn['title']))
-      $conn['title']=print_r($conn['connection'], 1);
-
-
-    // save time of connection start
-    $conn['date']=time();
-  }
+  // check for database connection
+  sql_connect(&$conn);
 
   // Do we want debug information?
   if(isset($conn['debug'])&&($conn['debug']))
