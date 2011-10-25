@@ -1,0 +1,8 @@
+Enter sudoers definition to sudoers-file:
+  Cmnd_Alias POSTGRES = /etc/init.d/postgresql restart
+  osm     ALL=NOPASSWD: POSTGRES
+  // put last line to end of file if osm matches another rule too
+
+Different cmd for restarting postgresql-server:
+  add line to conf.php, e.g.:
+  $postgresql_restart_cmd="sudo /etc/init.d/postgresql-8.4 restart";
