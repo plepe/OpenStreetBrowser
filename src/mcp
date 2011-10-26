@@ -29,6 +29,8 @@ include "inc/data_dir.php";
 include "gen_renderd_conf.php";
 $plugins[]="icon";
 plugins_init("mcp");
+debug("* MCP all plugins loaded, initializing", "mcp");
+
 call_hooks("mcp_start");
 
 function compile($cat_id) {
@@ -61,7 +63,8 @@ function mcp_sig_handler($signo) {
   switch($signo) {
     case SIGTERM:
     case SIGINT:
-      print "exiting\n";
+      debug("* MCP got termination signal, stopping", "mcp");
+      call_hooks("mcp_stop");
       fclose($fifo);
       unlink($fifo_path);
       exit;
@@ -80,6 +83,7 @@ pcntl_signal(SIGTERM, "mcp_sig_handler");
 pcntl_signal(SIGINT,  "mcp_sig_handler");
 
 $mcp_next_clean_up=time()+15*60;
+debug("* MCP up and running", "mcp");
 
 while(1) {
   call_hooks("mcp_tick", null);
