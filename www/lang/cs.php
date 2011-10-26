@@ -92,7 +92,7 @@ $lang_str["help:language_support"]="Touto volbou můžeš vybrat své preferovan
 $lang_str["options:ui_lang"]="Jazyk rozhraní";
 $lang_str["options:data_lang"]="Jazyk dat";
 $lang_str["lang:"]="Místní jazyk";
-#$lang_str["lang:auto"]="Same as interface language";
+$lang_str["lang:auto"]="Stejný jako jazyk rozhraní";
 
 $lang_str["overlay:data"]="Data";
 $lang_str["overlay:draggable"]="Značky";
@@ -113,7 +113,7 @@ $lang_str["user:login"]="Přihlásit se";
 $lang_str["user:logged_in_as"]="Přihlášen jako ";
 $lang_str["user:logout"]="Odhlásit se";
 
-#$lang_str["attention"]="Attention: ";
+$lang_str["attention"]="Pozor:";
 $lang_str["error"]="Objevila se chyba: ";
 $lang_str["error:not_logged_in"]="nejste přihlášen";
 
