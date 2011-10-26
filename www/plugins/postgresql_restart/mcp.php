@@ -17,6 +17,11 @@ function postgresql_restart_do($conn) {
   // try to connect (again)
   $conn['connection']=
     pg_connect("dbname={$conn['name']} user={$conn['user']} password={$conn['passwd']} host={$conn['host']}");
+
+  // if successful inform other modules
+  if(pg_connection_status($conn['connection'])===PGSQL_CONNECTION_OK) {
+    call_hooks("postgresql_restart_done", $conn);
+  }
 }
 
 register_hook("sql_connection_failed", "postgresql_restart_do");
