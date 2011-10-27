@@ -4,6 +4,7 @@ function category_osm_info_show(cat_win, category) {
   t.content.innerHTML="<img src=\"img/ajax_loader.gif\" /> "+lang("loading");
 
   var content=document.createElement("div");
+  content.className="category_osm_info";
 
   var div=dom_create_append(content, "div");
 

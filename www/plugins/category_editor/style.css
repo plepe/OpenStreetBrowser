@@ -1,7 +1,13 @@
 div.category_editor {
   padding: 3px;
 }
+div.category_editor_content {
+  overflow: auto;
+  height: 300px;
+}
 div.category_editor_content textarea.view_source {
   width: 494px;
   height: 250px;
+}
+div.category_editor_inputs {
 }

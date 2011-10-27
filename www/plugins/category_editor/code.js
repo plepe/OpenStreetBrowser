@@ -27,12 +27,16 @@ function category_editor(id, param, cat_win) {
       dom_create_append_text(warning, lang("category_editor:not_newest"));
     }
 
+    this.msg_div=dom_create_append(this.form, "div");
+    this.msg_div.className="category_editor_msg";
+
+    this.inputs_div=dom_create_append(this.form, "div");
+    this.inputs_div.className="category_editor_inputs";
+
     this.form_content=dom_create_append(this.form, "div");
     this.form_content.className="category_editor_content";
 
     this.view_form();
-
-    this.msg_div=dom_create_append(this.form, "div");
 
     this.inputs={};
 
@@ -42,13 +46,13 @@ function category_editor(id, param, cat_win) {
     this.inputs.save.onclick=this.save.bind(this);
     if(!active)
       this.inputs.save.disabled=true;
-    this.form.appendChild(this.inputs.save);
+    this.inputs_div.appendChild(this.inputs.save);
 
     this.inputs.cancel=document.createElement("input");
     this.inputs.cancel.type="button";
     this.inputs.cancel.value=lang("cancel");
     this.inputs.cancel.onclick=this.cancel.bind(this);
-    this.form.appendChild(this.inputs.cancel);
+    this.inputs_div.appendChild(this.inputs.cancel);
 
     if(this.version==this.newest_version) {
       this.inputs.delete=document.createElement("input");
@@ -57,7 +61,7 @@ function category_editor(id, param, cat_win) {
       this.inputs.delete.onclick=this.delete.bind(this);
       if(!active)
 	this.inputs.delete.disabled=true;
-      this.form.appendChild(this.inputs.delete);
+      this.inputs_div.appendChild(this.inputs.delete);
     }
     else {
       this.inputs.restore=document.createElement("input");
@@ -66,11 +70,11 @@ function category_editor(id, param, cat_win) {
       this.inputs.restore.onclick=this.restore.bind(this);
       if(!active)
 	this.inputs.restore.disabled=true;
-      this.form.appendChild(this.inputs.restore);
+      this.inputs_div.appendChild(this.inputs.restore);
     }
 
     // view select
-    dom_create_append_text(this.form, lang("category_editor:view_mode")+": ");
+    dom_create_append_text(this.inputs_div, lang("category_editor:view_mode")+": ");
     this.view_select=document.createElement("select");
 
     var opt=dom_create_append(this.view_select, "option");
@@ -82,7 +86,7 @@ function category_editor(id, param, cat_win) {
     dom_create_append_text(opt, lang("category_editor:view_mode:source"));
 
     this.view_select.onchange=this.view_select_change.bind(this);
-    this.form.appendChild(this.view_select);
+    this.inputs_div.appendChild(this.view_select);
   }
 
   // get_rule
@@ -342,7 +346,7 @@ function category_editor(id, param, cat_win) {
     input.type="button";
     input.value=lang("category_editor:new_rule");
     input.onclick=this.new_rule.bind(this);
-    this.form_content.appendChild(input);
+    this.inputs_div.appendChild(input);
   }
 
   // view_source
