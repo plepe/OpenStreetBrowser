@@ -109,6 +109,9 @@ function category_editor(id, param, cat_win) {
     div.className="editor_category_rule";
 
     el.editor(div, true);
+
+    var pos=div.offsetTop-this.form_content.firstChild.offsetTop;
+    this.form_content.scrollTop=pos;
   }
 
   // remove_rule
