@@ -1,35 +1,6 @@
 <?
-//  All tags should have translations in www/lang/tags_XX.php, with
-//  language strings like "tag:key" for the translation of the key and
-//  "tag:key=value" for the translation of the value. E.g.
-//  $lang_str["tag:amenity"]=array("Amenity", "Amenities");
-//  $lang_str["tag:amenity=bar"]=array("Bar", "Bars");
-//
-//  Furthermore you can describe the tags with the array $tag_type. Every
-//  entry is an array again to further specify its type, e.g.:
-//  $tag_type["width"]=array("number", "m", "in");
-//                ^             ^       ^    ^
-//                |             |       |    \-- the preferred unit in this locale
-//                |             |       \------- the default unit for this tag
-//                |             \--------------- the type of the value
-//                \----------------------------- tag
-//
-//  This defines, that the default value for the tag width is a number, with
-//  its default unit m (for meter) and the preferred unit for this locale is
-//  in (for inch).
-//
-//  The following types are valid:
-//  * text          default (e.g. religion, name)
-//  * number        a value, with default unit and preferred unit as defined
-//                  by the second and third entry in this array (e.g. width,
-//                  voltage)
-//  * count         an integer value (e.g. population)
-//  * date          a date
-//  * link          an Internet URL
-//
-//  NOTE: the $tag_type can already be defined, but it's not used yet.
-//  There might also be more tag types soon and a way to format the output
-//  (e.g. "100.000 m" or "2010-12-24").
+// All tags should have a translation, with language strings like "tag:key" for the translation of the key and "tag:key=value" for the translation of the value. E.g. tag:amenity "Amenity;Amenities" resp. tag:amenity=bar "Bar;Bars". You can also define the Gender like "F;Bar;Bars".
+// Currently there's no way to add a new tag in this editor. This should follow in some update hopefully soon.
 
 // accomodation
 $lang_str["tag:accomodation"]="Ubytování";
@@ -182,6 +153,8 @@ $lang_str["tag:place=hamlet"]=array("Samota", "Samoty");
 $lang_str["tag:place=locality"]=array("Lokalita", "Lokality");
 $lang_str["tag:place=island"]=array("Ostrov", "Ostrovy");
 $lang_str["tag:place=islet"]=array("Ostrůvek", "Ostrůvky");
+$lang_str["tag:place=ocean"]=array("Oceán", "Oceány");
+$lang_str["tag:place=sea"]=array("Moře", "Moře");
 
 // population
 $lang_str["tag:population"]="Počet obyvatel";
@@ -291,7 +264,7 @@ $lang_str["tag:sport=korfball"]="Korfbal";
 $lang_str["tag:sport=orienteering"]="Orientační závod";
 #$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
 $lang_str["tag:sport=paragliding"]="Paragliding";
-#$lang_str["tag:sport=pelota"]="Pelota";
+$lang_str["tag:sport=pelota"]="Pelota";
 #$lang_str["tag:sport=racquet"]="Racquet";
 $lang_str["tag:sport=rowing"]="Veslování";
 $lang_str["tag:sport=rugby"]="Rugby";
@@ -327,6 +300,5 @@ $tag_type["wires"]=array("count");
 $lang_str["tag:website"]="Webová stránka";
 $tag_type["website"]=array("link");
 // The following $lang_str were not defined in the English language file and might be deprecated or wrong:
-$lang_str["tag:place=city;population>1000000"]=array("Město, > 1 Mil. obyvatel", "Města, > 1 Mil. obyvatel");
-$lang_str["tag:place=city;population>200000"]=array("Město, > 200 000 obyvatel", "Města, > 200 000 obyvatel");
-$lang_str["tag:place=town;population>30000"]=array("Město, > 30 000 obyvatel", "Města, > 30 000 obyvatel");
+#$lang_str["tag:admin_level=7"]="";
+#$lang_str["tag:admin_level=7.5"]="";
