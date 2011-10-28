@@ -52,18 +52,18 @@ function icon_editor(icon, callback) {
   this.win=new win({ class: "icon_editor", title: lang("icon:editor") });
 
   var comment=dom_create_append(this.win.content, "div");
-  dom_create_append_text(comment, "Upload Icon:");
+  dom_create_append_text(comment, lang("icon_editor:upload"));
 
   var x=this.obj.upload_form("file.src");
   this.win.content.appendChild(x);
 
   var comment=dom_create_append(this.win.content, "div");
-  dom_create_append_text(comment, "Tags");
+  dom_create_append_text(comment, lang("tags", 2));
   
   var a=dom_create_append(comment, "a");
   a.target="_new";
   a.href="http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Icons";
-  dom_create_append_text(a, "(Help)");
+  dom_create_append_text(a, "("+lang("help")+")");
 
   dom_create_append_text(comment, ":");
 
@@ -74,17 +74,17 @@ function icon_editor(icon, callback) {
     this.tags=new tags(icon_tags_default);
   this.tags.editor(this.div_tags);
 
-  dom_create_append_text(this.win.content, "Edit summary:");
+  dom_create_append_text(this.win.content, lang("editor:request_message", 0, lang("save"))+":");
   this.summary=dom_create_append(this.win.content, "input");
   this.summary.name="summary";
 
   var input=dom_create_append(this.win.content, "input");
   input.type="button";
-  input.value="Save";
+  input.value=lang("save");
   input.onclick=this.new_icon_finish.bind(this);
 
   var input=dom_create_append(this.win.content, "input");
   input.type="button";
-  input.value="Cancel";
+  input.value=lang("cancel");
   input.onclick=this.new_icon_cancel.bind(this);
 }

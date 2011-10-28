@@ -21,11 +21,11 @@ function icon_chooser(current, callback) {
   }
 
   this.win=new win({ class: "edit_icon", title: lang("icon:editor") });
-  this.win.content.innerHTML="Loading ...";
+  this.win.content.appendChild(ajax_indicator_dom());
 
   var obj_list=icon_git.obj_list();
 
-  this.win.content.innerHTML="";
+  dom_clean(this.win.content);
   var ul=dom_create_append(this.win.content, "ul");
   
   for(var i=0; i<obj_list.length; i++) {
@@ -35,14 +35,12 @@ function icon_chooser(current, callback) {
   if(current_user.username) {
     var a=dom_create_append(this.win.content, "input");
     a.type="button";
-    a.value="Create new icon";
+    a.value=lang("icon_chooser:create");
     a.onclick=this.new_icon.bind(this);
   }
 
   var a=dom_create_append(this.win.content, "input");
   a.type="button";
-  a.value=t("cancel");
+  a.value=lang("cancel");
   a.onclick=this.cancel.bind(this);
 }
-
-
