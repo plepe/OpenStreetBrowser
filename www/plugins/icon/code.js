@@ -8,18 +8,6 @@ function icon_obj(dir, id, files) {
     this.save_callback(this.id);
   }
 
-  this.write_chooser=function(ul, callback) {
-    var li=dom_create_append(ul, "li");
-    var img=dom_create_append(li, "img");
-    img.src=this.url("preview.png");
-    var name=this.tags.get("name")
-    if(name)
-      var txt=dom_create_append_text(li, name);
-
-    this.save_callback=callback;
-    img.onclick=this.callback.bind(this);
-  }
-
   this.icon_url=function() {
     return this.url("preview.png");
   }

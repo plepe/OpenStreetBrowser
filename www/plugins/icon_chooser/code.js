@@ -20,16 +20,17 @@ function icon_chooser(current, callback) {
     delete(this.win);
   }
 
-  this.win=new win({ class: "edit_icon", title: lang("icon:editor") });
+  this.win=new win({ class: "icon_chooser", title: lang("icon_chooser:title") });
   this.win.content.appendChild(ajax_indicator_dom());
 
   var obj_list=icon_git.obj_list();
 
   dom_clean(this.win.content);
   var ul=dom_create_append(this.win.content, "ul");
-  
+  ul.className="list";
+
   for(var i=0; i<obj_list.length; i++) {
-    obj_list[i].write_chooser(ul, this.choose_callback.bind(this));
+    obj_list[i].icon_chooser_write(ul, this.choose_callback.bind(this));
   }
 
   if(current_user.username) {
@@ -44,3 +45,18 @@ function icon_chooser(current, callback) {
   a.value=lang("cancel");
   a.onclick=this.cancel.bind(this);
 }
+
+icon_obj.prototype.icon_chooser_write=function(ul, callback) {
+  var li=dom_create_append(ul, "li");
+  var img=dom_create_append(li, "img");
+  img.src=this.url("preview.png");
+  dom_create_append_text(li, " ");
+  var name=this.tags.get("name")
+  if(name)
+    var txt=dom_create_append_text(li, name);
+
+  this.save_callback=callback;
+  li.onclick=this.callback.bind(this);
+}
+
+
