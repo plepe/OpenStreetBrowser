@@ -12,3 +12,4 @@ $lang_str['category_editor:remove_rule']="Remove Rule";
 $lang_str['category_editor:view_mode']="View";
 $lang_str['category_editor:view_mode:form']="Form";
 $lang_str['category_editor:view_mode:source']="Source";
+$lang_str['category_editor:new_rule_help']="Add rules, to define which objects should appear in this category";

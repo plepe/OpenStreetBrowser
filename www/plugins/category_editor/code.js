@@ -345,11 +345,19 @@ function category_editor(id, param, cat_win) {
       this.rules[i].editor(div);
     }
 
+    this.post_rule_list=dom_create_append(this.form_content, "div");
+    this.post_rule_list.className="editor_category_post_rule_list";
+
     var input=document.createElement("input");
     input.type="button";
     input.value=lang("category_editor:new_rule");
     input.onclick=this.new_rule.bind(this);
-    this.inputs_div.appendChild(input);
+    this.post_rule_list.appendChild(input);
+
+    var span=dom_create_append(this.post_rule_list, "span");
+    span.className="help";
+    dom_create_append_text(span, lang("category_editor:new_rule_help"));
+
   }
 
   // view_source
