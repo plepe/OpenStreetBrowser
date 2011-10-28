@@ -1,5 +1,10 @@
 div.icon_editor {
-  width: 300px;
+  width: 450px;
+}
+div.icon_editor iframe {
+  height: 50px;
+  width: 420px;
+  border: none;
 }
 div.edit_icon {
   width: 300px;

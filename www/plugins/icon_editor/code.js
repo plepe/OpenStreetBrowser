@@ -16,6 +16,14 @@ function icon_editor(icon, callback) {
     return true;
   }
 
+  this.new_icon_save=function() {
+    dom_create_append_text(this.div_summary, lang("editor:request_message", 0, lang("save"))+":");
+    this.summary=dom_create_append(this.div_summary, "input");
+    this.summary.name="summary";
+
+    this.inputs.save.onclick=this.new_icon_finish.bind(this);
+  }
+
   this.new_icon_finish=function() {
     if(!this.check()) {
       return;
@@ -49,7 +57,7 @@ function icon_editor(icon, callback) {
   if(!this.obj)
     return;
 
-  this.win=new win({ class: "icon_editor", title: lang("icon:editor") });
+  this.win=new win({ class: "icon_editor", title: lang("icon_editor:title") });
 
   var comment=dom_create_append(this.win.content, "div");
   dom_create_append_text(comment, lang("icon_editor:upload"));
@@ -58,8 +66,8 @@ function icon_editor(icon, callback) {
   this.win.content.appendChild(x);
 
   var comment=dom_create_append(this.win.content, "div");
-  dom_create_append_text(comment, lang("tags", 2));
-  
+  dom_create_append_text(comment, lang("head:tags", 2));
+
   var a=dom_create_append(comment, "a");
   a.target="_new";
   a.href="http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Icons";
@@ -74,17 +82,16 @@ function icon_editor(icon, callback) {
     this.tags=new tags(icon_tags_default);
   this.tags.editor(this.div_tags);
 
-  dom_create_append_text(this.win.content, lang("editor:request_message", 0, lang("save"))+":");
-  this.summary=dom_create_append(this.win.content, "input");
-  this.summary.name="summary";
+  this.div_summary=dom_create_append(this.win.content, "div");
 
-  var input=dom_create_append(this.win.content, "input");
-  input.type="button";
-  input.value=lang("save");
-  input.onclick=this.new_icon_finish.bind(this);
+  this.inputs={};
+  this.inputs.save=dom_create_append(this.win.content, "input");
+  this.inputs.save.type="button";
+  this.inputs.save.value=lang("save");
+  this.inputs.save.onclick=this.new_icon_save.bind(this);
 
-  var input=dom_create_append(this.win.content, "input");
-  input.type="button";
-  input.value=lang("cancel");
-  input.onclick=this.new_icon_cancel.bind(this);
+  this.inputs.cancel=dom_create_append(this.win.content, "input");
+  this.inputs.cancel.type="button";
+  this.inputs.cancel.value=lang("cancel");
+  this.inputs.cancel.onclick=this.new_icon_cancel.bind(this);
 }
