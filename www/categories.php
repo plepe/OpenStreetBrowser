@@ -14,6 +14,7 @@ include "inc/css.php";
 include "inc/plugins.php";
 include "../src/wiki_stuff.php";
 include "inc/user.php";
+include "inc/git_obj.php";
 plugins_init();
 sql_query("SET enable_seqscan='off'");
 
