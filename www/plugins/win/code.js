@@ -4,6 +4,7 @@ var win_mousemove_old;
 var win_mousepos;
 var win_currentdrag=null;
 var win_oldmouseup;
+var win_maxzindex=10000;
 
 function win_mousemove(event) {
   var win_mouseold=win_mousepos;
@@ -51,7 +52,8 @@ function win(options) {
     win_currentdrag=this;
 
     // Raise window to top
-    win_root.appendChild(this.win);
+    if(this.win.style.zIndex!=win_maxzindex)
+      this.win.style.zIndex=++win_maxzindex;
   }
 
   // mouseup
@@ -112,6 +114,8 @@ function win(options) {
   this.content.className="content";
   add_css_class(this.content, options.class);
   this.win.appendChild(this.content);
+  // Raise new window to top
+  this.win.style.zIndex=++win_maxzindex;
 
   this.id=uniqid();
   windows[this.id]=this;
