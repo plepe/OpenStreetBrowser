@@ -31,6 +31,11 @@ $plugins[]="icon";
 plugins_init("mcp");
 debug("* MCP all plugins loaded, initializing", "mcp");
 
+define("MCP_READ",   0);
+define("MCP_WRITE",  1);
+define("MCP_EXCEPT", 2);
+$streams=array(MCP_READ=>array(), MCP_WRITE=>array(), MCP_EXCEPT=>array());
+$streams_callback=array(MCP_READ=>array(), MCP_WRITE=>array(), MCP_EXCEPT=>array());
 call_hooks("mcp_start");
 
 function compile($cat_id) {
@@ -39,7 +44,8 @@ function compile($cat_id) {
   restart_renderd();
 }
 
-function mcp_process($todo) {
+function mcp_process($fifo) {
+  $todo=trim(fgets($fifo));
   $todo=explode(" ", $todo);
 
   switch($todo[0]) {
@@ -93,6 +99,46 @@ mkdir($tmp_dir);
 $mcp_next_clean_up=time()+15*60;
 debug("* MCP up and running", "mcp");
 
+// Example:
+// $p=fopen("/dev/zero", "r");
+// mcp_register_stream(MCP_READ, $p, "test");
+// Function "test" will be called everytime data is available on /dev/zero
+// Function "test" will be passed the current $stream
+function mcp_register_stream($type, $stream, $callback) {
+  global $streams;
+  global $streams_callback;
+
+  if(($type<0)||($type>2)) {
+    debug("mcp_register_stream: invalid type $type", "mcp");
+    return;
+  }
+
+  $streams[$type][]=$stream;
+  $streams_callback[$type][]=array($stream, $callback);
+}
+
+function mcp_unregister_stream($type, $stream) {
+  global $streams;
+  global $streams_callback;
+
+  if(($type<0)||($type>2)) {
+    debug("mcp_unregister_stream: invalid type $type", "mcp");
+    return;
+  }
+
+  $pos=array_search($stream, $streams[$type]);
+  if($pos===false) {
+    debug("mcp_unregister_stream: could not find stream '$stream'", "mcp");
+    return;
+  }
+
+  unset($streams[$type][$pos]);
+  unset($streams_callback[$type][$pos]);
+  debug("mcp_unregister_stream: unregistered $type:$pos", "mcp");
+}
+
+mcp_register_stream(MCP_READ, $fifo, "mcp_process");
+
 while(1) {
   call_hooks("mcp_tick", null);
 
@@ -103,15 +149,16 @@ while(1) {
       call_hooks("mcp_clean_up_master", null);
   }
 
-  $stream_read=array($fifo);
-  $stream_write=array();
-  $stream_except=array();
-  stream_select($stream_read, $stream_write, $stream_except, 10);
+  unset($_streams);
+  array_deep_copy($streams, $_streams);
+  stream_select(&$_streams[MCP_READ], &$_streams[MCP_WRITE], &$_streams[MCP_EXCEPT], 10);
 
-  foreach($stream_read as $str) {
-    if($str==$fifo) {
-      $todo=trim(fgets($fifo));
-      mcp_process($todo);
+  foreach($_streams as $type=>$type_streams) {
+    foreach($type_streams as $str) {
+      if(($pos=array_search($str, $streams[$type]))!==false) {
+        $fun=$streams_callback[$type][$pos][1];
+        $fun($str);
+      }
     }
   }
 }
