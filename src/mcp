@@ -61,6 +61,12 @@ function mcp_sig_handler($signo) {
   global $fifo_path;
 
   switch($signo) {
+    case SIGUSR1:
+      call_hooks("mcp_sigusr1");
+      break;
+    case SIGUSR2:
+      call_hooks("mcp_sigusr2");
+      break;
     case SIGTERM:
     case SIGINT:
       debug("* MCP got termination signal, stopping", "mcp");
@@ -71,6 +77,11 @@ function mcp_sig_handler($signo) {
   }
 }
 
+pcntl_signal(SIGTERM, "mcp_sig_handler");
+pcntl_signal(SIGINT,  "mcp_sig_handler");
+pcntl_signal(SIGUSR1, "mcp_sig_handler");
+pcntl_signal(SIGUSR2, "mcp_sig_handler");
+
 umask(0);
 posix_mkfifo($fifo_path, 0666);
 $fifo=fopen($fifo_path, "r+");
@@ -78,9 +89,6 @@ $fifo=fopen($fifo_path, "r+");
 $tmp_dir="$root_path/tmp/".Date("Ymd-Hi");
 print "Creating temporary directory $tmp_dir\n";
 mkdir($tmp_dir);
-
-pcntl_signal(SIGTERM, "mcp_sig_handler");
-pcntl_signal(SIGINT,  "mcp_sig_handler");
 
 $mcp_next_clean_up=time()+15*60;
 debug("* MCP up and running", "mcp");
