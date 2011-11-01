@@ -49,3 +49,19 @@ function is_dom(obj) {
   return true;
 }
 
+// gets right distance from root-node
+function dom_distance_right(obj, root) {
+  if(!root)
+    root=document.body;
+  if(obj==root)
+    return 0;
+  if(root.offsetParent==obj)
+    return 0;
+
+  var p=obj.offsetParent;
+  var ret=p.clientWidth-
+          (obj.offsetLeft+obj.offsetWidth)+
+	  dom_distance_right(p, root);
+
+  return ret;
+}
