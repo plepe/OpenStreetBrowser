@@ -3,6 +3,13 @@ body, li, td {
   font-size: 11px;
   color:#333;
 }
+div#content {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+}
 a:hover {
   cursor: pointer;
 }

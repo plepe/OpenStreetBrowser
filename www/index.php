@@ -33,6 +33,10 @@ print_add_html_headers();
 <!-- <script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script> -->
 </head>
 <body>
+<?
+call_hooks("html_start");
+?>
+<div id='content'>
 <script type="text/javascript">
 <?
 unset($my_lat);
@@ -122,7 +126,6 @@ foreach($menu_list as $entry) {
 <?
 //show_lang_select();
 ?>
-</div>
 <div class="map" id="map"></div>
 
 <div class="shadow"></div>
@@ -131,6 +134,7 @@ foreach($menu_list as $entry) {
 call_hooks("html_done", null);
 ?>
 <div class="permalink"><a href="" id="permalink" onclick="var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));"><?=lang("main:permalink")?></a></div>
+</div><!-- #content -->
 <?
 call_hooks("html_end", null);
 ?>
