@@ -20,15 +20,19 @@ function map_key_remove(id) {
 }
 
 function map_key_toggle() {
-  var map=document.getElementById("map");
+  var content=document.getElementById("content");
+  var right=dom_distance_right(content);
 
   if(!has_css_class(map_key, 'shown')) {
-    add_css_class(map, 'with_map_key');
     add_css_class(map_key, 'shown');
+    content.style.right=(right+map_key.offsetWidth)+"px";
+    map_key.style.right=(right)+"px";
+    
     map_key_check();
   }
   else {
-    del_css_class(map, 'with_map_key');
+    content.style.right=(right-map_key.offsetWidth)+"px";
+
     del_css_class(map_key, 'shown');
   }
 }
