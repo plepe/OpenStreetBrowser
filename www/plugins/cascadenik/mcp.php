@@ -82,6 +82,47 @@ function cascadenik_set_fontsets($file) {
   file_put_contents($file, $content->saveXML());
 }
 
+/* you can add additional parameters to layers by
+ * adding "/*layer* .... * /" (remove the " " between * and /)
+ * to the sql-query
+ * (no that's not nice, but cascadenik doesn't make it easy to do unexpected
+ * things)
+ */
+function cascadenik_add_layer_params($file) {
+  global $cascadenik_fontsets;
+  $font_replace=array();
+
+  print "Cascadenik:: Adding additional layer parameters\n";
+
+  $content=new DOMDocument();
+  $content->loadXML(file_get_contents($file));
+
+  // find all Layers Map and its first child
+  $layers=$content->getElementsByTagName("Layer");
+  for($i=0; $i<$layers->length; $i++) {
+    $layer=$layers->item($i);
+
+    $params=$layer->getElementsByTagName("Parameter");
+    for($j=0; $j<$params->length; $j++) {
+      $param=$params->item($j);
+
+      if($param->getAttribute("name")=="table") {
+	$sql=$param->textContent;
+
+	if(preg_match("/\/\*layer\*(.*)\*\//", $sql, $m)) {
+	  $x=new DOMDocument();
+	  $x->loadXML("<?xml version='1.0'?"."><tmp $m[1]/>");
+	  foreach($x->firstChild->attributes as $attr) {
+	    $layer->setAttribute($attr->nodeName, $attr->nodeValue);
+	  }
+	}
+      }
+    }
+  }
+
+  file_put_contents($file, $content->saveXML());
+}
+
 function cascadenik_compile($file, $path=null) {
   $file_noext=substr($file, 0, strrpos($file, "."));
   if(!$path)
@@ -94,6 +135,7 @@ function cascadenik_compile($file, $path=null) {
 
   cascadenik_set_fontsets("$file_noext.xml");
   cascadenik_style_reorder("$file_noext.xml");
+  cascadenik_add_layer_params("$file_noext.xml");
 
   rename("$file_noext.xml", "$file_noext.mapnik");
 
