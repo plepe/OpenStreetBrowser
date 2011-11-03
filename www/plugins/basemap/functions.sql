@@ -19,3 +19,25 @@ BEGIN
   return ret;
 END;
 $$ LANGUAGE plpgsql immutable;
+
+CREATE OR REPLACE FUNCTION basemap_places_get_name(text, hstore, geometry) RETURNS text AS $$
+DECLARE
+  id alias for $1;
+  tags alias for $2;
+  way alias for $3;
+BEGIN
+  return tags->'name';
+END;
+$$ LANGUAGE plpgsql immutable;
+
+CREATE OR REPLACE FUNCTION basemap_places_get_name_en(text, hstore, geometry) RETURNS text AS $$
+DECLARE
+  id alias for $1;
+  tags alias for $2;
+  way alias for $3;
+BEGIN
+  return (CASE
+	   WHEN (tags->'name:en')!=(tags->'name') THEN (tags->'name:en')
+	  END);
+END;
+$$ LANGUAGE plpgsql immutable;

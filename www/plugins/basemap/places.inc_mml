@@ -11,10 +11,8 @@
       <Parameter name="table">
       (select /* place high */
         osm_way,
-        osm_tags->'name' as "name",
-        (CASE
-	  WHEN (osm_tags->'name:en')!=(osm_tags->'name') THEN (osm_tags->'name:en')
-        END) as "name_en",
+        basemap_places_get_name(osm_id, osm_tags, osm_way) as "name",
+        basemap_places_get_name_en(osm_id, osm_tags, osm_way) as "name_en",
         %SQL_place%
       from osm_point_extract
       where osm_tags?'place'
@@ -36,8 +34,8 @@
       <Parameter name="table">
       (select /* places_db */
         osm_way,
-        osm_tags->'name' as "name",
-        osm_tags->'name:en' as "name_en",
+        basemap_places_get_name(osm_id, osm_tags, osm_way) as "name",
+        basemap_places_get_name_en(osm_id, osm_tags, osm_way) as "name_en",
         %SQL_place%
       from osm_point
       where osm_tags?'place'
