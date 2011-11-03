@@ -77,6 +77,12 @@ function cascadenik_set_fontsets($file) {
       $sym->removeAttribute("face_name");
       $sym->setAttribute("fontset_name", $font_replace[$face_name]);
     }
+
+    // if a face-name is found replace by fontset_name (mapnik >0.7.2)
+    if(($face_name=$sym->getAttribute("face-name"))&&($font_replace[$face_name])) {
+      $sym->removeAttribute("face-name");
+      $sym->setAttribute("fontset_name", $font_replace[$face_name]);
+    }
   }
 
   file_put_contents($file, $content->saveXML());
