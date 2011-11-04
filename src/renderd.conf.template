@@ -1,3 +1,6 @@
+# you can copy this file to {$data_dir}/renderd.conf.template and 
+# adapt it to your needs
+
 [renderd]
 ;socketname=/var/run/renderd/renderd.sock
 num_threads=4

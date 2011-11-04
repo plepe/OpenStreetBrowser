@@ -166,8 +166,8 @@ function contextmenu_options_show(list) {
 }
 
 function contextmenu_options_save() {
- var r=options_radio_get("contextmenu_mouse_button");
-  options_set("contextmenu_mouse_button", options_radio_get("contextmenu_mouse_button"));
+  var r=options_radio_get("contextmenu_mouse_button");
+  options_set("contextmenu_mouse_button", r);
 }
 
 register_hook("init", contextmenu_init);

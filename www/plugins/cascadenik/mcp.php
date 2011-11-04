@@ -78,9 +78,57 @@ function cascadenik_set_fontsets($file) {
       $sym->setAttribute("fontset_name", $font_replace[$face_name]);
     }
 
+    // if a face-name is found replace by fontset_name (mapnik >0.7.2)
+    if(($face_name=$sym->getAttribute("face-name"))&&($font_replace[$face_name])) {
+      $sym->removeAttribute("face-name");
+      $sym->setAttribute("fontset_name", $font_replace[$face_name]);
+    }
+
     // as cascadenik ignores text-max-char-angle-delta, we just put it to
     // any TextSymbolizer. Is there a reason why we wouldn't want that?
     $sym->setAttribute("max_char_angle_delta", 10);
+  }
+
+  file_put_contents($file, $content->saveXML());
+}
+
+/* you can add additional parameters to layers by
+ * adding "/*layer* .... * /" (remove the " " between * and /)
+ * to the sql-query
+ * (no that's not nice, but cascadenik doesn't make it easy to do unexpected
+ * things)
+ */
+function cascadenik_add_layer_params($file) {
+  global $cascadenik_fontsets;
+  $font_replace=array();
+
+  print "Cascadenik:: Adding additional layer parameters\n";
+
+  $content=new DOMDocument();
+  $content->loadXML(file_get_contents($file));
+
+  // find all Layers Map and its first child
+  $layers=$content->getElementsByTagName("Layer");
+  for($i=0; $i<$layers->length; $i++) {
+    $layer=$layers->item($i);
+
+    $params=$layer->getElementsByTagName("Parameter");
+    for($j=0; $j<$params->length; $j++) {
+      $param=$params->item($j);
+
+      if($param->getAttribute("name")=="table") {
+	$sql=$param->textContent;
+
+	if(preg_match("/\/\*layer\*(.*)\*\//", $sql, $m)) {
+	  $x=new DOMDocument();
+	  $x->loadXML("<?xml version='1.0'?"."><tmp $m[1]/>");
+	  foreach($x->firstChild->attributes as $attr) {
+	    $layer->setAttribute($attr->nodeName, $attr->nodeValue);
+	  }
+	}
+      }
+    }
+>>>>>>> version-2.0.8
   }
 
   file_put_contents($file, $content->saveXML());
@@ -98,6 +146,7 @@ function cascadenik_compile($file, $path=null) {
 
   cascadenik_set_fontsets("$file_noext.xml");
   cascadenik_style_reorder("$file_noext.xml");
+  cascadenik_add_layer_params("$file_noext.xml");
 
   rename("$file_noext.xml", "$file_noext.mapnik");
 

@@ -6,6 +6,7 @@ $route_levels=array("train", "rail", "railway", "subway", "light_rail", "ferry",
 $route_types=array("train"=>"Train", "rail"=>"Railway", "railway"=>"Railway", "subway"=>"Subway", "light_rail"=>"Light Rail", "ferry"=>"Ferry", "tram"=>"Tram", "trolley"=>"Trolley", "bus"=>"Bus", "minibus"=>"Minibus");
 
 // Local read only database
+$db=array();
 $db['name']="gis";
 $db['user']="www";
 $db['passwd']="PASSWORD";
@@ -13,11 +14,13 @@ $db['host']="localhost";
 $db['debug']=false;
 
 // Central writeable database
-$db_central['name']="gis";
-$db_central['user']="www";
-$db_central['passwd']="PASSWORD";
-$db_central['host']="localhost";
-$db_central['debug']=false;
+$db_central=&$db; // Use the same database
+# $db_central=array(); // OR use database on another server
+# $db_central['name']="gis";
+# $db_central['user']="www";
+# $db_central['passwd']="PASSWORD";
+# $db_central['host']="localhost";
+# $db_central['debug']=false;
 
 $SRID=900913;
 
@@ -157,3 +160,4 @@ $overlays_add=array(
 // icon - Icons
 // icon_chooser - Choose icons from list
 // icon_editor - Upload icons
+// postgresql_restart - Try to restart PostgreSQL after connection failure

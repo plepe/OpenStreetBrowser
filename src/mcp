@@ -31,6 +31,7 @@ function restart_renderd() {
   system("src/ap2restart");
   system("software/mod_tile/renderd");
 }
+register_hook("postgresql_restart_done", "restart_renderd");
 
 function compile($cat_id) {
   $x=new category($cat_id);
