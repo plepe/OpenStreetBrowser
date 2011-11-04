@@ -294,7 +294,7 @@ $lang_str["tag:sport=korfball"]="Korfbal";
 $lang_str["tag:sport=orienteering"]="Orientační závod";
 #$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
 $lang_str["tag:sport=paragliding"]="Paragliding";
-#$lang_str["tag:sport=pelota"]="Pelota";
+$lang_str["tag:sport=pelota"]="Pelota";
 #$lang_str["tag:sport=racquet"]="Racquet";
 $lang_str["tag:sport=rowing"]="Veslování";
 $lang_str["tag:sport=rugby"]="Rugby";

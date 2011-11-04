@@ -58,5 +58,3 @@ $lang_str["map_key_basemap:landuse"]="Utilisation du sol";
 $lang_str["map_key_basemap:buildings"]="Immeubles";
 $lang_str["map_key_basemap:barrier"]="Barrières";
 $lang_str["map_key_basemap:housenumbers"]="No. d'immeuble";
-// The following $lang_str were not defined in the English language file and might be deprecated or wrong:
-#$lang_str["map_key_basemap:landuse=recreation_ground"]="Aires de Jeux";

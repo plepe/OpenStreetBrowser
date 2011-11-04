@@ -66,7 +66,8 @@ $lang_str["routing_distance"]="Distance";
 $lang_str["routing_time"]="Temps";
 $lang_str["routing_disclaimer"]="Routage: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
-$lang_str["list_info"]="Choose a category to browse map content or click on an object on the map for details";
+// lang_str["list_info"]="Choose a category to browse map content or click on an object on the map for details";
+$lang_str["list_info"]="Cliquez sur un objet pour voir les métadonnées ou choisissez une catégorie pour voir la liste d'objets sur la carte";
 $lang_str["list_leisure_sport_tourism"]="Loisir, Sport et Tourisme";
 
 // Mapkey
@@ -83,8 +84,8 @@ $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'><
 
 $lang_str["options:autozoom"]="Réglage Autozoom";
 $lang_str["help:autozoom"]="Lors de la sélection d'un objet, la fenêtre d'affichage focus sur cet objet. Le niveau de zoom peut aussi être modifié. Avec cette option vous pouvez sélectionner à partir de different modes.";
-$lang_str["options:autozoom:pan"]="Bascule vers l'objet courant (+ doux)";
-$lang_str["options:autozoom:move"]="Se déplace vers l'objet courant (+ rapide)";
+$lang_str["options:autozoom:pan"]="Basculer vers l'objet courant (+ doux)";
+$lang_str["options:autozoom:move"]="Se déplacer vers l'objet courant (+ rapide)";
 $lang_str["options:autozoom:stay"]="Ne jamais modifier la fenêtre automatiquement";
 
 $lang_str["options:language_support"]="Langue supportée";
@@ -135,10 +136,10 @@ $lang_str["basemap:cyclemap"]="CycleMap";
 $lang_str["lang:de"]="Allemand";
 $lang_str["lang:bg"]="Bulgare";
 $lang_str["lang:cs"]="Tchèque";
-$lang_str["lang:en"]="Englais";
+$lang_str["lang:en"]="Anglais";
 $lang_str["lang:es"]="Espagnol";
 $lang_str["lang:it"]="Italien";
-$lang_str["lang:fr"]="Frençais";
+$lang_str["lang:fr"]="Français";
 $lang_str["lang:uk"]="Ukrainien";
 $lang_str["lang:ru"]="Russe";
 $lang_str["lang:ja"]="Japonais";
