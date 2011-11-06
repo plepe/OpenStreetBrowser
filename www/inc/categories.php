@@ -808,6 +808,7 @@ function category_delete($category_id) {
 //    branch    the branch of a conflicting merge
 //    version   the version of the file last loaded
 //    msg       message describing changes
+//    lock	should the category be locked for editing (yes/no)
 //
 // return:
 //   array(
@@ -841,6 +842,8 @@ function category_save($request_id, $content, $param=array()) {
   $version_tags->set("user", $current_user->username);
   $version_tags->set("date", Date("c"));
   $version_tags->set("msg", $param['msg']);
+  if($param['lock']=="yes")
+    $version_tags->set("lock", "yes");
 
   // and old version
   $old_version=$root->getAttribute("version");

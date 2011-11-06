@@ -161,6 +161,14 @@ function category_editor(id, param, cat_win) {
     var div=dom_create_append(this.msg_div, "div");
     dom_create_append_text(div, lang("editor:request_message", 0, lang("save")));
 
+    if(current_user.tags.get("admin")=="yes") {
+      this.inputs.lock=dom_create_append(this.msg_div, "input");
+      this.inputs.lock.type="checkbox";
+      this.inputs.lock.name="lock";
+      dom_create_append_text(this.msg_div, lang("category_editor:lock"));
+      dom_create_append(this.msg_div, "br");
+    }
+
     this.inputs.msg=dom_create_append(this.msg_div, "input");
     this.inputs.msg.name="msg";
     this.inputs.msg.focus();
@@ -175,7 +183,16 @@ function category_editor(id, param, cat_win) {
     ret="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     ret+=this.export_xml();
 
-    ajax_post("categories.php", { todo: 'save', id: this.id, msg: this.inputs.msg.value }, ret, this.save_callback.bind(this));
+    var param={
+      todo: 'save',
+      id: this.id,
+      msg: this.inputs.msg.value
+    };
+
+    if(this.inputs.lock)
+      param.lock=this.inputs.lock.checked?"yes":"no";
+
+    ajax_post("categories.php", param, ret, this.save_callback.bind(this));
   }
 
   // save_callback
