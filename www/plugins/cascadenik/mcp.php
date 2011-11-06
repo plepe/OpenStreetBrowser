@@ -128,7 +128,6 @@ function cascadenik_add_layer_params($file) {
 	}
       }
     }
->>>>>>> version-2.0.8
   }
 
   file_put_contents($file, $content->saveXML());
