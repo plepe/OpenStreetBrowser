@@ -870,6 +870,17 @@ function category_save($request_id, $content, $param=array()) {
     $id=$new_id;
   }
 
+  if($old_version&&($id==$tags->get("id"))) {
+    $res=sql_query("select * from category where version=".postgre_escape($old_version), $db_central);
+    $old_cat=pg_fetch_assoc($res);
+    $old_version_tags=parse_hstore($old_cat['version_tags']);
+    if(($old_version_tags['lock'])&&($current_user->tags->get("admin")!="yes")) {
+      // category is locked and we are not admin
+      $tags->set("id:message", "Category '$id' is locked.");
+      $id="cat_{$version}";
+    }
+  }
+
   // add id to tags
   $tags->set("id", $id);
 
