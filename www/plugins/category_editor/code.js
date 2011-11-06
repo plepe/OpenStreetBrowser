@@ -26,6 +26,11 @@ function category_editor(id, param, cat_win) {
       warning.className="warning";
       dom_create_append_text(warning, lang("category_editor:not_newest"));
     }
+    if(this.lock&&(current_user.tags.get("admin")!="yes")) {
+      var warning=dom_create_append(this.form, "div");
+      warning.className="warning";
+      dom_create_append_text(warning, lang("category_editor:locked"));
+    }
 
     this.msg_div=dom_create_append(this.form, "div");
     this.msg_div.className="category_editor_msg";
@@ -165,6 +170,8 @@ function category_editor(id, param, cat_win) {
       this.inputs.lock=dom_create_append(this.msg_div, "input");
       this.inputs.lock.type="checkbox";
       this.inputs.lock.name="lock";
+      if(this.lock)
+	this.inputs.lock.checked=true;
       dom_create_append_text(this.msg_div, lang("category_editor:lock"));
       dom_create_append(this.msg_div, "br");
     }
@@ -315,6 +322,7 @@ function category_editor(id, param, cat_win) {
 
     this.version=cat_data.getAttribute("version");
     this.newest_version=cat_data.getAttribute("newest_version");
+    this.lock=cat_data.getAttribute("lock");
 
     var cur=cat_data.firstChild;
     while(cur) {

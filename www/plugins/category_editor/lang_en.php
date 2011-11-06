@@ -15,3 +15,4 @@ $lang_str['category_editor:view_mode:source']="Source";
 $lang_str['category_editor:new_rule_help']="Add rules, to define which objects should appear in this category";
 
 $lang_str['category_editor:lock']="Lock category for editing";
+$lang_str['category_editor:locked']="This category is locked for editing. If you save, a clone with a new ID will be created.";
