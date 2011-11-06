@@ -842,7 +842,7 @@ function category_save($request_id, $content, $param=array()) {
   $version_tags->set("user", $current_user->username);
   $version_tags->set("date", Date("c"));
   $version_tags->set("msg", $param['msg']);
-  if($param['lock']=="yes")
+  if(($current_user->tags->get("admin")=="yes")&&($param['lock']=="yes"))
     $version_tags->set("lock", "yes");
 
   // and old version
@@ -1010,6 +1010,11 @@ function category_load($id, $param=array()) {
   // process Tags
   $tags=new tags(parse_hstore($elem['tags']));
   $tags->writeDOM($root, $dom);
+
+  // check if there's important stuff in version tags
+  $version_tags=parse_hstore($elem['version_tags']);
+  if($version_tags['lock']=="yes")
+    $root->setAttribute("lock", "yes");
 
   // Now process the rules
   $res=sql_query("select * from category_rule where version=$pg_version", $db);
