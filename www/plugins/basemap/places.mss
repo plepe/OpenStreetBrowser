@@ -87,7 +87,6 @@ alias place=town_large place=town|population>=30000
   text-halo-radius: 1;
   text-dy: 8;
 }
-.places_db[place=hamlet][zoom>=11][zoom<13] name,
 .places_db[place=locality][zoom>=15] name
 {
   text-size: 8;
@@ -97,7 +96,6 @@ alias place=town_large place=town|population>=30000
   text-avoid-edges: true;
   text-halo-radius: 1;
 }
-.places_db[place=hamlet][zoom>=11][zoom<13] name_en,
 .places_db[place=locality][zoom>=15] name_en
 {
   text-size: 6;
