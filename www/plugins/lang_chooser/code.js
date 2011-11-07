@@ -64,5 +64,52 @@ function lang_chooser_entry(list) {
   list.push([ -1, parts ]);
 }
 
+// lang_chooser_win::constructor
+function lang_chooser_win() {
+  this.win=new win({ class: 'options_win', title: lang('lang_chooser:name') });
+
+  var ret=document.createElement("form");
+  ret.onsubmit=this.save.bind(this); //"javascript:save_options()";
+  ret.id="options_form";
+
+  list=[];
+  lang_chooser_entry(list);
+
+  var parts=dom_create_append(ret, "div");
+  parts.className="options_parts";
+  parts.appendChild(list[0][1]);
+
+  var d=dom_create_append(ret, "div");
+  d.className="options_interact";
+
+  var i=dom_create_append(d, "input");
+  i.type="submit";
+  i.value=lang("save");
+
+  var i=dom_create_append(d, "input");
+  i.type="button";
+  i.onclick=this.close.bind(this);
+  i.value=lang("cancel");
+
+  this.win.content.appendChild(ret);
+}
+
+// lang_chooser_win::close
+lang_chooser_win.prototype.close=function() {
+  this.win.close();
+  delete(this.win);
+}
+
+// lang_chooser_win::save
+lang_chooser_win.prototype.save=function() {
+  lang_chooser_save();
+  this.close();
+  return false;
+}
+
+function lang_chooser_show() {
+  new lang_chooser_win();
+}
+
 register_hook("options_show", lang_chooser_entry);
 register_hook("options_save", lang_chooser_save);
