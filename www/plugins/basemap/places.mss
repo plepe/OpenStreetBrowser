@@ -64,7 +64,8 @@ alias place=town_large place=town|population>=30000
 }
 .places_high[place=continent][zoom=1] name,
 .places_db[place=suburb][zoom>=13][zoom<15] name,
-.places_db[place=hamlet][zoom>=15] name
+.places_db[place=hamlet][zoom>=15] name,
+.places_db[place=isolated_dwelling][zoom>=17] name
 {
   text-size: 10;
   text-placement: point;
@@ -75,7 +76,8 @@ alias place=town_large place=town|population>=30000
 }
 .places_high[place=continent][zoom=1] name_en,
 .places_db[place=suburb][zoom>=13][zoom<15] name_en,
-.places_db[place=hamlet][zoom>=15] name_en
+.places_db[place=hamlet][zoom>=15] name_en,
+.places_db[place=isolated_dwelling][zoom>=17] name_en
 {
   text-size: 8;
   text-placement: point;
@@ -195,7 +197,8 @@ alias place=town_large place=town|population>=30000
 .places_high_point[place=town_large][zoom>=8][zoom<10] ,
 .places_high_point[place=town][zoom>=9][zoom<10] ,
 .places_db_point[place=village][zoom>=11][zoom<13] ,
-.places_db_point[place=hamlet][zoom>=13][zoom<15] 
+.places_db_point[place=hamlet][zoom>=13][zoom<15],
+.places_db_point[place=isolated_dwelling][zoom>=15][zoom<17]
 {
   point-file: url('img/city5.png');
 }
@@ -205,7 +208,8 @@ alias place=town_large place=town|population>=30000
 .places_high[place=town_large][zoom>=8][zoom<10] name,
 .places_high[place=town][zoom>=9][zoom<10] name,
 .places_db[place=village][zoom>=11][zoom<13] name,
-.places_db[place=hamlet][zoom>=13][zoom<15] name
+.places_db[place=hamlet][zoom>=13][zoom<15] name,
+.places_db[place=isolated_dwelling][zoom>=15][zoom<17] name
 {
   text-dy: 4;
   text-size: 8;
@@ -221,7 +225,8 @@ alias place=town_large place=town|population>=30000
 .places_high[place=town_large][zoom>=8][zoom<10] name_en,
 .places_high[place=town][zoom>=9][zoom<10] name_en,
 .places_db[place=village][zoom>=11][zoom<13] name_en,
-.places_db[place=hamlet][zoom>=13][zoom<15] name_en
+.places_db[place=hamlet][zoom>=13][zoom<15] name_en,
+.places_db[place=isolated_dwelling][zoom>=15][zoom<17] name_en
 {
   text-size: 6;
   text-placement: point;

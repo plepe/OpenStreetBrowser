@@ -223,6 +223,7 @@ $query['places_sort']=<<<EOT
        WHEN osm_tags->'place'='suburb'    THEN 9
        WHEN osm_tags->'place'='locality'  THEN 10
        WHEN osm_tags->'place'='islet'     THEN 11
+       WHEN osm_tags->'place'='isolated_dwelling'     THEN 12
        ELSE                          20
      END) ASC,
      (CASE
