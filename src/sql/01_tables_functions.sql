@@ -17,6 +17,13 @@ BEGIN
     return ret;
   end if;
 
+  -- maybe already finished polygon? -> get only boundary
+  ret:=(select ST_Boundary(osm_way) from osm_polygon where osm_id='way_'||id);
+  if ret is not null then
+    -- raise notice 'way_get_geom(%) - osm_polygon hit', id;
+    return ret;
+  end if;
+
   -- raise notice 'way_get_geom(%)', id;
 
 --  raise notice 'count: %', (select count(node_id) from (select * from way_nodes join nodes on way_nodes.node_id=nodes.id where way_nodes.way_id=id order by sequence_id) c group by way_id);
