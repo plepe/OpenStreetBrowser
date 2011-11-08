@@ -277,6 +277,8 @@ DECLARE
   id alias for $1;
   geom geometry;
   tags hstore;
+  outer_tags hstore;
+  outer_equal boolean;
   tmp hstore;
   outer_members bigint[];
   members record;
@@ -308,19 +310,28 @@ BEGIN
     return false;
   end if;
 
-  -- if there's only one outer polygon, check if multipolygon doesn't have
-  -- (relevant) tags. Then we can import tags and delete outer way from
-  -- osm_polygon
-  if(array_upper(outer_members, 1)=1) then
-    -- delete not relevant tags ('created_by' has already been removed)
-    tmp:=delete(tags, Array['type', 'source']);
-
-    -- in case of undefined polygon merge tags and remove outer polygon
-    if array_upper(akeys(tmp), 1) is null then
-      tags:=tags_merge(tags, way_assemble_tags(outer_members[1]));
-      delete from osm_polygon where osm_id='way_'||(outer_members[1]);
+  -- check if all outer polygons are equal
+  outer_equal=true;
+  outer_tags=way_assemble_tags(outer_members[1]);
+  for i in 2..array_upper(outer_members, 1) loop
+    if way_assemble_tags(outer_members[i])!=outer_tags then
+      outer_equal=false;
     end if;
+  end loop;
 
+  -- if all outer polygons have equal tags (or only one outer polygon),
+  -- check if multipolygon doesn't have (relevant) tags. Then we can import
+  -- tags and delete outer way(s) from osm_polygon
+
+  -- delete not relevant tags ('created_by' has already been removed)
+  tmp:=delete(tags, Array['type', 'source']);
+
+  -- in case of undefined polygon merge tags and remove outer polygon
+  if array_upper(akeys(tmp), 1) is null then
+    tags:=tags_merge(tags, way_assemble_tags(outer_members[1]));
+    for i in 1..array_upper(outer_members, 1) loop
+      delete from osm_polygon where osm_id='way_'||(outer_members[i]);
+    end loop;
   end if;
 
   -- if no tags (beside 'type'), return
