@@ -307,7 +307,7 @@ BEGIN
   -- multipolygon has no relevant tags
   if array_upper(akeys(tmp), 1) is null then
     -- ... if outer polygons are not equal ignore multipolygons
-    if !outer_equal then
+    if not outer_equal then
       return false;
     end if;
     
