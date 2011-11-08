@@ -285,12 +285,22 @@ BEGIN
   -- get list of outer members
   outer_members:=(select to_intarray(member_id) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id);
 
+  -- no outer members? use all members without role as outer members
+  if array_upper(outer_members, 1) is null then
+    outer_members:=(select to_intarray(member_id) from relation_members where relation_id=id and member_type='W' and member_role='' group by relation_id);
+  end if;
+
+  -- still no outer members? -> ignore
+  if array_upper(outer_members, 1) is null then
+    return false;
+  end if;
+
   -- tags
   tags:=rel_assemble_tags(id);
 
   -- generate multipolygon geometry
   geom:=build_multipolygon(
-    (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id),
+    (select to_array(way_get_geom(outer_members[i])) from generate_series(1, array_upper(outer_members, 1)) i),
     (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='inner' group by relation_id));
 
   -- of geometry is not valid, then return false
