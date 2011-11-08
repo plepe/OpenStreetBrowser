@@ -333,8 +333,14 @@ BEGIN
   -- delete not relevant tags ('created_by' has already been removed)
   tmp:=delete(tags, Array['type', 'source']);
 
-  -- in case of undefined polygon merge tags and remove outer polygon
+  -- multipolygon has no relevant tags
   if array_upper(akeys(tmp), 1) is null then
+    -- ... if outer polygons are not equal ignore multipolygons
+    if !outer_equal then
+      return false;
+    end if;
+    
+    -- else use tags from outer polygon(s) and delete from osm_polygon
     tags:=tags_merge(tags, way_assemble_tags(outer_members[1]));
     for i in 1..array_upper(outer_members, 1) loop
       delete from osm_polygon where osm_id='way_'||(outer_members[i]);
