@@ -1,0 +1,6 @@
+li.list-image {
+  list-style-type: none;
+  margin-left: -20px;
+  padding-left: 20px;
+  background-repeat: no-repeat;
+}
