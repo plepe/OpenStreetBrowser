@@ -100,7 +100,13 @@ begin
   for i in 1..ST_NumGeometries(inner_ways) loop
     next:=ST_GeometryN(inner_ways, i);
     if ST_IsValid(next) then
-      outer_ways:=ST_Difference(outer_ways, next);
+      begin
+	outer_ways:=ST_Difference(outer_ways, next);
+      exception 
+        when others then
+	  raise notice 'multipolygon got an error when substracting inner polygons (inner %)', i;
+	  return null;
+      end;
     end if;
   end loop;
 
