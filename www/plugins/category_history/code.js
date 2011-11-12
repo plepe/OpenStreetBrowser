@@ -56,7 +56,7 @@ function category_history(category, cat_win) {
 
   // constructor
   this.category=category;
-  this.win=new tab({ class: "category_history", title: lang("category_history:name", 1) });
+  this.win=new tab({ class: "category_history", title: lang("category_history:name", 1), weight: -2 });
   this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
   this.content_div=this.win.content;
   cat_win.tab_manager.register_tab(this.win);

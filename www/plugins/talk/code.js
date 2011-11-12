@@ -213,7 +213,7 @@ function talk_show(param) {
 
 // returns a tab with a talk page
 function talk_tab(param) {
-  var _tab=new tab({ class: "talk", title: "Talk" });
+  var _tab=new tab({ class: "talk", title: "Talk", weight: -4 });
   var t=new talk(param);
   _tab.content.appendChild(t.div);
   _tab.onclose=t.remove.bind(t);

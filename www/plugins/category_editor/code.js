@@ -424,7 +424,7 @@ function category_editor(id, param, cat_win) {
 
   this.param=param;
 
-  this.win=new tab({ class: "category_editor", title: lang("category_editor:editor", 1) });
+  this.win=new tab({ class: "category_editor", title: lang("category_editor:editor", 1), weight: -2 });
   this.win.content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading");
   cat_win.tab_manager.register_tab(this.win);
 
