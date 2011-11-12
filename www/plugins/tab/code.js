@@ -53,6 +53,8 @@ function tab_manager(div) {
 
     if(!this.active_tab)
       this.activate(tab);
+
+    this.show();
   }
 
   // unregister_tab
@@ -85,6 +87,10 @@ function tab_manager(div) {
     for(var i=0; i<list.length; i++) {
       this.header.appendChild(list[i].header);
     }
+
+    // activate first tab
+    if(list.length>0)
+      this.activate(list[0]);
   }
 
   // activate
