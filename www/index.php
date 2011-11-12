@@ -1,4 +1,8 @@
 <?
+/**
+ * @file index.php
+ * @brief The main file which is called on load and outputs the application.
+ */
 Header("content-type: text/html; charset=UTF-8");
 include("code.php");
 

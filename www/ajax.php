@@ -1,4 +1,8 @@
 <?
+/**
+ * @file ajax.php
+ * @brief Most ajax-requests call this file, it calls the specified function.
+ */
 session_start();
 $design_hidden=1;
 //include "conf.php";
