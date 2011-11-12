@@ -11,7 +11,15 @@ if($_SERVER['QUERY_STRING']!="") {
 }
 
 if(!$version) {
-	$version="dev";
+  $version="dev";
+}
+
+if(!isset($version_string)) {
+  exec("git rev-parse --short HEAD", $version_string, $status);
+  if($status==0)
+    $version_string="?{$version_string[0]}";
+  else
+    $version_string="";
 }
 
 ?>

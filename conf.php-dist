@@ -1,5 +1,9 @@
 <?
+// The version information which will be shown on the homepage. If you don't set it it will be set to "dev"
 $version="2.0"
+
+// The $version_string will be added to included files (css, js) to force loading of correct version. If you don't set it (default) it will be generated from the current git commit.
+# $version_string="xxx"; 
 
 $importance_levels=array("international"=>0, "national"=>0, "region"=>7, "urban"=>12, "suburban"=>13, "local"=>13);
 $route_levels=array("train", "rail", "railway", "subway", "light_rail", "ferry", "tram", "trolley", "bus", "minibus");
