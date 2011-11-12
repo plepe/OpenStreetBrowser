@@ -52,6 +52,7 @@ function plugins_html_head($plugin) {
   global $plugins_list;
   global $plugins_include_files;
   global $plugins;
+  global $version_string;
   $plugins_script="";
   $str="";
 
@@ -75,9 +76,9 @@ function plugins_html_head($plugin) {
     if(isset($plugins_include_files[$plugin]))
       foreach($plugins_include_files[$plugin] as $file) {
 	if(preg_match("/\.js$/", $file))
-	  $str.="<script type='text/javascript' src='plugins/$plugin/$file'></script>\n";
+	  $str.="<script type='text/javascript' src='plugins/$plugin/$file{$version_string}'></script>\n";
 	if(preg_match("/\.css$/", $file))
-	  $str.="<link rel='stylesheet' type='text/css' href=\"plugins/$plugin/$file\">\n";
+	  $str.="<link rel='stylesheet' type='text/css' href=\"plugins/$plugin/$file{$version_string}\">\n";
       }
   }
 

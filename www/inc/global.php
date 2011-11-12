@@ -39,10 +39,10 @@ while($r=readdir($dir)) {
       break;
     case "js":
       if(!in_array($r, array("hooks.js", "lang.js")))
-	add_html_header("<script type='text/javascript' src='inc/$r'></script>");
+	add_html_header("<script type='text/javascript' src='inc/$r{$version_string}'></script>");
       break;
     case "css":
-      add_html_header("<link rel='stylesheet' type='text/css' href=\"inc/$r\">");
+      add_html_header("<link rel='stylesheet' type='text/css' href=\"inc/$r{$version_string}\">");
   }
 }
 closedir($dir);

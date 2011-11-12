@@ -26,18 +26,18 @@ if(!isset($version_string)) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>OpenStreetBrowser</title>
-<script src="OpenLayers/OpenLayers.js"></script>
-<link rel="stylesheet" type="text/css" href="index.css" />
+<script src="OpenLayers/OpenLayers.js<?=$version_string?>"></script>
+<link rel="stylesheet" type="text/css" href="index.css<?=$version_string?>" />
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <link rel="search" type="application/opensearchdescription+xml" title="OpenStreetBrowser" href="osb_search.xml" />
-<script type="text/javascript" src="inc/hooks.js"></script>
+<script type="text/javascript" src="inc/hooks.js<?=$version_string?>"></script>
 <?
 include "inc/global.php";
 call_hooks("init", $dummy);
 print_add_html_headers();
 ?>
-<script type="text/javascript" src="index.js"></script>
-<script type="text/javascript" src="ajax.js"></script>
+<script type="text/javascript" src="index.js<?=$version_string?>"></script>
+<script type="text/javascript" src="ajax.js<?=$version_string?>"></script>
 <!-- <script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script> -->
 </head>
 <body>
