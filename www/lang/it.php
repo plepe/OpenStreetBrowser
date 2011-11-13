@@ -1,38 +1,37 @@
 <?
-// All untranslated strings have a # in front. When you translate a string
-// please remove this hash.
+// In this editor you can translate all strings. In the third column you can compare the strings to another language (set it in the select box on the bottom of the window). Please note that changes will not appear right away, they need to be imported by a developer.
+// Every language string can have a singular and plural variant by separating them by ";", e.g. "Restaurant;Restaurants". The first string is the singular form, the second the plural form.  Optionally you can define the Gender (F, M, N) for the word by prepending one of those characters, e.g. "N;Büro;Büros" (German for "office").
+// When translating a language variant (e.g. 'British English', code 'en-gb') please translate only strings which are different from the base language.
+$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
 
-//  Every language string looks like this:
-//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
-//  the first entry is the translation of the language string in Singular,
-//  the second the Plural form.
-//
-//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
-//  German translation for office:
-//  $lang_str["office"]=array(N, "Büro", "Büros");
-//
-//  If a Singular/Plural form is not
-//  suitable/necessary you can ignore the array, e.g.
-//  $lang_str["help"]="Help";
 $lang_str["lang:current"]="Italiano"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
 // General
-$lang_str["general_info"]="General Information";
-$lang_str["yes"]="yes";
+$lang_str["general_info"]="Informazioni generali";
+$lang_str["yes"]="si";
 $lang_str["no"]="no";
-#$lang_str["ok"]="Ok";
-#$lang_str["save"]="Save";
-#$lang_str["cancel"]="Cancel";
-#$lang_str["longitude"]=array("Longitude", "Longitudes");
-#$lang_str["latitude"]=array("Latitude", "Latitudes");
-$lang_str["noname"]="(noname)";
-$lang_str["info_back"]="back to overview";
+$lang_str["ok"]="Ok";
+$lang_str["save"]="Salva";
+$lang_str["saved"]="Salvato"; // for dialog boxes confirming saving
+$lang_str["cancel"]="Annulla";
+$lang_str["show"]="Mostra";
+$lang_str["edit"]="Modifica";
+$lang_str["delete"]="Elimina";
+#$lang_str["history"]="History";
+$lang_str["choose"]="Scegli";
+$lang_str["help"]="Aiuto";
+$lang_str["longitude"]=array("Longitudine", "Longitudini");
+$lang_str["latitude"]=array("Latitudine", "Latitudini");
+$lang_str["noname"]="(senza nome)";
+$lang_str["info_back"]="T";
 $lang_str["info_zoom"]="zoom";
 #$lang_str["nothing_found"]="nothing found";
 $lang_str["loading"]="loading";
 #$lang_str["more"]="more";
+#$lang_str["source"]="Source";
 #$lang_str["unnamed"]="unnamed";
 $lang_str["zoom"]="Zoom level";
+#$lang_str["no_message"]=array("no message", "no messages");
 
 // Headings
 $lang_str["head:general_info"]="General Information";
@@ -93,6 +92,7 @@ $lang_str["help:language_support"]="Qui puoi scegliere le tue lingue preferite. 
 $lang_str["options:ui_lang"]="Lingua interfaccia";
 $lang_str["options:data_lang"]="Lingua dati";
 $lang_str["lang:"]="Lingua del tuo browser";
+#$lang_str["lang:auto"]="Same as interface language";
 
 #$lang_str["overlay:data"]="Data";
 #$lang_str["overlay:draggable"]="Markers";
@@ -113,19 +113,23 @@ $lang_str["lang:"]="Lingua del tuo browser";
 #$lang_str["user:logged_in_as"]="Logged in as ";
 #$lang_str["user:logout"]="Logout";
 
+#$lang_str["attention"]="Attention: ";
 #$lang_str["error"]="An error occured: ";
 #$lang_str["error:not_logged_in"]="you are not logged in";
 
+#$lang_str["category"]=array("Category", "Categories");
 #$lang_str["more_categories"]="More categories";
 #$lang_str["category:status"]="Status";
 #$lang_str["category:data_status"]="Status";
 #$lang_str["category:old_version"]="A new version of this category is being prepared.";
 #$lang_str["category:not_compiled"]="New category is being prepared.";
 
+#$lang_str["category:new_rule"]="New Rule";
 #$lang_str["category_rule_tag:match"]="Match";
 #$lang_str["category_rule_tag:description"]="Description";
 #$lang_str["category_chooser:choose"]="Choose a category";
 #$lang_str["category_chooser:new"]="New category";
+#$lang_str["category:sub_category"]=array("Sub-category", "Sub-categories");
 
 #$lang_str["basemap:osb"]="OpenStreetBrowser";
 #$lang_str["basemap:mapnik"]="Standard (Mapnik)";
