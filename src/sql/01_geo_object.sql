@@ -29,6 +29,10 @@ create type geo_object as (
   way	geometry
 );
 
+CREATE OR REPLACE FUNCTION geo_object(in id text, in tags hstore, in way geometry, out ob geo_object) AS $$
+  select cast(row($1, $2, $3) as geo_object)
+$$ LANGUAGE sql immutable;
+
 CREATE OR REPLACE FUNCTION geo_object_id(geo_object) RETURNS text AS $$
 DECLARE
 BEGIN
