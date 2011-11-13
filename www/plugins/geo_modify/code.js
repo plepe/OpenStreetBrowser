@@ -11,8 +11,9 @@ function geo_modify_info_hide() {
 function geo_modify_info_show(info, ob) {
   // call ajax-function
   var param={};
-  param.fun="buffer";
+  param.fun="grid";
   param.id=ob.id;
+  param.zoom=map.zoom;
   param.param={ radius: -100 };
 
   ajax("geo_modify", param, geo_modify_info_show_callback);
