@@ -1,21 +1,18 @@
-CREATE OR REPLACE FUNCTION geo_modify_buffer(geo_object, hstore, hstore) RETURNS geo_object AS $$
+CREATE OR REPLACE FUNCTION geo_modify_buffer(in geo_object, in param hstore, in context hstore, out ob geo_object, out geo geometry) AS $$
 DECLARE
-  ob geo_object;
   param alias for $2;
   context alias for $3;
 BEGIN
   ob:=$1;
 
-  ob.way=ST_Buffer(ob.way, parse_number(param->'radius'));
-
-  return ob;
+  geo:=ST_Buffer(ob.way, parse_number(param->'radius'));
+  ob.way:=geo;
 END;
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION geo_modify_get_center(geo_object, hstore, hstore) RETURNS geo_object AS $$
+-- thanks to http://proceedings.esri.com/library/userconf/proc01/professional/papers/pap388/p388.htm (chapter 3)
+CREATE OR REPLACE FUNCTION geo_modify_get_center(in geo_object, in param hstore, in context hstore, out ob geo_object, out geo geometry) AS $$
 DECLARE
-  ob geo_object;
-  geo geometry;
   param alias for $2;
   context alias for $3;
   radius float:=0;
@@ -61,14 +58,12 @@ BEGIN
   end if;
 
   ob.way=ST_Centroid(ob.way);
-
-  return ob;
+  geo=ob.way;
 END;
 $$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION geo_modify_grid(geo_object, hstore, hstore) RETURNS geo_object AS $$
+CREATE OR REPLACE FUNCTION geo_modify_grid(in geo_object, in param hstore, in context hstore, out ob geo_object, out geo geometry) AS $$
 DECLARE
-  ob geo_object;
   geo geometry;
   param alias for $2;
   grid_size int;
@@ -92,8 +87,6 @@ BEGIN
       ) points
     where ST_Intersects(poi, ob.way));
 
-  ob.way:=geo; -- ST_Intersection(geo, ST_SnapToGrid(ob.way, 1));
-
-  return ob;
+  ob.way:=geo;
 END;
 $$ language 'plpgsql';

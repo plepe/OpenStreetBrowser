@@ -18,7 +18,7 @@ function ajax_geo_modify($param) {
   );
   $context=array_to_hstore($context);
 
-  $res=sql_query("select geo_object_id(ob) as id, geo_object_tags(ob) as tags, astext(geo_object_way(ob)) as way from (select $fun(cast(row(osm_id, osm_tags, osm_way) as geo_object), $sql_param, $context) as ob from osm_all where osm_id=$id offset 0) x");
+  $res=sql_query("select (x.ob).id as id, (x.ob).tags as tags, astext((x.ob).way) as way from $fun((select geo_object(osm_id, osm_tags, osm_way) from osm_all where osm_id=$id), $sql_param, $context) x");
   $elem=pg_fetch_assoc($res);
 
   $elem['tags']=parse_hstore($elem['tags']);
