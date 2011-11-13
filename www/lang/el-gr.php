@@ -67,7 +67,7 @@ $lang_str["routing_time"]="Χρόνος";
 $lang_str["routing_disclaimer"]="Δρομολόγηση: (c) από <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
 $lang_str["list_info"]="Επέλεξε μια κατηγορία για εμφάνιση περιεχομένων του χάρτη ή κλικ σε ένα αντικείμενο στο χάρτη για λεπτομέρειες";
-#$lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
+$lang_str["list_leisure_sport_tourism"]="Αναψυχή, Άθληση και Τουρισμός";
 
 // Mapkey
 
