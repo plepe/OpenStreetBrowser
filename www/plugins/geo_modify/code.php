@@ -1,6 +1,6 @@
 <?
 global $geo_modify_funs;
-$geo_modify_funs=array("buffer");
+$geo_modify_funs=array("buffer", "get_center");
 
 function ajax_geo_modify($param) {
   global $geo_modify_funs;
