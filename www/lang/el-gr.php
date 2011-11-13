@@ -43,30 +43,30 @@ $lang_str["head:address"]="Διεύθυνση";
 $lang_str["head:services"]="Υπηρεσίες";
 $lang_str["head:culture"]="Πολιτισμός";
 #$lang_str["head:graves"]="Important Graves";
-#$lang_str["head:routing"]="Routing";
-#$lang_str["head:search"]="Search";
-#$lang_str["head:actions"]=array("Action", "Actions");
-#$lang_str["head:location"]="Location";
-#$lang_str["head:tags"]=array("Tag", "Tags");
-#$lang_str["head:whats_here"]="What's here?";
+$lang_str["head:routing"]="Δρομολόγηση";
+$lang_str["head:search"]="Αναζήτηση";
+$lang_str["head:actions"]=array("Ενέργεια", "Ενέργειες");
+$lang_str["head:location"]="Τοποθεσία";
+$lang_str["head:tags"]=array("Ετικέτα", "Ετικέτες");
+$lang_str["head:whats_here"]=array("Τι είναι εδώ", "");
 
-#$lang_str["action_browse"]="browse in OSM";
-#$lang_str["action_edit"]="edit in OSM";
+$lang_str["action_browse"]="Εμφάνιση στο OSM";
+$lang_str["action_edit"]="Επεξεργασία στο OSM";
 
-#$lang_str["geo_click_pos"]="Click on your position on the map";
-#$lang_str["geo_set_pos"]="Set my position";
-#$lang_str["geo_change_pos"]="Change my position";
+$lang_str["geo_click_pos"]="Κλικ στη θέση σου στο χάρτη";
+$lang_str["geo_set_pos"]="Καθορισμός της θέσης μου";
+$lang_str["geo_change_pos"]="Αλλαγή της θέσης μου";
 
-#$lang_str["routing_type_car"]="Car";
-#$lang_str["routing_type_car_shortest"]="Car (Shortest)";
-#$lang_str["routing_type_bicycle"]="Bicycle";
-#$lang_str["routing_type_foot"]="Foot";
-#$lang_str["routing_type"]="Route type";
-#$lang_str["routing_distance"]="Distance";
-#$lang_str["routing_time"]="Time";
-#$lang_str["routing_disclaimer"]="Routing: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
+$lang_str["routing_type_car"]="Αυτοκίνητο";
+$lang_str["routing_type_car_shortest"]="Αυτοκίνητο (πιο σύντομη)";
+$lang_str["routing_type_bicycle"]="Ποδήλατο";
+$lang_str["routing_type_foot"]="Πεζός";
+$lang_str["routing_type"]="Τύπος δρομολογίου";
+$lang_str["routing_distance"]="Απόσταση";
+$lang_str["routing_time"]="Χρόνος";
+$lang_str["routing_disclaimer"]="Δρομολόγηση: (c) από <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
-#$lang_str["list_info"]="Choose a category to browse map content or click on an object on the map for details";
+$lang_str["list_info"]="Επέλεξε μια κατηγορία για εμφάνιση περιεχομένων του χάρτη ή κλικ σε ένα αντικείμενο στο χάρτη για λεπτομέρειες";
 #$lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
 
 // Mapkey
