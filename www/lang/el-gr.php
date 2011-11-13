@@ -75,13 +75,13 @@ $lang_str["list_info"]="Επέλεξε μια κατηγορία για εμφά
 
 $lang_str["main:options"]="Επιλογές";
 $lang_str["main:about"]="Περί";
-#$lang_str["main:donate"]="Donate";
+$lang_str["main:donate"]="Συνεισφορά";
 $lang_str["main:licence"]="Δεδομένα Χάρτη: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> συνεργάτες | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> και <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">συνεργάτες</a>";
 #$lang_str["main:permalink"]="Permalink";
 
 #$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
-#$lang_str["options:autozoom"]="Autozoom behaviour";
+$lang_str["options:autozoom"]="Συμπεριφορά αυτόματης εστίασης";
 #$lang_str["help:autozoom"]="When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.";
 #$lang_str["options:autozoom:pan"]="Pan to current object (nicer)";
 #$lang_str["options:autozoom:move"]="Move to current object (faster)";
@@ -95,7 +95,7 @@ $lang_str["lang:"]="Τοπική γλώσσα";
 $lang_str["lang:auto"]="Ίδια με τη γλώσσα διεπαφής";
 
 $lang_str["overlay:data"]="Δεδομένα";
-#$lang_str["overlay:draggable"]="Markers";
+$lang_str["overlay:draggable"]="Δείκτες";
 
 $lang_str["user:no_auth"]="Όνομα χρήστη και κωδικός λάθος!";
 $lang_str["user:login_text"]="Σύνδεση στο OpenStreetBrowser:";
@@ -121,17 +121,17 @@ $lang_str["category"]=array("Κατηγορία", "Κατηγορίες");
 $lang_str["more_categories"]="Περισσότερες κατηγορίες";
 $lang_str["category:status"]="Κατάσταση";
 $lang_str["category:data_status"]="Κατάσταση";
-#$lang_str["category:old_version"]="A new version of this category is being prepared.";
-#$lang_str["category:not_compiled"]="New category is being prepared.";
+$lang_str["category:old_version"]="Μια νέα έκδοση αυτής της κατηγορίας προετοιμάζεται";
+$lang_str["category:not_compiled"]="Η νέα κατηγορία προετοιμάστηκε";
 
 $lang_str["category:new_rule"]="Νέος Ρόλος";
 #$lang_str["category_rule_tag:match"]="Match";
-#$lang_str["category_rule_tag:description"]="Description";
-#$lang_str["category_chooser:choose"]="Choose a category";
-#$lang_str["category_chooser:new"]="New category";
-#$lang_str["category:sub_category"]=array("Sub-category", "Sub-categories");
+$lang_str["category_rule_tag:description"]="Περιγραφή";
+$lang_str["category_chooser:choose"]="Επέλεξε μια κατηγορία";
+$lang_str["category_chooser:new"]="Νέα κατηγορία";
+$lang_str["category:sub_category"]=array("Υπο-κατηγορία", "Υπο-κατηγορίες");
 
-#$lang_str["basemap:osb"]="OpenStreetBrowser";
-#$lang_str["basemap:mapnik"]="Standard (Mapnik)";
-#$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
-#$lang_str["basemap:cyclemap"]="CycleMap";
+$lang_str["basemap:osb"]="OpenStreetBrowser";
+$lang_str["basemap:mapnik"]="Κοινό (Mapnik)";
+$lang_str["basemap:osmarender"]="Κοινό (OsmaRender)";
+$lang_str["basemap:cyclemap"]="	CycleMap";
