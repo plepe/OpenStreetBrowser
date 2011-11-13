@@ -28,7 +28,7 @@ $lang_str["info_zoom"]="Εστίαση";
 $lang_str["nothing_found"]="δεν βρέθηκε τίποτα";
 $lang_str["loading"]="Φόρτωση...";
 $lang_str["more"]="περισσότερα";
-#$lang_str["source"]="Source";
+$lang_str["source"]="Πηγή";
 $lang_str["unnamed"]="ανώνυμο";
 $lang_str["zoom"]="Επίπεδο Εστίασης";
 $lang_str["no_message"]=array("χωρίς μήνυμα", "χωρίς μηνύματα");
@@ -73,10 +73,10 @@ $lang_str["list_info"]="Επέλεξε μια κατηγορία για εμφά
 
 #$lang_str["grave_is_on"]="Grave is on";
 
-#$lang_str["main:options"]="Options";
-#$lang_str["main:about"]="About";
+$lang_str["main:options"]="Επιλογές";
+$lang_str["main:about"]="Περί";
 #$lang_str["main:donate"]="Donate";
-#$lang_str["main:licence"]="Map Data: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributors | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">contributors</a>";
+$lang_str["main:licence"]="Δεδομένα Χάρτη: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> συνεργάτες | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> και <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">συνεργάτες</a>";
 #$lang_str["main:permalink"]="Permalink";
 
 #$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
@@ -89,42 +89,42 @@ $lang_str["list_info"]="Επέλεξε μια κατηγορία για εμφά
 
 #$lang_str["options:language_support"]="Language Support";
 #$lang_str["help:language_support"]="You can choose your prefered languages with this options. The first option changes the language of the user interface. The second option changes the data language. Date of many geographic objects has been translated to several languages. If no translation is available or \"Local language\" was chosen, the main language of the object is displayed.";
-#$lang_str["options:ui_lang"]="Interface language";
-#$lang_str["options:data_lang"]="Data language";
-#$lang_str["lang:"]="Local language";
-#$lang_str["lang:auto"]="Same as interface language";
+$lang_str["options:ui_lang"]="Γλώσσα διεπαφής";
+$lang_str["options:data_lang"]="Γλωσσα δεδομένων";
+$lang_str["lang:"]="Τοπική γλώσσα";
+$lang_str["lang:auto"]="Ίδια με τη γλώσσα διεπαφής";
 
-#$lang_str["overlay:data"]="Data";
+$lang_str["overlay:data"]="Δεδομένα";
 #$lang_str["overlay:draggable"]="Markers";
 
-#$lang_str["user:no_auth"]="Username or password wrong!";
-#$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
-#$lang_str["user:create_user"]="Create a new user:";
-#$lang_str["user:username"]="Username";
-#$lang_str["user:email"]="E-mail address";
-#$lang_str["user:password"]="Password";
-#$lang_str["user:password_verify"]="Verify password";
-#$lang_str["user:old_password"]="Old password";
-#$lang_str["user:no_username"]="Please supply a username!";
-#$lang_str["user:password_no_match"]="Passwords do not match!";
-#$lang_str["user:full_name"]="Full name";
-#$lang_str["user:user_exists"]="Username already exists";
-#$lang_str["user:login"]="Login";
-#$lang_str["user:logged_in_as"]="Logged in as ";
-#$lang_str["user:logout"]="Logout";
+$lang_str["user:no_auth"]="Όνομα χρήστη και κωδικός λάθος!";
+$lang_str["user:login_text"]="Σύνδεση στο OpenStreetBrowser:";
+$lang_str["user:create_user"]="Δημιουργία νέου χρήστη:";
+$lang_str["user:username"]="Όνομα χρήστη";
+$lang_str["user:email"]="Διεύθυνση e-mail";
+$lang_str["user:password"]="Κωδικός";
+$lang_str["user:password_verify"]="Επαλήθευση κωδικού";
+$lang_str["user:old_password"]="Παλιός κωδικός";
+$lang_str["user:no_username"]="Παρακαλώ δώστε ένα όνομα χρήστη!";
+$lang_str["user:password_no_match"]="Οι κωδικοί δεν ταιριάζουν!";
+$lang_str["user:full_name"]="Πλήρες όνομα";
+$lang_str["user:user_exists"]="Το όνομα χρήστη υπάρχει ήδη";
+$lang_str["user:login"]="Σύνδεση";
+$lang_str["user:logged_in_as"]="Συνδεδεμένος ως";
+$lang_str["user:logout"]="Αποσύνδεση";
 
-#$lang_str["attention"]="Attention: ";
-#$lang_str["error"]="An error occured: ";
-#$lang_str["error:not_logged_in"]="you are not logged in";
+$lang_str["attention"]="Προσοχή:";
+$lang_str["error"]="Προέκυψε ένα σφάλμα:";
+$lang_str["error:not_logged_in"]="δεν έχεις συνδεθεί";
 
-#$lang_str["category"]=array("Category", "Categories");
-#$lang_str["more_categories"]="More categories";
-#$lang_str["category:status"]="Status";
-#$lang_str["category:data_status"]="Status";
+$lang_str["category"]=array("Κατηγορία", "Κατηγορίες");
+$lang_str["more_categories"]="Περισσότερες κατηγορίες";
+$lang_str["category:status"]="Κατάσταση";
+$lang_str["category:data_status"]="Κατάσταση";
 #$lang_str["category:old_version"]="A new version of this category is being prepared.";
 #$lang_str["category:not_compiled"]="New category is being prepared.";
 
-#$lang_str["category:new_rule"]="New Rule";
+$lang_str["category:new_rule"]="Νέος Ρόλος";
 #$lang_str["category_rule_tag:match"]="Match";
 #$lang_str["category_rule_tag:description"]="Description";
 #$lang_str["category_chooser:choose"]="Choose a category";
