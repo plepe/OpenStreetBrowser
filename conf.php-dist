@@ -165,3 +165,4 @@ $overlays_add=array(
 // icon_chooser - Choose icons from list
 // icon_editor - Upload icons
 // postgresql_restart - Try to restart PostgreSQL after connection failure
+// geo_modify - On request modify geo objects
