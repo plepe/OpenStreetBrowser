@@ -17,57 +17,57 @@ $lang_str["cancel"]="Annulla";
 $lang_str["show"]="Mostra";
 $lang_str["edit"]="Modifica";
 $lang_str["delete"]="Elimina";
-#$lang_str["history"]="History";
+$lang_str["history"]="Storia";
 $lang_str["choose"]="Scegli";
 $lang_str["help"]="Aiuto";
 $lang_str["longitude"]=array("Longitudine", "Longitudini");
 $lang_str["latitude"]=array("Latitudine", "Latitudini");
-$lang_str["noname"]="(senza nome)";
-$lang_str["info_back"]="T";
+$lang_str["noname"]="(nessun nome)";
+$lang_str["info_back"]="torna alla vista d'insieme";
 $lang_str["info_zoom"]="zoom";
-#$lang_str["nothing_found"]="nothing found";
-$lang_str["loading"]="loading";
-#$lang_str["more"]="more";
-#$lang_str["source"]="Source";
-#$lang_str["unnamed"]="unnamed";
-$lang_str["zoom"]="Zoom level";
-#$lang_str["no_message"]=array("no message", "no messages");
+$lang_str["nothing_found"]="non trovato";
+$lang_str["loading"]="In caricamento...";
+$lang_str["more"]="altri";
+$lang_str["source"]="Provenienza";
+$lang_str["unnamed"]="privo di nome";
+$lang_str["zoom"]="Livello di zoom";
+$lang_str["no_message"]="nessun messaggio";
 
 // Headings
-$lang_str["head:general_info"]="General Information";
-$lang_str["head:stops"]="Stops";
-$lang_str["head:routes"]="Routes";
-$lang_str["head:members"]="Members";
-$lang_str["head:address"]="Address";
-$lang_str["head:internal"]="OSM Internal";
-$lang_str["head:services"]="Services";
-$lang_str["head:culture"]="Culture";
-$lang_str["head:graves"]="Important Graves";
-$lang_str["head:routing"]="Routing";
-$lang_str["head:search"]="Search";
-$lang_str["head:actions"]="Actions";
-#$lang_str["head:location"]="Location";
-#$lang_str["head:tags"]=array("Tag", "Tags");
-#$lang_str["head:whats_here"]="What's here?";
+$lang_str["head:general_info"]="Informazioni generali";
+$lang_str["head:stops"]="Stop";
+$lang_str["head:routes"]="Itinerari";
+$lang_str["head:members"]="Membri";
+$lang_str["head:address"]="Indirizzo";
+$lang_str["head:internal"]="OSM Interno";
+$lang_str["head:services"]="Servizi";
+$lang_str["head:culture"]="Cultura";
+$lang_str["head:graves"]="Tombe importanti";
+$lang_str["head:routing"]="Pianificazione del percorso";
+$lang_str["head:search"]="Cerca";
+$lang_str["head:actions"]=array("Azione", "Azioni");
+$lang_str["head:location"]="Posizione";
+$lang_str["head:tags"]=array("Etichetta", "Etichette");
+$lang_str["head:whats_here"]="Cosa c'è qui?";
 
-$lang_str["action_browse"]="browse in OSM";
-$lang_str["action_edit"]="edit in OSM";
+$lang_str["action_browse"]="visualizza in OSM";
+$lang_str["action_edit"]="modifica in OSM";
 
-#$lang_str["geo_click_pos"]="Click on your position on the map";
-$lang_str["geo_set_pos"]="Set my position";
-$lang_str["geo_change_pos"]="Change my position";
+$lang_str["geo_click_pos"]="Clicca sulla tua posizione sulla mappa";
+$lang_str["geo_set_pos"]="Fissa la mia posizione";
+$lang_str["geo_change_pos"]="Modifica la mia posizione";
 
-$lang_str["routing_type_car"]="Car";
-$lang_str["routing_type_car_shortest"]="Car (Shortest)";
-$lang_str["routing_type_bicycle"]="Bicycle";
-$lang_str["routing_type_foot"]="Foot";
-$lang_str["routing_type"]="Route type";
-$lang_str["routing_distance"]="Distance";
-$lang_str["routing_time"]="Time";
-$lang_str["routing_disclaimer"]="Routing: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
+$lang_str["routing_type_car"]="Automobile";
+$lang_str["routing_type_car_shortest"]="Automobile (il più breve)";
+$lang_str["routing_type_bicycle"]="Bicicletta";
+$lang_str["routing_type_foot"]="A piedi";
+$lang_str["routing_type"]="Tipo di itinerario";
+$lang_str["routing_distance"]="Distanza";
+$lang_str["routing_time"]="Tempi";
+$lang_str["routing_disclaimer"]="Pianificazione del percorso: (c)  <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
-$lang_str["list_info"]="Choose a category to browse map content or click on an object on the map for details";
-$lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
+$lang_str["list_info"]="Scegli una categoria per sfogliare i contenuti della mappa o clicca su un oggetto sulla mappa per visualizzarne i dettagli";
+$lang_str["list_leisure_sport_tourism"]="Tempo libero, sport e turismo";
 
 // Mapkey
 
