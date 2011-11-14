@@ -375,7 +375,7 @@ $lang_str["tag:public_transport"]="Μέσα Μαζικής Μεταφοράς";
 $lang_str["tag:tourism"]="Τουρισμός";
 
 // historic
-#$lang_str["tag:historic"]="Historic";
+$lang_str["tag:historic"]="Ιστορικά";
 
 // landuse
 $lang_str["tag:landuse"]="Χρήση Γης";
