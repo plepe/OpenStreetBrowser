@@ -496,7 +496,12 @@ function translation(l) {
 
     // Enable plugin 'lang_preferred' to make this work
     if((typeof lang_preferred_langs!="undefined")&&(lang_preferred_langs.length>0)) {
-      input.value=lang_preferred_langs[0];
+      for(var i=0; i<lang_preferred_langs.length; i++) {
+	if(!lang_preferred_langs[i].match(/-/)) {
+	  input.value=lang_preferred_langs[i];
+	  break;
+	}
+      }
     }
 
     dom_create_append(this.form, "br");
