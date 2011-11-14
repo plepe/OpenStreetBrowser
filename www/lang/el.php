@@ -111,7 +111,7 @@ $lang_str["user:password_no_match"]="Οι κωδικοί δεν ταιριάζο
 $lang_str["user:full_name"]="Πλήρες όνομα";
 $lang_str["user:user_exists"]="Το όνομα χρήστη υπάρχει ήδη";
 $lang_str["user:login"]="Σύνδεση";
-$lang_str["user:logged_in_as"]="Συνδεδεμένος ως";
+$lang_str["user:logged_in_as"]="Συνδεδεμένος ως ";
 $lang_str["user:logout"]="Αποσύνδεση";
 
 $lang_str["attention"]="Προσοχή:";
