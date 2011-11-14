@@ -134,4 +134,4 @@ $lang_str["category:sub_category"]=array("Υπο-κατηγορία", "Υπο-κ
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Κοινό (Mapnik)";
 $lang_str["basemap:osmarender"]="Κοινό (OsmaRender)";
-$lang_str["basemap:cyclemap"]="	CycleMap";
+$lang_str["basemap:cyclemap"]="CycleMap";

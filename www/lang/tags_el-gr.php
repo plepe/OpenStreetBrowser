@@ -76,31 +76,31 @@ $lang_str["tag:description"]="Περιγραφή";
 $lang_str["tag:note"]="Σημείωση";
 
 // food
-#$lang_str["tag:food"]="Serves food";
+$lang_str["tag:food"]="Σερβίρισμα φαγητού";
 
 // cuisine
-#$lang_str["tag:cuisine"]="Cuisine";
+$lang_str["tag:cuisine"]="Κουζίνα";
 #$lang_str["tag:cuisine=regional"]="regional";
 
 // highway
 $lang_str["tag:highway"]=array("Οδική αρτηρία", "Οδικές αρτηρίες");
 $lang_str["tag:highway=motorway"]="Αυτοκινητόδρομος";
-#$lang_str["tag:highway=motorway_link"]="Motorway Link";
+$lang_str["tag:highway=motorway_link"]="Σύνδεση Αυτοκινητόδρομου";
 #$lang_str["tag:highway=trunk"]="Trunk Road";
 #$lang_str["tag:highway=trunk_link"]="Trunk Road Link";
-#$lang_str["tag:highway=primary"]="Primary Road";
-#$lang_str["tag:highway=primary_link"]="Primary Road Link";
-#$lang_str["tag:highway=secondary"]="Secondary Road";
-#$lang_str["tag:highway=tertiary"]="Tertiary Road";
+$lang_str["tag:highway=primary"]="Πρωτεύων Δρόμος";
+$lang_str["tag:highway=primary_link"]="Σύνδεση Πρωτεύοντος Δρόμου";
+$lang_str["tag:highway=secondary"]="Δευτερεύων Δρόμος";
+$lang_str["tag:highway=tertiary"]="Τριτεύων Δρόμος";
 #$lang_str["tag:highway=minor"]="Minor Road";
-#$lang_str["tag:highway=road"]="Road";
+$lang_str["tag:highway=road"]="Δρόμος";
 #$lang_str["tag:highway=residential"]="Residential Road";
 #$lang_str["tag:highway=unclassified"]="Unclassified Road";
 #$lang_str["tag:highway=service"]="Service Road";
 #$lang_str["tag:highway=pedestrian"]="Pedestrian Zone";
 #$lang_str["tag:highway=living_street"]="Living Street";
 #$lang_str["tag:highway=path"]="Path";
-#$lang_str["tag:highway=cycleway"]="Cycleway";
+$lang_str["tag:highway=cycleway"]="Ποδηλατόδρομος";
 #$lang_str["tag:highway=footway"]="Footway";
 #$lang_str["tag:highway=bridleway"]="Bridleway";
 #$lang_str["tag:highway=track"]="Track";
