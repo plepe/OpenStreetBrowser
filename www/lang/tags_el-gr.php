@@ -56,7 +56,7 @@ $lang_str["tag:amenity=restaurant"]=array("Εστιατόριο", "Εστιατ�
 #$lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
 
 // barrier
-#$lang_str["tag:barrier"]=array("Barrier", "Barriers");
+$lang_str["tag:barrier"]=array("Μπάρα", "Μπάρες");
 #$lang_str["tag:barrier=city_wall"]=array("City wall", "City walls");
 #$lang_str["tag:barrier=wall"]=array("Wall", "Walls");
 #$lang_str["tag:barrier=retaining_wall"]=array("Retaining Wall", "Retaining Walls");
@@ -80,7 +80,7 @@ $lang_str["tag:food"]="Σερβίρισμα φαγητού";
 
 // cuisine
 $lang_str["tag:cuisine"]="Κουζίνα";
-#$lang_str["tag:cuisine=regional"]="regional";
+$lang_str["tag:cuisine=regional"]="τοπική";
 
 // highway
 $lang_str["tag:highway"]=array("Οδική αρτηρία", "Οδικές αρτηρίες");
@@ -144,7 +144,7 @@ $lang_str["tag:leisure=garden"]="Κήπος";
 $lang_str["tag:leisure=miniature_golf"]="Μίνι Γκολφ";
 $lang_str["tag:leisure=swimming_pool"]="Πισίνα";
 #$lang_str["tag:leisure=beach_resort"]="Beach Resort";
-#$lang_str["tag:leisure=bird_hide"]="Bird Hide";
+$lang_str["tag:leisure=bird_hide"]="Καταφύγιο Πουλιών";
 $lang_str["tag:leisure=sport"]="Άλλο Άθλημα";
 
 // man_made
@@ -188,21 +188,21 @@ $lang_str["tag:network"]="Δίκτυο";
 $lang_str["tag:opening_hours"]="Ώρες λειτουργίας";
 
 // operator
-#$lang_str["tag:operator"]="Operator";
+$lang_str["tag:operator"]="Διαχειριστής";
 
 // place
-#$lang_str["tag:place"]="Place";
-#$lang_str["tag:place=continent"]=array("Continent", "Continents");
+$lang_str["tag:place"]="Τόπος";
+$lang_str["tag:place=continent"]=array("Ήπειρος", "Ήπειροι");
 $lang_str["tag:place=country"]=array("Χώρα", "Χώρες");
 $lang_str["tag:place=state"]=array("Πολιτεία", "Πολιτείες");
-$lang_str["tag:place=region"]=array("Περιχή", "Περιοχές");
+$lang_str["tag:place=region"]=array("Περιοχή", "Περιοχές");
 $lang_str["tag:place=county"]=array("Επαρχία", "Επαρχίες");
 $lang_str["tag:place=city"]=array("Πόλη", "Πόλεις");
 $lang_str["tag:place=town"]="Κωμόπολη";
 $lang_str["tag:place=village"]="ΧωριόςΧωριά";
 $lang_str["tag:place=suburb"]=array("Προάστιο", "Προάστια");
 $lang_str["tag:place=hamlet"]=array("Οικισμός", "Οικισμοί");
-#$lang_str["tag:place=locality"]=array("Locality", "Localities");
+$lang_str["tag:place=locality"]=array("Τοποθεσία", "Τοποθεσίες");
 $lang_str["tag:place=island"]=array("Νησί", "Νησιά");
 $lang_str["tag:place=islet"]=array("Νησίδα", "Νησίδες");
 $lang_str["tag:place=ocean"]=array("Ωκεανός", "Ωκεανοί");
@@ -233,15 +233,15 @@ $lang_str["tag:power_source=tidal"]="Παλίρροια";
 $lang_str["tag:power_source=wave"]="Κύματα";
 $lang_str["tag:power_source=geothermal"]="Γεωθερμία";
 $lang_str["tag:power_source=nuclear"]="Πυρηνικά";
-#$lang_str["tag:power_source=fusion"]="Fusion";
+$lang_str["tag:power_source=fusion"]="Σύντηξη";
 $lang_str["tag:power_source=wind"]="Αέρας";
 $lang_str["tag:power_source=photovoltaic"]="Φωτοβολταϊκά";
 $lang_str["tag:power_source=solar-thermal"]="Ηλιοθερμία";
 
 // railway
 $lang_str["tag:railway"]="Σιδηρόδρομος";
-$lang_str["tag:railway=rail"]=array("Σιδηροτροχιά", "Σιδηροτροχιές");
-#$lang_str["tag:railway=tram"]=array("Tram Track", "Tram Tracks");
+$lang_str["tag:railway=rail"]=array("Τροχιά Τρένου", "Τροχιές Τρένου");
+$lang_str["tag:railway=tram"]=array("Τροχιά Τραμ", "Τροχιές Τραμ");
 $lang_str["tag:railway=platform"]=array("Πλατφόρμα", "Πλατφόρμες");
 
 // real_ale
@@ -272,11 +272,11 @@ $lang_str["tag:route=trolley"]="Τρόλεϊ";
 $lang_str["tag:route=trolleybus"]="Τρόλεϊ";
 $lang_str["tag:route=bus"]="Λεωφορείο";
 #$lang_str["tag:route=minibus"]="Minibus";
-#$lang_str["tag:route=ferry"]="Ferry";
-#$lang_str["tag:route=road"]="Road";
-#$lang_str["tag:route=bicycle"]="Bicycle";
-#$lang_str["tag:route=hiking"]="Hiking";
-#$lang_str["tag:route=mtb"]="Mountainbike";
+$lang_str["tag:route=ferry"]="Πορθμείο";
+$lang_str["tag:route=road"]="Δρόμος";
+$lang_str["tag:route=bicycle"]="Ποδήλατο";
+$lang_str["tag:route=hiking"]="Πεζοπορία";
+$lang_str["tag:route=mtb"]="Ποδήλατο Βουνού";
 
 // shop
 $lang_str["tag:shop"]="Κατάστημα";
@@ -285,49 +285,49 @@ $lang_str["tag:shop"]="Κατάστημα";
 $lang_str["tag:sport"]="Άθλημα";
 #$lang_str["tag:sport=9pin"]="9pin Bowling";
 #$lang_str["tag:sport=10pin"]="10pin Bowling";
-#$lang_str["tag:sport=archery"]="Archery";
+$lang_str["tag:sport=archery"]="Τοξοβολία";
 #$lang_str["tag:sport=athletics"]="Athletics";
-#$lang_str["tag:sport=australian_football"]="Australian Football";
+$lang_str["tag:sport=australian_football"]="Αυστραλιανό Ποδόσφαιρο";
 #$lang_str["tag:sport=baseball"]="Baseball";
-#$lang_str["tag:sport=basketball"]="Basketball";
+$lang_str["tag:sport=basketball"]="Μπάσκετ";
 #$lang_str["tag:sport=beachvolleyball"]="Beachvolleyball";
 #$lang_str["tag:sport=boules"]="Boules";
 #$lang_str["tag:sport=bowls"]="Bowls";
-#$lang_str["tag:sport=canoe"]="Canoe";
-#$lang_str["tag:sport=chess"]="Chess";
-#$lang_str["tag:sport=climbing"]="Climbing";
-#$lang_str["tag:sport=cricket"]="Cricket";
+$lang_str["tag:sport=canoe"]="Κανό";
+$lang_str["tag:sport=chess"]="Σκάκι";
+$lang_str["tag:sport=climbing"]="Ορειβασία";
+$lang_str["tag:sport=cricket"]="Κρίκετ";
 #$lang_str["tag:sport=cricket_nets"]="Cricket Nets";
 #$lang_str["tag:sport=croquet"]="Croquet";
 #$lang_str["tag:sport=cycling"]="Cycling";
-#$lang_str["tag:sport=diving"]="Diving";
-#$lang_str["tag:sport=dog_racing"]="Dog Racing";
+$lang_str["tag:sport=diving"]="Κατάδυση";
+$lang_str["tag:sport=dog_racing"]="Κυνοδρομίες";
 #$lang_str["tag:sport=equestrian"]="Equestrian";
-#$lang_str["tag:sport=football"]="Football";
-#$lang_str["tag:sport=golf"]="Golf";
-#$lang_str["tag:sport=gymnastics"]="Gymnastics";
-#$lang_str["tag:sport=hockey"]="Hockey";
-#$lang_str["tag:sport=horse_racing"]="Horse Racing";
+$lang_str["tag:sport=football"]="Ποδόσφαιρο";
+$lang_str["tag:sport=golf"]="Γκολφ";
+$lang_str["tag:sport=gymnastics"]="Γυμναστική";
+$lang_str["tag:sport=hockey"]="Χόκεϊ";
+$lang_str["tag:sport=horse_racing"]="Ιππόδρομος";
 #$lang_str["tag:sport=korfball"]="Korfball";
-#$lang_str["tag:sport=motor"]="Motor";
-#$lang_str["tag:sport=multi"]="Multi";
+$lang_str["tag:sport=motor"]="Μηχανοκίνητα";
+$lang_str["tag:sport=multi"]="Πολλαπλά";
 #$lang_str["tag:sport=orienteering"]="Orienteering";
 #$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
 #$lang_str["tag:sport=paragliding"]="Paragliding";
 #$lang_str["tag:sport=pelota"]="Pelota";
 #$lang_str["tag:sport=racquet"]="Racquet";
-#$lang_str["tag:sport=rowing"]="Rowing";
+$lang_str["tag:sport=rowing"]="Κωπηλασία";
 #$lang_str["tag:sport=rugby"]="Rugby";
 #$lang_str["tag:sport=shooting"]="Shooting";
 #$lang_str["tag:sport=skating"]="Skating";
 #$lang_str["tag:sport=skateboard"]="Skateboard";
 #$lang_str["tag:sport=skiing"]="Skiing";
 #$lang_str["tag:sport=soccer"]="Soccer";
-#$lang_str["tag:sport=swimming"]="Swimming";
+$lang_str["tag:sport=swimming"]="Κολύμβηση";
 #$lang_str["tag:sport=table_tennis"]="Table Tennis";
 #$lang_str["tag:sport=team_handball"]="Handball";
-#$lang_str["tag:sport=tennis"]="Tennis";
-#$lang_str["tag:sport=volleyball"]="Volleyball";
+$lang_str["tag:sport=tennis"]="Τένις";
+$lang_str["tag:sport=volleyball"]="Βόλεϊ";
 
 // tracks
 #$lang_str["tag:tracks"]="Tracks";
@@ -384,7 +384,7 @@ $lang_str["tag:landuse"]="Χρήση Γης";
 #$lang_str["tag:wood"]="Type of wood";
 
 // military
-#$lang_str["tag:military"]="Military";
+$lang_str["tag:military"]="Στρατιωτικό";
 
 // natural
 #$lang_str["tag:natural"]="Natural";
@@ -402,10 +402,10 @@ $lang_str["tag:landuse"]="Χρήση Γης";
 #$lang_str["tag:lit"]="Street lighting";
 
 // area
-#$lang_str["tag:area"]="Area";
+$lang_str["tag:area"]="Περιοχή";
 
 // crossing
-#$lang_str["tag:crossing"]="crossing";
+$lang_str["tag:crossing"]="Διασταύρωση";
 
 // mountain_pass
 #$lang_str["tag:mountain_pass"]="Mountain Pass";
@@ -417,34 +417,34 @@ $lang_str["tag:landuse"]="Χρήση Γης";
 #$lang_str["tag:embankment"]="Embankment";
 
 // lanes
-#$lang_str["tag:lanes"]="Lanes";
+$lang_str["tag:lanes"]="Λωρίδες";
 
 // layer
-#$lang_str["tag:layer"]="Layer";
+$lang_str["tag:layer"]="Επίπεδο";
 
 // surface
-#$lang_str["tag:surface"]="Surface";
+$lang_str["tag:surface"]="Επιφάνεια";
 
 // smoothness
-#$lang_str["tag:smoothness"]="Smoothness";
+$lang_str["tag:smoothness"]="Ομαλότητα";
 
 // ele
-#$lang_str["tag:ele"]="Elevation";
+$lang_str["tag:ele"]="Υψόμετρο";
 
 // width
-#$lang_str["tag:width"]="Width";
+$lang_str["tag:width"]="Πλάτος";
 
 // est_width
-#$lang_str["tag:est_width"]="Estimated width";
+$lang_str["tag:est_width"]="Αναμενόμενο πλάτος";
 
 // incline
 #$lang_str["tag:incline"]="incline";
 
 // start_date
-#$lang_str["tag:start_date"]="Date of creation";
+$lang_str["tag:start_date"]="Ημερ/νία κατασκευής";
 
 // end_date
-#$lang_str["tag:end_date"]="Date of removal";
+$lang_str["tag:end_date"]="Ημερ/νία αφαίρεσης";
 
 // disused
 #$lang_str["tag:disused"]="Disused";
@@ -457,13 +457,13 @@ $lang_str["tag:landuse"]="Χρήση Γης";
 #$lang_str["tag:tactile_paving"]="Tactile paving";
 
 // narrow
-#$lang_str["tag:narrow"]="Narrow";
+$lang_str["tag:narrow"]="Στενό";
 
 // covered
-#$lang_str["tag:covered"]="Covered";
+$lang_str["tag:covered"]="Επενδεδυμένο";
 
 // ford
-#$lang_str["tag:ford"]="Ford";
+$lang_str["tag:ford"]="Κοιτόστρωση";
 
 // access
 #$lang_str["tag:access"]="General access permission";
@@ -496,31 +496,31 @@ $lang_str["tag:landuse"]="Χρήση Γης";
 #$lang_str["tag:psv"]="PSV access permission";
 
 // oneway
-#$lang_str["tag:oneway"]="Oneway";
+$lang_str["tag:oneway"]="Μονόδρομος";
 
 // noexit
-#$lang_str["tag:noexit"]="Dead end road";
+$lang_str["tag:noexit"]="Αδιέξοδο";
 
 // maxweight
-#$lang_str["tag:maxweight"]="Max. weight";
+$lang_str["tag:maxweight"]="Μεγ. βάρος";
 
 // maxheight
-#$lang_str["tag:maxheight"]="Max. height";
+$lang_str["tag:maxheight"]="Μεγ. ύψος";
 
 // maxlength
-#$lang_str["tag:maxlength"]="Max. length";
+$lang_str["tag:maxlength"]="Μεγ. μήκος";
 
 // maxspeed
-#$lang_str["tag:maxspeed"]="Max. speed";
+$lang_str["tag:maxspeed"]="Μεγ. ταχύτητα";
 
 // minspeed
-#$lang_str["tag:minspeed"]="Min. speed";
+$lang_str["tag:minspeed"]="Ελαχ. ταχύτητα";
 
 // traffic_sign
 #$lang_str["tag:traffic_sign"]="Traffic sign";
 
 // toll
-#$lang_str["tag:toll"]="Toll";
+$lang_str["tag:toll"]="Διόδια";
 
 // charge
 #$lang_str["tag:charge"]="Charge";
@@ -529,19 +529,19 @@ $lang_str["tag:landuse"]="Χρήση Γης";
 #$lang_str["tag:source"]="Source";
 
 // phone
-#$lang_str["tag:phone"]="Phone number";
+$lang_str["tag:phone"]="Αριθμ. τηλεφώνου";
 
 // fax
-#$lang_str["tag:fax"]="Fax number";
+$lang_str["tag:fax"]="Αριθμ. φαξ";
 
 // email
-#$lang_str["tag:email"]="E-mail";
+$lang_str["tag:email"]="E-mail";
 
 // wikipedia
 #$lang_str["tag:wikipedia"]="Wikipedia";
 
 // created_by
-#$lang_str["tag:created_by"]="Created by";
+$lang_str["tag:created_by"]="Δημιουργήθηκε από";
 
 // construction
 #$lang_str["tag:construction"]="Construction";
