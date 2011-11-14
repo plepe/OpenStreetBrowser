@@ -251,7 +251,14 @@ class category {
 	    "!bbox!"=>"PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913)",
 	  ));
 
-	  $qryc="select *, astext(ST_Centroid(geo)) as center from (";
+	  // Build Query
+          $qryc ="";
+
+	  // Some debug info, visible in pg_stat_activity
+	  $qryc.="/* {$this->id}.get_list: z{$param['zoom']}, {$imp} */ ";
+
+	  // Main query
+	  $qryc.="select *, astext(ST_Centroid(geo)) as center from (";
 	  $qryc.=$sql;
 	  $qryc.=") as x where $where limit $max_count";
 	  //print "==\n$qryc\n==";
