@@ -26,6 +26,7 @@ $lang_str["noname"]="(noname)";
 $lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";
 $lang_str["nothing_found"]="nothing found";
+$lang_str["list:zoom_for_obs"]="Zoom in for less important objects";
 $lang_str["loading"]="Loading...";
 $lang_str["more"]="more";
 $lang_str["source"]="Source";

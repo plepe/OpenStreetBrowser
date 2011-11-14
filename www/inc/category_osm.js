@@ -82,11 +82,15 @@ function category_osm(id, param) {
     }
 
     dom_clean(div.more);
-    if(!this.result.complete) {
+    if(this.result.complete=="false") {
       var a=dom_create_append(div.more, "a");
       a.href="#";
       a.onclick=this.show_more.bind(this);
       dom_create_append_text(a, t("more"));
+    }
+    else if(this.result.complete=="zoom") {
+      var span=dom_create_append(div.more, "span");
+      dom_create_append_text(span, t("list:zoom_for_obs"));
     }
 
     this.write_status(div);
@@ -180,7 +184,7 @@ function category_osm(id, param) {
     // recv
     this.recv=function(dom, viewbox) {
       this.version=dom.getAttribute("version");
-      this.complete=dom.getAttribute("complete")=="true";
+      this.complete=dom.getAttribute("complete");
       this.data_status=dom.getAttribute("status");
 
       // maybe we can save it to the cache if the viewbox changed?
@@ -231,7 +235,7 @@ function category_osm(id, param) {
     this.version=0;
     this.status="new";
     this.category=category;
-    this.complete=false;
+    this.complete="false";
     this.complete_importance=false;
     this.data=[];
     this.viewbox=null;

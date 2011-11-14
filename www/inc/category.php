@@ -215,11 +215,21 @@ class category {
   //// set some more vars
     $max_count=$count+1;
     $list=array();
+    $more="true";
 
   //// now run, until we are finished
     foreach($importance as $imp) {
       if(($max_count>0)&&($list_data[$imp])) {
 	foreach($list_data[$imp] as $t=>$req_data) {
+	  global $importance_zoom;
+	  if(isset($importance_zoom)&&($param['zoom']<$importance_zoom[$imp]['list'])) {
+	    // TODO: Need plugin 'importance' enabled to make this work
+	    // TODO: This should be managed by hooks
+	    $more="zoom";
+	    continue;
+	  }
+
+
 	  $qry_where=array();
 	  if(sizeof($sql_where[$t]))
 	    $qry_where[]=implode(" and ", $sql_where[$t]);
@@ -279,10 +289,9 @@ class category {
   //      $list[]=$elemc;
   //  }
 
-    $more=0;
     if(sizeof($list)>$count) {
       $list=array_slice($list, 0, $count);
-      $more=1;
+      $more="false";
     }
 
     $ret ="<category id='$this->id'";
@@ -292,7 +301,7 @@ class category {
       $ret.=" status='old_version'";
     }
 
-    $ret.=" complete='".($more?"false":"true")."'";
+    $ret.=" complete='{$more}'";
     $ret.=">\n";
     foreach($list as $l) {
       $ret.=$this->print_match($l);
