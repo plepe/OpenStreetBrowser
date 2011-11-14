@@ -125,7 +125,7 @@ $lang_str["tag:postal_code"]="Ταχ. Κώδικας";
 #$lang_str["tag:is_in"]="Is in";
 
 // leisure
-#$lang_str["tag:leisure"]="Leisure";
+$lang_str["tag:leisure"]="Ελεύθερος Χρόνος";
 $lang_str["tag:leisure=sports_centre"]="Αθλητικό Κέντρο";
 $lang_str["tag:leisure=golf_course"]="Γήπεδο Γκολφ";
 $lang_str["tag:leisure=stadium"]="Στάδιο";
@@ -282,7 +282,7 @@ $lang_str["tag:route=mtb"]="Ποδήλατο Βουνού";
 $lang_str["tag:shop"]="Κατάστημα";
 
 // sport
-$lang_str["tag:sport"]="Άθλημα";
+$lang_str["tag:sport"]="Άθλητισμός";
 #$lang_str["tag:sport=9pin"]="9pin Bowling";
 #$lang_str["tag:sport=10pin"]="10pin Bowling";
 $lang_str["tag:sport=archery"]="Τοξοβολία";
