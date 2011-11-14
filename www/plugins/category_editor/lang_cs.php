@@ -12,3 +12,7 @@ $lang_str["category_editor:remove_rule"]="Odstranit pravidlo";
 $lang_str["category_editor:view_mode"]="Prohlížet";
 $lang_str["category_editor:view_mode:form"]="Formulář";
 $lang_str["category_editor:view_mode:source"]="Zdroj";
+#$lang_str["category_editor:new_rule_help"]="Add rules, to define which objects should appear in this category";
+
+$lang_str["category_editor:lock"]="Zamknout kategorii";
+$lang_str["category_editor:locked"]="Tato kategorie je zamknutá. Pokud ji uložíte, bude vytvořen klon s novým ID.";

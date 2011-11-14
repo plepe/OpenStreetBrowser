@@ -1,6 +1,6 @@
 <?
 // The UI has been translated to following languages
-$ui_langs=array("en", "de", "it", "ja", "uk", "fr", "ru", "es", "cs", "hu", "nl", "ast");
+$ui_langs=array("en", "de", "it", "ja", "uk", "fr", "ru", "es", "cs", "hu", "nl", "ast", "el");
 
 // A list of all languages we know about
 $language_list=array(
@@ -14,7 +14,7 @@ $language_list=array(
   "da"=>"dansk",
   "de"=>"Deutsch",
   "et"=>"eesti keel",
-  "el"=>"ελληνικά",
+  "el"=>"Ελληνικά",
   "fr"=>"français",
   "ga"=>"Gaeilge",
   "is"=>"íslenska",
