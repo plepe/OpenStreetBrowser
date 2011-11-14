@@ -19,46 +19,62 @@ DECLARE
   i int:=0;
   max_i int;
   max_size float:=0;
+  test geometry;
 BEGIN
   ob:=$1;
   geo:=ob.way;
 
-  radius=sqrt(ST_Area(geo));
+  -- start with buffer radius sqrt(area)/2 - can't be bigger than that
+  radius=sqrt(ST_Area(geo))/2;
 
+  -- try to reduce buffer radius until we are successful
   loop
+    -- calculate geometry with negative buffer
     geo:=ST_Buffer(ob.way, -radius);
-    ob.tags=ob.tags || (('#geo_modify:radius'||i)=>cast(radius as text));
-    ob.tags=ob.tags || (('#geo_modify:it'||i)=>cast(ST_Area(geo) as text));
-    ob.tags=ob.tags || (('#geo_modify:num'||i)=>cast(ST_NumGeometries(geo) as text));
+    --ob.tags=ob.tags || (('#geo_modify:radius'||i)=>cast(radius as text));
+    --ob.tags=ob.tags || (('#geo_modify:it'||i)=>cast(ST_Area(geo) as text));
+    --ob.tags=ob.tags || (('#geo_modify:num'||i)=>cast(ST_NumGeometries(geo) as text));
 
+    -- we were successful -> exit loop
     if ST_NumGeometries(geo)>0 or ST_NumGeometries(geo) is null then
       exit;
     end if;
 
-    if i>30 then
+    -- still nothing? -> exit too
+    if i>15 then
       exit;
     end if;
 
-    radius:=radius/1.25;
+    -- geometry is empty -> reduce radius and try again
+    radius:=radius/1.5;
     i:=i+1;
   end loop;
 
-  if ST_NumGeometries(geo) is null then
-    ob.way=geo;
-  else 
-    for i in 1..ST_NumGeometries(geo) loop
-      if ST_Area(GeometryN(geo, i))>max_size then
-	max_size:=ST_Area(GeometryN(geo, i));
-	max_i:=i;
-      end if;
-    end loop;
-
-    ob.tags=ob.tags || (('#geo_modify:i')=>cast(max_i as text));
-    ob.way=GeometryN(geo, max_i);
+  -- nothing found ... return Centroid of polygon
+  if ST_NumGeometries(geo)=0 then
+    geo:=ST_Centroid(ob.way);
+    ob.way:=geo;
+    return;
   end if;
 
-  ob.way=ST_Centroid(ob.way);
-  geo=ob.way;
+  test:=geo;
+
+  -- do it once again, with smaller change to improve likeliness to find a point close to the centroid
+  radius:=radius/1.2;
+  i:=i+1;
+  geo:=ST_Buffer(ob.way, -radius);
+  test:=ST_Collect(test, geo);
+  --ob.tags=ob.tags || (('#geo_modify:radius'||i)=>cast(radius as text));
+  --ob.tags=ob.tags || (('#geo_modify:it'||i)=>cast(ST_Area(geo) as text));
+  --ob.tags=ob.tags || (('#geo_modify:num'||i)=>cast(ST_NumGeometries(geo) as text));
+
+  -- now find the point on the created geometry which is closest to the centroid -> that's our new center
+  geo:=ST_ClosestPoint(geo, ST_Centroid(ob.way));
+  test:=ST_Collect(test, geo);
+
+  ob.tags=ob.tags || (('#geo_modify:debug')=>astext(test));
+
+  ob.way=geo;
 END;
 $$ language 'plpgsql';
 
