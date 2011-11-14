@@ -92,10 +92,9 @@ class translation {
 
   // update_language_list
   function update_language_list() {
-    global $ui_langs;
-    global $language_list;
     global $translation_path;
 
+    include "$translation_path/www/lang/list.php";
     include "$translation_path/www/lang/{$this->lang}.php";
     $language_list[$this->lang]=$lang_str['lang:current'];
 
