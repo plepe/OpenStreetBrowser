@@ -28,6 +28,15 @@ BEGIN
   geo:=ob.way;
   debug:=(param->'debug'='true');
 
+  -- check if there's a cached result (in debug we always calculate result)
+  if(not debug) then
+    geo:=cache_search(ob.id, 'geo_modify_get_center');
+    if geo is not null then
+      ob.way:=geo;
+      return;
+    end if;
+  end if;
+
   if(debug) then
     t:=clock_timestamp();
     debug_prefix='#geo_modify:center:';
@@ -97,6 +106,8 @@ BEGIN
     ob.tags=ob.tags || ((debug_prefix||'pos')=>astext(ST_Transform(ST_Centroid(ob.way), 4326)));
     ob.tags=ob.tags || ((debug_prefix||'time')=>(cast(clock_timestamp()-t as text)));
   end if;
+
+  perform cache_insert(ob.id, 'geo_modify_get_center', geo);
 
   ob.way=geo;
 END;
