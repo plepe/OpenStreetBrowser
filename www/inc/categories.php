@@ -643,7 +643,7 @@ function build_mapnik_style($id, $data, $global_tags) {
       print "Columns (2): ";
       print_r($columns);
 
-      $sql=$data2['sql'];
+      $sql_tables=$data2['sql'];
       $sql_select=array();
       $sql_join=array();
       $sql_select[]="t.*";
@@ -662,7 +662,7 @@ function build_mapnik_style($id, $data, $global_tags) {
 
       $sql ="";
       $sql.="/* {$id}.mapnik: s!scale_denominator!, {$importance} */ ";
-      $sql.="(select{$sql_select} from ($sql) as t{$sql_join}) as u";
+      $sql.="(select{$sql_select} from ($sql_tables) as t{$sql_join}) as u";
 
       if(in_array($table, array("polygon"))) {
 	$layer=mapnik_get_layer($dom, "{$id}_{$importance}_{$table}_shape", $sql, "polygon");
