@@ -1,44 +1,42 @@
-var geo_modify_features;
-var geo_modify_div;
+var geo_modify_current;
 
-function geo_modify_info_hide() {
-  if(geo_modify_features) {
-    vector_layer.removeFeatures(geo_modify_features);
-    delete(geo_modify_features);
-  }
-}
+function geo_modify(info, ob) {
+  this.ob=ob;
 
-function geo_modify_info_show(info, ob) {
-  // call ajax-function
-  var param={};
-  param.fun="grid";
-  param.id=ob.id;
-  param.zoom=map.zoom;
-  param.param={ radius: -100 };
-
-  ajax("geo_modify", param, geo_modify_info_show_callback);
+  this.load();
 
   // create geo_modify chapter in info-box
-  geo_modify_div=document.createElement("div");
+  this.div=document.createElement("div");
   info.push({
     head: "geo_modify",
     weight: 5,
-    content: geo_modify_div
+    content: this.div
   });
 }
 
-function geo_modify_info_show_callback(result) {
+geo_modify.prototype.load=function() {
+  // call ajax-function
+  var param={};
+  param.fun="get_center";
+  param.id=this.ob.id;
+  param.zoom=map.zoom;
+  param.param={ };
+  ajax("geo_modify", param, this.load_callback.bind(this));
+}
+
+geo_modify.prototype.load_callback=function(result) {
   var value=result.return_value;
 
   geo_modify_info_hide();
 
   // show modified geometry
   var geo=new postgis(value.way);
-  geo_modify_features=geo.geo();
-  vector_layer.addFeatures(geo_modify_features);
+  this.features=geo.geo();
+  this.features[0].style= { pointRadius: 3, fillColor: "#ff0000", strokeColor: "#ff0000" };
+  vector_layer.addFeatures(this.features);
 
   // show additional #geo_modify-tags
-  var ul=dom_create_append(geo_modify_div, "ul");
+  var ul=dom_create_append(this.div, "ul");
   for(var i in value.tags) {
     var k;
     if(k=i.match(/^#geo_modify:(.*)/)) {
@@ -46,6 +44,24 @@ function geo_modify_info_show_callback(result) {
       dom_create_append_text(li, k[1]+": "+value.tags[i]);
     }
   }
+}
+
+geo_modify.prototype.hide=function() {
+  if(this.features) {
+    vector_layer.removeFeatures(this.features);
+    delete(this.features);
+  }
+}
+
+function geo_modify_info_hide() {
+  if(geo_modify_current) {
+    geo_modify_current.hide();
+    delete(geo_modify_current);
+  }
+}
+
+function geo_modify_info_show(info, ob) {
+  geo_modify_current=new geo_modify(info, ob);
 }
 
 register_hook("info", geo_modify_info_show);
