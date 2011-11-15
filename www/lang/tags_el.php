@@ -199,7 +199,7 @@ $lang_str["tag:place=region"]=array("Περιοχή", "Περιοχές");
 $lang_str["tag:place=county"]=array("Επαρχία", "Επαρχίες");
 $lang_str["tag:place=city"]=array("Πόλη", "Πόλεις");
 $lang_str["tag:place=town"]="Κωμόπολη";
-$lang_str["tag:place=village"]="ΧωριόςΧωριά";
+$lang_str["tag:place=village"]=array("Χωριό", "Χωριά");
 $lang_str["tag:place=suburb"]=array("Προάστιο", "Προάστια");
 $lang_str["tag:place=hamlet"]=array("Οικισμός", "Οικισμοί");
 $lang_str["tag:place=locality"]=array("Τοποθεσία", "Τοποθεσίες");
