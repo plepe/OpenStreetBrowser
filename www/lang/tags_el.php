@@ -216,8 +216,8 @@ $lang_str["tag:power"]="Ενέργεια";
 $lang_str["tag:power=generator"]="Γενήτρια Ρεύματος";
 $lang_str["tag:power=line"]="Γραμμή Ρεύματος";
 #$lang_str["tag:power=minor_line"]="Minor Power Line";
-#$lang_str["tag:power=tower"]="Power Tower";
-#$lang_str["tag:power=pole"]="Power Pole";
+$lang_str["tag:power=tower"]="Πυλώνας Ρεύματος";
+$lang_str["tag:power=pole"]="Κολόνα Ρεύματος";
 #$lang_str["tag:power=station"]="Power Station";
 #$lang_str["tag:power=sub_station"]="Power Substation";
 
