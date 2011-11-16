@@ -120,19 +120,19 @@ $lang_str["error:not_logged_in"]="Non sei registrato";
 
 $lang_str["category"]=array("Categoria", "Categorie");
 $lang_str["more_categories"]="Altre categorie";
-#$lang_str["category:status"]="Status";
-#$lang_str["category:data_status"]="Status";
-#$lang_str["category:old_version"]="A new version of this category is being prepared.";
-#$lang_str["category:not_compiled"]="New category is being prepared.";
+$lang_str["category:status"]="Stato";
+$lang_str["category:data_status"]="Stato";
+$lang_str["category:old_version"]="Una nuova versione di questa categoria è in preparazione";
+$lang_str["category:not_compiled"]="Nuova categoria in preparazione";
 
-#$lang_str["category:new_rule"]="New Rule";
-#$lang_str["category_rule_tag:match"]="Match";
-#$lang_str["category_rule_tag:description"]="Description";
-#$lang_str["category_chooser:choose"]="Choose a category";
-#$lang_str["category_chooser:new"]="New category";
-#$lang_str["category:sub_category"]=array("Sub-category", "Sub-categories");
+$lang_str["category:new_rule"]="Nuova regola";
+$lang_str["category_rule_tag:match"]="Corrispondenza";
+$lang_str["category_rule_tag:description"]="Descrizione";
+$lang_str["category_chooser:choose"]="Scegli una categoria";
+$lang_str["category_chooser:new"]="Crea una nuova categoria";
+$lang_str["category:sub_category"]=array("Sottocategoria", "Sottocategorie");
 
-#$lang_str["basemap:osb"]="OpenStreetBrowser";
-#$lang_str["basemap:mapnik"]="Standard (Mapnik)";
-#$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
-#$lang_str["basemap:cyclemap"]="CycleMap";
+$lang_str["basemap:osb"]="OpenStreetBrowser";
+$lang_str["basemap:mapnik"]="Standard (Mapnik)";
+$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
+$lang_str["basemap:cyclemap"]="CycleMap";
