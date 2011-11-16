@@ -11,7 +11,7 @@ END;
 $$ language 'plpgsql';
 
 -- thanks to http://proceedings.esri.com/library/userconf/proc01/professional/papers/pap388/p388.htm (chapter 3)
-CREATE OR REPLACE FUNCTION geo_modify_get_center(in geo_object, in param hstore, in context hstore, out ob geo_object, out geo geometry) AS $$
+CREATE OR REPLACE FUNCTION geo_modify_area_label(in geo_object, in param hstore, in context hstore, out ob geo_object, out geo geometry) AS $$
 DECLARE
   param alias for $2;
   context alias for $3;
@@ -30,7 +30,7 @@ BEGIN
 
   -- check if there's a cached result (in debug we always calculate result)
   if(not debug) then
-    geo:=cache_search(ob.id, 'geo_modify_get_center');
+    geo:=cache_search(ob.id, 'geo_modify_area_label');
     if geo is not null then
       ob.way:=geo;
       return;
@@ -107,7 +107,7 @@ BEGIN
     ob.tags=ob.tags || ((debug_prefix||'time')=>(cast(clock_timestamp()-t as text)));
   end if;
 
-  perform cache_insert(ob.id, 'geo_modify_get_center', geo);
+  perform cache_insert(ob.id, 'geo_modify_area_label', geo);
 
   ob.way=geo;
 END;

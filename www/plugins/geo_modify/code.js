@@ -32,7 +32,7 @@ function geo_modify(info, ob) {
 geo_modify.prototype.load=function() {
   // call ajax-function
   var param={};
-  param.fun="get_center";
+  param.fun="area_label";
   param.id=this.ob.id;
   param.zoom=map.zoom;
   param.param={ debug: this.inputs.debug.checked?"true":"false" };
