@@ -230,10 +230,10 @@
      	(select
 	  osm_tags->'name' as "name",
 	  osm_tags->'#area_text' as "type",
-	  osm_way,
+	  (geo_modify_area_label(geo_object(osm_id, osm_tags, osm_way), '', '')).geo as osm_way,
 	  ST_Area(osm_way)/1000 as "way_area_k"
 	from (select
-	    osm_way,
+	    osm_id, osm_way,
 	    classify_hmatch(Array['basemap_area_text'],
 	                    osm_id, osm_tags, osm_way, osm_type) as "osm_tags"
 	    from osm_all_polygon_extract
@@ -243,6 +243,7 @@
 	         osm_tags ? 'leisure' or
 	         osm_tags ? 'landuse' or
 		 osm_tags ? 'natural')
+	    and osm_tags ? 'name'
 	    offset 0) as t1
 	    order by
 	      cast(osm_tags->'#highway_level' as int) desc,
@@ -266,10 +267,10 @@
      	(select
 	  osm_tags->'name' as "name",
 	  osm_tags->'#area_text' as "type",
-	  osm_way,
+	  (geo_modify_area_label(geo_object(osm_id, osm_tags, osm_way), '', '')).geo as osm_way,
 	  ST_Area(osm_way) as "way_area"
 	from (select
-	    osm_way,
+	    osm_id, osm_way,
 	    classify_hmatch(Array['basemap_area_text'],
 	                    osm_id, osm_tags, osm_way, osm_type) as "osm_tags"
 	    from osm_all_polygon
@@ -279,6 +280,7 @@
 	         osm_tags ? 'leisure' or
 	         osm_tags ? 'landuse' or
 		 osm_tags ? 'natural')
+	    and osm_tags ? 'name'
 	    offset 0) as t1
 	    order by
 	      cast(osm_tags->'#highway_level' as int) desc,
