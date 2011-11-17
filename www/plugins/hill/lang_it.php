@@ -1,2 +1,2 @@
 <?
-#$lang_str["hill:name"]="Hillshading (NASA SRTM3 v2)";
+$lang_str["hill:name"]="Ombreggiatura dei rilievi (NASA SRTM3 v2)";

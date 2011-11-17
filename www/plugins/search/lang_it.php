@@ -1,9 +1,9 @@
 <?
-#$lang_str["search:name"]="Search";
-#$lang_str["search:process"]="searching";
-#$lang_str["search:more"]="more results";
-#$lang_str["search:results"]="Search results";
-#$lang_str["search:nominatim"]="search provided by";
-#$lang_str["search:field"]="Search...";
-#$lang_str["search:tip"]="e.g. 'London', 'Cromwell Road', 'post box near Hyde Park',...";
-#$lang_str["search:clear"]="Clear search field";
+$lang_str["search:name"]="Cerca";
+$lang_str["search:process"]="Ricerca in corso";
+$lang_str["search:more"]="altri risultati";
+$lang_str["search:results"]="Risultati della ricerca";
+$lang_str["search:nominatim"]="ricerca fornita da";
+$lang_str["search:field"]="Cerca...";
+$lang_str["search:tip"]="es. 'London', 'Cromwell Road', 'post box near Hyde Park',...";
+$lang_str["search:clear"]="Resetta il campo di ricerca";

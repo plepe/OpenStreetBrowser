@@ -1,3 +1,3 @@
 <?
-#$lang_str["marker_list:title"]="Marker List";
-#$lang_str["marker_list:empty_text"]="No markers in view port, add markers from context menu";
+$lang_str["marker_list:title"]="Lista dei marcatori";
+$lang_str["marker_list:empty_text"]="Nell'area inquadrata non ci sono marcatori, puoi aggiungere dei marcatori dal menù contestuale";
