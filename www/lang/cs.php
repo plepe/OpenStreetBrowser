@@ -26,6 +26,7 @@ $lang_str["noname"]="(bezejmenný)";
 $lang_str["info_back"]="zpět na přehled";
 $lang_str["info_zoom"]="přiblížení";
 $lang_str["nothing_found"]="nic nenalezeno";
+$lang_str["list:zoom_for_obs"]="K zobrazení méně důležitých objektů je nuntno zazoomovat";
 $lang_str["loading"]="Načítání...";
 $lang_str["more"]="více";
 $lang_str["source"]="Zdroj";
