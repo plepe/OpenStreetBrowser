@@ -93,7 +93,7 @@ $lang_str["tag:highway=primary_link"]="Nájezdová nebo sjezdová rampa sil. I. 
 $lang_str["tag:highway=secondary"]="Silnice II. třídy";
 $lang_str["tag:highway=tertiary"]="Silnice III. třídy";
 $lang_str["tag:highway=minor"]="Vedlejší cesta";
-$lang_str["tag:highway=road"]="Cesta";
+$lang_str["tag:highway=road"]="Silnice";
 $lang_str["tag:highway=residential"]="Ulice";
 $lang_str["tag:highway=unclassified"]="Nezařazená komunikace";
 $lang_str["tag:highway=service"]="Účelová komunikace";
