@@ -1,2 +1,2 @@
 <?
-geom_register("grid");
+geom_register("grid", array());

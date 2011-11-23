@@ -1,2 +1,2 @@
 <?
-geom_register("buffer");
+geom_register("buffer", array("radius"=>array("float", 0)));

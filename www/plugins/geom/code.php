@@ -5,7 +5,7 @@ $geom_funs=array();
 function ajax_geom($param) {
   global $geom_funs;
 
-  if(!in_array($param['fun'], $geom_funs)) {
+  if(!array_key_exists($param['fun'], $geom_funs)) {
     return false;
   }
 
@@ -26,8 +26,23 @@ function ajax_geom($param) {
   return $elem;
 }
 
-function geom_register($fun) {
+// all 'geom_*' functions need to be registered:
+// call 
+// geom_register("buffer", array("radius"=>array("float", "100"), "foo"=>array("int"), "debug"=>array("bool")))
+// -> registering function 'buffer' (called 'geom_buffer')
+// -> available parameters: 'radius' of type float with default value 100
+//                          'foo' of type int, no default value
+//                          'debug' of type boolean
+function geom_register($fun, $param) {
   global $geom_funs;
 
-  $geom_funs[]=$fun;
+  $geom_funs[$fun]=$param;
 }
+
+function geom_init() {
+  global $geom_funs;
+
+  html_export_var(array("geom_funs"=>$geom_funs));
+}
+
+register_hook("init", "geom_init");
