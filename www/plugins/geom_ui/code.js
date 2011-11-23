@@ -1,14 +1,14 @@
-var geo_modify_current;
-var geo_modify_config;
-var geo_modify_color_list=[ '#009f00', '#9f0000', '#008f8f', '#00009f', '#8f008f', '#8f8f00', '#009f3f', '#003f9f', '#3f009f', '#9f003f', '#3f9f00', '#9f3f00' ];
+var geom_ui_current;
+var geom_ui_config;
+var geom_ui_color_list=[ '#009f00', '#9f0000', '#008f8f', '#00009f', '#8f008f', '#8f8f00', '#009f3f', '#003f9f', '#3f009f', '#9f003f', '#3f9f00', '#9f3f00' ];
 
-function geo_modify(info, ob) {
+function geom_ui(info, ob) {
   this.ob=ob;
 
-  // create geo_modify chapter in info-box
+  // create geom chapter in info-box
   var chapter=document.createElement("div");
   info.push({
-    head: lang("geo_modify:name"),
+    head: lang("geom_ui:name"),
     weight: 5,
     content: chapter
   });
@@ -19,48 +19,46 @@ function geo_modify(info, ob) {
   this.inputs.debug=dom_create_append(d, "input");
   this.inputs.debug.type="checkbox";
   this.inputs.debug.checked=true;
-  if(geo_modify_config)
-    this.inputs.debug.checked=geo_modify_config.debug;
+  if(geom_ui_config)
+    this.inputs.debug.checked=geom_ui_config.debug;
   this.inputs.debug.onchange=this.refresh.bind(this);
-  dom_create_append_text(d, lang("geo_modify:debug"));
+  dom_create_append_text(d, lang("geom_ui:debug"));
 
   this.div=dom_create_append(chapter, "div");
 
   this.load();
 }
 
-geo_modify.prototype.load=function() {
+geom_ui.prototype.load=function() {
   // call ajax-function
   var param={};
   param.fun="area_label";
   param.id=this.ob.id;
   param.zoom=map.zoom;
   param.param={ debug: this.inputs.debug.checked?"true":"false" };
-  ajax("geo_modify", param, this.load_callback.bind(this));
+  ajax("geom", param, this.load_callback.bind(this));
 }
 
-geo_modify.prototype.load_callback=function(result) {
+geom_ui.prototype.load_callback=function(result) {
   var debug_colors={};
   var value=result.return_value;
-
-  geo_modify_info_hide();
 
   this.debug_features=[];
   var debug_colors={ 'result': '#ff0000' };
   debug_color_index=0;
 
-  // show additional #geo_modify-tags
+  // show additional #geom-tags
   var ul=dom_create_append(this.div, "ul");
   var ks=keys(value.tags);
   ks.sort();
   for(var ki=0; ki<ks.length; ki++) {
     var i=ks[ki];
     var k;
-    if((k=i.match(/^#geo_modify:([^:]*):/))&&(!debug_colors[k[1]])) {
-      debug_colors[k[1]]=geo_modify_color_list[debug_color_index++];
+    if((k=i.match(/^#geom:([^:]*):/))&&(!debug_colors[k[1]])) {
+      debug_colors[k[1]]=geom_ui_color_list[debug_color_index++];
     }
 
-    if(k=i.match(/^#geo_modify:([^:]*):geo/)) {
+    if(k=i.match(/^#geom:([^:]*):geo/)) {
       var geo=new postgis(value.tags[i]);
       var features=geo.geo();
       for(var j=0; j<features.length; j++) {
@@ -69,7 +67,7 @@ geo_modify.prototype.load_callback=function(result) {
       vector_layer.addFeatures(features);
       this.debug_features.push(features);
     }
-    else if(k=i.match(/^#geo_modify:(([^:]*):.*)/)) {
+    else if(k=i.match(/^#geom:(([^:]*):.*)/)) {
       var li=dom_create_append(ul, "li");
       li.style.color=debug_colors[k[2]];
       dom_create_append_text(li, k[1]+": "+value.tags[i]);
@@ -84,12 +82,12 @@ geo_modify.prototype.load_callback=function(result) {
 
 }
 
-geo_modify.prototype.refresh=function() {
+geom_ui.prototype.refresh=function() {
   this.hide();
   this.load();
 }
 
-geo_modify.prototype.hide=function() {
+geom_ui.prototype.hide=function() {
   if(this.features) {
     vector_layer.removeFeatures(this.features);
     delete(this.features);
@@ -102,19 +100,19 @@ geo_modify.prototype.hide=function() {
   }
   dom_clean(this.div);
 
-  geo_modify_config={ debug: this.inputs.debug.checked };
+  geom_ui_config={ debug: this.inputs.debug.checked };
 }
 
-function geo_modify_info_hide() {
-  if(geo_modify_current) {
-    geo_modify_current.hide();
-    delete(geo_modify_current);
+function geom_ui_info_hide() {
+  if(geom_ui_current) {
+    geom_ui_current.hide();
+    delete(geom_ui_current);
   }
 }
 
-function geo_modify_info_show(info, ob) {
-  geo_modify_current=new geo_modify(info, ob);
+function geom_ui_info_show(info, ob) {
+  geom_ui_current=new geom_ui(info, ob);
 }
 
-register_hook("info", geo_modify_info_show);
-register_hook("info_hide", geo_modify_info_hide);
+register_hook("info", geom_ui_info_show);
+register_hook("info_hide", geom_ui_info_hide);

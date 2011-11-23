@@ -230,7 +230,7 @@
      	(select
 	  osm_tags->'name' as "name",
 	  osm_tags->'#area_text' as "type",
-	  (geo_modify_area_label(geo_object(osm_id, osm_tags, osm_way), '', '')).geo as osm_way,
+	  (geom_area_label(geo_object(osm_id, osm_tags, osm_way), '', '')).geo as osm_way,
 	  ST_Area(osm_way)/1000 as "way_area_k"
 	from (select
 	    osm_id, osm_way,
@@ -267,7 +267,7 @@
      	(select
 	  osm_tags->'name' as "name",
 	  osm_tags->'#area_text' as "type",
-	  (geo_modify_area_label(geo_object(osm_id, osm_tags, osm_way), '', '')).geo as osm_way,
+	  (geom_area_label(geo_object(osm_id, osm_tags, osm_way), '', '')).geo as osm_way,
 	  ST_Area(osm_way) as "way_area"
 	from (select
 	    osm_id, osm_way,

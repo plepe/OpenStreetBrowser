@@ -1,17 +1,5 @@
-CREATE OR REPLACE FUNCTION geo_modify_buffer(in geo_object, in param hstore, in context hstore, out ob geo_object, out geo geometry) AS $$
-DECLARE
-  param alias for $2;
-  context alias for $3;
-BEGIN
-  ob:=$1;
-
-  geo:=ST_Buffer(ob.way, parse_number(param->'radius'));
-  ob.way:=geo;
-END;
-$$ language 'plpgsql';
-
 -- thanks to http://proceedings.esri.com/library/userconf/proc01/professional/papers/pap388/p388.htm (chapter 3)
-CREATE OR REPLACE FUNCTION geo_modify_area_label(in geo_object, in param hstore, in context hstore, out ob geo_object, out geo geometry) AS $$
+CREATE OR REPLACE FUNCTION geom_area_label(in geo_object, in param hstore, in context hstore, out ob geo_object, out geo geometry) AS $$
 DECLARE
   param alias for $2;
   context alias for $3;
@@ -30,7 +18,7 @@ BEGIN
 
   -- check if there's a cached result (in debug we always calculate result)
   if(not debug) then
-    geo:=cache_search(ob.id, 'geo_modify_area_label');
+    geo:=cache_search(ob.id, 'geom_area_label');
     if geo is not null then
       ob.way:=geo;
       return;
@@ -39,7 +27,7 @@ BEGIN
 
   if(debug) then
     t:=clock_timestamp();
-    debug_prefix='#geo_modify:center:';
+    debug_prefix='#geom:center:';
     ob.tags=ob.tags || ((debug_prefix||'geo')=>astext(ST_Centroid(ob.way)));
     ob.tags=ob.tags || ((debug_prefix||'pos')=>astext(ST_Transform(ST_Centroid(ob.way), 4326)));
   end if;
@@ -53,7 +41,7 @@ BEGIN
     geo:=ST_Buffer(ob.way, -radius);
 
     if(debug) then
-      debug_prefix='#geo_modify:step'||lpad(cast(i as text), 2, '0')||':';
+      debug_prefix='#geom:step'||lpad(cast(i as text), 2, '0')||':';
       ob.tags=ob.tags || ((debug_prefix||'radius')=>cast(radius as text));
       ob.tags=ob.tags || ((debug_prefix||'area')=>cast(ST_Area(geo) as text));
       ob.tags=ob.tags || ((debug_prefix||'num geo')=>cast(ST_NumGeometries(geo) as text));
@@ -91,7 +79,7 @@ BEGIN
   geo:=ST_Buffer(ob.way, -radius);
 
   if(debug) then
-    debug_prefix='#geo_modify:step'||lpad(cast(i as text), 2, '0')||':';
+    debug_prefix='#geom:step'||lpad(cast(i as text), 2, '0')||':';
     ob.tags=ob.tags || ((debug_prefix||'radius')=>cast(radius as text));
     ob.tags=ob.tags || ((debug_prefix||'area')=>cast(ST_Area(geo) as text));
     ob.tags=ob.tags || ((debug_prefix||'num geo')=>cast(ST_NumGeometries(geo) as text));
@@ -102,42 +90,13 @@ BEGIN
   geo:=ST_ClosestPoint(geo, ST_Centroid(ob.way));
 
   if(debug) then
-    debug_prefix='#geo_modify:result:';
+    debug_prefix='#geom:result:';
     ob.tags=ob.tags || ((debug_prefix||'pos')=>astext(ST_Transform(ST_Centroid(ob.way), 4326)));
     ob.tags=ob.tags || ((debug_prefix||'time')=>(cast(clock_timestamp()-t as text)));
   end if;
 
-  perform cache_insert(ob.id, 'geo_modify_area_label', geo);
+  perform cache_insert(ob.id, 'geom_area_label', geo);
 
   ob.way=geo;
-END;
-$$ language 'plpgsql';
-
-CREATE OR REPLACE FUNCTION geo_modify_grid(in geo_object, in param hstore, in context hstore, out ob geo_object, out geo geometry) AS $$
-DECLARE
-  geo geometry;
-  param alias for $2;
-  grid_size int;
-  context alias for $3;
-  xmin int; xmax int; ymin int; ymax int;
-BEGIN
-  ob:=$1;
-
-  xmin:=cast(ceil(XMin(ob.way)) as int);
-  xmax:=cast(floor(XMax(ob.way)) as int);
-  ymin:=cast(ceil(YMin(ob.way)) as int);
-  ymax:=cast(floor(YMax(ob.way)) as int);
-  grid_size:=cast(sqrt(ST_Area(ob.way))/10 as int);
-
-  geo:=(select ST_Collect(poi) from
-      (select
-	ST_SetSRID(ST_Point(x, y), 900913) poi
-      from
-	generate_series(xmin, xmax, grid_size) x,
-	generate_series(ymin, ymax, grid_size) y
-      ) points
-    where ST_Intersects(poi, ob.way));
-
-  ob.way:=geo;
 END;
 $$ language 'plpgsql';

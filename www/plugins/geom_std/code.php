@@ -1,0 +1,2 @@
+<?
+geom_register("buffer");

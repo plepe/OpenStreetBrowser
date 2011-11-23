@@ -1,16 +1,16 @@
 <?
-global $geo_modify_funs;
-$geo_modify_funs=array("buffer", "area_label", "grid");
+global $geom_funs;
+$geom_funs=array();
 
-function ajax_geo_modify($param) {
-  global $geo_modify_funs;
+function ajax_geom($param) {
+  global $geom_funs;
 
-  if(!in_array($param['fun'], $geo_modify_funs)) {
+  if(!in_array($param['fun'], $geom_funs)) {
     return false;
   }
 
   $id=postgre_escape($param['id']);
-  $fun="geo_modify_{$param['fun']}";
+  $fun="geom_{$param['fun']}";
   $sql_param=array_to_hstore($param['param']);
   $context=array(
     "zoom"=>$param['zoom'],
@@ -24,4 +24,10 @@ function ajax_geo_modify($param) {
   $elem['tags']=parse_hstore($elem['tags']);
 
   return $elem;
+}
+
+function geom_register($fun) {
+  global $geom_funs;
+
+  $geom_funs[]=$fun;
 }
