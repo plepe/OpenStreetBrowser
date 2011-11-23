@@ -88,7 +88,7 @@ $lang_str["options:autozoom"]="Συμπεριφορά αυτόματης εστ�
 #$lang_str["options:autozoom:move"]="Move to current object (faster)";
 #$lang_str["options:autozoom:stay"]="Never change viewport automatically";
 
-#$lang_str["options:language_support"]="Language Support";
+$lang_str["options:language_support"]="Γλωσσική υποστήριξη";
 #$lang_str["help:language_support"]="You can choose your prefered languages with this options. The first option changes the language of the user interface. The second option changes the data language. Date of many geographic objects has been translated to several languages. If no translation is available or \"Local language\" was chosen, the main language of the object is displayed.";
 $lang_str["options:ui_lang"]="Γλώσσα διεπαφής";
 $lang_str["options:data_lang"]="Γλωσσα δεδομένων";

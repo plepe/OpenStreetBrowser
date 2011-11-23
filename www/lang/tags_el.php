@@ -92,18 +92,18 @@ $lang_str["tag:highway=primary"]="Πρωτεύων Δρόμος";
 $lang_str["tag:highway=primary_link"]="Σύνδεση Πρωτεύοντος Δρόμου";
 $lang_str["tag:highway=secondary"]="Δευτερεύων Δρόμος";
 $lang_str["tag:highway=tertiary"]="Τριτεύων Δρόμος";
-#$lang_str["tag:highway=minor"]="Minor Road";
+$lang_str["tag:highway=minor"]="Μικρός Δρόμος";
 $lang_str["tag:highway=road"]="Δρόμος";
 #$lang_str["tag:highway=residential"]="Residential Road";
 #$lang_str["tag:highway=unclassified"]="Unclassified Road";
 #$lang_str["tag:highway=service"]="Service Road";
-#$lang_str["tag:highway=pedestrian"]="Pedestrian Zone";
+$lang_str["tag:highway=pedestrian"]="Ζώνη πεζών";
 #$lang_str["tag:highway=living_street"]="Living Street";
 #$lang_str["tag:highway=path"]="Path";
 $lang_str["tag:highway=cycleway"]="Ποδηλατόδρομος";
 #$lang_str["tag:highway=footway"]="Footway";
 #$lang_str["tag:highway=bridleway"]="Bridleway";
-#$lang_str["tag:highway=track"]="Track";
+$lang_str["tag:highway=track"]="Χωματόδρομος";
 $lang_str["tag:highway=steps"]="Σκαλιά";
 
 // bridge
@@ -318,13 +318,13 @@ $lang_str["tag:sport=multi"]="Πολλαπλά";
 #$lang_str["tag:sport=racquet"]="Racquet";
 $lang_str["tag:sport=rowing"]="Κωπηλασία";
 #$lang_str["tag:sport=rugby"]="Rugby";
-#$lang_str["tag:sport=shooting"]="Shooting";
+$lang_str["tag:sport=shooting"]="Σκοποβολή";
 #$lang_str["tag:sport=skating"]="Skating";
 #$lang_str["tag:sport=skateboard"]="Skateboard";
 #$lang_str["tag:sport=skiing"]="Skiing";
-#$lang_str["tag:sport=soccer"]="Soccer";
+$lang_str["tag:sport=soccer"]="Ποδόσφαιρο";
 $lang_str["tag:sport=swimming"]="Κολύμβηση";
-#$lang_str["tag:sport=table_tennis"]="Table Tennis";
+$lang_str["tag:sport=table_tennis"]="Πινγκ Πονγκ";
 #$lang_str["tag:sport=team_handball"]="Handball";
 $lang_str["tag:sport=tennis"]="Τένις";
 $lang_str["tag:sport=volleyball"]="Βόλεϊ";
@@ -348,7 +348,7 @@ $lang_str["tag:wires"]="Καλώδια";
 $lang_str["tag:website"]="Ιστότοπος";
 
 // cycleway
-#$lang_str["tag:cycleway"]="Cycleway";
+$lang_str["tag:cycleway"]="Ποδηλατόδρομος";
 
 // tracktype
 #$lang_str["tag:tracktype"]="Track type";
