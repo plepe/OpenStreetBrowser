@@ -1,5 +1,4 @@
 var geom_ui_current;
-var geom_ui_config;
 var geom_ui_color_list=[ '#009f00', '#9f0000', '#008f8f', '#00009f', '#8f008f', '#8f8f00', '#009f3f', '#003f9f', '#3f009f', '#9f003f', '#3f9f00', '#9f3f00' ];
 
 function geom_ui(info, ob) {
@@ -17,11 +16,12 @@ function geom_ui(info, ob) {
 
   this.form=dom_create_append(chapter, "form");
   this.form.action="javascript:geom_ui_submit()";
-  this.form.onsubmit=this.load.bind(this);
+  this.form.onsubmit=this.refresh.bind(this);
 
   var d=dom_create_append(this.form, "div");
   dom_create_append_text(d, lang("geom_ui:function")+": ");
   this.inputs.fun=dom_create_append(d, "select");
+  this.inputs.fun.onchange=this.fun_change.bind(this);
   var opt=dom_create_append(this.inputs.fun, "option");
   opt.value="";
   dom_create_append_text(opt, "choose ...");
@@ -32,14 +32,8 @@ function geom_ui(info, ob) {
     dom_create_append_text(opt, i);
   }
 
-  var d=dom_create_append(this.inputs.param, "div");
-  this.inputs.debug=dom_create_append(d, "input");
-  this.inputs.debug.type="checkbox";
-  this.inputs.debug.checked=true;
-  if(geom_ui_config)
-    this.inputs.debug.checked=geom_ui_config.debug;
-  this.inputs.debug.onchange=this.refresh.bind(this);
-  dom_create_append_text(d, lang("geom_ui:debug"));
+
+  this.inputs.params=dom_create_append(this.form, "div");
 
   this.inputs.submit=dom_create_append(this.form, "input");
   this.inputs.submit.type="submit";
@@ -50,6 +44,64 @@ function geom_ui(info, ob) {
   this.load();
 }
 
+geom_ui.prototype.fun_change=function() {
+  dom_clean(this.inputs.params);
+  this.params={};
+
+  var def=geom_funs[this.inputs.fun.value];
+  if(!def)
+    return;
+
+  for(var i in def) {
+    var d=dom_create_append(this.inputs.params, "div");
+
+    dom_create_append_text(d, i+": ");
+
+    switch(def[i][0]) {
+      case "float":
+      case "text":
+      case "int":
+	var input=dom_create_append(d, "input");
+	this.params[i]=input;
+	input.name=i;
+	if(def[i].length>1)
+	  input.value=def[i][1];
+        break;
+      case "bool":
+	var input=dom_create_append(d, "input");
+	this.params[i]=input;
+	input.type="checkbox";
+	if(def[i].length>1)
+	  input.checked=(def[i][1]!="false")&&(def[i][1]);
+      default:
+    }
+  }
+}
+
+geom_ui.prototype.get_params=function() {
+  var ret={};
+  var def=geom_funs[this.inputs.fun.value];
+  if(!def)
+    return;
+
+  for(var i in def) {
+    var d=dom_create_append(this.inputs.params, "div");
+
+    switch(def[i][0]) {
+      case "float":
+      case "text":
+      case "int":
+	ret[i]=this.params[i].value;
+	break;
+      case "bool":
+	ret[i]=this.params[i].checked?"true":"false";
+	break;
+    }
+  }
+
+  return ret;
+}
+
 geom_ui.prototype.load=function() {
   // call ajax-function
   var param={};
@@ -58,7 +110,8 @@ geom_ui.prototype.load=function() {
     return;
   param.id=this.ob.id;
   param.zoom=map.zoom;
-  param.param={ debug: this.inputs.debug.checked?"true":"false", "angle": 1.67 };
+  param.param=this.get_params();
+
   ajax("geom", param, this.load_callback.bind(this));
 }
 
@@ -122,8 +175,6 @@ geom_ui.prototype.hide=function() {
     delete(this.debug_features);
   }
   dom_clean(this.div);
-
-  geom_ui_config={ debug: this.inputs.debug.checked };
 }
 
 function geom_ui_info_hide() {
