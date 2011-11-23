@@ -1,5 +1,7 @@
 var geom_ui_current;
 var geom_ui_color_list=[ '#009f00', '#9f0000', '#008f8f', '#00009f', '#8f008f', '#8f8f00', '#009f3f', '#003f9f', '#3f009f', '#9f003f', '#3f9f00', '#9f3f00' ];
+var geom_ui_last;
+var geom_ui_last_params={};
 
 function geom_ui(info, ob) {
   this.ob=ob;
@@ -30,8 +32,9 @@ function geom_ui(info, ob) {
     var opt=dom_create_append(this.inputs.fun, "option");
     opt.value=i;
     dom_create_append_text(opt, i);
+    if(geom_ui_last==i)
+      opt.selected=true;
   }
-
 
   this.inputs.params=dom_create_append(this.form, "div");
 
@@ -41,6 +44,7 @@ function geom_ui(info, ob) {
 
   this.div=dom_create_append(chapter, "div");
 
+  this.fun_change();
   this.load();
 }
 
@@ -51,6 +55,8 @@ geom_ui.prototype.fun_change=function() {
   var def=geom_funs[this.inputs.fun.value];
   if(!def)
     return;
+
+  var last=geom_ui_last_params[this.inputs.fun.value];
 
   for(var i in def) {
     var d=dom_create_append(this.inputs.params, "div");
@@ -64,14 +70,18 @@ geom_ui.prototype.fun_change=function() {
 	var input=dom_create_append(d, "input");
 	this.params[i]=input;
 	input.name=i;
-	if(def[i].length>1)
+	if(last)
+          input.value=last[i];
+	else if(def[i].length>1)
 	  input.value=def[i][1];
         break;
       case "bool":
 	var input=dom_create_append(d, "input");
 	this.params[i]=input;
 	input.type="checkbox";
-	if(def[i].length>1)
+	if(last)
+          input.checked=(last[i]=="true");
+	else if(def[i].length>1)
 	  input.checked=(def[i][1]!="false")&&(def[i][1]);
       default:
     }
@@ -111,6 +121,9 @@ geom_ui.prototype.load=function() {
   param.id=this.ob.id;
   param.zoom=map.zoom;
   param.param=this.get_params();
+
+  geom_ui_last=this.inputs.fun.value;
+  geom_ui_last_params[this.inputs.fun.value]=param.param;
 
   ajax("geom", param, this.load_callback.bind(this));
 }
