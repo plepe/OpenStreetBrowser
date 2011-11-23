@@ -15,7 +15,24 @@ function geom_ui(info, ob) {
 
   this.inputs={};
 
-  var d=dom_create_append(chapter, "div");
+  this.form=dom_create_append(chapter, "form");
+  this.form.action="javascript:geom_ui_submit()";
+  this.form.onsubmit=this.load.bind(this);
+
+  var d=dom_create_append(this.form, "div");
+  dom_create_append_text(d, lang("geom_ui:function")+": ");
+  this.inputs.fun=dom_create_append(d, "select");
+  var opt=dom_create_append(this.inputs.fun, "option");
+  opt.value="";
+  dom_create_append_text(opt, "choose ...");
+
+  for(var i in geom_funs) {
+    var opt=dom_create_append(this.inputs.fun, "option");
+    opt.value=i;
+    dom_create_append_text(opt, i);
+  }
+
+  var d=dom_create_append(this.inputs.param, "div");
   this.inputs.debug=dom_create_append(d, "input");
   this.inputs.debug.type="checkbox";
   this.inputs.debug.checked=true;
@@ -23,6 +40,10 @@ function geom_ui(info, ob) {
     this.inputs.debug.checked=geom_ui_config.debug;
   this.inputs.debug.onchange=this.refresh.bind(this);
   dom_create_append_text(d, lang("geom_ui:debug"));
+
+  this.inputs.submit=dom_create_append(this.form, "input");
+  this.inputs.submit.type="submit";
+  this.inputs.submit.value=lang("ok");
 
   this.div=dom_create_append(chapter, "div");
 
@@ -32,10 +53,12 @@ function geom_ui(info, ob) {
 geom_ui.prototype.load=function() {
   // call ajax-function
   var param={};
-  param.fun="area_label";
+  param.fun=this.inputs.fun.value;
+  if(!param.fun)
+    return;
   param.id=this.ob.id;
   param.zoom=map.zoom;
-  param.param={ debug: this.inputs.debug.checked?"true":"false" };
+  param.param={ debug: this.inputs.debug.checked?"true":"false", "angle": 1.67 };
   ajax("geom", param, this.load_callback.bind(this));
 }
 
@@ -112,6 +135,9 @@ function geom_ui_info_hide() {
 
 function geom_ui_info_show(info, ob) {
   geom_ui_current=new geom_ui(info, ob);
+}
+
+function geom_ui_submit() {
 }
 
 register_hook("info", geom_ui_info_show);
