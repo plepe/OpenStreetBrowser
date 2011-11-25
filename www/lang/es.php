@@ -1,19 +1,9 @@
 <?
-// All untranslated strings have a # in front. When you translate a string
-// please remove this hash.
+// In this editor you can translate all strings. In the third column you can compare the strings to another language (set it in the select box on the bottom of the window). Please note that changes will not appear right away, they need to be imported by a developer.
+// Every language string can have a singular and plural variant by separating them by ";", e.g. "Restaurant;Restaurants". The first string is the singular form, the second the plural form.  Optionally you can define the Gender (F, M, N) for the word by prepending one of those characters, e.g. "N;Büro;Büros" (German for "office").
+// When translating a language variant (e.g. 'British English', code 'en-gb') please translate only strings which are different from the base language.
+#$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
 
-//  Every language string looks like this:
-//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
-//  the first entry is the translation of the language string in Singular,
-//  the second the Plural form.
-//
-//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
-//  German translation for office:
-//  $lang_str["office"]=array(N, "Büro", "Büros");
-//
-//  If a Singular/Plural form is not
-//  suitable/necessary you can ignore the array, e.g.
-//  $lang_str["help"]="Help";
 $lang_str["lang:current"]="Español"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
 // General
@@ -22,17 +12,27 @@ $lang_str["yes"]="si";
 $lang_str["no"]="no";
 #$lang_str["ok"]="Ok";
 $lang_str["save"]="Guardar";
+#$lang_str["saved"]="Saved"; // for dialog boxes confirming saving
 $lang_str["cancel"]="Cancelar";
+#$lang_str["show"]="Show";
+#$lang_str["edit"]="Edit";
+#$lang_str["delete"]="Delete";
+#$lang_str["history"]="History";
+#$lang_str["choose"]="Choose";
+#$lang_str["help"]="Help";
 $lang_str["longitude"]=array("Longitud", "Longitudes");
 $lang_str["latitude"]=array("Latitud", "Latitudes");
 $lang_str["noname"]="(sin_nombre)";
 #$lang_str["info_back"]="back to overview";
 $lang_str["info_zoom"]="zoom";
 #$lang_str["nothing_found"]="nothing found";
+#$lang_str["list:zoom_for_obs"]="Zoom in for less important objects";
 $lang_str["loading"]="Cargando...";
 $lang_str["more"]="más";
+#$lang_str["source"]="Source";
 #$lang_str["unnamed"]="unnamed";
 $lang_str["zoom"]="Nivel de Zoom";
+#$lang_str["no_message"]=array("no message", "no messages");
 
 // Headings
 $lang_str["head:general_info"]="Información General";
@@ -67,7 +67,7 @@ $lang_str["routing_distance"]="Distancia";
 $lang_str["routing_time"]="Tiempo";
 #$lang_str["routing_disclaimer"]="Routing: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
-#$lang_str["list_info"]="Choose a category to browse map content or click on an object on the map for details";
+$lang_str["list_info"]="Elige una categoría para explorar el contenido del mapa, o haga clic en un objeto en el mapa para ver los detalles";
 #$lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
 
 // Mapkey
@@ -93,6 +93,7 @@ $lang_str["main:permalink"]="Enlace Permanente";
 $lang_str["options:ui_lang"]="Idioma de interfaz";
 $lang_str["options:data_lang"]="Idioma de datos";
 $lang_str["lang:"]="Idioma local";
+#$lang_str["lang:auto"]="Same as interface language";
 
 #$lang_str["overlay:data"]="Data";
 #$lang_str["overlay:draggable"]="Markers";
@@ -113,19 +114,23 @@ $lang_str["user:user_exists"]="El usuario ya existe";
 #$lang_str["user:logged_in_as"]="Logged in as ";
 $lang_str["user:logout"]="Cerrar sesión";
 
+#$lang_str["attention"]="Attention: ";
 $lang_str["error"]="Ha ocurrido un error: ";
 #$lang_str["error:not_logged_in"]="you are not logged in";
 
+#$lang_str["category"]=array("Category", "Categories");
 $lang_str["more_categories"]="Más categorías";
 $lang_str["category:status"]="Estatus";
 $lang_str["category:data_status"]="Estatus";
 #$lang_str["category:old_version"]="A new version of this category is being prepared.";
 #$lang_str["category:not_compiled"]="New category is being prepared.";
 
+#$lang_str["category:new_rule"]="New Rule";
 #$lang_str["category_rule_tag:match"]="Match";
 $lang_str["category_rule_tag:description"]="Descripción";
 #$lang_str["category_chooser:choose"]="Choose a category";
 #$lang_str["category_chooser:new"]="New category";
+#$lang_str["category:sub_category"]=array("Sub-category", "Sub-categories");
 
 #$lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Estándar (Mapnik)";
