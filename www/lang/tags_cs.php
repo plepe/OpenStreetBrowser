@@ -351,7 +351,7 @@ $lang_str["tag:website"]="Webová stránka";
 $lang_str["tag:cycleway"]="Cyklostezka";
 
 // tracktype
-#$lang_str["tag:tracktype"]="Track type";
+$lang_str["tag:tracktype"]="Kvalita povrchu polní cesty";
 
 // waterway
 $lang_str["tag:waterway"]="Vodní cesta";

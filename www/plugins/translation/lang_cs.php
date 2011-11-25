@@ -7,3 +7,4 @@ $lang_str["translation:improve"]="Zlepšit překlad";
 $lang_str["translation:new"]="Vytvořit nový překlad";
 $lang_str["translation:enter_lang_code"]="Vložit kod pro nový jazyk";
 $lang_str["translation:enter_lang_code_help"]="např. 'CZ' pro Čeština nebo 'en-gb' pro jazykové varianty jako 'Britská angličtina'";
+$lang_str["translation:add_value"]="Přidat hodnotu pro '%s'";
