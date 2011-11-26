@@ -110,8 +110,8 @@ $lang_str["user:no_username"]="Por favor, indica un usuario!";
 $lang_str["user:password_no_match"]="Las contraseñas no concuerdan!";
 $lang_str["user:full_name"]="Nombre completo";
 $lang_str["user:user_exists"]="El usuario ya existe";
-#$lang_str["user:login"]="Login";
-#$lang_str["user:logged_in_as"]="Logged in as ";
+$lang_str["user:login"]="Inico de sessión";
+$lang_str["user:logged_in_as"]="Identificado como";
 $lang_str["user:logout"]="Cerrar sesión";
 
 #$lang_str["attention"]="Attention: ";
