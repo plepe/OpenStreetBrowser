@@ -1,0 +1,9 @@
+<?
+$lang_str["importance:name"]="Σπουδαιότητα";
+$lang_str["importance:global"]="παγκόσμια";
+$lang_str["importance:international"]="διεθνής";
+$lang_str["importance:national"]="εθνική";
+#$lang_str["importance:regional"]="regional";
+#$lang_str["importance:urban"]="urban";
+#$lang_str["importance:suburban"]="suburban";
+#$lang_str["importance:local"]="local";

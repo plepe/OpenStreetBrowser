@@ -1,328 +1,553 @@
 <?
-//  All tags should have translations in www/lang/tags_XX.php, with
-//  language strings like "tag:key" for the translation of the key and
-//  "tag:key=value" for the translation of the value. E.g.
-//  $lang_str["tag:amenity"]=array("Amenity", "Amenities");
-//  $lang_str["tag:amenity=bar"]=array("Bar", "Bars");
-//
-//  Furthermore you can describe the tags with the array $tag_type. Every
-//  entry is an array again to further specify its type, e.g.:
-//  $tag_type["width"]=array("number", "m", "in");
-//                ^             ^       ^    ^
-//                |             |       |    \-- the preferred unit in this locale
-//                |             |       \------- the default unit for this tag
-//                |             \--------------- the type of the value
-//                \----------------------------- tag
-//
-//  This defines, that the default value for the tag width is a number, with
-//  its default unit m (for meter) and the preferred unit for this locale is
-//  in (for inch).
-//
-//  The following types are valid:
-//  * text          default (e.g. religion, name)
-//  * number        a value, with default unit and preferred unit as defined
-//                  by the second and third entry in this array (e.g. width,
-//                  voltage)
-//  * count         an integer value (e.g. population)
-//  * date          a date
-//  * link          an Internet URL
-//
-//  NOTE: the $tag_type can already be defined, but it's not used yet.
-//  There might also be more tag types soon and a way to format the output
-//  (e.g. "100.000 m" or "2010-12-24").
+// All tags should have a translation, with language strings like "tag:key" for the translation of the key and "tag:key=value" for the translation of the value. E.g. tag:amenity "Amenity;Amenities" resp. tag:amenity=bar "Bar;Bars". You can also define the Gender like "F;Bar;Bars".
+
+// *
+$lang_str["tag:*=yes"]="si";
+$lang_str["tag:*=no"]="no";
 
 // accomodation
-$lang_str["tag:accomodation"]="Accomodation";
+$lang_str["tag:accomodation"]="Alloggio";
 
 // address
-$lang_str["tag:address"]="Address";
+$lang_str["tag:address"]="Indirizzo";
 
 // addr:housenumber
-#$lang_str["tag:addr:housenumber"]=array("Housenumber", "Housenumbers");
+$lang_str["tag:addr:housenumber"]=array("Numero civico", "Numeri civici");
+
+// addr:housename
+$lang_str["tag:addr:housename"]=array("Nome dell'edificio", "Nomi degli edifici");
+
+// addr:street
+$lang_str["tag:addr:street"]=array("Via", "Vie");
+
+// addr:postcode
+$lang_str["tag:addr:postcode"]=array("Codice di avviamento postale", "Codici di avviamento postale");
+
+// addr:city
+$lang_str["tag:addr:city"]=array("Città", "Città");
+
+// addr:country
+$lang_str["tag:addr:country"]=array("Nazione", "Nazioni");
+
+// addr:full
+$lang_str["tag:addr:full"]=array("Indirizzo completo", "Indirizzi completi");
 
 // addr:interpolation
-#$lang_str["tag:addr:interpolation"]="Interpolated housenumbers";
+$lang_str["tag:addr:interpolation"]="Numeri civici interpolati";
 
 // aeroway
-#$lang_str["tag:aeroway"]="Aeroway";
-#$lang_str["tag:aeroway=runway"]="Runway";
-#$lang_str["tag:aeroway=taxiway"]="Taxiway";
+$lang_str["tag:aeroway"]="Traffico aereo";
+$lang_str["tag:aeroway=runway"]="Pista di decollo o atterraggio";
+$lang_str["tag:aeroway=taxiway"]="Pista di rullaggio";
 
 // admin_level
-$lang_str["tag:admin_level=2"]="Country Border";
+$lang_str["tag:admin_level=2"]="Confine nazionale";
 $lang_str["tag:admin_level=3"]="Divisions";
-$lang_str["tag:admin_level=4"]="State Border";
+$lang_str["tag:admin_level=4"]="Confine regionale";
 $lang_str["tag:admin_level=5"]="Community Border";
-$lang_str["tag:admin_level=6"]="County Border";
-#$lang_str["tag:admin_level=7"]="";
-#$lang_str["tag:admin_level=7.5"]="";
-$lang_str["tag:admin_level=8"]="Town/Municipality Border";
-$lang_str["tag:admin_level=10"]="Subdivisions of Cities";
+$lang_str["tag:admin_level=6"]="Confine provinciale";
+$lang_str["tag:admin_level=8"]="Confine comunale";
+$lang_str["tag:admin_level=10"]="Confine di circoscrizione o di località";
 
 // amenity
-$lang_str["tag:amenity"]="Amenity";
-$lang_str["tag:amenity=cinema"]=array("Cinema", "Cinemas");
+$lang_str["tag:amenity"]="Strutture di servizio";
+$lang_str["tag:amenity=cinema"]=array("Cinema", "Cinema");
 $lang_str["tag:amenity=restaurant"]=array("Ristorante", "Ristoranti");
-$lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
+$lang_str["tag:amenity=pub"]=array("Pub", "Pub");
 
 // barrier
-#$lang_str["tag:barrier"]=array("Barrier", "Barriers");
-#$lang_str["tag:barrier=city_wall"]=array("City wall", "City walls");
-#$lang_str["tag:barrier=wall"]=array("Wall", "Walls");
-#$lang_str["tag:barrier=retaining_wall"]=array("Retaining Wall", "Retaining Walls");
-#$lang_str["tag:barrier=fence"]=array("Fence", "Fences");
-#$lang_str["tag:barrier=hedge"]=array("Hedge", "Hedges");
+$lang_str["tag:barrier"]=array("Barriera", "Barriere");
+$lang_str["tag:barrier=city_wall"]=array("Mura cittadine", "Mura cittadine");
+$lang_str["tag:barrier=wall"]=array("Muro", "Muri");
+$lang_str["tag:barrier=retaining_wall"]=array("Muro di contenimento", "Muri di contenimento");
+$lang_str["tag:barrier=fence"]=array("Recinzione", "Recinzioni");
+$lang_str["tag:barrier=hedge"]=array("Siepe", "Siepi");
 
 // cables
-$lang_str["tag:cables"]="Cables";
-
-// cuisine
-$lang_str["tag:cuisine"]="Cuisine";
-#$lang_str["tag:cuisine=regional"]="regional";
+$lang_str["tag:cables"]="Cavi elettrici";
 
 // description
-$lang_str["tag:description"]="Description";
+$lang_str["tag:description"]="Descrizione";
 
-// food
-$lang_str["tag:food"]="Serves food";
-
-// highway
-$lang_str["tag:highway"]=array("Highway", "Highways");
-#$lang_str["tag:highway=motorway"]="Motorway";
-#$lang_str["tag:highway=motorway_link"]="Motorway Link";
-#$lang_str["tag:highway=trunk"]="Trunk Road";
-#$lang_str["tag:highway=trunk_link"]="Trunk Road Link";
-#$lang_str["tag:highway=primary"]="Primary Road";
-#$lang_str["tag:highway=primary_link"]="Primary Road Link";
-#$lang_str["tag:highway=secondary"]="Secondary Road";
-#$lang_str["tag:highway=tertiary"]="Tertiary Road";
-#$lang_str["tag:highway=minor"]="Minor Road";
-#$lang_str["tag:highway=road"]="Road";
-#$lang_str["tag:highway=residential"]="Residential Road";
-#$lang_str["tag:highway=unclassified"]="Unclassified Road";
-#$lang_str["tag:highway=service"]="Service Road";
-#$lang_str["tag:highway=pedestrian"]="Pedestrian Zone";
-#$lang_str["tag:highway=living_street"]="Living Street";
-#$lang_str["tag:highway=path"]="Path";
-#$lang_str["tag:highway=cycleway"]="Cycleway";
-#$lang_str["tag:highway=footway"]="Footway";
-#$lang_str["tag:highway=bridleway"]="Bridleway";
-#$lang_str["tag:highway=track"]="Track";
-#$lang_str["tag:highway=path"]="Path";
-#$lang_str["tag:highway=steps"]="Steps";
-
-// is_in
-$lang_str["tag:is_in"]="Is in";
-
-// leisure
-$lang_str["tag:leisure=sports_centre"]="Sport Centre";
-$lang_str["tag:leisure=golf_course"]="Golf Course";
-$lang_str["tag:leisure=stadium"]="Stadium";
-$lang_str["tag:leisure=track"]="Track";
-$lang_str["tag:leisure=pitch"]="Pitche";
-$lang_str["tag:leisure=water_park"]="Water Park";
-$lang_str["tag:leisure=marina"]="Marina";
-$lang_str["tag:leisure=slipway"]="Slipway";
-$lang_str["tag:leisure=fishing"]="Fishing";
-$lang_str["tag:leisure=nature_reserve"]="Nature Reserve";
-$lang_str["tag:leisure=park"]="Leisure Park";
-$lang_str["tag:leisure=playground"]="Playground";
-$lang_str["tag:leisure=garden"]="Garden";
-$lang_str["tag:leisure=common"]="Common";
-$lang_str["tag:leisure=ice_rink"]="Ice Rink";
-$lang_str["tag:leisure=miniature_golf"]="Miniature Golf";
-$lang_str["tag:leisure=swimming_pool"]="Swimming Pool";
-$lang_str["tag:leisure=beach_resort"]="Beach Resort";
-$lang_str["tag:leisure=bird_hide"]="Bird Hide";
-$lang_str["tag:leisure=sport"]="Other Sport";
-
-// man_made
-#$lang_str["tag:man_made"]="Artificial structures";
-#$lang_str["tag:man_made=pipeline"]=array("Pipeline", "Pipelines");
-
-// man_made - type
-#$lang_str["tag:type"]="Type";
-#$lang_str["tag:type=gas"]="Gas";
-#$lang_str["tag:type=heat"]="Heat";
-#$lang_str["tag:type=hot_water"]="Hot Water";
-#$lang_str["tag:type=oil"]="Oil";
-#$lang_str["tag:type=sewage"]="Sewage";
-#$lang_str["tag:type=water"]="Water";
-
-// name
-$lang_str["tag:name"]=array("Name", "Namen");
-
-// network
-$lang_str["tag:network"]="Network";
+// fixme
+$lang_str["tag:fixme"]="Da rivedere";
 
 // note
-$lang_str["tag:note"]="Note";
+$lang_str["tag:note"]="Annotazione";
+
+// food
+$lang_str["tag:food"]="Serve vivande";
+
+// cuisine
+$lang_str["tag:cuisine"]="Cucina";
+$lang_str["tag:cuisine=regional"]="regionale";
+
+// highway
+$lang_str["tag:highway"]=array("Strada", "Strade");
+$lang_str["tag:highway=motorway"]="Autostrada";
+$lang_str["tag:highway=motorway_link"]="Rampe e svincoli di raccordo autostradale";
+$lang_str["tag:highway=trunk"]="Superstrada";
+$lang_str["tag:highway=trunk_link"]="Rampe e svincoli di raccordo di superstrada";
+$lang_str["tag:highway=primary"]="Strada di importanza nazionale";
+$lang_str["tag:highway=primary_link"]="Rampe e svincoli di raccordo di strada di importanza nazionale";
+$lang_str["tag:highway=secondary"]="Strada di importanza provinciale";
+$lang_str["tag:highway=tertiary"]="Strada locale importante o strada urbana a scorrimento veloce";
+$lang_str["tag:highway=minor"]="Strada secondaria";
+$lang_str["tag:highway=road"]="Strada";
+$lang_str["tag:highway=residential"]="Strada residenziale";
+$lang_str["tag:highway=unclassified"]="Strada urbana o extraurbana poco importante";
+$lang_str["tag:highway=service"]="Strada di servizio";
+$lang_str["tag:highway=pedestrian"]="Zona pedonale";
+$lang_str["tag:highway=living_street"]="Zona a traffico limitato";
+$lang_str["tag:highway=path"]="Sentieri/Passaggi";
+$lang_str["tag:highway=cycleway"]="Pista ciclabile";
+$lang_str["tag:highway=footway"]="Pista pedonale";
+$lang_str["tag:highway=bridleway"]="Pista per cavalli";
+$lang_str["tag:highway=track"]="Strada agricola o forestale";
+$lang_str["tag:highway=steps"]="Scala/Gradini";
+
+// bridge
+$lang_str["tag:bridge"]="Ponte";
+
+// tunnel
+$lang_str["tag:tunnel"]="Tunnel";
+
+// traffic_calming
+$lang_str["tag:traffic_calming"]="Rallentatore del traffico";
+
+// service
+$lang_str["tag:service"]="Tipo di strada di servizio";
+
+// postal_code
+$lang_str["tag:postal_code"]="Codice di avviamento postale";
+
+// is_in
+$lang_str["tag:is_in"]="è in";
+
+// leisure
+$lang_str["tag:leisure"]="Tempo libero";
+$lang_str["tag:leisure=sports_centre"]="Centro sportivo";
+$lang_str["tag:leisure=golf_course"]="Campo di golf";
+$lang_str["tag:leisure=stadium"]="Stadio";
+$lang_str["tag:leisure=track"]="Pista";
+$lang_str["tag:leisure=pitch"]="Campo da gioco";
+$lang_str["tag:leisure=water_park"]="Parco acquatico";
+$lang_str["tag:leisure=marina"]="Porticciolo turistico";
+$lang_str["tag:leisure=slipway"]="Scalo di alaggio";
+$lang_str["tag:leisure=fishing"]="Pesca";
+$lang_str["tag:leisure=nature_reserve"]="Riserva naturale";
+$lang_str["tag:leisure=park"]="Parco";
+$lang_str["tag:leisure=playground"]="Area giochi";
+$lang_str["tag:leisure=garden"]="Giardino";
+$lang_str["tag:leisure=common"]="Area pubblica";
+$lang_str["tag:leisure=ice_rink"]="Pista da pattinaggio su ghiaccio";
+$lang_str["tag:leisure=miniature_golf"]="Minigolf";
+$lang_str["tag:leisure=swimming_pool"]="Piscina";
+$lang_str["tag:leisure=beach_resort"]="Stabilimento balneare";
+$lang_str["tag:leisure=bird_hide"]="Capanno per birdwatching";
+$lang_str["tag:leisure=sport"]="Altri sport";
+
+// man_made
+$lang_str["tag:man_made"]="Manufatti";
+$lang_str["tag:man_made=pipeline"]=array("Conduttura", "Condutture");
+
+// type
+$lang_str["tag:type"]="Tipo";
+$lang_str["tag:type=gas"]="Gas";
+$lang_str["tag:type=heat"]="Teleriscaldamento";
+$lang_str["tag:type=hot_water"]="Acqua calda";
+$lang_str["tag:type=oil"]="Petrolio";
+$lang_str["tag:type=sewage"]="Acque di scarico";
+$lang_str["tag:type=water"]="Acqua";
+
+// name
+$lang_str["tag:name"]=array("Nome", "Nomi");
+
+// alt_name
+$lang_str["tag:alt_name"]=array("Nome alternativo", "Nomi alternativi");
+
+// official_name
+$lang_str["tag:official_name"]=array("Nome ufficiale", "Nomi ufficiali");
+
+// int_name
+$lang_str["tag:int_name"]=array("Nome internazionale", "Nomi internazionali");
+
+// loc_name
+$lang_str["tag:loc_name"]=array("Nome locale", "Nomi locali");
 
 // old_name
-$lang_str["tag:old_name"]="Old Name(s)";
+$lang_str["tag:old_name"]=array("Nome storico o precedente", "Nomi storici o precedenti");
+
+// ref
+$lang_str["tag:ref"]="Riferimento";
+
+// network
+$lang_str["tag:network"]="Rete";
 
 // opening_hours
-$lang_str["tag:opening_hours"]="Opening hours";
+$lang_str["tag:opening_hours"]="Orario di apertura";
 
 // operator
-$lang_str["tag:operator"]="Operator";
+$lang_str["tag:operator"]="Gestore";
 
 // place
-$lang_str["tag:place"]="Place";
-$lang_str["tag:place=continent"]="Continent";
-$lang_str["tag:place=country"]="Country";
-$lang_str["tag:place=state"]="State";
-$lang_str["tag:place=region"]="Region";
-$lang_str["tag:place=county"]="County";
-$lang_str["tag:place=city"]="City";
-$lang_str["tag:place=town"]="Town";
-$lang_str["tag:place=village"]="Village";
-$lang_str["tag:place=suburb"]="Suburb";
-$lang_str["tag:place=hamlet"]="Hamlet";
-$lang_str["tag:place=locality"]="Locality";
-$lang_str["tag:place=island"]="Island";
-#$lang_str["tag:place=islet"]=array("Islet", "Islets");
+$lang_str["tag:place"]="Luogo";
+$lang_str["tag:place=continent"]=array("Continente", "Continenti");
+$lang_str["tag:place=country"]=array("Stato", "Stati");
+$lang_str["tag:place=state"]=array("Regione", "Regioni");
+$lang_str["tag:place=region"]=array("Provincia", "Province");
+$lang_str["tag:place=county"]=array("Circoscrizione", "Circoscrizioni");
+$lang_str["tag:place=city"]=array("Città", "Città");
+$lang_str["tag:place=town"]=array("Cittadina", "Cittadine");
+$lang_str["tag:place=village"]=array("Paese", "Paesi");
+$lang_str["tag:place=suburb"]=array("Sobborgo", "Sobborghi");
+$lang_str["tag:place=hamlet"]=array("Borgo", "Borghi");
+$lang_str["tag:place=locality"]=array("Località", "Località");
+$lang_str["tag:place=island"]=array("Isola", "Isole");
+$lang_str["tag:place=islet"]=array("Isolotto", "Isolotti");
+$lang_str["tag:place=ocean"]=array("Oceano", "Oceani");
+$lang_str["tag:place=sea"]=array("Mare", "Mari");
 
 // population
-$lang_str["tag:population"]="Population";
-$tag_type["population"]=array("count");
+$lang_str["tag:population"]="Popolazione";
 
 // power
-#$lang_str["tag:power"]="Power";
-$lang_str["tag:power=generator"]="Power Generator";
-$lang_str["tag:power=line"]="Power Line";
-#$lang_str["tag:power=minor_line"]="Minor Power Line";
-$lang_str["tag:power=tower"]="Power Tower";
-$lang_str["tag:power=pole"]="Power Pole";
-$lang_str["tag:power=station"]="Power Station";
-$lang_str["tag:power=sub_station"]="Power Substation";
+$lang_str["tag:power"]="Energia elettrica";
+$lang_str["tag:power=generator"]="Centrale elettrica";
+$lang_str["tag:power=line"]="Elettrodotto";
+$lang_str["tag:power=minor_line"]="Linea elettrica secondaria";
+$lang_str["tag:power=tower"]="Traliccio dell'alta tensione";
+$lang_str["tag:power=pole"]="Pilone o palo";
+$lang_str["tag:power=station"]="Stazione di trasformazione";
+$lang_str["tag:power=sub_station"]="Sottostazione di trasformazione";
 
 // power_source
-$lang_str["tag:power_source"]="Power source";
-$lang_str["tag:power_source=biofuel"]="Biofuel";
-$lang_str["tag:power_source=oil"]="Oil";
-$lang_str["tag:power_source=coal"]="Coal";
+$lang_str["tag:power_source"]="Fonte di energia";
+$lang_str["tag:power_source=biofuel"]="Biocarburante";
+$lang_str["tag:power_source=oil"]="Petrolio";
+$lang_str["tag:power_source=coal"]="Carbone";
 $lang_str["tag:power_source=gas"]="Gas";
-$lang_str["tag:power_source=waste"]="Waste";
-$lang_str["tag:power_source=hydro"]="Hydro";
-$lang_str["tag:power_source=tidal"]="Tidal";
-$lang_str["tag:power_source=wave"]="Wave";
-$lang_str["tag:power_source=geothermal"]="Geothermal";
-$lang_str["tag:power_source=nuclear"]="Nuclear";
-$lang_str["tag:power_source=fusion"]="Fusion";
-$lang_str["tag:power_source=wind"]="Wind";
-$lang_str["tag:power_source=photovoltaic"]="Photovoltaic";
-$lang_str["tag:power_source=solar-thermal"]="Solar Thermal";
+$lang_str["tag:power_source=waste"]="Rifiuti";
+$lang_str["tag:power_source=hydro"]="Idroelettrica";
+$lang_str["tag:power_source=tidal"]="Marea";
+$lang_str["tag:power_source=wave"]="Onde";
+$lang_str["tag:power_source=geothermal"]="Geotermica";
+$lang_str["tag:power_source=nuclear"]="Nucleare";
+$lang_str["tag:power_source=fusion"]="Fusione";
+$lang_str["tag:power_source=wind"]="Vento";
+$lang_str["tag:power_source=photovoltaic"]="Fotovoltaica";
+$lang_str["tag:power_source=solar-thermal"]="Energia termica solare";
 
 // railway
-#$lang_str["tag:railway"]="Railway";
-#$lang_str["tag:railway=rail"]=array("Rail Track", "Rail Tracks");
-#$lang_str["tag:railway=tram"]=array("Tram Track", "Tram Tracks");
-#$lang_str["tag:railway=platform"]=array("Platform", "Platforms");
+$lang_str["tag:railway"]="Ferrovia";
+$lang_str["tag:railway=rail"]=array("Ferrovia", "Ferrovie");
+$lang_str["tag:railway=tram"]=array("Tram", "Tram");
+$lang_str["tag:railway=platform"]=array("Banchina", "Banchine");
 
 // real_ale
-$lang_str["tag:real_ale"]="Real ale offered";
+$lang_str["tag:real_ale"]="Birra autentica in offerta";
 
 // religion
-$lang_str["tag:religion"]="Religion";
-#$lang_str["tag:religion=christian"]="christian";
-#$lang_str["tag:religion=buddhist"]="buddhist";
-#$lang_str["tag:religion=hindu"]="hindu";
-#$lang_str["tag:religion=jewish"]="jewish";
-#$lang_str["tag:religion=muslim"]="muslim";
-#$lang_str["tag:religion=multifaith"]="multifaith";
+$lang_str["tag:religion"]="Religione";
+$lang_str["tag:religion=christian"]="Cristiana";
+$lang_str["tag:religion=buddhist"]="Buddista";
+$lang_str["tag:religion=hindu"]="Indù";
+$lang_str["tag:religion=jewish"]="Ebraica";
+$lang_str["tag:religion=muslim"]="Mussulmana";
+$lang_str["tag:religion=multifaith"]="Più religioni";
+
+// denomination
+$lang_str["tag:denomination"]="Confessione";
 
 // route
-#$lang_str["tag:route"]="Route";
-$lang_str["tag:route=train"]="Train";
-$lang_str["tag:route=railway"]="Railway";
-$lang_str["tag:route=rail"]="Railway";
-$lang_str["tag:route=light_rail"]="Light Rail";
-$lang_str["tag:route=subway"]="Subway";
+$lang_str["tag:route"]="Linea";
+$lang_str["tag:route=train"]="Treno";
+$lang_str["tag:route=railway"]="Ferrovia";
+$lang_str["tag:route=rail"]="Ferrovia";
+$lang_str["tag:route=light_rail"]="Metropolitana leggera";
+$lang_str["tag:route=subway"]="Metropolitana";
 $lang_str["tag:route=tram"]="Tram";
-#$lang_str["tag:route=tram_bus"]="Tram and Bus";
-$lang_str["tag:route=trolley"]="Trolley";
-$lang_str["tag:route=trolleybus"]="Trolley";
-$lang_str["tag:route=bus"]="Bus";
+$lang_str["tag:route=tram_bus"]="Tram e autobus";
+$lang_str["tag:route=trolley"]="Filobus";
+$lang_str["tag:route=trolleybus"]="Filobus";
+$lang_str["tag:route=bus"]="Autobus";
 $lang_str["tag:route=minibus"]="Minibus";
-$lang_str["tag:route=ferry"]="Ferry";
-$lang_str["tag:route=road"]="Road";
-$lang_str["tag:route=bicycle"]="Bicycle";
-$lang_str["tag:route=hiking"]="Hiking";
-$lang_str["tag:route=mtb"]="Mountainbike";
-
-// route_type
-// the following tags are deprecated
-$lang_str["tag:route_type"]="Route type";
+$lang_str["tag:route=ferry"]="Traghetto";
+$lang_str["tag:route=road"]="Strada";
+$lang_str["tag:route=bicycle"]="Bicicletta";
+$lang_str["tag:route=hiking"]="Camminate";
+$lang_str["tag:route=mtb"]="Mountain bike";
 
 // shop
-$lang_str["tag:shop"]="Shop";
+$lang_str["tag:shop"]="Esercizio commerciale";
 
 // sport
-#$lang_str["tag:sport"]="Sport";
-$lang_str["tag:sport=9pin"]="9pin Bowling";
-$lang_str["tag:sport=10pin"]="10pin Bowling";
-$lang_str["tag:sport=archery"]="Archery";
-$lang_str["tag:sport=athletics"]="Athletics";
-$lang_str["tag:sport=australian_football"]="Australian Football";
+$lang_str["tag:sport"]="Sport";
+$lang_str["tag:sport=9pin"]="Bowling a 9 birilli";
+$lang_str["tag:sport=10pin"]="Bowling a 10 birilli";
+$lang_str["tag:sport=archery"]="Tiro con l'arco";
+$lang_str["tag:sport=athletics"]="Atletica leggera";
+$lang_str["tag:sport=australian_football"]="Football australiano";
 $lang_str["tag:sport=baseball"]="Baseball";
-$lang_str["tag:sport=basketball"]="Basketball";
-$lang_str["tag:sport=beachvolleyball"]="Beachvolleyball";
+$lang_str["tag:sport=basketball"]="Pallacanestro";
+$lang_str["tag:sport=beachvolleyball"]="Beach volley";
 $lang_str["tag:sport=boules"]="Boules";
 $lang_str["tag:sport=bowls"]="Bowls";
-$lang_str["tag:sport=canoe"]="Canoe";
-$lang_str["tag:sport=chess"]="Chess";
-$lang_str["tag:sport=climbing"]="Climbing";
+$lang_str["tag:sport=canoe"]="Canoa";
+$lang_str["tag:sport=chess"]="Scacchi";
+$lang_str["tag:sport=climbing"]="Arrampicata";
 $lang_str["tag:sport=cricket"]="Cricket";
 $lang_str["tag:sport=cricket_nets"]="Cricket Nets";
 $lang_str["tag:sport=croquet"]="Croquet";
-$lang_str["tag:sport=cycling"]="Cycling";
-$lang_str["tag:sport=diving"]="Diving";
-$lang_str["tag:sport=dog_racing"]="Dog Racing";
-$lang_str["tag:sport=equestrian"]="Equestrian";
+$lang_str["tag:sport=cycling"]="Ciclismo";
+$lang_str["tag:sport=diving"]="Immersione sportiva";
+$lang_str["tag:sport=dog_racing"]="Corse di cani";
+$lang_str["tag:sport=equestrian"]="Equitazione";
 $lang_str["tag:sport=football"]="Football";
 $lang_str["tag:sport=golf"]="Golf";
-$lang_str["tag:sport=gymnastics"]="Gymnastics";
+$lang_str["tag:sport=gymnastics"]="Ginnastica";
 $lang_str["tag:sport=hockey"]="Hockey";
-$lang_str["tag:sport=horse_racing"]="Horse Racing";
-$lang_str["tag:sport=korfball"]="Korfball";
-$lang_str["tag:sport=motor"]="Motor";
-$lang_str["tag:sport=multi"]="Multi";
-$lang_str["tag:sport=orienteering"]="Orienteering";
+$lang_str["tag:sport=horse_racing"]="Ippica";
+$lang_str["tag:sport=korfball"]="Pallacesto";
+$lang_str["tag:sport=motor"]="Sport motoristici";
+$lang_str["tag:sport=multi"]="Più discipline sportive";
+$lang_str["tag:sport=orienteering"]="Orientamento";
 $lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
-$lang_str["tag:sport=paragliding"]="Paragliding";
-$lang_str["tag:sport=pelota"]="Pelota";
-$lang_str["tag:sport=racquet"]="Racquet";
-$lang_str["tag:sport=rowing"]="Rowing";
+$lang_str["tag:sport=paragliding"]="Parapendio";
+$lang_str["tag:sport=pelota"]="Pelota basca";
+$lang_str["tag:sport=racquet"]="Racquetball";
+$lang_str["tag:sport=rowing"]="Canottaggio";
 $lang_str["tag:sport=rugby"]="Rugby";
-$lang_str["tag:sport=shooting"]="Shooting";
-$lang_str["tag:sport=skating"]="Skating";
+$lang_str["tag:sport=shooting"]="Tiro a segno";
+$lang_str["tag:sport=skating"]="Pattinaggio";
 $lang_str["tag:sport=skateboard"]="Skateboard";
-$lang_str["tag:sport=skiing"]="Skiing";
-$lang_str["tag:sport=soccer"]="Soccer";
-$lang_str["tag:sport=swimming"]="Swimming";
-$lang_str["tag:sport=table_tennis"]="Table Tennis";
-$lang_str["tag:sport=team_handball"]="Handball";
+$lang_str["tag:sport=skiing"]="Sci";
+$lang_str["tag:sport=soccer"]="Calcio";
+$lang_str["tag:sport=swimming"]="Nuoto";
+$lang_str["tag:sport=table_tennis"]="Ping-Pong";
+$lang_str["tag:sport=team_handball"]="Pallamano";
 $lang_str["tag:sport=tennis"]="Tennis";
-$lang_str["tag:sport=volleyball"]="Volleyball";
+$lang_str["tag:sport=volleyball"]="Pallovolo";
 
 // tracks
-#$lang_str["tag:tracks"]="Tracks";
-#$lang_str["tag:tracks=single"]="Single";
-#$lang_str["tag:tracks=double"]="Double";
-#$lang_str["tag:tracks=multiple"]="Multiple";
+$lang_str["tag:tracks"]="Corsie";
+$lang_str["tag:tracks=single"]="Singola";
+$lang_str["tag:tracks=double"]="Doppia";
+$lang_str["tag:tracks=multiple"]="Multipla";
 
 // vending
-$lang_str["tag:vending"]="Vending";
+$lang_str["tag:vending"]="Distributore automatico";
 
 // voltage
-$lang_str["tag:voltage"]="Voltage";
-$tag_type["voltage"]=array("number", "V", "V");
+$lang_str["tag:voltage"]="Tensione";
 
 // wires
-$lang_str["tag:wires"]="Wires";
-$tag_type["wires"]=array("count");
+$lang_str["tag:wires"]="Cavi";
 
 // website
-$lang_str["tag:website"]="Website";
-$tag_type["website"]=array("link");
+$lang_str["tag:website"]="Sito web";
+
+// cycleway
+$lang_str["tag:cycleway"]="Pista ciclabile";
+
+// tracktype
+$lang_str["tag:tracktype"]="Tipo di pista";
+
+// waterway
+$lang_str["tag:waterway"]="Corso d'acqua";
+
+// aerialway
+$lang_str["tag:aerialway"]="Impianti a fune";
+
+// public_transport
+$lang_str["tag:public_transport"]="Trasporti pubblici";
+
+// office
+$lang_str["tag:office"]="Ufficio";
+
+// craft
+$lang_str["tag:craft"]="Artigiani";
+
+// emergency
+$lang_str["tag:emergency"]="Servizi d'emergenza";
+
+// tourism
+$lang_str["tag:tourism"]="Turismo";
+
+// historic
+$lang_str["tag:historic"]="Storico";
+
+// landuse
+$lang_str["tag:landuse"]="Uso del suolo";
+
+// wood
+$lang_str["tag:wood"]="Tipo di essenza";
+
+// military
+$lang_str["tag:military"]="Militare";
+
+// natural
+$lang_str["tag:natural"]="Naturale";
+
+// geological
+$lang_str["tag:geological"]="Geologico";
+
+// boundary
+$lang_str["tag:boundary"]="Confine";
+
+// abutters
+$lang_str["tag:abutters"]="Frontisti";
+
+// lit
+$lang_str["tag:lit"]="Illuminazione stradale";
+
+// area
+$lang_str["tag:area"]="Area";
+
+// crossing
+$lang_str["tag:crossing"]="Attraversamento";
+
+// mountain_pass
+$lang_str["tag:mountain_pass"]="Passo alpino";
+
+// cutting
+$lang_str["tag:cutting"]="Taglio";
+
+// embankment
+$lang_str["tag:embankment"]="Terrapieno";
+
+// lanes
+$lang_str["tag:lanes"]="Corsie";
+
+// layer
+$lang_str["tag:layer"]="Livello";
+
+// surface
+$lang_str["tag:surface"]="Superficie";
+
+// smoothness
+$lang_str["tag:smoothness"]="Scorrevolezza";
+
+// ele
+$lang_str["tag:ele"]="Altitudine";
+
+// width
+$lang_str["tag:width"]="Larghezza";
+
+// est_width
+$lang_str["tag:est_width"]="Larghezza stimata";
+
+// incline
+$lang_str["tag:incline"]="Pendenza";
+
+// start_date
+$lang_str["tag:start_date"]="Data di creazione";
+
+// end_date
+$lang_str["tag:end_date"]="Data di eliminazione o demolizione";
+
+// disused
+$lang_str["tag:disused"]="Abbandonato";
+
+// wheelchair
+$lang_str["tag:wheelchair"]="Sedia a rotelle";
+$lang_str["tag:wheelchair=limited"]="limitato";
+
+// tactile_paving
+$lang_str["tag:tactile_paving"]="Pavimentazione tattile";
+
+// narrow
+$lang_str["tag:narrow"]="Stretto";
+
+// covered
+$lang_str["tag:covered"]="Coperto";
+
+// ford
+$lang_str["tag:ford"]="Guado";
+
+// access
+$lang_str["tag:access"]="Permesso generale di accesso";
+
+// vehicle
+$lang_str["tag:vehicle"]="Permesso di accesso per i veicoli";
+
+// bicycle
+$lang_str["tag:bicycle"]="Permesso di accesso per le biciclette";
+
+// foot
+$lang_str["tag:foot"]="Permesso di accesso per i pedoni";
+
+// goods
+$lang_str["tag:goods"]="Permesso di accesso per veicoli commerciali leggeri";
+
+// hgv
+$lang_str["tag:hgv"]="Permesso di accesso per veicoli commerciali pesanti";
+
+// horse
+$lang_str["tag:horse"]="Permesso di accesso a cavallo";
+
+// motorcycle
+$lang_str["tag:motorcycle"]="Permesso di accesso per motocicli";
+
+// motorcar
+$lang_str["tag:motorcar"]="Permesso di accesso per autoveicoli";
+
+// psv
+$lang_str["tag:psv"]="Permesso di accesso per veicoli di servizio pubblico";
+
+// oneway
+$lang_str["tag:oneway"]="Senso unico";
+
+// noexit
+$lang_str["tag:noexit"]="Strada senza uscita";
+
+// maxweight
+$lang_str["tag:maxweight"]="Peso massimo";
+
+// maxheight
+$lang_str["tag:maxheight"]="Altezza massima";
+
+// maxlength
+$lang_str["tag:maxlength"]="Lunghezza massima";
+
+// maxspeed
+$lang_str["tag:maxspeed"]="Velocità massima";
+
+// minspeed
+$lang_str["tag:minspeed"]="Velocità minima";
+
+// traffic_sign
+$lang_str["tag:traffic_sign"]="Cartello indicatore";
+
+// toll
+$lang_str["tag:toll"]="Pedaggio";
+
+// charge
+$lang_str["tag:charge"]="Tariffa";
+
+// source
+$lang_str["tag:source"]="Fonte";
+
+// phone
+$lang_str["tag:phone"]="Numero telefonico";
+
+// fax
+$lang_str["tag:fax"]="Numero di fax";
+
+// email
+$lang_str["tag:email"]="E-mail";
+
+// wikipedia
+$lang_str["tag:wikipedia"]="Wikipedia";
+
+// created_by
+$lang_str["tag:created_by"]="Creato da";
+
+// construction
+$lang_str["tag:construction"]="In costruzione";
+
+// proposed
+$lang_str["tag:proposed"]="In progetto";
+
+// route_type
+$lang_str["tag:route_type"]="Route type";

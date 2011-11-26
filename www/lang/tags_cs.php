@@ -93,7 +93,7 @@ $lang_str["tag:highway=primary_link"]="Nájezdová nebo sjezdová rampa sil. I. 
 $lang_str["tag:highway=secondary"]="Silnice II. třídy";
 $lang_str["tag:highway=tertiary"]="Silnice III. třídy";
 $lang_str["tag:highway=minor"]="Vedlejší cesta";
-$lang_str["tag:highway=road"]="Cesta";
+$lang_str["tag:highway=road"]="Silnice";
 $lang_str["tag:highway=residential"]="Ulice";
 $lang_str["tag:highway=unclassified"]="Nezařazená komunikace";
 $lang_str["tag:highway=service"]="Účelová komunikace";
@@ -116,7 +116,7 @@ $lang_str["tag:tunnel"]="Tunel";
 #$lang_str["tag:traffic_calming"]="Traffic calming";
 
 // service
-#$lang_str["tag:service"]="Service road attributes";
+$lang_str["tag:service"]="Vlastnosti obslužné komunikace";
 
 // postal_code
 $lang_str["tag:postal_code"]="PSČ";
@@ -351,7 +351,7 @@ $lang_str["tag:website"]="Webová stránka";
 $lang_str["tag:cycleway"]="Cyklostezka";
 
 // tracktype
-#$lang_str["tag:tracktype"]="Track type";
+$lang_str["tag:tracktype"]="Kvalita povrchu polní cesty";
 
 // waterway
 $lang_str["tag:waterway"]="Vodní cesta";
@@ -390,7 +390,7 @@ $lang_str["tag:military"]="Vojenství";
 $lang_str["tag:natural"]="Příroda";
 
 // geological
-#$lang_str["tag:geological"]="Geological";
+$lang_str["tag:geological"]="Geologický";
 
 // boundary
 $lang_str["tag:boundary"]="Hranice";
@@ -411,10 +411,10 @@ $lang_str["tag:crossing"]="přechod";
 $lang_str["tag:mountain_pass"]="Průsmyk";
 
 // cutting
-#$lang_str["tag:cutting"]="Cutting";
+$lang_str["tag:cutting"]="Průsek";
 
 // embankment
-#$lang_str["tag:embankment"]="Embankment";
+$lang_str["tag:embankment"]="Násep";
 
 // lanes
 $lang_str["tag:lanes"]="Jízdní pruhy";
@@ -426,7 +426,7 @@ $lang_str["tag:layer"]="Vrstva";
 $lang_str["tag:surface"]="Povrch";
 
 // smoothness
-#$lang_str["tag:smoothness"]="Smoothness";
+$lang_str["tag:smoothness"]="Plynulost";
 
 // ele
 $lang_str["tag:ele"]="Nadmořská výška";
@@ -451,7 +451,7 @@ $lang_str["tag:disused"]="Nevyužíváno";
 
 // wheelchair
 $lang_str["tag:wheelchair"]="Kolečkové křeslo";
-#$lang_str["tag:wheelchair=limited"]="limited";
+$lang_str["tag:wheelchair=limited"]="omezený";
 
 // tactile_paving
 #$lang_str["tag:tactile_paving"]="Tactile paving";
@@ -460,37 +460,37 @@ $lang_str["tag:wheelchair"]="Kolečkové křeslo";
 $lang_str["tag:narrow"]="Rovný";
 
 // covered
-#$lang_str["tag:covered"]="Covered";
+$lang_str["tag:covered"]="Zakrytý";
 
 // ford
 $lang_str["tag:ford"]="Brod";
 
 // access
-#$lang_str["tag:access"]="General access permission";
+$lang_str["tag:access"]="Neomezeý přístup";
 
 // vehicle
-#$lang_str["tag:vehicle"]="Vehicle access permission";
+$lang_str["tag:vehicle"]="Motorová vozidla povolena";
 
 // bicycle
-#$lang_str["tag:bicycle"]="Bicycle access permission";
+$lang_str["tag:bicycle"]="Jízdní kola povolena";
 
 // foot
-#$lang_str["tag:foot"]="Foot access permission";
+$lang_str["tag:foot"]="Pěší povoleno";
 
 // goods
 #$lang_str["tag:goods"]="LCV access permission";
 
 // hgv
-#$lang_str["tag:hgv"]="HGV access permission";
+$lang_str["tag:hgv"]="Kamiony povoleny";
 
 // horse
-#$lang_str["tag:horse"]="Horse riders access permission";
+$lang_str["tag:horse"]="Koně povoleny";
 
 // motorcycle
-#$lang_str["tag:motorcycle"]="Motorcycle access permission";
+$lang_str["tag:motorcycle"]="Motocykly povoleny";
 
 // motorcar
-#$lang_str["tag:motorcar"]="Motorcar access permission";
+$lang_str["tag:motorcar"]="Osobní auta povolena";
 
 // psv
 #$lang_str["tag:psv"]="PSV access permission";

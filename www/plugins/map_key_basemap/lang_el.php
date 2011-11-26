@@ -49,12 +49,12 @@ $lang_str["map_key_basemap:building=historic"]="Ιστορικά Κτήρια";
 #$lang_str["map_key_basemap:landuse=natural_rock"]="Rocks, Cliffs";
 
 // heads
-#$lang_str["map_key_basemap:places"]="Places";
-#$lang_str["map_key_basemap:roads"]="Roads";
-#$lang_str["map_key_basemap:rails"]="Railroads";
-#$lang_str["map_key_basemap:pipe_power_lines"]="Pipe- and Power Lines";
-#$lang_str["map_key_basemap:borders"]="Borders";
-#$lang_str["map_key_basemap:landuse"]="Landuse";
-#$lang_str["map_key_basemap:buildings"]="Buildings";
+$lang_str["map_key_basemap:places"]="Μέρη";
+$lang_str["map_key_basemap:roads"]="Δρόμοι";
+$lang_str["map_key_basemap:rails"]="Σιδηρόδρομοι";
+$lang_str["map_key_basemap:pipe_power_lines"]="Αγωγοί- και Γραμμές Ρεύματος";
+$lang_str["map_key_basemap:borders"]="Όρια";
+$lang_str["map_key_basemap:landuse"]="Χρήση Γης";
+$lang_str["map_key_basemap:buildings"]="Κτήρια";
 #$lang_str["map_key_basemap:barrier"]="Barriers";
-#$lang_str["map_key_basemap:housenumbers"]="Housenumbers";
+$lang_str["map_key_basemap:housenumbers"]="Αριθμοί Σπιτιών";

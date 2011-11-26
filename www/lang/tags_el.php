@@ -92,18 +92,18 @@ $lang_str["tag:highway=primary"]="Πρωτεύων Δρόμος";
 $lang_str["tag:highway=primary_link"]="Σύνδεση Πρωτεύοντος Δρόμου";
 $lang_str["tag:highway=secondary"]="Δευτερεύων Δρόμος";
 $lang_str["tag:highway=tertiary"]="Τριτεύων Δρόμος";
-#$lang_str["tag:highway=minor"]="Minor Road";
+$lang_str["tag:highway=minor"]="Μικρός Δρόμος";
 $lang_str["tag:highway=road"]="Δρόμος";
 #$lang_str["tag:highway=residential"]="Residential Road";
 #$lang_str["tag:highway=unclassified"]="Unclassified Road";
 #$lang_str["tag:highway=service"]="Service Road";
-#$lang_str["tag:highway=pedestrian"]="Pedestrian Zone";
+$lang_str["tag:highway=pedestrian"]="Ζώνη πεζών";
 #$lang_str["tag:highway=living_street"]="Living Street";
 #$lang_str["tag:highway=path"]="Path";
 $lang_str["tag:highway=cycleway"]="Ποδηλατόδρομος";
 #$lang_str["tag:highway=footway"]="Footway";
 #$lang_str["tag:highway=bridleway"]="Bridleway";
-#$lang_str["tag:highway=track"]="Track";
+$lang_str["tag:highway=track"]="Χωματόδρομος";
 $lang_str["tag:highway=steps"]="Σκαλιά";
 
 // bridge
@@ -125,7 +125,7 @@ $lang_str["tag:postal_code"]="Ταχ. Κώδικας";
 #$lang_str["tag:is_in"]="Is in";
 
 // leisure
-#$lang_str["tag:leisure"]="Leisure";
+$lang_str["tag:leisure"]="Ελεύθερος Χρόνος";
 $lang_str["tag:leisure=sports_centre"]="Αθλητικό Κέντρο";
 $lang_str["tag:leisure=golf_course"]="Γήπεδο Γκολφ";
 $lang_str["tag:leisure=stadium"]="Στάδιο";
@@ -199,7 +199,7 @@ $lang_str["tag:place=region"]=array("Περιοχή", "Περιοχές");
 $lang_str["tag:place=county"]=array("Επαρχία", "Επαρχίες");
 $lang_str["tag:place=city"]=array("Πόλη", "Πόλεις");
 $lang_str["tag:place=town"]="Κωμόπολη";
-$lang_str["tag:place=village"]="ΧωριόςΧωριά";
+$lang_str["tag:place=village"]=array("Χωριό", "Χωριά");
 $lang_str["tag:place=suburb"]=array("Προάστιο", "Προάστια");
 $lang_str["tag:place=hamlet"]=array("Οικισμός", "Οικισμοί");
 $lang_str["tag:place=locality"]=array("Τοποθεσία", "Τοποθεσίες");
@@ -216,8 +216,8 @@ $lang_str["tag:power"]="Ενέργεια";
 $lang_str["tag:power=generator"]="Γενήτρια Ρεύματος";
 $lang_str["tag:power=line"]="Γραμμή Ρεύματος";
 #$lang_str["tag:power=minor_line"]="Minor Power Line";
-#$lang_str["tag:power=tower"]="Power Tower";
-#$lang_str["tag:power=pole"]="Power Pole";
+$lang_str["tag:power=tower"]="Πυλώνας Ρεύματος";
+$lang_str["tag:power=pole"]="Κολόνα Ρεύματος";
 #$lang_str["tag:power=station"]="Power Station";
 #$lang_str["tag:power=sub_station"]="Power Substation";
 
@@ -282,7 +282,7 @@ $lang_str["tag:route=mtb"]="Ποδήλατο Βουνού";
 $lang_str["tag:shop"]="Κατάστημα";
 
 // sport
-$lang_str["tag:sport"]="Άθλημα";
+$lang_str["tag:sport"]="Άθλητισμός";
 #$lang_str["tag:sport=9pin"]="9pin Bowling";
 #$lang_str["tag:sport=10pin"]="10pin Bowling";
 $lang_str["tag:sport=archery"]="Τοξοβολία";
@@ -318,13 +318,13 @@ $lang_str["tag:sport=multi"]="Πολλαπλά";
 #$lang_str["tag:sport=racquet"]="Racquet";
 $lang_str["tag:sport=rowing"]="Κωπηλασία";
 #$lang_str["tag:sport=rugby"]="Rugby";
-#$lang_str["tag:sport=shooting"]="Shooting";
+$lang_str["tag:sport=shooting"]="Σκοποβολή";
 #$lang_str["tag:sport=skating"]="Skating";
 #$lang_str["tag:sport=skateboard"]="Skateboard";
 #$lang_str["tag:sport=skiing"]="Skiing";
-#$lang_str["tag:sport=soccer"]="Soccer";
+$lang_str["tag:sport=soccer"]="Ποδόσφαιρο";
 $lang_str["tag:sport=swimming"]="Κολύμβηση";
-#$lang_str["tag:sport=table_tennis"]="Table Tennis";
+$lang_str["tag:sport=table_tennis"]="Πινγκ Πονγκ";
 #$lang_str["tag:sport=team_handball"]="Handball";
 $lang_str["tag:sport=tennis"]="Τένις";
 $lang_str["tag:sport=volleyball"]="Βόλεϊ";
@@ -348,7 +348,7 @@ $lang_str["tag:wires"]="Καλώδια";
 $lang_str["tag:website"]="Ιστότοπος";
 
 // cycleway
-#$lang_str["tag:cycleway"]="Cycleway";
+$lang_str["tag:cycleway"]="Ποδηλατόδρομος";
 
 // tracktype
 #$lang_str["tag:tracktype"]="Track type";
@@ -375,7 +375,7 @@ $lang_str["tag:public_transport"]="Μέσα Μαζικής Μεταφοράς";
 $lang_str["tag:tourism"]="Τουρισμός";
 
 // historic
-#$lang_str["tag:historic"]="Historic";
+$lang_str["tag:historic"]="Ιστορικά";
 
 // landuse
 $lang_str["tag:landuse"]="Χρήση Γης";
