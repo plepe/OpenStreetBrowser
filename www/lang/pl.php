@@ -111,7 +111,7 @@ $lang_str["user:password_no_match"]="Hasła nie są takie same!";
 $lang_str["user:full_name"]="Pełne imię i nazwisko";
 $lang_str["user:user_exists"]="Nazwa użytkownika już istnieje";
 $lang_str["user:login"]="Login";
-$lang_str["user:logged_in_as"]="Zalogowany jako";
+$lang_str["user:logged_in_as"]="Zalogowany jako ";
 $lang_str["user:logout"]="Wyloguj";
 
 $lang_str["attention"]="Uwaga:";
