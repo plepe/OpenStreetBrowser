@@ -357,7 +357,7 @@ $lang_str["tag:tracktype"]="Kvalita povrchu polní cesty";
 $lang_str["tag:waterway"]="Vodní cesta";
 
 // aerialway
-#$lang_str["tag:aerialway"]="Aerialway";
+$lang_str["tag:aerialway"]="Letecká cesta";
 
 // public_transport
 $lang_str["tag:public_transport"]="Veřejná doprava";
@@ -438,7 +438,7 @@ $lang_str["tag:width"]="Šířka";
 $lang_str["tag:est_width"]="Očekávaná šířka";
 
 // incline
-#$lang_str["tag:incline"]="incline";
+$lang_str["tag:incline"]="sklon";
 
 // start_date
 $lang_str["tag:start_date"]="Datum vytvoření";
@@ -478,7 +478,7 @@ $lang_str["tag:bicycle"]="Jízdní kola povolena";
 $lang_str["tag:foot"]="Pěší povoleno";
 
 // goods
-#$lang_str["tag:goods"]="LCV access permission";
+$lang_str["tag:goods"]="Lehká užitkové vozy povoleny";
 
 // hgv
 $lang_str["tag:hgv"]="Kamiony povoleny";
