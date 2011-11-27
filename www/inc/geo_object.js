@@ -68,7 +68,7 @@ function geo_object() {
     var extent=this.get_extent();
 
     var zoom=map.getZoomForExtent(extent);
-    if(map.zoom>15) {
+    if((map.getExtent().intersectsBounds(extent))&&(map.zoom>15)) {
       if(zoom>map.zoom)
 	zoom=map.zoom;
     }
