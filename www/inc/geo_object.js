@@ -68,8 +68,14 @@ function geo_object() {
     var extent=this.get_extent();
 
     var zoom=map.getZoomForExtent(extent);
-    if(zoom>15)
-      zoom=15;
+    if(map.zoom>15) {
+      if(zoom>map.zoom)
+	zoom=map.zoom;
+    }
+    else {
+      if(zoom>15)
+	zoom=15;
+    }
 
     var center=this.geo_center();
     if(center&&center.length)
