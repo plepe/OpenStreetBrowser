@@ -36,6 +36,7 @@ $lang_str["more"]="mehr";
 $lang_str["source"]="Quelle";
 $lang_str["unnamed"]="Namenlos";
 $lang_str["zoom"]="Zoomstufe";
+$lang_str["ad"]=array("Werbung", "Werbungen");
 
 // Headings
 $lang_str["head:general_info"]="Allgemeine Informationen";
