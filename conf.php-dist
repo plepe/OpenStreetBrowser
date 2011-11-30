@@ -165,3 +165,11 @@ $overlays_add=array(
 // icon_chooser - Choose icons from list
 // icon_editor - Upload icons
 // postgresql_restart - Try to restart PostgreSQL after connection failure
+// program - Write programs on geo objects
+
+// geom - Geometry Editor
+// geom_ui - UI for geometry editor functions
+// geom_std - Standard gis functions like 'buffer'
+// geom_area_label - Searches for a good place to label an area
+// geom_grid - Builds a grid of points on top of area
+// geom_rotated_line - Creates a rotated line on a point
