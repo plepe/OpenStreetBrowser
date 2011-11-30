@@ -111,12 +111,12 @@ $lang_str["user:password_no_match"]="Le password non sono identiche";
 $lang_str["user:full_name"]="Nome e cognome";
 $lang_str["user:user_exists"]="Lo username esiste già";
 $lang_str["user:login"]="Entra";
-$lang_str["user:logged_in_as"]="Entra come";
+$lang_str["user:logged_in_as"]="Loggato come ";
 $lang_str["user:logout"]="Esci";
 
 $lang_str["attention"]="Attenzione:";
 $lang_str["error"]="Si è verificato un errore:";
-$lang_str["error:not_logged_in"]="Non sei registrato";
+$lang_str["error:not_logged_in"]="Non sei loggato";
 
 $lang_str["category"]=array("Categoria", "Categorie");
 $lang_str["more_categories"]="Altre categorie";
