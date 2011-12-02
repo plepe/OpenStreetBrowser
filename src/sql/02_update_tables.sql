@@ -1,10 +1,3 @@
---drop table if exists save_actions;
---create table save_actions as (select now(), * from actions);
--- create index save_actions_now on save_actions(now);
-
--- use this to play back save_actions into actions:
--- insert into actions (select data_type, (CASE WHEN oneof_is(to_textarray(action), 'D') THEN 'D' WHEN oneof_is(to_textarray(action), 'C') THEN 'C' ELSE 'M' END), id from save_actions group by data_type, id);
-
 -- **
 -- * Hooks:
 -- * 'osmosis_update_start' - called when function is called
@@ -87,12 +80,6 @@ BEGIN
   -- we should also mark relations where relations were changed, but currently
   -- we don't do recursive relations
   raise notice 'calculated implicit changes';
-
-  -- for later check make a copy of actions
-  -- delete from save_actions;
-  insert into save_actions (select now(), * from actions);
-
-  raise notice 'saved actions';
 
   raise notice E'statistics:\n%', (select array_to_string(to_textarray(stat.text), E'\n') from (select data_type || E'\t' || action || E'\t' || count(id) as text from actions group by data_type, action order by data_type, action) stat);
   

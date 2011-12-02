@@ -110,6 +110,7 @@ $overlays_add=array(
 // navigation_cloudmade - an interface to the cloudmade routing service
 // no_basemap - An empty basemap as background map
 // db - Plugins can define db-stuff using migrations
+// save_actions - Save entries to the 'actions' table from Osmosis
 // state_info - Info about state of database
 // hill - Hill Shading on base of NASA SRTM
 // contour - Contour Shading (DE/AT/CH only)
