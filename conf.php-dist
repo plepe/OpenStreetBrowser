@@ -25,6 +25,7 @@ $db_central=&$db; // Use the same database
 # $db_central['passwd']="PASSWORD";
 # $db_central['host']="localhost";
 # $db_central['debug']=false;
+$db_central['master']=true; // set to false if this instance is slave database
 
 $SRID=900913;
 
