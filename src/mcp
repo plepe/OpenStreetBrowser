@@ -82,9 +82,17 @@ pcntl_signal(SIGTERM, "mcp_sig_handler");
 pcntl_signal(SIGINT,  "mcp_sig_handler");
 
 restart_renderd();
+$mcp_next_clean_up=time()+15*60;
 
 while(1) {
   call_hooks("mcp_tick", null);
+
+  if($mcp_next_clean_up>=time()) {
+    $mcp_next_clean_up=time()+60*60;
+    call_hooks("mcp_clean_up", null);
+    if($db_central['master'])
+      call_hooks("mcp_clean_up_master", null);
+  }
 
   $stream_read=array($fifo);
   $stream_write=array();
