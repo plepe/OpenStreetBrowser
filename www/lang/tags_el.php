@@ -58,7 +58,7 @@ $lang_str["tag:amenity=restaurant"]=array("Εστιατόριο", "Εστιατ�
 // barrier
 $lang_str["tag:barrier"]=array("Μπάρα", "Μπάρες");
 #$lang_str["tag:barrier=city_wall"]=array("City wall", "City walls");
-#$lang_str["tag:barrier=wall"]=array("Wall", "Walls");
+$lang_str["tag:barrier=wall"]=array("Τοίχος", "Τοίχοι");
 #$lang_str["tag:barrier=retaining_wall"]=array("Retaining Wall", "Retaining Walls");
 $lang_str["tag:barrier=fence"]=array("Φράχτης", "Φράχτες");
 #$lang_str["tag:barrier=hedge"]=array("Hedge", "Hedges");
@@ -101,7 +101,7 @@ $lang_str["tag:highway=pedestrian"]="Ζώνη πεζών";
 #$lang_str["tag:highway=living_street"]="Living Street";
 #$lang_str["tag:highway=path"]="Path";
 $lang_str["tag:highway=cycleway"]="Ποδηλατόδρομος";
-#$lang_str["tag:highway=footway"]="Footway";
+$lang_str["tag:highway=footway"]="Μονοπάτι";
 #$lang_str["tag:highway=bridleway"]="Bridleway";
 $lang_str["tag:highway=track"]="Χωματόδρομος";
 $lang_str["tag:highway=steps"]="Σκαλιά";
@@ -218,8 +218,8 @@ $lang_str["tag:power=line"]="Γραμμή Ρεύματος";
 #$lang_str["tag:power=minor_line"]="Minor Power Line";
 $lang_str["tag:power=tower"]="Πυλώνας Ρεύματος";
 $lang_str["tag:power=pole"]="Κολόνα Ρεύματος";
-#$lang_str["tag:power=station"]="Power Station";
-#$lang_str["tag:power=sub_station"]="Power Substation";
+$lang_str["tag:power=station"]="Σταθμός ρεύματος";
+$lang_str["tag:power=sub_station"]="Υποσταθμός ρεύματος";
 
 // power_source
 $lang_str["tag:power_source"]="Πηγή Ισχύος";
@@ -325,7 +325,7 @@ $lang_str["tag:sport=shooting"]="Σκοποβολή";
 $lang_str["tag:sport=soccer"]="Ποδόσφαιρο";
 $lang_str["tag:sport=swimming"]="Κολύμβηση";
 $lang_str["tag:sport=table_tennis"]="Πινγκ Πονγκ";
-#$lang_str["tag:sport=team_handball"]="Handball";
+$lang_str["tag:sport=team_handball"]="Χάντμπολ";
 $lang_str["tag:sport=tennis"]="Τένις";
 $lang_str["tag:sport=volleyball"]="Βόλεϊ";
 
@@ -354,7 +354,7 @@ $lang_str["tag:cycleway"]="Ποδηλατόδρομος";
 #$lang_str["tag:tracktype"]="Track type";
 
 // waterway
-#$lang_str["tag:waterway"]="Waterway";
+$lang_str["tag:waterway"]="Υδατοδιαδρομή";
 
 // aerialway
 #$lang_str["tag:aerialway"]="Aerialway";
@@ -387,19 +387,19 @@ $lang_str["tag:landuse"]="Χρήση Γης";
 $lang_str["tag:military"]="Στρατιωτικό";
 
 // natural
-#$lang_str["tag:natural"]="Natural";
+$lang_str["tag:natural"]="Φυσικό";
 
 // geological
-#$lang_str["tag:geological"]="Geological";
+$lang_str["tag:geological"]="Γεωλογικό";
 
 // boundary
-#$lang_str["tag:boundary"]="Boundary";
+$lang_str["tag:boundary"]="Όριο";
 
 // abutters
 #$lang_str["tag:abutters"]="Abutters";
 
 // lit
-#$lang_str["tag:lit"]="Street lighting";
+$lang_str["tag:lit"]="Φωτισμός οδού";
 
 // area
 $lang_str["tag:area"]="Περιοχή";
@@ -414,7 +414,7 @@ $lang_str["tag:crossing"]="Διασταύρωση";
 #$lang_str["tag:cutting"]="Cutting";
 
 // embankment
-#$lang_str["tag:embankment"]="Embankment";
+$lang_str["tag:embankment"]="Ανάχωμα";
 
 // lanes
 $lang_str["tag:lanes"]="Λωρίδες";
@@ -438,7 +438,7 @@ $lang_str["tag:width"]="Πλάτος";
 $lang_str["tag:est_width"]="Αναμενόμενο πλάτος";
 
 // incline
-#$lang_str["tag:incline"]="incline";
+$lang_str["tag:incline"]="Κλίση";
 
 // start_date
 $lang_str["tag:start_date"]="Ημερ/νία κατασκευής";
@@ -447,11 +447,11 @@ $lang_str["tag:start_date"]="Ημερ/νία κατασκευής";
 $lang_str["tag:end_date"]="Ημερ/νία αφαίρεσης";
 
 // disused
-#$lang_str["tag:disused"]="Disused";
+$lang_str["tag:disused"]="Εκτός χρήσης";
 
 // wheelchair
-#$lang_str["tag:wheelchair"]="Wheelchair";
-#$lang_str["tag:wheelchair=limited"]="limited";
+$lang_str["tag:wheelchair"]="Αναπηρική πολυθρόνα";
+$lang_str["tag:wheelchair=limited"]="Περιορισμένο";
 
 // tactile_paving
 #$lang_str["tag:tactile_paving"]="Tactile paving";
@@ -466,16 +466,16 @@ $lang_str["tag:covered"]="Επενδεδυμένο";
 $lang_str["tag:ford"]="Κοιτόστρωση";
 
 // access
-#$lang_str["tag:access"]="General access permission";
+$lang_str["tag:access"]="Γενικοί κανόνες πρόσβασης";
 
 // vehicle
-#$lang_str["tag:vehicle"]="Vehicle access permission";
+$lang_str["tag:vehicle"]="Κανόνες πρόσβασης οχημάτων";
 
 // bicycle
-#$lang_str["tag:bicycle"]="Bicycle access permission";
+$lang_str["tag:bicycle"]="Κανόνες πρόσβασης ποδηλάτων";
 
 // foot
-#$lang_str["tag:foot"]="Foot access permission";
+$lang_str["tag:foot"]="Κανόνες πρόσβασης πεζών";
 
 // goods
 #$lang_str["tag:goods"]="LCV access permission";
@@ -487,7 +487,7 @@ $lang_str["tag:ford"]="Κοιτόστρωση";
 #$lang_str["tag:horse"]="Horse riders access permission";
 
 // motorcycle
-#$lang_str["tag:motorcycle"]="Motorcycle access permission";
+$lang_str["tag:motorcycle"]="Κανόνες πρόσβασης μοτοσυκλετών";
 
 // motorcar
 #$lang_str["tag:motorcar"]="Motorcar access permission";
@@ -523,10 +523,10 @@ $lang_str["tag:minspeed"]="Ελαχ. ταχύτητα";
 $lang_str["tag:toll"]="Διόδια";
 
 // charge
-#$lang_str["tag:charge"]="Charge";
+$lang_str["tag:charge"]="Φόρτιση";
 
 // source
-#$lang_str["tag:source"]="Source";
+$lang_str["tag:source"]="Πηγή";
 
 // phone
 $lang_str["tag:phone"]="Αριθμ. τηλεφώνου";
