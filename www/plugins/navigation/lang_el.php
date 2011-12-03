@@ -16,4 +16,4 @@ $lang_str["head:instructions"]="οδηγίες";
 #$lang_str["head:key_data"]="Key data";
 
 $lang_str["navigation:reverse"]="αντιστροφή";
-$lang_str["navigation:go"]="φύγε";
+$lang_str["navigation:go"]="πάμε";

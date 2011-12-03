@@ -469,13 +469,13 @@ $lang_str["tag:ford"]="Κοιτόστρωση";
 $lang_str["tag:access"]="Γενικοί κανόνες πρόσβασης";
 
 // vehicle
-$lang_str["tag:vehicle"]="Κανόνες πρόσβασης οχημάτων";
+$lang_str["tag:vehicle"]="Άδεια πρόσβασης οχημάτων";
 
 // bicycle
-$lang_str["tag:bicycle"]="Κανόνες πρόσβασης ποδηλάτων";
+$lang_str["tag:bicycle"]="Άδεια πρόσβασης ποδηλάτων";
 
 // foot
-$lang_str["tag:foot"]="Κανόνες πρόσβασης πεζών";
+$lang_str["tag:foot"]="Άδεια πρόσβασης πεζών";
 
 // goods
 #$lang_str["tag:goods"]="LCV access permission";
@@ -487,7 +487,7 @@ $lang_str["tag:foot"]="Κανόνες πρόσβασης πεζών";
 #$lang_str["tag:horse"]="Horse riders access permission";
 
 // motorcycle
-$lang_str["tag:motorcycle"]="Κανόνες πρόσβασης μοτοσυκλετών";
+$lang_str["tag:motorcycle"]="Άδεια πρόσβασης μοτοσυκλετών";
 
 // motorcar
 #$lang_str["tag:motorcar"]="Motorcar access permission";

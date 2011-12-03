@@ -76,7 +76,7 @@ $lang_str["list_leisure_sport_tourism"]="Αναψυχή, Άθληση και Τ�
 
 $lang_str["main:options"]="Επιλογές";
 $lang_str["main:about"]="Περί";
-$lang_str["main:donate"]="Συνεισφορά";
+$lang_str["main:donate"]="Δωρεά";
 $lang_str["main:licence"]="Δεδομένα Χάρτη: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> συνεργάτες | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> και <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">συνεργάτες</a>";
 #$lang_str["main:permalink"]="Permalink";
 
