@@ -330,10 +330,10 @@ $lang_str["tag:sport=tennis"]="Τένις";
 $lang_str["tag:sport=volleyball"]="Βόλεϊ";
 
 // tracks
-#$lang_str["tag:tracks"]="Tracks";
-#$lang_str["tag:tracks=single"]="Single";
-#$lang_str["tag:tracks=double"]="Double";
-#$lang_str["tag:tracks=multiple"]="Multiple";
+$lang_str["tag:tracks"]="Τροχιές";
+$lang_str["tag:tracks=single"]="Μονή";
+$lang_str["tag:tracks=double"]="Διπλή";
+$lang_str["tag:tracks=multiple"]="Πολλαπλή";
 
 // vending
 #$lang_str["tag:vending"]="Vending";
