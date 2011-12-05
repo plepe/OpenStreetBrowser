@@ -523,7 +523,7 @@ $lang_str["tag:traffic_sign"]="Semáforu";
 $lang_str["tag:toll"]="Peaxe";
 
 // charge
-#$lang_str["tag:charge"]="Charge";
+$lang_str["tag:charge"]="Tarifa";
 
 // source
 $lang_str["tag:source"]="Fonte";
