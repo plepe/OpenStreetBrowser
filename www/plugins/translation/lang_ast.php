@@ -7,3 +7,4 @@ $lang_str["translation:improve"]="Ameyorar traducción";
 $lang_str["translation:new"]="Crear traducción nueva";
 $lang_str["translation:enter_lang_code"]="Escribi'l códigu de la nueva llingua";
 $lang_str["translation:enter_lang_code_help"]="p.ex. «en» pal Inglés o «en-gb» pa la variante llingüística «Inglés británicu»";
+$lang_str["translation:add_value"]="Amestar valor pa '%s'";
