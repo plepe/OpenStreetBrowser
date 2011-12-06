@@ -90,7 +90,7 @@ $mcp_next_clean_up=time()+15*60;
 while(1) {
   call_hooks("mcp_tick", null);
 
-  if($mcp_next_clean_up>=time()) {
+  if($mcp_next_clean_up<=time()) {
     $mcp_next_clean_up=time()+60*60;
     call_hooks("mcp_clean_up", null);
     if($db_central['master'])
