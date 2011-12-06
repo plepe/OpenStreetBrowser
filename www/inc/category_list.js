@@ -99,6 +99,11 @@ function _category_list() {
     }
   }
 
+  // the root category is always visible
+  this.visible=function() {
+    return true;
+  }
+
   // constructor
   register_hook("view_changed_delay", this.shall_reload.bind(this));
   this.tags.set("name", t("list_info"));

@@ -42,6 +42,9 @@ function category(id) {
 
   // open_category - call to open category
   this.open_category=function(div) {
+    if(!div)
+      return;
+
     div.className="category_open";
     div.open=true;
 
@@ -116,9 +119,11 @@ function category(id) {
       return 0;
 
     for(var i=0; i<this.sub_categories.length; i++) {
-      var state=this.sub_categories[i].visible_list();
-      if(state)
-        ret[this.sub_categories[i].id]=state;
+      if(this.sub_categories[i].visible_list) {
+	var state=this.sub_categories[i].visible_list();
+	if(state)
+	  ret[this.sub_categories[i].id]=state;
+      }
     }
 
     return ret;
