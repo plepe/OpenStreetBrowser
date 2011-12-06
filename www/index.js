@@ -195,9 +195,12 @@ function check_redraw() {
   if(new_hash!=last_location_hash) {
     location_params={};
 
-    if(new_hash.substr(0, 2)=="#?") {
-      call_hooks("recv_permalink", new_hash.substr(2));
-      location_params=string_to_hash(new_hash.substr(2));
+    var m;
+    if(m=new_hash.match(/^#(.*)\?(.*)$/)) {
+      location_params=string_to_hash(m[2]);
+      if(m[1]!="")
+	location_params.obj=m[1];
+      call_hooks("recv_permalink", hash_to_string(location_params));
     }
     else if(new_hash.substr(0, 1)=="#") {
       location_params.obj=new_hash.substr(1);
