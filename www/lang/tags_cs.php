@@ -113,7 +113,7 @@ $lang_str["tag:bridge"]="Most";
 $lang_str["tag:tunnel"]="Tunel";
 
 // traffic_calming
-#$lang_str["tag:traffic_calming"]="Traffic calming";
+$lang_str["tag:traffic_calming"]="Zklidnění dopravy";
 
 // service
 $lang_str["tag:service"]="Vlastnosti obslužné komunikace";
