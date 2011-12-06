@@ -187,13 +187,14 @@ function set_location(params) {
 
 var last_location_hash;
 function check_redraw() {
-  location_params={};
   var new_hash=location.hash;
 
   // some browsers do not decode special characters
   new_hash=urldecode(new_hash);
 
   if(new_hash!=last_location_hash) {
+    location_params={};
+
     if(new_hash.substr(0, 2)=="#?") {
       call_hooks("recv_permalink", new_hash.substr(2));
       location_params=string_to_hash(new_hash.substr(2));
