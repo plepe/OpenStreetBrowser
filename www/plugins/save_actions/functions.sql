@@ -10,4 +10,4 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
-select register_hook("osmosis_update_finish", "save_actions_save", 0);
+select register_hook('osmosis_update_finish', "save_actions_save", 0);
