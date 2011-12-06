@@ -159,6 +159,8 @@ function redraw() {
   else if(location_params.zoom) {
     map.zoomTo(location_params.zoom);
   }
+
+  update_permalink();
 }
 
 // set_location ... resolve a link with all parts, moves accordingly 
