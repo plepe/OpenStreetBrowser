@@ -263,6 +263,19 @@ function get_permalink() {
   return permalink;
 }
 
+function get_permalink_for_control() {
+  var permalink=get_permalink();
+
+  if(!permalink.obj)
+    permalink.obj="";
+
+  permalink_control.base=get_baseurl()+"#"+permalink.obj;
+
+  delete(permalink.obj);
+
+  return permalink;
+}
+
 // update_permalink ... forces an update of the permalink
 function update_permalink() {
   permalink_control.updateLink();
@@ -308,7 +321,7 @@ function init() {
   var permalink=document.getElementById("permalink");
   permalink_control=new OpenLayers.Control.Permalink(permalink, get_baseurl()+"#");
   map.addControl(permalink_control);
-  permalink_control.createParams=get_permalink;
+  permalink_control.createParams=get_permalink_for_control;
 
   if(start_lon&&(first_load)) {
     var lonlat = new OpenLayers.LonLat(start_lon, start_lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
