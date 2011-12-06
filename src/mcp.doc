@@ -1,0 +1,9 @@
+Enter sudoers definition to sudoers-file:
+  Cmnd_Alias APACHE_RESTART = /etc/init.d/apache2 reload
+  osm     ALL=NOPASSWD: APACHE_RESTART
+  // put last line to end of file if osm matches another rule too
+
+Different cmd for restarting apache2-server:
+  add line to conf.php, e.g.:
+  $apache2_reload_cmd="sudo /etc/init.d/apache2 reload";
+
