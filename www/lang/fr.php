@@ -65,7 +65,6 @@ $lang_str["routing_type_foot"]="Piéton";
 $lang_str["routing_type"]="Type de route";
 $lang_str["routing_distance"]="Distance";
 $lang_str["routing_time"]="Temps";
-$lang_str["routing_disclaimer"]="Routage: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
 // lang_str["list_info"]="Choose a category to browse map content or click on an object on the map for details";
 $lang_str["list_info"]="Cliquez sur un objet pour voir les métadonnées ou choisissez une catégorie pour voir la liste d'objets sur la carte";

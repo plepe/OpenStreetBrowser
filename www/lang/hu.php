@@ -65,7 +65,6 @@ $lang_str["routing_type_foot"]="Gyalog";
 $lang_str["routing_type"]="Útvonal típusa";
 $lang_str["routing_distance"]="Távolság";
 $lang_str["routing_time"]="Idő";
-$lang_str["routing_disclaimer"]="Útvonaltervezés: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
 $lang_str["list_info"]="Válassz ki egy kategóriát, ami megjelenik a térképen, vagy kattints egy a térképen megjelenô pontra";
 $lang_str["list_leisure_sport_tourism"]="Szabadidő, sport és turizmus";

@@ -65,7 +65,6 @@ $lang_str["routing_type_foot"]="徒歩";
 $lang_str["routing_type"]="経路種別";
 $lang_str["routing_distance"]="距離";
 $lang_str["routing_time"]="時間";
-$lang_str["routing_disclaimer"]="ルーティング: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
 $lang_str["list_info"]="カテゴリを選択してマップの内容をブラウズするかオブジェクトをクリックしてマップの詳細を見ます";
 $lang_str["list_leisure_sport_tourism"]="レジャー、スポート＆観光";

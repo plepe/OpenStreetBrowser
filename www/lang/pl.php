@@ -65,7 +65,6 @@ $lang_str["routing_type_foot"]="Pieszo";
 $lang_str["routing_type"]="Typ trasy";
 $lang_str["routing_distance"]="Odległość";
 $lang_str["routing_time"]="Czas";
-$lang_str["routing_disclaimer"]="Wyznaczanie trasy: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
 $lang_str["list_info"]="Wybierz kategorię by przeglądać zawartość mapy lub kliknij obiekt na mapie by zobaczyć więcej informacji o nim";
 $lang_str["list_leisure_sport_tourism"]="Rozrywka, Sport i Turystyka";

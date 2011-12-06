@@ -66,7 +66,6 @@ $lang_str["routing_type_foot"]="Foot";
 $lang_str["routing_type"]="Route type";
 $lang_str["routing_distance"]="Distance";
 $lang_str["routing_time"]="Time";
-$lang_str["routing_disclaimer"]="Routing: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
 $lang_str["list_info"]="Choose a category to browse map content or click on an object on the map for details";
 $lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";

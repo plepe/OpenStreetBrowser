@@ -65,7 +65,6 @@ $lang_str["routing_type_foot"]="A peu";
 $lang_str["routing_type"]="Tipus de ruta";
 $lang_str["routing_distance"]="Distància";
 $lang_str["routing_time"]="Temps";
-$lang_str["routing_disclaimer"]="Enrutament: (c) de <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
 $lang_str["list_info"]="Tria una categoria per explorar el contingut del mapa, o faci clic en un objecte al mapa per veure els detalls";
 $lang_str["list_leisure_sport_tourism"]="Oci, Esport i Turisme";

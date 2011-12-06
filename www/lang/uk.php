@@ -65,7 +65,6 @@ $lang_str["routing_type_foot"]="Піший";
 $lang_str["routing_type"]="Тип маршруту";
 $lang_str["routing_distance"]="Відстань";
 $lang_str["routing_time"]="Час";
-$lang_str["routing_disclaimer"]="Routing: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
 $lang_str["list_info"]="Choose a category to browse map content or click on an object on the map for details";
 $lang_str["list_leisure_sport_tourism"]="Дозвілля, Спорт та Туризм";

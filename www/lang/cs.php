@@ -65,7 +65,6 @@ $lang_str["routing_type_foot"]="Chodec";
 $lang_str["routing_type"]="Typ trasy";
 $lang_str["routing_distance"]="Vzdálenost";
 $lang_str["routing_time"]="Čas";
-$lang_str["routing_disclaimer"]="Hledání trasy: (c) by Cloudmade";
 
 $lang_str["list_info"]="Vyber kategorii pro prohlížení obsahu mapy nebo klikni na nějaký objekt na mapě pro detaiy";
 $lang_str["list_leisure_sport_tourism"]="Odpočinek, Sport and Turismus";

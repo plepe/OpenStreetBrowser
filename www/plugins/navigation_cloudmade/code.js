@@ -180,6 +180,10 @@ function navigate_cloudmade_route() {
     var li=dom_create_append(ul, "li");
     dom_create_append_text(li, lang("routing_time")+": "+
                            units_format_time(d[0].textContent));
+
+    // Disclaimer
+    var d=dom_create_append(div, "div");
+    d.innerHTML=lang("navigation_cloudmade:disclaimer");
   }
 
   // print_instructions

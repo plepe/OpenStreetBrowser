@@ -65,7 +65,6 @@ $lang_str["routing_type_foot"]="Te voet";
 $lang_str["routing_type"]="Soort route";
 $lang_str["routing_distance"]="Afstand";
 $lang_str["routing_time"]="Tijd";
-$lang_str["routing_disclaimer"]="Routing: (c) by <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
 $lang_str["list_info"]="Kies een categorie om de kaartinhoud door te bladeren of klik op een object op de kaart voor details";
 $lang_str["list_leisure_sport_tourism"]="Vrije tijd, Sport and Toerisme";

@@ -65,7 +65,6 @@ $lang_str["routing_type_foot"]="Пешком";
 $lang_str["routing_type"]="Тип маршрута";
 $lang_str["routing_distance"]="Расстояние";
 $lang_str["routing_time"]="Время";
-$lang_str["routing_disclaimer"]="Маршруты: (c) от <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
 $lang_str["list_info"]="Выберите категорию для поиска на карте или нажмите на объект для получения информации";
 $lang_str["list_leisure_sport_tourism"]="Отдых, туризм и спорт";

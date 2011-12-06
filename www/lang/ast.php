@@ -57,7 +57,6 @@ $lang_str["routing_type_foot"]="A pie";
 $lang_str["routing_type"]="Triba de ruta";
 $lang_str["routing_distance"]="Distancia";
 $lang_str["routing_time"]="Tiempu";
-$lang_str["routing_disclaimer"]="Enrutamientu: (c) de <a href='http://www.cloudmade.com'>Cloudmade</a>";
 
 $lang_str["list_info"]="Escueyi una categoría pa ver el conteníu del mapa o calca nún oxetu del mapa pa ver los detalles";
 $lang_str["list_leisure_sport_tourism"]="Recréu, deporte y turismu";
