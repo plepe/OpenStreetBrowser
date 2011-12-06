@@ -244,7 +244,13 @@ function view_changed(event) {
 //   a hash array describing the current view
 function get_permalink() {
   var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
-  var permalink = { zoom: map.zoom, lat: center.lat, lon: center.lon };
+
+  var permalink = {
+    zoom: map.zoom,
+    lat: center.lat.toFixed(5),
+    lon: center.lon.toFixed(5)
+  };
+
   if(location_params.obj)
     permalink.obj=location_params.obj;
 
