@@ -11,7 +11,7 @@ $lang_str["category_editor:new_rule"]="Nuova regola";
 $lang_str["category_editor:remove_rule"]="Elimina la regola";
 $lang_str["category_editor:view_mode"]="Vista";
 $lang_str["category_editor:view_mode:form"]="Modulo";
-$lang_str["category_editor:view_mode:source"]="Fonte";
+$lang_str["category_editor:view_mode:source"]="Sorgente";
 $lang_str["category_editor:new_rule_help"]="Aggiungi delle regole per specificare quali oggetti devono comparire in questa categoria";
 
 $lang_str["category_editor:lock"]="Blocca la possibilità di modificare la categoria";

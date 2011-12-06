@@ -1,6 +1,9 @@
 <?
 // All tags should have a translation, with language strings like "tag:key" for the translation of the key and "tag:key=value" for the translation of the value. E.g. tag:amenity "Amenity;Amenities" resp. tag:amenity=bar "Bar;Bars". You can also define the Gender like "F;Bar;Bars".
-// Currently there's no way to add a new tag in this editor. This should follow in some update hopefully soon.
+
+// *
+$lang_str["tag:*=yes"]="si";
+$lang_str["tag:*=no"]="non";
 
 // accomodation
 $lang_str["tag:accomodation"]="Agospiamientu";
@@ -10,6 +13,24 @@ $lang_str["tag:address"]="Direición";
 
 // addr:housenumber
 $lang_str["tag:addr:housenumber"]=array("Númberu de portal", "Númberos de portal");
+
+// addr:housename
+$lang_str["tag:addr:housename"]=array("Nome de casa", "Nomes de cases");
+
+// addr:street
+$lang_str["tag:addr:street"]=array("Cai", "Cais");
+
+// addr:postcode
+$lang_str["tag:addr:postcode"]=array("Códigu postal", "Códigos postales");
+
+// addr:city
+$lang_str["tag:addr:city"]=array("Ciudá", "Ciudaes");
+
+// addr:country
+$lang_str["tag:addr:country"]=array("País", "Paises");
+
+// addr:full
+$lang_str["tag:addr:full"]=array("Direición completa", "Direiciones completes");
 
 // addr:interpolation
 $lang_str["tag:addr:interpolation"]="Númberos de casa entrepolaos";
@@ -25,8 +46,6 @@ $lang_str["tag:admin_level=3"]="Divisiones";
 $lang_str["tag:admin_level=4"]="Frontera d'estáu";
 $lang_str["tag:admin_level=5"]="Llende de comunidá";
 $lang_str["tag:admin_level=6"]="Llende de condáu";
-#$lang_str["tag:admin_level=7"]="";
-#$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Llende de ciudá/conceyu";
 $lang_str["tag:admin_level=10"]="Subdivisiones de ciudaes";
 
@@ -47,15 +66,21 @@ $lang_str["tag:barrier=hedge"]=array("Sebe", "Sebes");
 // cables
 $lang_str["tag:cables"]="Cables";
 
-// cuisine
-$lang_str["tag:cuisine"]="Cocina";
-$lang_str["tag:cuisine=regional"]="rexonal";
-
 // description
 $lang_str["tag:description"]="Descripción";
 
+// fixme
+$lang_str["tag:fixme"]="Por iguar";
+
+// note
+$lang_str["tag:note"]="Nota";
+
 // food
 $lang_str["tag:food"]="Sirve de comer";
+
+// cuisine
+$lang_str["tag:cuisine"]="Cocina";
+$lang_str["tag:cuisine=regional"]="rexonal";
 
 // highway
 $lang_str["tag:highway"]=array("Carretera", "Carreteres");
@@ -79,13 +104,28 @@ $lang_str["tag:highway=cycleway"]="Vía pa bicicletes";
 $lang_str["tag:highway=footway"]="Senderu";
 $lang_str["tag:highway=bridleway"]="Vía pa caballeríes";
 $lang_str["tag:highway=track"]="Pista";
-#$lang_str["tag:highway=path"]="Path";
 $lang_str["tag:highway=steps"]="Escaleres";
+
+// bridge
+$lang_str["tag:bridge"]="Ponte";
+
+// tunnel
+$lang_str["tag:tunnel"]="Túnel";
+
+// traffic_calming
+$lang_str["tag:traffic_calming"]="Aselamientu del tráficu";
+
+// service
+$lang_str["tag:service"]="Atributos de víes de serviciu";
+
+// postal_code
+$lang_str["tag:postal_code"]="Códigu postal";
 
 // is_in
 $lang_str["tag:is_in"]="Ta en";
 
 // leisure
+$lang_str["tag:leisure"]="Recréu";
 $lang_str["tag:leisure=sports_centre"]="Centru deportivu";
 $lang_str["tag:leisure=golf_course"]="Campu de golf";
 $lang_str["tag:leisure=stadium"]="Estadiu";
@@ -111,7 +151,7 @@ $lang_str["tag:leisure=sport"]="Otros deportes";
 $lang_str["tag:man_made"]="Construcciones";
 $lang_str["tag:man_made=pipeline"]=array("Tubería", "Tuberíes");
 
-// man_made - type
+// type
 $lang_str["tag:type"]="Triba";
 $lang_str["tag:type=gas"]="Gas";
 $lang_str["tag:type=heat"]="Calefacción";
@@ -123,14 +163,26 @@ $lang_str["tag:type=water"]="Agua";
 // name
 $lang_str["tag:name"]=array("Nome", "Nomes");
 
-// network
-$lang_str["tag:network"]="Rede";
+// alt_name
+$lang_str["tag:alt_name"]=array("Nome alternativu", "Nomes alternativos");
 
-// note
-$lang_str["tag:note"]="Nota";
+// official_name
+$lang_str["tag:official_name"]=array("Nome oficial", "Nomes oficiales");
+
+// int_name
+$lang_str["tag:int_name"]=array("Nome internacional", "Nomes internacionales");
+
+// loc_name
+$lang_str["tag:loc_name"]=array("Nome llocal", "Nomes llocales");
 
 // old_name
-$lang_str["tag:old_name"]="Nome(s) antiguu";
+$lang_str["tag:old_name"]="Nome(s) antiguu(os)";
+
+// ref
+$lang_str["tag:ref"]="Referencia";
+
+// network
+$lang_str["tag:network"]="Rede";
 
 // opening_hours
 $lang_str["tag:opening_hours"]="Hores d'apertura";
@@ -149,7 +201,7 @@ $lang_str["tag:place=city"]=array("Ciudá", "Ciudaes");
 $lang_str["tag:place=town"]=array("Villa", "Villes");
 $lang_str["tag:place=village"]=array("Pueblu", "Pueblos");
 $lang_str["tag:place=suburb"]=array("Barriu", "Barrios");
-#$lang_str["tag:place=hamlet"]=array("Hamlet", "Hamlets");
+$lang_str["tag:place=hamlet"]=array("Aldea", "Aldees");
 $lang_str["tag:place=locality"]=array("Llugar", "Llugares");
 $lang_str["tag:place=island"]=array("Islla", "Islles");
 $lang_str["tag:place=islet"]=array("Castru (islla)", "Castros (islles)");
@@ -158,7 +210,6 @@ $lang_str["tag:place=sea"]=array("Mar", "Mares");
 
 // population
 $lang_str["tag:population"]="Población";
-$tag_type["population"]=array("count");
 
 // power
 $lang_str["tag:power"]="Enerxía";
@@ -205,6 +256,9 @@ $lang_str["tag:religion=jewish"]="xudía";
 $lang_str["tag:religion=muslim"]="musulmana";
 $lang_str["tag:religion=multifaith"]="delles relixones";
 
+// denomination
+$lang_str["tag:denomination"]="Denominación";
+
 // route
 $lang_str["tag:route"]="Ruta";
 $lang_str["tag:route=train"]="Tren";
@@ -223,10 +277,6 @@ $lang_str["tag:route=road"]="Carretera";
 $lang_str["tag:route=bicycle"]="Bicicleta";
 $lang_str["tag:route=hiking"]="Senderismu";
 $lang_str["tag:route=mtb"]="Bici de monte";
-
-// route_type
-// the following tags are deprecated
-$lang_str["tag:route_type"]="Triba de ruta";
 
 // shop
 $lang_str["tag:shop"]="Tienda";
@@ -290,12 +340,214 @@ $lang_str["tag:vending"]="Venta automática";
 
 // voltage
 $lang_str["tag:voltage"]="Voltaxe";
-$tag_type["voltage"]=array("number", "V", "V");
 
 // wires
 $lang_str["tag:wires"]="Cables";
-$tag_type["wires"]=array("count");
 
 // website
 $lang_str["tag:website"]="Páxina Web";
-$tag_type["website"]=array("link");
+
+// cycleway
+$lang_str["tag:cycleway"]="Carril bici";
+
+// tracktype
+$lang_str["tag:tracktype"]="Clas de pista";
+
+// waterway
+$lang_str["tag:waterway"]="Vía acuática";
+
+// aerialway
+$lang_str["tag:aerialway"]="Vía aérea";
+
+// public_transport
+$lang_str["tag:public_transport"]="Tresporte públicu";
+
+// office
+$lang_str["tag:office"]="Oficina";
+
+// craft
+$lang_str["tag:craft"]="Oficiu";
+
+// emergency
+$lang_str["tag:emergency"]="Emerxencia";
+
+// tourism
+$lang_str["tag:tourism"]="Turismu";
+
+// historic
+$lang_str["tag:historic"]="Históricu";
+
+// landuse
+$lang_str["tag:landuse"]="Usu del tarrén";
+
+// wood
+$lang_str["tag:wood"]="Triba de viesca";
+
+// military
+$lang_str["tag:military"]="Militar";
+
+// natural
+$lang_str["tag:natural"]="Natural";
+
+// geological
+$lang_str["tag:geological"]="Xeolóxicu";
+
+// boundary
+$lang_str["tag:boundary"]="Llende";
+
+// abutters
+$lang_str["tag:abutters"]="Alredores";
+
+// lit
+$lang_str["tag:lit"]="Alumbráu públicu";
+
+// area
+$lang_str["tag:area"]="Área";
+
+// crossing
+$lang_str["tag:crossing"]="pasu";
+
+// mountain_pass
+$lang_str["tag:mountain_pass"]="Puertu de monte";
+
+// cutting
+$lang_str["tag:cutting"]="Trinchera";
+
+// embankment
+$lang_str["tag:embankment"]="Rellenu";
+
+// lanes
+$lang_str["tag:lanes"]="Calzaes";
+
+// layer
+$lang_str["tag:layer"]="Capa";
+
+// surface
+$lang_str["tag:surface"]="Superficie";
+
+// smoothness
+$lang_str["tag:smoothness"]="Regularidá";
+
+// ele
+$lang_str["tag:ele"]="Altura";
+
+// width
+$lang_str["tag:width"]="Anchura";
+
+// est_width
+$lang_str["tag:est_width"]="Anchura albidrada";
+
+// incline
+$lang_str["tag:incline"]="rampla";
+
+// start_date
+$lang_str["tag:start_date"]="Data de creación";
+
+// end_date
+$lang_str["tag:end_date"]="Data de desaniciu";
+
+// disused
+$lang_str["tag:disused"]="Yá nun s'usa";
+
+// wheelchair
+$lang_str["tag:wheelchair"]="Silla de ruedes";
+$lang_str["tag:wheelchair=limited"]="con torgues";
+
+// tactile_paving
+$lang_str["tag:tactile_paving"]="Suelu táctil";
+
+// narrow
+$lang_str["tag:narrow"]="Estrechu";
+
+// covered
+$lang_str["tag:covered"]="Cubiertu";
+
+// ford
+$lang_str["tag:ford"]="Vau";
+
+// access
+$lang_str["tag:access"]="Permisu d'accesu xeneral";
+
+// vehicle
+$lang_str["tag:vehicle"]="Permisu d'accesu a vehículos";
+
+// bicycle
+$lang_str["tag:bicycle"]="Permisu d'accesu a bicicletes";
+
+// foot
+$lang_str["tag:foot"]="Permisu d'accesu caminando";
+
+// goods
+$lang_str["tag:goods"]="Permisu d'accesu a furgonetes";
+
+// hgv
+$lang_str["tag:hgv"]="Permisu d'accesu a camiones";
+
+// horse
+$lang_str["tag:horse"]="Permisu d'accesu a xinetes";
+
+// motorcycle
+$lang_str["tag:motorcycle"]="Permisu d'accesu a motos";
+
+// motorcar
+$lang_str["tag:motorcar"]="Permisu d'accesu a turismos";
+
+// psv
+$lang_str["tag:psv"]="Permisu d'accesu a serviciu públicu";
+
+// oneway
+$lang_str["tag:oneway"]="Sentíu únicu";
+
+// noexit
+$lang_str["tag:noexit"]="Carretera cortada";
+
+// maxweight
+$lang_str["tag:maxweight"]="Pesu máx.";
+
+// maxheight
+$lang_str["tag:maxheight"]="Altor máx.";
+
+// maxlength
+$lang_str["tag:maxlength"]="Llonxitú máx.";
+
+// maxspeed
+$lang_str["tag:maxspeed"]="Velocidá máx.";
+
+// minspeed
+$lang_str["tag:minspeed"]="Velocidá mín.";
+
+// traffic_sign
+$lang_str["tag:traffic_sign"]="Semáforu";
+
+// toll
+$lang_str["tag:toll"]="Peaxe";
+
+// charge
+$lang_str["tag:charge"]="Tarifa";
+
+// source
+$lang_str["tag:source"]="Fonte";
+
+// phone
+$lang_str["tag:phone"]="Númberu de teléfonu";
+
+// fax
+$lang_str["tag:fax"]="Númberu de fax";
+
+// email
+$lang_str["tag:email"]="Corréu electrónicu";
+
+// wikipedia
+$lang_str["tag:wikipedia"]="Uiquipedia";
+
+// created_by
+$lang_str["tag:created_by"]="Creáu por";
+
+// construction
+$lang_str["tag:construction"]="Construcción";
+
+// proposed
+$lang_str["tag:proposed"]="Propuesta";
+
+// route_type
+$lang_str["tag:route_type"]="Triba de ruta";

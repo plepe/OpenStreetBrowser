@@ -12,3 +12,6 @@ $lang_str["lang:ja"]="Xaponés";
 $lang_str["lang:hu"]="Húngaru";
 $lang_str["lang:nl"]="Neerlandés";
 $lang_str["lang:ast"]="Asturianu";
+$lang_str["lang:el"]="Griegu";
+$lang_str["lang:pl"]="Polacu";
+$lang_str["lang:ca"]="Catalán";

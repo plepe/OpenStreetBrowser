@@ -14,17 +14,25 @@ $lang_str["ok"]="Aceutar";
 $lang_str["save"]="Guardar";
 $lang_str["saved"]="Guardáu"; // for dialog boxes confirming saving
 $lang_str["cancel"]="Encaboxar";
+$lang_str["show"]="Amosar";
+$lang_str["edit"]="Editar";
+$lang_str["delete"]="Desaniciar";
+$lang_str["history"]="Historial";
+$lang_str["choose"]="Escoyer";
+$lang_str["help"]="Ayuda";
 $lang_str["longitude"]=array("Llonxitú", "Llonxitúes");
 $lang_str["latitude"]=array("Llatitú", "Llatitúes");
 $lang_str["noname"]="(ensin nome)";
 $lang_str["info_back"]="dir a vista xeneral";
 $lang_str["info_zoom"]="zoom";
 $lang_str["nothing_found"]="nun s'alcontró";
+$lang_str["list:zoom_for_obs"]="Aumenta pa ver oxetos menos importantes";
 $lang_str["loading"]="Cargando...";
 $lang_str["more"]="más";
 $lang_str["source"]="Orixe";
 $lang_str["unnamed"]="ensin nome";
 $lang_str["zoom"]="Nivel de zoom";
+$lang_str["no_message"]="dengún mensaxe";
 
 // Headings
 $lang_str["head:general_info"]="Información xeneral";
@@ -127,6 +135,3 @@ $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Estándar (Mapnik)";
 $lang_str["basemap:osmarender"]="Estándar (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
-
-$lang_str['edit']="editar";
-$lang_str['choose']="escoyer";

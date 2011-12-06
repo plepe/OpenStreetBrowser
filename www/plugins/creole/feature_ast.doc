@@ -1,0 +1,7 @@
+WikiCreole ye un llinguaxe común de marques wiki (visita la [[http://www.wikicreole.org/|páxina web de WikiCreole]] pa más detalles). Mira la [[http://www.wikicreole.org/attach/CheatSheet/creole_cheat_sheet.png|chuleta]] de les posibles etiquetes de marca.
+
+Coses particulares pa OpenStreetBrowser:
+* Usa "{{{~~~}}}" o "{{{~~~~}}}" pa roblar un comentariu nuna páxina d'alderique ({{{~~~}}} pon el nome, {{{~~~~}}} incluye la hora del escritu).
+* Usa {{{[[osm:Nomedenllaz]]}}} pa enllazar a a una páxina de la Wiki d'OpenStreetMap (p. ex. [[osm:tag:amenity=bar]]).
+* Usa {{{[[talk:Páxina]]}}} pa enllazar a una páxina d'alderique.
+* Usa p.ex. {{{[[#node_240109189|Berlin]]}}} pa enllazar a un oxetu d'OpenStreetBrowser (p.ex. [[#node_240109189|Berlin]]).

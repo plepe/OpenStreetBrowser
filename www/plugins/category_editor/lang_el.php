@@ -1,6 +1,6 @@
 <?
 $lang_str["category_editor:editor"]="Επεξεργαστής";
-#$lang_str["category_editor:expand"]="expand";
+$lang_str["category_editor:expand"]="επέκταση";
 $lang_str["category_editor:tags"]="Ετικέτες";
 
 #$lang_str["category_editor:new"]="You are editing a new category. If you don't choose an id (identifier) or the chosen id is not available it will be assigned a random id.";
