@@ -18,8 +18,8 @@ function autozoom_info_show(info, ob) {
     return;
 
   if(ob.geo_center()) {
-    var a=button_dom(lang_dom("info_zoom",
-                     ob.geo_zoom_to.bind(ob)));
+    var a=button_dom(lang_dom("info_zoom"),
+                     ob.geo_zoom_to.bind(ob));
     info.buttons.add([0, a]);
   }
 }
