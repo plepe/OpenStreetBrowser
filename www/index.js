@@ -12,6 +12,7 @@ var loaded_list={};
 var view_changed_last;
 var data_dir;
 var location_params={};
+var permalink_current;
 
 var polygon_control;
 var permalink_control;
@@ -179,6 +180,7 @@ function set_location(params) {
 
   if(map) {
     redraw();
+    call_hooks("hash_changed", location_params);
   }
   else {
     start_lon=params.lon;
@@ -262,11 +264,12 @@ function get_permalink() {
 
   call_hooks("get_permalink", permalink);
 
+  permalink_current=permalink;
   return permalink;
 }
 
 function get_permalink_for_control() {
-  var permalink=get_permalink();
+  var permalink=new clone(get_permalink());
 
   if(!permalink.obj)
     permalink.obj="";
@@ -281,6 +284,7 @@ function get_permalink_for_control() {
 // update_permalink ... forces an update of the permalink
 function update_permalink() {
   permalink_control.updateLink();
+  call_hooks("permalink_update", permalink_current);
 }
 
 function get_baseurl() {
