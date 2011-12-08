@@ -83,15 +83,20 @@ function start_location_init() {
   });
   register_toolbox(start_location_toolbox);
 
+  lastview=cookie_read("_osb_location");
+
   if(((location.hash=="") || (location.hash=="#")) && (cookie_read("start_value")==null)) {
     start_location_toolbox.activate();
   }
-  else {
-    lastview=cookie_read("_osb_location");
+}
+
+function start_location_post_init() {
+  if(((location.hash!="") && (location.hash!="#")) || (cookie_read("start_value")!=null)) {
     start_location_start(cookie_read("start_value"));
   }
 }
 
 register_hook("init", start_location_init);
+register_hook("post_init", start_location_post_init);
 register_hook("view_changed", start_location_view_changed);
 register_hook("recv_permalink", start_location_recv_permalink);
