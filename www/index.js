@@ -330,8 +330,9 @@ function init() {
     map.setCenter(lonlat, start_zoom);
   }
 
-  //setTimeout("call_hooks(\"post_init\")", 2000);
   window_resize();
+
+  call_hooks("post_init");
 }
 
 function window_resize() {
