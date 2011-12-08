@@ -176,6 +176,11 @@ function set_location(params) {
   if(typeof(params)=="string")
     params=string_to_hash(params);
 
+  // TODO: Maybe not optimal, want to leave link intact when there are
+  // parameters to it?
+  if(params.obj)
+    location.hash="#"+params.obj;
+
   location_params=params;
 
   if(map) {
