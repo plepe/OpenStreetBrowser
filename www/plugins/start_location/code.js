@@ -66,8 +66,8 @@ function start_location_activate() {
   }
 }
 
-function start_location_view_changed(ev) {
-  cookie_write("_osb_location", hash_to_string(get_permalink()));
+function start_location_permalink_update(link) {
+  cookie_write("_osb_location", hash_to_string(link));
 }
 
 function start_location_recv_permalink(hash) {
@@ -98,5 +98,5 @@ function start_location_post_init() {
 
 register_hook("init", start_location_init);
 register_hook("post_init", start_location_post_init);
-register_hook("view_changed", start_location_view_changed);
+register_hook("permalink_update", start_location_permalink_update);
 register_hook("recv_permalink", start_location_recv_permalink);
