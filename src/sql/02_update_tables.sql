@@ -159,7 +159,7 @@ BEGIN
 	where
 	  data_type='R' and
 	  action not in ('D') and
-	  relation_tags.v='multipolygon') actions
+	  relation_tags.v in ('multipolygon', 'boundary')) actions
       where
 	assemble_multipolygon(actions.id);
 

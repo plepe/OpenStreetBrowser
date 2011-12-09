@@ -223,7 +223,7 @@ BEGIN
   end if;
 
   -- don't assemble multipolygons ...
-  if tags->'type' in ('multipolygon') then
+  if tags->'type' in ('multipolygon', 'boundary') then
     return false;
   end if;
 
@@ -263,7 +263,7 @@ DECLARE
 BEGIN
 
   -- get list of outer members
-  outer_members:=(select to_intarray(member_id) from relation_members where relation_id=id and member_type='W' and member_role='outer' group by relation_id);
+  outer_members:=(select to_intarray(member_id) from relation_members where relation_id=id and member_type='W' and member_role in ('outer', 'exclave') group by relation_id);
 
   -- no outer members? use all members without role as outer members
   if array_upper(outer_members, 1) is null then
@@ -281,7 +281,7 @@ BEGIN
   -- generate multipolygon geometry
   geom:=build_multipolygon(
     (select to_array(way_get_geom(outer_members[i])) from generate_series(1, array_upper(outer_members, 1)) i),
-    (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role='inner' group by relation_id));
+    (select to_array(way_get_geom(member_id)) from relation_members where relation_id=id and member_type='W' and member_role in ('inner', 'enclave') group by relation_id));
 
   -- of geometry is not valid, then return false
   if geom is null or ST_IsEmpty(geom) then

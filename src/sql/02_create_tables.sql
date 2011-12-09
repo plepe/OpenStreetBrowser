@@ -62,7 +62,7 @@ create index osm_rel_members_idx on osm_rel using gin(member_ids);
 select
   assemble_multipolygon(relation_id)
 from relation_tags
-where k='type' and v='multipolygon';
+where k='type' and v in ('multipolygon', 'boundary');
 
 create index osm_polygon_rel_id on osm_polygon(rel_id);
 create index osm_polygon_tags on osm_polygon using gin(osm_tags);
