@@ -93,7 +93,7 @@ while(1) {
   if($mcp_next_clean_up<=time()) {
     $mcp_next_clean_up=time()+60*60;
     call_hooks("mcp_clean_up", null);
-    if($db_central['master'])
+    if(isset($db_central['master'])&&($db_central['master']))
       call_hooks("mcp_clean_up_master", null);
   }
 
