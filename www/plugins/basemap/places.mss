@@ -22,9 +22,6 @@ alias place=town_large place=town|population>=30000
 .places_db[place=city_large][zoom>=11][zoom<15] name,
 .places_db[place=city_medium][zoom>=11][zoom<15] name,
 .places_high[place=city][zoom>=10][zoom<11] name,
-.places_high[place=island][zoom>=9][zoom<11] name,
-.places_db[place=island][zoom>=13][zoom<15] name,
-.places_db[place=islet][zoom>=15] name,
 .places_db[place=city][zoom>=11][zoom<15] name,
 .places_db[place=town_large][zoom>=13][zoom<15] name,
 .places_db[place=town][zoom>=13][zoom<15] name,
@@ -45,9 +42,6 @@ alias place=town_large place=town|population>=30000
 .places_db[place=city_large][zoom>=11][zoom<15] name_en,
 .places_db[place=city_medium][zoom>=11][zoom<15] name_en,
 .places_high[place=city][zoom>=10][zoom<11] name_en,
-.places_high[place=island][zoom>=9][zoom<11] name,
-.places_db[place=island][zoom>=13][zoom<15] name,
-.places_db[place=islet][zoom>=15] name,
 .places_db[place=city][zoom>=11][zoom<15] name_en,
 .places_db[place=town_large][zoom>=13][zoom<15] name_en,
 .places_db[place=town][zoom>=13][zoom<15] name_en,
@@ -332,3 +326,23 @@ alias place=town_large place=town|population>=30000
   text-size: 11;
 }
 
+
+.places_db[place=island][zoom>=12][zoom<16] name,
+.places_db[place=islet][zoom>=15] name {
+  text-face-name: "DejaVu Sans Oblique";
+  text-size: 10;
+  text-placement: point;
+  text-fill: #56533f;
+  text-halo-fill: #f2efd9;
+  text-halo-radius: 1;
+}
+.places_db[place=island][zoom>=12][zoom<16] name_en,
+.places_db[place=islet][zoom>=15] name_en {
+  text-face-name: "DejaVu Sans Oblique";
+  text-size: 8;
+  text-placement: point;
+  text-fill: #56533f;
+  text-halo-fill: #f2efd9;
+  text-halo-radius: 1;
+  text-dy: 9;
+}
