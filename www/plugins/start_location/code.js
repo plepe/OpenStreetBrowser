@@ -91,7 +91,7 @@ function start_location_init() {
 }
 
 function start_location_post_init() {
-  if(((location.hash!="") && (location.hash!="#")) || (cookie_read("start_value")!=null)) {
+  if((location.hash=="") || (location.hash=="#")) {
     start_location_start(cookie_read("start_value"));
   }
 }
