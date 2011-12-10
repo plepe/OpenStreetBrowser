@@ -242,7 +242,8 @@
 	    and (osm_tags@>'highway=>pedestrian' or
 	         osm_tags ? 'leisure' or
 	         osm_tags ? 'landuse' or
-		 osm_tags ? 'natural')
+		 osm_tags ? 'natural' or
+		 osm_tags @> 'place=>island')
 	    offset 0) as t1
 	    order by
 	      cast(osm_tags->'#highway_level' as int) desc,
@@ -278,7 +279,9 @@
 	    and (osm_tags@>'highway=>pedestrian' or
 	         osm_tags ? 'leisure' or
 	         osm_tags ? 'landuse' or
-		 osm_tags ? 'natural')
+		 osm_tags ? 'natural' or
+		 osm_tags @> 'place=>island' or
+		 osm_tags @> 'place=>islet')
 	    offset 0) as t1
 	    order by
 	      cast(osm_tags->'#highway_level' as int) desc,

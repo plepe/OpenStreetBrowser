@@ -261,3 +261,10 @@ Map {
   text-fill: #707070;
   text-halo-fill: #a0a0a0;
 }
+.area_text_extract[type=island] name,
+.area_text[type=island] name {
+  text-face-name: "DejaVu Sans Oblique";
+  text-fill: #56533f;
+  text-halo-fill: #f2efd9;
+}
+
