@@ -5,6 +5,7 @@ function debug($text, $category) {
   global $debug_list;
 
   $debug_list[]="$category: $text";
+  call_hooks("debug", $text, $category);
 }
 
 function debug_write($xml) {

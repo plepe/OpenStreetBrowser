@@ -2,6 +2,15 @@
 <?
 include "conf.php";
 include "inc/hooks.php";
+register_hook("debug", "mcp_debug");
+function mcp_debug($text, $category) {
+  global $debug_list;
+
+  print Date("Y-m-d H:i:s")." $category $text\n";
+
+  $debug_list=array();
+}
+
 include "inc/plugins.php";
 include "inc/lock.php";
 include "inc/number.php";
