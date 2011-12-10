@@ -8,9 +8,11 @@ function plugins_include($plugin, $app) {
   global $plugins_include_files;
   global $plugins_dir;
 
-  if((!file_exists("$plugins_dir/$plugin"))&&
-     (!file_exists("$plugins_dir/$plugin/conf.php")))
+  if((!file_exists("$plugins_dir/$plugin"))||
+     (!file_exists("$plugins_dir/$plugin/conf.php"))) {
+    debug("Including plugin '$plugin': No such plugin", "plugins");
     return false;
+  }
 
   $var_active="{$plugin}_active";
   $var_depend="{$plugin}_depend";
