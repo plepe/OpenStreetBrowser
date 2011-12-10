@@ -211,13 +211,45 @@ Map {
   polygon-fill: #f0dba5;
 }
 
+/*
+- when no translation of the text is available, the 'name_only'-styles are
+  used, which will be wrapped.
+- in case of translated texts, the 'name'- and 'name_en'-styles are used, which
+  are not wrapped, and the translation is written below with smaller font.
+*/
+.area_text_extract name_only,
+.area_text name_only,
 .area_text_extract name,
 .area_text name {
   text-face-name: "DejaVu Sans Book";
   text-avoid-edges: true;
   text-halo-radius: 1;
+  text-vertical-align: middle;
+}
+.area_text_extract name_en,
+.area_text name_en {
+  text-face-name: "DejaVu Sans Book";
+  text-avoid-edges: true;
+  text-halo-radius: 1;
+  text-vertical-align: middle;
+}
+.area_text_extract[way_area_k>=32000000][zoom=6] name_only,
+.area_text_extract[way_area_k>=8000000][zoom=7] name_only,
+.area_text_extract[way_area_k<400000000][way_area_k>=2000000][zoom=8] name_only,
+.area_text_extract[way_area_k<100000000][way_area_k>=500000][zoom=9] name_only,
+.area_text_extract[way_area_k<32000000][way_area_k>=125000][zoom=10] name_only,
+.area_text_extract[way_area_k<8000000][way_area_k>=32000][zoom=11] name_only,
+.area_text_extract[way_area_k<2000000][way_area_k>=8000][zoom=12] name_only,
+.area_text_extract[way_area_k<500000][way_area_k>=2000][zoom=13] name_only,
+/* the following zoom levels don't follow the exponential curve. when more
+ * objects are displayed this should be adapted too, to not clutter the map */
+.area_text[way_area<125000000][way_area>=150000][zoom=14] name_only,
+.area_text[way_area<32000000][way_area>=75000][zoom=15] name_only,
+.area_text[way_area<8000000][way_area>=10000][zoom=16] name_only,
+.area_text[way_area<2000000][zoom=17] name_only,
+.area_text[way_area<500000][zoom=18] name_only {
+  text-size: 10;
   text-wrap-width: 20;
-  text-max-char-angle-delta: 20;
 }
 .area_text_extract[way_area_k>=32000000][zoom=6] name,
 .area_text_extract[way_area_k>=8000000][zoom=7] name,
@@ -236,35 +268,72 @@ Map {
 .area_text[way_area<500000][zoom=18] name {
   text-size: 10;
 }
+.area_text_extract[way_area_k>=32000000][zoom=6] name_en,
+.area_text_extract[way_area_k>=8000000][zoom=7] name_en,
+.area_text_extract[way_area_k<400000000][way_area_k>=2000000][zoom=8] name_en,
+.area_text_extract[way_area_k<100000000][way_area_k>=500000][zoom=9] name_en,
+.area_text_extract[way_area_k<32000000][way_area_k>=125000][zoom=10] name_en,
+.area_text_extract[way_area_k<8000000][way_area_k>=32000][zoom=11] name_en,
+.area_text_extract[way_area_k<2000000][way_area_k>=8000][zoom=12] name_en,
+.area_text_extract[way_area_k<500000][way_area_k>=2000][zoom=13] name_en,
+/* the following zoom levels don't follow the exponential curve. when more
+ * objects are displayed this should be adapted too, to not clutter the map */
+.area_text[way_area<125000000][way_area>=150000][zoom=14] name_en,
+.area_text[way_area<32000000][way_area>=75000][zoom=15] name_en,
+.area_text[way_area<8000000][way_area>=10000][zoom=16] name_en,
+.area_text[way_area<2000000][zoom=17] name_en,
+.area_text[way_area<500000][zoom=18] name_en {
+  text-size: 8;
+  text-dy: 9;
+}
+.area_text_extract[type=water] name_only,
+.area_text[type=water] name_only,
+.area_text_extract[type=water] name_en,
+.area_text[type=water] name_en,
 .area_text_extract[type=water] name,
 .area_text[type=water] name {
   text-face-name: "DejaVu Sans Oblique";
   text-fill: #156299;
   text-halo-fill: #7eb9e3;
 }
+.area_text[type=pedestrian] name_only,
+.area_text[type=pedestrian] name_en,
 .area_text[type=pedestrian] name {
   text-fill: #000000;
   text-halo-fill: #cdcdcd;
 }
+.area_text[type=pedestrian_tunnel] name_only,
+.area_text[type=pedestrian_tunnel] name_en,
 .area_text[type=pedestrian_tunnel] name {
   text-fill: #303030;
   text-halo-radius: 0;
 }
+.area_text_extract[type=park] name_only,
+.area_text[type=park] name_only,
+.area_text_extract[type=park] name_en,
+.area_text[type=park] name_en,
 .area_text_extract[type=park] name,
 .area_text[type=park] name {
   text-fill: #000000;
   text-halo-fill: #9ce69c;
 }
+.area_text_extract[type=mountain_range] name_only,
+.area_text[type=mountain_range] name_only,
+.area_text_extract[type=mountain_range] name_en,
+.area_text[type=mountain_range] name_en,
 .area_text_extract[type=mountain_range] name,
 .area_text[type=mountain_range] name {
   text-face-name: "DejaVu Sans Oblique";
   text-fill: #707070;
   text-halo-fill: #a0a0a0;
 }
+.area_text_extract[type=island] name_only,
+.area_text[type=island] name_only,
+.area_text_extract[type=island] name_en,
+.area_text[type=island] name_en,
 .area_text_extract[type=island] name,
 .area_text[type=island] name {
   text-face-name: "DejaVu Sans Oblique";
   text-fill: #56533f;
   text-halo-fill: #f2efd9;
 }
-
