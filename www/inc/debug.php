@@ -4,7 +4,7 @@ unset($debug_list);
 function debug($text, $category) {
   global $debug_list;
 
-  $debug_list[]="$category: $text";
+  $debug_list[]=array(time(), $category, $text);
   call_hooks("debug", $text, $category);
 }
 
@@ -16,7 +16,7 @@ function debug_write($xml) {
   if($debug_list)
   foreach($debug_list as $d) {
     $debug=$xml->createElement("debug");
-    $text=$xml->createTextNode($d);
+    $text=$xml->createTextNode(Date("Y-m-d H:i:s", $d[0])." {$d[1]}: {$d[2]}");
     $debug->appendChild($text);
     $result->appendChild($debug);
   }
