@@ -29,6 +29,9 @@ function sql_connect(&$conn) {
     // inform other modules about successful database connection
     if($conn['connection'])
       call_hooks("sql_connect", $conn);
+    
+    // log opening of connection
+    debug("db connection {$conn['connection']} opened", "sql");
   }
 }
 
@@ -46,6 +49,7 @@ function sql_query($qry, &$conn=0) {
 
   // check if connection was opened too long
   if(isset($conn['date'])&&(time()-$conn['date']>3600)) {
+    debug("connection {$conn['connection']} opened too long, closing", "sql");
     $conn['date']=null;
     pg_close($conn['connection']);
     unset($conn['connection']);
