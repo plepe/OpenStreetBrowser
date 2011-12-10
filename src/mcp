@@ -17,8 +17,8 @@ include "inc/css.php";
 include "inc/postgis.php";
 include "inc/git_obj.php";
 include "inc/data_dir.php";
-include "inc/icon.php";
 include "gen_renderd_conf.php";
+$plugins[]="icon";
 plugins_init("mcp");
 call_hooks("mcp_start");
 
