@@ -356,7 +356,7 @@ class category {
     $version_tags=new tags();
     $version_tags->set("user", $current_user->username);
     $version_tags->set("date", Date("c"));
-    $version_tags->set("comment", $param['msg']);
+    $version_tags->set("msg", $param['msg']);
 
     $sql.="insert into category values ('{$this->id}', ".array_to_hstore($this->tags->data()).", '$version', Array['$parent_version'], ".array_to_hstore($version_tags->data()).");\n";
 
