@@ -166,6 +166,7 @@ $overlays_add=array(
 // icon_editor - Upload icons
 // postgresql_restart - Try to restart PostgreSQL after connection failure
 // program - Write programs on geo objects
+// quadtree - Organise database tables as quadtrees (geometrically)
 
 // geom - Geometry Editor
 // geom_ui - UI for geometry editor functions
