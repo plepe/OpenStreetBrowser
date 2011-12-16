@@ -307,6 +307,9 @@ function init() {
 
   //setTimeout("call_hooks(\"post_init\")", 2000);
   window_resize();
+  var x=new postgis("POLYGON((0 5009377.085,0 7514065.6275,2504688.5425 7514065.6275,2504688.5425 5009377.085,0 5009377.085))");
+  vector_layer.addFeatures(x.geo());
+
 }
 
 function window_resize() {
