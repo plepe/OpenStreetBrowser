@@ -56,11 +56,77 @@ DECLARE
 BEGIN
   way:=quadtree_get_way(NEW);
   table_list:=quadtree_get_table_list(table_name, way);
+  raise notice 'table_list %', table_list;
 
   for i in array_lower(table_list, 1)..array_upper(table_list, 1) loop
-    execute 'insert into '||table_name||'_'||i||' select $1.*' using NEW;
+    execute 'insert into '||table_name||'_'||table_list[i]||' select $1.*' using NEW;
   end loop;
 
+  perform quadtree_check_split(table_name, table_list);
+
   return true;
+END;
+$$ LANGUAGE plpgsql;
+
+-- check if a subtable needs a split, and do the split right away.
+CREATE OR REPLACE FUNCTION quadtree_check_split(in table_name text, in table_list int2[]) returns void as $$
+#variable_conflict use_variable
+DECLARE
+  table_size int;
+  table_def record;
+  this record;
+  new record;
+  parts geometry[];
+BEGIN
+  select * into table_def from quadtree_tables where quadtree_tables.table_name=table_name;
+
+  for i in array_lower(table_list, 1)..array_upper(table_list, 1) loop
+    -- get size. if size too big, start a split.
+    select pg_relation_size(table_name||'_'||table_list[i]) into table_size;
+    if table_size>cast(table_def.options->'size' as int) then
+
+      -- get table -> this
+      execute 'select * from '||table_name||'_quadtree where table_id='||table_list[i]||';' into this;
+      raise notice 'split table %_% - path: %', table_name, table_list[i], this.path;
+
+      -- calculate parts
+      parts=Array[
+	ST_TransScale(this.boundary,
+	  ST_Xmin(this.boundary), ST_Ymin(this.boundary), 0.5, 0.5),
+	ST_TransScale(this.boundary,
+	  ST_Xmin(this.boundary), ST_Ymax(this.boundary), 0.5, 0.5),
+	ST_TransScale(this.boundary,
+	  ST_Xmax(this.boundary), ST_Ymax(this.boundary), 0.5, 0.5),
+	ST_TransScale(this.boundary,
+	  ST_Xmax(this.boundary), ST_Ymin(this.boundary), 0.5, 0.5)
+	];
+
+      for i in 1..4 loop
+	-- create entry in XXX_quadtree
+	execute 'insert into '||table_name||'_quadtree values ('||
+	  ''''||this.path||i||''', '||
+	  ''''||cast(parts[i] as text)||''');';
+	execute 'select * from '||table_name||'_quadtree where path='''||this.path||i||'''' into new;
+
+        -- create new table
+	execute 'create table '||table_name||'_'||new.table_id||' () inherits ('||table_name||');';
+	raise notice 'part path=% table_id=%', new.path, new.table_id;
+
+	-- insert all matching objects into new table
+	execute 'insert into '||table_name||'_'||new.table_id||
+	  ' (select * from '||table_name||'_'||this.table_id||' where '||
+	  table_name||'_'||this.table_id||'.way && '''||cast(parts[i] as text)||''' and ST_Distance('||table_name||'_'||this.table_id||'.way, '''||cast(parts[i] as text)||''')=0)';
+      end loop;
+
+      -- empty old table and marked as droppable (boundary is null). don't
+      -- drop right now, because this would block all selects on this table
+      -- until transaction has finished
+      execute 'delete from '||table_name||'_'||this.table_id||';';
+      execute 'update '||table_name||'_quadtree set boundary=null where table_id='||this.table_id||';';
+
+      raise notice 'finish split';
+    end if;
+
+  end loop;
 END;
 $$ LANGUAGE plpgsql;
