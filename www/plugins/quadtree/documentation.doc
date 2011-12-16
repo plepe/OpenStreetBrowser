@@ -1,0 +1,31 @@
+Plugin 'Quadtree' converts a spatial database table into a partitioned table
+
+Example:
+  -- create a test-table for demonstration
+  create table test (
+    id	text	not null,
+    tags	hstore	
+  );
+  select AddGeometryColumn('test', 'way', 900913, 'GEOMETRY', 2);
+
+  -- convert table into a partitioned table
+  select quadtree_init_table('test');
+
+  -- place a query on the table:
+  select * from test_query(ST_MakeEnvelope(-10, -10, 10, 10, 900913));
+
+  -- you could also use the following, but this would always include a search
+  -- on all tables and there could be duplicates
+  select * from test where way && ST_MakeEnvelope(-10, -10, 10, 10, 900913);
+
+The following tables and function will be created:
+  table 'test'               ... the original table
+  table 'test_quadtree'      ... a list of all partitions of test
+  tables 'test_X'            ... where X are numbers -> the partitions
+  function 'test_query(boundary, where, options)'
+			     ... place a query on test
+
+The following general tables and functions are available:
+  table 'quadtree_tables'    ... list of all tables which are partitioned
+  function 'quadtree_init_table(table_name, options)'
+                             ... initialize partitioning for a table
