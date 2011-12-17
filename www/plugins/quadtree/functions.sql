@@ -4,10 +4,10 @@
 -- 2. options (hstore)
 --      'size'=>size when to split a quadrant (bytes, default: 256 MB)
 --      'type'=>
---         'only_leaf' ... separate table only in leaf-tables, objects might
---                         need to be duplicated
---         'full_quad' ... keep a full quadtree, with the objects in their best
---                         matching boundary
+--         'only_leaf' ... separate table only in leaf-tables, overlapping
+--                         objects will be duplicated to each part
+--         'full_quad' ... keep a full quadtree, with overlapping objects
+--                         in the parent parts -> more tables need querying
 --
 -- the table needs to have a column 'way', a geometry column on which to 
 -- decide which subtable(s) to insert.
@@ -18,6 +18,9 @@ DECLARE
   r record;
   index_def text[]=Array[]::text[];
 BEGIN
+  -- set default values
+  options='size=>268435456, type=>only_leaf'||options;
+
   -- add table to the list of quadtree_tables
   insert into quadtree_tables values (table_name, options);
 
