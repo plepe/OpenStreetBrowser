@@ -2,7 +2,12 @@
 -- parameters:
 -- 1. name of the table (text)
 -- 2. options (hstore)
---      'size'=>size when to split a quadrant in byte (default: 256 MB)
+--      'size'=>size when to split a quadrant (bytes, default: 256 MB)
+--      'type'=>
+--         'only_leaf' ... separate table only in leaf-tables, objects might
+--                         need to be duplicated
+--         'full_quad' ... keep a full quadtree, with the objects in their best
+--                         matching boundary
 --
 -- the table needs to have a column 'way', a geometry column on which to 
 -- decide which subtable(s) to insert.
@@ -22,10 +27,10 @@ BEGIN
   execute 'create table '||table_name||'_1 () inherits ('||table_name||');';
 
   -- create quadtree
-  execute 'create table '||table_name||'_quadtree ( path text not null );';
+  execute 'create table '||table_name||'_quadtree ( path text not null, tags hstore not null default ''''::hstore );';
   perform AddGeometryColumn(table_name||'_quadtree', 'boundary', 900913, 'POLYGON', 2);
   execute 'alter table '||table_name||'_quadtree add column table_id serial;';
-  execute 'insert into '||table_name||'_quadtree values ('''', ST_MakeEnvelope(-20037508.34,-20037508.34,20037508.34,20037508.34, 900913));';
+  execute 'insert into '||table_name||'_quadtree values ('''', '''', ST_MakeEnvelope(-20037508.34,-20037508.34,20037508.34,20037508.34, 900913));';
   execute 'create index '||table_name||'_quadtree_boundary on '||table_name||'_quadtree using gist(boundary);';
 
   -- function to extract way from a row
@@ -40,16 +45,26 @@ $$ LANGUAGE plpgsql;
 
 -- get list of subtables where the given geometry is part of
 create or replace function quadtree_get_table_list(in table_name text, in way geometry) returns int2[] as $$
+#variable_conflict use_variable
 declare
   ret record;
+  table_def record;
 begin
+  select * into table_def from quadtree_tables where quadtree_tables.table_name=table_name;
+
   if way is null then
     return null;
   end if;
 
-  for ret in execute 'select array_agg(table_id) as c from '||
-    table_name||'_quadtree where boundary && '''||cast(way as text)||''' and ST_Distance(boundary, '''||cast(way as text)||''')=0;' loop
-  end loop;
+  if table_def.options->'type'='only_leaf' then
+    for ret in execute 'select array_agg(table_id) as c from '||
+      table_name||'_quadtree where boundary && '''||cast(way as text)||''' and ST_Distance(boundary, '''||cast(way as text)||''')=0;' loop
+    end loop;
+  elsif table_def.options->'type'='full_quad' then
+    for ret in execute 'select Array[table_id] as c from '||
+      table_name||'_quadtree where ST_Within('''||cast(way as text)||''', boundary) order by length(path) desc limit 1;' loop
+    end loop;
+  end if;
 
   return ret.c;
 end;
@@ -98,6 +113,11 @@ BEGIN
 
       -- get table -> this
       execute 'select * from '||table_name||'_quadtree where table_id='||table_list[i]||';' into this;
+
+      if table_def.options->'type'='full_quad' and this.tags?'parent' then
+	exit;
+      end if;
+	
       raise notice 'split table %_% - path: %', table_name, table_list[i], this.path;
 
       -- calculate parts
@@ -116,6 +136,7 @@ BEGIN
 	-- create entry in XXX_quadtree
 	execute 'insert into '||table_name||'_quadtree values ('||
 	  ''''||this.path||i||''', '||
+	  '''''::hstore, '||
 	  ''''||cast(parts[i] as text)||''');';
 	execute 'select * from '||table_name||'_quadtree where path='''||this.path||i||'''' into new;
 
@@ -124,16 +145,39 @@ BEGIN
 	raise notice 'part path=% table_id=%', new.path, new.table_id;
 
 	-- insert all matching objects into new table
-	execute 'insert into '||table_name||'_'||new.table_id||
-	  ' (select * from '||table_name||'_'||this.table_id||' where '||
-	  table_name||'_'||this.table_id||'.way && '''||cast(parts[i] as text)||''' and ST_Distance('||table_name||'_'||this.table_id||'.way, '''||cast(parts[i] as text)||''')=0)';
+	if table_def.options->'type'='only_leaf' then
+	  execute 'insert into '||table_name||'_'||new.table_id||
+	    ' (select * from '||table_name||'_'||this.table_id||' where '||
+	    table_name||'_'||this.table_id||'.way && '''||
+	    cast(parts[i] as text)||''' and '||
+	    'ST_Distance('||table_name||'_'||this.table_id||'.way, '||
+	    ''''||cast(parts[i] as text)||''')=0)';
+	elsif table_def.options->'type'='full_quad' then
+	  execute 'insert into '||table_name||'_'||new.table_id||
+	    ' (select * from '||table_name||'_'||this.table_id||' where '||
+	    table_name||'_'||this.table_id||'.way && '''||
+	    cast(parts[i] as text)||''' and '||
+	    'ST_Within('||table_name||'_'||this.table_id||'.way, '||
+	    ''''||cast(parts[i] as text)||'''))';
+	  execute 'delete from '||table_name||'_'||this.table_id||
+	    ' where '||table_name||'_'||this.table_id||'.way && '''||
+	    cast(parts[i] as text)||''' and '||
+	    'ST_Within('||table_name||'_'||this.table_id||'.way, '||
+	    ''''||cast(parts[i] as text)||''')';
+	end if;
       end loop;
 
       -- empty old table and marked as droppable (boundary is null). don't
       -- drop right now, because this would block all selects on this table
       -- until transaction has finished
-      execute 'delete from '||table_name||'_'||this.table_id||';';
-      execute 'update '||table_name||'_quadtree set boundary=null where table_id='||this.table_id||';';
+      if table_def.options->'type'='only_leaf' then
+	execute 'delete from '||table_name||'_'||this.table_id||';';
+	execute 'update '||table_name||'_quadtree set boundary=null '||
+	  'where table_id='||this.table_id||';';
+      elsif table_def.options->'type'='full_quad' then
+	execute 'update '||table_name||'_quadtree set '||
+	  'tags=tags||''parent=>1'' where table_id='||this.table_id||';';
+      end if;
 
       raise notice 'finish split';
     end if;
