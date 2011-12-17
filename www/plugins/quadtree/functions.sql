@@ -43,9 +43,14 @@ create or replace function quadtree_get_table_list(in table_name text, in way ge
 declare
   ret record;
 begin
+  if way is null then
+    return null;
+  end if;
+
   for ret in execute 'select array_agg(table_id) as c from '||
     table_name||'_quadtree where boundary && '''||cast(way as text)||''' and ST_Distance(boundary, '''||cast(way as text)||''')=0;' loop
   end loop;
+
   return ret.c;
 end;
 $$ language plpgsql;
@@ -59,7 +64,10 @@ DECLARE
 BEGIN
   way:=quadtree_get_way(NEW);
   table_list:=quadtree_get_table_list(table_name, way);
-  raise notice 'table_list %', table_list;
+
+  if table_list is null then
+    return false;
+  end if;
 
   for i in array_lower(table_list, 1)..array_upper(table_list, 1) loop
     execute 'insert into '||table_name||'_'||table_list[i]||' select $1.*' using NEW;
@@ -150,11 +158,14 @@ BEGIN
   -- join tables with union
   sql='select * from ('||array_to_string(tables, ' union ')||') a';
 
+  sql=sql||' where way && '||quote_nullable(cast(boundary as text));
+
   -- if there's a where specified concatenate to query
   if _where!='' then
-    sql=sql||' where '||_where;
+    sql=sql||' and '||_where;
   end if;
 
+  -- raise notice 'sql: %', sql;
   return sql;
 END;
 $$ language plpgsql;
