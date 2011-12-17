@@ -15,6 +15,8 @@
 CREATE OR REPLACE FUNCTION quadtree_init_table(in table_name text, in options hstore default ''::hstore) returns boolean as $$
 #variable_conflict use_variable
 DECLARE
+  r record;
+  index_def text[]=Array[]::text[];
 BEGIN
   -- add table to the list of quadtree_tables
   insert into quadtree_tables values (table_name, options);
@@ -38,6 +40,15 @@ BEGIN
 
   -- create query function
   execute 'create or replace function '||table_name||'_query(in boundary geometry, in _where text default '''', in options hstore default ''''::hstore) returns setof '||table_name||' as $f$ declare r '||table_name||'%rowtype; sql text; begin sql:=quadtree_compile_query('''||table_name||''', boundary, _where, options); for r in execute sql loop return next r; end loop; return; end; $f$ language plpgsql;';
+
+  -- save list of current indexes
+  for r in execute 'select * from pg_indexes where tablename='''||table_name||'''' loop
+    index_def=array_append(index_def, r.indexdef);
+  end loop;
+  update quadtree_tables
+    set indexes=index_def
+    where quadtree_tables.table_name=table_name;
+  perform quadtree_table_indexes(table_name, 1);
 
   return true;
 END;
@@ -165,6 +176,9 @@ BEGIN
 	    'ST_Within('||table_name||'_'||this.table_id||'.way, '||
 	    ''''||cast(parts[i] as text)||''')';
 	end if;
+
+	-- create indexes
+	perform quadtree_table_indexes(table_name, new.table_id);
       end loop;
 
       -- empty old table and marked as droppable (boundary is null). don't
@@ -228,6 +242,52 @@ BEGIN
     execute 'drop table '||table_name||'_'||r.table_id||';';
   end loop;
   execute 'delete from '||table_name||'_quadtree where boundary is null;';
+
+  return true;
+END;
+$$ language plpgsql;
+
+-- add indexes to all sub-tables
+create or replace function quadtree_add_index(in table_name text, in index_def text) returns boolean as $$
+#variable_conflict use_variable
+DECLARE
+  r record;
+BEGIN
+  update quadtree_tables
+    set indexes=array_append(indexes, index_def)
+    where quadtree_tables.table_name=table_name;
+
+  for r in execute 'select * from '||table_name||'_quadtree;' loop
+    perform quadtree_add_index_table(table_name, r.table_id, index_def);
+  end loop;
+
+  return true;
+END;
+$$ language plpgsql;
+
+-- create an index on a subtable
+create or replace function quadtree_add_index_table(in table_name text, in table_id int, in index_def text) returns boolean as $$
+#variable_conflict use_variable
+DECLARE
+BEGIN
+  execute replace(index_def, table_name, table_name||'_'||table_id);
+
+  return true;
+END;
+$$ language plpgsql;
+
+-- create all indexes for a (new) table
+create or replace function quadtree_table_indexes(in table_name text, in table_id int) returns boolean as $$
+#variable_conflict use_variable
+DECLARE
+  table_def record;
+  i int;
+BEGIN
+  select * into table_def from quadtree_tables where quadtree_tables.table_name=table_name;
+
+  for i in array_lower(table_def.indexes, 1)..array_upper(table_def.indexes, 1) loop
+    perform quadtree_add_index_table(table_name, table_id, table_def.indexes[i]);
+  end loop;
 
   return true;
 END;

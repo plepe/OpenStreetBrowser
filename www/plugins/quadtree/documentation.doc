@@ -31,3 +31,7 @@ The following general tables and functions are available:
                              ... initialize partitioning for a table
   function 'quadtree_vacuum(table_name)'
                              ... removes tables which are no longer needed
+  function 'quadtree_add_index(table_name, def)'
+			     ... create an index on all tables. supply
+				 defintion as it would fit for the original
+				 table
