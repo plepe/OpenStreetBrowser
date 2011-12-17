@@ -29,3 +29,5 @@ The following general tables and functions are available:
   table 'quadtree_tables'    ... list of all tables which are partitioned
   function 'quadtree_init_table(table_name, options)'
                              ... initialize partitioning for a table
+  function 'quadtree_vacuum(table_name)'
+                             ... removes tables which are no longer needed

@@ -169,3 +169,22 @@ BEGIN
   return sql;
 END;
 $$ language plpgsql;
+
+-- removes unneeded tables
+create or replace function quadtree_vacuum(in table_name text) returns boolean as $$
+#variable_conflict use_variable
+DECLARE
+  r record;
+  sql text;
+  tables text[]=Array[]::text[];
+BEGIN
+  -- drop tables which are not used anymore (boundary is null)
+  for r in execute 'select * from '||table_name||'_quadtree where boundary is null;' loop
+    raise notice 'drop table %_%', table_name, r.table_id;
+    execute 'drop table '||table_name||'_'||r.table_id||';';
+  end loop;
+  execute 'delete from '||table_name||'_quadtree where boundary is null;';
+
+  return true;
+END;
+$$ language plpgsql;
