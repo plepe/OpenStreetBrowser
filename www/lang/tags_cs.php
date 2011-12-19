@@ -113,7 +113,7 @@ $lang_str["tag:bridge"]="Most";
 $lang_str["tag:tunnel"]="Tunel";
 
 // traffic_calming
-#$lang_str["tag:traffic_calming"]="Traffic calming";
+$lang_str["tag:traffic_calming"]="Zklidnění dopravy";
 
 // service
 $lang_str["tag:service"]="Vlastnosti obslužné komunikace";
@@ -143,7 +143,7 @@ $lang_str["tag:leisure=common"]="Volně přístupná oblast";
 $lang_str["tag:leisure=ice_rink"]="Kluziště";
 $lang_str["tag:leisure=miniature_golf"]="Minigolf";
 $lang_str["tag:leisure=swimming_pool"]="Bazén";
-#$lang_str["tag:leisure=beach_resort"]="Beach Resort";
+$lang_str["tag:leisure=beach_resort"]="Plážový resort";
 #$lang_str["tag:leisure=bird_hide"]="Bird Hide";
 $lang_str["tag:leisure=sport"]="Jiný sport";
 

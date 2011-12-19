@@ -33,6 +33,7 @@ $lang_str["source"]="Zdroj";
 $lang_str["unnamed"]="nepojmenováno";
 $lang_str["zoom"]="Stupeň přiblížení";
 $lang_str["no_message"]="beze zprávy";
+$lang_str["ad"]=array("Reklama", "Reklamy");
 
 // Headings
 $lang_str["head:general_info"]="Základní informace";
