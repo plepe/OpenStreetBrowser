@@ -1,0 +1,5 @@
+div.icon_chooser ul {
+  overflow: auto;
+  width: 250px;
+  height: 400px;
+}
