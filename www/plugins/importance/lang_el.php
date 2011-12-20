@@ -6,4 +6,4 @@ $lang_str["importance:national"]="εθνική";
 #$lang_str["importance:regional"]="regional";
 #$lang_str["importance:urban"]="urban";
 #$lang_str["importance:suburban"]="suburban";
-#$lang_str["importance:local"]="local";
+$lang_str["importance:local"]="τοπική";

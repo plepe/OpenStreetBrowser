@@ -33,6 +33,7 @@ $lang_str["source"]="Πηγή";
 $lang_str["unnamed"]="ανώνυμο";
 $lang_str["zoom"]="Επίπεδο Εστίασης";
 $lang_str["no_message"]=array("χωρίς μήνυμα", "χωρίς μηνύματα");
+$lang_str["ad"]=array("Διαφήμιση", "Διαφημίσεις");
 
 // Headings
 $lang_str["head:general_info"]="Γενικές Πληροφορίες";
@@ -97,7 +98,7 @@ $lang_str["lang:auto"]="Ίδια με τη γλώσσα διεπαφής";
 $lang_str["overlay:data"]="Δεδομένα";
 $lang_str["overlay:draggable"]="Δείκτες";
 
-$lang_str["user:no_auth"]="Όνομα χρήστη και κωδικός λάθος!";
+$lang_str["user:no_auth"]="Όνομα χρήστη ή κωδικός λάθος!";
 $lang_str["user:login_text"]="Σύνδεση στο OpenStreetBrowser:";
 $lang_str["user:create_user"]="Δημιουργία νέου χρήστη:";
 $lang_str["user:username"]="Όνομα χρήστη";
