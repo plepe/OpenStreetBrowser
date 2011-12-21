@@ -17,18 +17,8 @@ echo "* Download new OSM-File"
 cd $ROOT_PATH/data
 wget -N http://download.geofabrik.de/osm/europe/austria.osm.bz2
 wget -N http://download.geofabrik.de/osm/europe/bulgaria.osm.bz2
-wget -N -nv http://hypercube.telascience.org/~kleptog/processed_p.zip
-wget -N -nv http://tileserv.openstreetmap.org/shoreline_300.tar.bz2
 
 echo "* Importing to Database"
-echo "- Shapefiles"
-cd $ROOT_PATH/data
-mkdir world_boundaries/
-unzip processed_p.zip
-mv coastlines/* world_boundaries/
-rmdir coastlines
-tar xjf shoreline_300.tar.bz2 -C world_boundaries
-
 psql -d gis -c "drop database $DB_NAME"
 psql -d gis -c "create database $DB_NAME"
 psql -d $DB_NAME -c "create language plpgsql"
