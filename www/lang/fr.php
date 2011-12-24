@@ -1,72 +1,72 @@
 <?
-// All untranslated strings have a # in front. When you translate a string
-// please remove this hash.
+// In this editor you can translate all strings. In the third column you can compare the strings to another language (set it in the select box on the bottom of the window). Please note that changes will not appear right away, they need to be imported by a developer.
+// Every language string can have a singular and plural variant by separating them by ";", e.g. "Restaurant;Restaurants". The first string is the singular form, the second the plural form.  Optionally you can define the Gender (F, M, N) for the word by prepending one of those characters, e.g. "N;Büro;Büros" (German for "office").
+// When translating a language variant (e.g. 'British English', code 'en-gb') please translate only strings which are different from the base language.
+#$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
 
-//  Every language string looks like this:
-//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
-//  the first entry is the translation of the language string in Singular,
-//  the second the Plural form.
-//
-//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
-//  German translation for office:
-//  $lang_str["office"]=array(N, "Büro", "Büros");
-//
-//  If a Singular/Plural form is not
-//  suitable/necessary you can ignore the array, e.g.
-//  $lang_str["help"]="Help";
 $lang_str["lang:current"]="Français"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
 // General
-$lang_str["general_info"]="Information générale";
+$lang_str["general_info"]="Informations générales";
 $lang_str["yes"]="oui";
 $lang_str["no"]="non";
 $lang_str["ok"]="Ok";
-$lang_str["save"]="Sauvegarde";
+$lang_str["save"]="Sauvegarder";
+$lang_str["saved"]="Sauvegarde effectuée"; // for dialog boxes confirming saving
 $lang_str["cancel"]="Annuler";
+$lang_str["show"]="Afficher";
+$lang_str["edit"]="Editer";
+$lang_str["delete"]="Supprimer";
+$lang_str["history"]="Historique";
+$lang_str["choose"]="Choisir";
+$lang_str["help"]="Aide";
 $lang_str["longitude"]=array("Longitude", "Longitudes");
 $lang_str["latitude"]=array("Latitude", "Latitudes");
-$lang_str["noname"]="(aucun nom)";
+$lang_str["noname"]="(sans nom)";
 $lang_str["info_back"]="retour à la Vue d'ensemble";
 $lang_str["info_zoom"]="zoom";
-$lang_str["nothing_found"]="n'a rien trouvé";
-$lang_str["loading"]="chargement";
+$lang_str["nothing_found"]="aucun résultat";
+$lang_str["list:zoom_for_obs"]="Zoom vers des objects mineurs";
+$lang_str["loading"]="Chargement en cours ...";
 $lang_str["more"]="plus";
+$lang_str["source"]="Source";
 $lang_str["unnamed"]="sans nom";
 $lang_str["zoom"]="Niveau de Zoom";
+$lang_str["no_message"]="aucun message,aucun message";
+$lang_str["ad"]=array("Publicité", "Publicités");
 
 // Headings
-$lang_str["head:general_info"]="Information générale";
+$lang_str["head:general_info"]="Informations générales";
 $lang_str["head:stops"]="Arrêts / Stops";
 $lang_str["head:routes"]="Routes";
 $lang_str["head:members"]="Membres";
-$lang_str["head:address"]="Addresse";
+$lang_str["head:address"]="Adresse";
 $lang_str["head:internal"]="OSM Internal";
 $lang_str["head:services"]="Services";
 $lang_str["head:culture"]="Culture";
 $lang_str["head:graves"]="Tombes célèbres";
-$lang_str["head:routing"]="Routage";
+$lang_str["head:routing"]="Itinéraire";
 $lang_str["head:search"]="Recherche";
-$lang_str["head:actions"]="Actions";
+$lang_str["head:actions"]=array("Action", "Actions");
 $lang_str["head:location"]="Emplacement";
 $lang_str["head:tags"]=array("Balise", "Balises");
-$lang_str["head:whats_here"]="Qu'est-ce qui est ici?";
+$lang_str["head:whats_here"]="Qu'y a-t-il ici ?";
 
 $lang_str["action_browse"]="visualiser dans OSM";
 $lang_str["action_edit"]="éditer dans OSM";
 
-$lang_str["geo_click_pos"]="Cliquez sur votre localisation sur la carte";
+$lang_str["geo_click_pos"]="Cliquez sur votre position sur la carte";
 $lang_str["geo_set_pos"]="Définir ma localisation";
-$lang_str["geo_change_pos"]="Modifier ma localisation";
+$lang_str["geo_change_pos"]="Modifier ma position";
 
 $lang_str["routing_type_car"]="Voiture";
 $lang_str["routing_type_car_shortest"]="Voiture (Le plus court)";
-$lang_str["routing_type_bicycle"]="Bicycle";
+$lang_str["routing_type_bicycle"]="Vélo";
 $lang_str["routing_type_foot"]="Piéton";
 $lang_str["routing_type"]="Type de route";
 $lang_str["routing_distance"]="Distance";
 $lang_str["routing_time"]="Temps";
 
-// lang_str["list_info"]="Choose a category to browse map content or click on an object on the map for details";
 $lang_str["list_info"]="Cliquez sur un objet pour voir les métadonnées ou choisissez une catégorie pour voir la liste d'objets sur la carte";
 $lang_str["list_leisure_sport_tourism"]="Loisir, Sport et Tourisme";
 
@@ -93,6 +93,7 @@ $lang_str["help:language_support"]="Vous pouvez sélectionner votre langue préf
 $lang_str["options:ui_lang"]="Langue de l'Interface";
 $lang_str["options:data_lang"]="Langue des données";
 $lang_str["lang:"]="Langue locale";
+#$lang_str["lang:auto"]="Same as interface language";
 
 $lang_str["overlay:data"]="Données";
 $lang_str["overlay:draggable"]="Repères";
@@ -113,19 +114,23 @@ $lang_str["user:login"]="Connexion";
 $lang_str["user:logged_in_as"]="Connexion avec identifiant ";
 $lang_str["user:logout"]="Déconnexion";
 
+#$lang_str["attention"]="Attention: ";
 $lang_str["error"]="Une erreur est survenue: ";
 $lang_str["error:not_logged_in"]="vous n'êtes pas connecté";
 
+#$lang_str["category"]=array("Category", "Categories");
 $lang_str["more_categories"]="Plus de catégories";
 $lang_str["category:status"]="Statut";
 $lang_str["category:data_status"]="Statut";
 $lang_str["category:old_version"]="Une nouvelle version de cette catégorie est en préparation.";
 $lang_str["category:not_compiled"]="Une nouvelle catégorie est en préparation.";
 
+#$lang_str["category:new_rule"]="New Rule";
 $lang_str["category_rule_tag:match"]="Correspondance";
 $lang_str["category_rule_tag:description"]="Description";
 $lang_str["category_chooser:choose"]="Choisissez une catégorie";
 $lang_str["category_chooser:new"]="Nouvelle catégorie";
+#$lang_str["category:sub_category"]=array("Sub-category", "Sub-categories");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
