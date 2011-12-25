@@ -8,8 +8,10 @@ function right_bar() {
 <a href='javascript:right_bar_hide()'><img src='plugins/win/close_dark.png' alt='X'></a>
 </div>
 
-<div class='stuff'>
-<h1><?=lang("main:donate")?></h1>
+<?
+  $content=array();
+  $content[]=array(-5, "<h1>".lang("main:donate")."</h1>".
+<<<EOD
 <!-- FLATTR -->
 <p>
 <a class="FlattrButton" style="display:none;" href="http://www.openstreetbrowser.org/"></a>
@@ -27,19 +29,22 @@ function right_bar() {
 </script>
 <!-- PAYPAL -->
 <a href='javascript:time_count_do_beg()' title='Donate via PayPal'><img src='plugins/right_bar/paypal_logo.png' alt='Donate via PayPal'></a>
+EOD
+  );
 
-<hr>
-<!-- TIPPS -->
-<h1>Tip of the day</h1>
-<p class='tip'>Did you know you can use <a href='http://osb.cc'>http://osb.cc</a> as short url?</p>
-
-</div> <!-- .stuff -->
-<hr>
+  $content[]=array(5, <<<EOD
 <!-- TWITTERWALL -->
 <iframe id='twitter' src='plugins/right_bar/twitter.html'></iframe>
 <!-- END -->
-</div>
-  <?
+EOD
+  );
+
+  call_hooks("right_bar_content", &$content);
+
+  $content=weight_sort($content);
+  print implode("\n<hr>\n", $content);
+
+  print "</div>\n";
 }
 
 register_hook("html_start", "right_bar");
