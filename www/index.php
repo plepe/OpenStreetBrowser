@@ -114,7 +114,8 @@ $menu_list[]=array(0,
 
 $main_links=array(
   array(0, "<a href='javascript:show_options()'>".lang("main:options")."</a>"),
-  array(1, "<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'>".lang("main:about")."</a>"),
+  array(0, "<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/Instructions' target='_new'>".lang("main:help")."</a>"),
+  array(1, "<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser' target='_new'>".lang("main:about")."</a>"),
   array(5, "<a href='javascript:time_count_do_beg()'>".lang("main:donate")."</a>")
 );
 call_hooks("main_links", &$main_links);
