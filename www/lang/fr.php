@@ -44,7 +44,6 @@ $lang_str["head:address"]="Adresse";
 $lang_str["head:internal"]="OSM Internal";
 $lang_str["head:services"]="Services";
 $lang_str["head:culture"]="Culture";
-$lang_str["head:graves"]="Tombes célèbres";
 $lang_str["head:routing"]="Itinéraire";
 $lang_str["head:search"]="Recherche";
 $lang_str["head:actions"]=array("Action", "Actions");
@@ -72,7 +71,6 @@ $lang_str["list_leisure_sport_tourism"]="Loisir, Sport et Tourisme";
 
 // Mapkey
 
-$lang_str["grave_is_on"]="Moulin à vent";
 
 $lang_str["main:options"]="Options";
 $lang_str["main:about"]="À Propos de";

@@ -44,7 +44,6 @@ $lang_str["head:address"]="Adresse";
 $lang_str["head:internal"]="Interne OSM-Daten";
 $lang_str["head:services"]="Dienstleistungen";
 $lang_str["head:culture"]="Kultureinrichtungen";
-$lang_str["head:graves"]="Wichtige Gräber";
 $lang_str["head:routing"]="Routenplanung";
 $lang_str["head:search"]="Suche";
 $lang_str["head:actions"]="Aktionen";
@@ -72,7 +71,6 @@ $lang_str["list_leisure_sport_tourism"]="Freizeit, Sport und Tourismus";
 
 // Mapkey
 
-#$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:options"]="Optionen";
 $lang_str["main:about"]="Impressum";

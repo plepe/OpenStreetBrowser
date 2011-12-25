@@ -43,7 +43,6 @@ $lang_str["head:address"]="Adresy";
 $lang_str["head:internal"]="Wewnętrzne OSM";
 $lang_str["head:services"]="Serwisy";
 $lang_str["head:culture"]="Kultura";
-$lang_str["head:graves"]="Ważne Groby";
 $lang_str["head:routing"]="Wyznaczanie trasa";
 $lang_str["head:search"]="Szukanie";
 $lang_str["head:actions"]=array("Akcja", "Akcje");
@@ -71,7 +70,6 @@ $lang_str["list_leisure_sport_tourism"]="Rozrywka, Sport i Turystyka";
 
 // Mapkey
 
-#$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:options"]="Opcje";
 $lang_str["main:about"]="O programie";

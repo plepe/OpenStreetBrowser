@@ -43,7 +43,6 @@ $lang_str["head:address"]="住所";
 $lang_str["head:internal"]="OSM 内部";
 $lang_str["head:services"]="サービス";
 $lang_str["head:culture"]="文化";
-$lang_str["head:graves"]="重要な墓地";
 $lang_str["head:routing"]="ルーティング";
 $lang_str["head:search"]="検索";
 $lang_str["head:actions"]="操作";
@@ -71,7 +70,6 @@ $lang_str["list_leisure_sport_tourism"]="レジャー、スポート＆観光";
 
 // Mapkey
 
-$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:options"]="オプション設定";
 $lang_str["main:about"]="About";

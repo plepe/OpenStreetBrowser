@@ -44,7 +44,6 @@ $lang_str["head:address"]="Address";
 $lang_str["head:internal"]="OSM Internal";
 $lang_str["head:services"]="Services";
 $lang_str["head:culture"]="Culture";
-$lang_str["head:graves"]="Important Graves";
 $lang_str["head:routing"]="Routing";
 $lang_str["head:search"]="Search";
 $lang_str["head:actions"]=array("Action", "Actions");
@@ -72,7 +71,6 @@ $lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
 
 // Mapkey
 
-$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:options"]="Options";
 $lang_str["main:about"]="About";

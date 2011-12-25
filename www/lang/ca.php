@@ -43,7 +43,6 @@ $lang_str["head:address"]="Adreça";
 #$lang_str["head:internal"]="OSM Internal";
 $lang_str["head:services"]="Serveis";
 $lang_str["head:culture"]="Cultura";
-$lang_str["head:graves"]="Tombes importants";
 $lang_str["head:routing"]="Encaminament";
 $lang_str["head:search"]="Cerca";
 $lang_str["head:actions"]=array("Acció", "Accions");
@@ -71,7 +70,6 @@ $lang_str["list_leisure_sport_tourism"]="Oci, Esport i Turisme";
 
 // Mapkey
 
-#$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:options"]="Opcions";
 #$lang_str["main:about"]="About";

@@ -43,7 +43,6 @@ $lang_str["head:address"]="Direición";
 $lang_str["head:internal"]="OSM Internu";
 $lang_str["head:services"]="Servicios";
 $lang_str["head:culture"]="Cultura";
-$lang_str["head:graves"]="Sepultures importantes";
 $lang_str["head:routing"]="Enrutamientu";
 $lang_str["head:search"]="Gueta";
 $lang_str["head:actions"]=array("Aición", "Aiciones");
@@ -71,7 +70,6 @@ $lang_str["list_leisure_sport_tourism"]="Recréu, deporte y turismu";
 
 // Mapkey
 
-$lang_str["grave_is_on"]="Acentu grave activáu";
 
 $lang_str["main:options"]="Opciones";
 $lang_str["main:about"]="Tocante a";

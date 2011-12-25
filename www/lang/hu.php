@@ -43,7 +43,6 @@ $lang_str["head:address"]="Címek";
 #$lang_str["head:internal"]="OSM Internal";
 $lang_str["head:services"]="Szolgáltatás";
 $lang_str["head:culture"]="Kultúra";
-$lang_str["head:graves"]="Fontos sírok";
 $lang_str["head:routing"]="Útvonaltervezés";
 $lang_str["head:search"]="Keresés";
 $lang_str["head:actions"]=array("Lehetőség", "Lehetőségek");
@@ -71,7 +70,6 @@ $lang_str["list_leisure_sport_tourism"]="Szabadidő, sport és turizmus";
 
 // Mapkey
 
-#$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:options"]="Beállítások";
 $lang_str["main:about"]="Névjegy";

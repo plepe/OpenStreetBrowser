@@ -43,7 +43,6 @@ $lang_str["head:address"]="Adres";
 $lang_str["head:internal"]="Interne OSM-data";
 $lang_str["head:services"]="Dienstverleningen";
 $lang_str["head:culture"]="Cultuur";
-$lang_str["head:graves"]="Belangrijke Graven";
 $lang_str["head:routing"]="Routeplanning";
 $lang_str["head:search"]="Zoeken";
 $lang_str["head:actions"]=array("Actie", "Acties");
@@ -71,7 +70,6 @@ $lang_str["list_leisure_sport_tourism"]="Vrije tijd, Sport and Toerisme";
 
 // Mapkey
 
-$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:options"]="Opties";
 $lang_str["main:about"]="Over";

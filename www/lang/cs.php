@@ -44,7 +44,6 @@ $lang_str["head:address"]="Adresa";
 #$lang_str["head:internal"]="OSM Internal";
 $lang_str["head:services"]="Služby";
 $lang_str["head:culture"]="Kultura";
-$lang_str["head:graves"]="Významné hroby";
 $lang_str["head:routing"]="Hledání trasy";
 $lang_str["head:search"]="Vyhledávání";
 $lang_str["head:actions"]=array(F, "Akce", "Akce");
@@ -72,7 +71,6 @@ $lang_str["list_leisure_sport_tourism"]="Odpočinek, Sport and Turismus";
 
 // Mapkey
 
-#$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:options"]="Nastavení";
 $lang_str["main:about"]="O Projektu";

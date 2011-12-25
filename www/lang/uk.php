@@ -43,7 +43,6 @@ $lang_str["head:address"]="Адреси";
 $lang_str["head:internal"]="OSM Internal";
 $lang_str["head:services"]="Services";
 $lang_str["head:culture"]="Культура";
-$lang_str["head:graves"]="Important Graves";
 $lang_str["head:routing"]="Маршрутизація";
 $lang_str["head:search"]="Пошук";
 $lang_str["head:actions"]="Actions";
@@ -71,7 +70,6 @@ $lang_str["list_leisure_sport_tourism"]="Дозвілля, Спорт та Ту�
 
 // Mapkey
 
-$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:options"]="Options";
 $lang_str["main:about"]="About";

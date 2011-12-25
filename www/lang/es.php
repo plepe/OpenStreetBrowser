@@ -43,7 +43,6 @@ $lang_str["head:address"]="Direccion";
 #$lang_str["head:internal"]="OSM Internal";
 $lang_str["head:services"]="Servicios";
 $lang_str["head:culture"]="Cultura";
-$lang_str["head:graves"]="Tumbas Importantes";
 #$lang_str["head:routing"]="Routing";
 $lang_str["head:search"]="Buscar";
 $lang_str["head:actions"]=array("Acción", "Acciones");
@@ -71,7 +70,6 @@ $lang_str["list_info"]="Elige una categoría para explorar el contenido del mapa
 
 // Mapkey
 
-#$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:options"]="Opciones";
 $lang_str["main:about"]="Acerca de...";

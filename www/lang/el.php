@@ -44,7 +44,6 @@ $lang_str["head:address"]="Διεύθυνση";
 #$lang_str["head:internal"]="OSM Internal";
 $lang_str["head:services"]="Υπηρεσίες";
 $lang_str["head:culture"]="Πολιτισμός";
-#$lang_str["head:graves"]="Important Graves";
 $lang_str["head:routing"]="Δρομολόγηση";
 $lang_str["head:search"]="Αναζήτηση";
 $lang_str["head:actions"]=array("Ενέργεια", "Ενέργειες");
@@ -72,7 +71,6 @@ $lang_str["list_leisure_sport_tourism"]="Αναψυχή, Άθληση και Τ�
 
 // Mapkey
 
-#$lang_str["grave_is_on"]="Grave is on";
 
 $lang_str["main:options"]="Επιλογές";
 $lang_str["main:about"]="Περί";
