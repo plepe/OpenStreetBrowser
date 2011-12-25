@@ -12,3 +12,6 @@ $lang_str["lang:ja"]="Japanisch";
 $lang_str["lang:hu"]="Ungarisch";
 $lang_str["lang:nl"]="Niederländisch";
 $lang_str["lang:ast"]="Asturisch";
+$lang_str["lang:el"]="Griechisch";
+$lang_str["lang:pl"]="Polnisch";
+$lang_str["lang:ca"]="Katalanisch";

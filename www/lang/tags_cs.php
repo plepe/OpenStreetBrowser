@@ -454,7 +454,7 @@ $lang_str["tag:wheelchair"]="Kolečkové křeslo";
 $lang_str["tag:wheelchair=limited"]="omezený";
 
 // tactile_paving
-#$lang_str["tag:tactile_paving"]="Tactile paving";
+$lang_str["tag:tactile_paving"]="Hmatová dlažba";
 
 // narrow
 $lang_str["tag:narrow"]="Rovný";

@@ -10,9 +10,9 @@ $lang_str["category_editor:got_new_id"]="Η κατηγορία πήρε ένα �
 $lang_str["category_editor:new_rule"]="Νέος Ρόλος";
 $lang_str["category_editor:remove_rule"]="Αφαίρεση Ρόλου";
 $lang_str["category_editor:view_mode"]="Εμφάνιση";
-#$lang_str["category_editor:view_mode:form"]="Form";
-#$lang_str["category_editor:view_mode:source"]="Source";
-#$lang_str["category_editor:new_rule_help"]="Add rules, to define which objects should appear in this category";
+$lang_str["category_editor:view_mode:form"]="Από";
+$lang_str["category_editor:view_mode:source"]="Πηγή";
+$lang_str["category_editor:new_rule_help"]="Προσθήκη ρόλων, για καθορισμό τω αντικειμένων που θα εμφανίζονται σε αυτή την κατηγορία";
 
-#$lang_str["category_editor:lock"]="Lock category for editing";
-#$lang_str["category_editor:locked"]="This category is locked for editing. If you save, a clone with a new ID will be created.";
+$lang_str["category_editor:lock"]="Κλείδωμα κατηγορίας για επεξεργασία";
+$lang_str["category_editor:locked"]="Αυτή η κατηγορία είναι κλειδωμένη για επεξεργασία. Εάν την αποθηκεύσετε, ένα αντίγραφο με νέο ID θα δημιουργηθεί.";

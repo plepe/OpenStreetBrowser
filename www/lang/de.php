@@ -1,21 +1,9 @@
 <?
-// All untranslated strings have a # in front. When you translate a string
-// please remove this hash.
+// In this editor you can translate all strings. In the third column you can compare the strings to another language (set it in the select box on the bottom of the window). Please note that changes will not appear right away, they need to be imported by a developer.
+// Every language string can have a singular and plural variant by separating them by ";", e.g. "Restaurant;Restaurants". The first string is the singular form, the second the plural form.  Optionally you can define the Gender (F, M, N) for the word by prepending one of those characters, e.g. "N;Büro;Büros" (German for "office").
+// When translating a language variant (e.g. 'British English', code 'en-gb') please translate only strings which are different from the base language.
+$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
 
-//  Every language string looks like this:
-//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
-//  the first entry is the translation of the language string in Singular,
-//  the second the Plural form.
-//
-//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
-//  German translation for office:
-//  $lang_str["office"]=array(N, "Büro", "Büros");
-//
-//  If a Singular/Plural form is not
-//  suitable/necessary you can ignore the array, e.g.
-//  $lang_str["help"]="Help";
-
-$lang_str["base_language"]="en";
 $lang_str["lang:current"]="Deutsch"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
 // General
@@ -24,18 +12,27 @@ $lang_str["yes"]="ja";
 $lang_str["no"]="nein";
 $lang_str["ok"]="Ok";
 $lang_str["save"]="Speichern";
+$lang_str["saved"]="Gespeichert."; // for dialog boxes confirming saving
 $lang_str["cancel"]="Abbrechen";
+$lang_str["show"]="Zeigen";
+$lang_str["edit"]="Bearbeiten";
+$lang_str["delete"]="Löschen";
+$lang_str["history"]="Geschichte";
+$lang_str["choose"]="Auswählen";
+$lang_str["help"]="Hilfe";
 $lang_str["longitude"]=array("Longitude", "Longituden");
 $lang_str["latitude"]=array("Latitude", "Latituden");
 $lang_str["noname"]="(kein Name)";
 $lang_str["info_back"]="zur Übersicht";
 $lang_str["info_zoom"]="zoomen";
 $lang_str["nothing_found"]="nichts gefunden";
+$lang_str["list:zoom_for_obs"]="Hineinzoomen für weniger wichtige Objekte";
 $lang_str["loading"]="lade";
 $lang_str["more"]="mehr";
 $lang_str["source"]="Quelle";
 $lang_str["unnamed"]="Namenlos";
 $lang_str["zoom"]="Zoomstufe";
+$lang_str["no_message"]=array("keine Nachricht", "keine Nachrichten");
 $lang_str["ad"]=array("Werbung", "Werbungen");
 
 // Headings
@@ -117,19 +114,23 @@ $lang_str["user:login"]="Anmelden";
 $lang_str["user:logged_in_as"]="Angemeldet als ";
 $lang_str["user:logout"]="Abmelden";
 
+$lang_str["attention"]="Achtung:";
 $lang_str["error"]="Es ist ein Fehler aufgetreten: ";
 $lang_str["error:not_logged_in"]="Du bist nicht eingeloggt";
 
+$lang_str["category"]=array("Kategorie", "Kategorien");
 $lang_str["more_categories"]="Mehr Kategorien";
 $lang_str["category:status"]="Status";
 $lang_str["category:data_status"]="Status";
 $lang_str["category:old_version"]="Eine neue Version dieser Kategorie wird vorbereitet.";
 $lang_str["category:not_compiled"]="Neue Kategorie wird vorbereitet.";
 
-$lang_str["category_rule_tag:match"]="Treffer";
+$lang_str["category:new_rule"]="Neue Regel";
+$lang_str["category_rule_tag:match"]="Vergleich";
 $lang_str["category_rule_tag:description"]="Beschreibung";
 $lang_str["category_chooser:choose"]="Wähle eine Kategorie";
 $lang_str["category_chooser:new"]="Neue Kategorie anlegen";
+$lang_str["category:sub_category"]=array("Unterkategorie", "Unterkategorien");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";

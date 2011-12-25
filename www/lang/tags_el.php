@@ -143,7 +143,7 @@ $lang_str["tag:leisure=garden"]="Κήπος";
 #$lang_str["tag:leisure=ice_rink"]="Ice Rink";
 $lang_str["tag:leisure=miniature_golf"]="Μίνι Γκολφ";
 $lang_str["tag:leisure=swimming_pool"]="Πισίνα";
-#$lang_str["tag:leisure=beach_resort"]="Beach Resort";
+$lang_str["tag:leisure=beach_resort"]="Παραθαλάσσιο Θέρετρο";
 $lang_str["tag:leisure=bird_hide"]="Καταφύγιο Πουλιών";
 $lang_str["tag:leisure=sport"]="Άλλο Άθλημα";
 
@@ -544,7 +544,7 @@ $lang_str["tag:email"]="E-mail";
 $lang_str["tag:created_by"]="Δημιουργήθηκε από";
 
 // construction
-#$lang_str["tag:construction"]="Construction";
+$lang_str["tag:construction"]="Υπό Κατασκευή";
 
 // proposed
-#$lang_str["tag:proposed"]="Proposed";
+$lang_str["tag:proposed"]="Προτεινόμενο";

@@ -1,5 +1,5 @@
 <?
-#$lang_str["head:map_key_basemap"]="Basemap";
+$lang_str["head:map_key_basemap"]="Βασικός χάρτης";
 
 // building
 $lang_str["map_key_basemap:building=yes"]="Κτήρια";
@@ -13,13 +13,13 @@ $lang_str["map_key_basemap:building=shop"]="Καταστήματα";
 $lang_str["map_key_basemap:building=public"]="Δημόσια Κτήρια";
 $lang_str["map_key_basemap:building=military"]="Στρατιωτικά Κτήρια";
 $lang_str["map_key_basemap:building=historic"]="Ιστορικά Κτήρια";
-#$lang_str["map_key_basemap:building=emergency"]="Buildings of emergency facilities";
-#$lang_str["map_key_basemap:building=health"]="Buildings of health services";
-#$lang_str["map_key_basemap:building=communication"]="Buildings for communication";
+$lang_str["map_key_basemap:building=emergency"]="Κτήρια υποδομών πρώτης ανάγκης";
+$lang_str["map_key_basemap:building=health"]="Κτήρια υπηρεσιών υγείας";
+$lang_str["map_key_basemap:building=communication"]="Κτήρια επικοινωνιών";
 #$lang_str["map_key_basemap:building=residential"]="Residential Buildings";
-#$lang_str["map_key_basemap:building=culture"]="Cultural Buildings";
-#$lang_str["map_key_basemap:building=tourism"]="Touristic Buildings";
-#$lang_str["map_key_basemap:building=sport"]="Buildings for sport activities";
+$lang_str["map_key_basemap:building=culture"]="Κτήρια Πολιτισμού";
+$lang_str["map_key_basemap:building=tourism"]="Τουριστικά Κτήρια";
+$lang_str["map_key_basemap:building=sport"]="Κτήρια αθλητικών δραστηριοτήτων";
 
 // landuse
 $lang_str["map_key_basemap:landuse=land"]="Ξηρά";
@@ -35,18 +35,18 @@ $lang_str["map_key_basemap:landuse=piste"]="Χιονοδρομικές Πίστ�
 $lang_str["map_key_basemap:landuse=sport"]="Περιοχές αθλητικών υποδομών";
 $lang_str["map_key_basemap:landuse=cemetery"]="Νεκροταφεία";
 $lang_str["map_key_basemap:landuse=residential"]="Οικιστικές περιοχές";
-#$lang_str["map_key_basemap:landuse=nature_reserve"]="Nature Reserves";
+$lang_str["map_key_basemap:landuse=nature_reserve"]="Προστασία της Φύσης";
 $lang_str["map_key_basemap:landuse=historic"]="Περιοχές με ιστορική αξία";
 $lang_str["map_key_basemap:landuse=emergency"]="Περιοχές υποδομών  πρώτης ανάγκης";
 $lang_str["map_key_basemap:landuse=health"]="Περιοχές υποδομών υγείας";
 #$lang_str["map_key_basemap:landuse=public"]="Areas for public services";
 #$lang_str["map_key_basemap:landuse=natural_forest"]="Woods and Forest";
-#$lang_str["map_key_basemap:landuse=natural_wetland"]="Wetland";
-#$lang_str["map_key_basemap:landuse=natural_glacier"]="Glaciers";
+$lang_str["map_key_basemap:landuse=natural_wetland"]="Υγροβιότοποι";
+$lang_str["map_key_basemap:landuse=natural_glacier"]="Παγετώνες";
 #$lang_str["map_key_basemap:landuse=natural_scree"]="Screes, Heaths";
-#$lang_str["map_key_basemap:landuse=natural_mud"]="Mud";
+$lang_str["map_key_basemap:landuse=natural_mud"]="Λάσπη";
 $lang_str["map_key_basemap:landuse=natural_beach"]="Παραλίες";
-#$lang_str["map_key_basemap:landuse=natural_rock"]="Rocks, Cliffs";
+$lang_str["map_key_basemap:landuse=natural_rock"]="Βράχοι, Γκρεμοί";
 
 // heads
 $lang_str["map_key_basemap:places"]="Μέρη";
