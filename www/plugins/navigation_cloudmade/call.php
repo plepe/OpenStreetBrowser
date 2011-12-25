@@ -41,6 +41,9 @@ unset($param['route_type_modifier']);
 // output_format -> force gpx
 unset($param['output_format']);
 
+// TODO: add language code here (need to bootstrap first)
+//$param['lang']=$_COOKIE['ui_lang'];
+
 // pass the rest of the parameters
 $add_param=array();
 foreach($param as $k=>$v) {

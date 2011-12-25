@@ -90,6 +90,9 @@ function navigation_cloudmade() {
 	  tw=navigation_cloudmade_travelwith[i];
       }
 
+      // TODO: Move param 'lang' to php code
+      param.lang=ui_lang;
+
       if(!tw) {
 	alert("navigation_cloudmade :: travel with wrong");
 	return;
