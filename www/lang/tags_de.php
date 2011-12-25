@@ -1,6 +1,5 @@
 <?
 // All tags should have a translation, with language strings like "tag:key" for the translation of the key and "tag:key=value" for the translation of the value. E.g. tag:amenity "Amenity;Amenities" resp. tag:amenity=bar "Bar;Bars". You can also define the Gender like "F;Bar;Bars".
-// Currently there's no way to add a new tag in this editor. This should follow in some update hopefully soon.
 
 // *
 $lang_str["tag:*=yes"]="ja";
@@ -14,6 +13,24 @@ $lang_str["tag:address"]="Adresse";
 
 // addr:housenumber
 $lang_str["tag:addr:housenumber"]="Hausnummer";
+
+// addr:housename
+#$lang_str["tag:addr:housename"]=array("House name", "House names");
+
+// addr:street
+#$lang_str["tag:addr:street"]=array("Street", "Streets");
+
+// addr:postcode
+#$lang_str["tag:addr:postcode"]=array("Postal Code", "Postal Codes");
+
+// addr:city
+#$lang_str["tag:addr:city"]=array("City", "Cities");
+
+// addr:country
+#$lang_str["tag:addr:country"]=array("Country", "Countries");
+
+// addr:full
+#$lang_str["tag:addr:full"]=array("Full address", "Full addresses");
 
 // addr:interpolation
 $lang_str["tag:addr:interpolation"]="Interpolierte Hausnummern";
@@ -29,13 +46,11 @@ $lang_str["tag:admin_level=2"]="Staat";
 $lang_str["tag:admin_level=4"]="Land";
 $lang_str["tag:admin_level=5"]="Regierungsbezirk";
 $lang_str["tag:admin_level=6"]="Kreis";
-#$lang_str["tag:admin_level=7"]="";
-#$lang_str["tag:admin_level=7.5"]="";
 $lang_str["tag:admin_level=8"]="Stadt und Gemeinde";
 $lang_str["tag:admin_level=10"]="Stadtteil";
 
 // amenity
-$lang_str["tag:amenity"]="Annehmlichkeit";
+$lang_str["tag:amenity"]="Einrichtung";
 $lang_str["tag:amenity=cinema"]=array("Kino", "Kinos");
 $lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");
@@ -51,15 +66,21 @@ $lang_str["tag:barrier=hedge"]=array("Hecke", "Hecken");
 // cables
 $lang_str["tag:cables"]="Stromkabel";
 
-// cuisine
-$lang_str["tag:cuisine"]="Küche";
-$lang_str["tag:cuisine=regional"]="regional";
-
 // description
 $lang_str["tag:description"]="Beschreibung";
 
+// fixme
+#$lang_str["tag:fixme"]="Fix me";
+
+// note
+$lang_str["tag:note"]="Anmerkung";
+
 // food
 #$lang_str["tag:food"]="Serves food";
+
+// cuisine
+$lang_str["tag:cuisine"]="Küche";
+$lang_str["tag:cuisine=regional"]="regional";
 
 // highway
 $lang_str["tag:highway"]=array("Straße", "Straßen");
@@ -78,18 +99,33 @@ $lang_str["tag:highway=unclassified"]="Unklassifizierte Straße";
 $lang_str["tag:highway=service"]="Erschließungsstraße";
 $lang_str["tag:highway=pedestrian"]="Fußgängerzone";
 $lang_str["tag:highway=living_street"]="Verkehrsberuhigter Bereich";
-$lang_str["tag:highway=path"]="Weg";
+$lang_str["tag:highway=path"]="Weg/Pfad";
 $lang_str["tag:highway=cycleway"]="Radweg";
 $lang_str["tag:highway=footway"]="Fußweg";
 $lang_str["tag:highway=bridleway"]="Reitweg";
 $lang_str["tag:highway=track"]="Feld-/Waldweg";
-$lang_str["tag:highway=path"]="Weg/Pfad";
 $lang_str["tag:highway=steps"]="Stufen";
+
+// bridge
+#$lang_str["tag:bridge"]="Bridge";
+
+// tunnel
+#$lang_str["tag:tunnel"]="Tunnel";
+
+// traffic_calming
+#$lang_str["tag:traffic_calming"]="Traffic calming";
+
+// service
+#$lang_str["tag:service"]="Service road attributes";
+
+// postal_code
+#$lang_str["tag:postal_code"]="Postal Code";
 
 // is_in
 $lang_str["tag:is_in"]="ist in";
 
 // leisure
+#$lang_str["tag:leisure"]="Leisure";
 $lang_str["tag:leisure=sports_centre"]="Sportzentrum";
 $lang_str["tag:leisure=golf_course"]="Golfplatz";
 $lang_str["tag:leisure=stadium"]="Stadion";
@@ -115,7 +151,7 @@ $lang_str["tag:leisure=sport"]="Anderer Sport";
 $lang_str["tag:man_made"]="Menschgeschaffenes";
 $lang_str["tag:man_made=pipeline"]=array("Pipeline", "Pipelines");
 
-// man_made - type
+// type
 $lang_str["tag:type"]="Typ";
 $lang_str["tag:type=gas"]="Gas";
 $lang_str["tag:type=heat"]="Fernwärme";
@@ -127,14 +163,26 @@ $lang_str["tag:type=water"]="Wasser";
 // name
 $lang_str["tag:name"]=array("Name", "Namen");
 
-// network
-$lang_str["tag:network"]="Netzwerk";
+// alt_name
+#$lang_str["tag:alt_name"]=array("Alternative name", "Alternative names");
 
-// note
-$lang_str["tag:note"]="Anmerkung";
+// official_name
+#$lang_str["tag:official_name"]=array("Official name", "Official names");
+
+// int_name
+#$lang_str["tag:int_name"]=array("International name", "International names");
+
+// loc_name
+#$lang_str["tag:loc_name"]=array("Local name", "Local names");
 
 // old_name
 $lang_str["tag:old_name"]="Alte Bezeichnung(en)";
+
+// ref
+#$lang_str["tag:ref"]="Reference";
+
+// network
+$lang_str["tag:network"]="Netzwerk";
 
 // opening_hours
 $lang_str["tag:opening_hours"]="Öffnungszeiten";
@@ -162,7 +210,6 @@ $lang_str["tag:place=islet"]=array("Inselchen", "Inselchen");
 
 // population
 $lang_str["tag:population"]="Einwohner";
-$tag_type["population"]=array("count");
 
 // power
 $lang_str["tag:power"]="Strom";
@@ -209,6 +256,9 @@ $lang_str["tag:religion=jewish"]="jüdisch";
 $lang_str["tag:religion=muslim"]="muslimisch";
 #$lang_str["tag:religion=multifaith"]="multifaith";
 
+// denomination
+#$lang_str["tag:denomination"]="Denomination";
+
 // route
 $lang_str["tag:route"]="Route";
 $lang_str["tag:route=train"]="Zug";
@@ -227,10 +277,6 @@ $lang_str["tag:route=road"]="Straße";
 $lang_str["tag:route=bicycle"]="Fahrrad";
 $lang_str["tag:route=hiking"]="Wandern";
 $lang_str["tag:route=mtb"]="Mountainbike";
-
-// route_type
-// the following tags are deprecated
-$lang_str["tag:route_type"]="Routentyp";
 
 // shop
 $lang_str["tag:shop"]="Geschäft";
@@ -294,12 +340,214 @@ $lang_str["tag:vending"]="Automatenverkauf";
 
 // voltage
 $lang_str["tag:voltage"]="Spannung";
-$tag_type["voltage"]=array("number", "V", "V");
 
 // wires
 $lang_str["tag:wires"]="Kabel";
-$tag_type["wires"]=array("count");
 
 // website
 $lang_str["tag:website"]="Webseite";
-$tag_type["website"]=array("link");
+
+// cycleway
+#$lang_str["tag:cycleway"]="Cycleway";
+
+// tracktype
+#$lang_str["tag:tracktype"]="Track type";
+
+// waterway
+#$lang_str["tag:waterway"]="Waterway";
+
+// aerialway
+#$lang_str["tag:aerialway"]="Aerialway";
+
+// public_transport
+#$lang_str["tag:public_transport"]="Public Transport";
+
+// office
+#$lang_str["tag:office"]="Office";
+
+// craft
+#$lang_str["tag:craft"]="Craft";
+
+// emergency
+#$lang_str["tag:emergency"]="Emergency";
+
+// tourism
+#$lang_str["tag:tourism"]="Tourism";
+
+// historic
+#$lang_str["tag:historic"]="Historic";
+
+// landuse
+#$lang_str["tag:landuse"]="Landuse";
+
+// wood
+#$lang_str["tag:wood"]="Type of wood";
+
+// military
+#$lang_str["tag:military"]="Military";
+
+// natural
+#$lang_str["tag:natural"]="Natural";
+
+// geological
+#$lang_str["tag:geological"]="Geological";
+
+// boundary
+#$lang_str["tag:boundary"]="Boundary";
+
+// abutters
+#$lang_str["tag:abutters"]="Abutters";
+
+// lit
+#$lang_str["tag:lit"]="Street lighting";
+
+// area
+#$lang_str["tag:area"]="Area";
+
+// crossing
+#$lang_str["tag:crossing"]="crossing";
+
+// mountain_pass
+#$lang_str["tag:mountain_pass"]="Mountain Pass";
+
+// cutting
+#$lang_str["tag:cutting"]="Cutting";
+
+// embankment
+#$lang_str["tag:embankment"]="Embankment";
+
+// lanes
+#$lang_str["tag:lanes"]="Lanes";
+
+// layer
+#$lang_str["tag:layer"]="Layer";
+
+// surface
+#$lang_str["tag:surface"]="Surface";
+
+// smoothness
+#$lang_str["tag:smoothness"]="Smoothness";
+
+// ele
+#$lang_str["tag:ele"]="Elevation";
+
+// width
+#$lang_str["tag:width"]="Width";
+
+// est_width
+#$lang_str["tag:est_width"]="Estimated width";
+
+// incline
+#$lang_str["tag:incline"]="incline";
+
+// start_date
+#$lang_str["tag:start_date"]="Date of creation";
+
+// end_date
+#$lang_str["tag:end_date"]="Date of removal";
+
+// disused
+#$lang_str["tag:disused"]="Disused";
+
+// wheelchair
+#$lang_str["tag:wheelchair"]="Wheelchair";
+#$lang_str["tag:wheelchair=limited"]="limited";
+
+// tactile_paving
+#$lang_str["tag:tactile_paving"]="Tactile paving";
+
+// narrow
+#$lang_str["tag:narrow"]="Narrow";
+
+// covered
+#$lang_str["tag:covered"]="Covered";
+
+// ford
+#$lang_str["tag:ford"]="Ford";
+
+// access
+#$lang_str["tag:access"]="General access permission";
+
+// vehicle
+#$lang_str["tag:vehicle"]="Vehicle access permission";
+
+// bicycle
+#$lang_str["tag:bicycle"]="Bicycle access permission";
+
+// foot
+#$lang_str["tag:foot"]="Foot access permission";
+
+// goods
+#$lang_str["tag:goods"]="LCV access permission";
+
+// hgv
+#$lang_str["tag:hgv"]="HGV access permission";
+
+// horse
+#$lang_str["tag:horse"]="Horse riders access permission";
+
+// motorcycle
+#$lang_str["tag:motorcycle"]="Motorcycle access permission";
+
+// motorcar
+#$lang_str["tag:motorcar"]="Motorcar access permission";
+
+// psv
+#$lang_str["tag:psv"]="PSV access permission";
+
+// oneway
+#$lang_str["tag:oneway"]="Oneway";
+
+// noexit
+#$lang_str["tag:noexit"]="Dead end road";
+
+// maxweight
+#$lang_str["tag:maxweight"]="Max. weight";
+
+// maxheight
+#$lang_str["tag:maxheight"]="Max. height";
+
+// maxlength
+#$lang_str["tag:maxlength"]="Max. length";
+
+// maxspeed
+#$lang_str["tag:maxspeed"]="Max. speed";
+
+// minspeed
+#$lang_str["tag:minspeed"]="Min. speed";
+
+// traffic_sign
+#$lang_str["tag:traffic_sign"]="Traffic sign";
+
+// toll
+#$lang_str["tag:toll"]="Toll";
+
+// charge
+#$lang_str["tag:charge"]="Charge";
+
+// source
+#$lang_str["tag:source"]="Source";
+
+// phone
+#$lang_str["tag:phone"]="Phone number";
+
+// fax
+#$lang_str["tag:fax"]="Fax number";
+
+// email
+#$lang_str["tag:email"]="E-mail";
+
+// wikipedia
+#$lang_str["tag:wikipedia"]="Wikipedia";
+
+// created_by
+#$lang_str["tag:created_by"]="Created by";
+
+// construction
+#$lang_str["tag:construction"]="Construction";
+
+// proposed
+#$lang_str["tag:proposed"]="Proposed";
+
+// route_type
+$lang_str["tag:route_type"]="Routentyp";
