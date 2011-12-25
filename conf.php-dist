@@ -168,3 +168,4 @@ $overlays_add=array(
 // icon_editor - Upload icons
 // postgresql_restart - Try to restart PostgreSQL after connection failure
 // osm_shapefiles - Include the OSM Shapefiles (needed for basemap)
+// tip_of_the_day - Tip of the day
