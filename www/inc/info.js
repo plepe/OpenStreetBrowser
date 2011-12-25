@@ -69,6 +69,10 @@ function info(ob) {
 
   // show
   this.show=function() {
+    // another content is shown ... ignore
+    if(info_current!=this)
+      return;
+
     var ret="";
     var info_content=document.getElementById("details_content");
     dom_clean(info_content);
