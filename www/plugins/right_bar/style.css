@@ -1,0 +1,42 @@
+#right_bar {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  width: 152px;
+  border-left: 1px solid black;
+}
+#right_bar XXXiframe {
+  height: 640px;
+  width: 120px;
+  border: none;
+  padding: 0px;
+  margin: 0px;
+}
+#right_bar iframe#twitter {
+  width: 150px;
+  border: none;
+  height: 356px;
+}
+#right_bar .stuff {
+  text-align: center;
+}
+#right_bar .tip {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+div#content {
+  position: absolute;
+  right: 153px;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+}
+div#right_bar_hide {
+  float: right;
+}
+div#right_bar_counter_hide {
+  float: left;
+  width: 16px;
+  height: 16px;
+}

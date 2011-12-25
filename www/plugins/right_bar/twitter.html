@@ -1,0 +1,45 @@
+<html>
+<head>
+</head>
+<body onload='init()'>
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'search',
+  search: '#osb_cc OR from:osb_cc',
+  interval: 30000,
+  title: 'OpenStreetBrowser',
+  subject: '#osb_cc',
+  width: 120,
+  height: 250,
+  theme: {
+    shell: {
+      background: '#efefef',
+      color: '#333333'
+    },
+    tweets: {
+      background: '#ffffff',
+      color: '#444444',
+      links: '#1985b5'
+    }
+  },
+  features: {
+    scrollbar: true,
+    loop: false,
+    live: true,
+    behavior: 'all'
+  }
+}).render().start();
+</script>
+<script>
+function init() {
+  var link=document.createElement("link");
+  link.rel="stylesheet";
+  link.type="text/css";
+  link.href="twitter.css?1";
+  document.head.appendChild(link);
+}
+</script>
+</body>
+</html>

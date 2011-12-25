@@ -169,3 +169,4 @@ $overlays_add=array(
 // postgresql_restart - Try to restart PostgreSQL after connection failure
 // osm_shapefiles - Include the OSM Shapefiles (needed for basemap)
 // tip_of_the_day - Tip of the day
+// right_bar - Show a bar to the right with donation, twitter, ...
