@@ -1,3 +1,3 @@
 <?
 
-$lang_str["map_key_overlay_pt:pt"]="Transport public";
+$lang_str["map_key_overlay_pt:pt"]="Transports en commun";
