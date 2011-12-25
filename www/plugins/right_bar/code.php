@@ -3,9 +3,8 @@ function right_bar() {
   ?>
 <div id='right_bar'>
 <!-- close button -->
-<div id='right_bar_counter_hide'></div>
 <div id='right_bar_hide'>
-<a href='javascript:right_bar_hide()'><img src='plugins/win/close_dark.png' alt='X'></a>
+<a href='javascript:right_bar_hide()'><img src='plugins/right_bar/close_dark.png' alt='X'></a>
 </div>
 
 <?

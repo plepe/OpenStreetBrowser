@@ -34,10 +34,7 @@ div#content {
   bottom: 0px;
 }
 div#right_bar_hide {
-  float: right;
-}
-div#right_bar_counter_hide {
-  float: left;
-  width: 16px;
-  height: 16px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
 }
