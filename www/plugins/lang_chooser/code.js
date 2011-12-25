@@ -72,7 +72,7 @@ function lang_chooser_win() {
   ret.onsubmit=this.save.bind(this); //"javascript:save_options()";
   ret.id="options_form";
 
-  list=[];
+  var list=[];
   lang_chooser_entry(list);
 
   var parts=dom_create_append(ret, "div");
