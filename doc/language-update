@@ -1,0 +1,10 @@
+# Get new translations from main server
+git fetch osm@www.openstreetbrowser.org:osb/data/translation
+git branch language-update FETCH_HEAD
+
+# Check for removed/renamed strings
+git log language-update..HEAD -p www/lang/*en.php www/plugins/*/lang_en.php
+
+# Import changes
+git merge language-update
+git branch -d language-update 
