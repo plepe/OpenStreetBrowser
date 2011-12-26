@@ -72,6 +72,7 @@ $lang_str["list_leisure_sport_tourism"]="Odpočinek, Sport and Turismus";
 // Mapkey
 
 
+$lang_str["main:help"]="Nápověda";
 $lang_str["main:options"]="Nastavení";
 $lang_str["main:about"]="O Projektu";
 $lang_str["main:donate"]="Sponzorovat";
