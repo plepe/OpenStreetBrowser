@@ -1,14 +1,22 @@
 div.blog_win {
-  width: 500px;
 }
 div.blog_content {
-  height: 200px;
   overflow: auto;
   padding: 3px;
 }
-h2.blog {
-  text-decoration: underline;
-  font-weight: bold;
+div.blog_content iframe {
+  height: 200px;
+  width: 500px;
+  border: 0px;
+}
+div.blog_loader {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding: 3px;
+}
+div.blog_win {
+  position: relative;
 }
 div.blog_win input {
   margin: 3px;

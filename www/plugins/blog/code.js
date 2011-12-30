@@ -44,26 +44,11 @@ function blog_check_new(rss) {
   return true;
 }
 
+function blog_foo() {
+  blog_loader.parentNode.removeChild(blog_loader);
+}
+
 function blog_show(rss) {
-  dom_clean(blog_content);
-
-  for(var i=0; i<rss.length; i++) {
-    var item_head=dom_create_append(blog_content, "h2");
-    item_head.className="blog";
-
-    var a=dom_create_append(item_head, "a");
-    a.href=rss[i].link;
-    a.target="_new";
-    a.innerHTML=rss[i].title;
-
-    var item_info=dom_create_append(blog_content, "div");
-    var d=new Date(rss[i]['pubDate']);
-    item_info.innerHTML=strftime("%Y-%m-%d %H:%m UTC", d)+" by "+
-      rss[i]['dc:creator'];
-
-    var item_cont=dom_create_append(blog_content, "div");
-    item_cont.innerHTML=rss[i].description;
-  }
 }
 
 function blog_hide() {
@@ -76,7 +61,14 @@ function blog_create_win() {
 
   blog_content=dom_create_append(blog_win.content, "div");
   blog_content.className="blog_content";
-  blog_content.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading")+"</div>\n";
+
+  var i=dom_create_append(blog_content, "iframe");
+  i.src="http://blog.openstreetbrowser.org/?q=frame";
+  i.onload=blog_foo;
+
+  blog_loader=dom_create_append(blog_win.content, "div");
+  blog_loader.className="blog_loader";
+  blog_loader.innerHTML="<img src='img/ajax_loader.gif' /> "+lang("loading")+"</div>\n";
 
   var close=dom_create_append(blog_win.content, "input");
   close.type="button";
@@ -97,8 +89,6 @@ function blog_show_startup(data) {
     return;
 
   blog_create_win();
-
-  blog_show(rss);
 }
 
 function blog_show_menu(data) {
