@@ -353,107 +353,107 @@ $lang_str["tag:website"]="Site Web";
 $lang_str["tag:cycleway"]="Piste cyclable";
 
 // tracktype
-#$lang_str["tag:tracktype"]="Track type";
+$lang_str["tag:tracktype"]="Type de chemin";
 
 // waterway
 $lang_str["tag:waterway"]="Cours d'eau";
 
 // aerialway
-#$lang_str["tag:aerialway"]="Aerialway";
+$lang_str["tag:aerialway"]="Transport suspendu";
 
 // public_transport
 $lang_str["tag:public_transport"]="Transport en commun";
 
 // office
-#$lang_str["tag:office"]="Office";
+$lang_str["tag:office"]="Service";
 
 // craft
-#$lang_str["tag:craft"]="Craft";
+$lang_str["tag:craft"]="Artisanat";
 
 // emergency
-#$lang_str["tag:emergency"]="Emergency";
+$lang_str["tag:emergency"]="Equipement de secours";
 
 // tourism
-#$lang_str["tag:tourism"]="Tourism";
+$lang_str["tag:tourism"]="Tourisme";
 
 // historic
-#$lang_str["tag:historic"]="Historic";
+$lang_str["tag:historic"]="Historique";
 
 // landuse
-#$lang_str["tag:landuse"]="Landuse";
+$lang_str["tag:landuse"]="Aménagement du terrain";
 
 // wood
-#$lang_str["tag:wood"]="Type of wood";
+$lang_str["tag:wood"]="Type de végétation";
 
 // military
-#$lang_str["tag:military"]="Military";
+$lang_str["tag:military"]="Zone militaire";
 
 // natural
-#$lang_str["tag:natural"]="Natural";
+$lang_str["tag:natural"]="Nature du terrain naturel";
 
 // geological
-#$lang_str["tag:geological"]="Geological";
+$lang_str["tag:geological"]="Type de site géologique";
 
 // boundary
-#$lang_str["tag:boundary"]="Boundary";
+$lang_str["tag:boundary"]="Limite";
 
 // abutters
-#$lang_str["tag:abutters"]="Abutters";
+$lang_str["tag:abutters"]="Environnement";
 
 // lit
-#$lang_str["tag:lit"]="Street lighting";
+$lang_str["tag:lit"]="Eclairage nocturne";
 
 // area
-#$lang_str["tag:area"]="Area";
+$lang_str["tag:area"]="Place";
 
 // crossing
-#$lang_str["tag:crossing"]="crossing";
+$lang_str["tag:crossing"]="Passage piéton";
 
 // mountain_pass
-#$lang_str["tag:mountain_pass"]="Mountain Pass";
+$lang_str["tag:mountain_pass"]="Chemin de montagne";
 
 // cutting
-#$lang_str["tag:cutting"]="Cutting";
+$lang_str["tag:cutting"]="Passage encaissé";
 
 // embankment
 #$lang_str["tag:embankment"]="Embankment";
 
 // lanes
-#$lang_str["tag:lanes"]="Lanes";
+$lang_str["tag:lanes"]="Voies";
 
 // layer
-#$lang_str["tag:layer"]="Layer";
+$lang_str["tag:layer"]="Claque";
 
 // surface
-#$lang_str["tag:surface"]="Surface";
+$lang_str["tag:surface"]="Surface";
 
 // smoothness
-#$lang_str["tag:smoothness"]="Smoothness";
+$lang_str["tag:smoothness"]="Surface roulante";
 
 // ele
-#$lang_str["tag:ele"]="Elevation";
+$lang_str["tag:ele"]="Altitude";
 
 // width
-#$lang_str["tag:width"]="Width";
+$lang_str["tag:width"]="Largeur exacte";
 
 // est_width
-#$lang_str["tag:est_width"]="Estimated width";
+$lang_str["tag:est_width"]="Largeur estimée";
 
 // incline
-#$lang_str["tag:incline"]="incline";
+$lang_str["tag:incline"]="pente";
 
 // start_date
-#$lang_str["tag:start_date"]="Date of creation";
+$lang_str["tag:start_date"]="Date de création";
 
 // end_date
-#$lang_str["tag:end_date"]="Date of removal";
+$lang_str["tag:end_date"]="Date de suppression";
 
 // disused
-#$lang_str["tag:disused"]="Disused";
+$lang_str["tag:disused"]="Désaffecté";
 
 // wheelchair
-#$lang_str["tag:wheelchair"]="Wheelchair";
-#$lang_str["tag:wheelchair=limited"]="limited";
+$lang_str["tag:wheelchair"]="Accès fauteuils roulants";
+$lang_str["tag:wheelchair=limited"]="Accès partiel fauteuils roulants";
 
 // tactile_paving
 #$lang_str["tag:tactile_paving"]="Tactile paving";
