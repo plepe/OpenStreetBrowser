@@ -10,13 +10,24 @@ Example:
 
   -- convert table into a partitioned table
   select quadtree_init_table('test');
+  
+  -- TODO: currently the old content is not moved to the subtables yet
 
-  -- place a query on the table:
-  select * from test_query(ST_MakeEnvelope(-10, -10, 10, 10, 900913));
+  -- insert something into the table:
+  insert into test values ('foo', 'foo=>bar', ST_Point(5, 5));
+  -- a message "INSERT 0 0" will be written to stdout ... this is a known 
+  -- problem with partitioning. try it, you'll see, the content is there
+  
+  -- you can use the table as you were used too, but this would always include
+  -- a search on all tables and there could be duplicates (so you should use
+  -- disinct)
+  select distinct * from test where way && ST_MakeEnvelope(-10, -10, 10, 10, 900913) and tags @> 'foo=>bar';
+  select distinct * from test where id='foo';
 
-  -- you could also use the following, but this would always include a search
-  -- on all tables and there could be duplicates
-  select * from test where way && ST_MakeEnvelope(-10, -10, 10, 10, 900913);
+  -- place a query on the table with "speedup" - this only queries the
+  -- subtables which can hold the object(s):
+  select * from test_query(ST_MakeEnvelope(-10, -10, 10, 10, 900913), $$tags @> 'foo=>bar'$$);
+  -- use $$ instead of ', so you don't have to double quote inner '
 
 The following tables and function will be created:
   table 'test'               ... the original table
