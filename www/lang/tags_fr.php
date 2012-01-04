@@ -380,7 +380,7 @@ $lang_str["tag:tourism"]="Tourisme";
 $lang_str["tag:historic"]="Historique";
 
 // landuse
-$lang_str["tag:landuse"]="Aménagement du terrain";
+$lang_str["tag:landuse"]="Nature du terrain";
 
 // wood
 $lang_str["tag:wood"]="Type de végétation";
