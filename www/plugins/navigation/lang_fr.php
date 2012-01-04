@@ -1,9 +1,9 @@
 <?
 $lang_str["navigation:route_name"]="Route";
 
-$lang_str["navigation:set_home"]="spécifier le point de départ";
+$lang_str["navigation:set_home"]="définir le départ";
 $lang_str["navigation:add_via"]="ajouter une étape";
-$lang_str["navigation:set_destination"]="spécifier l'arrivée";
+$lang_str["navigation:set_destination"]="définir l'arrivée";
 
 $lang_str["navigation:toolbox_title"]="Navigation";
 $lang_str["navigation:toolbox_help"]="Sélectionner le départ et l'arrivée sur la carte !";

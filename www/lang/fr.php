@@ -63,8 +63,8 @@ $lang_str["routing_type_car_shortest"]="Voiture (Le plus court)";
 $lang_str["routing_type_bicycle"]="Vélo";
 $lang_str["routing_type_foot"]="Piéton";
 $lang_str["routing_type"]="Type de route";
-$lang_str["routing_distance"]="Distance";
-$lang_str["routing_time"]="Temps";
+$lang_str["routing_distance"]="Distance ";
+$lang_str["routing_time"]="Temps ";
 
 $lang_str["list_info"]="Cliquez sur un objet pour voir les métadonnées ou choisissez une catégorie pour voir la liste d'objets sur la carte";
 $lang_str["list_leisure_sport_tourism"]="Loisir, Sport et Tourisme";
@@ -72,6 +72,7 @@ $lang_str["list_leisure_sport_tourism"]="Loisir, Sport et Tourisme";
 // Mapkey
 
 
+#$lang_str["main:help"]="Help";
 $lang_str["main:options"]="Options";
 $lang_str["main:about"]="À Propos de";
 $lang_str["main:donate"]="Donner";
@@ -94,7 +95,7 @@ $lang_str["lang:"]="Langue locale";
 $lang_str["lang:auto"]="Même lanque que pour l'interface";
 
 $lang_str["overlay:data"]="Données";
-$lang_str["overlay:draggable"]="Repères";
+$lang_str["overlay:draggable"]="Marqueurs";
 
 $lang_str["user:no_auth"]="Nom d'utilisateur ou mot de passe incorrect !";
 $lang_str["user:login_text"]="Connexion à OpenStreetBrowser :";
@@ -109,7 +110,7 @@ $lang_str["user:password_no_match"]="Les mots de passe ne correspondent pas !";
 $lang_str["user:full_name"]="Nom complet";
 $lang_str["user:user_exists"]="Ce nom d'utilisateur existe déjà";
 $lang_str["user:login"]="Connexion";
-$lang_str["user:logged_in_as"]="Connexion avec identifiant ";
+$lang_str["user:logged_in_as"]="Connecté en tant que ";
 $lang_str["user:logout"]="Déconnexion";
 
 $lang_str["attention"]="Attention :";
