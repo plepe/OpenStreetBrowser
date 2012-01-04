@@ -1,5 +1,5 @@
 <?
-$lang_str["head:map_key_basemap"]="Couche de base";
+$lang_str["head:map_key_basemap"]="Fond de carte";
 
 // building
 $lang_str["map_key_basemap:building=yes"]="Immeubles";

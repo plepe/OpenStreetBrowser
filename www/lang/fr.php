@@ -72,10 +72,10 @@ $lang_str["list_leisure_sport_tourism"]="Loisir, Sport et Tourisme";
 // Mapkey
 
 
-#$lang_str["main:help"]="Help";
+$lang_str["main:help"]="Aide";
 $lang_str["main:options"]="Options";
 $lang_str["main:about"]="À Propos de";
-$lang_str["main:donate"]="Donner";
+$lang_str["main:donate"]="Faire un don";
 $lang_str["main:licence"]="Données : <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributeurs | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">contributeurs</a>";
 $lang_str["main:permalink"]="Lien permanent";
 
