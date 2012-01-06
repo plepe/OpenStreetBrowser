@@ -13,6 +13,9 @@ function layer_toolbox_class(options) {
   register_toolbox(this);
 
   this.show();
+
+  register_hook("basemap_registered", this.show.bind(this));
+  register_hook("overlays_registered", this.show.bind(this));
 }
 
 layer_toolbox_class.prototype.show=function() {
