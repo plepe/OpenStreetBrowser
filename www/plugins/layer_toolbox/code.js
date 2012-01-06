@@ -35,6 +35,7 @@ layer_toolbox_class.prototype.show=function() {
     input.type="radio";
     input.name="layer_toolbox_base_layer";
     input.value=i;
+    input.onchange=this.select_basemap.bind(this, i, input);
     li.appendChild(input);
 
     dom_create_append_text(li, basemaps[i].name);
@@ -52,11 +53,22 @@ layer_toolbox_class.prototype.show=function() {
       input.type="checkbox";
       input.name="layer_toolbox_overlays_"+i;
       input.checked=true;
+      input.onchange=this.select_overlay.bind(this, i, input);
       li.appendChild(input);
 
       dom_create_append_text(li, overlays_layers[i].name);
     }
   }
+}
+
+layer_toolbox_class.prototype.select_basemap=function(i, input) {
+  map.setBaseLayer(basemaps[i]);
+}
+
+layer_toolbox_class.prototype.select_overlay=function(i, input) {
+  var l=overlays_layers[i];
+
+  l.setVisibility(input.checked);
 }
 
 function layer_toolbox_init() {
