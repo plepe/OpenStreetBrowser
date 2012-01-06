@@ -36,6 +36,8 @@ function register_basemap(id, layer) {
   map.addLayer(layer);
 
   layers_reorder();
+
+  call_hooks("basemap_registered", layer, id);
 }
 
 function basemap_permalink(permalink) {
