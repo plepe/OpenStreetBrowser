@@ -16,6 +16,8 @@ function layer_toolbox_class(options) {
 
   register_hook("basemap_registered", this.show.bind(this));
   register_hook("overlays_registered", this.show.bind(this));
+  register_hook("overlays_visibility_change", this.show.bind(this));
+  register_hook("basemap_changebaselayer", this.show.bind(this));
 }
 
 layer_toolbox_class.prototype.show=function() {
@@ -39,6 +41,9 @@ layer_toolbox_class.prototype.show=function() {
     li.appendChild(input);
 
     dom_create_append_text(li, basemaps[i].name);
+
+    if(map.baseLayer==basemaps[i])
+      input.checked=true;
   }
 
   if(overlays_layers&&(keys(overlays_layers).length)) {
@@ -57,6 +62,8 @@ layer_toolbox_class.prototype.show=function() {
       li.appendChild(input);
 
       dom_create_append_text(li, overlays_layers[i].name);
+
+      input.checked=overlays_layers[i].getVisibility();
     }
   }
 }
