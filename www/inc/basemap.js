@@ -28,6 +28,12 @@ function basemap_init() {
   }
 
   layers_reorder();
+
+  map.events.register("changebaselayer", map, basemap_change);
+}
+
+function basemap_change() {
+  call_hooks("basemap_changebaselayer", map.baseLayer);
 }
 
 function register_basemap(id, layer) {
