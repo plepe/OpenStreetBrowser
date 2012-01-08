@@ -53,6 +53,10 @@ BEGIN
     where quadtree_tables.table_name=table_name;
   perform quadtree_table_indexes(table_name, 1);
 
+  -- move current data from table to first-subtable
+  execute 'insert into '||table_name||' (select * from only '||table_name||');';
+  execute 'delete from only '||table_name||';';
+
   return true;
 END;
 $$ LANGUAGE plpgsql;
