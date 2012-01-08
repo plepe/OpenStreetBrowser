@@ -40,6 +40,10 @@ BEGIN
     where partition_tables.table_name=table_name;
   perform partition_table_indexes(table_name, 'other');
 
+  -- move current data from table to other-subtable
+  execute 'insert into '||table_name||' (select * from only '||table_name||');';
+  execute 'delete from only '||table_name||';';
+  
   return true;
 END;
 $$ LANGUAGE plpgsql;
@@ -56,6 +60,12 @@ BEGIN
 
   execute 'create table '||table_name||'_'||part_id||' () inherits ('||table_name||');';
 
+  -- fill subtable with fitting data
+  execute 'insert into '||table_name||'_'||part_id||' (select * from '||table_name||'_query(null, $f$'||part_where||'$f$));';
+  -- delete fitting data from other-subtable
+  execute 'delete from '||table_name||'_other where '||part_where||';';
+
+  -- create indexes on table
   perform partition_table_indexes(table_name, part_id);
 
   return true;
