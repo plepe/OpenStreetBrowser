@@ -291,6 +291,9 @@ DECLARE
   i int;
 BEGIN
   select * into table_def from quadtree_tables where quadtree_tables.table_name=table_name;
+  if table_def.indexes=Array[]::text[] then
+    return true;
+  end if;
 
   for i in array_lower(table_def.indexes, 1)..array_upper(table_def.indexes, 1) loop
     perform quadtree_add_index_table(table_name, table_id, table_def.indexes[i]);
