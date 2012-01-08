@@ -167,6 +167,7 @@ $overlays_add=array(
 // postgresql_restart - Try to restart PostgreSQL after connection failure
 // program - Write programs on geo objects
 // quadtree - Organise database tables as quadtrees (geometrically)
+// partition - Separates a table into several parts by a where clause
 
 // geom - Geometry Editor
 // geom_ui - UI for geometry editor functions
