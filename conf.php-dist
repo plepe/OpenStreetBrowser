@@ -168,6 +168,7 @@ $overlays_add=array(
 // program - Write programs on geo objects
 // quadtree - Organise database tables as quadtrees (geometrically)
 // partition - Separates a table into several parts by a where clause
+// partition_quadtree - Partition table into several parts AND build a quadtree on each subtable
 
 // geom - Geometry Editor
 // geom_ui - UI for geometry editor functions
