@@ -61,7 +61,7 @@ BEGIN
   execute 'create table '||table_name||'_'||part_id||' () inherits ('||table_name||');';
 
   -- fill subtable with fitting data
-  execute 'insert into '||table_name||'_'||part_id||' (select * from '||table_name||'_query(null, $f$'||part_where||'$f$));';
+  execute 'insert into '||table_name||'_'||part_id||' (select * from '||table_name||'_query(null::text[], $f$'||part_where||'$f$));';
   -- delete fitting data from other-subtable
   execute 'delete from '||table_name||'_other where '||part_where||';';
 
