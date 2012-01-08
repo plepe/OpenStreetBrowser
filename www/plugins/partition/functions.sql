@@ -92,6 +92,7 @@ BEGIN
   execute 'insert into '||table_name||'__tmp select $1.*' using NEW;
 
   -- process each parts and try to fit data into these table
+  if array_lower(table_def.parts_id, 1) is not null then
   for i in array_lower(table_def.parts_id, 1)..array_upper(table_def.parts_id, 1) loop
     part_id=table_def.parts_id[i];
     part_where=table_def.parts_where[i];
@@ -102,7 +103,7 @@ BEGIN
       -- raise notice 'inserted into %', part_id;
       done:=true;
     end if;
-  end loop;
+  end loop; end if;
 
   -- it didn't fit into any of these table ... insert to other
   if not done then
