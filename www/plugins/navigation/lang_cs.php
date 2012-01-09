@@ -1,5 +1,5 @@
 <?
-$lang_str["navigation:route_name"]="Trasa";
+$lang_str['navigation:name']="Trasa";
 
 $lang_str["navigation:set_home"]="nastav domov";
 $lang_str["navigation:add_via"]="přidat průjezdní bod";

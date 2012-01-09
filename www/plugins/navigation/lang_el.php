@@ -1,5 +1,5 @@
 <?
-$lang_str["navigation:route_name"]="Δρομολόγιο";
+$lang_str['navigation:name']="Δρομολόγιο";
 
 $lang_str["navigation:set_home"]="καθορισμός αφετηρίας";
 $lang_str["navigation:add_via"]="προσθήκη μέσω";

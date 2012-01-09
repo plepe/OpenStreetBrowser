@@ -1,5 +1,5 @@
 <?
-$lang_str["navigation:route_name"]="Ruta";
+$lang_str['navigation:name']="Ruta";
 
 $lang_str["navigation:set_home"]="conseñar salida";
 $lang_str["navigation:add_via"]="amestar pasu";
