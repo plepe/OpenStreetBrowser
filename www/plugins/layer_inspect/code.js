@@ -94,9 +94,12 @@ function layer_inspect_init() {
 
   var input=dom_create_append(dom, "input");
   input.type="checkbox";
+  input.id="input_layer_inspect";
   input.onchange=layer_inspect_toggle.bind(this, input);
   
-  dom_create_append_text(dom, lang("layer_inspect:name"));
+  var label=dom_create_append(dom, "label");
+  label.setAttribute("for", "input_layer_inspect");
+  dom_create_append_text(label, lang("layer_inspect:name"));
 
   if(debug_toolbox_register) {
     debug_toolbox_register({

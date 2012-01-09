@@ -17,9 +17,12 @@ function debug_toolbox_layer_switcher_init() {
 
   var input=dom_create_append(dom, "input");
   input.type="checkbox";
+  input.id="input_debug_toolbox_layer_switcher";
   input.onchange=debug_toolbox_layer_switcher_toggle.bind(this, input);
   
-  dom_create_append_text(dom, lang("debug_toolbox_layer_switcher:name"));
+  var label=dom_create_append(dom, "label");
+  label.setAttribute("for", "input_debug_toolbox_layer_switcher");
+  dom_create_append_text(label, lang("debug_toolbox_layer_switcher:name"));
 
   if(debug_toolbox_register) {
     debug_toolbox_register({
