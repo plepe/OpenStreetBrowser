@@ -1,0 +1,17 @@
+<?
+$lang_str["lang:de"]="Niemiecki";
+$lang_str["lang:bg"]="Bułgarski";
+$lang_str["lang:cs"]="Czeski";
+$lang_str["lang:en"]="Angielski";
+$lang_str["lang:es"]="Hiszpański";
+$lang_str["lang:it"]="Włoski";
+$lang_str["lang:fr"]="Francuski";
+$lang_str["lang:uk"]="Ukraiński";
+$lang_str["lang:ru"]="Rosyjski";
+$lang_str["lang:ja"]="Japoński";
+$lang_str["lang:hu"]="Węgierski";
+$lang_str["lang:nl"]="Duński";
+#$lang_str["lang:ast"]="Asturian";
+$lang_str["lang:el"]="Grecki";
+$lang_str["lang:pl"]="Polski";
+#$lang_str["lang:ca"]="Catalan";

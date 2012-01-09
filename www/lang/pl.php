@@ -33,6 +33,7 @@ $lang_str["source"]="Źródło";
 $lang_str["unnamed"]="nienazwane";
 $lang_str["zoom"]="Poziom powiększenia";
 $lang_str["no_message"]="brak wiadomości";
+$lang_str["ad"]=array("Reklama", "Reklamy");
 
 // Headings
 $lang_str["head:general_info"]="Ogólne Informacje";
@@ -71,6 +72,7 @@ $lang_str["list_leisure_sport_tourism"]="Rozrywka, Sport i Turystyka";
 // Mapkey
 
 
+$lang_str["main:help"]="Pomoc";
 $lang_str["main:options"]="Opcje";
 $lang_str["main:about"]="O programie";
 $lang_str["main:donate"]="Podaruj";

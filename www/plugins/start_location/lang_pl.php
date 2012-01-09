@@ -1,5 +1,5 @@
 <?
-#$lang_str["start_location:name"]="Map Position";
+$lang_str["start_location:name"]="Położenie Mapy";
 
 $lang_str["start_location:choose"]="Wybierz widok mapy";
 $lang_str["start_location:geolocation"]="pobierz pozycję geograficzną";

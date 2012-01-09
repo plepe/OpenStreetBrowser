@@ -1,14 +1,14 @@
 <?
-#$lang_str["head:map_key_basemap"]="Basemap";
+$lang_str["head:map_key_basemap"]="Mapa podstawowa";
 
 // building
 $lang_str["map_key_basemap:building=yes"]="Budynki";
 $lang_str["map_key_basemap:building=default"]="Budynki";
-#$lang_str["map_key_basemap:building=worship"]="Religious Buildings";
-#$lang_str["map_key_basemap:building=road_amenities"]="Facilities for Transportation (Stations, Terminals, Toll Booths, ...)";
+$lang_str["map_key_basemap:building=worship"]="Miejsca modlitwy";
+$lang_str["map_key_basemap:building=road_amenities"]="Budynki związane z transportem (stacje, terminale, punkty poboru opłat, ...)";
 #$lang_str["map_key_basemap:building=nature_building"]="Natural Buildings (e.g. Barriers)";
-#$lang_str["map_key_basemap:building=industrial"]="Industrial Buildings";
-#$lang_str["map_key_basemap:building=education"]="Educational Buildings";
+$lang_str["map_key_basemap:building=industrial"]="Budynki Przemysłowe";
+$lang_str["map_key_basemap:building=education"]="Budynki związane z edukacją";
 $lang_str["map_key_basemap:building=shop"]="Sklepy";
 $lang_str["map_key_basemap:building=public"]="Budynki Publiczne";
 $lang_str["map_key_basemap:building=military"]="Budynki Wojskowe";

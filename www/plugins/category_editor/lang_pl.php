@@ -1,6 +1,6 @@
 <?
 $lang_str["category_editor:editor"]="Edytor";
-#$lang_str["category_editor:expand"]="expand";
+$lang_str["category_editor:expand"]="Rozwiń";
 $lang_str["category_editor:tags"]="Tagi";
 
 $lang_str["category_editor:new"]="Edytujesz nową kategorię. Jeśli nie wybierzesz ID (identyfikatora) lub wybrany ID nie będzie dostępny, to zostanie przypisany losowy ID.";
