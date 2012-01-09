@@ -1,5 +1,5 @@
 <?
-$lang_str["head:map_key_basemap"]="Couche de base";
+$lang_str["head:map_key_basemap"]="Fond de carte";
 
 // building
 $lang_str["map_key_basemap:building=yes"]="Immeubles";
@@ -32,7 +32,7 @@ $lang_str["map_key_basemap:landuse=shop"]="Zones commerciales";
 $lang_str["map_key_basemap:landuse=industrial"]="Zones industrielles et ferroviaires";
 $lang_str["map_key_basemap:landuse=military"]="Zones militaires";
 $lang_str["map_key_basemap:landuse=piste"]="Pistes de ski";
-$lang_str["map_key_basemap:landuse=sport"]="Aires de Sports";
+$lang_str["map_key_basemap:landuse=sport"]="Terrains de sports";
 $lang_str["map_key_basemap:landuse=cemetery"]="Cimetières";
 $lang_str["map_key_basemap:landuse=residential"]="Zones résidentielles";
 $lang_str["map_key_basemap:landuse=nature_reserve"]="Réserves naturelles";
