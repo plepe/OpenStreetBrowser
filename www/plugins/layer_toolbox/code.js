@@ -29,18 +29,20 @@ layer_toolbox_class.prototype.show=function() {
   var h2=dom_create_append(div, "h2");
   dom_create_append_text(h2, lang("layer_toolbox:head:base_layer"));
 
-  var ul=dom_create_append(div, "ul");
   for(var i in basemaps) {
-    var li=dom_create_append(ul, "li");
+    var li=dom_create_append(div, "div");
 
     var input=document.createElement("input");
     input.type="radio";
     input.name="layer_toolbox_base_layer";
     input.value=i;
+    input.id="layer_toolbox_base_layer_"+i;
     input.onchange=this.select_basemap.bind(this, i, input);
     li.appendChild(input);
 
-    dom_create_append_text(li, basemaps[i].name);
+    var label=dom_create_append(li, "label");
+    label.setAttribute("for", "layer_toolbox_base_layer_"+i);
+    dom_create_append_text(label, basemaps[i].name);
 
     if(map.baseLayer==basemaps[i])
       input.checked=true;
@@ -50,18 +52,20 @@ layer_toolbox_class.prototype.show=function() {
     var h2=dom_create_append(div, "h2");
     dom_create_append_text(h2, lang("layer_toolbox:head:overlays"));
 
-    var ul=dom_create_append(div, "ul");
     for(var i in overlays_layers) {
-      var li=dom_create_append(ul, "li");
+      var li=dom_create_append(div, "div");
 
       var input=document.createElement("input");
       input.type="checkbox";
       input.name="layer_toolbox_overlays_"+i;
+      input.id="layer_toolbox_overlays_"+i;
       input.checked=true;
       input.onchange=this.select_overlay.bind(this, i, input);
       li.appendChild(input);
 
-      dom_create_append_text(li, overlays_layers[i].name);
+      var label=dom_create_append(li, "label");
+      label.setAttribute("for", "layer_toolbox_base_layer_"+i);
+      dom_create_append_text(label, overlays_layers[i].name);
 
       input.checked=overlays_layers[i].getVisibility();
     }
