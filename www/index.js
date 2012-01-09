@@ -339,6 +339,7 @@ function init() {
   }
 
   window_resize();
+  window.onresize=call_hooks.bind(this, "window_resize");
 
   call_hooks("post_init");
 }
