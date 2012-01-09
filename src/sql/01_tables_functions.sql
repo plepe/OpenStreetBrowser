@@ -278,6 +278,12 @@ BEGIN
   -- tags
   tags:=rel_assemble_tags(id);
 
+  -- check if type is correct
+  if tags->'type' not in ('multipolygon', 'boundary') then
+    raise notice 'relation % is neither multipolygon nor boundary!', id;
+    return false;
+  end if;
+
   -- generate multipolygon geometry
   geom:=build_multipolygon(
     (select to_array(way_get_geom(outer_members[i])) from generate_series(1, array_upper(outer_members, 1)) i),
