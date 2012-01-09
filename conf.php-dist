@@ -160,6 +160,7 @@ $overlays_add=array(
 // editor - Commonly used things for all editors (e.g. lang strings)
 // layer_inspect - Show date of rendering for all tiles
 // debug_toolbox - Show a toolbox with debug options
+// debug_toolbox_layer_switcher - Show original OpenLayers Layer Switcher
 // lang_chooser - A more accessible chooser for languages
 // ajax_indicator - A indicator to show activity while an ajax-action is active
 // autozoom - Automatic zoom to current object
@@ -170,3 +171,4 @@ $overlays_add=array(
 // osm_shapefiles - Include the OSM Shapefiles (needed for basemap)
 // tip_of_the_day - Tip of the day
 // right_bar - Show a bar to the right with donation, twitter, ...
+// layer_toolbox - Add a toolbox for choosing background layer and overlays

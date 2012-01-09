@@ -9,6 +9,8 @@ function overlays_register(id, overlay) {
   map.addLayer(overlay);
 
   layers_reorder();
+
+  call_hooks("overlays_registered", overlay, id);
 }
 
 function overlays_permalink(permalink) {
