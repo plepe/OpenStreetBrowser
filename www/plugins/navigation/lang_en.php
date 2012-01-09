@@ -1,5 +1,5 @@
 <?
-$lang_str["navigation:route_name"]="Route";
+$lang_str['navigation:name']="Route";
 
 $lang_str["navigation:set_home"]="set home";
 $lang_str["navigation:add_via"]="add via";

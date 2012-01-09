@@ -72,6 +72,7 @@ $lang_str["list_leisure_sport_tourism"]="Αναψυχή, Άθληση και Τ�
 // Mapkey
 
 
+$lang_str["main:help"]="Βοήθεια";
 $lang_str["main:options"]="Επιλογές";
 $lang_str["main:about"]="Περί";
 $lang_str["main:donate"]="Δωρεά";

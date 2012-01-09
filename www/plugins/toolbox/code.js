@@ -1,3 +1,5 @@
+var toolbox_css;
+
 // valid variables:
 //   .content:    the div for the content of the toolbox
 //
@@ -62,3 +64,26 @@ function toolbox(options) {
     this.options.weight=0;
   }
 }
+
+function toolbox_init() {
+  if(toolbox_css)
+    return;
+
+  toolbox_css=document.createElement("style");
+  toolbox_css.type="text/css";
+  dom_create_append_text(toolbox_css, "div.toolbox_active { }");
+  document.body.appendChild(toolbox_css);
+}
+
+function toolbox_window_resize() {
+  var max_size=document.getElementById("toolbox_container").offsetHeight+
+               document.getElementById("details").offsetHeight;
+
+  dom_clean(toolbox_css);
+  dom_create_append_text(toolbox_css, "div.toolbox_active { max-height: "+
+    (max_size/3)+"px; }");
+  toolbox_manager.resize_toolbox();
+}
+
+register_hook("init", toolbox_init);
+register_hook("window_resize", toolbox_window_resize);

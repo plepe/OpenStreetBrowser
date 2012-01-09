@@ -10,6 +10,8 @@
   line-height:0.8;
   margin-bottom:-2px;
   z-index:2;
+  max-height: 100px;
+  overflow: auto;
 }
 .toolbox {
   display: none;

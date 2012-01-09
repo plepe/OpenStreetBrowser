@@ -310,7 +310,6 @@ function init() {
 	    projection: new OpenLayers.Projection("EPSG:900913"),
 	    displayProjection: new OpenLayers.Projection("EPSG:4326"),
 	    controls: [ new OpenLayers.Control.PanZoomBar(),
-			new OpenLayers.Control.LayerSwitcher(),
 			new OpenLayers.Control.Navigation() ]
 	  });
 
@@ -340,6 +339,7 @@ function init() {
   }
 
   window_resize();
+  window.onresize=call_hooks.bind(this, "window_resize");
 
   call_hooks("post_init");
 }

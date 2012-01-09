@@ -1,5 +1,5 @@
 <?
-$lang_str["navigation:route_name"]="Itinerario";
+$lang_str['navigation:name']="Itinerario";
 
 $lang_str["navigation:set_home"]="fissa il punto di partenza";
 $lang_str["navigation:add_via"]="aggiungi un punto di passaggio";

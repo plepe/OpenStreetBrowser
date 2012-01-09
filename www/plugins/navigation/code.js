@@ -111,7 +111,7 @@ function navigation_route(id) {
 
   // name
   this.name=function() {
-    return lang("navigation:route_name");
+    return lang("navigation:name");
   }
 
   // id
@@ -654,7 +654,7 @@ function navigation_current_route_go() {
 function navigation_init() {
   navigation_toolbox=new toolbox({
     icon: "plugins/navigation/icon.png",
-    icon_title: "navigation",
+    icon_title: lang("navigation:name"),
     weight: -3,
   });
   register_toolbox(navigation_toolbox);

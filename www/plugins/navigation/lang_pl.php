@@ -1,5 +1,5 @@
 <?
-$lang_str["navigation:route_name"]="Trasa";
+$lang_str['navigation:name']="Trasa";
 
 $lang_str["navigation:set_home"]="zaznacz początek";
 $lang_str["navigation:add_via"]="ustaw punkt pośredni";

@@ -28,6 +28,12 @@ function basemap_init() {
   }
 
   layers_reorder();
+
+  map.events.register("changebaselayer", map, basemap_change);
+}
+
+function basemap_change() {
+  call_hooks("basemap_changebaselayer", map.baseLayer);
 }
 
 function register_basemap(id, layer) {
@@ -36,6 +42,8 @@ function register_basemap(id, layer) {
   map.addLayer(layer);
 
   layers_reorder();
+
+  call_hooks("basemap_registered", layer, id);
 }
 
 function basemap_permalink(permalink) {
