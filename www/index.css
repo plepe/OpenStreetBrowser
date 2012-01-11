@@ -85,9 +85,6 @@ input#search {
   overflow-x:hidden;
   bottom: 38px;
 }
-.info_loading {
-  position:absolute;
-}
 div#options{
   position: absolute;
   bottom: 1px;

@@ -112,8 +112,6 @@ function real_search(value, param) {
 
   dom_clean(details_content);
 
-  details_content.className="info_loading";
-
   var d=dom_create_append(details_content, "div");
   d.className="zoombuttons";
   d.innerHTML="<a class='zoom' href='#'>"+lang("info_back")+"</a>";
