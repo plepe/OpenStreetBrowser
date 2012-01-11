@@ -21,7 +21,7 @@ $lang_str["tag:addr:housename"]=array("Jméno domu", " Jména domu");
 $lang_str["tag:addr:street"]=array("Ulice", " Ulice");
 
 // addr:postcode
-$lang_str["tag:addr:postcode"]=array("PSČ", " PS");
+$lang_str["tag:addr:postcode"]=array("PSČ", " PSČ");
 
 // addr:city
 $lang_str["tag:addr:city"]=array("Město", " Města");
@@ -257,7 +257,7 @@ $lang_str["tag:religion=muslim"]="islám";
 $lang_str["tag:religion=multifaith"]="více náboženství";
 
 // denomination
-#$lang_str["tag:denomination"]="Denomination";
+$lang_str["tag:denomination"]="Vyznání";
 
 // route
 $lang_str["tag:route"]="Dopravní trasy";
@@ -490,10 +490,10 @@ $lang_str["tag:horse"]="Koně povoleny";
 $lang_str["tag:motorcycle"]="Motocykly povoleny";
 
 // motorcar
-$lang_str["tag:motorcar"]="Osobní auta povolena";
+$lang_str["tag:motorcar"]="Motorová vozidla povolena";
 
 // psv
-#$lang_str["tag:psv"]="PSV access permission";
+$lang_str["tag:psv"]="Osobní auta povolena";
 
 // oneway
 $lang_str["tag:oneway"]="Jednosměrka";
