@@ -96,15 +96,15 @@ $lang_str["tag:cuisine=regional"]="regionalna";
 #$lang_str["tag:highway=road"]="Road";
 #$lang_str["tag:highway=residential"]="Residential Road";
 #$lang_str["tag:highway=unclassified"]="Unclassified Road";
-#$lang_str["tag:highway=service"]="Service Road";
-#$lang_str["tag:highway=pedestrian"]="Pedestrian Zone";
+$lang_str["tag:highway=service"]="Droga serwisowa";
+$lang_str["tag:highway=pedestrian"]="Strefa pieszych";
 #$lang_str["tag:highway=living_street"]="Living Street";
-#$lang_str["tag:highway=path"]="Path";
-#$lang_str["tag:highway=cycleway"]="Cycleway";
+$lang_str["tag:highway=path"]="Ścieżka";
+$lang_str["tag:highway=cycleway"]="Droga dla rowerów";
 #$lang_str["tag:highway=footway"]="Footway";
 #$lang_str["tag:highway=bridleway"]="Bridleway";
 #$lang_str["tag:highway=track"]="Track";
-#$lang_str["tag:highway=steps"]="Steps";
+$lang_str["tag:highway=steps"]="Schody";
 
 // bridge
 $lang_str["tag:bridge"]="Most";
@@ -405,7 +405,7 @@ $lang_str["tag:lit"]="Droga oświetlona";
 $lang_str["tag:area"]="Obszar";
 
 // crossing
-#$lang_str["tag:crossing"]="crossing";
+$lang_str["tag:crossing"]="Przejście";
 
 // mountain_pass
 #$lang_str["tag:mountain_pass"]="Mountain Pass";
@@ -420,7 +420,7 @@ $lang_str["tag:area"]="Obszar";
 #$lang_str["tag:lanes"]="Lanes";
 
 // layer
-#$lang_str["tag:layer"]="Layer";
+$lang_str["tag:layer"]="Warstwa";
 
 // surface
 #$lang_str["tag:surface"]="Surface";
@@ -435,7 +435,7 @@ $lang_str["tag:area"]="Obszar";
 $lang_str["tag:width"]="Szerokość";
 
 // est_width
-#$lang_str["tag:est_width"]="Estimated width";
+$lang_str["tag:est_width"]="Oszacowana szerokość";
 
 // incline
 #$lang_str["tag:incline"]="incline";
@@ -466,7 +466,7 @@ $lang_str["tag:narrow"]="Wąski";
 #$lang_str["tag:ford"]="Ford";
 
 // access
-#$lang_str["tag:access"]="General access permission";
+$lang_str["tag:access"]="Dostęp";
 
 // vehicle
 #$lang_str["tag:vehicle"]="Vehicle access permission";
@@ -529,16 +529,16 @@ $lang_str["tag:oneway"]="Jednokierunkowa";
 $lang_str["tag:source"]="Źródło";
 
 // phone
-#$lang_str["tag:phone"]="Phone number";
+$lang_str["tag:phone"]="Nr telefonu";
 
 // fax
-#$lang_str["tag:fax"]="Fax number";
+$lang_str["tag:fax"]="Nr faxu";
 
 // email
-#$lang_str["tag:email"]="E-mail";
+$lang_str["tag:email"]="E-mail";
 
 // wikipedia
-#$lang_str["tag:wikipedia"]="Wikipedia";
+$lang_str["tag:wikipedia"]="Wikipedia";
 
 // created_by
 #$lang_str["tag:created_by"]="Created by";
