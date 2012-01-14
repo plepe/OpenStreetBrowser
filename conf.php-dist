@@ -174,3 +174,4 @@ $overlays_add=array(
 // right_bar - Show a bar to the right with donation, twitter, ...
 // layer_toolbox - Add a toolbox for choosing background layer and overlays
 // keyshort - Keyboard shortcuts
+// keyshort_map - Keyboard shortcuts for the map
