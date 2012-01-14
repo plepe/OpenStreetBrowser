@@ -1,0 +1,7 @@
+Other plugins can define 'Tip of the Day's by defining a lang_str in their
+lang_XX.php:
+$lang_str['tip_of_the_day:plugin:id']="Plugin 'plugin' has a tip of the day!";
+
+Replace 'plugin' by the name of your plugin. Id can be anything, you could use
+integers starting by 0, e.g:
+$lang_str['tip_of_the_day:map:0']="In the center of the page is a map view port.";
