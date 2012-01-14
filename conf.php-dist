@@ -173,3 +173,4 @@ $overlays_add=array(
 // tip_of_the_day - Tip of the day
 // right_bar - Show a bar to the right with donation, twitter, ...
 // layer_toolbox - Add a toolbox for choosing background layer and overlays
+// keyshort - Keyboard shortcuts
