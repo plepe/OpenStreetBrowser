@@ -4,6 +4,11 @@ function keyshort_keydown(ev) {
   if(!ev)
     ev=event;
 
+  // 'Esc' sets the focus on the body
+  if(ev.keyCode==27) {
+    document.activeElement.blur();
+  }
+
   // if an element has the focus, ignore
   if(document.activeElement!=document.body)
     return;
@@ -11,6 +16,10 @@ function keyshort_keydown(ev) {
   // tell hooks about keydown
   var done=[];
   call_hooks("keyshort_keydown", done, ev);
+
+  // if we did something with the keydown, tell browser
+  if(done.length)
+    return false;
 }
 
 function keyshort_keyup(ev) {
