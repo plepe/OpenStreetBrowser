@@ -280,6 +280,7 @@ $lang_str["tag:route=mtb"]="Mountainbike";
 
 // shop
 $lang_str["tag:shop"]="Geschäft";
+$lang_str["tag:shop=chemist"]="Drogerie";
 
 // sport
 $lang_str["tag:sport"]="Sport";
