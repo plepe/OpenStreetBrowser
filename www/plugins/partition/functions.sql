@@ -206,3 +206,15 @@ BEGIN
   return true;
 END;
 $$ language plpgsql;
+
+-- remove all traces of a table
+create or replace function quadtree_drop_table(in table_name text) returns boolean as $$
+#variable_conflict use_variable
+DECLARE
+BEGIN
+  execute 'drop table '||table_name||' cascade;';
+  execute 'delete from partition_tables where table_name='||quote_nullable(table_name)||';';
+
+  return true;
+END;
+$$ language plpgsql;
