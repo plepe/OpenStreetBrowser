@@ -1,5 +1,6 @@
 <?
 $lang_str['tip_of_the_day:name']="Tip of the day";
+$lang_str['tip_of_the_day:next']="next tip";
 
 $lang_str['tip_of_the_day:0']="Did you know you can use http://osb.cc as short url?";
 $lang_str['tip_of_the_day:1']="You can zoom into an area, by holding down Shift while dragging the mouse.";
