@@ -1,19 +1,9 @@
 <?
-// All untranslated strings have a # in front. When you translate a string
-// please remove this hash.
+// In this editor you can translate all strings. In the third column you can compare the strings to another language (set it in the select box on the bottom of the window). Please note that changes will not appear right away, they need to be imported by a developer.
+// Every language string can have a singular and plural variant by separating them by ";", e.g. "Restaurant;Restaurants". The first string is the singular form, the second the plural form.  Optionally you can define the Gender (F, M, N) for the word by prepending one of those characters, e.g. "N;Büro;Büros" (German for "office").
+// When translating a language variant (e.g. 'British English', code 'en-gb') please translate only strings which are different from the base language.
+$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
 
-//  Every language string looks like this:
-//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
-//  the first entry is the translation of the language string in Singular,
-//  the second the Plural form.
-//
-//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
-//  German translation for office:
-//  $lang_str["office"]=array(N, "Büro", "Büros");
-//
-//  If a Singular/Plural form is not
-//  suitable/necessary you can ignore the array, e.g.
-//  $lang_str["help"]="Help";
 $lang_str["lang:current"]="Nederlands"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
 // General
@@ -22,17 +12,28 @@ $lang_str["yes"]="ja";
 $lang_str["no"]="nee";
 $lang_str["ok"]="Ok";
 $lang_str["save"]="Opslaan";
+$lang_str["saved"]="Opgeslagen"; // for dialog boxes confirming saving
 $lang_str["cancel"]="Annuleren";
+$lang_str["show"]="Toon";
+$lang_str["edit"]="Bewerk";
+$lang_str["delete"]="Verwijder";
+$lang_str["history"]="Historie";
+$lang_str["choose"]="Kies";
+$lang_str["help"]="Help";
 $lang_str["longitude"]=array("Lengtegraad", "Lengtegraden");
 $lang_str["latitude"]=array("Breedtegraad", "Breedtegraden");
 $lang_str["noname"]="(geen naam)";
 $lang_str["info_back"]="terug naar overzicht";
 $lang_str["info_zoom"]="inzoomen";
 $lang_str["nothing_found"]="niets gevonden";
+$lang_str["list:zoom_for_obs"]="Zoom in voor minder belangrijke objecten";
 $lang_str["loading"]="Laden...";
 $lang_str["more"]="meer";
+$lang_str["source"]="Bron";
 $lang_str["unnamed"]="naamloos";
 $lang_str["zoom"]="Zoomniveau";
+$lang_str["no_message"]=array("geen bericht", "geen berichten");
+$lang_str["ad"]=array("Advertentie", "Advertenties");
 
 // Headings
 $lang_str["head:general_info"]="Algemene Informatie";
@@ -71,6 +72,7 @@ $lang_str["list_leisure_sport_tourism"]="Vrije tijd, Sport and Toerisme";
 // Mapkey
 
 
+$lang_str["main:help"]="Help";
 $lang_str["main:options"]="Opties";
 $lang_str["main:about"]="Over";
 $lang_str["main:donate"]="Doneer";
@@ -90,6 +92,7 @@ $lang_str["help:language_support"]="Met deze optie kunnen de gewenste talen word
 $lang_str["options:ui_lang"]="Interfacetaal";
 $lang_str["options:data_lang"]="Taal voor data";
 $lang_str["lang:"]="Lokale taal";
+$lang_str["lang:auto"]="Gelijk aan interfacetaal";
 
 $lang_str["overlay:data"]="Data";
 $lang_str["overlay:draggable"]="Markeringen";
@@ -110,19 +113,23 @@ $lang_str["user:login"]="Aanmelden";
 $lang_str["user:logged_in_as"]="Aangemeld als ";
 $lang_str["user:logout"]="Afmelden";
 
+$lang_str["attention"]="Attentie:";
 $lang_str["error"]="Er is een fout opgetreden: ";
 $lang_str["error:not_logged_in"]="U bent niet aangemeld";
 
+$lang_str["category"]=array("Categorie", "Categorieën");
 $lang_str["more_categories"]="Meer categorieën";
 $lang_str["category:status"]="Status";
 $lang_str["category:data_status"]="Status";
 $lang_str["category:old_version"]="Een nieuwe versie van deze categorie wordt voorbereid.";
 $lang_str["category:not_compiled"]="Nieuwe categorie wordt voorbereid.";
 
+$lang_str["category:new_rule"]="Nieuwe regel";
 $lang_str["category_rule_tag:match"]="Overeenkomst";
 $lang_str["category_rule_tag:description"]="Omschrijving";
 $lang_str["category_chooser:choose"]="Kies een categorie";
 $lang_str["category_chooser:new"]="Nieuwe categorie aanmaken";
+$lang_str["category:sub_category"]=array("Sub-categorie", "Sub-categorieën");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standaard (Mapnik)";
