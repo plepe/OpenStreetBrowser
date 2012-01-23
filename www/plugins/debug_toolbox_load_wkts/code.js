@@ -9,7 +9,11 @@ function debug_toolbox_load_wkts() {
   this.form.action="javascript:debug_toolbox_load_wkts_submit()";
   this.form.onsubmit=this.submit.bind(this);
 
+  dom_create_append_text(this.form, lang("debug_toolbox_load_wkts:info"));
+
   var textarea=dom_create_append(this.form, "textarea");
+  textarea.cols=60;
+  textarea.rows=15;
   textarea.name="wkts";
 
   var input=dom_create_append(this.form, "input");
