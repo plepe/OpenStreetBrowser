@@ -1,4 +1,34 @@
+function debug_toolbox_load_wkts_submit() {
+  return true;
+}
+
+function debug_toolbox_load_wkts() {
+  this.win=new win();
+
+  this.form=dom_create_append(this.win.content, "form");
+  this.form.action="javascript:debug_toolbox_load_wkts_submit()";
+  this.form.onsubmit=this.submit.bind(this);
+
+  var textarea=dom_create_append(this.form, "textarea");
+  textarea.name="wkts";
+
+  var input=dom_create_append(this.form, "input");
+  input.type="submit";
+  input.value=lang("ok");
+}
+
+debug_toolbox_load_wkts.prototype.submit=function() {
+  var list=this.form.wkts.value.split("\n");
+  for(var i=0; i<list.length; i++) {
+    var x=new postgis(list[i]);
+    vector_layer.addFeatures(x.geo());
+  }
+
+  this.win.close();
+}
+
 function debug_toolbox_load_wkts_show() {
+  new debug_toolbox_load_wkts();
 }
 
 function debug_toolbox_load_wkts_init() {
