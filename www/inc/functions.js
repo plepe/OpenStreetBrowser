@@ -14,6 +14,16 @@ function keys(ob) {
   return ret;
 }
 
+function values(ob) {
+  var ret=[];
+
+  for(var i in ob) {
+    ret.push(ob[i]);
+  }
+
+  return ret;
+}
+
 function split_semicolon(str) {
   var x=str.split(/;/);
   var ret=new Array();
