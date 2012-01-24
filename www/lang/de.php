@@ -72,6 +72,7 @@ $lang_str["list_leisure_sport_tourism"]="Freizeit, Sport und Tourismus";
 // Mapkey
 
 
+$lang_str["main:help"]="Hilfe";
 $lang_str["main:options"]="Optionen";
 $lang_str["main:about"]="Impressum";
 $lang_str["main:donate"]="Spende";

@@ -15,22 +15,22 @@ $lang_str["tag:address"]="Adresse";
 $lang_str["tag:addr:housenumber"]="Hausnummer";
 
 // addr:housename
-#$lang_str["tag:addr:housename"]=array("House name", "House names");
+$lang_str["tag:addr:housename"]=array("Hausname", "Hausnamen");
 
 // addr:street
-#$lang_str["tag:addr:street"]=array("Street", "Streets");
+$lang_str["tag:addr:street"]=array("Straße", "Straßen");
 
 // addr:postcode
-#$lang_str["tag:addr:postcode"]=array("Postal Code", "Postal Codes");
+$lang_str["tag:addr:postcode"]=array("Postleitzahl", "Postleitzahlen");
 
 // addr:city
-#$lang_str["tag:addr:city"]=array("City", "Cities");
+$lang_str["tag:addr:city"]=array("Stadt", "Städte");
 
 // addr:country
-#$lang_str["tag:addr:country"]=array("Country", "Countries");
+$lang_str["tag:addr:country"]=array("Land", "Länder");
 
 // addr:full
-#$lang_str["tag:addr:full"]=array("Full address", "Full addresses");
+$lang_str["tag:addr:full"]=array("komplette Adresse", "komplette Adressen");
 
 // addr:interpolation
 $lang_str["tag:addr:interpolation"]="Interpolierte Hausnummern";
@@ -70,13 +70,13 @@ $lang_str["tag:cables"]="Stromkabel";
 $lang_str["tag:description"]="Beschreibung";
 
 // fixme
-#$lang_str["tag:fixme"]="Fix me";
+$lang_str["tag:fixme"]="korregiere mich";
 
 // note
 $lang_str["tag:note"]="Anmerkung";
 
 // food
-#$lang_str["tag:food"]="Serves food";
+$lang_str["tag:food"]="Essen";
 
 // cuisine
 $lang_str["tag:cuisine"]="Küche";
@@ -107,10 +107,10 @@ $lang_str["tag:highway=track"]="Feld-/Waldweg";
 $lang_str["tag:highway=steps"]="Stufen";
 
 // bridge
-#$lang_str["tag:bridge"]="Bridge";
+$lang_str["tag:bridge"]="Brücke";
 
 // tunnel
-#$lang_str["tag:tunnel"]="Tunnel";
+$lang_str["tag:tunnel"]="Tunnel";
 
 // traffic_calming
 #$lang_str["tag:traffic_calming"]="Traffic calming";
