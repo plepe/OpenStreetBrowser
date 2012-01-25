@@ -125,7 +125,7 @@ $lang_str["tag:tunnel"]="Tunnel";
 $lang_str["tag:is_in"]="ist in";
 
 // leisure
-#$lang_str["tag:leisure"]="Leisure";
+$lang_str["tag:leisure"]="Freizeit";
 $lang_str["tag:leisure=sports_centre"]="Sportzentrum";
 $lang_str["tag:leisure=golf_course"]="Golfplatz";
 $lang_str["tag:leisure=stadium"]="Stadion";
@@ -164,22 +164,22 @@ $lang_str["tag:type=water"]="Wasser";
 $lang_str["tag:name"]=array("Name", "Namen");
 
 // alt_name
-#$lang_str["tag:alt_name"]=array("Alternative name", "Alternative names");
+$lang_str["tag:alt_name"]=array("Alternativer Name", " Alternative Namen");
 
 // official_name
-#$lang_str["tag:official_name"]=array("Official name", "Official names");
+$lang_str["tag:official_name"]=array("Offizieller Name", "Offizielle Namen");
 
 // int_name
-#$lang_str["tag:int_name"]=array("International name", "International names");
+$lang_str["tag:int_name"]=array("Internationaler Name", "Internationale Namen");
 
 // loc_name
-#$lang_str["tag:loc_name"]=array("Local name", "Local names");
+$lang_str["tag:loc_name"]=array("Lokaler Name", " Lokale Namen");
 
 // old_name
 $lang_str["tag:old_name"]="Alte Bezeichnung(en)";
 
 // ref
-#$lang_str["tag:ref"]="Reference";
+$lang_str["tag:ref"]="Referenz";
 
 // network
 $lang_str["tag:network"]="Netzwerk";
@@ -205,8 +205,8 @@ $lang_str["tag:place=suburb"]=array("Vorort", "Vororte");
 $lang_str["tag:place=locality"]=array("Lokalität", "Lokalitäten");
 $lang_str["tag:place=island"]=array("Insel", "Inseln");
 $lang_str["tag:place=islet"]=array("Inselchen", "Inselchen");
-#$lang_str["tag:place=ocean"]=array("Ocean", "Oceans");
-#$lang_str["tag:place=sea"]=array("Sea", "Seas");
+$lang_str["tag:place=ocean"]=array("Ozean", "Ozeane");
+$lang_str["tag:place=sea"]=array("Meer", "Meere");
 
 // population
 $lang_str["tag:population"]="Einwohner";
@@ -251,7 +251,7 @@ $lang_str["tag:real_ale"]="Richtiges Bier angeboten";
 $lang_str["tag:religion"]="Religion";
 $lang_str["tag:religion=christian"]="christlich";
 $lang_str["tag:religion=buddhist"]="buddhistisch";
-#$lang_str["tag:religion=hindu"]="hindu";
+$lang_str["tag:religion=hindu"]="hindisch";
 $lang_str["tag:religion=jewish"]="jüdisch";
 $lang_str["tag:religion=muslim"]="muslimisch";
 #$lang_str["tag:religion=multifaith"]="multifaith";
@@ -349,43 +349,43 @@ $lang_str["tag:wires"]="Kabel";
 $lang_str["tag:website"]="Webseite";
 
 // cycleway
-#$lang_str["tag:cycleway"]="Cycleway";
+$lang_str["tag:cycleway"]="Fahrradweg";
 
 // tracktype
-#$lang_str["tag:tracktype"]="Track type";
+$lang_str["tag:tracktype"]="Wegtyp";
 
 // waterway
-#$lang_str["tag:waterway"]="Waterway";
+$lang_str["tag:waterway"]="Wasserweg";
 
 // aerialway
 #$lang_str["tag:aerialway"]="Aerialway";
 
 // public_transport
-#$lang_str["tag:public_transport"]="Public Transport";
+$lang_str["tag:public_transport"]="Öffentliche Verkehrsmittel";
 
 // office
-#$lang_str["tag:office"]="Office";
+$lang_str["tag:office"]="Büro";
 
 // craft
 #$lang_str["tag:craft"]="Craft";
 
 // emergency
-#$lang_str["tag:emergency"]="Emergency";
+$lang_str["tag:emergency"]="Notaufnahme";
 
 // tourism
-#$lang_str["tag:tourism"]="Tourism";
+$lang_str["tag:tourism"]="Touristisch";
 
 // historic
-#$lang_str["tag:historic"]="Historic";
+$lang_str["tag:historic"]="Geschichtlich";
 
 // landuse
-#$lang_str["tag:landuse"]="Landuse";
+$lang_str["tag:landuse"]="Landnutzung";
 
 // wood
 #$lang_str["tag:wood"]="Type of wood";
 
 // military
-#$lang_str["tag:military"]="Military";
+$lang_str["tag:military"]="Militärisch";
 
 // natural
 #$lang_str["tag:natural"]="Natural";
