@@ -64,7 +64,7 @@ layer_toolbox_class.prototype.show=function() {
       li.appendChild(input);
 
       var label=dom_create_append(li, "label");
-      label.setAttribute("for", "layer_toolbox_base_layer_"+i);
+      label.setAttribute("for", "layer_toolbox_overlays_"+i);
       dom_create_append_text(label, overlays_layers[i].name);
 
       input.checked=overlays_layers[i].getVisibility();
