@@ -1,5 +1,8 @@
 var overlays_layers={};
 
+/* available options:
+    .help: text which will be shown as tooltip in layer chooser
+*/
 function overlays_register(id, overlay, options) {
   overlays_layers[id]=overlay;
   overlay.id=id;

@@ -65,6 +65,8 @@ layer_toolbox_class.prototype.show=function() {
 
       var label=dom_create_append(li, "label");
       label.setAttribute("for", "layer_toolbox_overlays_"+i);
+      if(overlays_layers[i].options&&overlays_layers[i].options.help)
+	label.title=overlays_layers[i].options.help;
       dom_create_append_text(label, overlays_layers[i].name);
 
       input.checked=overlays_layers[i].getVisibility();
