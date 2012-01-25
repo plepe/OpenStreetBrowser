@@ -1,3 +1,4 @@
+var layer_grid_overlay;
 var layer_grid_features={ meridians: {}, latitude_circle: {}, meridians_labels: {}, latitude_labels: {} };
 var layer_grid_cur_zoom=0;
 var layer_grid_major_style={ stroke: true, strokeColor: '#000000', strokeWidth: 2, strokeOpacity: 0.5 };
@@ -30,10 +31,10 @@ var layer_grid_meridian_minor_label_style={ labelAlign: 'ct', labelYOffset: -4, 
 var layer_grid_latitude_minor_label_style={ labelAlign: 'rm', labelXOffset: -4, labelOutlineWidth: 1, labelOutlineColor: 'white', externalGraphic: 'plugins/layer_grid/background.png', graphicHeight: 14, graphicWidth: 40, graphicXOffset: -41, graphicOpacity: 0.6, fontFamily: "Tahoma, Arial, Verdana", fontWeight: "normal", fontSize: "11px" };
 
 function layer_grid_remove() {
-  vector_layer.removeFeatures(values(layer_grid_features.meridians));
-  vector_layer.removeFeatures(values(layer_grid_features.latitude_circle));
-  vector_layer.removeFeatures(values(layer_grid_features.meridians_labels));
-  vector_layer.removeFeatures(values(layer_grid_features.latitude_labels));
+  layer_grid_overlay.removeFeatures(values(layer_grid_features.meridians));
+  layer_grid_overlay.removeFeatures(values(layer_grid_features.latitude_circle));
+  layer_grid_overlay.removeFeatures(values(layer_grid_features.meridians_labels));
+  layer_grid_overlay.removeFeatures(values(layer_grid_features.latitude_labels));
   layer_grid_features={ meridians: {}, latitude_circle: {}, meridians_labels: {}, latitude_labels: {} };
 }
 
@@ -161,10 +162,25 @@ function layer_grid_view_changed() {
     layer_grid_show_latitude(i, vp, conf);
 
   // add all features
-  vector_layer.addFeatures(values(layer_grid_features.meridians));
-  vector_layer.addFeatures(values(layer_grid_features.latitude_circle));
-  vector_layer.addFeatures(values(layer_grid_features.meridians_labels));
-  vector_layer.addFeatures(values(layer_grid_features.latitude_labels));
+  layer_grid_overlay.addFeatures(values(layer_grid_features.meridians));
+  layer_grid_overlay.addFeatures(values(layer_grid_features.latitude_circle));
+  layer_grid_overlay.addFeatures(values(layer_grid_features.meridians_labels));
+  layer_grid_overlay.addFeatures(values(layer_grid_features.latitude_labels));
+}
+
+function layer_grid_init() {
+  layer_grid_overlay=new OpenLayers.Layer.Vector(
+    lang("layer_grid:name"),
+    {
+      displayOutsideMaxExtent: false,
+      isBaseLayer: false,
+      transparent: true,
+      visibility: false,
+      weight: 0
+    });
+
+  overlays_register("layer_grid", layer_grid_overlay, { help: lang("layer_grid:help") });
 }
 
 register_hook("view_changed", layer_grid_view_changed);
+register_hook("init", layer_grid_init);
