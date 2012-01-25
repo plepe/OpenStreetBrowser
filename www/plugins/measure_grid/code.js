@@ -1,4 +1,4 @@
-var measure_features={ meridians: {}, latitude_circle: {}, meridians_labels: {} };
+var measure_features={ meridians: {}, latitude_circle: {}, meridians_labels: {}, latitude_labels: {} };
 var measure_cur_zoom=0;
 var measure_grid_major_style={ stroke: true, strokeColor: '#000000', strokeWidth: 2, strokeOpacity: 0.5 };
 var measure_grid_minor_style={ stroke: true, strokeColor: '#000000', strokeWidth: 1, strokeOpacity: 0.5 };
@@ -25,16 +25,100 @@ var measure_grid_zoom=[ // major_inc, inc, label precision
   [ 0.0025, 0.0005, 4 ] // 19
 ];
 var measure_grid_meridian_label_style={ labelAlign: 'ct', labelYOffset: -4, labelOutlineWidth: 1, labelOutlineColor: 'white' };
+var measure_grid_latitude_label_style={ labelAlign: 'rm', labelXOffset: -4, labelOutlineWidth: 1, labelOutlineColor: 'white' };
+
+function measure_grid_remove() {
+  vector_layer.removeFeatures(values(measure_features.meridians));
+  vector_layer.removeFeatures(values(measure_features.latitude_circle));
+  vector_layer.removeFeatures(values(measure_features.meridians_labels));
+  vector_layer.removeFeatures(values(measure_features.latitude_labels));
+  measure_features={ meridians: {}, latitude_circle: {}, meridians_labels: {}, latitude_labels: {} };
+}
+
+function measure_grid_show_latitude(i, vp, conf) {
+  var index=sprintf("%.5f", i);
+
+  var pos1 = new OpenLayers.LonLat(vp.left, i).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
+  var geo1 = new OpenLayers.Geometry.Point(pos1.lon, pos1.lat);
+  var pos2 = new OpenLayers.LonLat(vp.right, i).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
+  var geo2 = new OpenLayers.Geometry.Point(pos2.lon, pos2.lat);
+
+  // only move latitude line/label, then return
+  if(measure_features.latitude_circle[index]) {
+    var m=measure_features.latitude_circle[index];
+    m.geometry.components[0].move(-m.geometry.components[0].x+geo1.x, 0);
+    m.geometry.components[1].move(-m.geometry.components[1].x+geo2.x, 0);
+
+    if(measure_features.meridians_labels[index]) {
+      var m=measure_features.latitude_labels[index];
+      m.geometry.move(-m.geometry.x+geo2.x, 0);
+    }
+
+    return;
+  }
+
+  var geo=new OpenLayers.Geometry.LineString([ geo1, geo2 ]);
+
+  style=measure_grid_minor_style;
+  var is_major=i%conf[0]; // conf[0]: major_inc
+  if((Math.abs(is_major)<0.000001)||(Math.abs(major_inc-is_major)<0.000001)) {
+    style=measure_grid_major_style;
+
+    // label
+    var label_style=new clone(measure_grid_latitude_label_style);
+    label_style.label=sprintf("%."+conf[2]+"f°", i);
+    measure_features.latitude_labels[index]=
+      new OpenLayers.Feature.Vector(geo2, 0, label_style);
+  }
+
+  measure_features.latitude_circle[index]=new OpenLayers.Feature.Vector(geo, 0, style);
+}
+
+function measure_grid_show_meridian(i, vp, conf) {
+  var index=sprintf("%.5f", i);
+
+  var pos1 = new OpenLayers.LonLat(i, vp.bottom).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
+  var geo1 = new OpenLayers.Geometry.Point(pos1.lon, pos1.lat);
+  var pos2 = new OpenLayers.LonLat(i, vp.top).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
+  var geo2 = new OpenLayers.Geometry.Point(pos2.lon, pos2.lat);
+
+  // only move meridian line/label, then return
+  if(measure_features.meridians[index]) {
+    var m=measure_features.meridians[index];
+    m.geometry.components[0].move(0, -m.geometry.components[0].y+geo1.y);
+    m.geometry.components[1].move(0, -m.geometry.components[1].y+geo2.y);
+
+    if(measure_features.meridians_labels[index]) {
+      var m=measure_features.meridians_labels[index];
+      m.geometry.move(0, -m.geometry.y+geo2.y);
+    }
+
+    return;
+  }
+
+  var geo=new OpenLayers.Geometry.LineString([ geo1, geo2 ]);
+
+  style=measure_grid_minor_style;
+  var is_major=i%conf[0]; // conf[0]: major_inc
+  if((Math.abs(is_major)<0.000001)||(Math.abs(major_inc-is_major)<0.000001)) {
+    style=measure_grid_major_style;
+
+    // label
+    var label_style=new clone(measure_grid_meridian_label_style);
+    label_style.label=sprintf("%."+conf[2]+"f°", i);
+    measure_features.meridians_labels[index]=
+      new OpenLayers.Feature.Vector(geo2, 0, label_style);
+  }
+
+  measure_features.meridians[index]=new OpenLayers.Feature.Vector(geo, 0, style);
+}
 
 function measure_grid_view_changed() {
   var proj=new OpenLayers.Projection("EPSG:4326");
   var vp=map.getExtent().transform(map.getProjectionObject(), proj);
 
   if(measure_cur_zoom!=map.zoom) {
-    vector_layer.removeFeatures(values(measure_features.meridians));
-    vector_layer.removeFeatures(values(measure_features.latitude_circle));
-    vector_layer.removeFeatures(values(measure_features.meridians_labels));
-    measure_features={ meridians: {}, latitude_circle: {}, meridians_labels: {} };
+    measure_grid_remove();
     measure_cur_zoom=map.zoom;
   }
 
@@ -44,50 +128,33 @@ function measure_grid_view_changed() {
   inc=conf[1];
 
   // calculate position of first meridian
-  vp.left=(vp.left-vp.left%inc);
-  if(vp.left>=0)
-    vp.left+=inc;
+  var left=(vp.left-vp.left%inc);
+  if(left>=0)
+    left+=inc;
 
-  for(var i=vp.left; i<vp.right; i+=inc) {
-    var index=sprintf("%.5f", i);
+  for(var i=left; i<vp.right; i+=inc)
+    measure_grid_show_meridian(i, vp, conf);
 
-    var pos1 = new OpenLayers.LonLat(i, vp.bottom).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
-    var geo1 = new OpenLayers.Geometry.Point(pos1.lon, pos1.lat);
-    var pos2 = new OpenLayers.LonLat(i, vp.top).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
-    var geo2 = new OpenLayers.Geometry.Point(pos2.lon, pos2.lat);
+  // calculate position of inner-most circle of latitude
+  var inner;
+  if((vp.bottom<0)&&(vp.top>0))
+    inner=0;
+  else if(vp.top<=0)
+    inner=vp.top-vp.top%inc;
+  else
+    inner=vp.bottom-vp.bottom%inc;
 
-    if(measure_features.meridians[index]) {
-      var m=measure_features.meridians[index];
-      m.geometry.components[0].move(0, -m.geometry.components[0].y+geo1.y);
-      m.geometry.components[1].move(0, -m.geometry.components[1].y+geo2.y);
+  for(var i=inner; i<vp.top; i+=inc)
+    measure_grid_show_latitude(i, vp, conf);
 
-      if(measure_features.meridians_labels[index]) {
-	var m=measure_features.meridians_labels[index];
-	m.geometry.move(0, -m.geometry.y+geo2.y);
-      }
+  for(var i=inner; i>vp.bottom; i-=inc)
+    measure_grid_show_latitude(i, vp, conf);
 
-      continue;
-    }
-
-    var geo=new OpenLayers.Geometry.LineString([ geo1, geo2 ]);
-
-    style=measure_grid_minor_style;
-    var is_major=i%major_inc;
-    if((Math.abs(is_major)<0.000001)||(Math.abs(major_inc-is_major)<0.000001)) {
-      style=measure_grid_major_style;
-
-      // label
-      var label_style=new clone(measure_grid_meridian_label_style);
-      label_style.label=sprintf("%."+conf[2]+"f°", i);
-      measure_features.meridians_labels[index]=
-	new OpenLayers.Feature.Vector(geo2, 0, label_style);
-    }
-
-    measure_features.meridians[index]=new OpenLayers.Feature.Vector(geo, 0, style);
-  }
-
+  // add all features
   vector_layer.addFeatures(values(measure_features.meridians));
+  vector_layer.addFeatures(values(measure_features.latitude_circle));
   vector_layer.addFeatures(values(measure_features.meridians_labels));
+  vector_layer.addFeatures(values(measure_features.latitude_labels));
 }
 
 register_hook("view_changed", measure_grid_view_changed);
