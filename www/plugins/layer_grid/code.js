@@ -1,4 +1,5 @@
 var layer_grid_overlay;
+var layer_grid_activated=false;
 var layer_grid_features={ meridians: {}, latitude_circle: {}, meridians_labels: {}, latitude_labels: {} };
 var layer_grid_cur_zoom=0;
 var layer_grid_major_style={ stroke: true, strokeColor: '#000000', strokeWidth: 2, strokeOpacity: 0.5 };
@@ -125,6 +126,9 @@ function layer_grid_show_meridian(i, vp, conf) {
 }
 
 function layer_grid_view_changed() {
+  if(!layer_grid_overlay.visibility)
+    return;
+
   var proj=new OpenLayers.Projection("EPSG:4326");
   var vp=map.getExtent().transform(map.getProjectionObject(), proj);
 
@@ -168,6 +172,15 @@ function layer_grid_view_changed() {
   layer_grid_overlay.addFeatures(values(layer_grid_features.latitude_labels));
 }
 
+function layer_grid_activate() {
+  if(!layer_grid_activated) {
+    register_hook("view_changed", layer_grid_view_changed);
+    layer_grid_activated=true;
+  }
+
+  layer_grid_view_changed();
+}
+
 function layer_grid_init() {
   layer_grid_overlay=new OpenLayers.Layer.Vector(
     lang("layer_grid:name"),
@@ -178,9 +191,9 @@ function layer_grid_init() {
       visibility: false,
       weight: 0
     });
+  layer_grid_overlay.events.register("visibilitychanged", layer_grid_overlay, layer_grid_activate);
 
   overlays_register("layer_grid", layer_grid_overlay, { help: lang("layer_grid:help") });
 }
 
-register_hook("view_changed", layer_grid_view_changed);
 register_hook("init", layer_grid_init);
