@@ -94,7 +94,6 @@ $overlays_add=array(
 // units - format length and area values
 // measure - do some measurement on the map
 // measure_obj - do measurements on the current object
-// measure_grid - show a grid on the map for orientation
 // favorites - set favorites on the map
 // marker - set markers on the map
 // marker_list - Show list of visible markers as category
@@ -117,6 +116,7 @@ $overlays_add=array(
 // hill - Hill Shading on base of NASA SRTM
 // contour - Contour Shading (DE/AT/CH only)
 // overlays - Additional overlays
+// layer_grid - show a grid on the map for orientation
 // cloudmade_basemap - Add the default cloudmade basemap
 // tags_hide - Hide tags from display in info (calcualated tags)
 // tags_info - List all tags of an object in info
