@@ -1,8 +1,11 @@
 var overlays_layers={};
 
-function overlays_register(id, overlay) {
+function overlays_register(id, overlay, options) {
   overlays_layers[id]=overlay;
   overlay.id=id;
+  if(!options)
+    options={};
+  overlay.options=options;
 
   overlay.events.register("visibilitychanged", overlay, overlays_visibility_change);
 
