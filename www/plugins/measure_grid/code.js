@@ -24,8 +24,10 @@ var measure_grid_zoom=[ // major_inc, inc, label precision
   [ 0.005, 0.001, 3 ], // 18
   [ 0.0025, 0.0005, 4 ] // 19
 ];
-var measure_grid_meridian_label_style={ labelAlign: 'ct', labelYOffset: -4, labelOutlineWidth: 1, labelOutlineColor: 'white' };
-var measure_grid_latitude_label_style={ labelAlign: 'rm', labelXOffset: -4, labelOutlineWidth: 1, labelOutlineColor: 'white' };
+var measure_grid_meridian_major_label_style={ labelAlign: 'ct', labelYOffset: -4, labelOutlineWidth: 1, labelOutlineColor: 'white', externalGraphic: 'plugins/measure_grid/background.png', graphicHeight: 14, graphicWidth: 40, graphicYOffset: 1, graphicOpacity: 0.75, fontFamily: "Tahoma, Arial, Verdana", fontWeight: "bold", fontSize: "11px" };
+var measure_grid_latitude_major_label_style={ labelAlign: 'rm', labelXOffset: -4, labelOutlineWidth: 1, labelOutlineColor: 'white', externalGraphic: 'plugins/measure_grid/background.png', graphicHeight: 14, graphicWidth: 40, graphicXOffset: -41, graphicOpacity: 0.75, fontFamily: "Tahoma, Arial, Verdana", fontWeight: "bold", fontSize: "11px" };
+var measure_grid_meridian_minor_label_style={ labelAlign: 'ct', labelYOffset: -4, labelOutlineWidth: 1, labelOutlineColor: 'white', externalGraphic: 'plugins/measure_grid/background.png', graphicHeight: 14, graphicWidth: 40, graphicYOffset: 1, graphicOpacity: 0.6, fontFamily: "Tahoma, Arial, Verdana", fontWeight: "normal", fontSize: "11px" };
+var measure_grid_latitude_minor_label_style={ labelAlign: 'rm', labelXOffset: -4, labelOutlineWidth: 1, labelOutlineColor: 'white', externalGraphic: 'plugins/measure_grid/background.png', graphicHeight: 14, graphicWidth: 40, graphicXOffset: -41, graphicOpacity: 0.6, fontFamily: "Tahoma, Arial, Verdana", fontWeight: "normal", fontSize: "11px" };
 
 function measure_grid_remove() {
   vector_layer.removeFeatures(values(measure_features.meridians));
@@ -59,19 +61,23 @@ function measure_grid_show_latitude(i, vp, conf) {
 
   var geo=new OpenLayers.Geometry.LineString([ geo1, geo2 ]);
 
-  style=measure_grid_minor_style;
+  var style=measure_grid_minor_style;
+  var label_style=measure_grid_latitude_minor_label_style;
+
   var is_major=i%conf[0]; // conf[0]: major_inc
   if((Math.abs(is_major)<0.000001)||(Math.abs(major_inc-is_major)<0.000001)) {
     style=measure_grid_major_style;
-
-    // label
-    var label_style=new clone(measure_grid_latitude_label_style);
-    label_style.label=sprintf("%."+conf[2]+"f°", i);
-    measure_features.latitude_labels[index]=
-      new OpenLayers.Feature.Vector(geo2, 0, label_style);
+    label_style=measure_grid_latitude_major_label_style;
   }
 
+  // line
   measure_features.latitude_circle[index]=new OpenLayers.Feature.Vector(geo, 0, style);
+
+  // label
+  label_style=new clone(label_style);
+  label_style.label=sprintf("%."+conf[2]+"f°", i);
+  measure_features.latitude_labels[index]=
+    new OpenLayers.Feature.Vector(geo2, 0, label_style);
 }
 
 function measure_grid_show_meridian(i, vp, conf) {
@@ -98,19 +104,23 @@ function measure_grid_show_meridian(i, vp, conf) {
 
   var geo=new OpenLayers.Geometry.LineString([ geo1, geo2 ]);
 
-  style=measure_grid_minor_style;
+  var style=measure_grid_minor_style;
+  var label_style=measure_grid_meridian_minor_label_style;
+
   var is_major=i%conf[0]; // conf[0]: major_inc
   if((Math.abs(is_major)<0.000001)||(Math.abs(major_inc-is_major)<0.000001)) {
     style=measure_grid_major_style;
-
-    // label
-    var label_style=new clone(measure_grid_meridian_label_style);
-    label_style.label=sprintf("%."+conf[2]+"f°", i);
-    measure_features.meridians_labels[index]=
-      new OpenLayers.Feature.Vector(geo2, 0, label_style);
+    label_style=measure_grid_meridian_major_label_style;
   }
 
+  // line
   measure_features.meridians[index]=new OpenLayers.Feature.Vector(geo, 0, style);
+
+  // label
+  var label_style=new clone(label_style);
+  label_style.label=sprintf("%."+conf[2]+"f°", i);
+  measure_features.meridians_labels[index]=
+    new OpenLayers.Feature.Vector(geo2, 0, label_style);
 }
 
 function measure_grid_view_changed() {
