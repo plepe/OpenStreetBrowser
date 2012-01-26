@@ -46,6 +46,7 @@ function layer_grid_show_latitude(i, vp, conf) {
   var geo1 = new OpenLayers.Geometry.Point(pos1.lon, pos1.lat);
   var pos2 = new OpenLayers.LonLat(vp.right, i).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
   var geo2 = new OpenLayers.Geometry.Point(pos2.lon, pos2.lat);
+  var geop = new OpenLayers.Geometry.Point(pos2.lon-0.0001, pos2.lat);
 
   // only move latitude line/label, then return
   if(layer_grid_features.latitude_circle[index]) {
@@ -53,9 +54,9 @@ function layer_grid_show_latitude(i, vp, conf) {
     m.geometry.components[0].move(-m.geometry.components[0].x+geo1.x, 0);
     m.geometry.components[1].move(-m.geometry.components[1].x+geo2.x, 0);
 
-    if(layer_grid_features.meridians_labels[index]) {
+    if(layer_grid_features.latitude_labels[index]) {
       var m=layer_grid_features.latitude_labels[index];
-      m.geometry.move(-m.geometry.x+geo2.x, 0);
+      m.geometry.move(-m.geometry.x+geop.x, 0);
     }
 
     return;
@@ -79,7 +80,7 @@ function layer_grid_show_latitude(i, vp, conf) {
   label_style=new clone(label_style);
   label_style.label=sprintf("%."+conf[2]+"f°", i);
   layer_grid_features.latitude_labels[index]=
-    new OpenLayers.Feature.Vector(geo2, 0, label_style);
+    new OpenLayers.Feature.Vector(geop, 0, label_style);
 }
 
 function layer_grid_show_meridian(i, vp, conf) {
@@ -89,6 +90,7 @@ function layer_grid_show_meridian(i, vp, conf) {
   var geo1 = new OpenLayers.Geometry.Point(pos1.lon, pos1.lat);
   var pos2 = new OpenLayers.LonLat(i, vp.top).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
   var geo2 = new OpenLayers.Geometry.Point(pos2.lon, pos2.lat);
+  var geop = new OpenLayers.Geometry.Point(pos2.lon, pos2.lat-0.0001);
 
   // only move meridian line/label, then return
   if(layer_grid_features.meridians[index]) {
@@ -98,7 +100,7 @@ function layer_grid_show_meridian(i, vp, conf) {
 
     if(layer_grid_features.meridians_labels[index]) {
       var m=layer_grid_features.meridians_labels[index];
-      m.geometry.move(0, -m.geometry.y+geo2.y);
+      m.geometry.move(0, -m.geometry.y+geop.y);
     }
 
     return;
@@ -122,7 +124,7 @@ function layer_grid_show_meridian(i, vp, conf) {
   var label_style=new clone(label_style);
   label_style.label=sprintf("%."+conf[2]+"f°", i);
   layer_grid_features.meridians_labels[index]=
-    new OpenLayers.Feature.Vector(geo2, 0, label_style);
+    new OpenLayers.Feature.Vector(geop, 0, label_style);
 }
 
 function layer_grid_view_changed() {
@@ -144,8 +146,9 @@ function layer_grid_view_changed() {
 
   // calculate position of first meridian
   var left=(vp.left-vp.left%inc);
-  if(left>=0)
+  if(left>0)
     left+=inc;
+  console.log(left+" "+vp.left+" "+vp.right);
 
   for(var i=left; i<vp.right; i+=inc)
     layer_grid_show_meridian(i, vp, conf);
