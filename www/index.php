@@ -39,6 +39,7 @@ if(!isset($version_string)) {
 include "inc/global.php";
 call_hooks("init", $dummy);
 print_add_html_headers();
+call_hooks("html_head", $dummy);
 ?>
 <script type="text/javascript" src="index.js<?=$version_string?>"></script>
 <script type="text/javascript" src="ajax.js<?=$version_string?>"></script>
