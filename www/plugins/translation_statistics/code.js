@@ -1,6 +1,6 @@
 function translation_statistics() {
   this.win=new win({ title: lang("translation_statistics:name"), class: 'translation_statistics' });
-  ajax("translation_statistics", {}, this.load_callback.bind(this));
+  var req=ajax("translation_statistics", {}, this.load_callback.bind(this));
 
   this.table=dom_create_append(this.win.content, "table");
   var tr=dom_create_append(this.table, "tr");
@@ -28,6 +28,9 @@ function translation_statistics() {
 
   var th=dom_create_append(tr, "th");
   dom_create_append_text(th, lang("translation_statistics:total"));
+
+  this.indicator=ajax_indicator_dom(req)
+  this.win.content.appendChild(this.indicator);
 }
 
 translation_statistics.prototype.load_callback=function(data) {
@@ -84,6 +87,8 @@ translation_statistics.prototype.load_callback=function(data) {
 
     dom_create_append_text(th, sprintf("%d (%.0f%%)", sum, rate));
   }
+
+  this.win.content.removeChild(this.indicator);
 }
 
 function translation_statistics_win() {
