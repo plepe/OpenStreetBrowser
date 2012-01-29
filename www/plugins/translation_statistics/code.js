@@ -60,27 +60,27 @@ translation_statistics.prototype.load_callback=function(data) {
     var rate=data[i].lang_str_count/max_ui*100.0;
     sum+=data[i].lang_str_count;
     var th=dom_create_append(tr, "td");
-    th.className="rate_"+Math.floor(rate/15);
+    th.className="rate rate_"+Math.floor(rate/15);
 
     dom_create_append_text(th, sprintf("%d (%.0f%%)", data[i].lang_str_count, rate));
 
     var rate=data[i].tags_count/max_tags*100.0;
     sum+=data[i].tags_count;
     var th=dom_create_append(tr, "td");
-    th.className="rate_"+Math.floor(rate/15);
+    th.className="rate rate_"+Math.floor(rate/15);
 
     dom_create_append_text(th, sprintf("%d (%.0f%%)", data[i].tags_count, rate));
 
     var rate=data[i].category_count/max_category*100.0;
     sum+=data[i].category_count;
     var th=dom_create_append(tr, "td");
-    th.className="rate_"+Math.floor(rate/15);
+    th.className="rate rate_"+Math.floor(rate/15);
 
     dom_create_append_text(th, sprintf("%d (%.0f%%)", data[i].category_count, rate));
 
     var rate=sum/max_total*100.0;
     var th=dom_create_append(tr, "td");
-    th.className="rate_"+Math.floor(rate/15);
+    th.className="rate rate_"+Math.floor(rate/15);
 
     dom_create_append_text(th, sprintf("%d (%.0f%%)", sum, rate));
   }
