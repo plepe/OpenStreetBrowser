@@ -40,8 +40,11 @@ translation_statistics.prototype.load_callback=function(data) {
     var th=dom_create_append(tr, "td");
     dom_create_append_text(th, data[i].base_language);
 
+    var rate=data[i].lang_str_count/max_ui*100.0;
     var th=dom_create_append(tr, "td");
-    dom_create_append_text(th, sprintf("%d (%.0f%%)", data[i].lang_str_count, data[i].lang_str_count/max_ui*100.0));
+    th.className="rate_"+Math.floor(rate/15);
+
+    dom_create_append_text(th, sprintf("%d (%.0f%%)", data[i].lang_str_count, rate));
   }
 }
 
