@@ -36,6 +36,54 @@ function translation_statistics_load_lang($lang) {
   return $lang_str;
 }
 
+function translation_statistics_category_total() {
+  $list=array();
+
+  $sql_str="select category.* from category_current left join category on category_current.version=category.version";
+  $res=sql_query($sql_str);
+  while($elem=pg_fetch_assoc($res)) {
+    $tags=new tags(parse_hstore($elem['tags']));
+
+    $list["category:{$elem['category_id']}:name"]=true;
+    $list["category:{$elem['category_id']}:description"]=true;
+
+    $sql_str="select * from category_rule where version='{$elem['version']}'";
+    $res_r=sql_query($sql_str);
+    while($elem_r=pg_fetch_assoc($res_r)) {
+      $list["category:{$elem['category_id']}:{$elem_r['rule_id']}:name"]=true;
+    }
+  }
+
+  return $list;
+}
+
+function translation_statistics_category_lang($lang) {
+  $list=array();
+
+  $sql_str="select category.* from category_current left join category on category_current.version=category.version";
+  $res=sql_query($sql_str);
+  while($elem=pg_fetch_assoc($res)) {
+    $tags=new tags(parse_hstore($elem['tags']));
+    $cat_lang=coalesce($tags->get("lang"), "en");
+
+    if(($s=$tags->get("name:$lang"))||(($s=$tags->get("name"))&&$lang==$cat_lang))
+      $list["category:{$elem['category_id']}:name"]=$s;
+    if(($s=$tags->get("description:$lang"))||(($s=$tags->get("description"))&&$lang==$cat_lang))
+    $list["category:{$elem['category_id']}:description"]=$s;
+
+    $sql_str="select * from category_rule where version='{$elem['version']}'";
+    $res_r=sql_query($sql_str);
+    while($elem_r=pg_fetch_assoc($res_r)) {
+      $tags_r=new tags(parse_hstore($elem_r['tags']));
+
+      if(($s=$tags_r->get("name:$lang"))||(($s=$tags_r->get("name"))&&$lang==$cat_lang))
+	$list["category:{$elem['category_id']}:{$elem_r['rule_id']}:name"]=$s;
+    }
+  }
+
+  return $list;
+}
+
 function translation_statistics_lang($lang) {
   global $language_list;
   global $ui_lang;
@@ -51,6 +99,9 @@ function translation_statistics_lang($lang) {
   $lang_str=translation_statistics_load_tags($lang);
   $ret['tags_count']=sizeof($lang_str);
 
+  $lang_str=translation_statistics_category_lang($lang);
+  $ret['category_count']=sizeof($lang_str);
+
   return $ret;
 }
 
@@ -61,6 +112,7 @@ function ajax_translation_statistics() {
   $ret['total']=array(
     "lang_str_count"=>sizeof(translation_statistics_load_lang("en")),
     "tags_count"=>sizeof(translation_statistics_load_tags("en"))+sizeof(translation_statistics_load_tags_missing()),
+    "category_count"=>sizeof(translation_statistics_category_total()),
   );
 
   foreach($ui_langs as $lang) {

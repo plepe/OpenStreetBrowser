@@ -22,12 +22,16 @@ function translation_statistics() {
 
   var th=dom_create_append(tr, "th");
   dom_create_append_text(th, lang("translation_statistics:tags"));
+
+  var th=dom_create_append(tr, "th");
+  dom_create_append_text(th, lang("translation_statistics:category"));
 }
 
 translation_statistics.prototype.load_callback=function(data) {
   data=data.return_value;
   var max_ui=data.total.lang_str_count;
   var max_tags=data.total.tags_count;
+  var max_category=data.total.category_count;
 
   for(var i in data) {
     if(i=="total")
@@ -58,6 +62,12 @@ translation_statistics.prototype.load_callback=function(data) {
     th.className="rate_"+Math.floor(rate/15);
 
     dom_create_append_text(th, sprintf("%d (%.0f%%)", data[i].tags_count, rate));
+
+    var rate=data[i].category_count/max_category*100.0;
+    var th=dom_create_append(tr, "td");
+    th.className="rate_"+Math.floor(rate/15);
+
+    dom_create_append_text(th, sprintf("%d (%.0f%%)", data[i].category_count, rate));
   }
 }
 
