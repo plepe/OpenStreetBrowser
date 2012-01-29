@@ -19,13 +19,20 @@ function translation_statistics() {
 
   var th=dom_create_append(tr, "th");
   dom_create_append_text(th, lang("translation_statistics:ui"));
+
+  var th=dom_create_append(tr, "th");
+  dom_create_append_text(th, lang("translation_statistics:tags"));
 }
 
 translation_statistics.prototype.load_callback=function(data) {
   data=data.return_value;
-  var max_ui=data.en.lang_str_count;
+  var max_ui=data.total.lang_str_count;
+  var max_tags=data.total.tags_count;
 
   for(var i in data) {
+    if(i=="total")
+      continue;
+
     var tr=dom_create_append(this.table, "tr");
 
     var th=dom_create_append(tr, "td");
@@ -45,6 +52,12 @@ translation_statistics.prototype.load_callback=function(data) {
     th.className="rate_"+Math.floor(rate/15);
 
     dom_create_append_text(th, sprintf("%d (%.0f%%)", data[i].lang_str_count, rate));
+
+    var rate=data[i].tags_count/max_tags*100.0;
+    var th=dom_create_append(tr, "td");
+    th.className="rate_"+Math.floor(rate/15);
+
+    dom_create_append_text(th, sprintf("%d (%.0f%%)", data[i].tags_count, rate));
   }
 }
 
