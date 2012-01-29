@@ -1,5 +1,5 @@
 function translation_statistics() {
-  this.win=new win({ title: lang("translation_statistics:name") });
+  this.win=new win({ title: lang("translation_statistics:name"), class: 'translation_statistics' });
   ajax("translation_statistics", {}, this.load_callback.bind(this));
 
   this.table=dom_create_append(this.win.content, "table");

@@ -1,17 +1,31 @@
-.rate_0 {
+div.translation_statistics {
+  max-height: 400px;
+  overflow-y: auto;
+  min-width: 500px;
+}
+div.translation_statistics th {
+  font-size: 11px;
+  font-weight: bold;
+}
+div.translation_statistics .rate_0 {
   background: #ff0033;
+  white-space: nowrap;
 }
-.rate_1,
-.rate_2 {
+div.translation_statistics .rate_1,
+div.translation_statistics .rate_2 {
   background: #ff7700;
+  white-space: nowrap;
 }
-.rate_3 {
+div.translation_statistics .rate_3 {
   background: #ffcc00;
+  white-space: nowrap;
 }
-.rate_4 {
+div.translation_statistics .rate_4 {
   background: #77cc00;
+  white-space: nowrap;
 }
-.rate_5,
-.rate_6 {
+div.translation_statistics .rate_5,
+div.translation_statistics .rate_6 {
   background: #33cc00;
+  white-space: nowrap;
 }
