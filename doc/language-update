@@ -8,3 +8,7 @@ git log language-update..HEAD -p www/lang/*en.php www/plugins/*/lang_en.php
 # Import changes
 git merge language-update
 git branch -d language-update 
+
+# Check for new tags in non-English translations
+php www/plugins/translation/find_new_tags.php
+
