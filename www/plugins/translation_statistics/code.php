@@ -1,8 +1,9 @@
 <?
 function translation_statistics_load_tags_missing() {
+  global $translation_path;
   $list=array();
 
-  $f=fopen("lang/tags_en.php", "r");
+  $f=fopen("$translation_path/www/lang/tags_en.php", "r");
   while($r=fgets($f)) {
     if(preg_match("/^#\\\$lang_str\[\"([^\"]*)\"\]/", $r, $m)) {
       $list[]=$m[1];
@@ -14,23 +15,25 @@ function translation_statistics_load_tags_missing() {
 
 function translation_statistics_load_tags($lang) {
   global $plugins_list;
+  global $translation_path;
 
   $lang_str=array();
 
-  @include("lang/tags_{$lang}.php");
+  @include("$translation_path/www/lang/tags_{$lang}.php");
 
   return $lang_str;
 }
 
 function translation_statistics_load_lang($lang) {
   global $plugins_list;
+  global $translation_path;
 
   $lang_str=array();
 
-  @include("lang/{$lang}.php");
-  @include("lang/lang_{$lang}.php");
+  @include("$translation_path/www/lang/{$lang}.php");
+  @include("$translation_path/www/lang/lang_{$lang}.php");
   foreach($plugins_list as $plugin=>$dummy) {
-    @include("plugins/$plugin/lang_{$lang}.php");
+    @include("$translation_path/www/plugins/$plugin/lang_{$lang}.php");
   }
 
   return $lang_str;
@@ -108,6 +111,8 @@ function translation_statistics_lang($lang) {
 function ajax_translation_statistics() {
   global $ui_langs;
   $ret=array();
+
+  translation_init();
 
   $ret['total']=array(
     "lang_str_count"=>sizeof(translation_statistics_load_lang("en")),
