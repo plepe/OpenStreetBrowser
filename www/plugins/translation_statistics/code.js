@@ -47,6 +47,8 @@ translation_statistics.prototype.load_callback=function(data) {
     var sum=0;
 
     var tr=dom_create_append(this.table, "tr");
+    if(i==ui_lang)
+      tr.className="current";
 
     var th=dom_create_append(tr, "td");
     dom_create_append_text(th, data[i].name);
