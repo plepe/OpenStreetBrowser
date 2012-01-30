@@ -33,6 +33,7 @@ $lang_str["source"]="Orixe";
 $lang_str["unnamed"]="ensin nome";
 $lang_str["zoom"]="Nivel de zoom";
 $lang_str["no_message"]="dengún mensaxe";
+$lang_str["ad"]=array("Anunciu", "Anuncios");
 
 // Headings
 $lang_str["head:general_info"]="Información xeneral";
@@ -71,6 +72,7 @@ $lang_str["list_leisure_sport_tourism"]="Recréu, deporte y turismu";
 // Mapkey
 
 
+$lang_str["main:help"]="Ayuda";
 $lang_str["main:options"]="Opciones";
 $lang_str["main:about"]="Tocante a";
 $lang_str["main:donate"]="Donativos";
