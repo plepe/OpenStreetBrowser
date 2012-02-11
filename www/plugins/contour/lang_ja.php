@@ -1,2 +1,2 @@
 <?
-#$lang_str["contour:name"]="Contourshading";
+#$lang_str["contour:name"]="等高線間の陰影有無";
