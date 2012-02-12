@@ -144,7 +144,7 @@ $lang_str["tag:leisure=ice_rink"]="Kluziště";
 $lang_str["tag:leisure=miniature_golf"]="Minigolf";
 $lang_str["tag:leisure=swimming_pool"]="Bazén";
 $lang_str["tag:leisure=beach_resort"]="Plážový resort";
-#$lang_str["tag:leisure=bird_hide"]="Bird Hide";
+$lang_str["tag:leisure=bird_hide"]="Ptačí budka";
 $lang_str["tag:leisure=sport"]="Jiný sport";
 
 // man_made
@@ -280,6 +280,7 @@ $lang_str["tag:route=mtb"]="Horské kolo";
 
 // shop
 $lang_str["tag:shop"]="Obchod";
+$lang_str["tag:shop=chemist"]="Lékárna";
 
 // sport
 $lang_str["tag:sport"]="Sport";
@@ -315,7 +316,7 @@ $lang_str["tag:sport=orienteering"]="Orientační závod";
 #$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
 $lang_str["tag:sport=paragliding"]="Paragliding";
 $lang_str["tag:sport=pelota"]="Pelota";
-#$lang_str["tag:sport=racquet"]="Racquet";
+$lang_str["tag:sport=racquet"]="Raketové sporty";
 $lang_str["tag:sport=rowing"]="Veslování";
 $lang_str["tag:sport=rugby"]="Rugby";
 $lang_str["tag:sport=shooting"]="Střelba";
