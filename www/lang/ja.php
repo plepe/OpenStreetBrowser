@@ -118,11 +118,11 @@ $lang_str["error"]="エラー発生: ";
 $lang_str["error:not_logged_in"]="ログインしていません";
 
 $lang_str["category"]=array("カテゴリ", "カテゴリ");
-$lang_str["more_categories"]="これ以外のカテゴリ";
+$lang_str["more_categories"]="カテゴリを一覧から追加";
 $lang_str["category:status"]="ステータス";
 $lang_str["category:data_status"]="ステータス";
-$lang_str["category:old_version"]="このカテゴリの新しいバージョンが準備中です。";
-$lang_str["category:not_compiled"]="新しいカテゴリが準備中です。";
+$lang_str["category:old_version"]="このカテゴリの新しいバージョンを準備中です。";
+$lang_str["category:not_compiled"]="新しいカテゴリを準備中です。";
 
 $lang_str["category:new_rule"]="新しいルール";
 $lang_str["category_rule_tag:match"]="一致";
