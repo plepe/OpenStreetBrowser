@@ -1,3 +1,3 @@
 <?
-#$lang_str["editor:request_message"]="Please provide a description of your changes and press '%s' again";
-#$lang_str["editor:not_logged_in"]="You are not logged in. You cannot save your changes.";
+$lang_str["editor:request_message"]="変更内容の説明を書いてもう一度'%s' を押してください";
+$lang_str["editor:not_logged_in"]="あなたはログインしていません。変更は保存できません。";

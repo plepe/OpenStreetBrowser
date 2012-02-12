@@ -2,8 +2,8 @@
 // All tags should have a translation, with language strings like "tag:key" for the translation of the key and "tag:key=value" for the translation of the value. E.g. tag:amenity "Amenity;Amenities" resp. tag:amenity=bar "Bar;Bars". You can also define the Gender like "F;Bar;Bars".
 
 // *
-#$lang_str["tag:*=yes"]="yes";
-#$lang_str["tag:*=no"]="no";
+$lang_str["tag:*=yes"]="はい";
+$lang_str["tag:*=no"]="いいえ";
 
 // accomodation
 $lang_str["tag:accomodation"]="宿泊";
@@ -15,25 +15,25 @@ $lang_str["tag:address"]="住所";
 $lang_str["tag:addr:housenumber"]="家番号";
 
 // addr:housename
-#$lang_str["tag:addr:housename"]=array("House name", "House names");
+$lang_str["tag:addr:housename"]=array("建物名", "建物名");
 
 // addr:street
-#$lang_str["tag:addr:street"]=array("Street", "Streets");
+$lang_str["tag:addr:street"]=array("通り名", "通り名");
 
 // addr:postcode
-#$lang_str["tag:addr:postcode"]=array("Postal Code", "Postal Codes");
+$lang_str["tag:addr:postcode"]=array("郵便番号", "郵便番号");
 
 // addr:city
-#$lang_str["tag:addr:city"]=array("City", "Cities");
+$lang_str["tag:addr:city"]=array("都市", "都市");
 
 // addr:country
-#$lang_str["tag:addr:country"]=array("Country", "Countries");
+$lang_str["tag:addr:country"]=array("国", "国");
 
 // addr:full
-#$lang_str["tag:addr:full"]=array("Full address", "Full addresses");
+$lang_str["tag:addr:full"]=array("住所", "住所");
 
 // addr:interpolation
-#$lang_str["tag:addr:interpolation"]="Interpolated housenumbers";
+$lang_str["tag:addr:interpolation"]="補間済家番号";
 
 // aeroway
 $lang_str["tag:aeroway"]="航空";
@@ -53,7 +53,7 @@ $lang_str["tag:admin_level=10"]="町名・街区";
 $lang_str["tag:amenity"]="生活環境";
 $lang_str["tag:amenity=cinema"]=array("映画館", "映画館");
 $lang_str["tag:amenity=restaurant"]="レストラン";
-$lang_str["tag:amenity=pub"]=array("パブ", "パブ");
+$lang_str["tag:amenity=pub"]=array("居酒屋", "居酒屋");
 
 // barrier
 $lang_str["tag:barrier"]=array("バリア", "バリア");
@@ -70,7 +70,7 @@ $lang_str["tag:cables"]="ケーブル数";
 $lang_str["tag:description"]="説明";
 
 // fixme
-#$lang_str["tag:fixme"]="Fix me";
+$lang_str["tag:fixme"]="Fix me";
 
 // note
 $lang_str["tag:note"]="メモ";
@@ -107,25 +107,25 @@ $lang_str["tag:highway=track"]="未舗装路";
 $lang_str["tag:highway=steps"]="階段";
 
 // bridge
-#$lang_str["tag:bridge"]="Bridge";
+$lang_str["tag:bridge"]="橋";
 
 // tunnel
-#$lang_str["tag:tunnel"]="Tunnel";
+$lang_str["tag:tunnel"]="トンネル";
 
 // traffic_calming
-#$lang_str["tag:traffic_calming"]="Traffic calming";
+$lang_str["tag:traffic_calming"]="騒音低減装置";
 
 // service
-#$lang_str["tag:service"]="Service road attributes";
+$lang_str["tag:service"]="敷地内道路の属性";
 
 // postal_code
-#$lang_str["tag:postal_code"]="Postal Code";
+$lang_str["tag:postal_code"]="郵便番号";
 
 // is_in
 $lang_str["tag:is_in"]="Is in";
 
 // leisure
-#$lang_str["tag:leisure"]="Leisure";
+$lang_str["tag:leisure"]="レジャー";
 $lang_str["tag:leisure=sports_centre"]="スポーツセンター";
 $lang_str["tag:leisure=golf_course"]="ゴルフコース";
 $lang_str["tag:leisure=stadium"]="スタジアム";
@@ -154,7 +154,7 @@ $lang_str["tag:man_made=pipeline"]=array("パイプライン", "パイプライ�
 // type
 $lang_str["tag:type"]="種別";
 $lang_str["tag:type=gas"]="ガス";
-#$lang_str["tag:type=heat"]="Heat";
+$lang_str["tag:type=heat"]="熱";
 $lang_str["tag:type=hot_water"]="温水";
 $lang_str["tag:type=oil"]="石油";
 $lang_str["tag:type=sewage"]="汚水";
@@ -164,22 +164,22 @@ $lang_str["tag:type=water"]="水";
 $lang_str["tag:name"]=array("名前", "名前");
 
 // alt_name
-#$lang_str["tag:alt_name"]=array("Alternative name", "Alternative names");
+$lang_str["tag:alt_name"]=array("Alternative name", "別名");
 
 // official_name
-#$lang_str["tag:official_name"]=array("Official name", "Official names");
+$lang_str["tag:official_name"]=array("Official name", "公式名");
 
 // int_name
-#$lang_str["tag:int_name"]=array("International name", "International names");
+$lang_str["tag:int_name"]=array("International name", "国際的な名前");
 
 // loc_name
-#$lang_str["tag:loc_name"]=array("Local name", "Local names");
+$lang_str["tag:loc_name"]=array("Local name", "地域の呼び名");
 
 // old_name
 $lang_str["tag:old_name"]="旧名";
 
 // ref
-#$lang_str["tag:ref"]="Reference";
+$lang_str["tag:ref"]="参照番号";
 
 // network
 $lang_str["tag:network"]="ネットワーク";
@@ -205,8 +205,8 @@ $lang_str["tag:place=hamlet"]="小村(未使用)";
 $lang_str["tag:place=locality"]="地域の通称";
 $lang_str["tag:place=island"]="島";
 $lang_str["tag:place=islet"]=array("小島", "小島");
-#$lang_str["tag:place=ocean"]=array("Ocean", "Oceans");
-#$lang_str["tag:place=sea"]=array("Sea", "Seas");
+$lang_str["tag:place=ocean"]=array("大洋", "大洋");
+$lang_str["tag:place=sea"]=array("海", "海");
 
 // population
 $lang_str["tag:population"]="人口";
@@ -257,7 +257,7 @@ $lang_str["tag:religion=muslim"]="ムスリム";
 $lang_str["tag:religion=multifaith"]="多神教";
 
 // denomination
-#$lang_str["tag:denomination"]="Denomination";
+$lang_str["tag:denomination"]="宗派";
 
 // route
 $lang_str["tag:route"]="ルート";
@@ -348,206 +348,206 @@ $lang_str["tag:wires"]="ワイヤー数";
 $lang_str["tag:website"]="Webサイト";
 
 // cycleway
-#$lang_str["tag:cycleway"]="Cycleway";
+$lang_str["tag:cycleway"]="自転車道";
 
 // tracktype
-#$lang_str["tag:tracktype"]="Track type";
+$lang_str["tag:tracktype"]="トラックの種別";
 
 // waterway
-#$lang_str["tag:waterway"]="Waterway";
+$lang_str["tag:waterway"]="水路";
 
 // aerialway
-#$lang_str["tag:aerialway"]="Aerialway";
+$lang_str["tag:aerialway"]="空路";
 
 // public_transport
-#$lang_str["tag:public_transport"]="Public Transport";
+$lang_str["tag:public_transport"]="公共輸送機関";
 
 // office
-#$lang_str["tag:office"]="Office";
+$lang_str["tag:office"]="オフィス";
 
 // craft
-#$lang_str["tag:craft"]="Craft";
+$lang_str["tag:craft"]="クラフト";
 
 // emergency
-#$lang_str["tag:emergency"]="Emergency";
+$lang_str["tag:emergency"]="緊急設備";
 
 // tourism
-#$lang_str["tag:tourism"]="Tourism";
+$lang_str["tag:tourism"]="観光";
 
 // historic
-#$lang_str["tag:historic"]="Historic";
+$lang_str["tag:historic"]="歴史";
 
 // landuse
-#$lang_str["tag:landuse"]="Landuse";
+$lang_str["tag:landuse"]="土地利用";
 
 // wood
-#$lang_str["tag:wood"]="Type of wood";
+$lang_str["tag:wood"]="森林の種類";
 
 // military
-#$lang_str["tag:military"]="Military";
+$lang_str["tag:military"]="軍用施設";
 
 // natural
-#$lang_str["tag:natural"]="Natural";
+$lang_str["tag:natural"]="自然";
 
 // geological
-#$lang_str["tag:geological"]="Geological";
+$lang_str["tag:geological"]="地質学";
 
 // boundary
-#$lang_str["tag:boundary"]="Boundary";
+$lang_str["tag:boundary"]="境界";
 
 // abutters
-#$lang_str["tag:abutters"]="Abutters";
+$lang_str["tag:abutters"]="沿道";
 
 // lit
-#$lang_str["tag:lit"]="Street lighting";
+$lang_str["tag:lit"]="街灯";
 
 // area
-#$lang_str["tag:area"]="Area";
+$lang_str["tag:area"]="エリア";
 
 // crossing
-#$lang_str["tag:crossing"]="crossing";
+$lang_str["tag:crossing"]="横断歩道";
 
 // mountain_pass
-#$lang_str["tag:mountain_pass"]="Mountain Pass";
+$lang_str["tag:mountain_pass"]="峠";
 
 // cutting
-#$lang_str["tag:cutting"]="Cutting";
+$lang_str["tag:cutting"]="掘割";
 
 // embankment
-#$lang_str["tag:embankment"]="Embankment";
+$lang_str["tag:embankment"]="土手";
 
 // lanes
-#$lang_str["tag:lanes"]="Lanes";
+$lang_str["tag:lanes"]="レーン数";
 
 // layer
-#$lang_str["tag:layer"]="Layer";
+$lang_str["tag:layer"]="レイヤ";
 
 // surface
-#$lang_str["tag:surface"]="Surface";
+$lang_str["tag:surface"]="表面";
 
 // smoothness
-#$lang_str["tag:smoothness"]="Smoothness";
+$lang_str["tag:smoothness"]="スムーズさ";
 
 // ele
-#$lang_str["tag:ele"]="Elevation";
+$lang_str["tag:ele"]="高度";
 
 // width
-#$lang_str["tag:width"]="Width";
+$lang_str["tag:width"]="幅";
 
 // est_width
-#$lang_str["tag:est_width"]="Estimated width";
+$lang_str["tag:est_width"]="目測幅";
 
 // incline
-#$lang_str["tag:incline"]="incline";
+$lang_str["tag:incline"]="斜度";
 
 // start_date
-#$lang_str["tag:start_date"]="Date of creation";
+$lang_str["tag:start_date"]="作成日";
 
 // end_date
-#$lang_str["tag:end_date"]="Date of removal";
+$lang_str["tag:end_date"]="撤去日";
 
 // disused
-#$lang_str["tag:disused"]="Disused";
+$lang_str["tag:disused"]="休止";
 
 // wheelchair
-#$lang_str["tag:wheelchair"]="Wheelchair";
-#$lang_str["tag:wheelchair=limited"]="limited";
+$lang_str["tag:wheelchair"]="車椅子";
+$lang_str["tag:wheelchair=limited"]="一部制限";
 
 // tactile_paving
-#$lang_str["tag:tactile_paving"]="Tactile paving";
+$lang_str["tag:tactile_paving"]="点字ブロック";
 
 // narrow
-#$lang_str["tag:narrow"]="Narrow";
+$lang_str["tag:narrow"]="狭い";
 
 // covered
-#$lang_str["tag:covered"]="Covered";
+$lang_str["tag:covered"]="覆いあり";
 
 // ford
-#$lang_str["tag:ford"]="Ford";
+$lang_str["tag:ford"]="洗い越し";
 
 // access
-#$lang_str["tag:access"]="General access permission";
+$lang_str["tag:access"]="通行制限全般";
 
 // vehicle
-#$lang_str["tag:vehicle"]="Vehicle access permission";
+$lang_str["tag:vehicle"]="乗り物の通行制限";
 
 // bicycle
-#$lang_str["tag:bicycle"]="Bicycle access permission";
+$lang_str["tag:bicycle"]="自転車の通行制限";
 
 // foot
-#$lang_str["tag:foot"]="Foot access permission";
+$lang_str["tag:foot"]="歩行者の通行制限";
 
 // goods
-#$lang_str["tag:goods"]="LCV access permission";
+$lang_str["tag:goods"]="LCVの通行制限";
 
 // hgv
-#$lang_str["tag:hgv"]="HGV access permission";
+$lang_str["tag:hgv"]="HGVの通行制限";
 
 // horse
-#$lang_str["tag:horse"]="Horse riders access permission";
+$lang_str["tag:horse"]="乗馬の通行制限";
 
 // motorcycle
-#$lang_str["tag:motorcycle"]="Motorcycle access permission";
+$lang_str["tag:motorcycle"]="オートバイの通行制限";
 
 // motorcar
-#$lang_str["tag:motorcar"]="Motorcar access permission";
+$lang_str["tag:motorcar"]="自動車の通行制限";
 
 // psv
-#$lang_str["tag:psv"]="PSV access permission";
+$lang_str["tag:psv"]="PSVの通行制限";
 
 // oneway
-#$lang_str["tag:oneway"]="Oneway";
+$lang_str["tag:oneway"]="一方通行";
 
 // noexit
-#$lang_str["tag:noexit"]="Dead end road";
+$lang_str["tag:noexit"]="行き止まり";
 
 // maxweight
-#$lang_str["tag:maxweight"]="Max. weight";
+$lang_str["tag:maxweight"]="最大重量";
 
 // maxheight
-#$lang_str["tag:maxheight"]="Max. height";
+$lang_str["tag:maxheight"]="最大高";
 
 // maxlength
-#$lang_str["tag:maxlength"]="Max. length";
+$lang_str["tag:maxlength"]="最大長";
 
 // maxspeed
-#$lang_str["tag:maxspeed"]="Max. speed";
+$lang_str["tag:maxspeed"]="最高速度";
 
 // minspeed
-#$lang_str["tag:minspeed"]="Min. speed";
+$lang_str["tag:minspeed"]="最低速度";
 
 // traffic_sign
-#$lang_str["tag:traffic_sign"]="Traffic sign";
+$lang_str["tag:traffic_sign"]="交通標識";
 
 // toll
-#$lang_str["tag:toll"]="Toll";
+$lang_str["tag:toll"]="料金所";
 
 // charge
-#$lang_str["tag:charge"]="Charge";
+$lang_str["tag:charge"]="料金";
 
 // source
-#$lang_str["tag:source"]="Source";
+$lang_str["tag:source"]="ソース";
 
 // phone
-#$lang_str["tag:phone"]="Phone number";
+$lang_str["tag:phone"]="電話番号";
 
 // fax
-#$lang_str["tag:fax"]="Fax number";
+$lang_str["tag:fax"]="FAX番号";
 
 // email
-#$lang_str["tag:email"]="E-mail";
+$lang_str["tag:email"]="Eメールアドレス";
 
 // wikipedia
-#$lang_str["tag:wikipedia"]="Wikipedia";
+$lang_str["tag:wikipedia"]="Wikipedia";
 
 // created_by
-#$lang_str["tag:created_by"]="Created by";
+$lang_str["tag:created_by"]="作成者";
 
 // construction
-#$lang_str["tag:construction"]="Construction";
+$lang_str["tag:construction"]="建設中";
 
 // proposed
-#$lang_str["tag:proposed"]="Proposed";
+$lang_str["tag:proposed"]="提案中";
 
 // route_type
 $lang_str["tag:route_type"]="ルート種別";
