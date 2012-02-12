@@ -10,33 +10,33 @@ $lang_str["lang:current"]="日本語"; // The name of the current language in th
 $lang_str["general_info"]="全般的なお知らせ";
 $lang_str["yes"]="はい";
 $lang_str["no"]="いいえ";
-#$lang_str["ok"]="Ok";
+$lang_str["ok"]="Ok";
 $lang_str["save"]="保存";
-#$lang_str["saved"]="Saved"; // for dialog boxes confirming saving
+$lang_str["saved"]="保存済"; // for dialog boxes confirming saving
 $lang_str["cancel"]="キャンセル";
-#$lang_str["show"]="Show";
-#$lang_str["edit"]="Edit";
-#$lang_str["delete"]="Delete";
-#$lang_str["history"]="History";
-#$lang_str["choose"]="Choose";
-#$lang_str["help"]="Help";
-$lang_str["longitude"]=array("経度", "軽度");
+$lang_str["show"]="表示";
+$lang_str["edit"]="編集";
+$lang_str["delete"]="削除";
+$lang_str["history"]="履歴";
+$lang_str["choose"]="選択";
+$lang_str["help"]="ヘルプ";
+$lang_str["longitude"]=array("経度", "経度");
 $lang_str["latitude"]=array("緯度", "緯度");
 $lang_str["noname"]="(無名)";
 $lang_str["info_back"]="概要に戻る";
 $lang_str["info_zoom"]="ズーム";
 $lang_str["nothing_found"]="見つかりません";
-#$lang_str["list:zoom_for_obs"]="Zoom in for less important objects";
+$lang_str["list:zoom_for_obs"]="ズームインしてより重要性の低いオブジェクトを見る";
 $lang_str["loading"]="読み込み中";
 $lang_str["more"]="もっと";
-#$lang_str["source"]="Source";
-$lang_str["unnamed"]="名前なし";
+$lang_str["source"]="ソース";
+$lang_str["unnamed"]="nameなし";
 $lang_str["zoom"]="ズームレベル";
-#$lang_str["no_message"]=array("no message", "no messages");
-#$lang_str["ad"]=array("Advertisement", "Advertisements");
+$lang_str["no_message"]=array("メッセージなし", "メッセージなし");
+$lang_str["ad"]=array("Advertisement", "広告");
 
 // Headings
-$lang_str["head:general_info"]="全般的な情報";
+$lang_str["head:general_info"]="全般的なお知らせ";
 $lang_str["head:stops"]="Stops";
 $lang_str["head:routes"]="ルート";
 $lang_str["head:members"]="メンバー";
@@ -49,7 +49,7 @@ $lang_str["head:search"]="検索";
 $lang_str["head:actions"]="操作";
 $lang_str["head:location"]="位置";
 $lang_str["head:tags"]=array("タグ", "タグ");
-$lang_str["head:whats_here"]="ここは何?";
+$lang_str["head:whats_here"]="ここにあるものは?";
 
 $lang_str["action_browse"]="OSM で見る";
 $lang_str["action_edit"]="OSM で編集";
@@ -76,7 +76,7 @@ $lang_str["list_leisure_sport_tourism"]="レジャー、スポート＆観光";
 $lang_str["main:options"]="オプション設定";
 $lang_str["main:about"]="このサイトについて";
 $lang_str["main:donate"]="寄付";
-$lang_str["main:licence"]="マップデータ: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributors | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">投稿者</a>";
+$lang_str["main:licence"]="マップデータ: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> 投稿者 | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> 及び<a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">投稿者</a>";
 $lang_str["main:permalink"]="パーマリンク";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>オブジェクトがみつかりません</h1>ID \"%s\" のオブジェクトが見つかりません。次のいずれかの理由でしょう:<ul><li>IDが間違っている。</li><li>オブジェクトがまだサードパーティサイトに認識されておらず、OpenStreetBrowserでは(まだ)利用できない。</li><li>オブジェクトはサポート外のエリアにある。</li><li>リンクが古く、オブジェクトはOpenStreetMapから削除されている。</li></ul>";
@@ -92,7 +92,7 @@ $lang_str["help:language_support"]="このオプションであなたの言語�
 $lang_str["options:ui_lang"]="インターフェース表示";
 $lang_str["options:data_lang"]="データ表示";
 $lang_str["lang:"]="ブラウザの設定言語";
-#$lang_str["lang:auto"]="Same as interface language";
+$lang_str["lang:auto"]="UI言語と同じ";
 
 $lang_str["overlay:data"]="データ";
 $lang_str["overlay:draggable"]="マーカー";
@@ -113,23 +113,23 @@ $lang_str["user:login"]="ログイン";
 $lang_str["user:logged_in_as"]="ログイン中 ";
 $lang_str["user:logout"]="ログアウト";
 
-#$lang_str["attention"]="Attention: ";
+$lang_str["attention"]="注意: ";
 $lang_str["error"]="エラー発生: ";
 $lang_str["error:not_logged_in"]="ログインしていません";
 
-#$lang_str["category"]=array("Category", "Categories");
+$lang_str["category"]=array("カテゴリ", "カテゴリ");
 $lang_str["more_categories"]="これ以外のカテゴリ";
 $lang_str["category:status"]="ステータス";
 $lang_str["category:data_status"]="ステータス";
 $lang_str["category:old_version"]="このカテゴリの新しいバージョンが準備中です。";
 $lang_str["category:not_compiled"]="新しいカテゴリが準備中です。";
 
-#$lang_str["category:new_rule"]="New Rule";
+$lang_str["category:new_rule"]="新しいルール";
 $lang_str["category_rule_tag:match"]="一致";
 $lang_str["category_rule_tag:description"]="説明";
 $lang_str["category_chooser:choose"]="カテゴリを選択";
 $lang_str["category_chooser:new"]="新しいカテゴリ";
-#$lang_str["category:sub_category"]=array("Sub-category", "Sub-categories");
+$lang_str["category:sub_category"]=array("サブカテゴリ", "サブカテゴリ");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="標準 (Mapnik)";
