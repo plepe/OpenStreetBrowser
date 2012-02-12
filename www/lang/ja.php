@@ -81,7 +81,7 @@ $lang_str["main:permalink"]="パーマリンク";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>オブジェクトがみつかりません</h1>ID \"%s\" のオブジェクトが見つかりません。次のいずれかの理由でしょう:<ul><li>IDが間違っている。</li><li>オブジェクトがまだサードパーティサイトに認識されておらず、OpenStreetBrowserでは(まだ)利用できない。</li><li>オブジェクトはサポート外のエリアにある。</li><li>リンクが古く、オブジェクトはOpenStreetMapから削除されている。</li></ul>";
 
-$lang_str["options:autozoom"]="オートズームの挙動";
+$lang_str["options:autozoom"]="オートズームの動作";
 $lang_str["help:autozoom"]="オブジェクトを選択すると、ビューはそのオブジェクトにパンし、ズームレベルも切り替えられます。このオプションで異なるモード間を選択できます。";
 $lang_str["options:autozoom:pan"]="現在のオブジェクトにパン(精度優先)";
 $lang_str["options:autozoom:move"]="現在のオブジェクトに移動(速度優先)";
