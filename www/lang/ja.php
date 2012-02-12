@@ -26,7 +26,7 @@ $lang_str["noname"]="(無名)";
 $lang_str["info_back"]="概要に戻る";
 $lang_str["info_zoom"]="ズーム";
 $lang_str["nothing_found"]="見つかりません";
-$lang_str["list:zoom_for_obs"]="ズームインしてより重要性の低いオブジェクトを見る";
+$lang_str["list:zoom_for_obs"]="低レベルのオブジェクトはもっとズームインして探してください";
 $lang_str["loading"]="読み込み中";
 $lang_str["more"]="もっと";
 $lang_str["source"]="ソース";
@@ -82,14 +82,14 @@ $lang_str["main:permalink"]="パーマリンク";
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>オブジェクトがみつかりません</h1>ID \"%s\" のオブジェクトが見つかりません。次のいずれかの理由でしょう:<ul><li>IDが間違っている。</li><li>オブジェクトがまだサードパーティサイトに認識されておらず、OpenStreetBrowserでは(まだ)利用できない。</li><li>オブジェクトはサポート外のエリアにある。</li><li>リンクが古く、オブジェクトはOpenStreetMapから削除されている。</li></ul>";
 
 $lang_str["options:autozoom"]="オートズームの挙動";
-$lang_str["help:autozoom"]="オブジェクトを選択すると、閲覧ポートはそのオブジェクトにパンし、ズームレベルも切り替えられます。このオプションで異なるモード間を選択できます。";
+$lang_str["help:autozoom"]="オブジェクトを選択すると、ビューはそのオブジェクトにパンし、ズームレベルも切り替えられます。このオプションで異なるモード間を選択できます。";
 $lang_str["options:autozoom:pan"]="現在のオブジェクトにパン(精度優先)";
 $lang_str["options:autozoom:move"]="現在のオブジェクトに移動(速度優先)";
 $lang_str["options:autozoom:stay"]="自動的に視点の変更をしない";
 
 $lang_str["options:language_support"]="言語サポート";
 $lang_str["help:language_support"]="このオプションであなたの言語設定を選択できます。最初のオプションはユーザインタフェースの言語を変更します。２番目のオプションはデータの言語を切り替えます。多くの地物のデータはいくつかの言語に翻訳されています。翻訳が利用できなかったり \"Local language\" が選択されている場合は、オブジェクトのメイン言語が表示されます。";
-$lang_str["options:ui_lang"]="インターフェース表示";
+$lang_str["options:ui_lang"]="インタフェース表示";
 $lang_str["options:data_lang"]="データ表示";
 $lang_str["lang:"]="ブラウザの設定言語";
 $lang_str["lang:auto"]="UI言語と同じ";
