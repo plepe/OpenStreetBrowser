@@ -1,18 +1,18 @@
 <?
-#$lang_str["category_editor:editor"]="Editor";
-#$lang_str["category_editor:expand"]="expand";
-#$lang_str["category_editor:tags"]="Tags";
+$lang_str["category_editor:editor"]="エディタ";
+$lang_str["category_editor:expand"]="拡張";
+$lang_str["category_editor:tags"]="タグ";
 
-#$lang_str["category_editor:new"]="You are editing a new category. If you don't choose an id (identifier) or the chosen id is not available it will be assigned a random id.";
-#$lang_str["category_editor:not_newest"]="You are editing an old version of this category. When saving, a new category will be created. Most likely the id will not be available, therefore a different id will be assigned.";
-#$lang_str["category_editor:got_new_id"]="Category got a new ID '%s'";
+$lang_str["category_editor:new"]="あなたは新しいカテゴリを編集しています。ID(識別子)を選択しなかったり、選択したIDが利用できない場合はランダムなIDが割り当てられます。";
+$lang_str["category_editor:not_newest"]="あなたはこのカテゴリの旧バージョンを編集しています。保存すると、新しいカテゴリが作成されます。おそらくそのIDは利用できないので、違うIDが割り当てられます。";
+$lang_str["category_editor:got_new_id"]="カテゴリに新しいID '%s'が割り当てられました";
 
-#$lang_str["category_editor:new_rule"]="New Rule";
-#$lang_str["category_editor:remove_rule"]="Remove Rule";
-#$lang_str["category_editor:view_mode"]="View";
-#$lang_str["category_editor:view_mode:form"]="Form";
-#$lang_str["category_editor:view_mode:source"]="Source";
-#$lang_str["category_editor:new_rule_help"]="Add rules, to define which objects should appear in this category";
+$lang_str["category_editor:new_rule"]="新しいルール";
+$lang_str["category_editor:remove_rule"]="ルールを削除";
+$lang_str["category_editor:view_mode"]="閲覧";
+$lang_str["category_editor:view_mode:form"]="フォーム";
+$lang_str["category_editor:view_mode:source"]="ソース";
+$lang_str["category_editor:new_rule_help"]="ルールを追加して、このカテゴリにはどのオブジェクトが表示されるべきか定義してください";
 
-#$lang_str["category_editor:lock"]="Lock category for editing";
-#$lang_str["category_editor:locked"]="This category is locked for editing. If you save, a clone with a new ID will be created.";
+$lang_str["category_editor:lock"]="編集用にカテゴリをロック";
+$lang_str["category_editor:locked"]="このカテゴリは編集のためにロックされています。もしあなたが保存すると、新しいIDのクローンが作成されます。";
