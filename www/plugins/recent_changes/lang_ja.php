@@ -1,2 +1,2 @@
 <?
-#$lang_str["recent_changes:name"]="Recent Changes";
+$lang_str["recent_changes:name"]="直近の更新";
