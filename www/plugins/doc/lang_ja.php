@@ -1,2 +1,2 @@
 <?
-#$lang_str["head:doc"]="Documentation";
+$lang_str["head:doc"]="文書化";
