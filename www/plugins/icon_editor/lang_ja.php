@@ -1,3 +1,3 @@
 <?
-#$lang_str["icon_editor:title"]="Icon Editor";
-#$lang_str["icon_editor:upload"]="Upload Icon:";
+$lang_str["icon_editor:title"]="アイコンエディタ";
+$lang_str["icon_editor:upload"]="アイコンをアップロード:";

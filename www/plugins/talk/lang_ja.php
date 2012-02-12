@@ -1,3 +1,3 @@
 <?
-#$lang_str["talk:name"]="Talk Page";
-#$lang_str["talk:default"]="No text in this talk page. You can use this page to suggest and discuss improvements or to leave comments.";
+$lang_str["talk:name"]="議論のページ";
+$lang_str["talk:default"]="この議論のページにはテキストがありません。このページを使って改善の提案や議論をしたり、あるいはコメントを残すことができます。";

@@ -1,2 +1,2 @@
 <?
-#$lang_str["lang_chooser:name"]="Language Chooser";
+$lang_str["lang_chooser:name"]="言語選択";
