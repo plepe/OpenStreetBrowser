@@ -19,21 +19,21 @@ $lang_str["cancel"]="キャンセル";
 #$lang_str["delete"]="Delete";
 #$lang_str["history"]="History";
 #$lang_str["choose"]="Choose";
-#$lang_str["help"]="Help";
-$lang_str["longitude"]=array("経度", "軽度");
+$lang_str["help"]="ヘルプ";
+$lang_str["longitude"]=array("経度", "経度");
 $lang_str["latitude"]=array("緯度", "緯度");
-$lang_str["noname"]="(無名)";
+$lang_str["noname"]="(nameなし)";
 $lang_str["info_back"]="概要に戻る";
 $lang_str["info_zoom"]="ズーム";
 $lang_str["nothing_found"]="見つかりません";
 #$lang_str["list:zoom_for_obs"]="Zoom in for less important objects";
 $lang_str["loading"]="読み込み中";
 $lang_str["more"]="もっと";
-#$lang_str["source"]="Source";
-$lang_str["unnamed"]="名前なし";
+$lang_str["source"]="ソース";
+$lang_str["unnamed"]="nameなし";
 $lang_str["zoom"]="ズームレベル";
-#$lang_str["no_message"]=array("no message", "no messages");
-#$lang_str["ad"]=array("Advertisement", "Advertisements");
+$lang_str["no_message"]=array("メッセージなし", "メッセージなし");
+$lang_str["ad"]=array("広告", "広告");
 
 // Headings
 $lang_str["head:general_info"]="全般的な情報";
@@ -49,7 +49,7 @@ $lang_str["head:search"]="検索";
 $lang_str["head:actions"]="操作";
 $lang_str["head:location"]="位置";
 $lang_str["head:tags"]=array("タグ", "タグ");
-$lang_str["head:whats_here"]="ここは何?";
+$lang_str["head:whats_here"]="ここにあるものは?";
 
 $lang_str["action_browse"]="OSM で見る";
 $lang_str["action_edit"]="OSM で編集";
@@ -72,7 +72,7 @@ $lang_str["list_leisure_sport_tourism"]="レジャー、スポート＆観光";
 // Mapkey
 
 
-#$lang_str["main:help"]="Help";
+$lang_str["main:help"]="ヘルプ";
 $lang_str["main:options"]="オプション設定";
 $lang_str["main:about"]="このサイトについて";
 $lang_str["main:donate"]="寄付";
