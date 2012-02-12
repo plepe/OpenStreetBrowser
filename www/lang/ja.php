@@ -1,19 +1,9 @@
 <?
-// All untranslated strings have a # in front. When you translate a string
-// please remove this hash.
+// In this editor you can translate all strings. In the third column you can compare the strings to another language (set it in the select box on the bottom of the window). Please note that changes will not appear right away, they need to be imported by a developer.
+// Every language string can have a singular and plural variant by separating them by ";", e.g. "Restaurant;Restaurants". The first string is the singular form, the second the plural form.  Optionally you can define the Gender (F, M, N) for the word by prepending one of those characters, e.g. "N;Büro;Büros" (German for "office").
+// When translating a language variant (e.g. 'British English', code 'en-gb') please translate only strings which are different from the base language.
+#$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
 
-//  Every language string looks like this:
-//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
-//  the first entry is the translation of the language string in Singular,
-//  the second the Plural form.
-//
-//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
-//  German translation for office:
-//  $lang_str["office"]=array(N, "Büro", "Büros");
-//
-//  If a Singular/Plural form is not
-//  suitable/necessary you can ignore the array, e.g.
-//  $lang_str["help"]="Help";
 $lang_str["lang:current"]="日本語"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
 // General
@@ -22,17 +12,28 @@ $lang_str["yes"]="はい";
 $lang_str["no"]="いいえ";
 #$lang_str["ok"]="Ok";
 $lang_str["save"]="保存";
+#$lang_str["saved"]="Saved"; // for dialog boxes confirming saving
 $lang_str["cancel"]="キャンセル";
+#$lang_str["show"]="Show";
+#$lang_str["edit"]="Edit";
+#$lang_str["delete"]="Delete";
+#$lang_str["history"]="History";
+#$lang_str["choose"]="Choose";
+#$lang_str["help"]="Help";
 $lang_str["longitude"]=array("経度", "軽度");
 $lang_str["latitude"]=array("緯度", "緯度");
 $lang_str["noname"]="(無名)";
 $lang_str["info_back"]="概要に戻る";
 $lang_str["info_zoom"]="ズーム";
 $lang_str["nothing_found"]="見つかりません";
+#$lang_str["list:zoom_for_obs"]="Zoom in for less important objects";
 $lang_str["loading"]="読み込み中";
 $lang_str["more"]="もっと";
+#$lang_str["source"]="Source";
 $lang_str["unnamed"]="名前なし";
 $lang_str["zoom"]="ズームレベル";
+#$lang_str["no_message"]=array("no message", "no messages");
+#$lang_str["ad"]=array("Advertisement", "Advertisements");
 
 // Headings
 $lang_str["head:general_info"]="全般的な情報";
@@ -71,6 +72,7 @@ $lang_str["list_leisure_sport_tourism"]="レジャー、スポート＆観光";
 // Mapkey
 
 
+#$lang_str["main:help"]="Help";
 $lang_str["main:options"]="オプション設定";
 $lang_str["main:about"]="このサイトについて";
 $lang_str["main:donate"]="寄付";
@@ -90,6 +92,7 @@ $lang_str["help:language_support"]="このオプションであなたの言語�
 $lang_str["options:ui_lang"]="インターフェース表示";
 $lang_str["options:data_lang"]="データ表示";
 $lang_str["lang:"]="ブラウザの設定言語";
+#$lang_str["lang:auto"]="Same as interface language";
 
 $lang_str["overlay:data"]="データ";
 $lang_str["overlay:draggable"]="マーカー";
@@ -110,19 +113,23 @@ $lang_str["user:login"]="ログイン";
 $lang_str["user:logged_in_as"]="ログイン中 ";
 $lang_str["user:logout"]="ログアウト";
 
+#$lang_str["attention"]="Attention: ";
 $lang_str["error"]="エラー発生: ";
 $lang_str["error:not_logged_in"]="ログインしていません";
 
+#$lang_str["category"]=array("Category", "Categories");
 $lang_str["more_categories"]="これ以外のカテゴリ";
 $lang_str["category:status"]="ステータス";
 $lang_str["category:data_status"]="ステータス";
 $lang_str["category:old_version"]="このカテゴリの新しいバージョンが準備中です。";
 $lang_str["category:not_compiled"]="新しいカテゴリが準備中です。";
 
+#$lang_str["category:new_rule"]="New Rule";
 $lang_str["category_rule_tag:match"]="一致";
 $lang_str["category_rule_tag:description"]="説明";
 $lang_str["category_chooser:choose"]="カテゴリを選択";
 $lang_str["category_chooser:new"]="新しいカテゴリ";
+#$lang_str["category:sub_category"]=array("Sub-category", "Sub-categories");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="標準 (Mapnik)";
