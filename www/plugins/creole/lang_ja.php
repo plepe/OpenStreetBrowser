@@ -1,2 +1,2 @@
 <?
-#$lang_str["creole:advice"]="You can use <a href='javascript:doc_show(\"plugin:creole/feature\")'>WikiCreole</a> markup here.";
+$lang_str["creole:advice"]="こちらの<a href='javascript:doc_show(\"plugin:creole/feature\")'>WikiCreole</a> マークアップを利用できます。";
