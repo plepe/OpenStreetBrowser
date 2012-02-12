@@ -1,9 +1,9 @@
 <?
-#$lang_str["importance:name"]="Importance";
-#$lang_str["importance:global"]="global";
-#$lang_str["importance:international"]="international";
-#$lang_str["importance:national"]="national";
-#$lang_str["importance:regional"]="regional";
-#$lang_str["importance:urban"]="urban";
-#$lang_str["importance:suburban"]="suburban";
-#$lang_str["importance:local"]="local";
+$lang_str["importance:name"]="重要性";
+$lang_str["importance:global"]="全世界";
+$lang_str["importance:international"]="国際的";
+$lang_str["importance:national"]="国内";
+$lang_str["importance:regional"]="地域";
+$lang_str["importance:urban"]="都市";
+$lang_str["importance:suburban"]="都市周辺";
+$lang_str["importance:local"]="地方";
