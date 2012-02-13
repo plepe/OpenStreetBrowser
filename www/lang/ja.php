@@ -2,7 +2,7 @@
 // In this editor you can translate all strings. In the third column you can compare the strings to another language (set it in the select box on the bottom of the window). Please note that changes will not appear right away, they need to be imported by a developer.
 // Every language string can have a singular and plural variant by separating them by ";", e.g. "Restaurant;Restaurants". The first string is the singular form, the second the plural form.  Optionally you can define the Gender (F, M, N) for the word by prepending one of those characters, e.g. "N;Büro;Büros" (German for "office").
 // When translating a language variant (e.g. 'British English', code 'en-gb') please translate only strings which are different from the base language.
-#$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
+$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
 
 $lang_str["lang:current"]="日本語"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
@@ -22,7 +22,7 @@ $lang_str["choose"]="選択";
 $lang_str["help"]="ヘルプ";
 $lang_str["longitude"]=array("経度", "経度");
 $lang_str["latitude"]=array("緯度", "緯度");
-$lang_str["noname"]="(無名)";
+$lang_str["noname"]="(nameなし)";
 $lang_str["info_back"]="概要に戻る";
 $lang_str["info_zoom"]="ズーム";
 $lang_str["nothing_found"]="見つかりません";
@@ -33,7 +33,7 @@ $lang_str["source"]="ソース";
 $lang_str["unnamed"]="nameなし";
 $lang_str["zoom"]="ズームレベル";
 $lang_str["no_message"]=array("メッセージなし", "メッセージなし");
-$lang_str["ad"]=array("Advertisement", "広告");
+$lang_str["ad"]=array("広告", "広告");
 
 // Headings
 $lang_str["head:general_info"]="全般的なお知らせ";
@@ -72,7 +72,7 @@ $lang_str["list_leisure_sport_tourism"]="レジャー、スポート＆観光";
 // Mapkey
 
 
-#$lang_str["main:help"]="Help";
+$lang_str["main:help"]="ヘルプ";
 $lang_str["main:options"]="オプション設定";
 $lang_str["main:about"]="このサイトについて";
 $lang_str["main:donate"]="寄付";
