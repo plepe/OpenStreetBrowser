@@ -280,6 +280,7 @@ $lang_str["tag:route=mtb"]="マウンテンバイク";
 
 // shop
 $lang_str["tag:shop"]="店";
+$lang_str["tag:shop=chemist"]="薬品・化粧品店";
 
 // sport
 $lang_str["tag:sport"]="スポーツ";
