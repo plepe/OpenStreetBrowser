@@ -27,3 +27,6 @@ $lang_str["routing_time"]="Timp";
 $lang_str["main:help"]="Ajutor";
 $lang_str["head:whats_here"]="Ce se afla aici ?";
 $lang_str["delete"]="Sterge";
+$lang_str["head:routes"]="Rute";
+$lang_str["head:members"]="Membrii";
+$lang_str["head:address"]="Adresa";
