@@ -26,3 +26,4 @@ $lang_str["routing_type_bicycle"]="Bicicleta";
 $lang_str["routing_time"]="Timp";
 $lang_str["main:help"]="Ajutor";
 $lang_str["head:whats_here"]="Ce se afla aici ?";
+$lang_str["delete"]="Sterge";
