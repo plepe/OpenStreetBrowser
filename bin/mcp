@@ -1,6 +1,7 @@
 #!/usr/bin/php
 <?
-include "conf.php";
+include_once "inc/cli.php";
+include "$root_path/conf.php";
 include "inc/hooks.php";
 register_hook("debug", "mcp_debug");
 function mcp_debug($text, $category) {
