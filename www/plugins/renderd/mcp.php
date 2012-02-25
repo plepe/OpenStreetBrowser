@@ -1,4 +1,8 @@
 <?
+/*
+ * You can set $renderd_cmd in conf.php to point to alternative location
+ * Default: "renderd -f 2>&1"
+ */
 global $renderd_file_read;
 global $renderd_start_time;
 
@@ -31,6 +35,7 @@ function renderd_restart() {
   global $apache2_reload_cmd;
   global $root_path;
   global $renderd_start_time;
+  global $renderd_cmd;
 
   system("killall renderd");
   gen_renderd_conf();
@@ -40,7 +45,11 @@ function renderd_restart() {
   system($apache2_reload_cmd);
 
   $renderd_start_time=time();
-  $p=popen("software/mod_tile/renderd -f 2>&1", "r");
+
+  if(!$renderd_cmd)
+    $renderd_cmd="renderd";
+
+  $p=popen($renderd_cmd, "r");
 
   mcp_register_stream(MCP_READ, $p, "renderd_read");
 }
