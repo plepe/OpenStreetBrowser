@@ -23,8 +23,11 @@ function osm_update_status() {
 
   $state=osm_update_read_state();
 
-  if(!isset($state['timestamp']))
+  if(!isset($state['timestamp'])) {
+    global $osm_update_proc;
+    $osm_update_proc=1;
     return "update not correctly configured";
+  }
 
   $state_timestamp=new DateTime($state['timestamp']);
   $ret.="Timestamp: ".$state_timestamp->format("Y-m-d H:i:s");
@@ -82,6 +85,16 @@ function osm_update_start() {
   if($osm_update_last_start+30>time())
     return;
 
+  // it's disabled
+  if($osm_update_proc==1)
+    return;
+
+  debug(osm_update_status(), "osm_update");
+
+  // it's disabled
+  if($osm_update_proc==1)
+    return;
+
   if(!file_exists("$working_dir/state.txt")) {
     debug("ERROR: state_file does not exist. Please create the working directory data/updates/. See http://wiki.openstreetmap.org/wiki/Minutely_Mapnik for details.", "osm_update");
 
@@ -89,8 +102,6 @@ function osm_update_start() {
     $osm_update_proc=1;
     return;
   }
-
-  debug(osm_update_status(), "osm_update");
 
   $descriptors=array(
     0=>array("pipe", "r"),
