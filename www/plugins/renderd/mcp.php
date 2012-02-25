@@ -1,7 +1,7 @@
 <?
 /*
  * You can set $renderd_cmd in conf.php to point to alternative location
- * Default: "renderd -f 2>&1"
+ * Default: "renderd"
  *
  * You should set $renderd_tiles_path in conf.php
  *
@@ -172,7 +172,7 @@ function renderd_restart() {
   if(!$renderd_cmd)
     $renderd_cmd="renderd";
 
-  $renderd_file_read=popen($renderd_cmd, "r");
+  $renderd_file_read=popen("$renderd_cmd -f 2>&1", "r");
 
   mcp_register_stream(MCP_READ, $renderd_file_read, "renderd_read");
 
