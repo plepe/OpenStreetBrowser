@@ -11,8 +11,7 @@ function render_route_init($renderd) {
     mapnik_rotate_process("$prefix.mapnik");
   }
 
-  renderd_register(&$renderd, "render_route_overlay_pt", "$prefix.mapnik");
+  $renderd['overlay_pt']=array("file"=>"$prefix.mapnik");
 }
 
-register_hook("build_renderd", "render_route_init");
-
+register_hook("renderd_get_maps", "render_route_init");

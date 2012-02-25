@@ -10,7 +10,7 @@ function basemap_init($renderd) {
     cascadenik_compile("$prefix.mml", $path);
   }
 
-  renderd_register(&$renderd, "basemap_base", "$prefix.mapnik");
+  $renderd['basemap_base']=array("file"=>"$prefix.mapnik");
 }
 
-register_hook("build_renderd", "basemap_init");
+register_hook("renderd_get_maps", "basemap_init");

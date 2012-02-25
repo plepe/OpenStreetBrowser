@@ -4,18 +4,25 @@
  * Default: "renderd -f 2>&1"
  *
  * You should set $renderd_tiles_path in conf.php
+ *
+ * Hooks:
+ * renderd_get_maps(list)
+ * -> add entries to the list:
+ *    "id"=>array("file"=>"/path/to/file.mapnik")
  */
 global $renderd_file_read;
 global $renderd_start_time;
 global $renderd_current;
 $renderd_current=array();
 
-function renderd_register(&$renderd, $id, $file) {
-  $renderd.="[$id]\n";
-  $renderd.="URI=/tiles/$id/\n";
-  $renderd.="XML=$file\n";
-  $renderd.="HOST=dummy.host\n";
-  $renderd.="\n";
+function renderd_print_entry($id, $entry) {
+  $ret ="[{$id}]\n";
+  $ret.="URI=/tiles/{$id}/\n";
+  $ret.="XML={$entry['file']}\n";
+  $ret.="HOST=dummy.host\n";
+  $ret.="\n";
+
+  return $ret;
 }
 
 function renderd_gen_conf() {
@@ -67,9 +74,12 @@ function renderd_gen_conf() {
     }
   }
   
-  $renderd="";
-  call_hooks("build_renderd", &$renderd);
-  fwrite($conf, $renderd);
+  $renderd=array();
+  call_hooks("renderd_get_maps", &$renderd);
+
+  foreach($renderd as $id=>$entry) {
+    fwrite($conf, renderd_print_entry($id, $entry));
+  }
 
   // generate dummy entry in renderd.conf to avoid renderd-bug
   global $data_path;
