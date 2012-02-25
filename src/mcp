@@ -29,21 +29,14 @@ include "inc/data_dir.php";
 include "gen_renderd_conf.php";
 $plugins[]="icon";
 plugins_init("mcp");
+debug("* MCP all plugins loaded, initializing", "mcp");
+
+define("MCP_READ",   0);
+define("MCP_WRITE",  1);
+define("MCP_EXCEPT", 2);
+$streams=array(MCP_READ=>array(), MCP_WRITE=>array(), MCP_EXCEPT=>array());
+$streams_callback=array(MCP_READ=>array(), MCP_WRITE=>array(), MCP_EXCEPT=>array());
 call_hooks("mcp_start");
-
-function restart_renderd() {
-  global $apache2_reload_cmd;
-  global $root_path;
-
-  system("killall renderd");
-  gen_renderd_conf();
-  chdir($root_path);
-  if(!$apache2_reload_cmd)
-    $apache2_reload_cmd="sudo /etc/init.d/apache2 reload";
-  system($apache2_reload_cmd);
-  system("software/mod_tile/renderd");
-}
-register_hook("postgresql_restart_done", "restart_renderd");
 
 function compile($cat_id) {
   $x=new category($cat_id);
@@ -51,12 +44,13 @@ function compile($cat_id) {
   restart_renderd();
 }
 
-function mcp_process($todo) {
+function mcp_process($fifo) {
+  $todo=trim(fgets($fifo));
   $todo=explode(" ", $todo);
 
   switch($todo[0]) {
     case "restart":
-      restart_renderd();
+      call_hooks("mcp_restart");
       break;
     case "compile":
       compile($todo[1]);
@@ -73,14 +67,26 @@ function mcp_sig_handler($signo) {
   global $fifo_path;
 
   switch($signo) {
+    case SIGUSR1:
+      call_hooks("mcp_sigusr1");
+      break;
+    case SIGUSR2:
+      call_hooks("mcp_sigusr2");
+      break;
     case SIGTERM:
     case SIGINT:
-      print "exiting\n";
+      debug("* MCP got termination signal, stopping", "mcp");
+      call_hooks("mcp_stop");
       fclose($fifo);
       unlink($fifo_path);
       exit;
   }
 }
+
+pcntl_signal(SIGTERM, "mcp_sig_handler");
+pcntl_signal(SIGINT,  "mcp_sig_handler");
+pcntl_signal(SIGUSR1, "mcp_sig_handler");
+pcntl_signal(SIGUSR2, "mcp_sig_handler");
 
 umask(0);
 posix_mkfifo($fifo_path, 0666);
@@ -90,11 +96,48 @@ $tmp_dir="$root_path/tmp/".Date("Ymd-Hi");
 print "Creating temporary directory $tmp_dir\n";
 mkdir($tmp_dir);
 
-pcntl_signal(SIGTERM, "mcp_sig_handler");
-pcntl_signal(SIGINT,  "mcp_sig_handler");
-
-restart_renderd();
 $mcp_next_clean_up=time()+15*60;
+debug("* MCP up and running", "mcp");
+
+// Example:
+// $p=fopen("/dev/zero", "r");
+// mcp_register_stream(MCP_READ, $p, "test");
+// Function "test" will be called everytime data is available on /dev/zero
+// Function "test" will be passed the current $stream
+function mcp_register_stream($type, $stream, $callback) {
+  global $streams;
+  global $streams_callback;
+
+  if(($type<0)||($type>2)) {
+    debug("mcp_register_stream: invalid type $type", "mcp");
+    return;
+  }
+
+  $streams[$type][]=$stream;
+  $streams_callback[$type][]=array($stream, $callback);
+}
+
+function mcp_unregister_stream($type, $stream) {
+  global $streams;
+  global $streams_callback;
+
+  if(($type<0)||($type>2)) {
+    debug("mcp_unregister_stream: invalid type $type", "mcp");
+    return;
+  }
+
+  $pos=array_search($stream, $streams[$type]);
+  if($pos===false) {
+    debug("mcp_unregister_stream: could not find stream '$stream'", "mcp");
+    return;
+  }
+
+  unset($streams[$type][$pos]);
+  unset($streams_callback[$type][$pos]);
+  debug("mcp_unregister_stream: unregistered $type:$pos", "mcp");
+}
+
+mcp_register_stream(MCP_READ, $fifo, "mcp_process");
 
 while(1) {
   call_hooks("mcp_tick", null);
@@ -106,15 +149,16 @@ while(1) {
       call_hooks("mcp_clean_up_master", null);
   }
 
-  $stream_read=array($fifo);
-  $stream_write=array();
-  $stream_except=array();
-  stream_select($stream_read, $stream_write, $stream_except, 10);
+  unset($_streams);
+  array_deep_copy($streams, $_streams);
+  stream_select(&$_streams[MCP_READ], &$_streams[MCP_WRITE], &$_streams[MCP_EXCEPT], 10);
 
-  foreach($stream_read as $str) {
-    if($str==$fifo) {
-      $todo=trim(fgets($fifo));
-      mcp_process($todo);
+  foreach($_streams as $type=>$type_streams) {
+    foreach($type_streams as $str) {
+      if(($pos=array_search($str, $streams[$type]))!==false) {
+        $fun=$streams_callback[$type][$pos][1];
+        $fun($str);
+      }
     }
   }
 }

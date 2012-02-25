@@ -175,3 +175,4 @@ $overlays_add=array(
 // layer_toolbox - Add a toolbox for choosing background layer and overlays
 // keyshort - Keyboard shortcuts
 // keyshort_map - Keyboard shortcuts for the map
+// renderd - Start a renderd in the background
