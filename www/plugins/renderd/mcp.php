@@ -94,14 +94,15 @@ function renderd_gen_conf() {
 function renderd_tiles_done($m) {
   global $renderd_tiles_path;
   global $renderd_current;
+  global $db_central;
 
-  $res=sql_query("select * from renderd_tiles where host='$renderd_tiles_path' and map='$m[1]' and zoom='$m[2]' and x_min='$m[3]' and y_min='$m[5]'");
+  $res=sql_query("select * from renderd_tiles where host='$renderd_tiles_path' and map='$m[1]' and zoom='$m[2]' and x_min='$m[3]' and y_min='$m[5]'", $db_central);
   $elem=pg_fetch_assoc($res);
   if($elem) {
     sql_query("update renderd_tiles set previous=array_append(previous, date), date=now() where host='$renderd_tiles_path' and map='$m[1]' and zoom='$m[2]' and x_min='$m[3]' and y_min='$m[5]'");
   }
   else {
-    sql_query("insert into renderd_tiles values ('$renderd_tiles_path', '$m[1]', '$m[2]', $m[3], $m[4], $m[5], $m[6], $m[7], now())");
+    sql_query("insert into renderd_tiles values ('$renderd_tiles_path', '$m[1]', '$m[2]', $m[3], $m[4], $m[5], $m[6], $m[7], now())", $db_central);
   }
 
   unset($renderd_current["$m[1]-$m[2]-$m[3]-$m[4]-$m[5]-$m[6]"]);
