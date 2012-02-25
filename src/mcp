@@ -137,7 +137,14 @@ function mcp_unregister_stream($type, $stream) {
   debug("mcp_unregister_stream: unregistered $type:$pos", "mcp");
 }
 
+function mcp_command($p) {
+  $str=trim(fgets($p));
+
+  call_hooks("mcp_command", $str);
+}
+
 mcp_register_stream(MCP_READ, $fifo, "mcp_process");
+mcp_register_stream(MCP_READ, STDIN, "mcp_command");
 
 while(1) {
   call_hooks("mcp_tick", null);
