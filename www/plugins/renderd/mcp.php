@@ -21,10 +21,11 @@ function renderd_update_list($m) {
   }
 }
 
-function renderd_read($p) {
+function renderd_read() {
   global $renderd_start_time;
+  global $renderd_file_read;
 
-  if($f=fgets($p)) {
+  if($f=fgets($renderd_file_read)) {
     $f=trim($f);
     debug($f, "renderd");
 
@@ -38,15 +39,17 @@ function renderd_read($p) {
     debug(sprintf("renderd aborted after %ds", $duration), "renderd");
 
     // unregister stream from select
-    mcp_unregister_stream(MCP_READ, $p);
-    pclose($p);
+    mcp_unregister_stream(MCP_READ, $renderd_file_read);
+    pclose($renderd_file_read);
 
     // if renderd is not working properly (quit after less than a minute) don't
     // restart but write debug message instead
     if($duration>60)
       renderd_restart();
-    else
+    else {
       debug("not restarting renderd - respawning too fast", "renderd");
+      $renderd_file_read=null;
+    }
   }
 }
 
@@ -55,6 +58,7 @@ function renderd_restart() {
   global $root_path;
   global $renderd_start_time;
   global $renderd_cmd;
+  global $renderd_file_read;
 
   system("killall renderd");
   gen_renderd_conf();
@@ -68,9 +72,9 @@ function renderd_restart() {
   if(!$renderd_cmd)
     $renderd_cmd="renderd";
 
-  $p=popen($renderd_cmd, "r");
+  $renderd_file_read=popen($renderd_cmd, "r");
 
-  mcp_register_stream(MCP_READ, $p, "renderd_read");
+  mcp_register_stream(MCP_READ, $renderd_file_read, "renderd_read");
 }
 
 function renderd_mcp_start() {
@@ -82,6 +86,17 @@ function renderd_mcp_start() {
   renderd_restart();
 }
 
+function renderd_command($str){
+  global $renderd_file_read;
+
+  if($str=="status") {
+    print "renderd: ";
+    print ($renderd_file_read?"active":"inactive");
+    print "\n";
+  }
+}
+
 register_hook("mcp_start", "renderd_mcp_start");
 register_hook("mcp_restart", "renderd_mcp_start");
+register_hook("mcp_command", "renderd_command");
 register_hook("postgresql_restart_done", "renderd_restart");
