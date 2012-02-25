@@ -18,6 +18,29 @@ function osm_update_read_state() {
   return $state;
 }
 
+function osm_update_status() {
+  $ret="";
+
+  $state=osm_update_read_state();
+
+  if(!isset($state['timestamp']))
+    return "update not correctly configured";
+
+  $state_timestamp=new DateTime($state['timestamp']);
+  $ret.="Timestamp: ".$state_timestamp->format("Y-m-d H:i:s");
+
+  $ret.=", ";
+
+  $state_now=new DateTime("now");
+  $d=$state_timestamp->diff($state_now);
+  if($d->days>0)
+    $ret.=$d->format("Back: %ad, %h:%I");
+  else
+    $ret.=$d->format("Back: %h:%I");
+
+  return $ret;
+}
+
 function osm_update_read_stdout($p) {
   global $osm_update_proc;
   global $osm_update_last_start;
@@ -67,16 +90,7 @@ function osm_update_start() {
     return;
   }
 
-  $state=osm_update_read_state();
-
-  $state_timestamp=new DateTime($state['timestamp']);
-  debug("Timestamp: ".$state_timestamp->format("Y-m-d H:i:s"), "osm_update");
-  $state_now=new DateTime("now");
-  $d=$state_timestamp->diff($state_now);
-  if($d->days>0)
-    debug($d->format("Back: %ad, %h:%I\n"), "osm_update");
-  else
-    debug($d->format("Back: %h:%I\n"), "osm_update");
+  debug(osm_update_status(), "osm_update");
 
   $descriptors=array(
     0=>array("pipe", "r"),
@@ -104,6 +118,23 @@ function osm_update_tick() {
   }
 }
 
+function osm_update_command($str) {
+  global $osm_update_proc;
+
+  if($str=="status") {
+    print "osm_update: ";
+    if($osm_update_proc==1)
+      print "disabled\n";
+    elseif($osm_update_proc)
+      print "active";
+    else
+      print "resting";
+
+    print "\n  ".osm_update_status()."\n";
+  }
+}
+
+register_hook("mcp_command", "osm_update_command");
 register_hook("mcp_tick", "osm_update_tick");
 
 // THIS IS MISSING
