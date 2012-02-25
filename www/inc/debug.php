@@ -1,7 +1,7 @@
 <?
 unset($debug_list);
 
-function debug($text, $category) {
+function debug($text, $category="unknown") {
   global $debug_list;
 
   $debug_list[]=array(time(), $category, $text);
