@@ -170,6 +170,7 @@ $overlays_add=array(
 // icon_editor - Upload icons
 // postgresql_restart - Try to restart PostgreSQL after connection failure
 // osm_shapefiles - Include the OSM Shapefiles (needed for basemap)
+// osm_update - Import updates from OSM
 // tip_of_the_day - Tip of the day
 // right_bar - Show a bar to the right with donation, twitter, ...
 // layer_toolbox - Add a toolbox for choosing background layer and overlays
