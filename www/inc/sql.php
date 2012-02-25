@@ -60,7 +60,7 @@ function sql_query($qry, &$conn=0) {
 
   // Do we want debug information?
   if(isset($conn['debug'])&&($conn['debug']))
-    debug("CONN {$conn['title']}: ".$qry);
+    debug("CONN {$conn['title']}: ".$qry, "sql");
 
   // Query
   $res=pg_query($conn['connection'], $qry);
