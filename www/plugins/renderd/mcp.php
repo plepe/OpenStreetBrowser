@@ -7,9 +7,12 @@
  */
 global $renderd_file_read;
 global $renderd_start_time;
+global $renderd_current;
+$renderd_current=array();
 
-function renderd_update_list($m) {
+function renderd_tiles_done($m) {
   global $renderd_tiles_path;
+  global $renderd_current;
 
   $res=sql_query("select * from renderd_tiles where host='$renderd_tiles_path' and map='$m[1]' and zoom='$m[2]' and x_min='$m[3]' and y_min='$m[5]'");
   $elem=pg_fetch_assoc($res);
@@ -19,18 +22,31 @@ function renderd_update_list($m) {
   else {
     sql_query("insert into renderd_tiles values ('$renderd_tiles_path', '$m[1]', '$m[2]', $m[3], $m[4], $m[5], $m[6], $m[7], now())");
   }
+
+  unset($renderd_current["$m[1]-$m[2]-$m[3]-$m[4]-$m[5]-$m[6]"]);
+}
+
+function renderd_tiles_start($m) {
+  global $renderd_current;
+
+  $m[]=date("Y-m-d h:i:s");
+  $renderd_current["$m[1]-$m[2]-$m[3]-$m[4]-$m[5]-$m[6]"]=$m;
 }
 
 function renderd_read() {
   global $renderd_start_time;
   global $renderd_file_read;
+  global $renderd_current;
 
   if($f=fgets($renderd_file_read)) {
     $f=trim($f);
     debug($f, "renderd");
 
     if(preg_match("/DONE TILE ([A-Za-z0-9_]+) ([0-9]+) ([0-9]+)\-([0-9]+) ([0-9]+)\-([0-9]+) in ([0-9\.]+) seconds/", $f, $m)) {
-      renderd_update_list($m);
+      renderd_tiles_done($m);
+    }
+    elseif(preg_match("/START TILE ([A-Za-z0-9_]+) ([0-9]+) ([0-9]+)\-([0-9]+) ([0-9]+)\-([0-9]+)/", $f, $m)) {
+      renderd_tiles_start($m);
     }
   }
   else {
@@ -41,6 +57,7 @@ function renderd_read() {
     // unregister stream from select
     mcp_unregister_stream(MCP_READ, $renderd_file_read);
     pclose($renderd_file_read);
+    $renderd_current=array();
 
     // if renderd is not working properly (quit after less than a minute) don't
     // restart but write debug message instead
@@ -59,6 +76,7 @@ function renderd_restart() {
   global $renderd_start_time;
   global $renderd_cmd;
   global $renderd_file_read;
+  global $renderd_current;
 
   system("killall renderd");
   gen_renderd_conf();
@@ -75,6 +93,8 @@ function renderd_restart() {
   $renderd_file_read=popen($renderd_cmd, "r");
 
   mcp_register_stream(MCP_READ, $renderd_file_read, "renderd_read");
+
+  global $renderd_current;
 }
 
 function renderd_mcp_start() {
@@ -88,11 +108,16 @@ function renderd_mcp_start() {
 
 function renderd_command($str){
   global $renderd_file_read;
+  global $renderd_current;
 
   if($str=="status") {
     print "renderd: ";
     print ($renderd_file_read?"active":"inactive");
     print "\n";
+
+    foreach($renderd_current as $m) {
+      print "  $m[1] $m[2] $m[3]-$m[4] $m[5]-$m[6] @ $m[7]\n";
+    }
   }
 }
 
