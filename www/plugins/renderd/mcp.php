@@ -1,4 +1,19 @@
 <?
+global $renderd_file_read;
+
+function renderd_read($p) {
+
+  if($f=fgets($p)) {
+    $f=trim($f);
+    debug($f, "renderd");
+  }
+  else {
+    debug("renderd aborted", "renderd");
+    mcp_unregister_stream(MCP_READ, $p);
+    pclose($p);
+  }
+}
+
 function renderd_restart() {
   global $apache2_reload_cmd;
   global $root_path;
@@ -9,7 +24,10 @@ function renderd_restart() {
   if(!$apache2_reload_cmd)
     $apache2_reload_cmd="sudo /etc/init.d/apache2 reload";
   system($apache2_reload_cmd);
-  system("software/mod_tile/renderd");
+
+  $p=popen("software/mod_tile/renderd -f 2>&1", "r");
+
+  mcp_register_stream(MCP_READ, $p, "renderd_read");
 }
 
 function renderd_mcp_start() {
