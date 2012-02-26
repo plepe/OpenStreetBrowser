@@ -7,7 +7,7 @@ register_hook("debug", "mcp_debug");
 function mcp_debug($text, $category) {
   global $debug_list;
 
-  print Date("Y-m-d H:i:s")." $category $text\n";
+  fputs(STDERR, Date("Y-m-d H:i:s")." $category $text\n");
 
   $debug_list=array();
 }
