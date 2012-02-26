@@ -1,5 +1,6 @@
 <?
 $make_valid=array("&"=>"&amp;", "\""=>"&quot;", "<"=>"&lt;", ">"=>"&gt;");
+$plugins[]="category";
 
 class category_rule {
   public $tags;
