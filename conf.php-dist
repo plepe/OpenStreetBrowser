@@ -180,6 +180,7 @@ $overlays_add=array(
 // renderd - Start a renderd in the background
 // geo_object - Base of geometric objects
 // hooks - Functions can register to hooks to react on events
+// osb_user - User handling for OpenStreetBrowser
 
 // Database functions:
 // pg_array - A couple of useful array functions
