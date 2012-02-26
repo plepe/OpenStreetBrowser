@@ -1,4 +1,6 @@
 <?
+$plugins[]="load_object";
+
 // global vars
 $objects=array();
 $object_types=array();

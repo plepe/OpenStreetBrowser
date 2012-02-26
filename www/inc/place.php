@@ -1,4 +1,6 @@
 <?
+$plugins[]="load_object";
+
 class place {
   function get_type() { return "default"; }
   public $data;

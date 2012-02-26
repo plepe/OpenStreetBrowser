@@ -182,6 +182,7 @@ $overlays_add=array(
 // geo_object - Base of geometric objects
 // hooks - Functions can register to hooks to react on events
 // osb_user - User handling for OpenStreetBrowser
+// load_object - Functions to load geometry objects
 
 // Database functions:
 // pg_array - A couple of useful array functions
