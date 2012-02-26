@@ -1,0 +1,2 @@
+<?
+$osb_active=true;

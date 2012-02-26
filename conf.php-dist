@@ -150,15 +150,12 @@ $overlays_add=array(
 // win - Windowmanager
 // lang_preferred - Query preferred languages
 // translation - Translation system
-// category - Base functions for categories
 // category_chooser - List all available categories and add to list
 // category_window - A window for category interaction (info, edit, ...)
 // category_editor - An editor for editing OSM categories
 // category_osm_info - Show info about an OSM Category
 // cateogory_history - Show history of a category
 // importance - Define values and functions for defining importance of objects
-// talk - Talk pages
-// recent_changes - Show recent changes in talk pages, categories, ...
 // editor - Commonly used things for all editors (e.g. lang strings)
 // layer_inspect - Show date of rendering for all tiles
 // debug_toolbox - Show a toolbox with debug options
@@ -181,8 +178,14 @@ $overlays_add=array(
 // renderd - Start a renderd in the background
 // geo_object - Base of geometric objects
 // hooks - Functions can register to hooks to react on events
-// osb_user - User handling for OpenStreetBrowser
 // load_object - Functions to load geometry objects
+
+// User generated data for OSB
+// osb - Database schema
+// osb_user - User handling for OpenStreetBrowser
+// talk - Talk pages
+// category - Base functions for categories
+// recent_changes - Show recent changes in talk pages, categories, ...
 
 // Database functions:
 // pg_array - A couple of useful array functions
