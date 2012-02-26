@@ -134,7 +134,6 @@ $overlays_add=array(
 // iplocation - Locate 'my position' using the iplocationtools-service
 // cluster_call - Send events through the database to db-clients
 // extract - Create a table with extracted data (for small zoom levels)
-// osm_member - Show member information for objects
 // iplocation - Locate 'my position' using the iplocationtools-service
 // blog - On startup show a window with the rss-feed of the blog
 // mouseposition - Show the coordinates of the current mouseposition
@@ -167,9 +166,6 @@ $overlays_add=array(
 // icon_chooser - Choose icons from list
 // icon_editor - Upload icons
 // postgresql_restart - Try to restart PostgreSQL after connection failure
-// osm_shapefiles - Include the OSM Shapefiles (needed for basemap)
-// osm_import - Initial import of OSM data
-// osm_update - Import updates from OSM
 // tip_of_the_day - Tip of the day
 // right_bar - Show a bar to the right with donation, twitter, ...
 // layer_toolbox - Add a toolbox for choosing background layer and overlays
@@ -186,6 +182,13 @@ $overlays_add=array(
 // talk - Talk pages
 // category - Base functions for categories
 // recent_changes - Show recent changes in talk pages, categories, ...
+
+// OSM stuff
+// osm - Database schema
+// osm_member - Show member information for objects
+// osm_shapefiles - Include the OSM Shapefiles (needed for basemap)
+// osm_import - Initial import of OSM data
+// osm_update - Import updates from OSM
 
 // Database functions:
 // pg_array - A couple of useful array functions

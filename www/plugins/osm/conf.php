@@ -1,0 +1,2 @@
+<?
+$osm_active=true;
