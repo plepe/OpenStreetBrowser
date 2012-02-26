@@ -10,8 +10,7 @@ create index relations_members_role on relation_members (member_role);
 create index way_nodes_seq_id on way_nodes("sequence_id");
 
 -- point
-drop table if exists osm_point;
-create table osm_point (
+create table !schema:osm!.osm_point (
   osm_id		text		not null,
   osm_tags		hstore		null,
   primary key(osm_id)
@@ -25,16 +24,14 @@ create index osm_point_way  on osm_point using gist(osm_way);
 create index osm_point_way_tags on osm_point using gist(osm_way, osm_tags);
 
 -- ways -> osm_line and osm_polygon
-drop table if exists osm_line;
-create table osm_line (
+create table !schema:osm!.osm_line (
   osm_id		text		not null,
   osm_tags		hstore		null,
   primary key(osm_id)
 );
 select AddGeometryColumn('osm_line', 'osm_way', 900913, 'LINESTRING', 2);
 
-drop table if exists osm_polygon;
-create table osm_polygon (
+create table !schema:osm!.osm_polygon (
   osm_id		text		not null,
   rel_id		text		null,
   osm_tags		hstore		null,
@@ -52,8 +49,7 @@ create index osm_line_way  on osm_line using gist(osm_way);
 create index osm_line_way_tags on osm_line using gist(osm_way, osm_tags);
 
 -- rel
-drop table if exists osm_rel;
-create table osm_rel (
+create table !schema:osm!.osm_rel (
   osm_id		text		not null,
   osm_tags		hstore		null,
   primary key(osm_id)
@@ -96,7 +92,7 @@ drop view if exists osm_all_polygon;
 drop view if exists osm_all_rel;
 
 -- osm_all_point
-create view osm_all_point as (
+create view !schema:osm!.osm_all_point as (
   select
     "osm_id",
     'type=>node, form=>point'::hstore as "osm_type",
@@ -109,7 +105,7 @@ create view osm_all_point as (
 );
 
 -- osm_all_line
-create view osm_all_line as (
+create view !schema:osm!.osm_all_line as (
   select
     "osm_id",
     'type=>way, form=>line'::hstore as "osm_type",
@@ -122,7 +118,7 @@ create view osm_all_line as (
 );
 
 -- osm_all_polygon
-create view osm_all_polygon as (
+create view !schema:osm!.osm_all_polygon as (
   select
     "osm_id",
     (CASE
@@ -138,7 +134,7 @@ create view osm_all_polygon as (
 );
 
 -- osm_all_rel
-create view osm_all_rel as (
+create view !schema:osm!.osm_all_rel as (
   select
     "osm_id",
     'type=>rel, form=>special'::hstore as "osm_type",
@@ -151,7 +147,7 @@ create view osm_all_rel as (
 );
 
 -- osm_all
-create view osm_all as (
+create view !schema:osm!.osm_all as (
   select * from osm_all_point
   union all
   select * from osm_all_line
@@ -162,21 +158,21 @@ create view osm_all as (
 );
 
 -- osm_poipoly
-create view osm_poipoly as (
+create view !schema:osm!.osm_poipoly as (
   select * from osm_all_point
   union all
   select * from osm_all_polygon
 );
 
 -- osm_linepoly
-create view osm_linepoly as (
+create view !schema:osm!.osm_linepoly as (
   select * from osm_all_line
   union all
   select * from osm_all_polygon
 );
 
 -- osm_all_rel
-create view osm_allrel as (
+create view !schema:osm!.osm_allrel as (
   select * from osm_all_polygon
   union all
   select * from osm_all_rel
@@ -184,7 +180,7 @@ create view osm_allrel as (
 
 -- osm_rel_members
 drop view osm_rel_members;
-create view osm_rel_members as (
+create view !schema:osm!.osm_rel_members as (
   select
     osm_rel.osm_id,
     osm_line.osm_id as member_id,
