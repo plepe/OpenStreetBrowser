@@ -25,7 +25,7 @@ DECLARE
   refs alias for $1;
   roles alias for $2;
 BEGIN
-  return array_to_string(array_nat_sort(array_unique(refs)), ', ');
+  return array_to_string(nat_sort(array_unique(refs)), ', ');
 END;
 $$ LANGUAGE plpgsql immutable;
 

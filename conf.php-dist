@@ -187,3 +187,4 @@ $overlays_add=array(
 // parse_number - Parse single/multiple numbers from (osm) values
 // postgis_extensions - Some extensions to the postgis library
 // tags - Handling of tags (key/value-pairs)
+// nat_sort - Implement a natural sort algorithm
