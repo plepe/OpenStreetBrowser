@@ -178,6 +178,7 @@ $overlays_add=array(
 // keyshort_map - Keyboard shortcuts for the map
 // renderd - Start a renderd in the background
 // geo_object - Base of geometric objects
+// hooks - Functions can register to hooks to react on events
 
 // Database functions:
 // pg_array - A couple of useful array functions
