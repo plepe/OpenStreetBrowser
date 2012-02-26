@@ -1,24 +1,3 @@
-create or replace function oneof_is(text[], text)
-  returns bool
-  as $$
-declare
-  arr alias for $1;
-  val alias for $2;
-  i   int:=1;
-begin
-  if array_lower(arr, 1) is null then
-    return false;
-  end if;
-
-  for i in array_lower(arr, 1)..array_upper(arr, 1) loop
-    if arr[i]=val then
-      return true;
-    end if;
-  end loop;
-  return false;
-end;
-$$ language 'plpgsql';
-
 drop table if exists dimension_units;
 create table dimension_units (
   id		text	not null,
@@ -288,15 +267,5 @@ begin
     end if;
   end loop;
   return false;
-end;
-$$ language 'plpgsql' immutable;
-
-create or replace function split_semicolon(text)
-  returns text[]
-  as $$
-declare
-  str alias for $1;
-begin
-  return string_to_array(str, ';');
 end;
 $$ language 'plpgsql' immutable;
