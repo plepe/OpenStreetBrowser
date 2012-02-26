@@ -44,23 +44,21 @@ function db_init() {
 
       sort($files);
 
-      print "Plugin '$plugin', (re-)loading functions:";
       foreach($files as $file) {
-	print " $file";
+	debug("Plugin '$plugin', (re-)loading functions/$file", "plugins");
 	sql_query(file_get_contents("$plugins_dir/$plugin/functions/$file"));
       }
-      print "\n";
     }
     elseif(file_exists("$plugins_dir/$plugin/functions.sql")) {
       // it's a single file -> load
-      print "Plugin '$plugin', (re-)loading functions.sql\n";
+      debug("Plugin '$plugin', (re-)loading functions.sql", "plugins");
       sql_query(file_get_contents("$plugins_dir/$plugin/functions.sql"));
     }
 
     if(file_exists("$plugins_dir/$plugin/db.sql")) {
       // If plugin has never been loaded before, load db.sql
       if(!isset($plugins_db[$plugin])) {
-	print "Plugin '$plugin', initializing db\n";
+	debug("Plugin '$plugin', initializing db", "plugins");
 	sql_query(file_get_contents("$plugins_dir/$plugin/db.sql"));
       }
       // load all missing updates
@@ -68,7 +66,7 @@ function db_init() {
 	$updates_done=explode(";", $plugin_tags->get("updates"));
 	foreach($updates as $update=>$files) {
 	  if(!in_array($update, $updates_done)) {
-	    print "Plugin '$plugin', loading update $update\n";
+	    debug("Plugin '$plugin', loading update $update", "plugins");
 	    if(in_array("sql", $files))
 	      sql_query(file_get_contents("$plugins_dir/$plugin/update/$update.sql"));
 	  }
