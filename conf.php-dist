@@ -185,3 +185,4 @@ $overlays_add=array(
 // pg_cache - Cache functions using db tables
 // parse_number - Parse single/multiple numbers from (osm) values
 // postgis_extensions - Some extensions to the postgis library
+// tags - Handling of tags (key/value-pairs)
