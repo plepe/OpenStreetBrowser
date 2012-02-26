@@ -1,0 +1,18 @@
+== Initialize database ==
+You need PostgreSQL 9.0 and PostGIS 1.5 installed.
+First run 'bin/init' to initialize database structure
+
+== Configure ==
+Copy conf.php-dist to conf.php and adapt to your needs.
+Especially choose plugins appropriate for your project.
+
+== OpenStreetBrowser-Daemon ==
+Then run 'bin/osbd' which will initialize the rest and will take care of a
+clean database. It also re-compiles categories and similar stuff.
+
+There's a tiny command line interface. Supported commands:
+  status	Print status of all plugins which support it
+  stop		Shutdown daemon
+  quit		Force daemon shutdown
+
+'MCP' is an alias for the OpenStreetBrowser-Daemon, used internally
