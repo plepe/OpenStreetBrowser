@@ -6,6 +6,15 @@ function sql_connect(&$conn) {
     $conn['connection']=
       pg_connect("dbname={$conn['name']} user={$conn['user']} password={$conn['passwd']} host={$conn['host']}");
 
+    // set schema search path
+    $sql_schema_path=array(
+      array(-10, "{$conn['user']}"),
+      array(10, "public")
+    );
+    call_hooks("sql_schema_path", &$sql_schema_path);
+    $path=implode(", ", weight_sort($sql_schema_path));
+    pg_query("set search_path to $path");
+
     // check for successful connection
     if(!$conn['connection']) {
       debug("db connection failed", "sql");
@@ -119,5 +128,3 @@ function array_to_hstore($array) {
 function parse_hstore($text) {
   return eval("return array($text);");
 }
-
-
