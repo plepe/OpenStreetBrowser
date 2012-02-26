@@ -4,7 +4,7 @@
 -- * 'osmosis_update_delete' - called when changed items were removed - use this to remove data from other tables
 -- * 'osmosis_update_finish' - called when data has been updated - use this to update data in other tables
 
-CREATE OR REPLACE FUNCTION osmosisUpdate() RETURNS void AS $$
+CREATE OR REPLACE FUNCTION osm.osmosisUpdate() RETURNS void AS $$
 DECLARE
   num_rows  int;
 BEGIN
