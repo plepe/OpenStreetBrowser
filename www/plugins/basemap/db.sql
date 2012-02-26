@@ -1,4 +1,6 @@
--- basemap_highway
+create index osm_line_layer_way on osm_line using gist(osm_way, parse_layer(osm_tags));
+create index osm_polygon_layer_way on osm_polygon using gist(osm_way, parse_layer(osm_tags));-- basemap_highway
+
 insert into classify_hmatch values ( 'basemap_highway',
   'highway=>motorway',
   null,

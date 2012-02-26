@@ -1,3 +1,33 @@
+create or replace function parse_layer(hstore)
+returns int as $$
+declare
+  osm_tags alias for $1;
+  ret	float;
+begin
+  if(osm_tags is null or not osm_tags?'layer') then
+    if osm_tags->'tunnel' in ('yes', 'true') then
+      return -1;
+    elsif osm_tags->'power' in ('line') then
+      return 5;
+    else
+      return 0;
+    end if;
+  end if;
+
+  ret:=parse_highest_number($1->'layer');
+
+  if(ret is null) then
+    return 0;
+  elsif ret>5 then
+    return 5;
+  elsif ret<-5 then
+    return -5;
+  end if;
+
+  return floor(ret);
+end;
+$$ language 'plpgsql' immutable;
+  
 CREATE OR REPLACE FUNCTION basemap_rotate_line(text, hstore, geometry, float, float) RETURNS text AS $$
 DECLARE
   id alias for $1;
