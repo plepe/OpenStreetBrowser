@@ -177,6 +177,7 @@ $overlays_add=array(
 // keyshort - Keyboard shortcuts
 // keyshort_map - Keyboard shortcuts for the map
 // renderd - Start a renderd in the background
+// geo_object - Base of geometric objects
 
 // Database functions:
 // pg_array - A couple of useful array functions
