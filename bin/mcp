@@ -44,32 +44,10 @@ function compile($cat_id) {
   restart_renderd();
 }
 
-function mcp_process($fifo) {
-  $todo=trim(fgets($fifo));
-  $todo=explode(" ", $todo);
-
-  switch($todo[0]) {
-    case "restart":
-      call_hooks("mcp_restart");
-      break;
-    case "compile":
-      compile($todo[1]);
-      break;
-    default:
-      print "didn't understand ".implode(" ", $todo)."\n";
-  }
-  return 1;
-}
-
 function quit() {
-  global $fifo;
-  global $fifo_path;
-
   debug("* MCP got termination signal, stopping", "mcp");
 
   call_hooks("mcp_stop");
-  fclose($fifo);
-  unlink($fifo_path);
 
   exit(0);
 }
@@ -93,10 +71,6 @@ pcntl_signal(SIGTERM, "mcp_sig_handler");
 pcntl_signal(SIGINT,  "mcp_sig_handler");
 pcntl_signal(SIGUSR1, "mcp_sig_handler");
 pcntl_signal(SIGUSR2, "mcp_sig_handler");
-
-umask(0);
-posix_mkfifo($fifo_path, 0666);
-$fifo=fopen($fifo_path, "r+");
 
 $tmp_dir="$root_path/tmp/".Date("Ymd-Hi");
 print "Creating temporary directory $tmp_dir\n";
@@ -156,7 +130,6 @@ function mcp_command($p) {
   }
 }
 
-mcp_register_stream(MCP_READ, $fifo, "mcp_process");
 mcp_register_stream(MCP_READ, STDIN, "mcp_command");
 
 while(1) {
