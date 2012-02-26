@@ -33,7 +33,26 @@ function db_init() {
     ksort($updates);
 
     // always reload functions
-    if(file_exists("$plugins_dir/$plugin/functions.sql")) {
+    if(is_dir("$plugins_dir/$plugin/functions")) {
+      // it's a list of files: read, sort and load each one of them
+      $files=array();
+      $d=opendir("$plugins_dir/$plugin/functions");
+      while($f=readdir($d)) {
+	if(preg_match("/^[^.].*\.sql/", $f))
+	  $files[]=$f;
+      }
+
+      sort($files);
+
+      print "Plugin '$plugin', (re-)loading functions:";
+      foreach($files as $file) {
+	print " $file";
+	sql_query(file_get_contents("$plugins_dir/$plugin/functions/$file"));
+      }
+      print "\n";
+    }
+    elseif(file_exists("$plugins_dir/$plugin/functions.sql")) {
+      // it's a single file -> load
       print "Plugin '$plugin', (re-)loading functions.sql\n";
       sql_query(file_get_contents("$plugins_dir/$plugin/functions.sql"));
     }
