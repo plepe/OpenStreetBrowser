@@ -1,5 +1,6 @@
 <?
 $lang_str["tip_of_the_day:name"]="Tip dne";
+$lang_str["tip_of_the_day:next"]="další tip";
 
 $lang_str["tip_of_the_day:0"]="Víte, že můžete použít zkrácený odkaz http://osb.cc?";
 $lang_str["tip_of_the_day:1"]="Stisknutím a držením klávesy shift a posouváním myši můžete přibližovat a oddalovat pohled.";
