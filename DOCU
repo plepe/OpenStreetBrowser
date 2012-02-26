@@ -1,3 +1,0 @@
-Unfortunately we have to import the database twice ... once with osm2pgsql to have a database structure which is usable for mapnik. A second time with osmosis, because we want to have all possibly available data.
-
-In preprocessing many operations are carried out, e.g. the 'collections' (automatic relations) are created (stations, streets, ...)
