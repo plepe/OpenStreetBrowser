@@ -1,5 +1,4 @@
-drop table if exists talk;
-create table talk (
+create table !schema:osb!.talk (
   page		text		not null,
   version	varchar(32)	not null,
   tags		hstore		default ''::hstore,
@@ -9,8 +8,7 @@ create table talk (
   primary key(version)
 );
 
-drop table if exists talk_current;
-create table talk_current (
+create table !schema:osb!.talk_current (
   page		text		not null,
   version	varchar(32)	not null,
   now		timestamp with time zone	not null,

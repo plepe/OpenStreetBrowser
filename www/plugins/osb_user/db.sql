@@ -1,5 +1,4 @@
-drop table if exists user_list;
-create table user_list (
+create table !schema:osb!.user_list (
   username		text		not null,
   md5_password		text		not null,
   osm_tags		hstore		null,
@@ -11,6 +10,5 @@ create table auth (
   auth_id		text		not null,
   username		text		not null,
   last_login		timestamp	not null,
-  primary key(auth_id),
-  foreign key(username) references user_list(username)
+  primary key(auth_id)
 );

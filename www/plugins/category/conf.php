@@ -1,3 +1,3 @@
 <?
 $category_active=true;
-$category_depend=array("db");
+$category_depend=array("db", "osb");

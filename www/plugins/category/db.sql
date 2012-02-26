@@ -1,5 +1,4 @@
-drop table if exists category;
-create table category (
+create table !schema:osb!.category (
   category_id		text	not null,
   tags			hstore,
   version		text	not null,
@@ -8,8 +7,7 @@ create table category (
   primary key(category_id, version)
 );
 
-drop table if exists category_rule;
-create table category_rule (
+create table !schema:osb!.category_rule (
   category_id		text	not null,
   rule_id		text	not null,
   tags			hstore,
@@ -17,8 +15,7 @@ create table category_rule (
   primary key(category_id, version, rule_id)
 );
 
-drop table if exists category_current;
-create table category_current (
+create table !schema:osb!.category_current (
   category_id		text	not null,
   version		text	not null,
   now			timestamp with time zone	not null,
