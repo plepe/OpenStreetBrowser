@@ -132,6 +132,7 @@ $lang_str["category_chooser:new"]="Nueva categoría";
 $lang_str["category:sub_category"]=array("Sub-categoría", "Sub-categoríes");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
+$lang_str["basemap:osb_light"]="OpenStreetBrowser (dilíu)";
 $lang_str["basemap:mapnik"]="Estándar (Mapnik)";
 $lang_str["basemap:osmarender"]="Estándar (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
