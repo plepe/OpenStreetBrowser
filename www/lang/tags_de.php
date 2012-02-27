@@ -119,7 +119,7 @@ $lang_str["tag:tunnel"]="Tunnel";
 #$lang_str["tag:service"]="Service road attributes";
 
 // postal_code
-#$lang_str["tag:postal_code"]="Postal Code";
+$lang_str["tag:postal_code"]="Postleitzahl";
 
 // is_in
 $lang_str["tag:is_in"]="ist in";
