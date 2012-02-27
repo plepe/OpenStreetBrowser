@@ -15,5 +15,5 @@ $lang_str["navigation:destination"]="Ziel";
 $lang_str["head:instructions"]="Instruktionen";
 $lang_str["head:key_data"]="Schlüsseldaten";
 
-$lang_str["navigation:reverse"]="umgeghert";
+$lang_str["navigation:reverse"]="umgekehrt";
 $lang_str["navigation:go"]="Gehe zu";
