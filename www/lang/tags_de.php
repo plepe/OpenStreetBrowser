@@ -70,7 +70,7 @@ $lang_str["tag:cables"]="Stromkabel";
 $lang_str["tag:description"]="Beschreibung";
 
 // fixme
-$lang_str["tag:fixme"]="korregiere mich";
+$lang_str["tag:fixme"]="korrigiere mich";
 
 // note
 $lang_str["tag:note"]="Anmerkung";
@@ -382,7 +382,7 @@ $lang_str["tag:historic"]="Geschichtlich";
 $lang_str["tag:landuse"]="Landnutzung";
 
 // wood
-#$lang_str["tag:wood"]="Type of wood";
+$lang_str["tag:wood"]="Holzart";
 
 // military
 $lang_str["tag:military"]="Militärisch";
@@ -394,7 +394,7 @@ $lang_str["tag:military"]="Militärisch";
 #$lang_str["tag:geological"]="Geological";
 
 // boundary
-#$lang_str["tag:boundary"]="Boundary";
+$lang_str["tag:boundary"]="Grenze";
 
 // abutters
 #$lang_str["tag:abutters"]="Abutters";
@@ -403,13 +403,13 @@ $lang_str["tag:military"]="Militärisch";
 #$lang_str["tag:lit"]="Street lighting";
 
 // area
-#$lang_str["tag:area"]="Area";
+$lang_str["tag:area"]="Gebiet";
 
 // crossing
 #$lang_str["tag:crossing"]="crossing";
 
 // mountain_pass
-#$lang_str["tag:mountain_pass"]="Mountain Pass";
+$lang_str["tag:mountain_pass"]="Gebirgspass";
 
 // cutting
 #$lang_str["tag:cutting"]="Cutting";
@@ -421,7 +421,7 @@ $lang_str["tag:military"]="Militärisch";
 #$lang_str["tag:lanes"]="Lanes";
 
 // layer
-#$lang_str["tag:layer"]="Layer";
+$lang_str["tag:layer"]="Ebene";
 
 // surface
 #$lang_str["tag:surface"]="Surface";
@@ -500,7 +500,7 @@ $lang_str["tag:military"]="Militärisch";
 #$lang_str["tag:oneway"]="Oneway";
 
 // noexit
-#$lang_str["tag:noexit"]="Dead end road";
+$lang_str["tag:noexit"]="Sackgasse";
 
 // maxweight
 #$lang_str["tag:maxweight"]="Max. weight";
@@ -512,37 +512,37 @@ $lang_str["tag:military"]="Militärisch";
 #$lang_str["tag:maxlength"]="Max. length";
 
 // maxspeed
-#$lang_str["tag:maxspeed"]="Max. speed";
+$lang_str["tag:maxspeed"]="Höchstgeschwindigkeit";
 
 // minspeed
 #$lang_str["tag:minspeed"]="Min. speed";
 
 // traffic_sign
-#$lang_str["tag:traffic_sign"]="Traffic sign";
+$lang_str["tag:traffic_sign"]="Verkehrszeichen";
 
 // toll
-#$lang_str["tag:toll"]="Toll";
+$lang_str["tag:toll"]="Maut";
 
 // charge
 #$lang_str["tag:charge"]="Charge";
 
 // source
-#$lang_str["tag:source"]="Source";
+$lang_str["tag:source"]="Quelle";
 
 // phone
-#$lang_str["tag:phone"]="Phone number";
+$lang_str["tag:phone"]="Telefonnummer";
 
 // fax
-#$lang_str["tag:fax"]="Fax number";
+$lang_str["tag:fax"]="Faxnummer";
 
 // email
-#$lang_str["tag:email"]="E-mail";
+$lang_str["tag:email"]="E-Mail";
 
 // wikipedia
 #$lang_str["tag:wikipedia"]="Wikipedia";
 
 // created_by
-#$lang_str["tag:created_by"]="Created by";
+$lang_str["tag:created_by"]="Erstellt von";
 
 // construction
 #$lang_str["tag:construction"]="Construction";

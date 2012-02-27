@@ -6,8 +6,8 @@ $lang_str["units:ha"]="%s ha";
 $lang_str["units:m2"]="%s m²";
 
 $lang_str["units:sec"]="%s s";
-#$lang_str["units:min_sec"]="%s:%02s mins";
-#$lang_str["units:min"]="%s mins";
-#$lang_str["units:hour_min"]="%s:%02s hours";
-#$lang_str["units:hour"]="%s hours";
-#$lang_str["units:day"]="%s days";
+$lang_str["units:min_sec"]="%s:%02s min";
+$lang_str["units:min"]="%s min";
+$lang_str["units:hour_min"]="%s:%02s Std.";
+$lang_str["units:hour"]="%s Std.";
+$lang_str["units:day"]="%s Tage";
