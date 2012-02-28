@@ -36,13 +36,20 @@ function debug($text, $category="unknown", $level=D_NOTICE) {
 
 function debug_write($xml) {
   global $debug_list;
+  global $debug_levels_abbr;
+
   $result=$xml->getElementsByTagname("result");
   $result=$result->item(0);
 
   if($debug_list)
-  foreach($debug_list as $d) {
+  foreach($debug_list as $entry) {
     $debug=$xml->createElement("debug");
-    $text=$xml->createTextNode(Date("Y-m-d H:i:s", $d[0])." {$d[1]}: {$d[2]}");
+    $text=$xml->createTextNode(sprintf("%s (%s) %s %s",
+	Date("Y-m-d H:i:s", $entry['time']),
+	$debug_levels_abbr[$entry['level']],
+	$entry['category'],
+	$entry['text']
+      ));
     $debug->appendChild($text);
     $result->appendChild($debug);
   }
