@@ -36,6 +36,13 @@ define("MCP_WRITE",  1);
 define("MCP_EXCEPT", 2);
 $streams=array(MCP_READ=>array(), MCP_WRITE=>array(), MCP_EXCEPT=>array());
 $streams_callback=array(MCP_READ=>array(), MCP_WRITE=>array(), MCP_EXCEPT=>array());
+
+// create temporary directory
+$tmp_dir="$root_path/tmp/".Date("Ymd-Hi");
+debug("Creating temporary directory $tmp_dir", "mcp");
+mkdir($tmp_dir);
+
+// initialize plugins
 call_hooks("mcp_start");
 
 function compile($cat_id) {
@@ -71,10 +78,6 @@ pcntl_signal(SIGTERM, "mcp_sig_handler");
 pcntl_signal(SIGINT,  "mcp_sig_handler");
 pcntl_signal(SIGUSR1, "mcp_sig_handler");
 pcntl_signal(SIGUSR2, "mcp_sig_handler");
-
-$tmp_dir="$root_path/tmp/".Date("Ymd-Hi");
-print "Creating temporary directory $tmp_dir\n";
-mkdir($tmp_dir);
 
 $mcp_next_clean_up=time()+15*60;
 debug("* MCP up and running", "mcp");
