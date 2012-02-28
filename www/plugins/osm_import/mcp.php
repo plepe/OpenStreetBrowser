@@ -7,7 +7,7 @@ function osm_import_init() {
   global $db_central;
   global $tmp_dir;
 
-  $res=sql_query("select * from pg_tables where schemaname='osm' and tablename='nodes'");
+  $res=sql_query("select * from pg_tables where schemaname='!schema:osmosis!' and tablename='nodes'");
   if(pg_num_rows($res))
     return;
 
