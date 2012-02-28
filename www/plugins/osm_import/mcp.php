@@ -8,20 +8,22 @@ function osm_import_init() {
   global $tmp_dir;
 
   $res=sql_query("select * from pg_tables where schemaname='!schema:osmosis!' and tablename='nodes'");
-  if(pg_num_rows($res))
+  if(pg_num_rows($res)) {
+    debug("osm-data has already been imported", "osm_import", D_DEBUG);
     return;
+  }
 
   if(!$osm_import_source) {
-    debug("set \$osm_import_source in conf.php to an osm-file", "osm_import");
+    debug("set \$osm_import_source in conf.php to an osm-file", "osm_import", D_ERROR);
     exit;
   }
 
   if(!$osmosis_path) {
-    debug("set \$osmosis_path in conf.php to the root of an osmosis-installation", "osm_import");
+    debug("set \$osmosis_path in conf.php to the root of an osmosis-installation", "osm_import", D_ERROR);
     exit;
   }
 
-  debug("database not initialized yet -> import", "osm_import");
+  debug("database not initialized yet -> import", "osm_import", D_WARNING);
 
   // remember search_path and set to 'osm'
   $res=sql_query("show search_path", $db_osmosis);
@@ -44,13 +46,17 @@ function osm_import_init() {
   }
 
   // import via osmosis
+  debug("starting osmosis, source: $osm_import_source", "osm_import", D_WARNING);
   system("osmosis --read-xml file=$osm_import_source --write-pgsimp host={$db_osmosis['host']} user={$db_osmosis['user']} password={$db_osmosis['passwd']} database={$db_osmosis['name']}");
 
   // reset search_path
   sql_query("set search_path to {$search_path}", $db_osmosis);
 
   // calculate osm tables
+  debug("initialize osm_-tables", "osm_import", D_WARNING);
   sql_query("select osm_import_init()");
+
+  debug("done", "osm_import", D_WARNING);
 }
 
 register_hook("mcp_start", "osm_import_init");
