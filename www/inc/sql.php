@@ -1,7 +1,49 @@
 <?
-function sql_connect(&$conn) {
-  global $sql_replace;
+global $db;
+global $sql_replace;
+if(!isset($sql_replace))
+  $sql_replace=array();
 
+function sql_create_schema(&$conn, $schema, $param="") {
+  $res=pg_query($conn['connection'], "SELECT nspname AS name FROM pg_namespace WHERE nspname !~ '^pg_.*' and nspname='{$schema}'");
+  if(pg_num_rows($res)==0) {
+    pg_query($conn['connection'], "create schema $schema $param");
+  }
+
+  return true;
+}
+
+function sql_register_schema(&$conn, $alias, $schema, $weight=0) {
+  global $db;
+  global $db_central;
+
+  // set schema search path
+  $conn['schema_path'][]=array($weight, $schema);
+  $path=implode(", ", weight_sort($conn['schema_path']));
+  $conn['replace']['!schema:search_path!']=$path;
+
+  // set search paths to database
+  if(isset($conn['connection']))
+    pg_query($conn['connection'], "set search_path to $path");
+
+  // register replacement string
+  $conn['replace']["!schema:$alias!"]=$schema;
+}
+
+function sql_get_schema_path(&$conn) {
+  // initialize
+  $conn['schema_path']=array();
+  $conn['replace']=array();
+  sql_register_schema($conn, 'this', $conn['user'], -10);
+  sql_register_schema($conn, 'public', "public", 10);
+
+  // requestr list of schemata
+  call_hooks("sql_schema_path", &$conn);
+
+  pg_query($conn['connection'], "set search_path to {$conn['replace']['!schema:search_path!']}");
+}
+
+function sql_connect(&$conn) {
   // If database connection has not been opened yet, open it
   if(!isset($conn['connection'])) {
     // connect
@@ -21,22 +63,15 @@ function sql_connect(&$conn) {
       }
     }
 
-    // set schema search path
-    $sql_schema_path=array(
-      array(-10, $conn['user']),
-      array( 10, "public"),
-    );
-    call_hooks("sql_schema_path", $sql_schema_path);
-    $sql_schema_path=implode(", ", weight_sort($sql_schema_path));
-    $sql_replace['!schema:search_path!']=$sql_schema_path;
-    pg_query("set search_path to $sql_schema_path");
-
     // Set a title for debugging
     if(!isset($conn['title']))
       $conn['title']=print_r($conn['connection'], 1);
 
     // save time of connection start
     $conn['date']=time();
+
+    // set schema search path
+    sql_get_schema_path(&$conn);
 
     // inform other modules about successful database connection
     if($conn['connection'])
@@ -80,6 +115,7 @@ function sql_query($qry, &$conn=0, $replace=array()) {
   sql_connect(&$conn);
 
   // replace strings in query
+  $replace=array_merge($conn['replace'], $replace);
   $replace=array_merge($sql_replace, $replace);
   $qry=strtr($qry, $replace);
 
@@ -145,7 +181,3 @@ function parse_hstore($text) {
   return eval("return array($text);");
 }
 
-if(!isset($sql_replace))
-  $sql_replace=array();
-if(!isset($sql_replace['!schema:this!']))
-  $sql_replace['!schema:this!']=$db['user'];
