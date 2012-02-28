@@ -19,6 +19,15 @@ function sql_connect(&$conn) {
       }
     }
 
+    // set schema search path
+    $sql_schema_path=array(
+      array(-10, $conn['user']),
+      array( 10, "public"),
+    );
+    call_hooks("sql_schema_path", $sql_schema_path);
+    $sql_schema_path=implode(", ", weight_sort($sql_schema_path));
+    pg_query("set search_path to $sql_schema_path");
+
     // Set a title for debugging
     if(!isset($conn['title']))
       $conn['title']=print_r($conn['connection'], 1);
