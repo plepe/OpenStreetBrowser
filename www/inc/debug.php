@@ -37,12 +37,19 @@ function debug($text, $category="unknown", $level=D_NOTICE) {
 function debug_write($xml) {
   global $debug_list;
   global $debug_levels_abbr;
+  global $www_debug_level;
 
   $result=$xml->getElementsByTagname("result");
   $result=$result->item(0);
 
+  if(!isset($www_debug_level))
+    $www_debug_level=2;
+
   if($debug_list)
   foreach($debug_list as $entry) {
+    if($entry['level']<$www_debug_level)
+      continue;
+
     $debug=$xml->createElement("debug");
     $text=$xml->createTextNode(sprintf("%s (%s) %s %s",
 	Date("Y-m-d H:i:s", $entry['time']),

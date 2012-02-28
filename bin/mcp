@@ -4,16 +4,21 @@ include_once "inc/cli.php";
 include "$root_path/conf.php";
 include "inc/hooks.php";
 register_hook("debug", "mcp_debug");
+
+if(!isset($mcp_debug_level))
+  $mcp_debug_level=2;
 function mcp_debug($entry) {
   global $debug_list;
   global $debug_levels_abbr;
+  global $mcp_debug_level;
 
-  fprintf(STDERR, "%s (%s) %s %s\n",
-    Date("Y-m-d H:i:s", $entry['time']),
-    $debug_levels_abbr[$entry['level']],
-    $entry['category'],
-    $entry['text']
-  );
+  if($entry['level']>=$mcp_debug_level)
+    fprintf(STDERR, "%s (%s) %s %s\n",
+      Date("Y-m-d H:i:s", $entry['time']),
+      $debug_levels_abbr[$entry['level']],
+      $entry['category'],
+      $entry['text']
+    );
 
   $debug_list=array();
 }

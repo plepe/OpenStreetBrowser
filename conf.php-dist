@@ -90,6 +90,10 @@ $overlays_add=array(
 //  "foo"=>array("http://foo.bar/tiles/", array("numZoomLevels"=>19)),
 );
 
+// Debug level
+$mcp_debug_level=2;
+$www_debug_level=2;
+
 // Available plugins:
 // units - format length and area values
 // measure - do some measurement on the map
