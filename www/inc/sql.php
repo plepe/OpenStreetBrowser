@@ -52,7 +52,7 @@ function sql_connect(&$conn) {
 
     // check for successful connection
     if(!$conn['connection']) {
-      debug("db connection failed", "sql");
+      debug("db connection failed", "sql", D_ERROR);
 
       call_hooks("sql_connection_failed", &$conn);
 
@@ -78,7 +78,7 @@ function sql_connect(&$conn) {
       call_hooks("sql_connect", $conn);
     
     // log opening of connection
-    debug("db connection {$conn['connection']} opened", "sql");
+    debug("db connection {$conn['connection']} opened", "sql", D_NOTICE);
   }
 }
 
@@ -105,7 +105,7 @@ function sql_query($qry, &$conn=0, $replace=array()) {
 
   // check if connection was opened too long
   if(isset($conn['date'])&&(time()-$conn['date']>3600)) {
-    debug("connection {$conn['connection']} opened too long, closing", "sql");
+    debug("connection {$conn['connection']} opened too long, closing", "sql", D_NOTICE);
     $conn['date']=null;
     pg_close($conn['connection']);
     unset($conn['connection']);
@@ -120,8 +120,7 @@ function sql_query($qry, &$conn=0, $replace=array()) {
   $qry=strtr($qry, $replace);
 
   // Do we want debug information?
-  if(isset($conn['debug'])&&($conn['debug']))
-    debug("CONN {$conn['title']}: ".$qry, "sql");
+  debug("CONN {$conn['title']}: ".$qry, "sql", D_DEBUG);
 
   // Query
   $res=pg_query($conn['connection'], $qry);
@@ -130,7 +129,7 @@ function sql_query($qry, &$conn=0, $replace=array()) {
   if($res===false) {
     // if postgresql connection died ...
     if(pg_connection_status($conn['connection'])==PGSQL_CONNECTION_BAD) {
-      debug("sql connection died", "sql");
+      debug("sql connection died", "sql", D_WARNING);
       pg_close($conn['connection']);
       unset($conn['connection']);
 
@@ -142,12 +141,12 @@ function sql_query($qry, &$conn=0, $replace=array()) {
         $res=pg_query($conn['connection'], $qry);
 
         if($res!==false) {
-          debug("sql retry successful", "sql");
+          debug("sql retry successful", "sql", D_NOTICE);
           return $res;
         }
       }
       else {
-        print "sql connection died\n";
+        debug("sql connection died", "sql", D_ERROR);
         exit;
       }
     }
@@ -156,8 +155,7 @@ function sql_query($qry, &$conn=0, $replace=array()) {
     call_hooks("sql_error", &$db, $qry, $error);
 
     // If we want debug information AND we have an error, tell about it
-    if(isset($conn['debug'])&&($conn['debug']))
-      debug("CONN {$conn['title']}: ".pg_last_error(), "sql");
+    debug("CONN {$conn['title']}: {$error}", "sql", D_ERROR);
   }
 
   return $res;
