@@ -66,6 +66,9 @@ function plugins_html_head($plugin) {
     global $$var_depend;
     global $$var_tags;
 
+    if(!isset($$var_tags))
+      $$var_tags=new tags(array());
+
     $plugins_script.="var {$var_active}=true;\n";
     $plugins_script.="var {$var_depend}=".html_var_to_js($$var_depend).";\n";
     $plugins_script.="var {$var_tags}=new tags(".html_var_to_js($$var_tags->data()).");\n";

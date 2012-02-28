@@ -4,10 +4,16 @@ include_once "inc/cli.php";
 include "$root_path/conf.php";
 include "inc/hooks.php";
 register_hook("debug", "mcp_debug");
-function mcp_debug($text, $category) {
+function mcp_debug($entry) {
   global $debug_list;
+  global $debug_levels_abbr;
 
-  fputs(STDERR, Date("Y-m-d H:i:s")." $category $text\n");
+  fprintf(STDERR, "%s (%s) %s %s\n",
+    Date("Y-m-d H:i:s", $entry['time']),
+    $debug_levels_abbr[$entry['level']],
+    $entry['category'],
+    $entry['text']
+  );
 
   $debug_list=array();
 }
