@@ -1,3 +1,8 @@
+create or replace function osm_import_init()
+returns boolean
+as $$
+declare
+begin
 create index node_tags_k_id on node_tags(k, node_id);
 create index way_tags_k_id on way_tags(k, way_id);
 create index relation_tags_k_id on relation_tags(k, relation_id);
@@ -15,9 +20,9 @@ create table !schema:osm!.osm_point (
   osm_tags		hstore		null,
   primary key(osm_id)
 );
-select AddGeometryColumn('osm_point', 'osm_way', 900913, 'POINT', 2);
+perform AddGeometryColumn('osm_point', 'osm_way', 900913, 'POINT', 2);
  
-select assemble_point(id) from nodes;
+perform assemble_point(id) from nodes;
  
 create index osm_point_tags on osm_point using gin(osm_tags);
 create index osm_point_way  on osm_point using gist(osm_way);
@@ -29,7 +34,7 @@ create table !schema:osm!.osm_line (
   osm_tags		hstore		null,
   primary key(osm_id)
 );
-select AddGeometryColumn('osm_line', 'osm_way', 900913, 'LINESTRING', 2);
+perform AddGeometryColumn('osm_line', 'osm_way', 900913, 'LINESTRING', 2);
 
 create table !schema:osm!.osm_polygon (
   osm_id		text		not null,
@@ -37,12 +42,12 @@ create table !schema:osm!.osm_polygon (
   osm_tags		hstore		null,
   primary key(osm_id)
 );
-select AddGeometryColumn('osm_polygon', 'osm_way', 900913, 'GEOMETRY', 2);
+perform AddGeometryColumn('osm_polygon', 'osm_way', 900913, 'GEOMETRY', 2);
 alter table osm_polygon
   add column	member_ids		text[]		null,
   add column	member_roles		text[]		null;
 
-select assemble_way(id) from ways;
+perform assemble_way(id) from ways;
 
 create index osm_line_tags on osm_line using gin(osm_tags);
 create index osm_line_way  on osm_line using gist(osm_way);
@@ -54,19 +59,19 @@ create table !schema:osm!.osm_rel (
   osm_tags		hstore		null,
   primary key(osm_id)
 );
-select AddGeometryColumn('osm_rel', 'osm_way', 900913, 'GEOMETRY', 2);
+perform AddGeometryColumn('osm_rel', 'osm_way', 900913, 'GEOMETRY', 2);
 alter table osm_rel
   add column	member_ids		text[]		null,
   add column	member_roles		text[]		null;
 
-select assemble_rel(id) from relations;
+perform assemble_rel(id) from relations;
 
 create index osm_rel_tags on osm_rel using gin(osm_tags);
 create index osm_rel_way  on osm_rel using gist(osm_way);
 create index osm_rel_way_tags on osm_rel using gist(osm_way, osm_tags);
 create index osm_rel_members_idx on osm_rel using gin(member_ids);
 
-select
+perform
   assemble_multipolygon(relation_id)
 from relation_tags
 where k='type' and v in ('multipolygon', 'boundary');
@@ -179,7 +184,7 @@ create view !schema:osm!.osm_allrel as (
 );
 
 -- osm_rel_members
-drop view osm_rel_members;
+drop view if exists osm_rel_members;
 create view !schema:osm!.osm_rel_members as (
   select
     osm_rel.osm_id,
@@ -199,3 +204,7 @@ create view !schema:osm!.osm_rel_members as (
     join osm_line
       on osm_line.osm_id=osm_rel.member_id
 );
+
+return true;
+end;
+$$ language 'plpgsql';
