@@ -35,8 +35,17 @@ function sql_connect(&$conn) {
   }
 }
 
-function sql_query($qry, &$conn=0) {
+// Issue a sql query.
+// $qry     ... the string of the query
+// $conn    ... the database connection to use (optional)
+// $replace ... an array for strtr for strings to be replaced (optional)
+//
+// by default the strings in the global $sql_replace variable will be replaced.
+// Plugins may add strings there, e.g.:
+// !schema:osb!   	a specific schema; will be defined by plugins
+function sql_query($qry, &$conn=0, $replace=array()) {
   global $db;
+  global $sql_replace;
 
   // If no database connection is supplied use default
   if(!$conn)
@@ -57,6 +66,10 @@ function sql_query($qry, &$conn=0) {
 
   // check for database connection
   sql_connect(&$conn);
+
+  // replace strings in query
+  $replace=array_merge($sql_replace, $replace);
+  $qry=strtr($qry, $replace);
 
   // Do we want debug information?
   if(isset($conn['debug'])&&($conn['debug']))
@@ -120,4 +133,7 @@ function parse_hstore($text) {
   return eval("return array($text);");
 }
 
-
+if(!isset($sql_replace))
+  $sql_replace=array();
+if(!isset($sql_replace['!schema:this!']))
+  $sql_replace['!schema:this!']=$db['user'];
