@@ -1,5 +1,7 @@
 <?
 function sql_connect(&$conn) {
+  global $sql_replace;
+
   // If database connection has not been opened yet, open it
   if(!isset($conn['connection'])) {
     // connect
@@ -26,6 +28,7 @@ function sql_connect(&$conn) {
     );
     call_hooks("sql_schema_path", $sql_schema_path);
     $sql_schema_path=implode(", ", weight_sort($sql_schema_path));
+    $sql_replace['!schema:search_path!']=$sql_schema_path;
     pg_query("set search_path to $sql_schema_path");
 
     // Set a title for debugging
