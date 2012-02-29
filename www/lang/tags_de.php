@@ -113,10 +113,10 @@ $lang_str["tag:bridge"]="Brücke";
 $lang_str["tag:tunnel"]="Tunnel";
 
 // traffic_calming
-#$lang_str["tag:traffic_calming"]="Traffic calming";
+$lang_str["tag:traffic_calming"]="Bremsschwelle";
 
 // service
-#$lang_str["tag:service"]="Service road attributes";
+$lang_str["tag:service"]="Zufahrtsweg";
 
 // postal_code
 $lang_str["tag:postal_code"]="Postleitzahl";
@@ -257,7 +257,7 @@ $lang_str["tag:religion=muslim"]="muslimisch";
 #$lang_str["tag:religion=multifaith"]="multifaith";
 
 // denomination
-#$lang_str["tag:denomination"]="Denomination";
+$lang_str["tag:denomination"]="Konfession";
 
 // route
 $lang_str["tag:route"]="Route";
@@ -313,10 +313,10 @@ $lang_str["tag:sport=korfball"]="Korfball";
 $lang_str["tag:sport=motor"]="Motorsport";
 $lang_str["tag:sport=multi"]="Diverse";
 $lang_str["tag:sport=orienteering"]="Orientierungslauf";
-#$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
+$lang_str["tag:sport=paddle_tennis"]="Paddel-Tennis";
 $lang_str["tag:sport=paragliding"]="Paragliding";
 $lang_str["tag:sport=pelota"]="Pelota";
-#$lang_str["tag:sport=racquet"]="Racquet";
+$lang_str["tag:sport=racquet"]="Racquetball";
 $lang_str["tag:sport=rowing"]="Rudern";
 $lang_str["tag:sport=rugby"]="Rugby";
 $lang_str["tag:sport=shooting"]="Schießen";
@@ -358,7 +358,7 @@ $lang_str["tag:tracktype"]="Wegtyp";
 $lang_str["tag:waterway"]="Wasserweg";
 
 // aerialway
-#$lang_str["tag:aerialway"]="Aerialway";
+$lang_str["tag:aerialway"]="Lift";
 
 // public_transport
 $lang_str["tag:public_transport"]="Öffentliche Verkehrsmittel";
@@ -367,7 +367,7 @@ $lang_str["tag:public_transport"]="Öffentliche Verkehrsmittel";
 $lang_str["tag:office"]="Büro";
 
 // craft
-#$lang_str["tag:craft"]="Craft";
+$lang_str["tag:craft"]="Handwerk";
 
 // emergency
 $lang_str["tag:emergency"]="Notaufnahme";
@@ -388,7 +388,14 @@ $lang_str["tag:wood"]="Holzart";
 $lang_str["tag:military"]="Militärisch";
 
 // natural
-#$lang_str["tag:natural"]="Natural";
+$lang_str["tag:natural"]="Natur";
+$lang_str["tag:natural=beach"]="Strand";
+$lang_str["tag:natural=glacier"]="Gletscher";
+$lang_str["tag:natural=cliff"]="Klippe";
+$lang_str["tag:natural=spring"]="Quelle";
+$lang_str["tag:natural=volcano"]="Vulkan";
+$lang_str["tag:natural=wood"]="Urwald";
+$lang_str["tag:natural=tree"]="Baum";
 
 // geological
 #$lang_str["tag:geological"]="Geological";
