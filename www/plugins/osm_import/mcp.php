@@ -57,6 +57,8 @@ function osm_import_init() {
   sql_query("select osm_import_init()");
 
   debug("done", "osm_import", D_WARNING);
+
+  call_hooks("osm_import_done");
 }
 
 register_hook("mcp_start", "osm_import_init");

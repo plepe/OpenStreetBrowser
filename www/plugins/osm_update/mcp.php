@@ -79,6 +79,7 @@ function osm_update_start() {
   global $root_path;
   global $osm_update_proc;
   global $osm_update_last_start;
+  global $db_osmosis;
   $working_dir="$root_path/data/updates";
 
   // make sure the start of two update commands are at least 30 seconds apart
@@ -108,7 +109,7 @@ function osm_update_start() {
     1=>array("pipe", "w"),
     2=>array("pipe", "w"));
 
-  $command="osmosis --read-replication-interval workingDirectory=$working_dir --simplify-change --write-pgsimp-change database={$db_central['name']} password={$db_central['passwd']}";
+  $command="osmosis --read-replication-interval workingDirectory=$working_dir --simplify-change --write-pgsimp-change host={$db_osmosis['host']} user={$db_osmosis['user']} password={$db_osmosis['passwd']} database={$db_osmosis['name']}";
 
   debug("osm_update", "starting osmosis ".Date("r"));
   $osm_update_proc=proc_open($command, $descriptors, $pipes, null, array("JAVACMD_OPTIONS"=>"-Xmx512M"));
@@ -145,8 +146,30 @@ function osm_update_command($str) {
   }
 }
 
+function osm_update_import_done() {
+  global $osmosis_path;
+  global $root_path;
+  global $db_osmosis;
+  debug("Loading osmosis actions-table", "osm_update", D_NOTICE);
+
+  // remember search_path and set to 'osmosis'
+  $res=sql_query("show search_path", $db_osmosis);
+  $elem=pg_fetch_array($res);
+  $search_path=$elem[0];
+  sql_query("set search_path to !schema:osmosis!, !schema:this!, public", $db_osmosis);
+
+  // load file
+  sql_query(file_get_contents("$osmosis_path/script/pgsimple_schema_0.6_action.sql"), $db_osmosis);
+  sql_query(file_get_contents("$root_path/www/plugins/osm_update/functions.sql"), $db_osmosis);
+
+  // reset search_path
+  sql_query("set search_path to {$search_path}", $db_osmosis);
+
+}
+
 register_hook("mcp_command", "osm_update_command");
 register_hook("mcp_tick", "osm_update_tick");
+register_hook("osm_import_done", "osm_update_import_done");
 
 // THIS IS MISSING
 //  if($last_clean+7200<time()) {
