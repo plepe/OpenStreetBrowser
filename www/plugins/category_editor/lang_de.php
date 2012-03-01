@@ -1,18 +1,18 @@
 <?
-#$lang_str["category_editor:editor"]="Editor";
-#$lang_str["category_editor:expand"]="expand";
+$lang_str["category_editor:editor"]="Editor";
+$lang_str["category_editor:expand"]="erweitern";
 #$lang_str["category_editor:tags"]="Tags";
 
-#$lang_str["category_editor:new"]="You are editing a new category. If you don't choose an id (identifier) or the chosen id is not available it will be assigned a random id.";
-#$lang_str["category_editor:not_newest"]="You are editing an old version of this category. When saving, a new category will be created. Most likely the id will not be available, therefore a different id will be assigned.";
-#$lang_str["category_editor:got_new_id"]="Category got a new ID '%s'";
+$lang_str["category_editor:new"]="Sie bearbeiten eine neue Kategorie. Wenn Sie keine ID (Identifikationsnummer) auswählen oder die ausgewählte ID nicht verfügbar ist, wird eine zufällige ID zugewiesen.";
+$lang_str["category_editor:not_newest"]="Sie bearbeiten eine alte Version dieser Kategorie. Wenn Sie speichern, wird eine neue Kategorie erzeugt. Meistens wird die ID nicht verfügbar sein, deshalb wird eine andere ID zugewiesen.";
+$lang_str["category_editor:got_new_id"]="Kategorie erhielt eine neue ID '%s'";
 
 $lang_str["category_editor:new_rule"]="Neue Regel";
 $lang_str["category_editor:remove_rule"]="Regel entfernen";
 $lang_str["category_editor:view_mode"]="Ansicht";
-#$lang_str["category_editor:view_mode:form"]="Form";
-#$lang_str["category_editor:view_mode:source"]="Source";
-#$lang_str["category_editor:new_rule_help"]="Add rules, to define which objects should appear in this category";
+$lang_str["category_editor:view_mode:form"]="Form";
+$lang_str["category_editor:view_mode:source"]="Quelle";
+$lang_str["category_editor:new_rule_help"]="Füge Regeln hinzu, welche definieren, welche Objekte in dieser Kategorie erscheinen sollen";
 
-#$lang_str["category_editor:lock"]="Lock category for editing";
-#$lang_str["category_editor:locked"]="This category is locked for editing. If you save, a clone with a new ID will be created.";
+$lang_str["category_editor:lock"]="Sperre Kategorie zum Editieren";
+$lang_str["category_editor:locked"]="Diese Kategorie ist zum Editieren gesperrt. Wenn Sie speichern wird eine Kopie mit einer neuen ID erzeugt.";

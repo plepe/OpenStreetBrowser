@@ -201,10 +201,10 @@ $lang_str["tag:place=city"]=array("Stadt", "Städte");
 $lang_str["tag:place=town"]=array("Kleinstadt", "Kleinstädte");
 $lang_str["tag:place=village"]=array("Dorf", "Dörfer");
 $lang_str["tag:place=suburb"]=array("Vorort", "Vororte");
-#$lang_str["tag:place=hamlet"]=array("Hamlet", "Hamlets");
+$lang_str["tag:place=hamlet"]="Weiler";
 $lang_str["tag:place=locality"]=array("Lokalität", "Lokalitäten");
 $lang_str["tag:place=island"]=array("Insel", "Inseln");
-$lang_str["tag:place=islet"]=array("Inselchen", "Inselchen");
+$lang_str["tag:place=islet"]="Inselchen";
 $lang_str["tag:place=ocean"]=array("Ozean", "Ozeane");
 $lang_str["tag:place=sea"]=array("Meer", "Meere");
 
@@ -407,7 +407,7 @@ $lang_str["tag:boundary"]="Grenze";
 #$lang_str["tag:abutters"]="Abutters";
 
 // lit
-#$lang_str["tag:lit"]="Street lighting";
+$lang_str["tag:lit"]="Straßenbeleuchtung";
 
 // area
 $lang_str["tag:area"]="Gebiet";
@@ -437,10 +437,10 @@ $lang_str["tag:layer"]="Ebene";
 #$lang_str["tag:smoothness"]="Smoothness";
 
 // ele
-#$lang_str["tag:ele"]="Elevation";
+$lang_str["tag:ele"]="Höhe";
 
 // width
-#$lang_str["tag:width"]="Width";
+$lang_str["tag:width"]="Breite";
 
 // est_width
 #$lang_str["tag:est_width"]="Estimated width";
@@ -465,7 +465,7 @@ $lang_str["tag:layer"]="Ebene";
 #$lang_str["tag:tactile_paving"]="Tactile paving";
 
 // narrow
-#$lang_str["tag:narrow"]="Narrow";
+$lang_str["tag:narrow"]="Eng";
 
 // covered
 #$lang_str["tag:covered"]="Covered";
@@ -504,25 +504,25 @@ $lang_str["tag:layer"]="Ebene";
 #$lang_str["tag:psv"]="PSV access permission";
 
 // oneway
-#$lang_str["tag:oneway"]="Oneway";
+$lang_str["tag:oneway"]="Einbahnstraße";
 
 // noexit
 $lang_str["tag:noexit"]="Sackgasse";
 
 // maxweight
-#$lang_str["tag:maxweight"]="Max. weight";
+$lang_str["tag:maxweight"]="Gewichtsbegrenzung";
 
 // maxheight
-#$lang_str["tag:maxheight"]="Max. height";
+$lang_str["tag:maxheight"]="Höhenbegrenzung";
 
 // maxlength
-#$lang_str["tag:maxlength"]="Max. length";
+$lang_str["tag:maxlength"]="Längenbegrenzung";
 
 // maxspeed
 $lang_str["tag:maxspeed"]="Höchstgeschwindigkeit";
 
 // minspeed
-#$lang_str["tag:minspeed"]="Min. speed";
+$lang_str["tag:minspeed"]="Mindestgeschwindigkeit";
 
 // traffic_sign
 $lang_str["tag:traffic_sign"]="Verkehrszeichen";
@@ -555,7 +555,7 @@ $lang_str["tag:created_by"]="Erstellt von";
 #$lang_str["tag:construction"]="Construction";
 
 // proposed
-#$lang_str["tag:proposed"]="Proposed";
+$lang_str["tag:proposed"]="Vorgeschlagen";
 
 // route_type
 $lang_str["tag:route_type"]="Routentyp";
