@@ -5,6 +5,7 @@
  */
 Header("content-type: text/html; charset=UTF-8");
 include("code.php");
+include "inc/global.php";
 
 if($_SERVER['QUERY_STRING']!="") {
   $path=$_SERVER['SCRIPT_NAME'];
@@ -26,6 +27,8 @@ if(!isset($version_string)) {
     $version_string="";
 }
 
+call_hooks("init", $dummy);
+call_hooks("http_head");
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -36,9 +39,8 @@ if(!isset($version_string)) {
 <link rel="search" type="application/opensearchdescription+xml" title="OpenStreetBrowser" href="osb_search.xml" />
 <script type="text/javascript" src="inc/hooks.js<?=$version_string?>"></script>
 <?
-include "inc/global.php";
-call_hooks("init", $dummy);
-print_add_html_headers();
+print_add_html_headers(); // legacy
+call_hooks("html_head");
 ?>
 <script type="text/javascript" src="index.js<?=$version_string?>"></script>
 <script type="text/javascript" src="ajax.js<?=$version_string?>"></script>
