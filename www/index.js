@@ -194,34 +194,6 @@ function set_location(params) {
   }
 }
 
-var last_location_hash;
-function check_redraw() {
-  var new_hash=location.hash;
-
-  // some browsers do not decode special characters
-  new_hash=urldecode(new_hash);
-
-  if(new_hash!=last_location_hash) {
-    location_params={};
-
-    var m;
-    if(m=new_hash.match(/^#(.*)\?(.*)$/)) {
-      location_params=string_to_hash(m[2]);
-      if(m[1]!="")
-	location_params.obj=m[1];
-      call_hooks("recv_permalink", hash_to_string(location_params));
-    }
-    else if(new_hash.substr(0, 1)=="#") {
-      location_params.obj=new_hash.substr(1);
-    }
-
-    call_hooks("hash_changed", location_params);
-    last_location_hash=new_hash;
-  }
-
-  redraw_timer=setTimeout("check_redraw()", 300);
-}
-
 function view_changed_start(event) {
   if((map.zoom)&&(start_zoom!=map.zoom))
     first_load=0;
@@ -297,11 +269,6 @@ function get_baseurl() {
 }
 
 function init() {
-  if(!location.hash) {
-    location.hash="#";
-  }
-//  else if(location.hash=="#")
-
   map = new OpenLayers.Map("map",
 	  { maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
 	    numZoomLevels: 19,
@@ -315,7 +282,6 @@ function init() {
 
   map.addControl(new OpenLayers.Control.ScaleLine({ geodesic: true }));
 
-  redraw_timer=setTimeout("check_redraw()", 300);
   register_hook("hash_changed", redraw);
 
   map.events.register("moveend", map, view_changed);
