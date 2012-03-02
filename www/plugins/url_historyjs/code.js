@@ -8,13 +8,15 @@ function url_history_statechange() {
     new_hash=m[1];
   }
 
+  if(m=new_hash.match(/^\.(\?.*)$/))
+    new_hash=m[1];
+
   location_params={};
 
   var m;
   if(m=new_hash.match(/^(.*)\?(.*)$/)) {
     location_params=string_to_hash(m[2]);
-    if(m[1]!="")
-      location_params.obj=m[1];
+    location_params.obj=m[1];
     call_hooks("recv_permalink", hash_to_string(location_params));
   }
   else {
@@ -38,12 +40,16 @@ function url_history_follow_link(ob) {
 
   if(m=ob.href.match(/#(.*)$/)) {
     var hash=m[1];
+    if(hash=="")
+      hash=".";
     window.History.pushState(null, null, hash);
     return false;
   }
 
   if(ob.href.substr(0, baseurl.length)==baseurl) {
     var hash=ob.href.substr(baseurl.length);
+    if(hash.match(/^\?(.*)$/))
+      hash="."+hash;
     window.History.pushState(null, null, hash);
     return false;
   }
