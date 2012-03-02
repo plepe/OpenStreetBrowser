@@ -195,3 +195,6 @@ $www_debug_level=2;
 // postgis_extensions - Some extensions to the postgis library
 // tags - Handling of tags (key/value-pairs)
 // nat_sort - Implement a natural sort algorithm
+
+// URL handling, Permalink and so on
+// url_hash - "Original" plugin using URL hashes
