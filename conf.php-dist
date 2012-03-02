@@ -198,3 +198,4 @@ $www_debug_level=2;
 
 // URL handling, Permalink and so on
 // url_hash - "Original" plugin using URL hashes
+// url_historyjs - Include external window.History library
