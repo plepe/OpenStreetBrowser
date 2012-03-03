@@ -399,6 +399,13 @@ $lang_str["tag:military"]="Military";
 
 // natural
 $lang_str["tag:natural"]="Natural";
+#$lang_str["tag:natural=beach"]="";
+#$lang_str["tag:natural=glacier"]="";
+#$lang_str["tag:natural=cliff"]="";
+#$lang_str["tag:natural=spring"]="";
+#$lang_str["tag:natural=volcano"]="";
+#$lang_str["tag:natural=wood"]="";
+#$lang_str["tag:natural=tree"]="";
 
 // geological
 $lang_str["tag:geological"]="Geological";
