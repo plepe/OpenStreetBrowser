@@ -60,9 +60,24 @@ function url_history_follow_link(ob) {
   return true;
 }
 
-function url_history_content_change(event) {
+function url_history_check_link(ob) {
   var m;
+  var href=ob.getAttribute("href");
 
+  if(!ob.onclick)
+    ob.onclick=url_history_follow_link.bind(this, ob);
+
+  if(!href)
+    return;
+
+  if(m=href.match(/^#(.*)$/))
+    href=m[1];
+
+  if(m=href.match(/^(\?.*)$/))
+    ob.setAttribute("href", "."+href);
+}
+
+function url_history_content_change(event) {
   if(!event)
     return;
 
@@ -70,11 +85,7 @@ function url_history_content_change(event) {
     return;
 
   if(event.target.tagName=="A") {
-    if(!event.target.onclick)
-      event.target.onclick=url_history_follow_link.bind(this, event.target);
-
-    if(m=event.target.href.match(/^#(.*)$/))
-      event.target.href=m[1];
+    url_history_check_link(event.target);
   }
 }
 
@@ -90,11 +101,7 @@ function url_historyhs_init() {
   // modify all links currently in the dom tree
   var as=document.getElementsByTagName("a");
   for(var i=0; i<as.length; i++) {
-    var a=as[i];
-
-    if(!a.onclick) {
-      a.onclick=url_history_follow_link.bind(this, a);
-    }
+    url_history_check_link(as[i]);
   }
 
   // if there's a # in the anchor remove it
