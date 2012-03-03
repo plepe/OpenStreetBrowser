@@ -35,10 +35,14 @@ function url_history_follow_link(ob) {
   var baseurl=get_baseurl();
   var m;
 
-  if(ob.href.substr(0, 11)=="javascript:")
+  var href=ob.getAttribute("href");
+  if(!href)
+    return;
+
+  if(href.substr(0, 11)=="javascript:")
     return true;
 
-  if(m=ob.href.match(/#(.*)$/)) {
+  if(m=href.match(/#(.*)$/)) {
     var hash=m[1];
     if(hash=="")
       hash=".";
@@ -46,11 +50,10 @@ function url_history_follow_link(ob) {
     return false;
   }
 
-  if(ob.href.substr(0, baseurl.length)==baseurl) {
-    var hash=ob.href.substr(baseurl.length);
-    if(hash.match(/^\?(.*)$/))
-      hash="."+hash;
-    window.History.pushState(null, null, hash);
+  if(!href.match(/^https?:\/\//)) {
+    if(href.match(/^\?(.*)$/))
+      href="."+href;
+    window.History.pushState(null, null, href);
     return false;
   }
 
