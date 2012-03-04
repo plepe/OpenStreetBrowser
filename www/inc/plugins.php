@@ -29,6 +29,9 @@ function plugins_load_conf($plugin) {
 
   include_once("$plugins_dir/$plugin/conf.php");
 
+  // Default Values
+  if(!isset($$var_active))
+    $$var_active=true;
   if(!$$var_conflict)
     $$var_conflict=array();
   if(!isset($$var_provide))
@@ -64,6 +67,11 @@ function plugins_check_dependency($plugin, &$loaded) {
 
   if(!isset($plugins_available[$plugin])) {
     debug("Including plugin '$plugin': No such plugin", "plugins", D_ERROR);
+    return;
+  }
+
+  if($$var_active===false) {
+    debug("Including plugin '$plugin': Plugin has been deactivated", "plugins", D_ERROR);
     return;
   }
 
@@ -133,9 +141,6 @@ function plugins_include($plugin, $app) {
   global $$var_depend;
   global $$var_conflict;
   global $$var_tags;
-
-  if(!$$var_active)
-    return false;
 
   if(file_exists("$plugins_dir/$plugin/$app.php"))
     $plugins_include_files[$plugin][]="$app.php";
