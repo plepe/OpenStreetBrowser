@@ -30,6 +30,7 @@ call_hooks("http_head");
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <link rel="search" type="application/opensearchdescription+xml" title="OpenStreetBrowser" href="osb_search.xml" />
 <script type="text/javascript" src="inc/hooks.js<?=$version_string?>"></script>
+<script type="text/javascript" src="inc/lang.js<?=$version_string?>"></script>
 <?
 print_add_html_headers(); // legacy
 call_hooks("html_head");
