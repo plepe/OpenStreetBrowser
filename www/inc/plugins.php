@@ -16,16 +16,20 @@ function plugins_include($plugin, $app) {
 
   $var_active="{$plugin}_active";
   $var_depend="{$plugin}_depend";
+  $var_conflict="{$plugin}_conflict";
   $var_tags="{$plugin}_tags";
 
   global $$var_active;
   global $$var_depend;
+  global $$var_conflict;
   global $$var_tags;
 
   include_once("$plugins_dir/$plugin/conf.php");
 
   if(!$$var_active)
     return false;
+  if(!$$var_conflict)
+    $$var_conflict=array();
 
   if(file_exists("$plugins_dir/$plugin/$app.php"))
     $plugins_include_files[$plugin][]="$app.php";
@@ -47,6 +51,27 @@ function plugins_include($plugin, $app) {
     }
 
   return true;
+}
+
+// returns false on error
+function plugins_check() {
+  global $plugins_list;
+
+  // check conflicts
+  $noerror=true;
+  foreach($plugins_list as $plugin=>$tags) {
+    $var_conflict="{$plugin}_conflict";
+    global $$var_conflict;
+
+    foreach($$var_conflict as $conflict) {
+      if(isset($plugins_list[$conflict])) {
+	debug("Plugin '$plugin': Conflict with plugin '$conflict', please deactivate.", "plugins", D_ERROR);
+	$noerror=false;
+      }
+    }
+  }
+
+  return $noerror;
 }
 
 function plugins_html_head($plugin) {
@@ -115,6 +140,11 @@ function plugins_init($app="code") {
   $plugins=array_keys($plugins_list);
 
   closedir($d);
+
+  if(!plugins_check()) {
+    print "Error loading plugins, see log for details.\n";
+    exit;
+  }
 }
 
 function plugins_include_file($plugin, $file) {
