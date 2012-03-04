@@ -1,0 +1,38 @@
+== Plugins ==
+A plugin has a unique name. A plugin has a directory (named after the plugin) with a couple of files. This files define the plugin, there can be several php and js files, as well as images and css files.
+
+== Files ==
+Example (a plugin called 'testplugin'):
+  testplugin/
+  testplugin/conf.php       -- basic configuration of the plugin like dependencies to other plugins
+  testplugin/code.php       -- the main code of the application - server side
+  testplugin/code.php       -- the main code of the application - daemon
+  testplugin/code.js        -- the main code of the application - browser side
+  testplugin/style.css      -- styles
+  testplugin/icon.png       -- an icon for toolbox/context menu/options
+  testplugin/lang_en.php    -- definition of ('en' for English) language strings
+
+If a plugin doesn't have server/browser side code or no additional styles, the
+files don't need to be created. Only the file conf.php is mandatory. You have
+to enable plugins by adding them to the <tt>$plugins</tt>-variable in main
+conf.php.
+
+In the code all global identifiers like functions, variables, classes, language
+strings, or styles should be called <tt>testplugin_something</tt>. Language
+Strings can be called 'testplugin:something'. If no translation is found
+everything before ":" (including ":") will be omitted.
+
+=== Configuration ===
+here's a configuration for every plugin. It can contain specific variables, but also contains some strings with defines the plugin. These variables will be exported to JavaScript.
+
+* <tt>$testplugin_active = true</tt> - set this to false to disable this plugin and all plugins which depend on this plugin. Plugins which are not listed in the global <tt>$plugins</tt>-var, but are depended on will be loaded automatically (but can be disabled with the active-var). Default: true.
+* <tt>$testplugin_depend = array("otherplugin");</tt> - Defines that the plugin needs other plugins. They will be included before this plugin.
+* <tt>$testplugin_provide = array("otherplugin");</tt> - Defines that this plugin can be used as replacement for other plugin (or functionality).
+* <tt>$testplugin_conflict = array("otherplugin");</tt> - Plugin can not be used together with otherplugin.
+* <tt>$testplugin_tags = new tags(array("name"=>"Test Plugin", "author"=>"John Doe"));</tt> - Some tags which other plugins might need
+
+=== Global Variables ===
+* <tt>$plugins_available</tt> (PHP/JS) - List of all available plugins as $plugins_available['testplugin']['active'] (resp. plugins_available.testplugin.active). In plugins_available all plugins are listed, even not loaded or deactivated.
+* <tt>$plugins</tt> (PHP/JS) - List of all loaded plugins. Form: array('plugin1', 'plugin2') resp. ['plugins1', 'plugins2'].
+
+Currently all $testplugin_* variables are available as global variables too, which can be considered legacy.
