@@ -3,9 +3,11 @@ $plugins_available=array();
 $plugins_list=array();
 $plugins_include_files=array();
 $plugins_dir="$root_path/www/plugins";
+$plugins_provide=array();
 
 function plugins_load_conf($plugin) {
   global $plugins_available;
+  global $plugins_provide;
   global $plugins_dir;
 
   if((!file_exists("$plugins_dir/$plugin"))||
@@ -16,28 +18,39 @@ function plugins_load_conf($plugin) {
   $var_active="{$plugin}_active";
   $var_depend="{$plugin}_depend";
   $var_conflict="{$plugin}_conflict";
+  $var_provide="{$plugin}_provide";
   $var_tags="{$plugin}_tags";
 
   global $$var_active;
   global $$var_depend;
   global $$var_conflict;
+  global $$var_provide;
   global $$var_tags;
 
   include_once("$plugins_dir/$plugin/conf.php");
 
   if(!$$var_conflict)
     $$var_conflict=array();
+  if(!isset($$var_provide))
+    $$var_provide=array();
+  elseif(is_string($$var_provide))
+    $$var_provide=array($$var_provide);
 
   $plugins_available[$plugin]=array(
     'active'	=>$$var_active,
     'depend'	=>$$var_depend,
     'conflict'	=>$$var_conflict,
+    'provide'	=>$$var_provide,
     'tags'	=>$$var_tags,
   );
+
+  foreach($$var_provide as $provide)
+    $plugins_provide[$provide][]=$plugin;
 }
 
 function plugins_check_dependency($plugin, &$loaded) {
   global $plugins_available;
+  global $plugins_provide;
 
   $var_active="{$plugin}_active";
   $var_depend="{$plugin}_depend";
@@ -55,7 +68,28 @@ function plugins_check_dependency($plugin, &$loaded) {
   }
 
   foreach($$var_depend as $dep) {
-    if(!isset($plugins_available[$dep])) {
+    if(isset($plugins_provide[$dep])) {
+      if(sizeof($plugins_provide[$dep])==1) {
+	debug("Including plugin '$plugin': Including dependency '$dep' - choosing '{$plugins_provide[$dep][0]}' instead", "plugins", D_WARNING);
+	$dep=$plugins_provide[$dep][0];
+      }
+      else {
+	$found=false;
+	foreach($loaded as $p)
+	  if(in_array($p, $plugins_provide[$dep]))
+	    $found=$p;
+
+	if($found) {
+	  debug("Including plugin '$plugin': Dependency '$dep' provided by '$found'", "plugins", D_NOTICE);
+	  $dep=$found;
+	}
+	else {
+	  debug("Including plugin '$plugin': Cannot include dependency '$dep', provided by '".implode("' or '", $plugins_provide[$dep])."' - enable one of them", "plugins", D_ERROR);
+	  return;
+	}
+      }
+    }
+    elseif(!isset($plugins_available[$dep])) {
       debug("Including plugin '$plugin': Cannot include dependency '$dep' - deactivating", "plugins", D_ERROR);
       return;
     }
@@ -194,6 +228,7 @@ function plugins_init($app="code") {
   global $plugins_dir;
   global $plugins_list;
   global $plugins_available;
+  global $plugins_provide;
   global $plugins;
   $plugins_list=array();
 
