@@ -1,16 +1,15 @@
 <?
+$plugins_available=array();
 $plugins_list=array();
 $plugins_include_files=array();
 $plugins_dir="$root_path/www/plugins";
 
-function plugins_include($plugin, $app) {
-  global $plugins_list;
-  global $plugins_include_files;
+function plugins_load_conf($plugin) {
+  global $plugins_available;
   global $plugins_dir;
 
   if((!file_exists("$plugins_dir/$plugin"))||
      (!file_exists("$plugins_dir/$plugin/conf.php"))) {
-    debug("Including plugin '$plugin': No such plugin", "plugins", D_WARNING);
     return false;
   }
 
@@ -26,10 +25,40 @@ function plugins_include($plugin, $app) {
 
   include_once("$plugins_dir/$plugin/conf.php");
 
-  if(!$$var_active)
-    return false;
   if(!$$var_conflict)
     $$var_conflict=array();
+
+  $plugins_available[$plugin]=array(
+    'active'	=>$$var_active,
+    'depend'	=>$$var_depend,
+    'conflict'	=>$$var_conflict,
+    'tags'	=>$$var_tags,
+  );
+}
+
+function plugins_include($plugin, $app) {
+  global $plugins_list;
+  global $plugins_include_files;
+  global $plugins_dir;
+  global $plugins_available;
+
+  if(!isset($plugins_available[$plugin])) {
+    debug("Including plugin '$plugin': No such plugin", "plugins", D_WARNING);
+    return false;
+  }
+
+  $var_active="{$plugin}_active";
+  $var_depend="{$plugin}_depend";
+  $var_conflict="{$plugin}_conflict";
+  $var_tags="{$plugin}_tags";
+
+  global $$var_active;
+  global $$var_depend;
+  global $$var_conflict;
+  global $$var_tags;
+
+  if(!$$var_active)
+    return false;
 
   if(file_exists("$plugins_dir/$plugin/$app.php"))
     $plugins_include_files[$plugin][]="$app.php";
@@ -130,17 +159,26 @@ function plugins_html_head($plugin) {
 function plugins_init($app="code") {
   global $plugins_dir;
   global $plugins_list;
+  global $plugins_available;
   global $plugins;
   $plugins_list=array();
 
+  // Load conf.php of all plugins
   $d=opendir("$plugins_dir/");
+  while($plugin=readdir($d)) {
+    if((substr($plugin, 0, 1)!=".")&&(is_dir("$plugins_dir/$plugin"))) {
+      plugins_load_conf($plugin);
+    }
+  }
+  closedir($d);
+
+  // Include plugins
   foreach($plugins as $plugin) {
     plugins_include($plugin, $app);
   }
 
   $plugins=array_keys($plugins_list);
 
-  closedir($d);
 
   if(!plugins_check()) {
     print "Error loading plugins, see log for details.\n";
