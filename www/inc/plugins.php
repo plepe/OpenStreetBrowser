@@ -36,6 +36,49 @@ function plugins_load_conf($plugin) {
   );
 }
 
+function plugins_check_dependency($plugin, &$loaded) {
+  global $plugins_available;
+
+  $var_active="{$plugin}_active";
+  $var_depend="{$plugin}_depend";
+  $var_conflict="{$plugin}_conflict";
+  $var_tags="{$plugin}_tags";
+
+  global $$var_active;
+  global $$var_depend;
+  global $$var_conflict;
+  global $$var_tags;
+
+  if(!isset($plugins_available[$plugin])) {
+    debug("Including plugin '$plugin': No such plugin", "plugins", D_ERROR);
+    return;
+  }
+
+  foreach($$var_depend as $dep) {
+    if(!isset($plugins_available[$dep])) {
+      debug("Including plugin '$plugin': Cannot include dependency '$dep' - deactivating", "plugins", D_ERROR);
+      return;
+    }
+
+    if(!in_array($dep, $loaded))
+      $loaded[]=$dep;
+  }
+
+  if(!in_array($plugin, $loaded))
+    $loaded[]=$plugin;
+}
+
+function plugins_check_dependencies($plugins) {
+  global $plugins_available;
+  $loaded=array();
+
+  foreach($plugins as $p) {
+    plugins_check_dependency($p, &$loaded);
+  }
+
+  return $loaded;
+}
+
 function plugins_include($plugin, $app) {
   global $plugins_list;
   global $plugins_include_files;
@@ -62,15 +105,6 @@ function plugins_include($plugin, $app) {
 
   if(file_exists("$plugins_dir/$plugin/$app.php"))
     $plugins_include_files[$plugin][]="$app.php";
-
-  if(is_array($$var_depend))
-    foreach($$var_depend as $inc) {
-      if(!isset($plugins_list[$inc])) {
-	if(!plugins_include($inc, $app))
-	  debug("Including plugin '$plugin': Cannot include dependency '$inc' - deactivating", "plugins", D_ERROR);
-	  return false;
-      }
-    }
 
   $plugins_list[$plugin]=$$var_tags;
 
@@ -171,6 +205,9 @@ function plugins_init($app="code") {
     }
   }
   closedir($d);
+
+  // Check dependencies
+  $plugins=plugins_check_dependencies($plugins);
 
   // Include plugins
   foreach($plugins as $plugin) {
