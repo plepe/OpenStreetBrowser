@@ -10,7 +10,7 @@ function plugins_include($plugin, $app) {
 
   if((!file_exists("$plugins_dir/$plugin"))||
      (!file_exists("$plugins_dir/$plugin/conf.php"))) {
-    debug("Including plugin '$plugin': No such plugin", "plugins");
+    debug("Including plugin '$plugin': No such plugin", "plugins", D_WARNING);
     return false;
   }
 
@@ -38,6 +38,7 @@ function plugins_include($plugin, $app) {
     foreach($$var_depend as $inc) {
       if(!isset($plugins_list[$inc])) {
 	if(!plugins_include($inc, $app))
+	  debug("Including plugin '$plugin': Cannot include dependency '$inc' - deactivating", "plugins", D_ERROR);
 	  return false;
       }
     }
