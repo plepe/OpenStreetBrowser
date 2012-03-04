@@ -39,12 +39,17 @@ function plugins_load_conf($plugin) {
   elseif(is_string($$var_provide))
     $$var_provide=array($$var_provide);
 
+  if($$var_tags)
+    $tags=$$var_tags->data();
+  else
+    $tags=array();
+
   $plugins_available[$plugin]=array(
     'active'	=>$$var_active,
     'depend'	=>$$var_depend,
     'conflict'	=>$$var_conflict,
     'provide'	=>$$var_provide,
-    'tags'	=>$$var_tags,
+    'tags'	=>$tags,
   );
 
   foreach($$var_provide as $provide)
@@ -183,6 +188,7 @@ function plugins_html_head($plugin) {
   global $plugins_include_files;
   global $plugins;
   global $version_string;
+  global $plugins_available;
   $plugins_script="";
   $str="";
 
@@ -227,6 +233,7 @@ function plugins_html_head($plugin) {
 
   print "<script type='text/javascript'>\n$plugins_script\n</script>\n";
   print $str;
+  html_export_var(array("plugins_available"=>$plugins_available));
 }
 
 function plugins_init($app="code") {
