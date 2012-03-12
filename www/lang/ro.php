@@ -110,7 +110,7 @@ $lang_str["user:password_no_match"]="Parolele nu se potrivesc!";
 $lang_str["user:full_name"]="Numele complet";
 $lang_str["user:user_exists"]="Numele de utilizator exista deja";
 $lang_str["user:login"]="Autentificare";
-$lang_str["user:logged_in_as"]="Conectat ca";
+$lang_str["user:logged_in_as"]="Conectat ca ";
 $lang_str["user:logout"]="Deconectare";
 
 $lang_str["attention"]="Atentie:";
