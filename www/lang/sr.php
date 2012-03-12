@@ -81,57 +81,58 @@ $lang_str["main:licence"]="Картографски подаци: <a href=\"http
 
 #$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
-#$lang_str["options:autozoom"]="Autozoom behaviour";
+$lang_str["options:autozoom"]="Понашање аутоувећања";
 #$lang_str["help:autozoom"]="When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.";
 #$lang_str["options:autozoom:pan"]="Pan to current object (nicer)";
 #$lang_str["options:autozoom:move"]="Move to current object (faster)";
 #$lang_str["options:autozoom:stay"]="Never change viewport automatically";
 
-#$lang_str["options:language_support"]="Language Support";
+$lang_str["options:language_support"]="Јазичка подршка";
 #$lang_str["help:language_support"]="You can choose your prefered languages with this options. The first option changes the language of the user interface. The second option changes the data language. Date of many geographic objects has been translated to several languages. If no translation is available or \"Local language\" was chosen, the main language of the object is displayed.";
-#$lang_str["options:ui_lang"]="Interface language";
-#$lang_str["options:data_lang"]="Data language";
-#$lang_str["lang:"]="Local language";
-#$lang_str["lang:auto"]="Same as interface language";
+$lang_str["options:ui_lang"]="Језик интерфејса";
+$lang_str["options:data_lang"]="Језик подетака";
+$lang_str["lang:"]="Локални језик";
+$lang_str["lang:auto"]="Исти као језик интерфејса";
 
-#$lang_str["overlay:data"]="Data";
-#$lang_str["overlay:draggable"]="Markers";
+$lang_str["overlay:data"]="Подаци";
+$lang_str["overlay:draggable"]="Маркери";
 
-#$lang_str["user:no_auth"]="Username or password wrong!";
-#$lang_str["user:login_text"]="Log in to OpenStreetBrowser:";
-#$lang_str["user:create_user"]="Create a new user:";
-#$lang_str["user:username"]="Username";
-#$lang_str["user:email"]="E-mail address";
-#$lang_str["user:password"]="Password";
-#$lang_str["user:password_verify"]="Verify password";
-#$lang_str["user:old_password"]="Old password";
-#$lang_str["user:no_username"]="Please supply a username!";
-#$lang_str["user:password_no_match"]="Passwords do not match!";
-#$lang_str["user:full_name"]="Full name";
-#$lang_str["user:user_exists"]="Username already exists";
-#$lang_str["user:login"]="Login";
-#$lang_str["user:logged_in_as"]="Logged in as ";
-#$lang_str["user:logout"]="Logout";
+$lang_str["user:no_auth"]="Погрешно корисничко име или шифра";
+$lang_str["user:login_text"]="Пријави се у ОУП";
+$lang_str["user:create_user"]="Направи новог корисника";
+$lang_str["user:username"]="Корисничко име";
+$lang_str["user:email"]="Е-пошта";
+$lang_str["user:password"]="Шифра";
+$lang_str["user:password_verify"]="Потврди шифру";
+$lang_str["user:old_password"]="Стара шифра";
+$lang_str["user:no_username"]="Упиши корисничко име!";
+$lang_str["user:password_no_match"]="Шифре се не подударају";
+$lang_str["user:full_name"]="Пуно име";
+$lang_str["user:user_exists"]="Корисничко име већ постоји";
+$lang_str["user:login"]="Пријави се";
+$lang_str["user:logged_in_as"]="Пријављен као";
+$lang_str["user:logout"]="Одјави се";
 
-#$lang_str["attention"]="Attention: ";
-#$lang_str["error"]="An error occured: ";
-#$lang_str["error:not_logged_in"]="you are not logged in";
+$lang_str["attention"]="Пажња:";
+$lang_str["error"]="Грешка:";
+$lang_str["error:not_logged_in"]="Ниси пријављен";
 
-#$lang_str["category"]=array("Category", "Categories");
-#$lang_str["more_categories"]="More categories";
-#$lang_str["category:status"]="Status";
-#$lang_str["category:data_status"]="Status";
+$lang_str["category"]=array("Категорија", "Категорије");
+$lang_str["more_categories"]="Више категорија";
+$lang_str["category:status"]="Стање";
+$lang_str["category:data_status"]="Стање";
 #$lang_str["category:old_version"]="A new version of this category is being prepared.";
 #$lang_str["category:not_compiled"]="New category is being prepared.";
 
-#$lang_str["category:new_rule"]="New Rule";
-#$lang_str["category_rule_tag:match"]="Match";
-#$lang_str["category_rule_tag:description"]="Description";
-#$lang_str["category_chooser:choose"]="Choose a category";
-#$lang_str["category_chooser:new"]="New category";
-#$lang_str["category:sub_category"]=array("Sub-category", "Sub-categories");
+$lang_str["category:new_rule"]="Ново правило";
+$lang_str["category_rule_tag:match"]="Подударање";
+$lang_str["category_rule_tag:description"]="Опис";
+$lang_str["category_chooser:choose"]="Одабери категорију";
+$lang_str["category_chooser:new"]="Нова категорија";
+$lang_str["category:sub_category"]=array("Подкатегорија", "Подкатегорије");
 
-#$lang_str["basemap:osb"]="OpenStreetBrowser";
+$lang_str["basemap:osb"]="ОтворениУличниПретраживач";
+#$lang_str["basemap:osb_light"]="OpenStreetBrowser (pale)";
 #$lang_str["basemap:mapnik"]="Standard (Mapnik)";
 #$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
-#$lang_str["basemap:cyclemap"]="CycleMap";
+$lang_str["basemap:cyclemap"]="Бициклистичка карта";
