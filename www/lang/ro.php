@@ -4,7 +4,7 @@
 // When translating a language variant (e.g. 'British English', code 'en-gb') please translate only strings which are different from the base language.
 $lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
 
-$lang_str["lang:current"]="Romana"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
+$lang_str["lang:current"]="Romanian"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
 // General
 $lang_str["general_info"]="Informatii generale";
