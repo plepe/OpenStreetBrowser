@@ -32,7 +32,7 @@ $lang_str["more"]="Mai mult";
 $lang_str["source"]="Sursa";
 #$lang_str["unnamed"]="unnamed";
 #$lang_str["zoom"]="Zoom level";
-#$lang_str["no_message"]=array("no message", "no messages");
+$lang_str["no_message"]="Nici un mesaj";
 #$lang_str["ad"]=array("Advertisement", "Advertisements");
 
 // Headings
@@ -97,7 +97,7 @@ $lang_str["lang:auto"]="La fel ca limba interfata";
 #$lang_str["overlay:data"]="Data";
 #$lang_str["overlay:draggable"]="Markers";
 
-$lang_str["user:no_auth"]="Numele utilizatorului sau parola este gresit !";
+$lang_str["user:no_auth"]="Nume de utilizator sau parola gresita!";
 $lang_str["user:login_text"]="Autentifica-te pe OpenStreetBrowser:";
 $lang_str["user:create_user"]="Creeaza un utilizator nou :";
 $lang_str["user:username"]="Nume utilizator";
@@ -126,7 +126,7 @@ $lang_str["category:old_version"]="O versiune nouă a acestei categorii este în
 
 $lang_str["category:new_rule"]="Noi reguli";
 #$lang_str["category_rule_tag:match"]="Match";
-#$lang_str["category_rule_tag:description"]="Description";
+$lang_str["category_rule_tag:description"]="Descriere";
 $lang_str["category_chooser:choose"]="Alege o categorie";
 $lang_str["category_chooser:new"]="Categorie noua";
 $lang_str["category:sub_category"]="Sub categorie";
