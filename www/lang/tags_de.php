@@ -42,7 +42,7 @@ $lang_str["tag:aeroway=taxiway"]="Rollbahn";
 
 // admin_level
 $lang_str["tag:admin_level=2"]="Staat";
-#$lang_str["tag:admin_level=3"]="Divisions";
+$lang_str["tag:admin_level=3"]="Divisionen";
 $lang_str["tag:admin_level=4"]="Land";
 $lang_str["tag:admin_level=5"]="Regierungsbezirk";
 $lang_str["tag:admin_level=6"]="Kreis";
@@ -191,7 +191,7 @@ $lang_str["tag:opening_hours"]="Öffnungszeiten";
 $lang_str["tag:operator"]="Betreiber";
 
 // place
-$lang_str["tag:place"]="Ort";
+$lang_str["tag:place"]=array("Ort", "Orte");
 $lang_str["tag:place=continent"]=array("Kontinent", "Kontinente");
 $lang_str["tag:place=country"]=array("Land", "Länder");
 $lang_str["tag:place=state"]=array("Staat", "Staaten");
@@ -254,10 +254,21 @@ $lang_str["tag:religion=buddhist"]="buddhistisch";
 $lang_str["tag:religion=hindu"]="hindisch";
 $lang_str["tag:religion=jewish"]="jüdisch";
 $lang_str["tag:religion=muslim"]="muslimisch";
-#$lang_str["tag:religion=multifaith"]="multifaith";
+$lang_str["tag:religion=multifaith"]="überreligiös";
 
 // denomination
 $lang_str["tag:denomination"]="Konfession";
+$lang_str["tag:denomination=anglican"]="anglikanisch";
+$lang_str["tag:denomination=baptist"]="baptistisch";
+$lang_str["tag:denomination=catholic"]="katholisch";
+$lang_str["tag:denomination=greek_orthodox"]="griechisch-orthodox";
+$lang_str["tag:denomination=lutheran"]="evangelisch-lutheranisch";
+$lang_str["tag:denomination=orthodox"]="orthodox";
+$lang_str["tag:denomination=old-catholic"]="altkatholisch";
+$lang_str["tag:denomination=protestant"]="evangelisch";
+$lang_str["tag:denomination=roman_catholic"]="römisch-katholisch";
+$lang_str["tag:denomination=russian_orthodox"]="russisch-orthodox";
+$lang_str["tag:denomination=united_reformed"]="vereinigt-reformiert";
 
 // route
 $lang_str["tag:route"]="Route";
@@ -449,10 +460,10 @@ $lang_str["tag:width"]="Breite";
 #$lang_str["tag:incline"]="incline";
 
 // start_date
-#$lang_str["tag:start_date"]="Date of creation";
+$lang_str["tag:start_date"]="Anfangsdatum";
 
 // end_date
-#$lang_str["tag:end_date"]="Date of removal";
+$lang_str["tag:end_date"]="Enddatum";
 
 // disused
 #$lang_str["tag:disused"]="Disused";
@@ -474,13 +485,13 @@ $lang_str["tag:narrow"]="Eng";
 #$lang_str["tag:ford"]="Ford";
 
 // access
-#$lang_str["tag:access"]="General access permission";
+$lang_str["tag:access"]="Allgemeine Zugangserlaubnis";
 
 // vehicle
-#$lang_str["tag:vehicle"]="Vehicle access permission";
+$lang_str["tag:vehicle"]="Fahrzeugzugangserlaubnis";
 
 // bicycle
-#$lang_str["tag:bicycle"]="Bicycle access permission";
+$lang_str["tag:bicycle"]="Fahrradzugangserlaubnis";
 
 // foot
 #$lang_str["tag:foot"]="Foot access permission";
@@ -546,16 +557,16 @@ $lang_str["tag:fax"]="Faxnummer";
 $lang_str["tag:email"]="E-Mail";
 
 // wikipedia
-#$lang_str["tag:wikipedia"]="Wikipedia";
+$lang_str["tag:wikipedia"]="Wikipedia";
 
 // created_by
 $lang_str["tag:created_by"]="Erstellt von";
 
 // construction
-#$lang_str["tag:construction"]="Construction";
+$lang_str["tag:construction"]="In Bau";
 
 // proposed
-$lang_str["tag:proposed"]="Vorgeschlagen";
+$lang_str["tag:proposed"]="In Planung";
 
 // route_type
 $lang_str["tag:route_type"]="Routentyp";
