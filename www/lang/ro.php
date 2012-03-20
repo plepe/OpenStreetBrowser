@@ -88,7 +88,7 @@ $lang_str["options:autozoom:move"]="Muta la obiectul curent (rapid)";
 $lang_str["options:autozoom:stay"]="Nu se schimba niciodata automat fereastra";
 
 $lang_str["options:language_support"]="Suport pentru limba";
-#$lang_str["help:language_support"]="You can choose your prefered languages with this options. The first option changes the language of the user interface. The second option changes the data language. Date of many geographic objects has been translated to several languages. If no translation is available or \"Local language\" was chosen, the main language of the object is displayed.";
+$lang_str["help:language_support"]="Aveţi posibilitatea să alegeţi dumneavoastră preferat de limbi cu aceste opţiuni.Prima opţiune schimba limba interfeţei utilizator.Doua opţiune schimbă limba de date. Data de multe obiecte geografice, a fost tradus în mai multe limbi. Dacă nu este disponibilă traducerea sau \"limba locală\" a fost ales, limba principală a obiectului este afişată.";
 $lang_str["options:ui_lang"]="Limba interfata";
 $lang_str["options:data_lang"]="Limba date";
 $lang_str["lang:"]="Limba locala";
