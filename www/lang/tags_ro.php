@@ -15,7 +15,7 @@ $lang_str["tag:address"]="Adresa";
 $lang_str["tag:addr:housenumber"]="Numar casa";
 
 // addr:housename
-#$lang_str["tag:addr:housename"]=array("House name", "House names");
+$lang_str["tag:addr:housename"]="Nume casa ";
 
 // addr:street
 $lang_str["tag:addr:street"]="Strada";
@@ -50,7 +50,7 @@ $lang_str["tag:addr:full"]="Adresa completa";
 #$lang_str["tag:admin_level=10"]="Subdivisions of Cities";
 
 // amenity
-#$lang_str["tag:amenity"]="Amenity";
+$lang_str["tag:amenity"]="Atractie";
 $lang_str["tag:amenity=cinema"]="Cinema";
 $lang_str["tag:amenity=restaurant"]="Restaurant";
 $lang_str["tag:amenity=pub"]="Pub";
@@ -70,10 +70,10 @@ $lang_str["tag:cables"]="Cabluri";
 $lang_str["tag:description"]="Descriere";
 
 // fixme
-#$lang_str["tag:fixme"]="Fix me";
+$lang_str["tag:fixme"]="Corecteaza";
 
 // note
-#$lang_str["tag:note"]="Note";
+$lang_str["tag:note"]="Notita";
 
 // food
 #$lang_str["tag:food"]="Serves food";
@@ -122,13 +122,13 @@ $lang_str["tag:tunnel"]="Tunel";
 $lang_str["tag:postal_code"]="Cod postal";
 
 // is_in
-#$lang_str["tag:is_in"]="Is in";
+$lang_str["tag:is_in"]="este in";
 
 // leisure
 #$lang_str["tag:leisure"]="Leisure";
 #$lang_str["tag:leisure=sports_centre"]="Sport Centre";
 #$lang_str["tag:leisure=golf_course"]="Golf Course";
-#$lang_str["tag:leisure=stadium"]="Stadium";
+$lang_str["tag:leisure=stadium"]="Stadion";
 #$lang_str["tag:leisure=track"]="Track";
 #$lang_str["tag:leisure=pitch"]="Pitche";
 #$lang_str["tag:leisure=water_park"]="Water Park";
@@ -137,7 +137,7 @@ $lang_str["tag:postal_code"]="Cod postal";
 #$lang_str["tag:leisure=fishing"]="Fishing";
 #$lang_str["tag:leisure=nature_reserve"]="Nature Reserve";
 #$lang_str["tag:leisure=park"]="Leisure Park";
-#$lang_str["tag:leisure=playground"]="Playground";
+$lang_str["tag:leisure=playground"]="Teren de joaca";
 #$lang_str["tag:leisure=garden"]="Garden";
 #$lang_str["tag:leisure=common"]="Common";
 #$lang_str["tag:leisure=ice_rink"]="Ice Rink";
@@ -152,7 +152,7 @@ $lang_str["tag:postal_code"]="Cod postal";
 #$lang_str["tag:man_made=pipeline"]=array("Pipeline", "Pipelines");
 
 // type
-#$lang_str["tag:type"]="Type";
+$lang_str["tag:type"]="Model";
 $lang_str["tag:type=gas"]="Peco";
 #$lang_str["tag:type=heat"]="Heat";
 $lang_str["tag:type=hot_water"]="Apa calda";
@@ -188,16 +188,16 @@ $lang_str["tag:old_name"]="Nume vechi";
 #$lang_str["tag:opening_hours"]="Opening hours";
 
 // operator
-#$lang_str["tag:operator"]="Operator";
+$lang_str["tag:operator"]="Operator";
 
 // place
 #$lang_str["tag:place"]="Place";
-#$lang_str["tag:place=continent"]=array("Continent", "Continents");
+$lang_str["tag:place=continent"]="Continent";
 #$lang_str["tag:place=country"]=array("Country", "Countries");
-#$lang_str["tag:place=state"]=array("State", "States");
+$lang_str["tag:place=state"]="Stat";
 $lang_str["tag:place=region"]="Regiune";
 #$lang_str["tag:place=county"]=array("County", "Counties");
-#$lang_str["tag:place=city"]=array("City", "Cities");
+$lang_str["tag:place=city"]="Oras";
 #$lang_str["tag:place=town"]="Town";
 #$lang_str["tag:place=village"]=array("Village", "Villages");
 #$lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
@@ -225,13 +225,13 @@ $lang_str["tag:population"]="Populatie";
 #$lang_str["tag:power_source"]="Power source";
 $lang_str["tag:power_source=biofuel"]="Combustibil Bio";
 $lang_str["tag:power_source=oil"]="Ulei";
-#$lang_str["tag:power_source=coal"]="Coal";
+$lang_str["tag:power_source=coal"]="Carbune";
 $lang_str["tag:power_source=gas"]="Gaz";
-#$lang_str["tag:power_source=waste"]="Waste";
+$lang_str["tag:power_source=waste"]="Deseuri";
 #$lang_str["tag:power_source=hydro"]="Hydro";
 #$lang_str["tag:power_source=tidal"]="Tidal";
 #$lang_str["tag:power_source=wave"]="Wave";
-#$lang_str["tag:power_source=geothermal"]="Geothermal";
+$lang_str["tag:power_source=geothermal"]="Geotermal";
 $lang_str["tag:power_source=nuclear"]="Nuclear";
 #$lang_str["tag:power_source=fusion"]="Fusion";
 $lang_str["tag:power_source=wind"]="Vant";
@@ -260,23 +260,23 @@ $lang_str["tag:religion=buddhist"]="Budista";
 #$lang_str["tag:denomination"]="Denomination";
 
 // route
-#$lang_str["tag:route"]="Route";
-#$lang_str["tag:route=train"]="Train";
-#$lang_str["tag:route=railway"]="Railway";
-#$lang_str["tag:route=rail"]="Railway";
+$lang_str["tag:route"]="Ruta";
+$lang_str["tag:route=train"]="Tren";
+$lang_str["tag:route=railway"]="Cale ferata ";
+$lang_str["tag:route=rail"]="Cale ferata ";
 #$lang_str["tag:route=light_rail"]="Light Rail";
-#$lang_str["tag:route=subway"]="Subway";
+$lang_str["tag:route=subway"]="Metrou";
 $lang_str["tag:route=tram"]="Tramvai";
-#$lang_str["tag:route=tram_bus"]="Tram and Bus";
-#$lang_str["tag:route=trolley"]="Trolley";
-#$lang_str["tag:route=trolleybus"]="Trolley";
+$lang_str["tag:route=tram_bus"]="Tramvai si autobuz";
+$lang_str["tag:route=trolley"]="Troleu";
+$lang_str["tag:route=trolleybus"]="Troleu";
 $lang_str["tag:route=bus"]="Autobuz";
 #$lang_str["tag:route=minibus"]="Minibus";
 #$lang_str["tag:route=ferry"]="Ferry";
 #$lang_str["tag:route=road"]="Road";
 $lang_str["tag:route=bicycle"]="Bicicleta";
 #$lang_str["tag:route=hiking"]="Hiking";
-#$lang_str["tag:route=mtb"]="Mountainbike";
+$lang_str["tag:route=mtb"]="Mountainbike";
 
 // shop
 #$lang_str["tag:shop"]="Shop";
@@ -293,7 +293,7 @@ $lang_str["tag:sport"]="Sport";
 #$lang_str["tag:sport=beachvolleyball"]="Beachvolleyball";
 #$lang_str["tag:sport=boules"]="Boules";
 #$lang_str["tag:sport=bowls"]="Bowls";
-#$lang_str["tag:sport=canoe"]="Canoe";
+$lang_str["tag:sport=canoe"]="Canoe";
 #$lang_str["tag:sport=chess"]="Chess";
 #$lang_str["tag:sport=climbing"]="Climbing";
 #$lang_str["tag:sport=cricket"]="Cricket";
@@ -463,7 +463,7 @@ $lang_str["tag:natural"]="Natural";
 #$lang_str["tag:covered"]="Covered";
 
 // ford
-#$lang_str["tag:ford"]="Ford";
+$lang_str["tag:ford"]="Vad";
 
 // access
 #$lang_str["tag:access"]="General access permission";
@@ -496,25 +496,25 @@ $lang_str["tag:natural"]="Natural";
 #$lang_str["tag:psv"]="PSV access permission";
 
 // oneway
-#$lang_str["tag:oneway"]="Oneway";
+$lang_str["tag:oneway"]="Un singur sens";
 
 // noexit
-#$lang_str["tag:noexit"]="Dead end road";
+$lang_str["tag:noexit"]="Sfarsit de drum";
 
 // maxweight
-#$lang_str["tag:maxweight"]="Max. weight";
+$lang_str["tag:maxweight"]="Greutate maxima";
 
 // maxheight
-#$lang_str["tag:maxheight"]="Max. height";
+$lang_str["tag:maxheight"]="Inaltime maxima";
 
 // maxlength
-#$lang_str["tag:maxlength"]="Max. length";
+$lang_str["tag:maxlength"]="Lungime maxima";
 
 // maxspeed
-#$lang_str["tag:maxspeed"]="Max. speed";
+$lang_str["tag:maxspeed"]="Viteza maxima";
 
 // minspeed
-#$lang_str["tag:minspeed"]="Min. speed";
+$lang_str["tag:minspeed"]="Viteza minima";
 
 // traffic_sign
 #$lang_str["tag:traffic_sign"]="Traffic sign";
@@ -529,19 +529,19 @@ $lang_str["tag:natural"]="Natural";
 #$lang_str["tag:source"]="Source";
 
 // phone
-#$lang_str["tag:phone"]="Phone number";
+$lang_str["tag:phone"]="Numar de telefon";
 
 // fax
-#$lang_str["tag:fax"]="Fax number";
+$lang_str["tag:fax"]="Numar de fax";
 
 // email
-#$lang_str["tag:email"]="E-mail";
+$lang_str["tag:email"]="E-mail";
 
 // wikipedia
-#$lang_str["tag:wikipedia"]="Wikipedia";
+$lang_str["tag:wikipedia"]="	Wikipedia";
 
 // created_by
-#$lang_str["tag:created_by"]="Created by";
+$lang_str["tag:created_by"]="Creeat de ";
 
 // construction
 #$lang_str["tag:construction"]="Construction";
