@@ -30,10 +30,10 @@ $lang_str["nothing_found"]="Nu s-a gasit nimic";
 $lang_str["loading"]="Se incarca...";
 $lang_str["more"]="Mai mult";
 $lang_str["source"]="Sursa";
-#$lang_str["unnamed"]="unnamed";
+$lang_str["unnamed"]="anonim";
 #$lang_str["zoom"]="Zoom level";
 $lang_str["no_message"]="Nici un mesaj";
-#$lang_str["ad"]=array("Advertisement", "Advertisements");
+$lang_str["ad"]="Advertisment";
 
 // Headings
 $lang_str["head:general_info"]="Informatii generale";
@@ -43,12 +43,12 @@ $lang_str["head:members"]="Membrii";
 $lang_str["head:address"]="Adresa";
 #$lang_str["head:internal"]="OSM Internal";
 #$lang_str["head:services"]="Services";
-#$lang_str["head:culture"]="Culture";
+$lang_str["head:culture"]="Cultura";
 #$lang_str["head:routing"]="Routing";
 $lang_str["head:search"]="Cauta";
-#$lang_str["head:actions"]=array("Action", "Actions");
+$lang_str["head:actions"]="Actiune";
 $lang_str["head:location"]="Locatie";
-#$lang_str["head:tags"]=array("Tag", "Tags");
+$lang_str["head:tags"]="Eticheta";
 $lang_str["head:whats_here"]="Ce se afla aici ?";
 
 $lang_str["action_browse"]="cauta in OSM";
@@ -61,13 +61,13 @@ $lang_str["geo_change_pos"]="Schimba pozitia mea";
 $lang_str["routing_type_car"]="Masina";
 $lang_str["routing_type_car_shortest"]="Masina (Shortest)";
 $lang_str["routing_type_bicycle"]="Bicicleta";
-#$lang_str["routing_type_foot"]="Foot";
-#$lang_str["routing_type"]="Route type";
+$lang_str["routing_type_foot"]="Pedestru";
+$lang_str["routing_type"]="Tip ruta";
 $lang_str["routing_distance"]="Distanta";
 $lang_str["routing_time"]="Timp";
 
-#$lang_str["list_info"]="Choose a category to browse map content or click on an object on the map for details";
-#$lang_str["list_leisure_sport_tourism"]="Leisure, Sport and Tourism";
+$lang_str["list_info"]="Alege o categorie pentru a căuta conţinut hartă sau faceţi clic pe un obiect de pe hartă pentru detalii";
+$lang_str["list_leisure_sport_tourism"]="Timp liber, Sport si Turism";
 
 // Mapkey
 
@@ -85,7 +85,7 @@ $lang_str["main:permalink"]="Permalink";
 #$lang_str["help:autozoom"]="When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.";
 #$lang_str["options:autozoom:pan"]="Pan to current object (nicer)";
 $lang_str["options:autozoom:move"]="Muta la obiectul curent (rapid)";
-#$lang_str["options:autozoom:stay"]="Never change viewport automatically";
+$lang_str["options:autozoom:stay"]="Nu se schimba niciodata automat fereastra";
 
 $lang_str["options:language_support"]="Suport pentru limba";
 #$lang_str["help:language_support"]="You can choose your prefered languages with this options. The first option changes the language of the user interface. The second option changes the data language. Date of many geographic objects has been translated to several languages. If no translation is available or \"Local language\" was chosen, the main language of the object is displayed.";
@@ -94,7 +94,7 @@ $lang_str["options:data_lang"]="Limba date";
 $lang_str["lang:"]="Limba locala";
 $lang_str["lang:auto"]="La fel ca limba interfata";
 
-#$lang_str["overlay:data"]="Data";
+$lang_str["overlay:data"]="Data";
 #$lang_str["overlay:draggable"]="Markers";
 
 $lang_str["user:no_auth"]="Nume de utilizator sau parola gresita!";
@@ -122,17 +122,17 @@ $lang_str["more_categories"]="Mai multe categorii";
 $lang_str["category:status"]="Stare";
 $lang_str["category:data_status"]="Stare";
 $lang_str["category:old_version"]="O versiune nouă a acestei categorii este în curs de elaborare.";
-#$lang_str["category:not_compiled"]="New category is being prepared.";
+$lang_str["category:not_compiled"]="Noua categorie este în curs de elaborare.";
 
 $lang_str["category:new_rule"]="Noi reguli";
-#$lang_str["category_rule_tag:match"]="Match";
+$lang_str["category_rule_tag:match"]="Combina";
 $lang_str["category_rule_tag:description"]="Descriere";
 $lang_str["category_chooser:choose"]="Alege o categorie";
 $lang_str["category_chooser:new"]="Categorie noua";
 $lang_str["category:sub_category"]="Sub categorie";
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
-#$lang_str["basemap:osb_light"]="OpenStreetBrowser (pale)";
+$lang_str["basemap:osb_light"]="OpenStreetBrowser (slab)";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
-#$lang_str["basemap:cyclemap"]="CycleMap";
+$lang_str["basemap:cyclemap"]="Harta bicicleta";
