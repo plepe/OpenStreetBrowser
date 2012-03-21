@@ -265,6 +265,17 @@ $lang_str["tag:religion=multifaith"]="multifaith";
 
 // denomination
 $lang_str["tag:denomination"]="Denomination";
+#$lang_str["tag:denomination=anglican"]="";
+#$lang_str["tag:denomination=baptist"]="";
+#$lang_str["tag:denomination=catholic"]="";
+#$lang_str["tag:denomination=greek_orthodox"]="";
+#$lang_str["tag:denomination=lutheran"]="";
+#$lang_str["tag:denomination=orthodox"]="";
+#$lang_str["tag:denomination=old-catholic"]="";
+#$lang_str["tag:denomination=protestant"]="";
+#$lang_str["tag:denomination=roman_catholic"]="";
+#$lang_str["tag:denomination=russian_orthodox"]="";
+#$lang_str["tag:denomination=united_reformed"]="";
 
 // route
 $lang_str["tag:route"]="Route";
