@@ -10,8 +10,6 @@ DECLARE
 BEGIN
   raise notice 'called osmosisUpdate()';
 
-  set search_path to !schema:search_path!;
-
   perform call_hooks('osmosis_update_start');
 
   ---- simplify table actions ----
