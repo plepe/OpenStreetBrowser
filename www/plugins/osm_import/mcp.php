@@ -54,7 +54,7 @@ function osm_import_init() {
 
   // calculate osm tables
   debug("initialize osm_-tables", "osm_import", D_WARNING);
-  sql_query("select osm_import_init()");
+  sql_query("select osm_import_init()", $db_central);
 
   debug("done", "osm_import", D_WARNING);
 
