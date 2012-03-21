@@ -33,6 +33,7 @@ function osm_import_init() {
 
   // load schema
   sql_query(file_get_contents("$osmosis_path/script/pgsimple_schema_0.6.sql"), $db_osmosis);
+  sql_query(file_get_contents("$osmosis_path/script/pgsimple_schema_0.6_action.sql"), $db_osmosis);
 
   // download file to tmp_dir
   if(preg_match("/^[a-z]+:\/\//", $osm_import_source)) {
