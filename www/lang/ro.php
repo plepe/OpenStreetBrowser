@@ -37,7 +37,7 @@ $lang_str["ad"]="Advertisment";
 
 // Headings
 $lang_str["head:general_info"]="Informatii generale";
-#$lang_str["head:stops"]="Stops";
+$lang_str["head:stops"]="Stopuri";
 $lang_str["head:routes"]="Rute";
 $lang_str["head:members"]="Membrii";
 $lang_str["head:address"]="Adresa";
