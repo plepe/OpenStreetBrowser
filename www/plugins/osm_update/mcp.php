@@ -109,7 +109,7 @@ function osm_update_start() {
     1=>array("pipe", "w"),
     2=>array("pipe", "w"));
 
-  $command="osmosis --read-replication-interval workingDirectory=$working_dir --simplify-change --write-pgsimp-change host={$db_osmosis['host']} user={$db_osmosis['user']} password={$db_osmosis['passwd']} database={$db_osmosis['name']}";
+  $command="osmosis --read-replication-interval workingDirectory=$working_dir --simplify-change --write-pgsimp-change host={$db_central['host']} user={$db_central['user']} password={$db_central['passwd']} database={$db_central['name']}";
 
   debug("osm_update", "starting osmosis ".Date("r"));
   $osm_update_proc=proc_open($command, $descriptors, $pipes, null, array("JAVACMD_OPTIONS"=>"-Xmx512M"));

@@ -27,15 +27,6 @@ $db_central=&$db; // Use the same database
 # $db_central['debug']=false;
 $db_central['master']=true; // set to false if this instance is slave database
 
-// Extra database connection for Osmosis
-$db_osmosis=&$db; // Use the same database connection
-# $db_osmosis=array(); // OR use database on another server
-# $db_osmosis['name']="gis";
-# $db_osmosis['user']="www";
-# $db_osmosis['passwd']="PASSWORD";
-# $db_osmosis['host']="localhost";
-# $db_osmosis['debug']=false;
-
 $SRID=900913;
 
 $type_list=array("w"=>"way", "n"=>"node", "r"=>"relation");

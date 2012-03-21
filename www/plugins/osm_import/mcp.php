@@ -48,7 +48,7 @@ function osm_import_init() {
 
   // import via osmosis
   debug("starting osmosis, source: $osm_import_source", "osm_import", D_WARNING);
-  system("osmosis --read-xml file=$osm_import_source --write-pgsimp host={$db_osmosis['host']} user={$db_osmosis['user']} password={$db_osmosis['passwd']} database={$db_osmosis['name']}");
+  system("osmosis --read-xml file=$osm_import_source --write-pgsimp host={$db_central['host']} user={$db_central['user']} password={$db_central['passwd']} database={$db_central['name']}");
 
   // reset search_path
   sql_query("set search_path to {$search_path}", $db_osmosis);
