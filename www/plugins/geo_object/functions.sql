@@ -18,11 +18,7 @@
 --   offset 0);
 -- -> use "offset 0", so the 'a_geo_object_function' doesn't get called multiple times
 
-drop function geo_object_id(geo_object);
-drop function geo_object_tags(geo_object);
-drop function geo_object_way(geo_object);
-drop type geo_object;
-
+drop type if exists geo_object cascade;
 create type geo_object as (
   id	text,
   tags	hstore,
