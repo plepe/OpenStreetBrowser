@@ -1,5 +1,7 @@
 <?
 $plugins[]="load_object";
+$plugins[]="osmosis";
+$plugins[]="osm";
 
 // global vars
 $objects=array();
