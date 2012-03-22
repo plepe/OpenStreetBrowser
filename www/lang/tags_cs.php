@@ -258,6 +258,15 @@ $lang_str["tag:religion=multifaith"]="více náboženství";
 
 // denomination
 $lang_str["tag:denomination"]="Vyznání";
+$lang_str["tag:denomination=anglican"]="anglikánské";
+$lang_str["tag:denomination=baptist"]="baptistické";
+$lang_str["tag:denomination=catholic"]="katolické";
+$lang_str["tag:denomination=greek_orthodox"]="řecké ortodoxní";
+$lang_str["tag:denomination=lutheran"]="luteránské";
+$lang_str["tag:denomination=orthodox"]="ortodoxní";
+$lang_str["tag:denomination=protestant"]="protestantské";
+$lang_str["tag:denomination=roman_catholic"]="římskokatolické";
+$lang_str["tag:denomination=russian_orthodox"]="ruské ortodoxní";
 
 // route
 $lang_str["tag:route"]="Dopravní trasy";
@@ -389,6 +398,13 @@ $lang_str["tag:military"]="Vojenství";
 
 // natural
 $lang_str["tag:natural"]="Příroda";
+$lang_str["tag:natural=beach"]="Pláž";
+$lang_str["tag:natural=glacier"]="Ledovec";
+$lang_str["tag:natural=cliff"]="Útes";
+$lang_str["tag:natural=spring"]="Pramen";
+$lang_str["tag:natural=volcano"]="Sopka";
+$lang_str["tag:natural=wood"]="Les";
+$lang_str["tag:natural=tree"]="Strom";
 
 // geological
 $lang_str["tag:geological"]="Geologický";
