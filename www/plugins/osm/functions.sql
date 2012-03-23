@@ -4,9 +4,9 @@ AS $$
 DECLARE
   sql	text;
 BEGIN
-  sql='select osm_id as id, osm_tags as tags, osm_way as way, null::text[], null::text[] from osm_point where osm_way && '||quote_nullable(cast(bbox as text));
+  sql='select * from (select osm_id as id, osm_tags as tags, osm_way as way, null::text[], null::text[] from osm_point where osm_way && '||quote_nullable(cast(bbox as text))||') osm';
   if _where!='' then
-    sql=sql||' and  '||_where;
+    sql=sql||' where '||_where;
   end if;
 
   return query execute sql;
