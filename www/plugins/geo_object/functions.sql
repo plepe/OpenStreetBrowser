@@ -22,7 +22,9 @@ drop type if exists geo_object cascade;
 create type geo_object as (
   id	text,
   tags	hstore,
-  way	geometry
+  way	geometry,
+  member_ids	text[],
+  member_roles	text[]
 );
 
 CREATE OR REPLACE FUNCTION geo_object_id(geo_object) RETURNS text AS $$
