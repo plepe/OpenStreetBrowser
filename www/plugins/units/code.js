@@ -68,3 +68,31 @@ function units_format_time(val) {
     return lang("units:min_sec", 0, Math.floor(val/60), (val%60).toFixed(0));
   return lang("units:sec", 0, val.toFixed(0));
 }
+
+/**
+ * translates speed value to prefered display unit
+ * @param val speed
+ * @param unit unit in which speed is provided. Valid values: "m/s" (default)
+ * @return string formated speed value
+ */
+function units_format_speed(val, unit) {
+  if(!unit)
+    unit="m/s";
+
+  if(val===null)
+    return "?";
+  if(isNaN(val))
+    return "?";
+
+  if(unit=="m/s")
+    val=val*3600/1000;
+
+  var display_unit="km/h";
+
+  if(val<10)
+    val=sprintf("%.1f", val);
+  else
+    val=sprintf("%.0f", val);
+
+  return lang("units:speed:"+display_unit, 0, val);
+}

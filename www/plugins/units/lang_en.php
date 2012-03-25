@@ -11,3 +11,5 @@ $lang_str["units:min"]="%s mins";
 $lang_str["units:hour_min"]="%s:%02s hours";
 $lang_str["units:hour"]="%s hours";
 $lang_str["units:day"]="%s days";
+
+$lang_str["units:speed:km/h"]="%s km/h";
