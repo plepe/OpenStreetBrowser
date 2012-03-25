@@ -6,6 +6,7 @@ function gps() {
 }
 
 gps.prototype.update=function(lonlat) {
+  this.coords=lonlat.coords;
   this.pos=new OpenLayers.LonLat(lonlat.coords.longitude, lonlat.coords.latitude);
 
   if(this.vector) {
