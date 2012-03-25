@@ -20,7 +20,9 @@ gps_toolbox_class.prototype.update=function(ob) {
   if(!this.show_lat) {
     dom_clean(this.content);
 
-    var t=dom_create_append(this.content, "table");
+    var list=[];
+
+    var t=document.createElement("table");
 
     var tr=dom_create_append(t, "tr");
     var td=dom_create_append(tr, "td");
@@ -46,6 +48,14 @@ gps_toolbox_class.prototype.update=function(ob) {
     var td=dom_create_append(tr, "td");
     dom_create_append_text(td, lang("speed")+":");
     this.show_speed=dom_create_append(tr, "td");
+
+    list.push([0, t]);
+    call_hooks("gps_toolbox_show", list);
+    list=weight_sort(list);
+
+    for(var i=0; i<list.length; i++) {
+      this.content.appendChild(list[i]);
+    }
   }
 
   if(!ob) {
