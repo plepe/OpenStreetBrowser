@@ -38,6 +38,11 @@ function toolbox(options) {
     }
   }
 
+  // active - returns true if toolbox is currently active
+  this.active=function() {
+    return this.manager.toolboxes[this.manager.current_active]==this;
+  }
+
   // show_icon
   this.show_icon=function() {
     while(this.button.firstChild) {
