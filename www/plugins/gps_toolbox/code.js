@@ -48,9 +48,9 @@ gps_toolbox_class.prototype.update=function(ob) {
   }
 
   dom_clean(this.show_lat);
-  dom_create_append_text(this.show_lat, ob.pos.lat);
+  dom_create_append_text(this.show_lat, units_format_latitude(ob.pos));
   dom_clean(this.show_lon);
-  dom_create_append_text(this.show_lon, ob.pos.lon);
+  dom_create_append_text(this.show_lon, units_format_longitude(ob.pos));
   dom_clean(this.show_alt);
   dom_create_append_text(this.show_alt, units_format_altitude(ob.coords.altitude, "m"));
   dom_clean(this.show_heading);
