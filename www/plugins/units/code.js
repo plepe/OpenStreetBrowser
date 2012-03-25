@@ -121,3 +121,31 @@ function units_format_altitude(val, unit) {
 
   return lang("units:altitude:"+display_unit, 0, val);
 }
+
+/**
+ * translates heading value to prefered display unit
+ * @param val heading
+ * @param unit unit in which heading is provided. Valid values: "deg" (default)
+ * @return string formated heading value
+ */
+function units_format_heading(val, unit) {
+  if(!unit)
+    unit="deg";
+
+  if(val===null)
+    return "?";
+  if(isNaN(val))
+    return "?";
+
+//  if(unit=="deg")
+//    val=val;
+
+  var display_unit="deg-windrose";
+  var windrose=lang("units:heading:windrose:"+(((val+337.5)/45.0).toFixed(0)%8));
+
+  val=sprintf("%.0f", val);
+
+  return lang("units:heading:"+display_unit, 0, val, windrose);
+}
+
+
