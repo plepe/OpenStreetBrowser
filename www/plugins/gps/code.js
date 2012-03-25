@@ -29,6 +29,8 @@ gps.prototype.update=function(lonlat) {
     first_load=1;
   }
 
+  call_hooks("gps_update", this);
+
   this.last_pos=this.pos;
 }
 
