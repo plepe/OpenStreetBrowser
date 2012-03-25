@@ -148,4 +148,30 @@ function units_format_heading(val, unit) {
   return lang("units:heading:"+display_unit, 0, val, windrose);
 }
 
+/**
+ * return latitude of position as formatted string
+ * @param val position as OpenLayers.Lonlat
+ * @return string formated heading value
+ */
+function units_format_latitude(val) {
+  if(val===null)
+    return "?";
+  if(val.lat===undefined)
+    return "?";
 
+  return sprintf("%s %.5f°", lang("units:latitude:"+(val.lat>0?"N":"S")), val.lat);
+}
+
+/**
+ * return longitude of position as formatted string
+ * @param val position as OpenLayers.Lonlat
+ * @return string formated heading value
+ */
+function units_format_longitude(val) {
+  if(val===null)
+    return "?";
+  if(val.lon===undefined)
+    return "?";
+
+  return sprintf("%s %.5f°", lang("units:longitude:"+(val.lon<0?"W":"E")), val.lon);
+}

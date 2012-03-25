@@ -26,3 +26,8 @@ $lang_str['units:heading:windrose:4']="S";
 $lang_str['units:heading:windrose:5']="SW";
 $lang_str['units:heading:windrose:6']="W";
 $lang_str['units:heading:windrose:7']="NW";
+
+$lang_str['units:latitude:N']="N"; // north (of equator)
+$lang_str['units:latitude:S']="S"; // south (of equator)
+$lang_str['units:longitude:E']="E"; // east (of greenwich)
+$lang_str['units:longitude:W']="W"; // west (of greenwich)
