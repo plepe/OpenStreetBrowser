@@ -96,3 +96,28 @@ function units_format_speed(val, unit) {
 
   return lang("units:speed:"+display_unit, 0, val);
 }
+
+/**
+ * translates altitude value to prefered display unit
+ * @param val altitude
+ * @param unit unit in which altitude is provided. Valid values: "m" (default)
+ * @return string formated altitude value
+ */
+function units_format_altitude(val, unit) {
+  if(!unit)
+    unit="m";
+
+  if(val===null)
+    return "?";
+  if(isNaN(val))
+    return "?";
+
+//  if(unit=="m")
+//    val=val*1;
+
+  var display_unit="m";
+
+  val=sprintf("%.0f", val);
+
+  return lang("units:altitude:"+display_unit, 0, val);
+}

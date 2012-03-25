@@ -13,3 +13,5 @@ $lang_str["units:hour"]="%s hours";
 $lang_str["units:day"]="%s days";
 
 $lang_str["units:speed:km/h"]="%s km/h";
+
+$lang_str["units:altitude:m"]="%s m";
