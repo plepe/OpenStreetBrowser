@@ -76,7 +76,8 @@ gps_toolbox_class.prototype.update=function(ob) {
 }
 
 function gps_toolbox_init() {
-  gps_toolbox=new gps_toolbox_class();
+  if(gps_object)
+    gps_toolbox=new gps_toolbox_class();
 }
 
 register_hook("init", gps_toolbox_init);

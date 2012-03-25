@@ -36,6 +36,9 @@ gps.prototype.update=function(lonlat) {
 }
 
 function gps_init() {
+  if(!navigator.geolocation)
+    return;
+
   gps_object=new gps();
 }
 
