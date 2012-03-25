@@ -13,6 +13,7 @@ function gps_toolbox_class(options) {
   register_toolbox(this);
 
   register_hook("gps_update", this.update.bind(this));
+  this.update();
 }
 
 gps_toolbox_class.prototype.update=function(ob) {
@@ -45,6 +46,21 @@ gps_toolbox_class.prototype.update=function(ob) {
     var td=dom_create_append(tr, "td");
     dom_create_append_text(td, lang("speed")+":");
     this.show_speed=dom_create_append(tr, "td");
+  }
+
+  if(!ob) {
+    dom_clean(this.show_lat);
+    dom_create_append_text(this.show_lat, "?");
+    dom_clean(this.show_lon);
+    dom_create_append_text(this.show_lon, "?");
+    dom_clean(this.show_alt);
+    dom_create_append_text(this.show_alt, "?");
+    dom_clean(this.show_heading);
+    dom_create_append_text(this.show_heading, "?");
+    dom_clean(this.show_speed);
+    dom_create_append_text(this.show_speed, "?");
+
+    return;
   }
 
   dom_clean(this.show_lat);
