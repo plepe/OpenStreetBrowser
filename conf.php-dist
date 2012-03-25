@@ -204,3 +204,4 @@ $www_debug_level=2;
 // GPS
 // gps - enables browser geo location
 // gps_toolbox - shows a toolbox to interact with GPS
+// gps_follow - map follows current geo location
