@@ -6,14 +6,14 @@ function gps() {
 }
 
 gps.prototype.update=function(lonlat) {
-  this.coords=lonlat.coords;
-  this.pos=new OpenLayers.LonLat(lonlat.coords.longitude, lonlat.coords.latitude);
+  gps.coords=lonlat.coords;
+  gps.pos=new OpenLayers.LonLat(lonlat.coords.longitude, lonlat.coords.latitude);
 
   if(this.vector) {
     vector_layer.removeFeatures([this.vector]);
   }
 
-  var pos = new clone(this.pos);
+  var pos = new clone(gps.pos);
   pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
   var geo_point=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
   this.vector=new OpenLayers.Feature.Vector(geo_point, 0, {
@@ -25,14 +25,17 @@ gps.prototype.update=function(lonlat) {
   });
   vector_layer.addFeatures([this.vector]);
 
-  if(first_load) {
-    map.setCenter(pos, 14);
-    first_load=1;
-  }
-
   call_hooks("gps_update", this);
 
-  this.last_pos=this.pos;
+  this.last_pos=gps.pos;
+}
+
+gps.prototype.get_pos=function() {
+  return gps.pos;
+}
+
+gps.prototype.get_coords=function() {
+  return gps.coords;
 }
 
 function gps_init() {

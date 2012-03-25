@@ -58,7 +58,7 @@ gps_toolbox_class.prototype.update=function(ob) {
     }
   }
 
-  if(!ob) {
+  if(!gps_object.get_pos()) {
     dom_clean(this.show_lat);
     dom_create_append_text(this.show_lat, "?");
     dom_clean(this.show_lon);
@@ -73,16 +73,17 @@ gps_toolbox_class.prototype.update=function(ob) {
     return;
   }
 
+  var ob=gps_object;
   dom_clean(this.show_lat);
-  dom_create_append_text(this.show_lat, units_format_latitude(ob.pos));
+  dom_create_append_text(this.show_lat, units_format_latitude(ob.get_pos()));
   dom_clean(this.show_lon);
-  dom_create_append_text(this.show_lon, units_format_longitude(ob.pos));
+  dom_create_append_text(this.show_lon, units_format_longitude(ob.get_pos()));
   dom_clean(this.show_alt);
-  dom_create_append_text(this.show_alt, units_format_altitude(ob.coords.altitude, "m"));
+  dom_create_append_text(this.show_alt, units_format_altitude(ob.get_coords().altitude, "m"));
   dom_clean(this.show_heading);
-  dom_create_append_text(this.show_heading, units_format_heading(ob.coords.heading, "deg"));
+  dom_create_append_text(this.show_heading, units_format_heading(ob.get_coords().heading, "deg"));
   dom_clean(this.show_speed);
-  dom_create_append_text(this.show_speed, units_format_speed(ob.coords.speed, "m/s"));
+  dom_create_append_text(this.show_speed, units_format_speed(ob.get_coords().speed, "m/s"));
 }
 
 function gps_toolbox_init() {
