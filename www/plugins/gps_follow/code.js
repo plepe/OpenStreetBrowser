@@ -1,5 +1,6 @@
 var gps_follow_active=false;
 var gps_follow_input;
+var gps_follow_checking=false;
 //var gps_follow_vector;
 
 // returns a polygon covering 2/3 of the available screen space
@@ -23,12 +24,33 @@ function gps_follow_polygon() {
   return poly;
 }
 
+function gps_follow_view_changed() {
+  if(gps_follow_checking)
+    return;
+
+  var pos=gps_object.get_pos();
+  if(!pos)
+    return;
+
+  pos=new clone(pos);
+  pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+  pos=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
+
+  if(!gps_follow_polygon().containsPoint(pos)) {
+    gps_follow_active=false;
+    if(gps_follow_input)
+      gps_follow_input.checked=false;
+  }
+}
+
 function gps_follow_update(ob) {
   if(gps_follow_active) {
 
     var pos = gps_object.get_pos();
     pos=new clone(pos);
     pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+
+    gps_follow_checking=true;
 
     var ppos=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
     // when loading map for the first time center on and zoom to location
@@ -41,6 +63,8 @@ function gps_follow_update(ob) {
     else if(!gps_follow_polygon().containsPoint(ppos)) {
       map.setCenter(pos);
     }
+
+    gps_follow_checking=false;
   }
 }
 
@@ -82,4 +106,5 @@ function gps_follow_init() {
 
 register_hook("gps_toolbox_show", gps_follow_show);
 register_hook("gps_update", gps_follow_update);
+register_hook("view_changed", gps_follow_view_changed);
 register_hook("init", gps_follow_init);
