@@ -50,7 +50,7 @@ function gps_follow_toggle() {
 
   if(gps_follow_active) {
     var pos;
-    if(geo_object&&(pos=gps_object.get_pos()))
+    if(gps_object&&(pos=gps_object.get_pos()))
       pos=new clone(pos);
       pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 
