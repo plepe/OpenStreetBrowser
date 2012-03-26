@@ -1,2 +1,2 @@
 <?
-$lang_str['gps_follow:label']="Center map on geo location";
+$lang_str['gps_follow:label']="Map follows geo location";

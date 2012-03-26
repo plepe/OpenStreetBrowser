@@ -1,13 +1,46 @@
 var gps_follow_active=false;
 var gps_follow_input;
+//var gps_follow_vector;
+
+// returns a polygon covering 2/3 of the available screen space
+function gps_follow_polygon() {
+    bounds=map.calculateBounds().scale(2.0/3);
+
+    var corners=[];
+    corners.push(new OpenLayers.Geometry.Point(bounds.left, bounds.top));
+    corners.push(new OpenLayers.Geometry.Point(bounds.right, bounds.top));
+    corners.push(new OpenLayers.Geometry.Point(bounds.right, bounds.bottom));
+    corners.push(new OpenLayers.Geometry.Point(bounds.left, bounds.bottom));
+    var ring=new OpenLayers.Geometry.LinearRing(corners);
+    var poly=new OpenLayers.Geometry.Polygon(ring);
+
+//    // show polygon on the map
+//    if(gps_follow_vector)
+//      vector_layer.removeFeatures([gps_follow_vector]);
+//    gps_follow_vector=new OpenLayers.Feature.Vector(poly, 0, { fill: false, strokeColor: "#707070" });
+//    vector_layer.addFeatures([gps_follow_vector]);
+
+  return poly;
+}
 
 function gps_follow_update(ob) {
   if(gps_follow_active) {
+
     var pos = gps_object.get_pos();
     pos=new clone(pos);
     pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 
-    map.setCenter(pos);
+    var ppos=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
+    // when loading map for the first time center on and zoom to location
+    if(first_load) {
+      map.setCenter(pos, 15);
+      first_load=false;
+    }
+    // check whether current location is visible on the map (in 2/3 of
+    // available screen space) and if not center on location
+    else if(!gps_follow_polygon().containsPoint(ppos)) {
+      map.setCenter(pos);
+    }
   }
 }
 
