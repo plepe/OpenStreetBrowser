@@ -212,8 +212,8 @@ $lang_str["tag:place=sea"]="Mare";
 $lang_str["tag:population"]="Populatie";
 
 // power
-#$lang_str["tag:power"]="Power";
-#$lang_str["tag:power=generator"]="Power Generator";
+$lang_str["tag:power"]="Energie";
+$lang_str["tag:power=generator"]="Generator energie";
 #$lang_str["tag:power=line"]="Power Line";
 #$lang_str["tag:power=minor_line"]="Minor Power Line";
 #$lang_str["tag:power=tower"]="Power Tower";
@@ -222,7 +222,7 @@ $lang_str["tag:population"]="Populatie";
 #$lang_str["tag:power=sub_station"]="Power Substation";
 
 // power_source
-#$lang_str["tag:power_source"]="Power source";
+$lang_str["tag:power_source"]="Sursa energie";
 $lang_str["tag:power_source=biofuel"]="Combustibil Bio";
 $lang_str["tag:power_source=oil"]="Ulei";
 $lang_str["tag:power_source=coal"]="Carbune";
@@ -279,7 +279,7 @@ $lang_str["tag:route=bicycle"]="Bicicleta";
 $lang_str["tag:route=mtb"]="Mountainbike";
 
 // shop
-#$lang_str["tag:shop"]="Shop";
+$lang_str["tag:shop"]="Magazin";
 
 // sport
 $lang_str["tag:sport"]="Sport";
@@ -301,13 +301,13 @@ $lang_str["tag:sport=canoe"]="Canoe";
 #$lang_str["tag:sport=croquet"]="Croquet";
 #$lang_str["tag:sport=cycling"]="Cycling";
 #$lang_str["tag:sport=diving"]="Diving";
-#$lang_str["tag:sport=dog_racing"]="Dog Racing";
+$lang_str["tag:sport=dog_racing"]="Curse de caini";
 #$lang_str["tag:sport=equestrian"]="Equestrian";
 #$lang_str["tag:sport=football"]="Football";
-#$lang_str["tag:sport=golf"]="Golf";
+$lang_str["tag:sport=golf"]="Golf";
 #$lang_str["tag:sport=gymnastics"]="Gymnastics";
 #$lang_str["tag:sport=hockey"]="Hockey";
-#$lang_str["tag:sport=horse_racing"]="Horse Racing";
+$lang_str["tag:sport=horse_racing"]="Curse de cai";
 #$lang_str["tag:sport=korfball"]="Korfball";
 #$lang_str["tag:sport=motor"]="Motor";
 #$lang_str["tag:sport=multi"]="Multi";
@@ -345,7 +345,7 @@ $lang_str["tag:sport=canoe"]="Canoe";
 #$lang_str["tag:wires"]="Wires";
 
 // website
-#$lang_str["tag:website"]="Website";
+$lang_str["tag:website"]="Site web";
 
 // cycleway
 #$lang_str["tag:cycleway"]="Cycleway";
@@ -399,10 +399,10 @@ $lang_str["tag:natural"]="Natural";
 #$lang_str["tag:abutters"]="Abutters";
 
 // lit
-#$lang_str["tag:lit"]="Street lighting";
+$lang_str["tag:lit"]="Iluminat stradal";
 
 // area
-#$lang_str["tag:area"]="Area";
+$lang_str["tag:area"]="Zona";
 
 // crossing
 #$lang_str["tag:crossing"]="crossing";
@@ -435,10 +435,10 @@ $lang_str["tag:natural"]="Natural";
 #$lang_str["tag:width"]="Width";
 
 // est_width
-#$lang_str["tag:est_width"]="Estimated width";
+$lang_str["tag:est_width"]="Latime estimativa";
 
 // incline
-#$lang_str["tag:incline"]="incline";
+$lang_str["tag:incline"]="înclinaţie";
 
 // start_date
 #$lang_str["tag:start_date"]="Date of creation";
@@ -457,7 +457,7 @@ $lang_str["tag:natural"]="Natural";
 #$lang_str["tag:tactile_paving"]="Tactile paving";
 
 // narrow
-#$lang_str["tag:narrow"]="Narrow";
+$lang_str["tag:narrow"]="Ingust";
 
 // covered
 #$lang_str["tag:covered"]="Covered";
