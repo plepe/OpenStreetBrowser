@@ -23,8 +23,8 @@ $lang_str["help"]="Ajutor";
 $lang_str["longitude"]="Longitudine";
 $lang_str["latitude"]="Latitudine";
 $lang_str["noname"]="(fara nume)";
-#$lang_str["info_back"]="back to overview";
-#$lang_str["info_zoom"]="zoom";
+$lang_str["info_back"]="Înapoi la prezentarea generală ";
+$lang_str["info_zoom"]="Zoom";
 $lang_str["nothing_found"]="Nu s-a gasit nimic";
 $lang_str["list:zoom_for_obs"]="Zoom in pentru obiecte mai putin importante";
 $lang_str["loading"]="Se incarca...";
@@ -41,10 +41,10 @@ $lang_str["head:stops"]="Stopuri";
 $lang_str["head:routes"]="Rute";
 $lang_str["head:members"]="Membrii";
 $lang_str["head:address"]="Adresa";
-#$lang_str["head:internal"]="OSM Internal";
-#$lang_str["head:services"]="Services";
+$lang_str["head:internal"]="OSM Intern";
+$lang_str["head:services"]="Servicii";
 $lang_str["head:culture"]="Cultura";
-#$lang_str["head:routing"]="Routing";
+$lang_str["head:routing"]="Rutare";
 $lang_str["head:search"]="Cauta";
 $lang_str["head:actions"]="Actiune";
 $lang_str["head:location"]="Locatie";
@@ -81,7 +81,7 @@ $lang_str["main:permalink"]="Permalink";
 
 #$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
 
-#$lang_str["options:autozoom"]="Autozoom behaviour";
+$lang_str["options:autozoom"]="Autozoom";
 #$lang_str["help:autozoom"]="When choosing an object, the view port pans to that object, the zoom level might also get changed. With this option you can choose between different modes.";
 #$lang_str["options:autozoom:pan"]="Pan to current object (nicer)";
 $lang_str["options:autozoom:move"]="Muta la obiectul curent (rapid)";
@@ -95,7 +95,7 @@ $lang_str["lang:"]="Limba locala";
 $lang_str["lang:auto"]="La fel ca limba interfata";
 
 $lang_str["overlay:data"]="Data";
-#$lang_str["overlay:draggable"]="Markers";
+$lang_str["overlay:draggable"]="Marcaje";
 
 $lang_str["user:no_auth"]="Nume de utilizator sau parola gresita!";
 $lang_str["user:login_text"]="Autentifica-te pe OpenStreetBrowser:";

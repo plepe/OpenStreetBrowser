@@ -1,7 +1,7 @@
 <?
 $lang_str["lang:de"]="Germana";
 $lang_str["lang:bg"]="Bulgara";
-#$lang_str["lang:cs"]="Czech";
+$lang_str["lang:cs"]="Cehă";
 $lang_str["lang:en"]="Engleza";
 $lang_str["lang:es"]="Spaniola";
 $lang_str["lang:it"]="Italiana";
