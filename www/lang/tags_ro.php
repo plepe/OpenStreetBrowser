@@ -6,7 +6,7 @@ $lang_str["tag:*=yes"]="da";
 $lang_str["tag:*=no"]="nu";
 
 // accomodation
-#$lang_str["tag:accomodation"]="Accomodation";
+$lang_str["tag:accomodation"]="Cazare";
 
 // address
 $lang_str["tag:address"]="Adresa";
@@ -27,7 +27,7 @@ $lang_str["tag:addr:postcode"]="Cod postal";
 $lang_str["tag:addr:city"]="Oras";
 
 // addr:country
-$lang_str["tag:addr:country"]="Tara";
+$lang_str["tag:addr:country"]="Tară";
 
 // addr:full
 $lang_str["tag:addr:full"]="Adresa completa";
@@ -41,9 +41,9 @@ $lang_str["tag:addr:full"]="Adresa completa";
 #$lang_str["tag:aeroway=taxiway"]="Taxiway";
 
 // admin_level
-#$lang_str["tag:admin_level=2"]="Country Border";
-#$lang_str["tag:admin_level=3"]="Divisions";
-#$lang_str["tag:admin_level=4"]="State Border";
+$lang_str["tag:admin_level=2"]="Frontieră tară";
+$lang_str["tag:admin_level=3"]="Diviziuni";
+$lang_str["tag:admin_level=4"]="Frontiera stat";
 #$lang_str["tag:admin_level=5"]="Community Border";
 #$lang_str["tag:admin_level=6"]="County Border";
 #$lang_str["tag:admin_level=8"]="Town/Municipality Border";
@@ -79,8 +79,8 @@ $lang_str["tag:note"]="Notita";
 #$lang_str["tag:food"]="Serves food";
 
 // cuisine
-#$lang_str["tag:cuisine"]="Cuisine";
-#$lang_str["tag:cuisine=regional"]="regional";
+$lang_str["tag:cuisine"]="Bucatarie";
+$lang_str["tag:cuisine=regional"]="traditional";
 
 // highway
 #$lang_str["tag:highway"]=array("Highway", "Highways");
