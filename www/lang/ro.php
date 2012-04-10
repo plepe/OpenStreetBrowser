@@ -26,12 +26,12 @@ $lang_str["noname"]="(fara nume)";
 #$lang_str["info_back"]="back to overview";
 #$lang_str["info_zoom"]="zoom";
 $lang_str["nothing_found"]="Nu s-a gasit nimic";
-#$lang_str["list:zoom_for_obs"]="Zoom in for less important objects";
+$lang_str["list:zoom_for_obs"]="Zoom in pentru obiecte mai putin importante";
 $lang_str["loading"]="Se incarca...";
 $lang_str["more"]="Mai mult";
 $lang_str["source"]="Sursa";
 $lang_str["unnamed"]="anonim";
-#$lang_str["zoom"]="Zoom level";
+$lang_str["zoom"]="Nivel de zoom";
 $lang_str["no_message"]="Nici un mesaj";
 $lang_str["ad"]="Advertisment";
 
