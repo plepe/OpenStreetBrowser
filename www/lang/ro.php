@@ -54,7 +54,7 @@ $lang_str["head:whats_here"]="Ce se afla aici ?";
 $lang_str["action_browse"]="cauta in OSM";
 $lang_str["action_edit"]="editeaza in OSM";
 
-#$lang_str["geo_click_pos"]="Click on your position on the map";
+$lang_str["geo_click_pos"]="Faceţi clic pe poziţia dumneavostră pe hartă ";
 $lang_str["geo_set_pos"]="Fixeaza pozitia mea ";
 $lang_str["geo_change_pos"]="Schimba pozitia mea";
 
