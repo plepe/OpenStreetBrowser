@@ -18,7 +18,7 @@ $lang_str["tag:addr:housenumber"]="Numar casa";
 $lang_str["tag:addr:housename"]="Nume casa ";
 
 // addr:street
-$lang_str["tag:addr:street"]="Strada";
+$lang_str["tag:addr:street"]=array("Strada", "Strazi");
 
 // addr:postcode
 $lang_str["tag:addr:postcode"]="Cod postal";
@@ -363,7 +363,7 @@ $lang_str["tag:website"]="Site web";
 $lang_str["tag:public_transport"]="Transport public";
 
 // office
-#$lang_str["tag:office"]="Office";
+$lang_str["tag:office"]="Birou";
 
 // craft
 #$lang_str["tag:craft"]="Craft";
@@ -441,10 +441,10 @@ $lang_str["tag:est_width"]="Latime estimativa";
 $lang_str["tag:incline"]="înclinaţie";
 
 // start_date
-#$lang_str["tag:start_date"]="Date of creation";
+$lang_str["tag:start_date"]="Data creeri";
 
 // end_date
-#$lang_str["tag:end_date"]="Date of removal";
+$lang_str["tag:end_date"]="Data stergere";
 
 // disused
 #$lang_str["tag:disused"]="Disused";
@@ -526,7 +526,7 @@ $lang_str["tag:minspeed"]="Viteza minima";
 #$lang_str["tag:charge"]="Charge";
 
 // source
-#$lang_str["tag:source"]="Source";
+$lang_str["tag:source"]="Sursa";
 
 // phone
 $lang_str["tag:phone"]="Numar de telefon";
