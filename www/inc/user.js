@@ -59,8 +59,8 @@ function login() {
   }
 
   this.auth=function() {
-    var password=hex_sha1(this.login_password.value);
-    ajax("login", { username: this.login_username.value, md5_password: password }, this.auth_callback.bind(this));
+    var password=this.login_password.value;
+    ajax("login", { username: this.login_username.value }, password, this.auth_callback.bind(this));
   }
 
   this.create_user=function() {
@@ -78,12 +78,11 @@ function login() {
     _tags.set("full_name", this.create_fullname.value);
     _tags.set("email", this.create_email.value);
 
-    var password=hex_sha1(this.create_password.value);
     ajax("user_create", {
        username: this.create_username.value,
-       md5_password: password,
        tags: _tags.data()
      },
+     this.create_password.value,
      this.create_user_callback.bind(this));
   }
 

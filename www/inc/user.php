@@ -22,7 +22,7 @@
  */
 
 // ajax_login - called from webapp when authenticating user
-function ajax_login($param, $xml) {
+function ajax_login($param, $xml, $post) {
   // create top level xml object "result"
   $ret=$xml->createElement("result");
   $xml->appendChild($ret);
@@ -32,6 +32,7 @@ function ajax_login($param, $xml) {
   $ret->appendChild($status);
 
   // create user object, authenticate
+  $param['password']=$post;
   $user=new user($param);
 
   // according to authentication level, set attributes
@@ -62,7 +63,7 @@ function ajax_user_savedata($param, $xml) {
   $status->setAttribute("saved", "true");
 }
 
-function ajax_user_create($param, $xml) {
+function ajax_user_create($param, $xml, $post) {
   global $current_user;
   global $db_central;
 
@@ -82,8 +83,8 @@ function ajax_user_create($param, $xml) {
     $status->setAttribute("error", "user_exists");
   }
   else {
-    $md5_password=postgre_escape($param['md5_password']);
-    sql_query("insert into user_list values ($pg_username, $md5_password, ".array_to_hstore($param['tags']).")", $db_central);
+    $password=postgre_escape(sha1($post));
+    sql_query("insert into user_list values ($pg_username, $password, ".array_to_hstore($param['tags']).")", $db_central);
     $status->setAttribute("created", "true");
 
     $user=new user($param, 1);
@@ -143,7 +144,7 @@ class User {
 
     // not authenticated yet, check password
     if(!$this->authenticated) {
-      if($elem['md5_password']!=$param['md5_password']) {
+      if($elem['md5_password']!=sha1($param['password'])) {
 	unset($this->username);
 	unset($this->pg_username);
 	$this->load_anonymous();
