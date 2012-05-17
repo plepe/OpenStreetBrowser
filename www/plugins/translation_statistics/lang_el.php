@@ -1,8 +1,8 @@
 <?
 $lang_str["translation_statistics:name"]="Στατιστικά Μετάφρασης";
 
-$lang_str["translation_statistics:local"]="Όνομα τοπικής γλώσσας";
-$lang_str["translation_statistics:current"]="Όνομα τρέχουσας γλώσσας";
+$lang_str["translation_statistics:local"]="Τοπικό όνομα γλώσσας";
+$lang_str["translation_statistics:current"]="Όνομα στην τρέχουσα γλώσσα";
 $lang_str["translation_statistics:lang_code"]="Κωδικός γλώσσας";
 $lang_str["translation_statistics:base_lang"]="Βασική γλώσσα";
 $lang_str["translation_statistics:ui"]="Διεπαφή Χρήστη";
