@@ -381,7 +381,7 @@ $lang_str["tag:historic"]="Ιστορικά";
 $lang_str["tag:landuse"]="Χρήση Γης";
 
 // wood
-#$lang_str["tag:wood"]="Type of wood";
+$lang_str["tag:wood"]="Τύπος δάσους";
 
 // military
 $lang_str["tag:military"]="Στρατιωτικό";
@@ -517,7 +517,7 @@ $lang_str["tag:maxspeed"]="Μεγ. ταχύτητα";
 $lang_str["tag:minspeed"]="Ελαχ. ταχύτητα";
 
 // traffic_sign
-#$lang_str["tag:traffic_sign"]="Traffic sign";
+$lang_str["tag:traffic_sign"]="Πινακίδα τροχαίας";
 
 // toll
 $lang_str["tag:toll"]="Διόδια";
