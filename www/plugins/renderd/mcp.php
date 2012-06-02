@@ -10,7 +10,8 @@
  * -> add entries to the list:
  *    "id"=>array("file"=>"/path/to/file.mapnik")
  */
-global $renderd_file_read;
+global $renderd_proc;
+global $renderd_pipes;
 global $renderd_start_time;
 global $renderd_current;
 $renderd_current=array();
@@ -117,10 +118,10 @@ function renderd_tiles_start($m) {
 
 function renderd_read() {
   global $renderd_start_time;
-  global $renderd_file_read;
+  global $renderd_pipes;
   global $renderd_current;
 
-  if($f=fgets($renderd_file_read)) {
+  if($f=fgets($renderd_pipes[1])) {
     $f=trim($f);
     debug($f, "renderd");
 
@@ -137,8 +138,10 @@ function renderd_read() {
     debug(sprintf("renderd aborted after %ds", $duration), "renderd");
 
     // unregister stream from select
-    mcp_unregister_stream(MCP_READ, $renderd_file_read);
-    pclose($renderd_file_read);
+    mcp_unregister_stream(MCP_READ, $renderd_pipes[1]);
+    fclose($renderd_pipes[0]);
+    fclose($renderd_pipes[1]);
+    fclose($renderd_pipes[2]);
     $renderd_current=array();
 
     // if renderd is not working properly (quit after less than a minute) don't
@@ -147,9 +150,29 @@ function renderd_read() {
       renderd_restart();
     else {
       debug("not restarting renderd - respawning too fast", "renderd");
-      $renderd_file_read=null;
+      unset($renderd_pipes);
+      unset($renderd_proc);
     }
   }
+}
+
+function renderd_stop() {
+  global $renderd_proc;
+
+  if(!isset($renderd_proc))
+    return;
+
+  debug("Stopping renderd. Sending term signal.", "renderd");
+  proc_terminate($renderd_proc);
+
+  sleep(1);
+  $status=proc_get_status($renderd_proc);
+  while($status['running']) {
+    $status=proc_get_status($renderd_proc);
+  }
+  unset($renderd_proc);
+
+  debug("renderd exited.", "renderd");
 }
 
 function renderd_restart() {
@@ -157,11 +180,13 @@ function renderd_restart() {
   global $root_path;
   global $renderd_start_time;
   global $renderd_cmd;
-  global $renderd_file_read;
+  global $renderd_proc;
+  global $renderd_pipes;
   global $renderd_current;
 
-  system("killall renderd");
   renderd_gen_conf();
+  renderd_stop();
+
   chdir($root_path);
   if(!$apache2_reload_cmd)
     $apache2_reload_cmd="sudo /etc/init.d/apache2 reload";
@@ -172,9 +197,16 @@ function renderd_restart() {
   if(!$renderd_cmd)
     $renderd_cmd="renderd";
 
-  $renderd_file_read=popen("$renderd_cmd -f 2>&1", "r");
+  $descriptors=array(
+    0=>array("pipe", "r"),
+    1=>array("pipe", "w"),
+    2=>array("pipe", "w"),
+  );
+  $renderd_pipes=array();
+  $renderd_proc=
+    proc_open("$renderd_cmd -f 2>&1", $descriptors, $renderd_pipes);
 
-  mcp_register_stream(MCP_READ, $renderd_file_read, "renderd_read");
+  mcp_register_stream(MCP_READ, $renderd_pipes[1], "renderd_read");
 
   global $renderd_current;
 }
@@ -189,12 +221,12 @@ function renderd_mcp_start() {
 }
 
 function renderd_command($str){
-  global $renderd_file_read;
+  global $renderd_pipes;
   global $renderd_current;
 
   if($str=="status") {
     print "renderd: ";
-    print ($renderd_file_read?"active":"inactive");
+    print ($renderd_pipes[1]?"active":"inactive");
     print "\n";
 
     foreach($renderd_current as $m) {
@@ -203,7 +235,12 @@ function renderd_command($str){
   }
 }
 
+function renderd_mcp_stop() {
+  renderd_stop();
+}
+
 register_hook("mcp_start", "renderd_mcp_start");
 register_hook("mcp_restart", "renderd_mcp_start");
+register_hook("mcp_stop", "renderd_mcp_stop");
 register_hook("mcp_command", "renderd_command");
 register_hook("postgresql_restart_done", "renderd_restart");
