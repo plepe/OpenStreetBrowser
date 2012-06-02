@@ -1,0 +1,2 @@
+Make sure you enable "AllowOverride FileInfo" in apache-config.
+If the webpath of your application is not / you have to adjust the ErrorDocument directive in www/.htaccess
