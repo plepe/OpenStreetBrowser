@@ -62,4 +62,11 @@ function debug_write($xml) {
   }
 }
 
+function debug_html_end() {
+  global $debug_list;
+  html_export_var(array("debug_list"=>$debug_list));
+  real_export();
+}
+
 register_hook("xml_done", "debug_write");
+register_hook("html_end", "debug_html_end");
