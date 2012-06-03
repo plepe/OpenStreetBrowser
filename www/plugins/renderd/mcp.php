@@ -123,14 +123,18 @@ function renderd_read() {
 
   if($f=fgets($renderd_pipes[1])) {
     $f=trim($f);
-    debug($f, "renderd");
+    $debug_level=D_DEBUG;
 
     if(preg_match("/DONE TILE ([A-Za-z0-9_]+) ([0-9]+) ([0-9]+)\-([0-9]+) ([0-9]+)\-([0-9]+) in ([0-9\.]+) seconds/", $f, $m)) {
       renderd_tiles_done($m);
+      $debug_level=D_NOTICE;
     }
     elseif(preg_match("/START TILE ([A-Za-z0-9_]+) ([0-9]+) ([0-9]+)\-([0-9]+) ([0-9]+)\-([0-9]+)/", $f, $m)) {
       renderd_tiles_start($m);
+      $debug_level=D_NOTICE;
     }
+
+    debug($f, "renderd", $debug_level);
   }
   else {
     // renderd stopped, handle possible restart
