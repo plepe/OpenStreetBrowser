@@ -33,12 +33,12 @@ $lang_str["tag:addr:country"]=array("Країна", "Країни");
 $lang_str["tag:addr:full"]=array("Повна адреса", "Повні адреси");
 
 // addr:interpolation
-#$lang_str["tag:addr:interpolation"]="Interpolated housenumbers";
+$lang_str["tag:addr:interpolation"]="Інтерпольовані адреси";
 
 // aeroway
-#$lang_str["tag:aeroway"]="Aeroway";
-#$lang_str["tag:aeroway=runway"]="Runway";
-#$lang_str["tag:aeroway=taxiway"]="Taxiway";
+$lang_str["tag:aeroway"]="Аеродромні доріжки";
+$lang_str["tag:aeroway=runway"]="Злітні смуги";
+$lang_str["tag:aeroway=taxiway"]="Руліжні доріжки";
 
 // admin_level
 $lang_str["tag:admin_level=2"]="Межі Країн";
@@ -215,68 +215,71 @@ $lang_str["tag:population"]="Населення";
 $lang_str["tag:power"]="Енергетика";
 $lang_str["tag:power=generator"]="Електростанція";
 $lang_str["tag:power=line"]="Лінія електропередачі";
-#$lang_str["tag:power=minor_line"]="Minor Power Line";
-$lang_str["tag:power=tower"]="Power Tower";
-$lang_str["tag:power=pole"]="Power Pole";
-$lang_str["tag:power=station"]="Power Station";
-$lang_str["tag:power=sub_station"]="Power Substation";
+$lang_str["tag:power=minor_line"]="Низьковольтні лінії електропередач";
+$lang_str["tag:power=tower"]="Опора лінії електропередачі";
+$lang_str["tag:power=pole"]="Електричний стовп";
+$lang_str["tag:power=station"]="Електропідстанція";
+$lang_str["tag:power=sub_station"]="Трансформаторна будка";
 
 // power_source
-$lang_str["tag:power_source"]="Power source";
-$lang_str["tag:power_source=biofuel"]="Biofuel";
-$lang_str["tag:power_source=oil"]="Oil";
-$lang_str["tag:power_source=coal"]="Coal";
-$lang_str["tag:power_source=gas"]="Gas";
-$lang_str["tag:power_source=waste"]="Waste";
-$lang_str["tag:power_source=hydro"]="Hydro";
-$lang_str["tag:power_source=tidal"]="Tidal";
-$lang_str["tag:power_source=wave"]="Wave";
-$lang_str["tag:power_source=geothermal"]="Geothermal";
-$lang_str["tag:power_source=nuclear"]="Nuclear";
+$lang_str["tag:power_source"]="Джерело енергії";
+$lang_str["tag:power_source=biofuel"]="Біопаливо";
+$lang_str["tag:power_source=oil"]="Нафта";
+$lang_str["tag:power_source=coal"]="Вугілля";
+$lang_str["tag:power_source=gas"]="Газ";
+$lang_str["tag:power_source=waste"]="Відходи";
+$lang_str["tag:power_source=hydro"]="Воды";
+$lang_str["tag:power_source=tidal"]="Припливи";
+$lang_str["tag:power_source=wave"]="Хвилі";
+$lang_str["tag:power_source=geothermal"]="Геотермальна";
+$lang_str["tag:power_source=nuclear"]="Ядерна реакція";
 $lang_str["tag:power_source=fusion"]="Fusion";
-$lang_str["tag:power_source=wind"]="Wind";
-$lang_str["tag:power_source=photovoltaic"]="Photovoltaic";
-$lang_str["tag:power_source=solar-thermal"]="Solar Thermal";
+$lang_str["tag:power_source=wind"]="Вітер";
+$lang_str["tag:power_source=photovoltaic"]="Фотоелектрична";
+$lang_str["tag:power_source=solar-thermal"]="Тепло сонця";
 
 // railway
-#$lang_str["tag:railway"]="Railway";
-#$lang_str["tag:railway=rail"]=array("Rail Track", "Rail Tracks");
-#$lang_str["tag:railway=tram"]=array("Tram Track", "Tram Tracks");
-#$lang_str["tag:railway=platform"]=array("Platform", "Platforms");
+$lang_str["tag:railway"]="Рейкові шляхи";
+$lang_str["tag:railway=rail"]=array("Залізнична колія", "Залізничні колії");
+$lang_str["tag:railway=tram"]=array("Трамвайна колія", " Трамвайні колії");
+$lang_str["tag:railway=platform"]=array("Платформа", "Платформи");
 
 // real_ale
-$lang_str["tag:real_ale"]="Real ale offered";
+$lang_str["tag:real_ale"]="Справжній ель";
 
 // religion
-$lang_str["tag:religion"]="Religion";
-$lang_str["tag:religion=christian"]="християнська";
-#$lang_str["tag:religion=buddhist"]="buddhist";
-#$lang_str["tag:religion=hindu"]="hindu";
-#$lang_str["tag:religion=jewish"]="jewish";
-#$lang_str["tag:religion=muslim"]="muslim";
+$lang_str["tag:religion"]="Релігія";
+$lang_str["tag:religion=christian"]="Християнство";
+$lang_str["tag:religion=buddhist"]="Буддизм";
+$lang_str["tag:religion=hindu"]="Індуїзм";
+$lang_str["tag:religion=jewish"]="Іудаїзм";
+$lang_str["tag:religion=muslim"]="Мусульманство";
 #$lang_str["tag:religion=multifaith"]="multifaith";
 
 // denomination
-#$lang_str["tag:denomination"]="Denomination";
+$lang_str["tag:denomination"]="Конфесії";
+$lang_str["tag:denomination=anglican"]="Англіканство";
+$lang_str["tag:denomination=baptist"]="Баптизм";
+$lang_str["tag:denomination=greek_orthodox"]="Грецьке православ'я";
 
 // route
-#$lang_str["tag:route"]="Route";
-$lang_str["tag:route=train"]="Train";
-$lang_str["tag:route=railway"]="Railway";
-$lang_str["tag:route=rail"]="Railway";
-$lang_str["tag:route=light_rail"]="Light Rail";
-$lang_str["tag:route=subway"]="Subway";
-$lang_str["tag:route=tram"]="Tram";
-#$lang_str["tag:route=tram_bus"]="Tram and Bus";
-$lang_str["tag:route=trolley"]="Trolley";
-$lang_str["tag:route=trolleybus"]="Trolley";
-$lang_str["tag:route=bus"]="Bus";
-$lang_str["tag:route=minibus"]="Minibus";
-$lang_str["tag:route=ferry"]="Ferry";
-$lang_str["tag:route=road"]="Road";
-$lang_str["tag:route=bicycle"]="Bicycle";
-$lang_str["tag:route=hiking"]="Hiking";
-$lang_str["tag:route=mtb"]="Mountainbike";
+$lang_str["tag:route"]="Маршрут";
+$lang_str["tag:route=train"]="Поїзд";
+$lang_str["tag:route=railway"]="Залізниця";
+$lang_str["tag:route=rail"]="Залізниця";
+$lang_str["tag:route=light_rail"]="Залізниця";
+$lang_str["tag:route=subway"]="Метро";
+$lang_str["tag:route=tram"]="Трамвай";
+$lang_str["tag:route=tram_bus"]="Трамвай та автобус";
+$lang_str["tag:route=trolley"]="Тролейбус";
+$lang_str["tag:route=trolleybus"]="Тролейбус";
+$lang_str["tag:route=bus"]="Автобус";
+$lang_str["tag:route=minibus"]="Маршрутне таксі";
+$lang_str["tag:route=ferry"]="Пором";
+$lang_str["tag:route=road"]="Автомобільна дорога";
+$lang_str["tag:route=bicycle"]="Велосипед";
+$lang_str["tag:route=hiking"]="Пішки";
+$lang_str["tag:route=mtb"]="Гірський велосипед";
 
 // shop
 $lang_str["tag:shop"]="Магазин";
@@ -290,44 +293,44 @@ $lang_str["tag:sport=athletics"]="Атлетика";
 $lang_str["tag:sport=australian_football"]="Австралійський футбол";
 $lang_str["tag:sport=baseball"]="Бейсбол";
 $lang_str["tag:sport=basketball"]="Баскетбол";
-$lang_str["tag:sport=beachvolleyball"]="Beachvolleyball";
-$lang_str["tag:sport=boules"]="Boules";
-$lang_str["tag:sport=bowls"]="Bowls";
-$lang_str["tag:sport=canoe"]="Canoe";
-$lang_str["tag:sport=chess"]="Chess";
-$lang_str["tag:sport=climbing"]="Climbing";
-$lang_str["tag:sport=cricket"]="Cricket";
+$lang_str["tag:sport=beachvolleyball"]="Пляжний волейбол";
+$lang_str["tag:sport=boules"]="Петанк";
+$lang_str["tag:sport=bowls"]="Боулз";
+$lang_str["tag:sport=canoe"]="Каноэ";
+$lang_str["tag:sport=chess"]="Шахи";
+$lang_str["tag:sport=climbing"]="Скелелазіння";
+$lang_str["tag:sport=cricket"]="Крикет";
 $lang_str["tag:sport=cricket_nets"]="Cricket Nets";
-$lang_str["tag:sport=croquet"]="Croquet";
-$lang_str["tag:sport=cycling"]="Cycling";
-$lang_str["tag:sport=diving"]="Diving";
-$lang_str["tag:sport=dog_racing"]="Dog Racing";
-$lang_str["tag:sport=equestrian"]="Equestrian";
-$lang_str["tag:sport=football"]="Football";
-$lang_str["tag:sport=golf"]="Golf";
-$lang_str["tag:sport=gymnastics"]="Gymnastics";
-$lang_str["tag:sport=hockey"]="Hockey";
-$lang_str["tag:sport=horse_racing"]="Horse Racing";
-$lang_str["tag:sport=korfball"]="Korfball";
-$lang_str["tag:sport=motor"]="Motor";
-$lang_str["tag:sport=multi"]="Multi";
-$lang_str["tag:sport=orienteering"]="Orienteering";
-$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
-$lang_str["tag:sport=paragliding"]="Paragliding";
-$lang_str["tag:sport=pelota"]="Pelota";
-$lang_str["tag:sport=racquet"]="Racquet";
-$lang_str["tag:sport=rowing"]="Rowing";
-$lang_str["tag:sport=rugby"]="Rugby";
-$lang_str["tag:sport=shooting"]="Shooting";
-$lang_str["tag:sport=skating"]="Skating";
-$lang_str["tag:sport=skateboard"]="Skateboard";
-$lang_str["tag:sport=skiing"]="Skiing";
-$lang_str["tag:sport=soccer"]="Soccer";
-$lang_str["tag:sport=swimming"]="Swimming";
-$lang_str["tag:sport=table_tennis"]="Table Tennis";
-$lang_str["tag:sport=team_handball"]="Handball";
-$lang_str["tag:sport=tennis"]="Tennis";
-$lang_str["tag:sport=volleyball"]="Volleyball";
+$lang_str["tag:sport=croquet"]="Крокет";
+$lang_str["tag:sport=cycling"]="Велоспорт";
+$lang_str["tag:sport=diving"]="Дайвінг";
+$lang_str["tag:sport=dog_racing"]="Собачі біга";
+$lang_str["tag:sport=equestrian"]="Кінний спорт";
+$lang_str["tag:sport=football"]="Футбол";
+$lang_str["tag:sport=golf"]="Гольф";
+$lang_str["tag:sport=gymnastics"]="Гімнастика";
+$lang_str["tag:sport=hockey"]="Хокей";
+$lang_str["tag:sport=horse_racing"]="Кінські перегони";
+$lang_str["tag:sport=korfball"]="Корфбол";
+$lang_str["tag:sport=motor"]="Автомотоспорт";
+$lang_str["tag:sport=multi"]="Різні види";
+$lang_str["tag:sport=orienteering"]="Спортивне орієнтування";
+$lang_str["tag:sport=paddle_tennis"]="Настільний теніс";
+$lang_str["tag:sport=paragliding"]="Парапланеризм";
+$lang_str["tag:sport=pelota"]="Пелота";
+$lang_str["tag:sport=racquet"]="Бадмінтон, Сквош";
+$lang_str["tag:sport=rowing"]="Гребля";
+$lang_str["tag:sport=rugby"]="Регбі";
+$lang_str["tag:sport=shooting"]="Стрілянина";
+$lang_str["tag:sport=skating"]="Ковзанярський спорт";
+$lang_str["tag:sport=skateboard"]="Скейтборд";
+$lang_str["tag:sport=skiing"]="Лижний спорт";
+$lang_str["tag:sport=soccer"]="Футбол";
+$lang_str["tag:sport=swimming"]="Плавання";
+$lang_str["tag:sport=table_tennis"]="Настільний теніс";
+$lang_str["tag:sport=team_handball"]="Гандбол";
+$lang_str["tag:sport=tennis"]="Теніс";
+$lang_str["tag:sport=volleyball"]="Волейбол";
 
 // tracks
 #$lang_str["tag:tracks"]="Tracks";
@@ -336,70 +339,71 @@ $lang_str["tag:sport=volleyball"]="Volleyball";
 #$lang_str["tag:tracks=multiple"]="Multiple";
 
 // vending
-$lang_str["tag:vending"]="Vending";
+$lang_str["tag:vending"]="Торгові автомати";
 
 // voltage
-$lang_str["tag:voltage"]="Voltage";
+$lang_str["tag:voltage"]="Напруга";
 
 // wires
-$lang_str["tag:wires"]="Wires";
+$lang_str["tag:wires"]="Дроти";
 
 // website
-$lang_str["tag:website"]="Website";
+$lang_str["tag:website"]="Вебсайт";
 
 // cycleway
-#$lang_str["tag:cycleway"]="Cycleway";
+$lang_str["tag:cycleway"]="Велодоріжка";
 
 // tracktype
-#$lang_str["tag:tracktype"]="Track type";
+$lang_str["tag:tracktype"]="Покриття доріг";
 
 // waterway
-#$lang_str["tag:waterway"]="Waterway";
+$lang_str["tag:waterway"]="Проточні води";
 
 // aerialway
-#$lang_str["tag:aerialway"]="Aerialway";
+$lang_str["tag:aerialway"]="Канатні дороги";
 
 // public_transport
-#$lang_str["tag:public_transport"]="Public Transport";
+$lang_str["tag:public_transport"]="Перон";
 
 // office
-#$lang_str["tag:office"]="Office";
+$lang_str["tag:office"]="Офіс";
 
 // craft
-#$lang_str["tag:craft"]="Craft";
+$lang_str["tag:craft"]="Майстерня";
 
 // emergency
-#$lang_str["tag:emergency"]="Emergency";
+$lang_str["tag:emergency"]="Екстрена служба";
 
 // tourism
-#$lang_str["tag:tourism"]="Tourism";
+$lang_str["tag:tourism"]="Туризм";
 
 // historic
-#$lang_str["tag:historic"]="Historic";
+$lang_str["tag:historic"]="Історичне місце";
 
 // landuse
-#$lang_str["tag:landuse"]="Landuse";
+$lang_str["tag:landuse"]="Територія";
 
 // wood
-#$lang_str["tag:wood"]="Type of wood";
+$lang_str["tag:wood"]="Дерево";
 
 // military
-#$lang_str["tag:military"]="Military";
+$lang_str["tag:military"]="Військовий";
 
 // natural
-#$lang_str["tag:natural"]="Natural";
+$lang_str["tag:natural"]="Природа";
+$lang_str["tag:natural=beach"]="Берегова зона";
 
 // geological
 #$lang_str["tag:geological"]="Geological";
 
 // boundary
-#$lang_str["tag:boundary"]="Boundary";
+$lang_str["tag:boundary"]="Кордони";
 
 // abutters
-#$lang_str["tag:abutters"]="Abutters";
+$lang_str["tag:abutters"]="Прилеглий район";
 
 // lit
-#$lang_str["tag:lit"]="Street lighting";
+$lang_str["tag:lit"]="Освітлення вулиці";
 
 // area
 #$lang_str["tag:area"]="Area";
