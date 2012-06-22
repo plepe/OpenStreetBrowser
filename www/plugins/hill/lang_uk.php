@@ -1,2 +1,2 @@
 <?
-#$lang_str["hill:name"]="Hillshading (NASA SRTM3 v2)";
+$lang_str["hill:name"]="Рельєф (NASA SRTM3 v2)";
