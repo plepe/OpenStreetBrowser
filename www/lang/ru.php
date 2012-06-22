@@ -124,7 +124,7 @@ $lang_str["category:data_status"]="Статус";
 $lang_str["category:old_version"]="Готовится новая версия этой категории.";
 $lang_str["category:not_compiled"]="Новая категория была подготовлена.";
 
-$lang_str["category:new_rule"]="Новые правила";
+$lang_str["category:new_rule"]="Новое правило";
 $lang_str["category_rule_tag:match"]="Заголовок";
 $lang_str["category_rule_tag:description"]="Описание";
 $lang_str["category_chooser:choose"]="Выбрать категорию";
