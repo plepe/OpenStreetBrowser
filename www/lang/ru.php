@@ -20,20 +20,20 @@ $lang_str["delete"]="Удалить";
 $lang_str["history"]="История";
 $lang_str["choose"]="Выбирать";
 $lang_str["help"]="Помощь";
-$lang_str["longitude"]="Долготы";
-$lang_str["latitude"]="Широты";
+$lang_str["longitude"]=array("Долгота", "Долготы");
+$lang_str["latitude"]=array("Широта", "Широты");
 $lang_str["noname"]="(неизвестно)";
 $lang_str["info_back"]="Возврат к обзору";
 $lang_str["info_zoom"]="Приближение";
 $lang_str["nothing_found"]="Не найдено";
-#$lang_str["list:zoom_for_obs"]="Zoom in for less important objects";
+$lang_str["list:zoom_for_obs"]="Увеличить менее важные объекты";
 $lang_str["loading"]="Загрузка...";
 $lang_str["more"]="Ещё";
 $lang_str["source"]="Источник";
-#$lang_str["unnamed"]="unnamed";
+$lang_str["unnamed"]="безымянный";
 $lang_str["zoom"]="Уровень приближения";
-#$lang_str["no_message"]=array("no message", "no messages");
-#$lang_str["ad"]=array("Advertisement", "Advertisements");
+$lang_str["no_message"]=array("нет сообщения", "нет сообщений");
+$lang_str["ad"]=array("Реклама", "Рекламы");
 
 // Headings
 $lang_str["head:general_info"]="Общая информация";
@@ -77,7 +77,7 @@ $lang_str["main:options"]="Настройки";
 $lang_str["main:about"]="Информация";
 $lang_str["main:donate"]="Помочь проекту";
 $lang_str["main:licence"]="Информация о карте: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> авторы | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Стефан Плепелти</a> и <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">другие</a>";
-$lang_str["main:permalink"]="Ссылка";
+$lang_str["main:permalink"]="Постоянная ссылка";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Объект не найден</h1>Объектов с ID \"%s\" не найдено. Это может быть связано с одной (или более) из следующих причин: <ul><li>Не правильный ID.</li><li>Объект был определен сайтами сторонних производителей и не является (пока) доступным в OpenStreetBrowser.</li><li>Объект находится вне поддерживается области.</li><li>Ссылка по которой Вы сюда пришли оказалась старой и объект уже был удалён из OpenStreetMap.</li></ul>";
 

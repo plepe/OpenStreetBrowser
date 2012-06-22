@@ -9,13 +9,13 @@ $lang_str["tag:*=no"]="нет";
 $lang_str["tag:accomodation"]="Жильё";
 
 // address
-$lang_str["tag:address"]=array("Адрес", "Адреса");
+$lang_str["tag:address"]="Адрес";
 
 // addr:housenumber
-$lang_str["tag:addr:housenumber"]="Номер дома";
+$lang_str["tag:addr:housenumber"]=array("Номер дома", "Номера домов");
 
 // addr:housename
-#$lang_str["tag:addr:housename"]=array("House name", "House names");
+$lang_str["tag:addr:housename"]=array("Имя дома", "Имена домов");
 
 // addr:street
 $lang_str["tag:addr:street"]=array("Улица", "Улицы");
@@ -61,19 +61,19 @@ $lang_str["tag:barrier=city_wall"]=array("Городская стена", "Го�
 $lang_str["tag:barrier=wall"]=array("Стена", "Стены");
 $lang_str["tag:barrier=retaining_wall"]=array("Подпорная стенка", "Подпорные стенки");
 $lang_str["tag:barrier=fence"]=array("Забор", "Заборы");
-#$lang_str["tag:barrier=hedge"]=array("Hedge", "Hedges");
+$lang_str["tag:barrier=hedge"]=array("Куст", "Кусты");
 
 // cables
 $lang_str["tag:cables"]="Кабели";
 
 // description
-$lang_str["tag:description"]=array(N, "Описание", "Описания");
+$lang_str["tag:description"]="Описание";
 
 // fixme
-#$lang_str["tag:fixme"]="Fix me";
+$lang_str["tag:fixme"]="Нужно исправить";
 
 // note
-$lang_str["tag:note"]=array(F, "Заметка", "Заметки");
+$lang_str["tag:note"]="Заметка";
 
 // food
 $lang_str["tag:food"]="Продукты питания";
@@ -164,22 +164,22 @@ $lang_str["tag:type=water"]="Вода";
 $lang_str["tag:name"]=array("Название", "Названия");
 
 // alt_name
-#$lang_str["tag:alt_name"]=array("Alternative name", "Alternative names");
+$lang_str["tag:alt_name"]=array("Альтернативное имя", "Альтернативные имена");
 
 // official_name
-#$lang_str["tag:official_name"]=array("Official name", "Official names");
+$lang_str["tag:official_name"]=array("Официальное имя", "Официальные имена");
 
 // int_name
-#$lang_str["tag:int_name"]=array("International name", "International names");
+$lang_str["tag:int_name"]=array("Международное название", "Международные названия");
 
 // loc_name
-#$lang_str["tag:loc_name"]=array("Local name", "Local names");
+$lang_str["tag:loc_name"]=array("Местное название", "Местные названия");
 
 // old_name
 $lang_str["tag:old_name"]="Старое название(я)";
 
 // ref
-#$lang_str["tag:ref"]="Reference";
+$lang_str["tag:ref"]="Ссылка";
 
 // network
 $lang_str["tag:network"]="Компьютерная сеть";
@@ -191,20 +191,20 @@ $lang_str["tag:opening_hours"]="Часы работы";
 $lang_str["tag:operator"]="Оператор";
 
 // place
-$lang_str["tag:place"]=array(N, "Место", "Места");
-$lang_str["tag:place=continent"]=array(M, "Континент", "Континенты");
-$lang_str["tag:place=country"]=array(F, "Страна", "Страны");
-$lang_str["tag:place=state"]=array(M, "Штат", "Штаты");
-$lang_str["tag:place=region"]=array(M, "Регион", "Регионы");
-$lang_str["tag:place=county"]=array(M, "Округ", "Округа");
-$lang_str["tag:place=city"]=array(M, "Город", "Города");
-$lang_str["tag:place=town"]=array(M, "Город", "Города");
-$lang_str["tag:place=village"]=array(F, "Деревня", "Деревни");
-$lang_str["tag:place=suburb"]=array(M, "Пригород", "Пригороды");
+$lang_str["tag:place"]="Место";
+$lang_str["tag:place=continent"]=array("Континент", "Континенты");
+$lang_str["tag:place=country"]=array("Страна", "Страны");
+$lang_str["tag:place=state"]=array("Штат", "Штаты");
+$lang_str["tag:place=region"]=array("Регион", "Регионы");
+$lang_str["tag:place=county"]=array("Округ", "Округа");
+$lang_str["tag:place=city"]=array("Город", "Города");
+$lang_str["tag:place=town"]=array("Город", "Города");
+$lang_str["tag:place=village"]=array("Деревня", "Деревни");
+$lang_str["tag:place=suburb"]=array("Пригород", "Пригороды");
 $lang_str["tag:place=hamlet"]=array("Хутор", "Хутора");
-$lang_str["tag:place=locality"]=array(M, "Район", "Районы");
-$lang_str["tag:place=island"]=array(M, "Остров", "Острова");
-$lang_str["tag:place=islet"]=array(M, "Островок", "Островки");
+$lang_str["tag:place=locality"]=array("Район", "Районы");
+$lang_str["tag:place=island"]=array("Остров", "Острова");
+$lang_str["tag:place=islet"]=array("Островок", "Островки");
 $lang_str["tag:place=ocean"]=array("Океан", "Океаны");
 $lang_str["tag:place=sea"]=array("Море", "Моря");
 
@@ -240,7 +240,7 @@ $lang_str["tag:power_source=solar-thermal"]="Тепло Солнца";
 
 // railway
 $lang_str["tag:railway"]="Рельсовые пути";
-$lang_str["tag:railway=rail"]=array("Ж/д путь", "Ж/д пути");
+$lang_str["tag:railway=rail"]=array("Железнодорожный путь", "Железнодорожные пути");
 $lang_str["tag:railway=tram"]=array("Трамвайный путь", "Трамвайные пути");
 $lang_str["tag:railway=platform"]=array("Платформа", "Платформы");
 
@@ -257,7 +257,10 @@ $lang_str["tag:religion=muslim"]="Мусульманство";
 #$lang_str["tag:religion=multifaith"]="multifaith";
 
 // denomination
-#$lang_str["tag:denomination"]="Denomination";
+$lang_str["tag:denomination"]="Конфессии";
+$lang_str["tag:denomination=anglican"]="Англиканство";
+$lang_str["tag:denomination=baptist"]="Баптизм";
+$lang_str["tag:denomination=greek_orthodox"]="Греческое православие";
 
 // route
 $lang_str["tag:route"]="Маршрут";
@@ -309,13 +312,13 @@ $lang_str["tag:sport=gymnastics"]="Гимнастика";
 $lang_str["tag:sport=hockey"]="Хоккей";
 $lang_str["tag:sport=horse_racing"]="Лошадиные бега";
 $lang_str["tag:sport=korfball"]="Корфбол";
-#$lang_str["tag:sport=motor"]="Motor";
+$lang_str["tag:sport=motor"]="Автомотоспорт";
 $lang_str["tag:sport=multi"]="Разные виды";
 $lang_str["tag:sport=orienteering"]="Спортивное ориентирование";
-#$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
+$lang_str["tag:sport=paddle_tennis"]="Настольный теннис";
 $lang_str["tag:sport=paragliding"]="Парапланеризм";
 $lang_str["tag:sport=pelota"]="Пелота";
-#$lang_str["tag:sport=racquet"]="Racquet";
+$lang_str["tag:sport=racquet"]="Бадминтон, Сквош";
 $lang_str["tag:sport=rowing"]="Гребля";
 $lang_str["tag:sport=rugby"]="Регби";
 $lang_str["tag:sport=shooting"]="Стрельба";
@@ -345,61 +348,62 @@ $lang_str["tag:voltage"]="Напряжение";
 $lang_str["tag:wires"]="Провода";
 
 // website
-$lang_str["tag:website"]=array("Сайт", "Сайты");
+$lang_str["tag:website"]="Вебсайт";
 
 // cycleway
-#$lang_str["tag:cycleway"]="Cycleway";
+$lang_str["tag:cycleway"]="Велодорожка";
 
 // tracktype
-#$lang_str["tag:tracktype"]="Track type";
+$lang_str["tag:tracktype"]="Покрытие дорог";
 
 // waterway
-#$lang_str["tag:waterway"]="Waterway";
+$lang_str["tag:waterway"]="Проточные воды";
 
 // aerialway
-#$lang_str["tag:aerialway"]="Aerialway";
+$lang_str["tag:aerialway"]="Канатные дороги";
 
 // public_transport
-#$lang_str["tag:public_transport"]="Public Transport";
+$lang_str["tag:public_transport"]="Перрон";
 
 // office
 $lang_str["tag:office"]="Офис";
 
 // craft
-#$lang_str["tag:craft"]="Craft";
+$lang_str["tag:craft"]="Мастерская";
 
 // emergency
-#$lang_str["tag:emergency"]="Emergency";
+$lang_str["tag:emergency"]="Экстренная служба";
 
 // tourism
 $lang_str["tag:tourism"]="Туризм";
 
 // historic
-#$lang_str["tag:historic"]="Historic";
+$lang_str["tag:historic"]="Историческое место";
 
 // landuse
-#$lang_str["tag:landuse"]="Landuse";
+$lang_str["tag:landuse"]="Территория";
 
 // wood
-#$lang_str["tag:wood"]="Type of wood";
+$lang_str["tag:wood"]="Дерево";
 
 // military
 $lang_str["tag:military"]="Военный";
 
 // natural
 $lang_str["tag:natural"]="Природа";
+$lang_str["tag:natural=beach"]="Береговая зона";
 
 // geological
 #$lang_str["tag:geological"]="Geological";
 
 // boundary
-#$lang_str["tag:boundary"]="Boundary";
+$lang_str["tag:boundary"]="Границы";
 
 // abutters
-#$lang_str["tag:abutters"]="Abutters";
+$lang_str["tag:abutters"]="Прилегающий район";
 
 // lit
-#$lang_str["tag:lit"]="Street lighting";
+$lang_str["tag:lit"]="Освещение улицы";
 
 // area
 #$lang_str["tag:area"]="Area";
@@ -411,13 +415,13 @@ $lang_str["tag:natural"]="Природа";
 #$lang_str["tag:mountain_pass"]="Mountain Pass";
 
 // cutting
-#$lang_str["tag:cutting"]="Cutting";
+$lang_str["tag:cutting"]="Выемка";
 
 // embankment
-#$lang_str["tag:embankment"]="Embankment";
+$lang_str["tag:embankment"]="Насыпь";
 
 // lanes
-#$lang_str["tag:lanes"]="Lanes";
+$lang_str["tag:lanes"]="Полос";
 
 // layer
 $lang_str["tag:layer"]="Слой";
@@ -429,10 +433,10 @@ $lang_str["tag:surface"]="Поверхность";
 $lang_str["tag:smoothness"]="Ровная";
 
 // ele
-#$lang_str["tag:ele"]="Elevation";
+$lang_str["tag:ele"]="Возвышение";
 
 // width
-#$lang_str["tag:width"]="Width";
+$lang_str["tag:width"]="Ширина";
 
 // est_width
 #$lang_str["tag:est_width"]="Estimated width";
