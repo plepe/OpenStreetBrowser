@@ -16,4 +16,4 @@ $lang_str["head:instructions"]="Инструкция";
 $lang_str["head:key_data"]="Основные данные";
 
 $lang_str["navigation:reverse"]="обратно";
-#$lang_str["navigation:go"]="go";
+$lang_str["navigation:go"]="начать";
