@@ -9,7 +9,7 @@ function osm_shapefiles_download($id, $url, $param=array()) {
   print "OSM Shapefile: Check $file\n";
 
   // Download file
-  system("cd $root_path/data/ ; wget --progress=dot:mega --continue --timestamping $url");
+  system("cd $root_path/data/ ; wget --progress=dot:mega --timestamping $url");
 
   // If file newer (or first time), extract
   if((!file_exists("$root_path/data/$id.timestamp"))||
