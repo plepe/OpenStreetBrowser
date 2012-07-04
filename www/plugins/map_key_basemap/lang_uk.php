@@ -1,30 +1,30 @@
 <?
-#$lang_str["head:map_key_basemap"]="Basemap";
+$lang_str["head:map_key_basemap"]="Об'єкти";
 
 // building
-#$lang_str["map_key_basemap:building=yes"]="Buildings";
-#$lang_str["map_key_basemap:building=default"]="Buildings";
-#$lang_str["map_key_basemap:building=worship"]="Religious Buildings";
+$lang_str["map_key_basemap:building=yes"]="Будівлі";
+$lang_str["map_key_basemap:building=default"]="Будівлі";
+$lang_str["map_key_basemap:building=worship"]="Культові місця";
 #$lang_str["map_key_basemap:building=road_amenities"]="Facilities for Transportation (Stations, Terminals, Toll Booths, ...)";
 #$lang_str["map_key_basemap:building=nature_building"]="Natural Buildings (e.g. Barriers)";
-#$lang_str["map_key_basemap:building=industrial"]="Industrial Buildings";
-#$lang_str["map_key_basemap:building=education"]="Educational Buildings";
-#$lang_str["map_key_basemap:building=shop"]="Shops";
-#$lang_str["map_key_basemap:building=public"]="Public Buildings";
-#$lang_str["map_key_basemap:building=military"]="Military Buildings";
-#$lang_str["map_key_basemap:building=historic"]="Historical Buildings";
-#$lang_str["map_key_basemap:building=emergency"]="Buildings of emergency facilities";
-#$lang_str["map_key_basemap:building=health"]="Buildings of health services";
-#$lang_str["map_key_basemap:building=communication"]="Buildings for communication";
-#$lang_str["map_key_basemap:building=residential"]="Residential Buildings";
-#$lang_str["map_key_basemap:building=culture"]="Cultural Buildings";
-#$lang_str["map_key_basemap:building=tourism"]="Touristic Buildings";
-#$lang_str["map_key_basemap:building=sport"]="Buildings for sport activities";
+$lang_str["map_key_basemap:building=industrial"]="Промислові будівлі";
+$lang_str["map_key_basemap:building=education"]="Навчальні корпуси";
+$lang_str["map_key_basemap:building=shop"]="Магазини";
+$lang_str["map_key_basemap:building=public"]="Громадські будівлі";
+$lang_str["map_key_basemap:building=military"]="Військові будівлі";
+$lang_str["map_key_basemap:building=historic"]="Історичні споруди";
+$lang_str["map_key_basemap:building=emergency"]="Будинки швидкої допомоги";
+$lang_str["map_key_basemap:building=health"]="Будинки медичних послуг";
+$lang_str["map_key_basemap:building=communication"]="Будинки послуг зв'язку";
+$lang_str["map_key_basemap:building=residential"]="Житлові будинки";
+$lang_str["map_key_basemap:building=culture"]="Культурні споруди";
+$lang_str["map_key_basemap:building=tourism"]="Туристичні споруди";
+$lang_str["map_key_basemap:building=sport"]="Спортивні споруди";
 
 // landuse
-#$lang_str["map_key_basemap:landuse=land"]="Land";
-#$lang_str["map_key_basemap:landuse=water"]="Water Areas";
-#$lang_str["map_key_basemap:landuse=park"]="Park";
+$lang_str["map_key_basemap:landuse=land"]="Земля";
+$lang_str["map_key_basemap:landuse=water"]="Водні території";
+$lang_str["map_key_basemap:landuse=park"]="Парк";
 #$lang_str["map_key_basemap:landuse=education"]="Area of educational facilities";
 #$lang_str["map_key_basemap:landuse=tourism"]="Area of touristic facilities";
 #$lang_str["map_key_basemap:landuse=garden"]="Farms, Plantages, Gardens";
@@ -57,4 +57,4 @@ $lang_str["map_key_basemap:borders"]="Кордони";
 $lang_str["map_key_basemap:landuse"]="Землевикористання";
 $lang_str["map_key_basemap:buildings"]="Будівлі";
 #$lang_str["map_key_basemap:barrier"]="Barriers";
-$lang_str["map_key_basemap:housenumbers"]="Нумерація будинків";
+$lang_str["map_key_basemap:housenumbers"]="Номери будинків";
