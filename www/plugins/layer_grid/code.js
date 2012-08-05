@@ -184,6 +184,10 @@ function layer_grid_activate() {
   layer_grid_view_changed();
 }
 
+function layer_grid_toggle() {
+  layer_grid_overlay.setVisibility(!layer_grid_overlay.visibility);
+}
+
 function layer_grid_init() {
   layer_grid_overlay=new OpenLayers.Layer.Vector(
     lang("layer_grid:name"),
@@ -200,3 +204,5 @@ function layer_grid_init() {
 }
 
 register_hook("init", layer_grid_init);
+if(typeof register_keyshort!="undefined")
+  register_keyshort("layer_grid", layer_grid_toggle, "g");
