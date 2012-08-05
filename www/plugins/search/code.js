@@ -9,6 +9,7 @@ function search_init() {
     icon: "plugins/search/icon.png",
     icon_title: lang("search:name"),
     callback_activate: search_toolbox_activate,
+    keyshort: { id: "search", default_keyshort: "/" },
     weight: -4
   });
   register_toolbox(search_toolbox);
