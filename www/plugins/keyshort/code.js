@@ -1,6 +1,11 @@
 var keyshort_list={};
 
-function keyshort_call(id, callback) {
+function keyshort_call(id) {
+  if(!id)
+    return;
+  if(!keyshort_list[id])
+    return;
+
   keyshort_list[id].callback(id);
 }
 
