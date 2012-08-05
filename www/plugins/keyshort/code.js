@@ -1,17 +1,27 @@
 var keyshort_list={};
 
 function keyshort_call(id, callback) {
-  keyshort_list[id][0](id);
+  keyshort_list[id].callback(id);
 }
 
 function register_keyshort(id, callback, default_keyshort, keydir) {
-  if(!keydir)
-    keydir="keydown";
+  var options={};
 
-  keyshort_list[id]=[
-    callback,
-    keydir+"."+default_keyshort
-  ];
+  if(typeof id=="object")
+    options=id;
+  else
+    options={
+      id: id,
+      callback: callback,
+      default_keyshort: default_keyshort,
+      keydir: keydir
+    };
 
-  $(document).bind(keydir+"."+default_keyshort, keyshort_call.bind(this, id));
+  if(!options.keydir)
+    options.keydir="keydown";
+
+  keyshort_list[options.id]=options;
+
+  $(document).bind(options.keydir+"."+options.default_keyshort,
+    keyshort_call.bind(this, options.id));
 }
