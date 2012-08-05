@@ -51,6 +51,11 @@ function toolbox(options) {
     }
   }
 
+  // keyshort_callback
+  this.keyshort_callback=function(id) {
+    this.activate();
+  }
+
   // constructor
   this.options=options;
   this.content=document.createElement("div");
@@ -62,6 +67,14 @@ function toolbox(options) {
 
   if(!this.options.weight) {
     this.options.weight=0;
+  }
+
+  if(this.options.keyshort) {
+    if(!this.options.keyshort.callback)
+      this.options.keyshort.callback=this.keyshort_callback.bind(this);
+
+    if(typeof register_keyshort!="undefined")
+      register_keyshort(this.options.keyshort);
   }
 }
 
