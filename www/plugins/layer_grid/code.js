@@ -201,8 +201,9 @@ function layer_grid_init() {
   layer_grid_overlay.events.register("visibilitychanged", layer_grid_overlay, layer_grid_activate);
 
   overlays_register("layer_grid", layer_grid_overlay, { help: lang("layer_grid:help") });
+
+  if(typeof register_keyshort!="undefined")
+    register_keyshort("layer_grid", layer_grid_toggle, "g", lang("layer_grid:toggle"));
 }
 
 register_hook("init", layer_grid_init);
-if(typeof register_keyshort!="undefined")
-  register_keyshort("layer_grid", layer_grid_toggle, "g");
