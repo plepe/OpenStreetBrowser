@@ -135,3 +135,10 @@ $lang_str["basemap:osb"]="OpenStreetBrowser";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
+
+$lang_str["zoom_in"]="zoom in";
+$lang_str["zoom_out"]="zoom out";
+$lang_str["pan_north"]="pan viewport North";
+$lang_str["pan_east"]="pan viewport East";
+$lang_str["pan_south"]="pan viewport South";
+$lang_str["pan_west"]="pan viewport West";
