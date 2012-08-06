@@ -19,16 +19,16 @@ function keyshort_map(id) {
     case "keyshort_map:zoom_out":
       map.zoomOut();
       break;
-    case "keyshort_map:scroll_north":
+    case "keyshort_map:pan_north":
       y=-1;
       break;
-    case "keyshort_map:scroll_east":
+    case "keyshort_map:pan_east":
       x=+1;
       break;
-    case "keyshort_map:scroll_south":
+    case "keyshort_map:pan_south":
       y=+1;
       break;
-    case "keyshort_map:scroll_west":
+    case "keyshort_map:pan_west":
       x=-1;
       break;
   }
@@ -43,15 +43,15 @@ function keyshort_map(id) {
 
 register_keyshort("keyshort_map:zoom_in", keyshort_map, "pageup");
 register_keyshort("keyshort_map:zoom_out", keyshort_map, "pagedown");
-register_keyshort("keyshort_map:scroll_north", keyshort_map, "up");
-register_keyshort("keyshort_map:scroll_east", keyshort_map, "right");
-register_keyshort("keyshort_map:scroll_south", keyshort_map, "down");
-register_keyshort("keyshort_map:scroll_west", keyshort_map, "left");
-register_keyshort("keyshort_map:scroll_north:fast", keyshort_map, "ctrl_up");
-register_keyshort("keyshort_map:scroll_east:fast", keyshort_map, "ctrl_right");
-register_keyshort("keyshort_map:scroll_south:fast", keyshort_map, "ctrl_down");
-register_keyshort("keyshort_map:scroll_west:fast", keyshort_map, "ctrl_left");
-register_keyshort("keyshort_map:scroll_north:slow", keyshort_map, "shift_up");
-register_keyshort("keyshort_map:scroll_east:slow", keyshort_map, "shift_right");
-register_keyshort("keyshort_map:scroll_south:slow", keyshort_map, "shift_down");
-register_keyshort("keyshort_map:scroll_west:slow", keyshort_map, "shift_left");
+register_keyshort("keyshort_map:pan_north", keyshort_map, "up");
+register_keyshort("keyshort_map:pan_east", keyshort_map, "right");
+register_keyshort("keyshort_map:pan_south", keyshort_map, "down");
+register_keyshort("keyshort_map:pan_west", keyshort_map, "left");
+register_keyshort("keyshort_map:pan_north:fast", keyshort_map, "ctrl_up");
+register_keyshort("keyshort_map:pan_east:fast", keyshort_map, "ctrl_right");
+register_keyshort("keyshort_map:pan_south:fast", keyshort_map, "ctrl_down");
+register_keyshort("keyshort_map:pan_west:fast", keyshort_map, "ctrl_left");
+register_keyshort("keyshort_map:pan_north:slow", keyshort_map, "shift_up");
+register_keyshort("keyshort_map:pan_east:slow", keyshort_map, "shift_right");
+register_keyshort("keyshort_map:pan_south:slow", keyshort_map, "shift_down");
+register_keyshort("keyshort_map:pan_west:slow", keyshort_map, "shift_left");
