@@ -80,6 +80,18 @@ function url_history_check_link(ob) {
     ob.setAttribute("href", "."+href);
 }
 
+function url_history_content_change2(ob) {
+  if(ob.tagName=="A") {
+    url_history_check_link(ob);
+  }
+
+  var curr=ob.firstChild;
+  while(curr) {
+    url_history_content_change2(curr);
+    curr=curr.nextSibling;
+  }
+}
+
 function url_history_content_change(event) {
   if(!event)
     return;
@@ -87,9 +99,7 @@ function url_history_content_change(event) {
   if(!event.target.tagName)
     return;
 
-  if(event.target.tagName=="A") {
-    url_history_check_link(event.target);
-  }
+  url_history_content_change2(event.target);
 }
 
 function url_historyhs_init() {
