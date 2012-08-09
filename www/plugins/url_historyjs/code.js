@@ -11,6 +11,9 @@ function url_history_statechange() {
   if(m=new_hash.match(/^\.(\?.*)$/))
     new_hash=m[1];
 
+  if(new_hash==".")
+    new_hash="";
+
   location_params={};
 
   var m;
@@ -73,7 +76,7 @@ function url_history_check_link(ob) {
   if(m=href.match(/^#(.*)$/))
     href=m[1];
 
-  if(m=href.match(/^(\?.*)$/))
+  if(m=href.match(/^([a-zA-Z_0-9:=\.,]*\?.*)$/))
     ob.setAttribute("href", "."+href);
 }
 
