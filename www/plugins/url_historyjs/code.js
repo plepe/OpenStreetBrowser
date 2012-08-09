@@ -119,4 +119,31 @@ function url_historyhs_init() {
   url_history_statechange();
 }
 
+function url(params) {
+  var ret="";
+
+  if(!params)
+    return "";
+
+  if(typeof params != "object")
+    return urlencode(params);
+
+  if(params.obj) {
+    ret+=urlencode(params.obj);
+    delete params.obj;
+  }
+
+  if(keys(params).length) {
+    ret+="?";
+
+    for(var k in params) {
+      ret+=urlencode(k)+"="+urlencode(params[k])+"&";
+    }
+
+    ret=ret.substr(0, ret.length-1);
+  }
+
+  return ret;
+}
+
 register_hook("post_init", url_historyhs_init);
