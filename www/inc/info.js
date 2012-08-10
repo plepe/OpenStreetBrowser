@@ -161,7 +161,7 @@ function info(ob) {
     var actions=dom_create_append(this.div, "div");
     var a=dom_create_append(actions, "a");
     a.className="zoom";
-    a.href="#";
+    a.href=url();
     a.onclick=redraw;
     dom_create_append_text(a, lang("info_back"));
 

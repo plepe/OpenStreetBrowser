@@ -32,7 +32,7 @@ function category_chooser(category_list) {
       var li=dom_create_append(ul, "li");
 
       var a=dom_create_append(li, "a");
-      a.href="#";
+      a.href=url();
       a.onclick=this.choose.bind(this, ob.getAttribute("id"));
 
       var text=lang("unnamed");
@@ -77,7 +77,7 @@ function category_chooser_open(category_list) {
 function category_chooser_list_more(list, category_list) {
   var span=document.createElement("span");
   var more_cat=dom_create_append(span, "a");
-  more_cat.href="#";
+  more_cat.href=url();
   more_cat.appendChild(lang_dom("more_categories"));
   more_cat.onclick=category_chooser_open.bind(this, category_list);
 

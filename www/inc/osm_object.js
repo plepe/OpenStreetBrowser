@@ -214,7 +214,7 @@ function osm_object(dom) {
     // href
     var a=dom_create_append(li, "a");
     if(this.id)
-      a.href="#"+this.id;
+      a.href=url({ obj: this.id });
 
     a.onmouseover=this.set_highlight.bind(this);
     a.onmouseout=this.unset_highlight.bind(this);

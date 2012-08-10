@@ -84,7 +84,7 @@ function category_osm(id, param) {
     dom_clean(div.more);
     if(this.result.complete=="false") {
       var a=dom_create_append(div.more, "a");
-      a.href="#";
+      a.href=url();
       a.onclick=this.show_more.bind(this);
       dom_create_append_text(a, t("more"));
     }

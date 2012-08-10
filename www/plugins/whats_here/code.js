@@ -91,7 +91,7 @@ function whats_here_view_click(event, pos) {
     return;
 
   var lonlat = pos.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
-  location.hash="#whats_here="+lonlat.lon+","+lonlat.lat;
+  set_url({ obj: "whats_here="+lonlat.lon+","+lonlat.lat });
 }
 
 function whats_here_search_object(objects, str) {
@@ -106,7 +106,7 @@ function whats_here_search_object(objects, str) {
 }
 
 function whats_here_contextmenu(pos) {
-  location.hash="#whats_here="+pos.lon+","+pos.lat;
+  set_url({ obj: "whats_here="+pos.lon+","+pos.lat });
 }
 
 function whats_here_init() {

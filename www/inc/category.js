@@ -38,6 +38,8 @@ function category(id) {
     else {
       this.open_category(div);
     }
+
+    return false;
   }
 
   // open_category - call to open category
@@ -214,7 +216,7 @@ function category(id) {
 
     dom_clean(div.header);
     div.header_name=dom_create_append(div.header, "a");
-    div.header_name.href="#";
+    div.header_name.href=url();
     div.header_name.className="header";
     div.header_name.onclick=this.toggle_open.bind(this, div);
     var name=lang_parse(this.tags.get_lang("name", ui_lang));

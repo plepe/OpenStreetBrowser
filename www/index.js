@@ -179,7 +179,7 @@ function set_location(params) {
   // TODO: Maybe not optimal, want to leave link intact when there are
   // parameters to it?
   if(params.obj)
-    location.hash="#"+params.obj;
+    set_url({ obj: params.obj });
 
   location_params=params;
 

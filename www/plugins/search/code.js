@@ -95,7 +95,7 @@ function search() {
 
   var details_content=document.getElementById("details_content");
   var details=document.getElementById("details");
-  location.hash="#search_"+search_form.elements.osb_search.value;
+  set_url({ obj: "search_"+search_form.elements.osb_search.value });
 }
 
 function real_search(value, param) {
@@ -115,7 +115,11 @@ function real_search(value, param) {
 
   var d=dom_create_append(details_content, "div");
   d.className="zoombuttons";
-  d.innerHTML="<a class='zoom' href='#'>"+lang("info_back")+"</a>";
+
+  var a=dom_create_append(d, "a");
+  a.className="zoom";
+  a.href=url();
+  dom_create_append_text(a, lang("info_back"));
 
   var search_content=dom_create_append(details_content, "div");
   search_content.className="search_content";
@@ -140,7 +144,7 @@ function search_result(data) {
     search_shown.push(ob.tags.get("nominatim_id"));
 
     el.name=ob.tags.get("name");
-    el.href="#"+ob.id;
+    el.href=url({ obj: ob.id });
 
     if(ob.tags.get("#geo:center")) {
       el.highlight=ob.tags.get("#geo:center");

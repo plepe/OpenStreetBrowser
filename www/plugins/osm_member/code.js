@@ -6,7 +6,7 @@ function osm_member_show_members(div, data) {
 
     var entry={};
     entry.name=ob.name();
-    entry.href="#"+i;
+    entry.href=url({ obj: i });
     if(ob.tags.get("#role"))
       entry.type=ob.tags.get("#role");
     if(ob.tags.get("#geo"))
@@ -31,7 +31,7 @@ function osm_member_show_member_of(div, data) {
 
     var entry={};
     entry.name=ob.name();
-    entry.href="#"+i;
+    entry.href=url({ obj: i });
     if(ob.tags.get("#role"))
       entry.type=ob.tags.get("#role");
     if(ob.tags.get("#geo"))

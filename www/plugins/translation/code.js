@@ -278,7 +278,7 @@ function translation(l) {
     td.colSpan=3;
 
     var a=dom_create_append(td, "a");
-    a.href="#";
+    a.href=url();
     a.onclick=this.print_file_tags_prefix_add.bind(this, tr);
     dom_create_append_text(a, lang("translation:add_value", 0, prefix));
   }

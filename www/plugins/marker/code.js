@@ -98,7 +98,7 @@ function marker(lon, lat) {
     this.feature.style=marker_style_selected;
     drag_layer.drawFeature(this.feature);
 
-    location.hash="#"+this.id;
+    set_url({ obj: this.id });
   }
 
   // object_unselect
@@ -142,7 +142,7 @@ function marker(lon, lat) {
     var a=document.createElement("a");
     dom_create_append_text(a, lang("marker:action_remove"));
     a.onclick=this.remove.bind(this);
-    a.href="#";
+    a.href=url();
 
     // insert to chapters
     chapters.push({
@@ -161,7 +161,7 @@ function marker(lon, lat) {
 
     ret.icon_url="plugins/marker/icon.png";
     ret.name=this.name();
-    ret.href="#"+this.id;
+    ret.href=url({ obj: this.id });
     ret.highlight=this.feature.geometry.toString();
     ret.highlight_center=this.feature.geometry.toString();
 
@@ -224,7 +224,7 @@ function marker_add_context(pos) {
   var marker=marker_add(pos.lon, pos.lat);
 
   // redirect to marker-page
-  location.hash="#"+marker.id;
+  set_url({ obj: marker.id });
 }
 
 function marker_search_object(ret, id) {
@@ -242,7 +242,7 @@ function marker_place(pos) {
   var marker=marker_add(pos.lon, pos.lat);
 
   // redirect to marker-page
-  location.hash="#"+marker.id;
+  set_url({ obj: marker.id });
 
   return false;
 }
@@ -251,7 +251,7 @@ function marker_info(chapters, ob) {
   if(ob.geo_center()&&(ob.type!="marker")) {
     var a=document.createElement("a");
     a.onclick=marker_place.bind(this, ob);
-    a.href="#";
+    a.href=url();
     dom_create_append_text(a, lang("marker:place"));
 
     var entry={
