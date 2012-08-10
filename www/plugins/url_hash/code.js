@@ -61,4 +61,8 @@ function url(params) {
   return "#"+ret;
 }
 
+function set_url(params) {
+  location.hash=url(params);
+}
+
 register_hook("init", url_hash_init);

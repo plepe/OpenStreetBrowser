@@ -156,4 +156,9 @@ function url(params) {
   return ret;
 }
 
+function set_url(params) {
+  var loc=url(params);
+  window.History.replaceState(null, null, loc);
+}
+
 register_hook("post_init", url_historyhs_init);
