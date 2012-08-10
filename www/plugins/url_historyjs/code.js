@@ -129,14 +129,18 @@ function url_historyhs_init() {
   url_history_statechange();
 }
 
-function url(params) {
+function url(params, full) {
   var ret="";
+  var base="";
+
+  if(full)
+    base=url_historyjs_base_url;
 
   if(!params)
-    return "";
+    return base;
 
   if(typeof params != "object")
-    return urlencode(params);
+    return base+urlencode(params);
 
   if(params.obj) {
     ret+=urlencode(params.obj);
@@ -153,7 +157,7 @@ function url(params) {
     ret=ret.substr(0, ret.length-1);
   }
 
-  return ret;
+  return base+ret;
 }
 
 function set_url(params) {

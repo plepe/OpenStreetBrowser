@@ -34,14 +34,18 @@ function url_hash_init() {
   redraw_timer=setTimeout("url_hash_check_redraw()", 300);
 }
 
-function url(params) {
+function url(params, full) {
   var ret="";
+  var base="#";
+
+  if(full)
+    base=get_baseurl()+"#";
 
   if(!params)
-    return "#";
+    return base;
 
   if(typeof params != "object")
-    return "#"+urlencode(params);
+    return base+urlencode(params);
 
   if(params.obj) {
     ret+=urlencode(params.obj);
@@ -58,7 +62,7 @@ function url(params) {
     ret=ret.substr(0, ret.length-1);
   }
 
-  return "#"+ret;
+  return base+ret;
 }
 
 function set_url(params) {
