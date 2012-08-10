@@ -248,12 +248,13 @@ function get_permalink() {
 function get_permalink_for_control() {
   var permalink=new clone(get_permalink());
 
-  if(!permalink.obj)
-    permalink.obj="";
+  var _url={};
+  if(permalink.obj) {
+    _url.obj=permalink.obj;
+    delete(permalink.obj);
+  }
 
-  permalink_control.base=get_baseurl()+"#"+permalink.obj;
-
-  delete(permalink.obj);
+  permalink_control.base=url(_url, 1);
 
   return permalink;
 }
@@ -295,7 +296,7 @@ function init() {
   call_hooks("init");
 
   var permalink=document.getElementById("permalink");
-  permalink_control=new OpenLayers.Control.Permalink(permalink, get_baseurl()+"#");
+  permalink_control=new OpenLayers.Control.Permalink(permalink, url({}, true));
   map.addControl(permalink_control);
   permalink_control.createParams=get_permalink_for_control;
 
