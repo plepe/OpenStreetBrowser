@@ -36,20 +36,31 @@ function start_location_start(start_value) {
   }
 }
 
-function start_location_activate() {
-  var text = "<i>"+lang("start_location:choose")+":</i><br><form id=\"startform\" style=\"margin-bottom:3px;\">";
+function start_location_options_list() {
+  var text="";
+  var opt=cookie_read('start_value');
+  if(!opt)
+    opt="startnormal";
+
   text += "<div id='start_location_list'>\n";
-  if (navigator.geolocation) {
-    text += "<input type=\"radio\" name=\"start_value\" id=\"geolocation\" value=\"geolocation\"><label for=\"geolocation\">"+lang("start_location:geolocation")+"</label></br>";
-  }
   if(lastview=cookie_read("_osb_location")) {
-    text += "<input type=\"radio\" name=\"start_value\" id=\"lastview\" value=\"lastview\"><label for=\"lastview\">"+lang("start_location:lastview")+"</label></br>";
+    text += "<input type=\"radio\" name=\"start_value\" id=\"lastview\" value=\"lastview\" "+(opt=="lastview"?"checked":"")+"><label for=\"lastview\">"+lang("start_location:lastview")+"</label></br>";
+  }
+  if (navigator.geolocation) {
+    text += "<input type=\"radio\" name=\"start_value\" id=\"geolocation\" value=\"geolocation\" "+(opt=="geolocation"?"checked":"")+"><label for=\"geolocation\">"+lang("start_location:geolocation")+"</label></br>";
   }
   if(cookie_read("_osb_permalink")) {
-    text += "<input type=\"radio\" name=\"start_value\" id=\"savedview\" value=\"savedview\"><label for=\"savedview\">"+lang("start_location:savedview")+"</label></br>";
+    text += "<input type=\"radio\" name=\"start_value\" id=\"savedview\" value=\"savedview\" "+(opt=="savedview"?"checked":"")+"><label for=\"savedview\">"+lang("start_location:savedview")+"</label></br>";
   }
-  text += "<input type=\"radio\" name=\"start_value\" id=\"startnormal\" value=\"startnormal\"><label for=\"startnormal\">"+lang("start_location:startnormal")+"</label></br>";
+  text += "<input type=\"radio\" name=\"start_value\" id=\"startnormal\" value=\"startnormal\" "+(opt=="startnormal"?"checked":"")+"><label for=\"startnormal\">"+lang("start_location:startnormal")+"</label></br>";
   text += "</div>\n";
+
+  return text;
+}
+
+function start_location_activate() {
+  var text = "<i>"+lang("start_location:choose")+":</i><br><form id=\"startform\" style=\"margin-bottom:3px;\">";
+  text += start_location_options_list();
   text += "</br><input type=\"button\" name=\"start\" value=\""+lang("ok")+"\" onclick=\"start_location_options()\"><input type=\"checkbox\" name=\"start_save\" id=\"save\" value=\"save\"><label for=\"save\">"+lang("start_location:remember")+"</label></br></form>";
 
   start_location_toolbox.content.innerHTML=text;
@@ -59,10 +70,7 @@ function start_location_activate() {
 
   var c=cookie_read('start_value');
   if(c) {
-    document.getElementById(c).checked=true;
     document.getElementById('save').checked=true;
-  } else {
-    document.getElementById('startnormal').checked=true;
   }
 }
 
@@ -96,7 +104,26 @@ function start_location_post_init() {
   }
 }
 
+function start_location_options_show(list) {
+  var ret1;
+
+  ret1 ="<h4>"+lang("start_location:name")+"</h4>\n";
+  ret1+="<div class='options_help'>"+lang("start_location:options_help")+"</div>\n";
+  ret1+= start_location_options_list();
+
+  var d=document.createElement("div");
+  d.innerHTML=ret1;
+
+  list.push([ 0, d ]);
+}
+
+function start_location_options_save() {
+  options_set("start_value", options_radio_get("start_value"));
+}
+
 register_hook("init", start_location_init);
 register_hook("post_init", start_location_post_init);
 register_hook("permalink_update", start_location_permalink_update);
 register_hook("recv_permalink", start_location_recv_permalink);
+register_hook("options_show", start_location_options_show);
+register_hook("options_save", start_location_options_save);

@@ -1,5 +1,6 @@
 <?
 $lang_str["start_location:name"]="Map Position";
+$lang_str["start_location:options_help"]="When loading page, on which location should the map center on?";
 
 $lang_str["start_location:choose"]="Choose map view";
 $lang_str["start_location:geolocation"]="get geolocation";
