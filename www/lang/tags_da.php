@@ -2,8 +2,8 @@
 // All tags should have a translation, with language strings like "tag:key" for the translation of the key and "tag:key=value" for the translation of the value. E.g. tag:amenity "Amenity;Amenities" resp. tag:amenity=bar "Bar;Bars". You can also define the Gender like "F;Bar;Bars".
 
 // *
-$lang_str["tag:*=yes"]="Ja";
-$lang_str["tag:*=no"]="Nej";
+$lang_str["tag:*=yes"]="ja";
+$lang_str["tag:*=no"]="nej";
 
 // accomodation
 #$lang_str["tag:accomodation"]="Accomodation";
@@ -15,22 +15,22 @@ $lang_str["tag:address"]="Adressen";
 $lang_str["tag:addr:housenumber"]=array("Husnummer", "Husnumre");
 
 // addr:housename
-#$lang_str["tag:addr:housename"]=array("House name", "House names");
+$lang_str["tag:addr:housename"]=array("Husnavn", "Husnavne");
 
 // addr:street
-$lang_str["tag:addr:street"]=array("Gade", "Gaden");
+$lang_str["tag:addr:street"]=array("Gade", "Gader");
 
 // addr:postcode
 $lang_str["tag:addr:postcode"]=array("Postnummer", "Postnumre");
 
 // addr:city
-$lang_str["tag:addr:city"]="Sted";
+$lang_str["tag:addr:city"]=array("By", "Byer");
 
 // addr:country
-$lang_str["tag:addr:country"]="Land";
+$lang_str["tag:addr:country"]=array("Land", "Lande");
 
 // addr:full
-#$lang_str["tag:addr:full"]=array("Full address", "Full addresses");
+$lang_str["tag:addr:full"]=array("Fulde adresse", "Fulde adresser");
 
 // addr:interpolation
 #$lang_str["tag:addr:interpolation"]="Interpolated housenumbers";
@@ -41,12 +41,12 @@ $lang_str["tag:addr:country"]="Land";
 #$lang_str["tag:aeroway=taxiway"]="Taxiway";
 
 // admin_level
-#$lang_str["tag:admin_level=2"]="Country Border";
+$lang_str["tag:admin_level=2"]="Landegrænser";
 #$lang_str["tag:admin_level=3"]="Divisions";
 #$lang_str["tag:admin_level=4"]="State Border";
 #$lang_str["tag:admin_level=5"]="Community Border";
 #$lang_str["tag:admin_level=6"]="County Border";
-#$lang_str["tag:admin_level=8"]="Town/Municipality Border";
+$lang_str["tag:admin_level=8"]="Bygrænser";
 #$lang_str["tag:admin_level=10"]="Subdivisions of Cities";
 
 // amenity
