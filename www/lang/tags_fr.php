@@ -390,6 +390,11 @@ $lang_str["tag:military"]="Zone militaire";
 
 // natural
 $lang_str["tag:natural"]="Nature du terrain naturel";
+$lang_str["tag:natural=beach"]="plage";
+$lang_str["tag:natural=glacier"]="glacier";
+$lang_str["tag:natural=volcano"]="volcan";
+$lang_str["tag:natural=wood"]="bois";
+$lang_str["tag:natural=tree"]="fôret";
 
 // geological
 $lang_str["tag:geological"]="Type de site géologique";
