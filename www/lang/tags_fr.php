@@ -545,7 +545,7 @@ $lang_str["tag:fax"]="Numéro de fax";
 $lang_str["tag:email"]="E-mail";
 
 // wikipedia
-$lang_str["tag:wikipedia"]="Wikipédia";
+$lang_str["tag:wikipedia"]="Wikipedia";
 
 // created_by
 $lang_str["tag:created_by"]="Créé par";
