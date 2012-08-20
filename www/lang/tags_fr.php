@@ -293,7 +293,7 @@ $lang_str["tag:sport=australian_football"]="Football australien";
 $lang_str["tag:sport=baseball"]="Baseball";
 $lang_str["tag:sport=basketball"]="Basketball";
 $lang_str["tag:sport=beachvolleyball"]="Beach Volley";
-$lang_str["tag:sport=boules"]="Jeu de boules";
+$lang_str["tag:sport=boules"]="Jeux de boules";
 $lang_str["tag:sport=bowls"]="Bowling";
 $lang_str["tag:sport=canoe"]="Canoé";
 $lang_str["tag:sport=chess"]="Échecs";
