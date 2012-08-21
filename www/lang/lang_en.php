@@ -4,6 +4,7 @@ $lang_str["lang:bg"]="Bulgarian";
 $lang_str["lang:cs"]="Czech";
 $lang_str["lang:en"]="English";
 $lang_str["lang:es"]="Spanish";
+$lang_str["lang:et"]="Estonian";
 $lang_str["lang:it"]="Italian";
 $lang_str["lang:fr"]="French";
 $lang_str["lang:uk"]="Ukrainian";
