@@ -1285,3 +1285,8 @@ function vsprintf (format, args) {
   return this.sprintf.apply(this, [format].concat(args));
 }
 
+function coalesce() {
+  for(var i=0; i<arguments.length; i++)
+    if(arguments[i]!==null)
+      return arguments[i];
+}

@@ -68,3 +68,110 @@ function units_format_time(val) {
     return lang("units:min_sec", 0, Math.floor(val/60), (val%60).toFixed(0));
   return lang("units:sec", 0, val.toFixed(0));
 }
+
+/**
+ * translates speed value to prefered display unit
+ * @param val speed
+ * @param unit unit in which speed is provided. Valid values: "m/s" (default)
+ * @return string formated speed value
+ */
+function units_format_speed(val, unit) {
+  if(!unit)
+    unit="m/s";
+
+  if(val===null)
+    return "?";
+  if(isNaN(val))
+    return "?";
+
+  if(unit=="m/s")
+    val=val*3600/1000;
+
+  var display_unit="km/h";
+
+  if(val<10)
+    val=sprintf("%.1f", val);
+  else
+    val=sprintf("%.0f", val);
+
+  return lang("units:speed:"+display_unit, 0, val);
+}
+
+/**
+ * translates altitude value to prefered display unit
+ * @param val altitude
+ * @param unit unit in which altitude is provided. Valid values: "m" (default)
+ * @return string formated altitude value
+ */
+function units_format_altitude(val, unit) {
+  if(!unit)
+    unit="m";
+
+  if(val===null)
+    return "?";
+  if(isNaN(val))
+    return "?";
+
+//  if(unit=="m")
+//    val=val*1;
+
+  var display_unit="m";
+
+  val=sprintf("%.0f", val);
+
+  return lang("units:altitude:"+display_unit, 0, val);
+}
+
+/**
+ * translates heading value to prefered display unit
+ * @param val heading
+ * @param unit unit in which heading is provided. Valid values: "deg" (default)
+ * @return string formated heading value
+ */
+function units_format_heading(val, unit) {
+  if(!unit)
+    unit="deg";
+
+  if(val===null)
+    return "?";
+  if(isNaN(val))
+    return "?";
+
+//  if(unit=="deg")
+//    val=val;
+
+  var display_unit="deg-windrose";
+  var windrose=lang("units:heading:windrose:"+(((val+337.5)/45.0).toFixed(0)%8));
+
+  val=sprintf("%.0f", val);
+
+  return lang("units:heading:"+display_unit, 0, val, windrose);
+}
+
+/**
+ * return latitude of position as formatted string
+ * @param val position as OpenLayers.Lonlat
+ * @return string formated heading value
+ */
+function units_format_latitude(val) {
+  if(val===null)
+    return "?";
+  if(val.lat===undefined)
+    return "?";
+
+  return sprintf("%s %.5f°", lang("units:latitude:"+(val.lat>0?"N":"S")), val.lat);
+}
+
+/**
+ * return longitude of position as formatted string
+ * @param val position as OpenLayers.Lonlat
+ * @return string formated heading value
+ */
+function units_format_longitude(val) {
+  if(val===null)
+    return "?";
+  if(val.lon===undefined)
+    return "?";
+
+  return sprintf("%s %.5f°", lang("units:longitude:"+(val.lon<0?"W":"E")), val.lon);
+}
