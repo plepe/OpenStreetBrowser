@@ -23,6 +23,7 @@ function basemap_init() {
       default:
         basemaps[i]=new OpenLayers.Layer.OSM(t("basemap:"+i), basemaps[i][0], basemaps[i][1]);
     }
+    basemaps[i].wrapDateLine=true;
 
     map.addLayer(basemaps[i]);
   }
