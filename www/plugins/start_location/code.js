@@ -54,22 +54,6 @@ function start_location_options_list() {
   return text;
 }
 
-function start_location_activate() {
-  var text = "<i>"+lang("start_location:choose")+":</i><br><form id=\"startform\" style=\"margin-bottom:3px;\">";
-  text += start_location_options_list();
-  text += "</br><input type=\"button\" name=\"start\" value=\""+lang("ok")+"\" onclick=\"start_location_options()\"><input type=\"checkbox\" name=\"start_save\" id=\"save\" value=\"save\"><label for=\"save\">"+lang("start_location:remember")+"</label></br></form>";
-
-  start_location_toolbox.content.innerHTML=text;
-  start_location_form=document.getElementById("startform");
-
-  call_hooks("start_location_activate", start_location_form);
-
-  var c=cookie_read('start_value');
-  if(c) {
-    document.getElementById('save').checked=true;
-  }
-}
-
 function start_location_permalink_update(link) {
   cookie_write("_osb_location", hash_to_string(link));
 }
@@ -83,14 +67,6 @@ function start_location_recv_permalink(hash) {
 }
 
 function start_location_init() {
-  start_location_toolbox=new toolbox({
-    icon: "plugins/start_location/icon.png",
-    icon_title: lang("start_location:name"),
-    weight: -5,
-    callback_activate: start_location_activate
-  });
-  register_toolbox(start_location_toolbox);
-
   lastview=cookie_read("_osb_location");
 
   if(((location.hash=="") || (location.hash=="#")) && (cookie_read("start_value")==null)) {
