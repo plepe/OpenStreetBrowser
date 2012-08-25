@@ -21,11 +21,17 @@ if(!isset($version_string)) {
 
 call_hooks("init", $dummy);
 call_hooks("http_head");
+
+// check for installed OpenLayers instance
+if(!file_exists("lib/OpenLayers/OpenLayers.js")) {
+  print "Please download <a href='http://openlayers.org/'>OpenLayers</a> and extract to www/lib/OpenLayers/\n";
+  exit();
+}
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>OpenStreetBrowser</title>
-<script src="OpenLayers/OpenLayers.js<?=$version_string?>"></script>
+<script src="lib/OpenLayers/OpenLayers.js<?=$version_string?>"></script>
 <link rel="stylesheet" type="text/css" href="index.css<?=$version_string?>" />
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <link rel="search" type="application/opensearchdescription+xml" title="OpenStreetBrowser" href="osb_search.xml" />
