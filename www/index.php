@@ -6,17 +6,19 @@
 Header("content-type: text/html; charset=UTF-8");
 include("code.php");
 
-if(!$version) {
-  $version="dev";
-}
-
 if(!isset($version_string)) {
   exec("git rev-parse --short HEAD", $version_string, $status);
-  if($status==0)
+  if($status==0) {
+    if(!isset($version))
+      $version="rev-{$version_string[0]}";
     $version_string="?{$version_string[0]}";
+  }
   else
     $version_string="";
 }
+
+if(!isset($version))
+  $version="";
 
 call_hooks("init", $dummy);
 call_hooks("http_head");
