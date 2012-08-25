@@ -1,3 +1,5 @@
+// TODO: deep_clone() instead of new clone()
+
 function git_obj(dir, id, files) {
   this.url=function(file, version) {
     var param=new clone(this.ajax_param);

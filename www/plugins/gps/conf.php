@@ -1,3 +1,3 @@
 <?
 $gps_active=true;
-$gps_depend=array();
+$gps_depend=array("jquery");

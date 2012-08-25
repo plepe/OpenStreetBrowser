@@ -1,3 +1,5 @@
+// TODO: deep_clone() instead of new clone()
+
 var tag_editors={};
 
 function tags(d) {

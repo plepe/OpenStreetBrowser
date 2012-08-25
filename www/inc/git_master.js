@@ -1,3 +1,5 @@
+// TODO: deep_clone() instead of new clone()
+
 function git_master() {
   var commit_id=null;
 

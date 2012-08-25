@@ -1,6 +1,6 @@
 function tags_info_translated(chapters, ob) {
   var ul=document.createElement("ul");
-  var disp=new clone(ob.tags.data());
+  var disp=deep_clone(ob.tags.data());
 
   // See plugin Tags Hide how to handle this hook
   call_hooks("info_tags_show", disp, ob);

@@ -1,3 +1,5 @@
+// TODO: deep_clone() instead of new clone()
+
 function git_dir(master, id, obj_proto) {
   var obj_cache={};
 

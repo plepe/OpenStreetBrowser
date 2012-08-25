@@ -1,3 +1,5 @@
+// TODO: deep_clone() instead of new clone()
+
 var map;
 var vector_layer;
 var showing="";

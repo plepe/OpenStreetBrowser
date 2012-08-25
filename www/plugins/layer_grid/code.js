@@ -77,7 +77,7 @@ function layer_grid_show_latitude(i, vp, conf) {
   layer_grid_features.latitude_circle[index]=new OpenLayers.Feature.Vector(geo, 0, style);
 
   // label
-  label_style=new clone(label_style);
+  label_style=deep_clone(label_style);
   label_style.label=sprintf("%."+conf[2]+"f°", i);
   layer_grid_features.latitude_labels[index]=
     new OpenLayers.Feature.Vector(geop, 0, label_style);
@@ -121,7 +121,7 @@ function layer_grid_show_meridian(i, vp, conf) {
   layer_grid_features.meridians[index]=new OpenLayers.Feature.Vector(geo, 0, style);
 
   // label
-  var label_style=new clone(label_style);
+  var label_style=deep_clone(label_style);
   label_style.label=sprintf("%."+conf[2]+"f°", i);
   layer_grid_features.meridians_labels[index]=
     new OpenLayers.Feature.Vector(geop, 0, label_style);

@@ -213,6 +213,7 @@ function weight_sort(arr) {
 
 // Source: http://www.hardcode.nl/subcategory_1/article_414-copy-or-clone-javascript-array-object
 // use as: var b=new clone(a);
+// DEPRECATED as of branch-2.2: use deep_clone() instead
 function clone(source) {
     for (i in source) {
         if (typeof source[i] == 'source') {
@@ -222,6 +223,12 @@ function clone(source) {
             this[i] = source[i];
 	}
     }
+}
+
+// use as var b=deep_clone(a);
+// when using this function the plugin needs to depend on jQuery!
+function deep_clone(source) {
+  return jQuery.extend(true, {}, source);
 }
 
 // Source: http://der-albert.com/archive/2006/01/05/mit-javascript-dom-events-manuell-ausloesen.aspx
