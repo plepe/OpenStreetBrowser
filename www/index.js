@@ -138,6 +138,17 @@ function redraw() {
   showing_details=false;
   call_hooks("unselect_all");
 
+  if(location_params.lat&&location_params.lon) {
+    var lonlat = new OpenLayers.LonLat(location_params.lon, location_params.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+    if(location_params.zoom)
+      map.setCenter(lonlat, location_params.zoom);
+    else
+      map.setCenter(lonlat);
+  }
+  else if(location_params.zoom) {
+    map.zoomTo(location_params.zoom);
+  }
+
   if(x=="") {
     category_list_hash_changed();
     view_changed(null);
@@ -148,17 +159,6 @@ function redraw() {
   }
   else {
     new info(x);
-  }
-
-  if(location_params.lat&&location_params.lon) {
-    var lonlat = new OpenLayers.LonLat(location_params.lon, location_params.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-    if(location_params.zoom)
-      map.setCenter(lonlat, location_params.zoom);
-    else
-      map.setCenter(lonlat);
-  }
-  else if(location_params.zoom) {
-    map.zoomTo(location_params.zoom);
   }
 
   update_permalink();
@@ -188,14 +188,12 @@ function set_location(params) {
     call_hooks("hash_changed", location_params);
   }
   else {
-    start_lon=params.lon;
-    start_lat=params.lat;
-    start_zoom=params.zoom;
+    start_location=params;
   }
 }
 
 function view_changed_start(event) {
-  if((map.zoom)&&(start_zoom!=map.zoom))
+  if((map.zoom)&&(start_location.zoom!=map.zoom))
     first_load=0;
 
   var map_div=document.getElementById("map");
@@ -300,9 +298,8 @@ function init() {
   map.addControl(permalink_control);
   permalink_control.createParams=get_permalink_for_control;
 
-  if(start_lon&&(first_load)) {
-    var lonlat = new OpenLayers.LonLat(start_lon, start_lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-    map.setCenter(lonlat, start_zoom);
+  if(start_location&&(first_load)) {
+    set_location(start_location);
   }
 
   window_resize();

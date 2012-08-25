@@ -29,6 +29,8 @@ $db_central['master']=true; // set to false if this instance is slave database
 
 $SRID=900913;
 
+$default_location=array('zoom'=>2, 'lat'=>28.43864, 'lon'=>18.61488);
+
 $type_list=array("w"=>"way", "n"=>"node", "r"=>"relation");
 $type_list_short=array("w"=>"way", "n"=>"node", "r"=>"rel");
 $type_list_plural=array("w"=>"ways", "n"=>"nodes", "r"=>"rels");

@@ -52,40 +52,35 @@ function maskErrors() {
 }
 
 $first_load=1;
-$mlat=$_REQUEST[mlat];
-$mlon=$_REQUEST[mlon];
-if($_REQUEST[lon]) {
-  $lon=$_REQUEST[lon];
-  $lat=$_REQUEST[lat];
-  $zoom=$_REQUEST[zoom];
+$start_location=$default_location;
+
+if(isset($_REQUEST['mlon'])) {
+  $mlat=$_REQUEST['mlat'];
+  $mlon=$_REQUEST['mlon'];
+}
+if(isset($_REQUEST['lon'])) {
+  $start_location['lon']=$_REQUEST['lon'];
+  $start_location['lat']=$_REQUEST['lat'];
+
   $first_load=0;
 }
-elseif($_REQUEST[mlon]) {
-  if(!$lon) {
-    $lon=$mlon;
-    $lat=$mlat;
-    $zoom=$_REQUEST[zoom];
-  }
+elseif(isset($_REQUEST['mlon'])) {
+  $start_location['lon']=$mlon;
+  $start_location['lat']=$mlat;
 }
 else {
   if(isset($my_lat)) {
-    $lat=$my_lat;
-    $lon=$my_lon;
-    $zoom=12;
-  }
-  else {
-    $lon=18.83461;
-    $lat=52.41508;
-    $zoom=4;
+    $start_location['lat']=$my_lat;
+    $start_location['lon']=$my_lon;
+    $start_location['zoom']=12;
   }
 }
-?>
 
-var start_zoom=<?=$zoom?>;
-var start_lon=<?=$lon?>;
-var start_lat=<?=$lat?>;
-var first_load=<?=$first_load?>;
-<?
+if(isset($_REQUEST['zoom']))
+  $start_location['zoom']=$_REQUEST['zoom'];
+
+html_export_var(array("start_location"=>$start_location, "first_load"=>$first_load));
+
 if(isset($mlon))
   print "var marker_pos={ lon: $mlon, lat: $mlat };\n";
 else
