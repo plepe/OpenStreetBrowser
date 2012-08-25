@@ -23,16 +23,16 @@ function start_location_start(start_value) {
     case "geolocation":
       geo_init();
       break;
-    case "lastview":
-      set_location(lastview);
-      break;
     case "savedview":
       set_location(cookie_read("_osb_permalink"));
       break;
     case "startnormal":
       break;
+    case "lastview":
     default:
-      call_hooks("start_location_start", start_value);
+      if(lastview)
+	set_location(lastview);
+      break;
   }
 }
 
@@ -78,6 +78,10 @@ function start_location_permalink_update(link) {
   cookie_write("_osb_location", hash_to_string(link));
 }
 
+function start_location_view_changed(link) {
+  cookie_write("_osb_location", hash_to_string(get_permalink()));
+}
+
 function start_location_recv_permalink(hash) {
   cookie_write("_osb_permalink", hash);
 }
@@ -102,6 +106,10 @@ function start_location_post_init() {
   if((location.hash=="") || (location.hash=="#")) {
     start_location_start(cookie_read("start_value"));
   }
+
+  // start in post_init to track location, so we don't accidentially save the
+  // initial location
+  register_hook("view_changed", start_location_view_changed);
 }
 
 function start_location_options_show(list) {
