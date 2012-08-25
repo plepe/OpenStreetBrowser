@@ -2,7 +2,7 @@
 // In this editor you can translate all strings. In the third column you can compare the strings to another language (set it in the select box on the bottom of the window). Please note that changes will not appear right away, they need to be imported by a developer.
 // Every language string can have a singular and plural variant by separating them by ";", e.g. "Restaurant;Restaurants". The first string is the singular form, the second the plural form.  Optionally you can define the Gender (F, M, N) for the word by prepending one of those characters, e.g. "N;Büro;Büros" (German for "office").
 // When translating a language variant (e.g. 'British English', code 'en-gb') please translate only strings which are different from the base language.
-$lang_str["base_language"]="es"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
+$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
 
 $lang_str["lang:current"]="Asturianu"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
@@ -33,6 +33,7 @@ $lang_str["source"]="Orixe";
 $lang_str["unnamed"]="ensin nome";
 $lang_str["zoom"]="Nivel de zoom";
 $lang_str["no_message"]="dengún mensaxe";
+$lang_str["ad"]=array("Anunciu", "Anuncios");
 
 // Headings
 $lang_str["head:general_info"]="Información xeneral";
@@ -71,6 +72,7 @@ $lang_str["list_leisure_sport_tourism"]="Recréu, deporte y turismu";
 // Mapkey
 
 
+$lang_str["main:help"]="Ayuda";
 $lang_str["main:options"]="Opciones";
 $lang_str["main:about"]="Tocante a";
 $lang_str["main:donate"]="Donativos";
@@ -95,16 +97,16 @@ $lang_str["lang:auto"]="Igual que la llingua de la interfaz";
 $lang_str["overlay:data"]="Datos";
 $lang_str["overlay:draggable"]="Marques";
 
-$lang_str["user:no_auth"]="¡Nome d'usuariu o contraseña enquivocaos!";
+$lang_str["user:no_auth"]="¡Nome d'usuariu o conseña enquivocaos!";
 $lang_str["user:login_text"]="Coneutase a OpenStreetBrowser:";
 $lang_str["user:create_user"]="Crear un usuariu nuevu:";
 $lang_str["user:username"]="Nome d'usuariu";
 $lang_str["user:email"]="Señes de corréu";
-$lang_str["user:password"]="Contraseña";
-$lang_str["user:password_verify"]="Comprobación de contraseña";
-$lang_str["user:old_password"]="Contraseña antigua";
+$lang_str["user:password"]="Conseña";
+$lang_str["user:password_verify"]="Comprobación de conseña";
+$lang_str["user:old_password"]="Conseña antigua";
 $lang_str["user:no_username"]="¡Tienes de dar un nome d'usuariu!";
-$lang_str["user:password_no_match"]="¡Les contraseñes nun casen!";
+$lang_str["user:password_no_match"]="¡Les conseñes nun casen!";
 $lang_str["user:full_name"]="Nome completu";
 $lang_str["user:user_exists"]="El nome d'usuariu yá esiste";
 $lang_str["user:login"]="Coneutar";
@@ -130,6 +132,7 @@ $lang_str["category_chooser:new"]="Nueva categoría";
 $lang_str["category:sub_category"]=array("Sub-categoría", "Sub-categoríes");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
+$lang_str["basemap:osb_light"]="OpenStreetBrowser (dilíu)";
 $lang_str["basemap:mapnik"]="Estándar (Mapnik)";
 $lang_str["basemap:osmarender"]="Estándar (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";

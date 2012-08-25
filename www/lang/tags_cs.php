@@ -144,7 +144,7 @@ $lang_str["tag:leisure=ice_rink"]="Kluziště";
 $lang_str["tag:leisure=miniature_golf"]="Minigolf";
 $lang_str["tag:leisure=swimming_pool"]="Bazén";
 $lang_str["tag:leisure=beach_resort"]="Plážový resort";
-#$lang_str["tag:leisure=bird_hide"]="Bird Hide";
+$lang_str["tag:leisure=bird_hide"]="Ptačí budka";
 $lang_str["tag:leisure=sport"]="Jiný sport";
 
 // man_made
@@ -258,6 +258,15 @@ $lang_str["tag:religion=multifaith"]="více náboženství";
 
 // denomination
 $lang_str["tag:denomination"]="Vyznání";
+$lang_str["tag:denomination=anglican"]="anglikánské";
+$lang_str["tag:denomination=baptist"]="baptistické";
+$lang_str["tag:denomination=catholic"]="katolické";
+$lang_str["tag:denomination=greek_orthodox"]="řecké ortodoxní";
+$lang_str["tag:denomination=lutheran"]="luteránské";
+$lang_str["tag:denomination=orthodox"]="ortodoxní";
+$lang_str["tag:denomination=protestant"]="protestantské";
+$lang_str["tag:denomination=roman_catholic"]="římskokatolické";
+$lang_str["tag:denomination=russian_orthodox"]="ruské ortodoxní";
 
 // route
 $lang_str["tag:route"]="Dopravní trasy";
@@ -280,6 +289,7 @@ $lang_str["tag:route=mtb"]="Horské kolo";
 
 // shop
 $lang_str["tag:shop"]="Obchod";
+$lang_str["tag:shop=chemist"]="Lékárna";
 
 // sport
 $lang_str["tag:sport"]="Sport";
@@ -315,7 +325,7 @@ $lang_str["tag:sport=orienteering"]="Orientační závod";
 #$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
 $lang_str["tag:sport=paragliding"]="Paragliding";
 $lang_str["tag:sport=pelota"]="Pelota";
-#$lang_str["tag:sport=racquet"]="Racquet";
+$lang_str["tag:sport=racquet"]="Raketové sporty";
 $lang_str["tag:sport=rowing"]="Veslování";
 $lang_str["tag:sport=rugby"]="Rugby";
 $lang_str["tag:sport=shooting"]="Střelba";
@@ -388,6 +398,13 @@ $lang_str["tag:military"]="Vojenství";
 
 // natural
 $lang_str["tag:natural"]="Příroda";
+$lang_str["tag:natural=beach"]="Pláž";
+$lang_str["tag:natural=glacier"]="Ledovec";
+$lang_str["tag:natural=cliff"]="Útes";
+$lang_str["tag:natural=spring"]="Pramen";
+$lang_str["tag:natural=volcano"]="Sopka";
+$lang_str["tag:natural=wood"]="Les";
+$lang_str["tag:natural=tree"]="Strom";
 
 // geological
 $lang_str["tag:geological"]="Geologický";

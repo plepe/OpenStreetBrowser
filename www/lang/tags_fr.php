@@ -219,13 +219,13 @@ $lang_str["tag:power=generator"]="Génératrice";
 $lang_str["tag:power=line"]="Lignes de transport d'électricité";
 $lang_str["tag:power=minor_line"]="Ligne électrique locale";
 $lang_str["tag:power=tower"]="Pylônes électriques";
-$lang_str["tag:power=pole"]="Pilones électriques à un seul pied";
+$lang_str["tag:power=pole"]="Pylônes électriques à un seul pied";
 $lang_str["tag:power=station"]="Centrale électrique";
 $lang_str["tag:power=sub_station"]="Sous-station électrique";
 
 // power_source
 $lang_str["tag:power_source"]="Source d'énergie";
-$lang_str["tag:power_source=biofuel"]="Biofuel";
+$lang_str["tag:power_source=biofuel"]="Biocarburant";
 $lang_str["tag:power_source=oil"]="Huile";
 $lang_str["tag:power_source=coal"]="Charbon";
 $lang_str["tag:power_source=gas"]="Essence";
@@ -293,9 +293,9 @@ $lang_str["tag:sport=australian_football"]="Football australien";
 $lang_str["tag:sport=baseball"]="Baseball";
 $lang_str["tag:sport=basketball"]="Basketball";
 $lang_str["tag:sport=beachvolleyball"]="Beach Volley";
-$lang_str["tag:sport=boules"]="Boules";
+$lang_str["tag:sport=boules"]="Jeux de boules";
 $lang_str["tag:sport=bowls"]="Bowling";
-$lang_str["tag:sport=canoe"]="Canoe";
+$lang_str["tag:sport=canoe"]="Canoé";
 $lang_str["tag:sport=chess"]="Échecs";
 $lang_str["tag:sport=climbing"]="Escalade";
 $lang_str["tag:sport=cricket"]="Cricket";
@@ -311,12 +311,12 @@ $lang_str["tag:sport=gymnastics"]="Gymnastique";
 $lang_str["tag:sport=hockey"]="Hockey";
 $lang_str["tag:sport=horse_racing"]="Course de chevaux";
 $lang_str["tag:sport=korfball"]="Korfball";
-$lang_str["tag:sport=motor"]="Sport mécanique";
+$lang_str["tag:sport=motor"]="Sports mécaniques";
 $lang_str["tag:sport=multi"]="Multi-sport";
-$lang_str["tag:sport=orienteering"]="Orientation";
+$lang_str["tag:sport=orienteering"]="Course d'orientation";
 $lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
 $lang_str["tag:sport=paragliding"]="Paragliding";
-$lang_str["tag:sport=pelota"]="Pelote";
+$lang_str["tag:sport=pelota"]="Pelote Basque";
 $lang_str["tag:sport=racquet"]="Raquette";
 $lang_str["tag:sport=rowing"]="Aviron";
 $lang_str["tag:sport=rugby"]="Rugby";
@@ -390,6 +390,11 @@ $lang_str["tag:military"]="Zone militaire";
 
 // natural
 $lang_str["tag:natural"]="Nature du terrain naturel";
+$lang_str["tag:natural=beach"]="plage";
+$lang_str["tag:natural=glacier"]="glacier";
+$lang_str["tag:natural=volcano"]="volcan";
+$lang_str["tag:natural=wood"]="bois";
+$lang_str["tag:natural=tree"]="fôret";
 
 // geological
 $lang_str["tag:geological"]="Type de site géologique";
@@ -504,52 +509,52 @@ $lang_str["tag:wheelchair=limited"]="Accès partiel fauteuils roulants";
 #$lang_str["tag:noexit"]="Dead end road";
 
 // maxweight
-#$lang_str["tag:maxweight"]="Max. weight";
+$lang_str["tag:maxweight"]="Poids max.";
 
 // maxheight
-#$lang_str["tag:maxheight"]="Max. height";
+$lang_str["tag:maxheight"]="Hauteur max.";
 
 // maxlength
-#$lang_str["tag:maxlength"]="Max. length";
+$lang_str["tag:maxlength"]="Longueur max.";
 
 // maxspeed
-#$lang_str["tag:maxspeed"]="Max. speed";
+$lang_str["tag:maxspeed"]="Vitesse max.";
 
 // minspeed
-#$lang_str["tag:minspeed"]="Min. speed";
+$lang_str["tag:minspeed"]="Vitesse min.";
 
 // traffic_sign
-#$lang_str["tag:traffic_sign"]="Traffic sign";
+$lang_str["tag:traffic_sign"]="Feux de signalisation";
 
 // toll
-#$lang_str["tag:toll"]="Toll";
+$lang_str["tag:toll"]="Péage";
 
 // charge
 #$lang_str["tag:charge"]="Charge";
 
 // source
-#$lang_str["tag:source"]="Source";
+$lang_str["tag:source"]="Source";
 
 // phone
-#$lang_str["tag:phone"]="Phone number";
+$lang_str["tag:phone"]="Numéro de tél.";
 
 // fax
-#$lang_str["tag:fax"]="Fax number";
+$lang_str["tag:fax"]="Numéro de fax";
 
 // email
-#$lang_str["tag:email"]="E-mail";
+$lang_str["tag:email"]="E-mail";
 
 // wikipedia
-#$lang_str["tag:wikipedia"]="Wikipedia";
+$lang_str["tag:wikipedia"]="Wikipedia";
 
 // created_by
-#$lang_str["tag:created_by"]="Created by";
+$lang_str["tag:created_by"]="Créé par";
 
 // construction
 #$lang_str["tag:construction"]="Construction";
 
 // proposed
-#$lang_str["tag:proposed"]="Proposed";
+$lang_str["tag:proposed"]="Proposé";
 
 // route_type
 $lang_str["tag:route_type"]="Type de Route";

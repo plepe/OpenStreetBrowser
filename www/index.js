@@ -302,8 +302,9 @@ function init() {
     set_location(start_location);
   }
 
-  window_resize();
   window.onresize=call_hooks.bind(this, "window_resize");
+  register_hook("window_resize", window_resize);
+  call_hooks("window_resize");
 
   call_hooks("post_init");
 }

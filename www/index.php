@@ -5,7 +5,6 @@
  */
 Header("content-type: text/html; charset=UTF-8");
 include("code.php");
-include "inc/global.php";
 
 if(!$version) {
   $version="dev";
@@ -38,8 +37,10 @@ if(!file_exists("lib/OpenLayers/OpenLayers.js")) {
 <script type="text/javascript" src="inc/hooks.js<?=$version_string?>"></script>
 <script type="text/javascript" src="inc/lang.js<?=$version_string?>"></script>
 <?
-print_add_html_headers(); // legacy
-call_hooks("html_head");
+include "inc/global.php";
+call_hooks("init", $dummy);
+print_add_html_headers();
+call_hooks("html_head", $dummy);
 ?>
 <script type="text/javascript" src="index.js<?=$version_string?>"></script>
 <script type="text/javascript" src="ajax.js<?=$version_string?>"></script>

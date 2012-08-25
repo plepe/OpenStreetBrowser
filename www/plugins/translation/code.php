@@ -490,6 +490,21 @@ function ajax_translation_read($param) {
   return $t->read();
 }
 
+function ajax_translation_recreate($param) {
+  if(!lang_code_check($param['lang']))
+    return false;
+
+  $t=new translation($param['lang']);
+
+  $ret=array();
+  $data=$t->read();
+  foreach($data as $file=>$d) {
+    $ret[$file]=array();
+  }
+
+  $t->save($ret, array("msg"=>"Updated translation {$param['lang']} to the newest version"));
+}
+
 function translation_main_links($links) {
   $links[]=array(5, "<a href='javascript:translation_open()'>".lang("translation:name")."</a>");
 }

@@ -1,38 +1,39 @@
 <?
-// All untranslated strings have a # in front. When you translate a string
-// please remove this hash.
+// In this editor you can translate all strings. In the third column you can compare the strings to another language (set it in the select box on the bottom of the window). Please note that changes will not appear right away, they need to be imported by a developer.
+// Every language string can have a singular and plural variant by separating them by ";", e.g. "Restaurant;Restaurants". The first string is the singular form, the second the plural form.  Optionally you can define the Gender (F, M, N) for the word by prepending one of those characters, e.g. "N;Büro;Büros" (German for "office").
+// When translating a language variant (e.g. 'British English', code 'en-gb') please translate only strings which are different from the base language.
+#$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
 
-//  Every language string looks like this:
-//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
-//  the first entry is the translation of the language string in Singular,
-//  the second the Plural form.
-//
-//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
-//  German translation for office:
-//  $lang_str["office"]=array(N, "Büro", "Büros");
-//
-//  If a Singular/Plural form is not
-//  suitable/necessary you can ignore the array, e.g.
-//  $lang_str["help"]="Help";
 $lang_str["lang:current"]="Русский"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
 // General
 $lang_str["general_info"]="Общая информация";
 $lang_str["yes"]="Да";
 $lang_str["no"]="Нет";
-#$lang_str["ok"]="Ok";
+$lang_str["ok"]="Ok";
 $lang_str["save"]="Сохранить";
+$lang_str["saved"]="Сохранено"; // for dialog boxes confirming saving
 $lang_str["cancel"]="Отмена";
-$lang_str["longitude"]="Долготы";
-$lang_str["latitude"]="Широты";
+$lang_str["show"]="Показать";
+$lang_str["edit"]="Редактировать";
+$lang_str["delete"]="Удалить";
+$lang_str["history"]="История";
+$lang_str["choose"]="Выбирать";
+$lang_str["help"]="Помощь";
+$lang_str["longitude"]=array("Долгота", "Долготы");
+$lang_str["latitude"]=array("Широта", "Широты");
 $lang_str["noname"]="(неизвестно)";
 $lang_str["info_back"]="Возврат к обзору";
-$lang_str["info_zoom"]="Приближение";
-$lang_str["nothing_found"]="Не найдено";
+$lang_str["info_zoom"]="Приблизить";
+$lang_str["nothing_found"]="ничего не найдено";
+$lang_str["list:zoom_for_obs"]="Увеличить менее важные объекты";
 $lang_str["loading"]="Загрузка...";
 $lang_str["more"]="Ещё";
-#$lang_str["unnamed"]="unnamed";
+$lang_str["source"]="Источник";
+$lang_str["unnamed"]="безымянный";
 $lang_str["zoom"]="Уровень приближения";
+$lang_str["no_message"]=array("нет сообщения", "нет сообщений");
+$lang_str["ad"]=array("Реклама", "Рекламы");
 
 // Headings
 $lang_str["head:general_info"]="Общая информация";
@@ -45,9 +46,9 @@ $lang_str["head:services"]="Услуги";
 $lang_str["head:culture"]="Культура";
 $lang_str["head:routing"]="Направления движения";
 $lang_str["head:search"]="Поиск";
-$lang_str["head:actions"]=array(N, "Действие", "Действия");
+$lang_str["head:actions"]=array("Действие", "Действия");
 $lang_str["head:location"]="Местоположение";
-$lang_str["head:tags"]=array(M, "Тег", "Теги");
+$lang_str["head:tags"]=array("Тег", "Теги");
 $lang_str["head:whats_here"]="Что тут?";
 
 $lang_str["action_browse"]="просмотреть в OSM";
@@ -71,11 +72,12 @@ $lang_str["list_leisure_sport_tourism"]="Отдых, туризм и спорт"
 // Mapkey
 
 
+$lang_str["main:help"]="Помощь";
 $lang_str["main:options"]="Настройки";
 $lang_str["main:about"]="Информация";
 $lang_str["main:donate"]="Помочь проекту";
 $lang_str["main:licence"]="Информация о карте: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> авторы | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Стефан Плепелти</a> и <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">другие</a>";
-$lang_str["main:permalink"]="Ссылка";
+$lang_str["main:permalink"]="Постоянная ссылка";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Объект не найден</h1>Объектов с ID \"%s\" не найдено. Это может быть связано с одной (или более) из следующих причин: <ul><li>Не правильный ID.</li><li>Объект был определен сайтами сторонних производителей и не является (пока) доступным в OpenStreetBrowser.</li><li>Объект находится вне поддерживается области.</li><li>Ссылка по которой Вы сюда пришли оказалась старой и объект уже был удалён из OpenStreetMap.</li></ul>";
 
@@ -90,6 +92,7 @@ $lang_str["help:language_support"]="С помощью этой опции Вы �
 $lang_str["options:ui_lang"]="Язык интерфейса";
 $lang_str["options:data_lang"]="Язык информации на карте";
 $lang_str["lang:"]="Определить язык автоматически";
+$lang_str["lang:auto"]="То же, что язык интерфейса";
 
 $lang_str["overlay:data"]="Данные";
 $lang_str["overlay:draggable"]="Отметки";
@@ -110,21 +113,26 @@ $lang_str["user:login"]="Войти";
 $lang_str["user:logged_in_as"]="Вы вошли как ";
 $lang_str["user:logout"]="Выйти";
 
+$lang_str["attention"]="Внимание: ";
 $lang_str["error"]="Ошибка: ";
 $lang_str["error:not_logged_in"]="Вы не вошли в систему";
 
+$lang_str["category"]=array("Категория", "Категории");
 $lang_str["more_categories"]="Больше категорий";
 $lang_str["category:status"]="Статус";
 $lang_str["category:data_status"]="Статус";
 $lang_str["category:old_version"]="Готовится новая версия этой категории.";
 $lang_str["category:not_compiled"]="Новая категория была подготовлена.";
 
+$lang_str["category:new_rule"]="Новое правило";
 $lang_str["category_rule_tag:match"]="Заголовок";
 $lang_str["category_rule_tag:description"]="Описание";
 $lang_str["category_chooser:choose"]="Выбрать категорию";
 $lang_str["category_chooser:new"]="Новая категория";
+$lang_str["category:sub_category"]=array("Под-категория", "Под-категории");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
-$lang_str["basemap:mapnik"]="Mapnik";
-$lang_str["basemap:osmarender"]="OsmaRender";
+$lang_str["basemap:osb_light"]="OpenStreetBrowser (бледный)";
+$lang_str["basemap:mapnik"]="Стандартный (Mapnik)";
+$lang_str["basemap:osmarender"]="Стандартный (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";

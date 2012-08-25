@@ -1,0 +1,9 @@
+<?
+$lang_str["importance:name"]="重要性";
+$lang_str["importance:global"]="全世界";
+$lang_str["importance:international"]="国際的";
+$lang_str["importance:national"]="国内";
+$lang_str["importance:regional"]="地域";
+$lang_str["importance:urban"]="都市";
+$lang_str["importance:suburban"]="都市周辺";
+$lang_str["importance:local"]="地方";

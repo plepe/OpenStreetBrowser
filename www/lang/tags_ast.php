@@ -388,6 +388,11 @@ $lang_str["tag:military"]="Militar";
 
 // natural
 $lang_str["tag:natural"]="Natural";
+$lang_str["tag:natural=beach"]="Playa";
+$lang_str["tag:natural=glacier"]="Glaciar";
+$lang_str["tag:natural=volcano"]="Volcán";
+$lang_str["tag:natural=wood"]="Viesca";
+$lang_str["tag:natural=tree"]="Árbol";
 
 // geological
 $lang_str["tag:geological"]="Xeolóxicu";

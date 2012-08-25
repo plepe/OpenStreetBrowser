@@ -72,6 +72,7 @@ $lang_str["list_leisure_sport_tourism"]="Freizeit, Sport und Tourismus";
 // Mapkey
 
 
+$lang_str["main:help"]="Hilfe";
 $lang_str["main:options"]="Optionen";
 $lang_str["main:about"]="Impressum";
 $lang_str["main:donate"]="Spende";
@@ -131,6 +132,7 @@ $lang_str["category_chooser:new"]="Neue Kategorie anlegen";
 $lang_str["category:sub_category"]=array("Unterkategorie", "Unterkategorien");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
+$lang_str["basemap:osb_light"]="OpenStreetBrowser (blass)";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";

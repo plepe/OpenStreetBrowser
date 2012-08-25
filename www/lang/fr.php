@@ -26,13 +26,13 @@ $lang_str["noname"]="(sans nom)";
 $lang_str["info_back"]="retour à la Vue d'ensemble";
 $lang_str["info_zoom"]="zoom";
 $lang_str["nothing_found"]="aucun résultat";
-$lang_str["list:zoom_for_obs"]="Zoom vers des objects mineurs";
+$lang_str["list:zoom_for_obs"]="Zoom vers des objets mineurs";
 $lang_str["loading"]="Chargement en cours ...";
 $lang_str["more"]="plus";
 $lang_str["source"]="Source";
 $lang_str["unnamed"]="sans nom";
 $lang_str["zoom"]="Niveau de Zoom";
-$lang_str["no_message"]="aucun message,aucun message";
+$lang_str["no_message"]=array("aucun message", "aucun message");
 $lang_str["ad"]=array("Publicité", "Publicités");
 
 // Headings
@@ -76,13 +76,13 @@ $lang_str["main:help"]="Aide";
 $lang_str["main:options"]="Options";
 $lang_str["main:about"]="À Propos de";
 $lang_str["main:donate"]="Faire un don";
-$lang_str["main:licence"]="Données : <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributeurs | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">contributeurs</a>";
+$lang_str["main:licence"]="Données : <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributeurs | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> et <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">contributeurs</a>";
 $lang_str["main:permalink"]="Lien permanent";
 
-$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Objet non trouvé</h1>Aucun objet avec le ID \"%s\" n'a pu être trouvé.Ceci peut être du à une (ou plus) des raisons suivantes::<ul><li>Le ID is inexistant.</li><li>L'objet a été identifié par un site tiers et n'est pas encore disponible dans OpenStreetBrowser.</li><li>L'objet n'est pas dans la zone supportée.</li><li>Le lien que vous suivez est ancien et a été effacé de from OpenStreetMap.</li></ul>";
+$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Objet non trouvé</h1>Aucun objet avec l'ID \"%s\" n'a pu être trouvé. Ceci peut être dû à une (ou plus) des raisons suivantes::<ul><li>L'ID est inexistant.</li><li>L'objet a été identifié par un site tiers et n'est pas encore disponible dans OpenStreetBrowser.</li><li>L'objet n'est pas dans la zone supportée.</li><li>Le lien que vous suivez est ancien et a été effacé sur OpenStreetMap.</li></ul>";
 
 $lang_str["options:autozoom"]="Réglage Autozoom";
-$lang_str["help:autozoom"]="Lors de la sélection d'un objet, la fenêtre d'affichage focus sur cet objet, le niveau de zoom peut aussi être modifié. Avec cette option vous pouvez sélectionner à partir de différent modes.";
+$lang_str["help:autozoom"]="Lors de la sélection d'un objet, la fenêtre d'affichage focus sur cet objet, le niveau de zoom peut aussi être modifié. Avec cette option vous pouvez sélectionner à partir de différents modes.";
 $lang_str["options:autozoom:pan"]="Basculer vers l'objet courant (+ doux)";
 $lang_str["options:autozoom:move"]="Se déplacer vers l'objet courant (+ rapide)";
 $lang_str["options:autozoom:stay"]="Ne jamais modifier la fenêtre automatiquement";
@@ -100,12 +100,12 @@ $lang_str["overlay:draggable"]="Marqueurs";
 $lang_str["user:no_auth"]="Nom d'utilisateur ou mot de passe incorrect !";
 $lang_str["user:login_text"]="Connexion à OpenStreetBrowser :";
 $lang_str["user:create_user"]="Créer un nouvel utilisateur :";
-$lang_str["user:username"]="Nom utilisateur";
+$lang_str["user:username"]="Nom d'utilisateur";
 $lang_str["user:email"]="Adresse e-mail";
 $lang_str["user:password"]="Mot de passe";
 $lang_str["user:password_verify"]="Vérifier le mot de passe";
 $lang_str["user:old_password"]="Ancien mot de passe";
-$lang_str["user:no_username"]="SVP fournir un nom d'utilisateur !";
+$lang_str["user:no_username"]="Veuillez fournir un nom d'utilisateur !";
 $lang_str["user:password_no_match"]="Les mots de passe ne correspondent pas !";
 $lang_str["user:full_name"]="Nom complet";
 $lang_str["user:user_exists"]="Ce nom d'utilisateur existe déjà";
@@ -132,6 +132,7 @@ $lang_str["category_chooser:new"]="Nouvelle catégorie";
 $lang_str["category:sub_category"]=array("Sous-catégorie", "Sous-catégories");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
+#$lang_str["basemap:osb_light"]="OpenStreetBrowser (pale)";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="Carte cyclable";

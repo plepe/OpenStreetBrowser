@@ -265,6 +265,17 @@ $lang_str["tag:religion=multifaith"]="multifaith";
 
 // denomination
 $lang_str["tag:denomination"]="Denomination";
+#$lang_str["tag:denomination=anglican"]="";
+#$lang_str["tag:denomination=baptist"]="";
+#$lang_str["tag:denomination=catholic"]="";
+#$lang_str["tag:denomination=greek_orthodox"]="";
+#$lang_str["tag:denomination=lutheran"]="";
+#$lang_str["tag:denomination=orthodox"]="";
+#$lang_str["tag:denomination=old-catholic"]="";
+#$lang_str["tag:denomination=protestant"]="";
+#$lang_str["tag:denomination=roman_catholic"]="";
+#$lang_str["tag:denomination=russian_orthodox"]="";
+#$lang_str["tag:denomination=united_reformed"]="";
 
 // route
 $lang_str["tag:route"]="Route";
@@ -287,6 +298,7 @@ $lang_str["tag:route=mtb"]="Mountainbike";
 
 // shop
 $lang_str["tag:shop"]="Shop";
+#$lang_str["tag:shop=chemist"]="";
 
 // sport
 $lang_str["tag:sport"]="Sport";
@@ -398,6 +410,13 @@ $lang_str["tag:military"]="Military";
 
 // natural
 $lang_str["tag:natural"]="Natural";
+#$lang_str["tag:natural=beach"]="";
+#$lang_str["tag:natural=glacier"]="";
+#$lang_str["tag:natural=cliff"]="";
+#$lang_str["tag:natural=spring"]="";
+#$lang_str["tag:natural=volcano"]="";
+#$lang_str["tag:natural=wood"]="";
+#$lang_str["tag:natural=tree"]="";
 
 // geological
 $lang_str["tag:geological"]="Geological";

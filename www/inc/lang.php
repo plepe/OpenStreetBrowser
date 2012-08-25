@@ -131,6 +131,11 @@ if(!isset($data_lang))
   $data_lang="auto";
 if($data_lang=="auto")
   $data_lang=$ui_lang;
+// if $data_lang is set to a language variant use mother language
+// (e.g. de-at -> de).
+// TODO: better would be fallback (checking both languages)
+if(preg_match("/^([a-z]+)\-/", $data_lang,  $m))
+  $data_lang=$m[1];
 
 function lang_load($lang, $loaded=array()) {
   global $lang_str;

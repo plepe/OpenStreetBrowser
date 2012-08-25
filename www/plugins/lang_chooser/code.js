@@ -44,9 +44,11 @@ function lang_chooser_entry(list) {
   l[""]="";
   l["auto"]=t("lang:auto");
   for(var i in language_list) {
-    l[i]=language_list[i];
-    if(lang("lang:"+i)!=l[i])
-      l[i]+=" ("+lang("lang:"+i)+")";
+    if(!i.match(/-/)) { // hide language variants from data languages
+      l[i]=language_list[i];
+      if(lang("lang:"+i)!=l[i])
+	l[i]+=" ("+lang("lang:"+i)+")";
+    }
   }
   l[""]=t("lang:");
 

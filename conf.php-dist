@@ -157,6 +157,7 @@ $www_debug_level=2;
 // lang_preferred - Query preferred languages
 // translation - Translation system
 // category - Base functions for categories
+// translation_statistics - Translation Statistics
 // category_chooser - List all available categories and add to list
 // category_window - A window for category interaction (info, edit, ...)
 // category_editor - An editor for editing OSM categories

@@ -9,3 +9,10 @@ function right_bar_hide() {
   var div=document.getElementById("right_bar");
   div.parentNode.removeChild(div);
 }
+
+function right_bar_window_resize() {
+  var twitter_frame=document.getElementById("twitter");
+  twitter_frame.style.height=(window.innerHeight-twitter_frame.offsetTop);
+}
+
+register_hook("window_resize", right_bar_window_resize);

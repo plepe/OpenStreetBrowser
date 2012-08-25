@@ -45,7 +45,7 @@ function _category_list() {
     else
       div=root_div;
 
-    if(!div.open)
+    if((!div)||(!div.open))
       return;
 
     var list={};
