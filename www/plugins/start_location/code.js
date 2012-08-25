@@ -40,18 +40,14 @@ function start_location_options_list() {
   var text="";
   var opt=cookie_read('start_value');
   if(!opt)
-    opt="startnormal";
+    opt="lastview";
 
   text += "<div id='start_location_list'>\n";
-  if(lastview=cookie_read("_osb_location")) {
-    text += "<input type=\"radio\" name=\"start_value\" id=\"lastview\" value=\"lastview\" "+(opt=="lastview"?"checked":"")+"><label for=\"lastview\">"+lang("start_location:lastview")+"</label></br>";
-  }
+  text += "<input type=\"radio\" name=\"start_value\" id=\"lastview\" value=\"lastview\" "+(opt=="lastview"?"checked":"")+"><label for=\"lastview\">"+lang("start_location:lastview")+"</label></br>";
   if (navigator.geolocation) {
     text += "<input type=\"radio\" name=\"start_value\" id=\"geolocation\" value=\"geolocation\" "+(opt=="geolocation"?"checked":"")+"><label for=\"geolocation\">"+lang("start_location:geolocation")+"</label></br>";
   }
-  if(cookie_read("_osb_permalink")) {
-    text += "<input type=\"radio\" name=\"start_value\" id=\"savedview\" value=\"savedview\" "+(opt=="savedview"?"checked":"")+"><label for=\"savedview\">"+lang("start_location:savedview")+"</label></br>";
-  }
+  text += "<input type=\"radio\" name=\"start_value\" id=\"savedview\" value=\"savedview\" "+(opt=="savedview"?"checked":"")+"><label for=\"savedview\">"+lang("start_location:savedview")+"</label></br>";
   text += "<input type=\"radio\" name=\"start_value\" id=\"startnormal\" value=\"startnormal\" "+(opt=="startnormal"?"checked":"")+"><label for=\"startnormal\">"+lang("start_location:startnormal")+"</label></br>";
   text += "</div>\n";
 
