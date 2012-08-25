@@ -4,15 +4,25 @@ var search_param;
 var search_shown;
 var search_form;
 
+function search_keyshort() {
+  search_toolbox.activate(true);
+
+  search_form.elements.search.focus();
+
+  return false;
+}
+
 function search_init() {
   search_toolbox=new toolbox({
     icon: "plugins/search/icon.png",
     icon_title: lang("search:name"),
     callback_activate: search_toolbox_activate,
-    keyshort: { id: "search", default_keyshort: "/", name: lang("search:keyshort") },
     weight: -4
   });
   register_toolbox(search_toolbox);
+
+  if(typeof register_keyshort!="undefined")
+    register_keyshort({ id: "search", callback: search_keyshort, default_keyshort: "/", name: lang("search:keyshort"), keydir: "keyup" });
 
   var content=dom_create_append(search_toolbox.content, "div");
   content.className="search";
