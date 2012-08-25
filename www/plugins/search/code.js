@@ -17,6 +17,7 @@ function search_init() {
     icon: "plugins/search/icon.png",
     icon_title: lang("search:name"),
     callback_activate: search_toolbox_activate,
+    callback_deactivate: search_toolbox_deactivate,
     weight: -4
   });
   register_toolbox(search_toolbox);
@@ -59,6 +60,10 @@ function search_toolbox_activate() {
   //todo: focus on input field when search toolbox not started automatically
 }
 
+function search_toolbox_deactivate() {
+  search_form.osb_search.blur();
+}
+
 function search_brush_mousedown(event) {
   if(event.preventDefault)
     event.preventDefault();
@@ -89,7 +94,10 @@ function search_brush(event) {
     search_form.brush.className = 'invisible';
   }
   if(event.which==27) {
-    search_clear();
+    if(search_form.osb_search.value=="")
+      search_toolbox.deactivate();
+    else
+      search_clear();
   }
 }
 
