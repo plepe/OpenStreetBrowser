@@ -20,7 +20,7 @@ function mem_check_tick() {
 
   if($free<2000000) {
     print "Restarting renderd\n";
-    restart_renderd();
+    renderd_restart();
   }
 }
 

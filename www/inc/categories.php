@@ -1168,7 +1168,7 @@ function categories_has_saved($id) {
   print "Detect saving of $id -> compile\n";
   $cat=new category($id);
   $cat->compile();
-  restart_renderd();
+  renderd_restart();
 }
 
 function categories_init() {
