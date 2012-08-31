@@ -237,6 +237,13 @@ function renderd_command($str){
       print "  $m[1] $m[2] $m[3]-$m[4] $m[5]-$m[6] @ $m[7]\n";
     }
   }
+
+  if($str=="renderd stop") {
+    renderd_stop();
+  }
+  if($str=="renderd start") {
+    renderd_restart();
+  }
 }
 
 function renderd_mcp_stop() {
