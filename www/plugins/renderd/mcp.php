@@ -160,6 +160,35 @@ function renderd_read() {
   }
 }
 
+function get_proc_children($pid, $tree=null) {
+  $tree=array();
+  $ret=array();
+
+  // build process tree in $tree
+  if($tree==null) {
+    $p=popen("ps eo pid,ppid", "r");
+    while($r=fgets($p)) {
+      if(preg_match("/^\s*([0-9]+)\s+([0-9]+)/", $r, $m)) {
+	if(!isset($tree[$m[2]]))
+	  $tree[$m[2]]=array();
+
+	$tree[$m[2]][]=$m[1];
+      }
+    }
+  }
+
+  // no children? return
+  if(!isset($tree[$pid]))
+    return array();
+
+  // add grand children
+  foreach($tree[$pid] as $child) {
+    $ret=array_merge($ret, get_proc_children($child, &$tree));
+  }
+
+  return array_merge($ret, $tree[$pid]);
+}
+
 function renderd_stop() {
   global $renderd_proc;
 
@@ -167,6 +196,16 @@ function renderd_stop() {
     return;
 
   debug("Stopping renderd. Sending term signal.", "renderd");
+  $status=proc_get_status($renderd_proc);
+
+  // find all children of our started command
+  $plist=get_proc_children($status['pid']);
+
+  // kill all children
+  foreach($plist as $pid)
+    posix_kill($pid, 15);
+
+  // now kill the children itself
   proc_terminate($renderd_proc);
 
   sleep(1);
