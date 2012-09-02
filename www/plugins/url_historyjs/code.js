@@ -35,7 +35,7 @@ function url_history_anchorchange() {
 }
 
 function url_history_follow_link(ob) {
-  var baseurl=get_baseurl();
+  var baseurl=url_historyjs_base_url;
   var m;
 
   var href=ob.getAttribute("href");
@@ -123,7 +123,7 @@ function url_historyhs_init() {
     return;
   }
   
-  new_hash=get_baseurl();
+  new_hash=url_historyjs_base_url;
   new_hash=new_hash.substr(url_historyjs_base_url.length);
   window.History.pushState(null, null, new_hash);
   url_history_statechange();
