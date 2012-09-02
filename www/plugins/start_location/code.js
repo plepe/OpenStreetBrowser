@@ -1,4 +1,3 @@
-var start_location_toolbox;
 var start_location_form;
 
 function start_location_options() {
@@ -15,7 +14,6 @@ function start_location_options() {
     cookie_delete("start_value");
   }
   start_location_start(start_value);
-  start_location_toolbox.deactivate();
 }
 
 function start_location_start(start_value) {
@@ -68,10 +66,6 @@ function start_location_recv_permalink(hash) {
 
 function start_location_init() {
   lastview=cookie_read("_osb_location");
-
-  if(((location.hash=="") || (location.hash=="#")) && (cookie_read("start_value")==null)) {
-    start_location_toolbox.activate();
-  }
 }
 
 function start_location_post_init() {
