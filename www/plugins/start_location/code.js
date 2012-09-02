@@ -16,10 +16,20 @@ function start_location_options() {
   start_location_start(start_value);
 }
 
+function start_location_first_load(gps) {
+  if(first_load==1) {
+    var pos=gps.get_pos();
+
+    pos=new OpenLayers.LonLat(pos.lon, pos.lat);
+    pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+    map.setCenter(pos, 14);
+  }
+}
+
 function start_location_start(start_value) {
   switch (start_value) {
     case "geolocation":
-      geo_init();
+      register_hook("gps_update", start_location_first_load);
       break;
     case "savedview":
       set_location(cookie_read("_osb_permalink"));
