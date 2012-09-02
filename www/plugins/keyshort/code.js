@@ -6,7 +6,7 @@ function keyshort_call(id) {
   if(!keyshort_list[id])
     return;
 
-  keyshort_list[id].callback(id);
+  return keyshort_list[id].callback(id);
 }
 
 function register_keyshort(id, callback, default_keyshort, name, keydir) {
