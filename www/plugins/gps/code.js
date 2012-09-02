@@ -2,18 +2,18 @@ var gps_object=null;
 
 function gps() {
   if(navigator.geolocation)
-    this.watch=navigator.geolocation.watchPosition(this.update);
+    this.watch=navigator.geolocation.watchPosition(this.update.bind(this));
 }
 
 gps.prototype.update=function(lonlat) {
-  gps.coords=lonlat.coords;
-  gps.pos=new OpenLayers.LonLat(lonlat.coords.longitude, lonlat.coords.latitude);
+  this.coords=lonlat.coords;
+  this.pos=new OpenLayers.LonLat(lonlat.coords.longitude, lonlat.coords.latitude);
 
   if(this.vector) {
     vector_layer.removeFeatures([this.vector]);
   }
 
-  var pos=new OpenLayers.LonLat(gps.pos.lon, gps.pos.lat);
+  var pos=new OpenLayers.LonLat(this.pos.lon, this.pos.lat);
   pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
   var geo_point=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
   this.vector=new OpenLayers.Feature.Vector(geo_point, 0, {
@@ -27,15 +27,15 @@ gps.prototype.update=function(lonlat) {
 
   call_hooks("gps_update", this);
 
-  this.last_pos=gps.pos;
+  this.last_pos=this.pos;
 }
 
 gps.prototype.get_pos=function() {
-  return gps.pos;
+  return this.pos;
 }
 
 gps.prototype.get_coords=function() {
-  return gps.coords;
+  return this.coords;
 }
 
 function gps_init() {
