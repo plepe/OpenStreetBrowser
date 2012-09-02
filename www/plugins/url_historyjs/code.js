@@ -39,7 +39,7 @@ function url_history_follow_link(ob) {
   var m;
 
   var href=ob.getAttribute("href");
-  if(!href)
+  if(typeof href=="undefined")
     return;
 
   if(href.substr(0, 11)=="javascript:")
@@ -54,8 +54,11 @@ function url_history_follow_link(ob) {
   }
 
   if(!href.match(/^https?:\/\//)) {
-    if(href.match(/^\?(.*)$/))
+    if(href==="")
+      href=".";
+    else if(href.match(/^\?(.*)$/))
       href="."+href;
+
     window.History.pushState(null, null, href);
     return false;
   }
