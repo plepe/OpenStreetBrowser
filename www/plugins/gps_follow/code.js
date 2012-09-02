@@ -29,15 +29,27 @@ function gps_follow_view_changed() {
     return;
 
   var pos=gps_object.get_pos();
-  if(!pos)
+  if(!pos) {
+    gps_follow_active=false;
+    if(gps_follow_input)
+      gps_follow_input.checked=false;
+
     return;
+  }
 
   // build a copy of pos (to not modify reference)
   var pos=new OpenLayers.LonLat(pos.lon, pos.lat);
   pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
   pos=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
 
-  if(!gps_follow_polygon().containsPoint(pos)) {
+  if(gps_follow_polygon().containsPoint(pos)) {
+    if(!gps_follow_active) {
+      gps_follow_active=true;
+      if(gps_follow_input)
+	gps_follow_input.checked=true;
+    }
+  }
+  else {
     gps_follow_active=false;
     if(gps_follow_input)
       gps_follow_input.checked=false;
