@@ -3,9 +3,15 @@ var gps_follow_input;
 var gps_follow_checking=false;
 //var gps_follow_vector;
 
-// returns a polygon covering 2/3 of the available screen space
-function gps_follow_polygon() {
-    bounds=map.calculateBounds().scale(2.0/3);
+// returns a polygon covering a part of the available screen space
+// default: 2/3
+// option size: 'full' returns a polygon the size of the view port
+function gps_follow_polygon(size) {
+  var scale_factor=2.0/3;
+  if(size=="full")
+    scale_factor=1;
+
+  bounds=map.calculateBounds().scale(scale_factor);
 
     var corners=[];
     corners.push(new OpenLayers.Geometry.Point(bounds.left, bounds.top));
@@ -42,7 +48,7 @@ function gps_follow_view_changed() {
   pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
   pos=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
 
-  if(gps_follow_polygon().containsPoint(pos)) {
+  if(gps_follow_polygon('full').containsPoint(pos)) {
     if(!gps_follow_active) {
       gps_follow_active=true;
       if(gps_follow_input)
