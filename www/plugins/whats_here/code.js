@@ -22,7 +22,8 @@ function whats_here(lonlat) {
     var cat=category_root.visible_list();
     cat=category_list_to_string(cat);
 
-    var pos = deep_clone(lonlat);
+    // build a copy of pos (to not modify reference)
+    var pos=new OpenLayers.LonLat(lonlat.lon, lonlat.lat);
     pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 
     var geo=new OpenLayers.Geometry.Point(pos.lon, pos.lat);

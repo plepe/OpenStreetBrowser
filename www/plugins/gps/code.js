@@ -13,7 +13,7 @@ gps.prototype.update=function(lonlat) {
     vector_layer.removeFeatures([this.vector]);
   }
 
-  var pos = deep_clone(gps.pos);
+  var pos=new OpenLayers.LonLat(gps.pos.lon, gps.pos.lat);
   pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
   var geo_point=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
   this.vector=new OpenLayers.Feature.Vector(geo_point, 0, {

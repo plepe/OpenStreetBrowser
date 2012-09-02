@@ -32,7 +32,8 @@ function gps_follow_view_changed() {
   if(!pos)
     return;
 
-  pos=deep_clone(pos);
+  // build a copy of pos (to not modify reference)
+  var pos=new OpenLayers.LonLat(pos.lon, pos.lat);
   pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
   pos=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
 
@@ -47,7 +48,8 @@ function gps_follow_update(ob) {
   if(gps_follow_active) {
 
     var pos = gps_object.get_pos();
-    pos=deep_clone(pos);
+    // build a copy of pos (to not modify reference)
+    pos=new OpenLayers.LonLat(pos.lon, pos.lat);
     pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 
     gps_follow_checking=true;
@@ -61,7 +63,7 @@ function gps_follow_update(ob) {
     // check whether current location is visible on the map (in 2/3 of
     // available screen space) and if not center on location
     else if(!gps_follow_polygon().containsPoint(ppos)) {
-      map.setCenter(pos);
+      map.panTo(pos);
     }
 
     gps_follow_checking=false;
@@ -75,7 +77,9 @@ function gps_follow_toggle() {
   if(gps_follow_active) {
     var pos;
     if(gps_object&&(pos=gps_object.get_pos()))
-      pos=deep_clone(pos);
+      // build a copy of pos (to not modify reference)
+      pos=new OpenLayers.LonLat(pos.lon, pos.lat);
+
       pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 
       map.panTo(pos);
