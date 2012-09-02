@@ -13,19 +13,13 @@ function gps_follow_polygon(size) {
 
   bounds=map.calculateBounds().scale(scale_factor);
 
-    var corners=[];
-    corners.push(new OpenLayers.Geometry.Point(bounds.left, bounds.top));
-    corners.push(new OpenLayers.Geometry.Point(bounds.right, bounds.top));
-    corners.push(new OpenLayers.Geometry.Point(bounds.right, bounds.bottom));
-    corners.push(new OpenLayers.Geometry.Point(bounds.left, bounds.bottom));
-    var ring=new OpenLayers.Geometry.LinearRing(corners);
-    var poly=new OpenLayers.Geometry.Polygon(ring);
-
-//    // show polygon on the map
-//    if(gps_follow_vector)
-//      vector_layer.removeFeatures([gps_follow_vector]);
-//    gps_follow_vector=new OpenLayers.Feature.Vector(poly, 0, { fill: false, strokeColor: "#707070" });
-//    vector_layer.addFeatures([gps_follow_vector]);
+  var corners=[];
+  corners.push(new OpenLayers.Geometry.Point(bounds.left, bounds.top));
+  corners.push(new OpenLayers.Geometry.Point(bounds.right, bounds.top));
+  corners.push(new OpenLayers.Geometry.Point(bounds.right, bounds.bottom));
+  corners.push(new OpenLayers.Geometry.Point(bounds.left, bounds.bottom));
+  var ring=new OpenLayers.Geometry.LinearRing(corners);
+  var poly=new OpenLayers.Geometry.Polygon(ring);
 
   return poly;
 }
