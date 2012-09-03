@@ -142,7 +142,6 @@ function marker(lon, lat) {
     var a=document.createElement("a");
     dom_create_append_text(a, lang("marker:action_remove"));
     a.onclick=this.remove.bind(this);
-    a.href=url();
 
     // insert to chapters
     chapters.push({
@@ -251,7 +250,6 @@ function marker_info(chapters, ob) {
   if(ob.geo_center()&&(ob.type!="marker")) {
     var a=document.createElement("a");
     a.onclick=marker_place.bind(this, ob);
-    a.href=url();
     dom_create_append_text(a, lang("marker:place"));
 
     var entry={
