@@ -34,6 +34,7 @@ if(!file_exists("lib/OpenLayers/OpenLayers.js")) {
 <head>
 <title>OpenStreetBrowser</title>
 <script src="lib/OpenLayers/OpenLayers.js<?=$version_string?>"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 <link rel="stylesheet" type="text/css" href="index.css<?=$version_string?>" />
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <link rel="search" type="application/opensearchdescription+xml" title="OpenStreetBrowser" href="osb_search.xml" />
