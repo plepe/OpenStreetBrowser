@@ -29,6 +29,7 @@ if(!file_exists("lib/OpenLayers/OpenLayers.js")) {
   exit();
 }
 ?>
+<!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>OpenStreetBrowser</title>
