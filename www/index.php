@@ -103,6 +103,7 @@ else
 </script>
 
 <div id='content'>
+<div id='sidebar_container'>
 <div id='sidebar'>
 <?
 $menu_list=array();
@@ -138,6 +139,7 @@ foreach($menu_list as $entry) {
 
 ?>
 </div> <!-- #sidebar -->
+</div> <!-- #sidebar_container -->
 <?
 //show_lang_select();
 ?>
