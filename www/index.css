@@ -350,3 +350,53 @@ a:focus{
 * html .toolboxbutton {
   border:none;
 }
+
+@media only screen and (min-width: 400px) and (max-width: 600px) {
+#sidebar {
+  width: 200px;
+}
+.logo img {
+  width: 100px;
+}
+.logo {
+  font-size: 16px;
+  height: 120px;
+}
+.logo p {
+  padding-top: 10px;
+}
+.logo .bigger {
+  font-size: 18px;
+}
+.logo .version {
+  font-size: 10px;
+}
+#map {
+  left: 220px;
+}
+}
+
+@media only screen and (max-width: 400px) {
+#sidebar {
+  width: 150px;
+}
+.logo img {
+  width: 60px;
+}
+.logo {
+  font-size: 14px;
+  height: 85px;
+}
+.logo p {
+  padding-top: 0px;
+}
+.logo .bigger {
+  font-size: 14px;
+}
+.logo .version {
+  font-size: 8px;
+}
+#map {
+  left: 170px;
+}
+}
