@@ -9,7 +9,7 @@ function list_template() {
   global $lang_str;
   $ret="";
 
-  $ret.="$lang_str[list_info]<br>\n";
+  $ret.="<div class='list_template'>$lang_str[list_info]<br>\n";
   $ret.="<img src='img/ajax_loader.gif' /> ".lang("loading")."</div>\n";
 
   return $ret;
