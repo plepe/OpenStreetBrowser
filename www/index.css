@@ -13,7 +13,7 @@ div#content {
 a:hover {
   cursor: pointer;
 }
-.sidebar {
+#sidebar {
   left: 0px;
   width: 250px;
   padding:10px;
@@ -55,6 +55,7 @@ input#search {
   color:#333;
   line-height:130%;
   margin-top:5px;
+  position: relative;
 }
 .logo p { padding-top:17px; margin:0; }
 .logo .version {
@@ -79,12 +80,14 @@ input#search {
   border-right:1px solid #999;
   height:100%;
 }
-.info {
-  position: absolute;
-  width: 250px;
+#details_container {
+  position: relative;
+  display: block;
+}
+#details {
   overflow: auto;
-  overflow-x:hidden;
-  bottom: 38px;
+  overflow-x: hidden;
+  width: 100%;
 }
 div#menu {
   position: absolute;

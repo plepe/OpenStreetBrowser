@@ -3,12 +3,11 @@
   border:1px solid #999999;
   color:#333333;
   display:block;
-  padding:5px 3px 0;
+  padding:5px 0px;
   top:0px;
-  width:242px;
-  position:relative;
   line-height:0.8;
-  margin-bottom:-2px;
+  width: 100%;
+  margin-bottom: 2px;
   z-index:2;
   max-height: 100px;
   overflow: auto;
@@ -18,14 +17,18 @@
 }
 #toolbox_container {
   display:block;
+  position: relative;
 }
 
+#toolboxbuttons_container {
+  position: relative;
+}
 #toolboxbuttons {
+  position: absolute;
   display:block;
-  position:absolute;
-  top:121px;
-  left:10px;
-  width:250px;
+  margin-top: -20px;
+  height: 20px;
+  right: 0px;
   z-index:3;
 }
 #toolboxbuttons_table {

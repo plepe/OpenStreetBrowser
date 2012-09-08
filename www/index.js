@@ -312,11 +312,15 @@ function init() {
 }
 
 function window_resize() {
-  var options=document.getElementById("options");
+  var menu=document.getElementById("menu");
+  var sidebar=document.getElementById("sidebar");
   var details=document.getElementById("details");
 
-  var h=options.offsetHeight;
-  details.style.bottom=(h+2)+"px";
+  var det_top=details.parentNode.offsetTop;
+  var menu_height=menu.offsetHeight;
+  var size=sidebar.offsetHeight-det_top-menu_height-2;
+
+  details.style.maxHeight=size+"px";
 }
 
 function add_funs(arr) {

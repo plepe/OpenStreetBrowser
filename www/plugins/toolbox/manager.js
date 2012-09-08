@@ -49,11 +49,7 @@ function _toolbox_manager() {
 
   // resize_toolbox
   this.resize_toolbox=function() {
-    var toolbox=document.getElementById("toolbox_container");
-    var details=document.getElementById("details");
-    var size=toolbox.offsetHeight;
-
-    details.style.top=150+size;
+    window_resize();
   }
 
   // show_buttons
