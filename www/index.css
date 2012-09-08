@@ -411,3 +411,24 @@ a:focus{
   left: 170px;
 }
 }
+
+@media only screen and (max-height: 400px) {
+.logo img {
+  width: 60px;
+}
+.logo p {
+  padding-top: 0px;
+  margin-top: 0px;
+}
+.logo .bigger {
+  font-size: 14px;
+}
+.logo .version {
+  font-size: 8px;
+}
+.logo {
+  height: 64px;
+  margin-top: 1px;
+  padding-top: 1px;
+}
+}
