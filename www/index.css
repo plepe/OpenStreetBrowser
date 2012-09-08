@@ -13,7 +13,7 @@ div#content {
 a:hover {
   cursor: pointer;
 }
-.menu {
+.sidebar {
   left: 0px;
   width: 250px;
   padding:10px;
@@ -24,7 +24,7 @@ a:hover {
 .shadow {
   position:absolute;
   z-index:10000;
-  left:270px;
+  left:0px;
   top:0;
   bottom:0;
   width:5px;
@@ -72,10 +72,11 @@ input#search {
 .map {
   position: absolute;
   left: 270px;
-  right: 0px;
+  right: 0;
   top: 0px;
   bottom: 0px;
   border-left:1px solid #999;
+  border-right:1px solid #999;
   height:100%;
 }
 .info {
@@ -85,11 +86,11 @@ input#search {
   overflow-x:hidden;
   bottom: 38px;
 }
-div#options{
+div#menu {
   position: absolute;
   bottom: 1px;
-  width: 250px;
   left: 10px;
+  right: 5px;
 }
 select#lang {
   border: 1px solid gray;

@@ -4,7 +4,6 @@
   top: 0px;
   bottom: 0px;
   width: 152px;
-  border-left: 1px solid black;
   text-align: center;
   overflow: hidden;
 }
@@ -28,11 +27,7 @@
   margin-right: 5px;
 }
 div#content {
-  position: absolute;
-  right: 153px;
-  left: 0px;
-  top: 0px;
-  bottom: 0px;
+  right: 152px;
 }
 div#right_bar_hide {
   position: absolute;

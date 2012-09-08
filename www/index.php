@@ -53,7 +53,6 @@ call_hooks("html_head", $dummy);
 <?
 call_hooks("html_start");
 ?>
-<div id='content'>
 <script type="text/javascript">
 <?
 unset($my_lat);
@@ -102,7 +101,8 @@ else
 ?>
 </script>
 
-<div class='menu'>
+<div id='content'>
+<div class='sidebar'>
 <?
 $menu_list=array();
 $menu_list[]=array(-10, "<div class='logo'><a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'><img src='img/osb_logo.png' alt='OpenStreetBrowser' name='OpenStreetBrowser' border='0'/></a><p>OpenStreet <span class='bigger'>Browser</span><br/><span class='version'><a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/ChangeLog' target='_new'>{$version}</a></span></p></div>");
@@ -122,7 +122,7 @@ $main_links=weight_sort($main_links);
 $main_links=implode(" |\n", $main_links);
 
 $menu_list[]=array(5,
-  "<div id='options'>\n".
+  "<div id='menu'>\n".
   "<div id='user_info'>{$current_user->login_info()}</div>\n".
   "<div id='main_links'>{$main_links}</div>\n".
   "</div>\n");
@@ -135,10 +135,12 @@ foreach($menu_list as $entry) {
 }
 
 ?>
+</div> <!-- .sidebar -->
 <?
 //show_lang_select();
 ?>
-<div class="map" id="map"></div>
+
+<div class="map" id="map">
 
 <div class="shadow"></div>
 <div id="licence"><?=lang("main:licence")?></div>
@@ -146,7 +148,9 @@ foreach($menu_list as $entry) {
 call_hooks("html_done", null);
 ?>
 <div class="permalink"><a href="" id="permalink" onclick="var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));"><?=lang("main:permalink")?></a></div>
-</div><!-- #content -->
+
+</div> <!-- #map -->
+</div> <!-- #content -->
 <?
 call_hooks("html_end", null);
 ?>
