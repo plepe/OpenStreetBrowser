@@ -1,0 +1,13 @@
+.contextmenu {
+  position:absolute;
+  background:#FEFEFE;
+  border:1px solid #999999;  
+  z-index: 1006;
+}
+td.contextmenu_entry:hover {
+  background:#CECECE;
+  cursor:pointer;
+}
+
+
+

@@ -307,17 +307,6 @@ label:hover {
   text-decoration:underline;
 }
 
-.contextmenu {
-  position:absolute;
-  background:#FEFEFE;
-  border:1px solid #999999;  
-}
-
-td.contextmenu_entry:hover {
-  background:#CECECE;
-  cursor:pointer;
-}
-
 select.icon-menu option {
   background-repeat: no-repeat;
   background-position: 3px center;
