@@ -287,4 +287,4 @@ function plugins_loaded($plugin) {
   return in_array($plugin, $plugins);
 }
 
-register_hook("html_done", "plugins_html_head");
+register_hook("html_head", "plugins_html_head");
