@@ -124,8 +124,8 @@ $lang_str["category"]=array("Kategooria", "Kategooriad");
 $lang_str["more_categories"]="Rohkem kategooriaid";
 #$lang_str["category:status"]="Status";
 #$lang_str["category:data_status"]="Status";
-#$lang_str["category:old_version"]="A new version of this category is being prepared.";
-#$lang_str["category:not_compiled"]="New category is being prepared.";
+$lang_str["category:old_version"]="Käimas on selle kategooria uue versiooni ettevalmistus.";
+$lang_str["category:not_compiled"]="Valmistatakse ette uut kategooriat.";
 
 $lang_str["category:new_rule"]="Uus reegel";
 #$lang_str["category_rule_tag:match"]="Match";
