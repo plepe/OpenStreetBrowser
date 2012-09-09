@@ -125,7 +125,7 @@ $lang_str["tag:postal_code"]="Postiindeks";
 #$lang_str["tag:is_in"]="Is in";
 
 // leisure
-#$lang_str["tag:leisure"]="Leisure";
+$lang_str["tag:leisure"]="Vaba aeg";
 $lang_str["tag:leisure=sports_centre"]="Spordikeskus";
 $lang_str["tag:leisure=golf_course"]="Golfiväljak";
 $lang_str["tag:leisure=stadium"]="Staadion";
@@ -367,7 +367,7 @@ $lang_str["tag:cycleway"]="Jalgrattatee";
 #$lang_str["tag:aerialway"]="Aerialway";
 
 // public_transport
-#$lang_str["tag:public_transport"]="Public Transport";
+$lang_str["tag:public_transport"]="Ühistransport";
 
 // office
 #$lang_str["tag:office"]="Office";
