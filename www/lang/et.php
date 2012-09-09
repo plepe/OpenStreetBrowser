@@ -113,7 +113,7 @@ $lang_str["user:password_no_match"]="Paroolid ei ühti.";
 $lang_str["user:full_name"]="Täisnimi";
 $lang_str["user:user_exists"]="Kasutajatunnus on juba kasutusel";
 $lang_str["user:login"]="Logi sisse";
-$lang_str["user:logged_in_as"]="Sisse logitud nimega";
+$lang_str["user:logged_in_as"]="Sisse logitud nimega ";
 $lang_str["user:logout"]="Logi välja";
 
 $lang_str["attention"]="Tähelepanu:";
