@@ -140,8 +140,8 @@ $lang_str["category:sub_category"]=array("Alamkategooria", "Alamkategooriad");
 #$lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 #$lang_str["basemap:cyclemap"]="CycleMap";
 
-#$lang_str["zoom_in"]="zoom in";
-#$lang_str["zoom_out"]="zoom out";
+$lang_str["zoom_in"]="suumi sisse";
+$lang_str["zoom_out"]="suumi välja";
 #$lang_str["pan_north"]="pan viewport North";
 #$lang_str["pan_east"]="pan viewport East";
 #$lang_str["pan_south"]="pan viewport South";

@@ -126,12 +126,12 @@ $lang_str["tag:postal_code"]="Postiindeks";
 
 // leisure
 #$lang_str["tag:leisure"]="Leisure";
-#$lang_str["tag:leisure=sports_centre"]="Sport Centre";
-#$lang_str["tag:leisure=golf_course"]="Golf Course";
+$lang_str["tag:leisure=sports_centre"]="Spordikeskus";
+$lang_str["tag:leisure=golf_course"]="Golfiväljak";
 $lang_str["tag:leisure=stadium"]="Staadion";
 #$lang_str["tag:leisure=track"]="Track";
 #$lang_str["tag:leisure=pitch"]="Pitche";
-#$lang_str["tag:leisure=water_park"]="Water Park";
+$lang_str["tag:leisure=water_park"]="Veepark";
 #$lang_str["tag:leisure=marina"]="Marina";
 #$lang_str["tag:leisure=slipway"]="Slipway";
 #$lang_str["tag:leisure=fishing"]="Fishing";
@@ -153,7 +153,7 @@ $lang_str["tag:leisure=stadium"]="Staadion";
 
 // type
 #$lang_str["tag:type"]="Type";
-#$lang_str["tag:type=gas"]="Gas";
+$lang_str["tag:type=gas"]="Gaas";
 #$lang_str["tag:type=heat"]="Heat";
 #$lang_str["tag:type=hot_water"]="Hot Water";
 #$lang_str["tag:type=oil"]="Oil";
@@ -164,7 +164,7 @@ $lang_str["tag:leisure=stadium"]="Staadion";
 $lang_str["tag:name"]=array("Nimi", "Nimed");
 
 // alt_name
-#$lang_str["tag:alt_name"]=array("Alternative name", "Alternative names");
+$lang_str["tag:alt_name"]=array("Alternatiivne nimi", "Alternatiivsed nimed");
 
 // official_name
 $lang_str["tag:official_name"]=array("Ametlik nimi", "Ametlikud nimed");
@@ -203,7 +203,7 @@ $lang_str["tag:place=country"]=array("Riik", "Riigid");
 #$lang_str["tag:place=suburb"]=array("Suburb", "Suburbs");
 #$lang_str["tag:place=hamlet"]=array("Hamlet", "Hamlets");
 #$lang_str["tag:place=locality"]=array("Locality", "Localities");
-#$lang_str["tag:place=island"]=array("Island", "Islands");
+$lang_str["tag:place=island"]=array("Saar", "Saared");
 #$lang_str["tag:place=islet"]=array("Islet", "Islets");
 $lang_str["tag:place=ocean"]="Ookean,Ookeanid";
 $lang_str["tag:place=sea"]=array("Meri", "Mered");
@@ -218,7 +218,7 @@ $lang_str["tag:place=sea"]=array("Meri", "Mered");
 #$lang_str["tag:power=minor_line"]="Minor Power Line";
 #$lang_str["tag:power=tower"]="Power Tower";
 #$lang_str["tag:power=pole"]="Power Pole";
-#$lang_str["tag:power=station"]="Power Station";
+$lang_str["tag:power=station"]="Elektrijaam";
 #$lang_str["tag:power=sub_station"]="Power Substation";
 
 // power_source
@@ -248,16 +248,23 @@ $lang_str["tag:power_source=gas"]="Gaas";
 #$lang_str["tag:real_ale"]="Real ale offered";
 
 // religion
-#$lang_str["tag:religion"]="Religion";
-#$lang_str["tag:religion=christian"]="christian";
-#$lang_str["tag:religion=buddhist"]="buddhist";
-#$lang_str["tag:religion=hindu"]="hindu";
-#$lang_str["tag:religion=jewish"]="jewish";
-#$lang_str["tag:religion=muslim"]="muslim";
+$lang_str["tag:religion"]="Religioon";
+$lang_str["tag:religion=christian"]="kristlik";
+$lang_str["tag:religion=buddhist"]="budistlik";
+$lang_str["tag:religion=hindu"]="hinduistlik";
+$lang_str["tag:religion=jewish"]="juudi";
+$lang_str["tag:religion=muslim"]="moslemi";
 #$lang_str["tag:religion=multifaith"]="multifaith";
 
 // denomination
-#$lang_str["tag:denomination"]="Denomination";
+$lang_str["tag:denomination"]="Usutunnistus";
+$lang_str["tag:denomination=anglican"]="anglikaani";
+$lang_str["tag:denomination=baptist"]="baptistlik";
+$lang_str["tag:denomination=catholic"]="katoliiklik";
+$lang_str["tag:denomination=lutheran"]="luteri";
+$lang_str["tag:denomination=orthodox"]="ortodokslik";
+$lang_str["tag:denomination=protestant"]="protestantlik";
+$lang_str["tag:denomination=russian_orthodox"]="vene õigeusklik";
 
 // route
 #$lang_str["tag:route"]="Route";
