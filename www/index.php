@@ -107,7 +107,7 @@ else
 <div id='sidebar'>
 <?
 $menu_list=array();
-$menu_list[]=array(-10, "<div class='logo'><a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'><img src='img/osb_logo.png' alt='OpenStreetBrowser' name='OpenStreetBrowser' border='0'/></a><p>OpenStreet <span class='bigger'>Browser</span><br/><span class='version'><a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/ChangeLog' target='_new'>{$version}</a></span></p></div>");
+$menu_list[]=array(-10, "<div id='logo'><div id='logo_image'><a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser'><img src='img/osb_logo.png' alt='OpenStreetBrowser' name='OpenStreetBrowser' border='0'/></a></div><div id='logo_name'>OpenStreet<span id='logo_name_bigger'>Browser</span><div class='version'><a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser/ChangeLog' target='_new'>{$version}</a></div></div></div>");
 $menu_list[]=array(0,
   "<div id='details_container'>\n".
   "<div id='details'>\n".

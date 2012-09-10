@@ -61,7 +61,7 @@ input#search {
   width: 250px;
   margin-top: 3px;
 }
-.logo {
+#logo {
   padding-top: 10px;
   height:125px;
   font-size:18px;
@@ -70,16 +70,18 @@ input#search {
   margin-top:5px;
   position: relative;
 }
-.logo p { padding-top:17px; margin:0; }
-.logo .version {
+#logo #logo_name { padding-top:17px; margin:0; }
+#logo #version {
   text-align:right;
   padding-right: 24px;
   float:right;
   font-size: 16px;
 }
-.logo .bigger { font-size:28px; }
-.logo .smaller { font-size:14px; }
-.logo img { 
+#logo #logo_name_bigger {
+  font-size:28px;
+  display: block;
+}
+#logo img { 
   float:left; 
   padding-right:10px;
 }
@@ -357,20 +359,20 @@ a:focus{
 #sidebar {
   width: 200px;
 }
-.logo img {
+#logo #logo_image img {
   width: 100px;
 }
-.logo {
+#logo {
   font-size: 16px;
   height: 120px;
 }
-.logo p {
+#logo #logo_name {
   padding-top: 10px;
 }
-.logo .bigger {
+#logo #logo_name_bigger {
   font-size: 18px;
 }
-.logo .version {
+#logo #version {
   font-size: 10px;
 }
 #map {
@@ -382,20 +384,20 @@ a:focus{
 #sidebar {
   width: 150px;
 }
-.logo img {
+#logo #logo_image img {
   width: 60px;
 }
-.logo {
+#logo {
   font-size: 14px;
   height: 85px;
 }
-.logo p {
+#logo #logo_name {
   padding-top: 0px;
 }
-.logo .bigger {
+#logo #logo_name_bigger {
   font-size: 14px;
 }
-.logo .version {
+#logo #version {
   font-size: 8px;
 }
 #map {
@@ -404,20 +406,20 @@ a:focus{
 }
 
 @media only screen and (max-height: 400px) {
-.logo img {
+#logo #logo_image img {
   width: 60px;
 }
-.logo p {
+#logo #logo_name {
   padding-top: 0px;
   margin-top: 0px;
 }
-.logo .bigger {
+#logo #logo_name_bigger {
   font-size: 14px;
 }
-.logo .version {
+#logo #version {
   font-size: 8px;
 }
-.logo {
+#logo {
   height: 64px;
   margin-top: 1px;
   padding-top: 1px;
