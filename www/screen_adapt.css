@@ -101,11 +101,52 @@
 }
 
 @media only screen and (max-width: 400px) and (max-height: 500px) {
+#logo #logo_image img {
+  float: none;
+}
 #sidebar_container {
   bottom: 201px;
 }
+#sidebar {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  margin-right: 2px;
+  margin-left: 5px;
+}
 #map_container {
   height: 200px;
+}
+#logo #logo_name,
+#logo #logo_name_bigger,
+#logo .version {
+  display: block;
+  font-size: 10px;
+  line-height: 100%;
+}
+#logo .version {
+  padding-top: 5px;
+}
+#content_container {
+  left: 70px;
+  right: 0px;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+}
+#toolboxbuttons_container {
+  height: 20px;
+}
+#toolboxbuttons {
+  margin-top: 0px;
+}
+#toolbox_container {
+}
+#details_container {
+}
+#menu {
 }
 }
 
