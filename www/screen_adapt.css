@@ -30,14 +30,17 @@
 #logo #logo_name {
   padding-top: 0px;
   margin-top: 0px;
+  font-size: 14px;
+  line-height: 100%;
 }
 #logo #logo_name_bigger {
-  font-size: 14px;
+  font-size: 16px;
 }
 #logo #version {
-  font-size: 8px;
+  padding-top: 2px;
+  font-size: 12px;
 }
-.logo {
+#logo {
   height: 64px;
   margin-top: 1px;
   padding-top: 1px;
@@ -119,14 +122,18 @@
 #map_container {
   height: 200px;
 }
+#logo {
+  width: 65px;
+}
 #logo #logo_name,
 #logo #logo_name_bigger,
-#logo .version {
+#logo #version {
   display: block;
   font-size: 10px;
   line-height: 100%;
 }
-#logo .version {
+#logo #version {
+  text-align: left;
   padding-top: 5px;
 }
 #content_container {
