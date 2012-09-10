@@ -1,0 +1,120 @@
+@media only screen and (min-width: 400px) and (max-width: 600px) {
+#sidebar {
+  width: 200px;
+}
+#logo #logo_image img {
+  width: 100px;
+}
+#logo {
+  font-size: 16px;
+  height: 120px;
+}
+#logo #logo_name {
+  padding-top: 10px;
+}
+#logo #logo_name_bigger {
+  font-size: 18px;
+}
+#logo #version {
+  font-size: 10px;
+}
+#map_container {
+  left: 220px;
+}
+}
+
+@media only screen and (max-height: 400px) {
+#logo #logo_image img {
+  width: 60px;
+}
+#logo #logo_name {
+  padding-top: 0px;
+  margin-top: 0px;
+}
+#logo #logo_name_bigger {
+  font-size: 14px;
+}
+#logo #version {
+  font-size: 8px;
+}
+.logo {
+  height: 64px;
+  margin-top: 1px;
+  padding-top: 1px;
+}
+}
+
+@media only screen and (max-width: 400px) {
+#sidebar_container {
+  bottom: 401px;
+  right: 0px;
+  left: 0px;
+  top: 0px;
+  width: auto;
+}
+#sidebar {
+}
+#map_container {
+  top: auto;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 400px;
+}
+#logo {
+  height: 64px;
+  margin-top: 1px;
+  padding-top: 1px;
+}
+#logo #logo_image img {
+  width: 60px;
+}
+#logo #logo_name {
+  padding-top: 0px;
+  font-size: 14px;
+}
+#logo #logo_name_bigger {
+  font-size: 14px;
+  display: inline;
+}
+#logo #version {
+  font-size: 10px;
+}
+}
+
+@media only screen and (max-width: 400px) and (max-height: 800px) {
+#sidebar_container {
+  bottom: 301px;
+}
+#map_container {
+  height: 300px;
+}
+}
+
+@media only screen and (max-width: 400px) and (max-height: 600px) {
+#sidebar_container {
+  bottom: 251px;
+}
+#map_container {
+  height: 250px;
+}
+}
+
+@media only screen and (max-width: 400px) and (max-height: 500px) {
+#sidebar_container {
+  bottom: 201px;
+}
+#map_container {
+  height: 200px;
+}
+}
+
+@media only screen and (max-width: 400px) and (max-height: 400px) {
+#sidebar_container {
+  bottom: 151px;
+}
+#map_container {
+  height: 150px;
+}
+}
+

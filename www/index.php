@@ -49,6 +49,7 @@ call_hooks("html_head", $dummy);
 <script type="text/javascript" src="index.js<?=$version_string?>"></script>
 <script type="text/javascript" src="ajax.js<?=$version_string?>"></script>
 <!-- <script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script> -->
+<link rel="stylesheet" type="text/css" href="screen_adapt.css<?=$version_string?>" />
 </head>
 <body>
 <?
