@@ -27,10 +27,10 @@ function osm_import_init() {
     $osmosis_db=$db_central;
 
   // remember search_path and set to 'osm'
-  $res=sql_query("show search_path");
-  $elem=pg_fetch_array($res);
-  $search_path=$elem[0];
-  sql_query("set search_path to {$osmosis_db['user']}, {$db_central['user']}, public");
+  //$res=sql_query("show search_path");
+  //$elem=pg_fetch_array($res);
+  //$search_path=$elem[0];
+  //sql_query("set search_path to {$osmosis_db['user']}, {$db_central['user']}, public");
 
   // load schema
   sql_query(file_get_contents("$osmosis_path/script/pgsimple_schema_0.6.sql"));
@@ -40,7 +40,7 @@ function osm_import_init() {
   system("osmosis --read-xml file=$osm_import_source --write-pgsimp host={$osmosis_db['host']} user={$osmosis_db['user']} password={$osmosis_db['passwd']} database={$osmosis_db['name']}");
 
   // reset search_path
-  sql_query("set search_path to {$search_path}");
+  //sql_query("set search_path to {$search_path}");
 
   // load db.sql which generates osm_point etc. tables
   debug("Plugin 'osm_import', initializing db", "osm_import", D_NOTICE);
