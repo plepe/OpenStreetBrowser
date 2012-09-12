@@ -59,6 +59,7 @@ function plugins_load_conf($plugin) {
 function plugins_check_dependency($plugin, &$loaded) {
   global $plugins_available;
   global $plugins_provide;
+  global $plugins;
 
   $var_active="{$plugin}_active";
   $var_depend="{$plugin}_depend";
@@ -90,7 +91,7 @@ function plugins_check_dependency($plugin, &$loaded) {
       }
       else {
 	$found=false;
-	foreach($loaded as $p)
+	foreach(array_merge($loaded, $plugins) as $p)
 	  if(in_array($p, $plugins_provide[$dep]))
 	    $found=$p;
 
