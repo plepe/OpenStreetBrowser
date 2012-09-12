@@ -43,6 +43,11 @@ $type_list=array("w"=>"way", "n"=>"node", "r"=>"relation");
 $type_list_short=array("w"=>"way", "n"=>"node", "r"=>"rel");
 $type_list_plural=array("w"=>"ways", "n"=>"nodes", "r"=>"rels");
 
+// Set debug-level for error messages; the lower the more verbose
+// see inc/debug.php for possible values
+# $mcp_debug_level=0;
+# $www_debug_level=0;
+
 $wiki_stylesheet="http://wiki.openstreetmap.org/index.php?title=OpenStreetBrowser/Stylesheet&action=raw";
 $wiki_img="http://wiki.openstreetmap.org/wiki/Image:";
 $wiki_imgsrc="http://wiki.openstreetmap.org";
