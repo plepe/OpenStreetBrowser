@@ -27,6 +27,14 @@ $db_central=&$db; // Use the same database
 # $db_central['debug']=false;
 $db_central['master']=true; // set to false if this instance is slave database
 
+$osmosis_db=&$db;
+# $osmosis_db=array(); // OR use database on another server
+# $osmosis_db['name']="gis";
+# $osmosis_db['user']="www";
+# $osmosis_db['passwd']="PASSWORD";
+# $osmosis_db['host']="localhost";
+# $osmosis_db['debug']=false;
+
 $SRID=900913;
 
 $default_location=array('zoom'=>2, 'lat'=>28.43864, 'lon'=>18.61488);
