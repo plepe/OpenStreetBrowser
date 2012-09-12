@@ -7,7 +7,12 @@ function osm_import_init() {
   global $tmp_dir;
   global $plugins_dir;
 
-  $res=sql_query("select * from pg_tables where schemaname='osm' and tablename='nodes'");
+  // $res=sql_query("select * from pg_tables where schemaname='osm' and tablename='nodes'");
+  $res=sql_query("select * from pg_tables where tablename='nodes'");
+  if(pg_num_rows($res))
+    return;
+
+  $res=sql_query("select * from pg_tables where tablename='osm_point'");
   if(pg_num_rows($res))
     return;
 
