@@ -80,6 +80,8 @@ function plugins_check_dependency($plugin, &$loaded) {
     return;
   }
 
+  debug("Including plugin '$plugin': Check dependencies", "plugins", D_DEBUG);
+
   foreach($$var_depend as $dep) {
     if(isset($plugins_provide[$dep])) {
       if(sizeof($plugins_provide[$dep])==1) {
@@ -106,9 +108,13 @@ function plugins_check_dependency($plugin, &$loaded) {
       debug("Including plugin '$plugin': Cannot include dependency '$dep' - deactivating", "plugins", D_ERROR);
       return;
     }
+    else {
+      // dependency can be loaded by name
+    }
 
-    if(!in_array($dep, $loaded))
-      $loaded[]=$dep;
+    if(!in_array($dep, $loaded)) {
+      plugins_check_dependency($dep, &$loaded);
+    }
   }
 
   if(!in_array($plugin, $loaded))
