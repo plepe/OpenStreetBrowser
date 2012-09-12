@@ -82,7 +82,7 @@ function plugins_check_dependency($plugin, &$loaded) {
 
   debug("Including plugin '$plugin': Check dependencies", "plugins", D_DEBUG);
 
-  foreach($$var_depend as $dep) {
+  if($$var_depend) foreach($$var_depend as $dep) {
     if(isset($plugins_provide[$dep])) {
       if(sizeof($plugins_provide[$dep])==1) {
 	debug("Including plugin '$plugin': Including dependency '$dep' - choosing '{$plugins_provide[$dep][0]}' instead", "plugins", D_WARNING);
