@@ -1,0 +1,9 @@
+<?
+$lang_str["importance:name"]="Olulisus";
+$lang_str["importance:global"]="globaalne";
+$lang_str["importance:international"]="rahvusvaheline";
+$lang_str["importance:national"]="rahvuslik";
+$lang_str["importance:regional"]="regionaalne";
+$lang_str["importance:urban"]="linnalik";
+$lang_str["importance:suburban"]="linnaosalik";
+$lang_str["importance:local"]="lokaalne";

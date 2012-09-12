@@ -4,6 +4,6 @@ $lang_str["importance:global"]="celosvětový";
 $lang_str["importance:international"]="mezinárodní";
 $lang_str["importance:national"]="národní";
 $lang_str["importance:regional"]="regionální";
-#$lang_str["importance:urban"]="urban";
+$lang_str["importance:urban"]="městský";
 #$lang_str["importance:suburban"]="suburban";
 $lang_str["importance:local"]="místní";

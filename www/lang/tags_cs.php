@@ -267,6 +267,7 @@ $lang_str["tag:denomination=orthodox"]="ortodoxní";
 $lang_str["tag:denomination=protestant"]="protestantské";
 $lang_str["tag:denomination=roman_catholic"]="římskokatolické";
 $lang_str["tag:denomination=russian_orthodox"]="ruské ortodoxní";
+$lang_str["tag:denomination=united_reformed"]="spojení reformisté";
 
 // route
 $lang_str["tag:route"]="Dopravní trasy";
