@@ -183,7 +183,7 @@ create view osm_allrel as (
 );
 
 -- osm_rel_members
-drop view osm_rel_members;
+drop view if exists osm_rel_members;
 create view osm_rel_members as (
   select
     osm_rel.osm_id,
