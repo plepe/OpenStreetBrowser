@@ -41,6 +41,10 @@ function osm_import_init() {
 
   // reset search_path
   sql_query("set search_path to {$search_path}");
+
+  // load db.sql which generates osm_point etc. tables
+  debug("Plugin 'osm_import', initializing db", "osm_import", D_NOTICE);
+  sql_query(file_get_contents("$plugins_dir/osm_import/db.sql"));
 }
 
 register_hook("mcp_start", "osm_import_init");
