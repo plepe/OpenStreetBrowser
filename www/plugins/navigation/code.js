@@ -721,7 +721,6 @@ function navigation_info(chapters, ob) {
     // set home
     var a=document.createElement("a");
     a.onclick=navigation_set_home.bind(this, ob);
-    a.href=url();
     dom_create_append_text(a, lang("navigation:set_home"));
 
     var entry={
@@ -735,7 +734,6 @@ function navigation_info(chapters, ob) {
     // set destination
     var a=document.createElement("a");
     a.onclick=navigation_set_destination.bind(this, ob);
-    a.href=url();
     dom_create_append_text(a, lang("navigation:set_destination"));
 
     var entry={
@@ -749,7 +747,6 @@ function navigation_info(chapters, ob) {
     // add via
     var a=document.createElement("a");
     a.onclick=navigation_add_via.bind(this, ob);
-    a.href=url();
     dom_create_append_text(a, lang("navigation:add_via"));
 
     var entry={
