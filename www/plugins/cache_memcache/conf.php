@@ -8,3 +8,4 @@ $cache_memcache_tags=new tags(array(
   "Author"=>"Stephan Plepelits",
 ));
 
+$cache_memcache_provide="cache";
