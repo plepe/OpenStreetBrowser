@@ -1,5 +1,5 @@
 <?
-function osm_import_init() {
+function osm_import_db_init() {
   global $osmosis_path;
   global $osmosis_db;
   global $osm_import_source;
@@ -51,5 +51,3 @@ function osm_import_init() {
   debug("initializing database", "osm_import", D_NOTICE);
   sql_query(file_get_contents("$plugins_dir/osm_import/init.sql"));
 }
-
-register_hook("mcp_start", "osm_import_init");
