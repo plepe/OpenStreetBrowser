@@ -23,7 +23,7 @@ function url_history_statechange() {
     call_hooks("recv_permalink", hash_to_string(location_params));
   }
   else {
-    location_params.obj=new_hash;
+    location_params.obj=urldecode(new_hash);
   }
 
   call_hooks("hash_changed", location_params);
