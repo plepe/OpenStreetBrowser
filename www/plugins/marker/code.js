@@ -79,6 +79,10 @@ function marker(lon, lat) {
       lonlat.lat=lonlat.y;
     }
 
+    // set new coordinates
+    this.lon=lonlat.lon;
+    this.lat=lonlat.lat;
+
     // update permalink
     update_permalink();
 
