@@ -69,6 +69,16 @@ function marker(lon, lat) {
   this.inheritFrom();
   this.type="marker";
 
+  // geo
+  this.geo=function() {
+    return [this.feature];
+  }
+
+  // geo_center
+  this.geo_center=function() {
+    return [this.feature];
+  }
+
   // next_drag
   this.next_drag=function(pos) {
     // calculate lonlat of new position
