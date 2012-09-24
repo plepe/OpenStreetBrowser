@@ -240,6 +240,12 @@ function marker_search_object(ret, id) {
     if(marker_list[i].id==id)
       ret.push(marker_list[i]);
   }
+
+  var m;
+  if((ret.length==0)&&
+     (m=id.match("^marker_(\-?[0-9]+\.[0-9]+),(\-?[0-9]+\.[0-9]+)$"))) {
+    ret.push(new marker(m[1], m[2]));
+  }
 }
 
 function marker_place(pos) {
