@@ -69,8 +69,8 @@ function marker(lon, lat) {
   this.inheritFrom();
   this.type="marker";
 
-  // finish_drag
-  this.finish_drag=function(pos) {
+  // next_drag
+  this.next_drag=function(pos) {
     // calculate lonlat of new position
     var lonlat=pos.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
 
@@ -92,9 +92,14 @@ function marker(lon, lat) {
     this.update_details();
   }
 
-  // next_drag
-  this.next_drag=function(pos) {
-    this.finish_drag(pos);
+  // finish_drag
+  this.finish_drag=function(pos) {
+    // do as if we just moved the object
+    this.next_drag(pos);
+
+    // no update id and set a new URL
+    this.id="marker_"+this.lon.toFixed(5)+","+this.lat.toFixed(5);
+    set_url({ obj: this.id });
   }
 
   // object_select
@@ -199,7 +204,7 @@ function marker(lon, lat) {
 
   this.lon=parseFloat(lon);
   this.lat=parseFloat(lat);
-  this.id="marker_"+marker_highest_id++;
+  this.id="marker_"+this.lon.toFixed(5)+","+this.lat.toFixed(5);
 
   // create the new marker
   var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
