@@ -141,6 +141,15 @@ function info(ob) {
 
     this.data=data;
 
+    // request geo or geo_center to show object
+    this.geo=this.ob.geo(this.got_geo.bind(this));
+    if(this.geo) {
+      this.got_geo(this.geo);
+    }
+    else {
+      this.got_geo_center(this.ob.geo_center());
+    }
+
     call_hooks("info_show", this, this.ob);
   }
 
@@ -232,6 +241,20 @@ function info(ob) {
   }
 
   register_hook("unselect_all", this.hide.bind(this), this);
+}
+
+info.prototype.got_geo=function(geo) {
+  this.geo=geo;
+
+  if(!this.geo) {
+    alert("object has no geometric representation");
+    return;
+  }
+
+  this.ob.geo_zoom_to();
+}
+
+info.prototype.got_geo_center=function(geo_center) {
 }
 
 function merge_chapters(chapters) {
