@@ -30,6 +30,11 @@ function start_location_start(start_value) {
   if(!first_load)
     return;
 
+  if(url_current()!="") {
+    first_load=false;
+    return;
+  }
+
   switch (start_value) {
     case "geolocation":
       register_hook("gps_update", start_location_first_load);
