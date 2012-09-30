@@ -234,6 +234,12 @@ function marker(lon, lat) {
 }
 
 function marker_add(lon, lat) {
+  var id="marker_"+parseFloat(lon).toFixed(5)+","+parseFloat(lat).toFixed(5);
+
+  for(var i=0; i<marker_list.length; i++)
+    if(marker_list[i].id==id)
+      return marker_list[i];
+
   return new marker(lon, lat);
 }
 
@@ -254,7 +260,7 @@ function marker_search_object(ret, id) {
   var m;
   if((ret.length==0)&&
      (m=id.match("^marker_(\-?[0-9]+\.[0-9]+),(\-?[0-9]+\.[0-9]+)$"))) {
-    ret.push(new marker(m[1], m[2]));
+    ret.push(marker_add(m[1], m[2]));
   }
 }
 
