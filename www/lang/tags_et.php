@@ -137,28 +137,28 @@ $lang_str["tag:leisure=water_park"]="Veepark";
 #$lang_str["tag:leisure=fishing"]="Fishing";
 #$lang_str["tag:leisure=nature_reserve"]="Nature Reserve";
 #$lang_str["tag:leisure=park"]="Leisure Park";
-#$lang_str["tag:leisure=playground"]="Playground";
-#$lang_str["tag:leisure=garden"]="Garden";
+$lang_str["tag:leisure=playground"]="Mänguväljak";
+$lang_str["tag:leisure=garden"]="Aed";
 #$lang_str["tag:leisure=common"]="Common";
-#$lang_str["tag:leisure=ice_rink"]="Ice Rink";
-#$lang_str["tag:leisure=miniature_golf"]="Miniature Golf";
-#$lang_str["tag:leisure=swimming_pool"]="Swimming Pool";
+$lang_str["tag:leisure=ice_rink"]="Liuväli";
+$lang_str["tag:leisure=miniature_golf"]="Minigolf";
+$lang_str["tag:leisure=swimming_pool"]="Ujumisbassein";
 #$lang_str["tag:leisure=beach_resort"]="Beach Resort";
 #$lang_str["tag:leisure=bird_hide"]="Bird Hide";
 #$lang_str["tag:leisure=sport"]="Other Sport";
 
 // man_made
 #$lang_str["tag:man_made"]="Artificial structures";
-#$lang_str["tag:man_made=pipeline"]=array("Pipeline", "Pipelines");
+$lang_str["tag:man_made=pipeline"]=array("Torujuhe", "Torujuhtmed");
 
 // type
-#$lang_str["tag:type"]="Type";
+$lang_str["tag:type"]="Liik";
 $lang_str["tag:type=gas"]="Gaas";
-#$lang_str["tag:type=heat"]="Heat";
-#$lang_str["tag:type=hot_water"]="Hot Water";
-#$lang_str["tag:type=oil"]="Oil";
-#$lang_str["tag:type=sewage"]="Sewage";
-#$lang_str["tag:type=water"]="Water";
+$lang_str["tag:type=heat"]="Soojus";
+$lang_str["tag:type=hot_water"]="Kuum vesi";
+$lang_str["tag:type=oil"]="Õli";
+$lang_str["tag:type=sewage"]="Reovesi";
+$lang_str["tag:type=water"]="Vesi";
 
 // name
 $lang_str["tag:name"]=array("Nimi", "Nimed");
@@ -188,7 +188,7 @@ $lang_str["tag:network"]="Võrk";
 $lang_str["tag:opening_hours"]="Avatud";
 
 // operator
-#$lang_str["tag:operator"]="Operator";
+$lang_str["tag:operator"]="Operaator";
 
 // place
 #$lang_str["tag:place"]="Place";
@@ -292,47 +292,47 @@ $lang_str["tag:shop"]="Pood";
 $lang_str["tag:sport"]="Sport";
 #$lang_str["tag:sport=9pin"]="9pin Bowling";
 #$lang_str["tag:sport=10pin"]="10pin Bowling";
-#$lang_str["tag:sport=archery"]="Archery";
-#$lang_str["tag:sport=athletics"]="Athletics";
-#$lang_str["tag:sport=australian_football"]="Australian Football";
-#$lang_str["tag:sport=baseball"]="Baseball";
+$lang_str["tag:sport=archery"]="Vibulaskmine";
+$lang_str["tag:sport=athletics"]="Kergejõustik";
+$lang_str["tag:sport=australian_football"]="Austraalia jalgpall";
+$lang_str["tag:sport=baseball"]="Pesapall";
 $lang_str["tag:sport=basketball"]="Korvpall";
-#$lang_str["tag:sport=beachvolleyball"]="Beachvolleyball";
+$lang_str["tag:sport=beachvolleyball"]="Rannavõrkpall";
 #$lang_str["tag:sport=boules"]="Boules";
 #$lang_str["tag:sport=bowls"]="Bowls";
-#$lang_str["tag:sport=canoe"]="Canoe";
+$lang_str["tag:sport=canoe"]="Kanuu";
 $lang_str["tag:sport=chess"]="Male";
-#$lang_str["tag:sport=climbing"]="Climbing";
-#$lang_str["tag:sport=cricket"]="Cricket";
+$lang_str["tag:sport=climbing"]="Ronimine";
+$lang_str["tag:sport=cricket"]="Kriket";
 #$lang_str["tag:sport=cricket_nets"]="Cricket Nets";
-#$lang_str["tag:sport=croquet"]="Croquet";
-#$lang_str["tag:sport=cycling"]="Cycling";
-#$lang_str["tag:sport=diving"]="Diving";
-#$lang_str["tag:sport=dog_racing"]="Dog Racing";
-#$lang_str["tag:sport=equestrian"]="Equestrian";
-#$lang_str["tag:sport=football"]="Football";
+$lang_str["tag:sport=croquet"]="Kroket";
+$lang_str["tag:sport=cycling"]="Jalgrattasõit";
+$lang_str["tag:sport=diving"]="Vettehüpped";
+$lang_str["tag:sport=dog_racing"]="Koerte võidujooks";
+$lang_str["tag:sport=equestrian"]="Ratsasport";
+$lang_str["tag:sport=football"]="Jalgpall";
 $lang_str["tag:sport=golf"]="Golf";
-#$lang_str["tag:sport=gymnastics"]="Gymnastics";
-#$lang_str["tag:sport=hockey"]="Hockey";
-#$lang_str["tag:sport=horse_racing"]="Horse Racing";
+$lang_str["tag:sport=gymnastics"]="Võimlemine";
+$lang_str["tag:sport=hockey"]="Hoki";
+$lang_str["tag:sport=horse_racing"]="Traavivõistlused";
 #$lang_str["tag:sport=korfball"]="Korfball";
 #$lang_str["tag:sport=motor"]="Motor";
 #$lang_str["tag:sport=multi"]="Multi";
-#$lang_str["tag:sport=orienteering"]="Orienteering";
+$lang_str["tag:sport=orienteering"]="Orienteerumine";
 #$lang_str["tag:sport=paddle_tennis"]="Paddle Tennis";
 #$lang_str["tag:sport=paragliding"]="Paragliding";
 #$lang_str["tag:sport=pelota"]="Pelota";
 #$lang_str["tag:sport=racquet"]="Racquet";
-#$lang_str["tag:sport=rowing"]="Rowing";
-#$lang_str["tag:sport=rugby"]="Rugby";
-#$lang_str["tag:sport=shooting"]="Shooting";
-#$lang_str["tag:sport=skating"]="Skating";
-#$lang_str["tag:sport=skateboard"]="Skateboard";
-#$lang_str["tag:sport=skiing"]="Skiing";
-#$lang_str["tag:sport=soccer"]="Soccer";
-#$lang_str["tag:sport=swimming"]="Swimming";
+$lang_str["tag:sport=rowing"]="Sõudmine";
+$lang_str["tag:sport=rugby"]="Ragbi";
+$lang_str["tag:sport=shooting"]="Laskmine";
+$lang_str["tag:sport=skating"]="Uisutamine";
+$lang_str["tag:sport=skateboard"]="Rula";
+$lang_str["tag:sport=skiing"]="Suusatamine";
+$lang_str["tag:sport=soccer"]="Jalgpall";
+$lang_str["tag:sport=swimming"]="Ujumine";
 $lang_str["tag:sport=table_tennis"]="Lauatennis";
-#$lang_str["tag:sport=team_handball"]="Handball";
+$lang_str["tag:sport=team_handball"]="Käsipall";
 $lang_str["tag:sport=tennis"]="Tennis";
 $lang_str["tag:sport=volleyball"]="Võrkpall";
 
@@ -397,7 +397,7 @@ $lang_str["tag:landuse"]="Maakasutus";
 #$lang_str["tag:natural"]="Natural";
 
 // geological
-#$lang_str["tag:geological"]="Geological";
+$lang_str["tag:geological"]="Geoloogiline";
 
 // boundary
 #$lang_str["tag:boundary"]="Boundary";
@@ -406,7 +406,7 @@ $lang_str["tag:landuse"]="Maakasutus";
 #$lang_str["tag:abutters"]="Abutters";
 
 // lit
-#$lang_str["tag:lit"]="Street lighting";
+$lang_str["tag:lit"]="Tänavavalgustus";
 
 // area
 #$lang_str["tag:area"]="Area";

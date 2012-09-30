@@ -22,6 +22,9 @@ $lang_str["choose"]="Επιλογή";
 $lang_str["help"]="Βοήθεια";
 $lang_str["longitude"]=array("Γεωγ. Μήκος", "Γεωγ. Μήκη");
 $lang_str["latitude"]=array("Γεωγ. Πλάτος", "Γεωγ. Πλάτη");
+$lang_str["altitude"]=array("Υψόμετρο", "Υψόμετρα");
+#$lang_str["heading"]=array("Heading", "Headings");
+$lang_str["speed"]=array("Ταχύτητα", "Ταχύτητες");
 $lang_str["noname"]="(χωρίς όνομα)";
 $lang_str["info_back"]="πίσω στη γενική άποψη";
 $lang_str["info_zoom"]="Εστίαση";
@@ -125,13 +128,21 @@ $lang_str["category:old_version"]="Μια νέα έκδοση αυτής της 
 $lang_str["category:not_compiled"]="Η νέα κατηγορία προετοιμάστηκε";
 
 $lang_str["category:new_rule"]="Νέος Ρόλος";
-#$lang_str["category_rule_tag:match"]="Match";
+$lang_str["category_rule_tag:match"]="Ταίριαγμα";
 $lang_str["category_rule_tag:description"]="Περιγραφή";
 $lang_str["category_chooser:choose"]="Επέλεξε μια κατηγορία";
 $lang_str["category_chooser:new"]="Νέα κατηγορία";
 $lang_str["category:sub_category"]=array("Υπο-κατηγορία", "Υπο-κατηγορίες");
 
 $lang_str["basemap:osb"]="OpenStreetBrowser";
+#$lang_str["basemap:osb_light"]="OpenStreetBrowser (pale)";
 $lang_str["basemap:mapnik"]="Κοινό (Mapnik)";
 $lang_str["basemap:osmarender"]="Κοινό (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
+
+$lang_str["zoom_in"]="Μεγέθυνση";
+$lang_str["zoom_out"]="Σμίκρυνση";
+#$lang_str["pan_north"]="pan viewport North";
+#$lang_str["pan_east"]="pan viewport East";
+#$lang_str["pan_south"]="pan viewport South";
+#$lang_str["pan_west"]="pan viewport West";
