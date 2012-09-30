@@ -26,6 +26,19 @@ function url_hash_check_redraw() {
   redraw_timer=setTimeout("url_hash_check_redraw()", 300);
 }
 
+function url_current() {
+  var new_hash=location.hash;
+
+  // some browsers do not decode special characters
+  new_hash=urldecode(new_hash);
+
+  var m;
+  if(m=new_hash.match(/^#(.*)$/))
+    new_hash=m[1];
+
+  return new_hash;
+}
+
 function url_hash_init() {
   if(!location.hash) {
     location.hash="#";

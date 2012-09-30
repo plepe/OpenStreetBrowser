@@ -1,4 +1,22 @@
 function url_history_statechange() {
+  var new_hash=url_current();
+
+  location_params={};
+
+  var m;
+  if(m=new_hash.match(/^(.*)\?(.*)$/)) {
+    location_params=string_to_hash(m[2]);
+    location_params.obj=m[1];
+    call_hooks("recv_permalink", hash_to_string(location_params));
+  }
+  else {
+    location_params.obj=urldecode(new_hash);
+  }
+
+  call_hooks("hash_changed", location_params);
+}
+
+function url_current() {
   var state=window.History.getState();
   var m;
 
@@ -14,19 +32,7 @@ function url_history_statechange() {
   if(new_hash==".")
     new_hash="";
 
-  location_params={};
-
-  var m;
-  if(m=new_hash.match(/^(.*)\?(.*)$/)) {
-    location_params=string_to_hash(m[2]);
-    location_params.obj=m[1];
-    call_hooks("recv_permalink", hash_to_string(location_params));
-  }
-  else {
-    location_params.obj=urldecode(new_hash);
-  }
-
-  call_hooks("hash_changed", location_params);
+  return new_hash;
 }
 
 function url_history_anchorchange() {
