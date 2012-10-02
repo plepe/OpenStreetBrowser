@@ -40,7 +40,7 @@ a:hover {
   top:0;
   bottom:0;
   width:5px;
-  background-image:url(img/bg_gray.png);
+  background-image:url(img/shadow_left.png);
   background-repeat:repeat-y;
   height:100%;
 }
@@ -92,7 +92,6 @@ input#search {
   top: 0px;
   bottom: 0px;
   border-left:1px solid #999;
-  border-right:1px solid #999;
   height:100%;
 }
 #map {

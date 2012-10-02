@@ -6,6 +6,7 @@
   width: 152px;
   text-align: center;
   overflow: hidden;
+  border-left: 1px solid #999;
 }
 #right_bar XXXiframe {
   height: 640px;
@@ -27,7 +28,7 @@
   margin-right: 5px;
 }
 div#content {
-  right: 152px;
+  right: 153px;
 }
 div#right_bar_hide {
   position: absolute;
