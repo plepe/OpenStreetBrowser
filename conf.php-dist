@@ -190,7 +190,10 @@ $www_debug_level=2;
 // hooks - Functions can register to hooks to react on events
 // osb_user - User handling for OpenStreetBrowser
 // load_object - Functions to load geometry objects
+
+// User Interface
 // options_ui - The Options-window
+// screen_adapt - Automatically adapt to small screens
 
 // Database functions:
 // pg_array - A couple of useful array functions

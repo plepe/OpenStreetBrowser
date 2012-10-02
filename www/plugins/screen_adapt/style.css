@@ -92,7 +92,7 @@
   top:0;
   right:0;
   height:5px;
-  background-image:url(img/shadow_top.png);
+  background-image:url(shadow_top.png);
   background-repeat:repeat-x;
   width:100%;
 }
