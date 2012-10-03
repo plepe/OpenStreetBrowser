@@ -13,6 +13,9 @@ function screen_adapt_resize() {
       map.removeControl(screen_adapt_map_controls.zoom);
       screen_adapt_map_controls.zoom=new OpenLayers.Control.Zoom();
       map.addControl(screen_adapt_map_controls.zoom);
+
+      screen_adapt_map_controls.zoom.zoomInLink.href="";
+      screen_adapt_map_controls.zoom.zoomOutLink.href="";
     }
   }
   else {
