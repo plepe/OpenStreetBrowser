@@ -194,6 +194,7 @@ $www_debug_level=2;
 // User Interface
 // options_ui - The Options-window
 // screen_adapt - Automatically adapt to small screens
+// touchscreen - Adaptions for touchscreens
 
 // Database functions:
 // pg_array - A couple of useful array functions

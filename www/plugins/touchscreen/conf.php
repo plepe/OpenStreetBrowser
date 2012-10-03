@@ -1,0 +1,2 @@
+<?
+$touchscreen_active=true;
