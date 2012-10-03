@@ -37,6 +37,7 @@ function win(options) {
       this.onclose();
 
     this.win.parentNode.removeChild(this.win);
+    unregister_hooks_object(this);
     delete windows[this.id];
   }
 
@@ -80,6 +81,7 @@ function win(options) {
   this.win=document.createElement("div");
   this.win.className="win"
   this.win.addEventListener("DOMSubtreeModified", this.resize.bind(this));
+  register_hook("window_resize", this.resize.bind(this), this);
 
   // Add window to div win_root (create if it doesn't exist)
   if(!win_root) {
