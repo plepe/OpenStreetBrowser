@@ -8,6 +8,11 @@ div.category_open .header a.header {
   font-weight: normal;
   font-style: italic;
   border-bottom: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
 }
 div.category_closed .header,
 div.category_open .header {

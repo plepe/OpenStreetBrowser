@@ -30,6 +30,10 @@ table.win_title_bar td.title {
   padding-left: 3px;
   cursor: default;
   user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
   font-weight: bold;
 }
 div.win_title_bar_moving {
