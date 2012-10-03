@@ -79,6 +79,7 @@ function win(options) {
   // create window and set class(es)
   this.win=document.createElement("div");
   this.win.className="win"
+  this.win.addEventListener("DOMSubtreeModified", this.resize.bind(this));
 
   // Add window to div win_root (create if it doesn't exist)
   if(!win_root) {
@@ -119,6 +120,10 @@ function win(options) {
 
   this.id=uniqid();
   windows[this.id]=this;
+}
+
+win.prototype.resize=function() {
+  alert("resize");
 }
 
 function win_close(id) {
