@@ -45,6 +45,12 @@
   margin-top: 1px;
   padding-top: 1px;
 }
+#menu div {
+  display: none;
+}
+#menu #menu_short {
+  display: block;
+}
 }
 
 @media only screen and (max-width: 400px) {
@@ -105,6 +111,12 @@
 #map_container {
   height: 65%;
 }
+#menu div {
+  display: none;
+}
+#menu #menu_short {
+  display: block;
+}
 }
 
 @media only screen and (max-width: 400px) and (max-height: 600px) {
@@ -157,7 +169,10 @@
 }
 #details_container {
 }
-#menu {
+#menu #menu_short {
+  position: absolute;
+  left: -70px;
+  bottom: 0px;
 }
 }
 

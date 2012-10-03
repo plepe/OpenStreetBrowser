@@ -27,6 +27,9 @@ function screen_adapt_resize() {
   }
 }
 
+function screen_adapt_show_menu() {
+}
+
 function screen_adapt_init() {
   for(var k in screen_adapt_map_controls) {
     for(var i=0; i<map.controls.length; i++) {
@@ -34,8 +37,8 @@ function screen_adapt_init() {
 	screen_adapt_map_controls.zoom=map.controls[i];
       }
     }
-
   }
+
 }
 
 register_hook("init", screen_adapt_init);
