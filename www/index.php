@@ -125,10 +125,16 @@ call_hooks("main_links", &$main_links);
 $main_links=weight_sort($main_links);
 $main_links=implode(" |\n", $main_links);
 
+$menu_short=array();
+call_hooks("main_menu_short", &$menu_short);
+$menu_short=weight_sort($menu_short);
+$menu_short=implode(" |\n", $menu_short);
+
 $menu_list[]=array(5,
   "<div id='menu'>\n".
   "<div id='user_info'>{$current_user->login_info()}</div>\n".
   "<div id='main_links'>{$main_links}</div>\n".
+  "<div id='menu_short'>{$menu_short}</div>\n".
   "</div>\n");
 
 call_hooks("menu_show", &$menu_list);

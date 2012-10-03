@@ -112,6 +112,9 @@ div#menu {
   position: absolute;
   bottom: 1px;
 }
+#menu #menu_short {
+  display: none;
+}
 select#lang {
   border: 1px solid gray;
   background-color:#efefef;
