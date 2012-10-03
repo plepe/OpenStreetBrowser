@@ -169,9 +169,11 @@
 }
 #details_container {
 }
+#menu {
+  left: -70px;
+}
 #menu #menu_short {
   position: absolute;
-  left: -70px;
   bottom: 0px;
 }
 }

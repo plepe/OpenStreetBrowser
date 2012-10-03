@@ -27,7 +27,39 @@ function screen_adapt_resize() {
   }
 }
 
+function screen_adapt_hide_menu() {
+  var menu=document.getElementById("menu");
+  var curr=menu.firstChild;
+
+  while(curr) {
+    if(curr.style)
+      curr.style.display=null;
+
+    curr=curr.nextSibling;
+  }
+
+  var menu_short=document.getElementById("menu_short");
+  menu_short.style.display=null;
+
+  call_hooks("window_resize");
+}
+
 function screen_adapt_show_menu() {
+  var menu=document.getElementById("menu");
+  var curr=menu.firstChild;
+
+  while(curr) {
+    if(curr.style)
+      curr.style.display="block";
+
+    curr=curr.nextSibling;
+  }
+
+  var menu_short=document.getElementById("menu_short");
+  menu_short.style.display="none";
+
+  setTimeout("screen_adapt_hide_menu()", 5000);
+  call_hooks("window_resize");
 }
 
 function screen_adapt_init() {
