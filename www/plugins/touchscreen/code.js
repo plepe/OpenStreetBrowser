@@ -93,7 +93,9 @@ function touchscreen_uncatch_link() {
   }
 }
 
-function touchscreen_catch_link() {
+function touchscreen_catch_link(e) {
+  var event=e?e:event;
+
   // first 'un'-catch old link
   touchscreen_uncatch_link();
 
@@ -116,7 +118,7 @@ function touchscreen_catch_link() {
   var element;
   if(element=ob.parentNode.element) {
     if(element.set_highlight)
-      element.set_highlight({target:ob});
+      element.set_highlight(event);
   }
 
   return false;
