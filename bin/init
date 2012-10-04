@@ -3,13 +3,12 @@
 include "inc/cli.php";
 include "$root_path/conf.php";
 
-$postgresql_contrib="/usr/share/postgresql/9.0/contrib";
+$postgresql_contrib="/usr/share/postgresql/9.1/contrib";
 $postgis_contrib="$postgresql_contrib/postgis-1.5";
 
 system("psql -d {$db['name']} -c 'create language plpgsql'");
-system("psql -d {$db['name']} -f $postgresql_contrib/_int.sql");
-system("psql -d {$db['name']} -f $postgresql_contrib/hstore.sql");
-system("psql -d {$db['name']} -f $postgresql_contrib/btree_gist.sql");
+system("psql -d {$db['name']} -c 'create extension hstore'");
+system("psql -d {$db['name']} -c 'create extension btree_gist'");
 system("psql -d {$db['name']} -f $postgis_contrib/postgis.sql");
 system("psql -d {$db['name']} -f $postgis_contrib/spatial_ref_sys.sql");
 system("psql -d {$db['name']} -f $root_path/init.sql");

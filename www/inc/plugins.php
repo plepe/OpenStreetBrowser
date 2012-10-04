@@ -59,6 +59,7 @@ function plugins_load_conf($plugin) {
 function plugins_check_dependency($plugin, &$loaded) {
   global $plugins_available;
   global $plugins_provide;
+  global $plugins;
 
   $var_active="{$plugin}_active";
   $var_depend="{$plugin}_depend";
@@ -80,7 +81,9 @@ function plugins_check_dependency($plugin, &$loaded) {
     return;
   }
 
-  foreach($$var_depend as $dep) {
+  debug("Including plugin '$plugin': Check dependencies", "plugins", D_DEBUG);
+
+  if($$var_depend) foreach($$var_depend as $dep) {
     if(isset($plugins_provide[$dep])) {
       if(sizeof($plugins_provide[$dep])==1) {
 	debug("Including plugin '$plugin': Including dependency '$dep' - choosing '{$plugins_provide[$dep][0]}' instead", "plugins", D_WARNING);
@@ -88,7 +91,7 @@ function plugins_check_dependency($plugin, &$loaded) {
       }
       else {
 	$found=false;
-	foreach($loaded as $p)
+	foreach(array_merge($loaded, $plugins) as $p)
 	  if(in_array($p, $plugins_provide[$dep]))
 	    $found=$p;
 
@@ -106,9 +109,13 @@ function plugins_check_dependency($plugin, &$loaded) {
       debug("Including plugin '$plugin': Cannot include dependency '$dep' - deactivating", "plugins", D_ERROR);
       return;
     }
+    else {
+      // dependency can be loaded by name
+    }
 
-    if(!in_array($dep, $loaded))
-      $loaded[]=$dep;
+    if(!in_array($dep, $loaded)) {
+      plugins_check_dependency($dep, &$loaded);
+    }
   }
 
   if(!in_array($plugin, $loaded))

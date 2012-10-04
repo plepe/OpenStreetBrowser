@@ -39,8 +39,8 @@ BEGIN
       'boundary_'||id,
       tags,
       min_admin_level,
-      ST_Transform(geom, 900913),
-      (select array_agg('rel_'||rel_id) from (select unnest(rel_ids) as rel_id) x)
+      (select array_agg('rel_'||rel_id) from (select unnest(rel_ids) as rel_id) x),
+      ST_Transform(geom, 900913)
     );
   
   return true;

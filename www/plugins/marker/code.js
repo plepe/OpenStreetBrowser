@@ -69,8 +69,18 @@ function marker(lon, lat) {
   this.inheritFrom();
   this.type="marker";
 
-  // finish_drag
-  this.finish_drag=function(pos) {
+  // geo
+  this.geo=function() {
+    return [this.feature];
+  }
+
+  // geo_center
+  this.geo_center=function() {
+    return [this.feature];
+  }
+
+  // next_drag
+  this.next_drag=function(pos) {
     // calculate lonlat of new position
     var lonlat=pos.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
 
@@ -78,6 +88,10 @@ function marker(lon, lat) {
       lonlat.lon=lonlat.x;
       lonlat.lat=lonlat.y;
     }
+
+    // set new coordinates
+    this.lon=lonlat.lon;
+    this.lat=lonlat.lat;
 
     // update permalink
     update_permalink();
@@ -88,9 +102,14 @@ function marker(lon, lat) {
     this.update_details();
   }
 
-  // next_drag
-  this.next_drag=function(pos) {
-    this.finish_drag(pos);
+  // finish_drag
+  this.finish_drag=function(pos) {
+    // do as if we just moved the object
+    this.next_drag(pos);
+
+    // no update id and set a new URL
+    this.id="marker_"+this.lon.toFixed(5)+","+this.lat.toFixed(5);
+    set_url({ obj: this.id });
   }
 
   // object_select
@@ -142,7 +161,6 @@ function marker(lon, lat) {
     var a=document.createElement("a");
     dom_create_append_text(a, lang("marker:action_remove"));
     a.onclick=this.remove.bind(this);
-    a.href=url();
 
     // insert to chapters
     chapters.push({
@@ -196,7 +214,7 @@ function marker(lon, lat) {
 
   this.lon=parseFloat(lon);
   this.lat=parseFloat(lat);
-  this.id="marker_"+marker_highest_id++;
+  this.id="marker_"+this.lon.toFixed(5)+","+this.lat.toFixed(5);
 
   // create the new marker
   var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
@@ -216,6 +234,12 @@ function marker(lon, lat) {
 }
 
 function marker_add(lon, lat) {
+  var id="marker_"+parseFloat(lon).toFixed(5)+","+parseFloat(lat).toFixed(5);
+
+  for(var i=0; i<marker_list.length; i++)
+    if(marker_list[i].id==id)
+      return marker_list[i];
+
   return new marker(lon, lat);
 }
 
@@ -231,6 +255,12 @@ function marker_search_object(ret, id) {
   for(var i=0; i<marker_list.length; i++) {
     if(marker_list[i].id==id)
       ret.push(marker_list[i]);
+  }
+
+  var m;
+  if((ret.length==0)&&
+     (m=id.match("^marker_(\-?[0-9]+\.[0-9]+),(\-?[0-9]+\.[0-9]+)$"))) {
+    ret.push(marker_add(m[1], m[2]));
   }
 }
 
@@ -251,7 +281,6 @@ function marker_info(chapters, ob) {
   if(ob.geo_center()&&(ob.type!="marker")) {
     var a=document.createElement("a");
     a.onclick=marker_place.bind(this, ob);
-    a.href=url();
     dom_create_append_text(a, lang("marker:place"));
 
     var entry={

@@ -32,3 +32,10 @@ BASETYPE = int4[],
 SFUNC = array_cat,
 STYPE = int4[],
 INITCOND = '{}'); 
+
+drop aggregate if exists to_array(geometry);
+CREATE AGGREGATE to_array (
+BASETYPE = geometry,
+SFUNC = array_append,
+STYPE = geometry[],
+INITCOND = '{}');

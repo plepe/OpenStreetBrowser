@@ -55,6 +55,12 @@ function db_init() {
       sql_query(file_get_contents("$plugins_dir/$plugin/functions.sql"));
     }
 
+    if((function_exists("{$plugin}_db_init"))&&
+       (!isset($plugins_db[$plugin]))) {
+      debug("Plugin '$plugin', calling db_init-function", "plugins");
+      call_user_func("{$plugin}_db_init");
+    }
+
     if(file_exists("$plugins_dir/$plugin/db.sql")) {
       // If plugin has never been loaded before, load db.sql
       if(!isset($plugins_db[$plugin])) {

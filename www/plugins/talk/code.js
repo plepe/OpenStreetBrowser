@@ -84,7 +84,6 @@ function talk(param, div) {
 
       var a=dom_create_append(li, "a");
       dom_create_append_text(a, e.version_tags.msg || lang("no_message"));
-      a.href=url();
       a.onclick=talk_show.bind(this, { page: this.page, version: e.version });
 
       dom_create_append_text(li, " (");

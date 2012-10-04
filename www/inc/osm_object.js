@@ -47,17 +47,38 @@ function osm_object(dom) {
   }
 
   // geo
-  this.geo=function() {
+  this.geo=function(callback) {
     if(this.info_features)
       return this.info_features;
 
     var geo=this.tags.get("#geo");
 
-    if(!geo)
+    // we can't answer this request? ask server and postpone for later
+    if(!geo) {
+      this.load_more_tags(["#geo"], this.answer_geo_callbacks.bind(this));
+
+      if(!this.geo_callbacks)
+	this.geo_callbacks=[];
+      this.geo_callbacks.push(callback);
+
       return;
+    }
 
     var way=new postgis(geo);
     this.info_features=way.geo();
+
+    set_feature_style(this.info_features,
+      {
+	strokeWidth: 2,
+	strokeColor: "black",
+	externalGraphic: "img/big_node.png",
+	graphicWidth: 11,
+	graphicHeight: 11,
+	graphicXOffset: -6,
+	graphicYOffset: -6,
+	fill: "none"
+      });
+    vector_layer.addFeatures(this.info_features);
 
     return this.info_features;
   }
@@ -165,39 +186,17 @@ function osm_object(dom) {
   }
 
   // info_show_real
-  this.info_show_real=function() {
-    this.geo();
+  this.answer_geo_callbacks=function() {
+    var geo=this.geo();
 
-    // if no geometric object, show nothing and return
-    if(!this.info_features) {
-      alert("object has no geometric representation");
-      return;
-    }
+    for(var i=0; i<this.geo_callbacks; i++)
+      this.geo_callbacks[i](this.geo());
 
-    set_feature_style(this.info_features,
-      {
-	strokeWidth: 2,
-	strokeColor: "black",
-	externalGraphic: "img/big_node.png",
-	graphicWidth: 11,
-	graphicHeight: 11,
-	graphicXOffset: -6,
-	graphicYOffset: -6,
-	fill: "none"
-      });
-    vector_layer.addFeatures(this.info_features);
-
-    this.geo_zoom_to();
+    delete(this.geo_callbacks);
   }
 
   // info_show
   this.info_show=function(info_ob) {
-    if(!this.tags.get("#geo")) {
-      // request from server
-      this.load_more_tags(["#geo"], this.info_show_real.bind(this));
-    }
-    else
-      this.info_show_real();
   }
 
   // info_hide

@@ -1,5 +1,6 @@
 <?
 $lang_str["start_location:name"]="Pozice mapy";
+$lang_str["start_location:options_help"]="Na jaké místo by se měla mapa po načtení stránky vycentrovat?";
 
 $lang_str["start_location:choose"]="Zvol pohled na mapu";
 $lang_str["start_location:geolocation"]="získat souřadnice";

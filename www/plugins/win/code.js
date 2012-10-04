@@ -37,6 +37,7 @@ function win(options) {
       this.onclose();
 
     this.win.parentNode.removeChild(this.win);
+    unregister_hooks_object(this);
     delete windows[this.id];
   }
 
@@ -79,6 +80,8 @@ function win(options) {
   // create window and set class(es)
   this.win=document.createElement("div");
   this.win.className="win"
+  this.win.addEventListener("DOMSubtreeModified", this.resize.bind(this));
+  register_hook("window_resize", this.resize.bind(this), this);
 
   // Add window to div win_root (create if it doesn't exist)
   if(!win_root) {
@@ -117,9 +120,40 @@ function win(options) {
   // Raise new window to top
   this.win.style.zIndex=++win_maxzindex;
 
+  this.content_offset={
+    'width': this.win.offsetWidth-this.content.clientWidth,
+    'height': this.win.offsetHeight-this.content.clientHeight
+  };
+
   this.id=uniqid();
   windows[this.id]=this;
 }
+
+  // resize
+win.prototype.resize=function() {
+    var border_margin=5;
+
+    // move window to left/up when too wide/high
+    if(this.win.offsetLeft+this.win.offsetWidth>window.innerWidth-border_margin*2)
+      this.win.style.left=(window.innerWidth-this.win.offsetWidth-border_margin*2)+"px";
+    if(this.win.offsetTop+this.win.offsetHeight>window.innerHeight-border_margin*2)
+      this.win.style.top=(window.innerHeight-this.win.offsetHeight-border_margin*2)+"px";
+    if(this.win.offsetLeft<border_margin)
+      this.win.style.left=(border_margin)+"px";
+    if(this.win.offsetTop<border_margin)
+      this.win.style.top=(border_margin)+"px";
+
+    if(!this.content)
+      return;
+    if(!this.content_offset)
+      return;
+
+    // if window is too wide/high, resize content
+    this.content.style.maxWidth=
+      (window.innerWidth-this.content_offset.width-border_margin*2)+"px";
+    this.content.style.maxHeight=
+      (window.innerHeight-this.content_offset.height-border_margin*2)+"px";
+  }
 
 function win_close(id) {
   windows[id].close();

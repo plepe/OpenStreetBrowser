@@ -27,6 +27,14 @@ $db_central=&$db; // Use the same database
 # $db_central['debug']=false;
 $db_central['master']=true; // set to false if this instance is slave database
 
+$osmosis_db=&$db;
+# $osmosis_db=array(); // OR use database on another server
+# $osmosis_db['name']="gis";
+# $osmosis_db['user']="www";
+# $osmosis_db['passwd']="PASSWORD";
+# $osmosis_db['host']="localhost";
+# $osmosis_db['debug']=false;
+
 $SRID=900913;
 
 $default_location=array('zoom'=>2, 'lat'=>28.43864, 'lon'=>18.61488);
@@ -34,6 +42,11 @@ $default_location=array('zoom'=>2, 'lat'=>28.43864, 'lon'=>18.61488);
 $type_list=array("w"=>"way", "n"=>"node", "r"=>"relation");
 $type_list_short=array("w"=>"way", "n"=>"node", "r"=>"rel");
 $type_list_plural=array("w"=>"ways", "n"=>"nodes", "r"=>"rels");
+
+// Set debug-level for error messages; the lower the more verbose
+// see inc/debug.php for possible values
+# $mcp_debug_level=0;
+# $www_debug_level=0;
 
 $wiki_stylesheet="http://wiki.openstreetmap.org/index.php?title=OpenStreetBrowser/Stylesheet&action=raw";
 $wiki_img="http://wiki.openstreetmap.org/wiki/Image:";

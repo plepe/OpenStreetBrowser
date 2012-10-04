@@ -4,7 +4,6 @@
    <Stylesheet src="roads.mss" />
    <Stylesheet src="land.mss" />
    <Stylesheet src="road_features.mss" />
-   <Stylesheet src="amenities.mss" />
    <Stylesheet src="rot_feature.mss" />
    <Stylesheet src="buildings.mss" />
    <Stylesheet src="boundaries.mss" />

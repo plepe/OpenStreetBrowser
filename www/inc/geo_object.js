@@ -13,7 +13,10 @@
 //
 // the following functions should be provided:
 //  .name() - Returning the name of the object in data_lang
-//  .geo()         - a function returning an array of OpenLayers features
+//  .geo(callback) - a function returning an array of OpenLayers features
+//                   or, if geometry is not available yet, should call the
+//                   callback later and pass the Array of OpenLayers features
+//                   as first parameter.
 //  .geo_center()  - a function returning an array of OpenLayers features
 //
 // if the object is a kind of relations it can have members:

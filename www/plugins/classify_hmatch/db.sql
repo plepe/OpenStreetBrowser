@@ -5,7 +5,7 @@ create table classify_hmatch (
   key_exists	text		null,
   result	hstore		null,
   importance	int		not null default 0,
-  type_match	hstore		not null default ''::hstore,
+  type_match	hstore		not null default ''::hstore
 );
 
 create index classify_hmatch_idx on classify_hmatch using btree("type");

@@ -1,3 +1,3 @@
 <?
 $hooks_active=true;
-$hooks_depend=array();
+$hooks_depend=array("db");
