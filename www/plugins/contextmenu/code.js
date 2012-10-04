@@ -15,11 +15,8 @@ function contextmenu_rightclick(e) {
     var posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
   }
 
-  var map_div=document.getElementById("map");
-  var offsetx = map_div.offsetLeft;
-  var offsety = map_div.offsetTop;
-
-  contextmenu_pos=map.getLonLatFromPixel(new OpenLayers.Pixel(posx-offsetx, posy-offsety)).transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+  var pos=map.getLonLatFromPixel(e.xy);
+  contextmenu_pos=pos.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
 
   var contextmenu=document.getElementById("contextmenu");
   contextmenu_compile();
