@@ -157,15 +157,13 @@ foreach($menu_list as $entry) {
 
 <div class="shadow"></div>
 <div id="licence"><?=lang("main:licence")?></div>
-<?
-call_hooks("html_done", null);
-?>
 <div class="permalink"><a href="" id="permalink" onclick="var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection('EPSG:4326'));"><?=lang("main:permalink")?></a></div>
 
 </div> <!-- #map -->
 </div> <!-- #map_container -->
 </div> <!-- #content -->
 <?
+call_hooks("html_done", null);
 call_hooks("html_end", null);
 ?>
 </body>
