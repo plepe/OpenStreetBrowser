@@ -1,14 +1,45 @@
 var touchscreen_present=false;
 var touchscreen_enabled=false;
 var touchscreen_last_touched_link;
+var touchscreen_debug_input;
 var touchscreen_css;
+
+function touchscreen_debug_init() {
+  if(debug_toolbox_register) {
+    var dom=document.createElement("div");
+
+    touchscreen_debug_input=dom_create_append(dom, "input");
+    var input=touchscreen_debug_input;
+    input.type="checkbox";
+    input.id="input_debug_toolbox_touchscreen";
+    input.onchange=touchscreen_debug_toggle.bind(this, input);
+
+    var label=dom_create_append(dom, "label");
+    label.setAttribute("for", "input_debug_toolbox_touchscreen");
+    dom_create_append_text(label, lang("touchscreen:debug_name"));
+
+    debug_toolbox_register({
+      weight: 0,
+      dom: dom
+    });
+  }
+}
+
+function touchscreen_debug_toggle() {
+  if(touchscreen_enabled)
+    touchscreen_disable();
+  else
+    touchscreen_enable();
+}
 
 function touchscreen_disable() {
   touchscreen_enabled=false;
 
   unregister_hooks_object("touchscreen");
 
-  touchscreen_css.parentNode.removeChild(touchscreen_css);
+  // uncheck input in debug
+  if(touchscreen_debug_input)
+    touchscreen_debug_input.checked=false;
 }
 
 function touchscreen_enable() {
@@ -23,10 +54,16 @@ function touchscreen_enable() {
   touchscreen_css.type="text/css";
   touchscreen_css.href="plugins/touchscreen/touchscreen.css";
   document.head.appendChild(touchscreen_css);
+
+  // check input in debug
+  if(touchscreen_debug_input)
+    touchscreen_debug_input.checked=true;
 }
 
 function touchscreen_init() {
   touchscreen_present='ontouchstart' in document.documentElement;
+
+  touchscreen_debug_init();
 
   if(touchscreen_present)
     touchscreen_enable();
