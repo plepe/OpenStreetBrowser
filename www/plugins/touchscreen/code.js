@@ -37,9 +37,45 @@ function touchscreen_disable() {
 
   unregister_hooks_object("touchscreen");
 
+  // disable click control
+  touchscreen_click_control.deactivate();
+  map.removeControl(touchscreen_click_control);
+
   // uncheck input in debug
   if(touchscreen_debug_input)
     touchscreen_debug_input.checked=false;
+}
+
+// Thanks to http://lists.osgeo.org/pipermail/openlayers-users/2011-July/021544.html
+function touchscreen_create_click_control() {
+  OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
+   defaultHandlerOptions: {
+     'single': true,
+     'double': false,
+     'pixelTolerance': 0,
+     'stopSingle': false,
+     'stopDouble': false
+   },
+
+   initialize: function(options) {
+     this.handlerOptions = OpenLayers.Util.extend(
+       {}, this.defaultHandlerOptions
+     );
+     OpenLayers.Control.prototype.initialize.apply(
+       this, arguments
+     );
+     this.handler = new OpenLayers.Handler.Click(
+       this, {
+         'click': view_click
+       }, this.handlerOptions
+     );
+   }
+  });
+
+  touchscreen_click_control= new OpenLayers.Control.Click();
+
+  map.addControl(touchscreen_click_control);
+  touchscreen_click_control.activate();
 }
 
 function touchscreen_enable() {
@@ -54,6 +90,10 @@ function touchscreen_enable() {
   touchscreen_css.type="text/css";
   touchscreen_css.href="plugins/touchscreen/touchscreen.css";
   document.head.appendChild(touchscreen_css);
+
+  // create click handler (as normal click event does not work
+  // on touch screens)
+  touchscreen_create_click_control();
 
   // check input in debug
   if(touchscreen_debug_input)
