@@ -69,7 +69,7 @@ function touchscreen_init() {
     touchscreen_enable();
 }
 
-function touchscreen_uncatch_link() {
+function touchscreen_uncatch_link(event) {
   if(!touchscreen_last_touched_link)
     return;
 
@@ -85,19 +85,16 @@ function touchscreen_uncatch_link() {
 
   ob.onclick=touchscreen_catch_link;
 
-  // unset highlight
-  var element;
-  if(element=ob.parentNode.element) {
-    if(element.unset_highlight)
-      element.unset_highlight({target:ob});
-  }
+  // call original onmouseout event
+  if(ob.onmouseout_touchscreen)
+    ob.onmouseout_touchscreen(event);
 }
 
 function touchscreen_catch_link(e) {
   var event=e?e:event;
 
   // first 'un'-catch old link
-  touchscreen_uncatch_link();
+  touchscreen_uncatch_link(event);
 
   // store currently clicked link
   var ob=event.target;
@@ -114,12 +111,9 @@ function touchscreen_catch_link(e) {
   // add css class 'selected'
   add_css_class(ob, "selected");
 
-  // show highlight (if available)
-  var element;
-  if(element=ob.parentNode.element) {
-    if(element.set_highlight)
-      element.set_highlight(event);
-  }
+  // call original onmouseover event
+  if(ob.onmouseover_touchscreen)
+    ob.onmouseover_touchscreen(event);
 
   return false;
 }
@@ -137,7 +131,9 @@ function touchscreen_mangle_list_links(list, node) {
     ob.onclick=touchscreen_catch_link;
 
     // remove onmouse-events
+    ob.onmouseover_touchscreen=ob.onmouseover;
     ob.onmouseover=null;
+    ob.onmouseout_touchscreen=ob.onmouseout;
     ob.onmouseout=null;
   }
 }
