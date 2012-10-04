@@ -1,8 +1,35 @@
-var touchscreen_enabled;
+var touchscreen_present=false;
+var touchscreen_enabled=false;
 var touchscreen_last_touched_link;
+var touchscreen_css;
+
+function touchscreen_disable() {
+  touchscreen_enabled=false;
+
+  unregister_hooks_object("touchscreen");
+
+  touchscreen_css.parentNode.removeChild(touchscreen_css);
+}
+
+function touchscreen_enable() {
+  touchscreen_enabled=true;
+
+  // activate mangling links of lists
+  register_hook("list_shown", touchscreen_mangle_list_links, "touchscreen");
+
+  // load additional css file
+  touchscreen_css=document.createElement("link");
+  touchscreen_css.rel="stylesheet";
+  touchscreen_css.type="text/css";
+  touchscreen_css.href="plugins/touchscreen/touchscreen.css";
+  document.head.appendChild(touchscreen_css);
+}
 
 function touchscreen_init() {
-  touchscreen_enabled='ontouchstart' in document.documentElement;
+  touchscreen_present='ontouchstart' in document.documentElement;
+
+  if(touchscreen_present)
+    touchscreen_enable();
 }
 
 function touchscreen_uncatch_link() {
@@ -77,4 +104,3 @@ function touchscreen_mangle_list_links(list, node) {
 }
 
 register_hook("init", touchscreen_init);
-register_hook("list_shown", touchscreen_mangle_list_links);
