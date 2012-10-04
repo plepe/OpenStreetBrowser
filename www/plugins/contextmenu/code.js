@@ -14,6 +14,21 @@ function contextmenu_rightclick(e) {
     var posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
     var posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
   }
+  else {
+    // calculate positions from map click
+    var posx = e.xy.x;
+    var posy = e.xy.y;
+
+    var ob=e.target;
+    while(ob) {
+      if(typeof ob.offsetLeft=="number") {
+	posx+=ob.offsetLeft;
+	posy+=ob.offsetTop;
+      }
+
+      ob=ob.parentNode;
+    }
+  }
 
   var pos=map.getLonLatFromPixel(e.xy);
   contextmenu_pos=pos.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
