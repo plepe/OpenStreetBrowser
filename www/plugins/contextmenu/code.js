@@ -35,7 +35,6 @@ function contextmenu_rightclick(e) {
 
   var contextmenu=document.getElementById("contextmenu");
   contextmenu_compile();
-  contextmenu.style.display="block";
 
   var contextWidth = contextmenu.offsetWidth;
   var contextHeight = contextmenu.offsetHeight;
@@ -65,8 +64,10 @@ function contextmenu_rightclick(e) {
     contextmenu_pointer.style.top="-2px";
     contextmenu_pointer.style.bottom="";
   }
+
   contextmenu.style.top=posy+"px";
   contextmenu.style.left=posx+"px";
+  contextmenu.style.display="block";
 }
 
 function contextmenu_mouseout(e) {
