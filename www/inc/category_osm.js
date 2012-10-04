@@ -79,6 +79,8 @@ function category_osm(id, param) {
 	call_hooks("category_show_match", this, match_ob);
 	match_ob.write_list(ul);
       }
+
+      call_hooks("list_shown", this, ul);
     }
 
     dom_clean(div.more);

@@ -49,6 +49,7 @@ function list(div, elements, request_more, options) {
   this.show_element=function(element) {
     var li=dom_create_append(this.ul, "li");
     li.className="list";
+    li.element=element;
 
     // icon
     if(element.icon) {
@@ -122,6 +123,8 @@ function list(div, elements, request_more, options) {
       if(more)
         this.recv(more);
     }
+
+    call_hooks("list_shown", this, this.ul);
   }
 
   // set_highlight
