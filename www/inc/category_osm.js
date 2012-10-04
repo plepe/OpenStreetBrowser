@@ -101,6 +101,8 @@ function category_osm(id, param) {
   // show_more - load more data from server
   this.show_more=function() {
     this.request_data(true);
+
+    return false;
   }
 
   // request_data - load new data from server

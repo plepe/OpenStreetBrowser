@@ -91,6 +91,8 @@ function list(div, elements, request_more, options) {
   this.more=function() {
     this.should_shown+=this.options.show_count;
     this.show();
+
+    return false;
   }
 
   // show
