@@ -1,0 +1,7 @@
+li a:hover {
+  background-color: #efefef;
+}
+li a.selected,
+li a.selected:hover {
+  background-color: #ccc;
+}
