@@ -25,6 +25,14 @@ function screen_adapt_resize() {
       map.addControl(screen_adapt_map_controls.zoom);
     }
   }
+
+  var sidebar_height=document.getElementById("sidebar_container").offsetHeight;
+  if(sidebar_height<300) {
+    if(toolbox_manager&&toolbox_manager.current_active) {
+      toolbox_manager.toolboxes[toolbox_manager.current_active].deactivate();
+    }
+
+  }
 }
 
 function screen_adapt_hide_menu() {
