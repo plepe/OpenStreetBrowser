@@ -29,7 +29,10 @@ function screen_adapt_resize() {
   var sidebar_height=document.getElementById("sidebar_container").offsetHeight;
   if(sidebar_height<300) {
     if(toolbox_manager&&toolbox_manager.current_active) {
-      toolbox_manager.toolboxes[toolbox_manager.current_active].deactivate();
+      // if activation was forced, keep
+      if(!toolbox_manager.current_force) {
+	toolbox_manager.toolboxes[toolbox_manager.current_active].deactivate();
+      }
     }
 
   }
