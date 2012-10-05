@@ -94,8 +94,9 @@ function toolbox_init() {
 }
 
 function toolbox_window_resize() {
-  var max_size=document.getElementById("toolbox_container").offsetHeight+
-               document.getElementById("details").offsetHeight;
+  var max_size=
+    document.getElementById("menu").offsetTop-
+    document.getElementById("toolbox_container").offsetTop;
 
   dom_clean(toolbox_css);
   dom_create_append_text(toolbox_css, "div.toolbox_active { max-height: "+
