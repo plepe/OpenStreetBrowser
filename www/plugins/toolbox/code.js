@@ -11,6 +11,9 @@ var toolbox_css;
 //   weight: order of icons (-10 left ... +10 right)
 function toolbox(options) {
   // activate
+  // force:
+  // null/0/false: don't force activation (e.g. activated by default)
+  // 1/true: force activation
   this.activate=function(force) {
     if(this.manager) {
       this.manager.activate_toolbox(this,force);

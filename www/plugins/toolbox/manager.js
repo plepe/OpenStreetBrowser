@@ -40,6 +40,8 @@ function _toolbox_manager() {
       return;
     }
 
+    this.current_force=force;
+
     this.current_active=index;
     this.toolboxes[index].notify_activate();
     this.toolboxes[index].button.className="toolboxbutton_active";
