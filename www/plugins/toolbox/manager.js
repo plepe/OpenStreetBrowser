@@ -31,7 +31,7 @@ function _toolbox_manager() {
     if(this.current_active>-1) {
       this.toolboxes[this.current_active].notify_deactivate();
       this.toolboxes[this.current_active].button.className="toolboxbutton";
-      this.toolboxes[this.current_active].content.className="toolbox";
+      this.toolboxes[this.current_active].content_container.className="toolbox";
     }
 
     if((force!=1)&&((this.current_active==index)||(index==-1))) {
@@ -43,7 +43,7 @@ function _toolbox_manager() {
     this.current_active=index;
     this.toolboxes[index].notify_activate();
     this.toolboxes[index].button.className="toolboxbutton_active";
-    this.toolboxes[index].content.className="toolbox_active";
+    this.toolboxes[index].content_container.className="toolbox_active";
     this.resize_toolbox();
   }
 
@@ -60,7 +60,7 @@ function _toolbox_manager() {
     for(var i=0; i<this.toolboxes.length; i++) {
       var tb=this.toolboxes[i];
       tb.button.onclick=this.activate_toolbox.bind(this, i);
-      toolbox_divs.appendChild(tb.content);
+      toolbox_divs.appendChild(tb.content_container);
     }
 
     var sorttds=[];

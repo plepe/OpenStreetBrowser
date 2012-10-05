@@ -63,8 +63,11 @@ function toolbox(options) {
 
   // constructor
   this.options=options;
+  this.content_container=document.createElement("div");
+  this.content_container.className="toolbox";
   this.content=document.createElement("div");
-  this.content.className="toolbox";
+  this.content.className="toolbox_content";
+  this.content_container.appendChild(this.content);
   this.button=document.createElement("td");
   this.button.className="toolboxbutton";
   this.show_icon();
