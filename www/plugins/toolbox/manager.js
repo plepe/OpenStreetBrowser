@@ -82,6 +82,14 @@ function _toolbox_manager() {
   this.current_active=-1;
 }
 
+// return current toolbox or null
+_toolbox_manager.prototype.current_toolbox=function() {
+    if(this.current_active==-1)
+      return null;
+
+    return this.toolboxes[this.current_active];
+  }
+
 var toolbox_manager=new _toolbox_manager();
 
 function register_toolbox(toolbox) {
