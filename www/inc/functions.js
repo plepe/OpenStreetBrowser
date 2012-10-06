@@ -67,6 +67,18 @@ function string_to_hash(str) {
   return ret;
 }
 
+// filters all included keys from a hash
+// e.g. hash_filter({ a: 1, b: 2, c: 3 }, [ 'a', 'b', 'd' ]) -> { a: 1, b: 2 }
+function hash_filter(hash, include) {
+  var ret={};
+
+  for(var i=0; i<include.length; i++)
+    if(hash[include[i]])
+      ret[include[i]]=hash[include[i]];
+
+  return ret;
+}
+
 // array_unfold ... removes depth of convoluted arrays
 function array_unfold(arr) {
   arr=arr.concat([]);

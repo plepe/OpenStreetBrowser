@@ -46,8 +46,14 @@ function start_location_start(start_value) {
       break;
     case "lastview":
     default:
-      if(lastview)
-	set_location(lastview);
+      if(lastview) {
+	var lastview_obj=string_to_hash(lastview);
+
+	var params=hash_filter(lastview_obj,
+	  [ 'lat', 'lon', 'zoom', 'mlat', 'mlon', 'basemap' ]);
+
+	set_location(hash_to_string(params));
+      }
       break;
   }
 }
