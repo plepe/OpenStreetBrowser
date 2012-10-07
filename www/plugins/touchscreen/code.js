@@ -78,11 +78,16 @@ function touchscreen_create_click_control() {
   touchscreen_click_control.activate();
 }
 
+function touchscreen_contextmenu_shown() {
+  contextmenu_timer=window.setTimeout("contextmenu_hide()", 3000);
+}
+
 function touchscreen_enable() {
   touchscreen_enabled=true;
 
   // activate mangling links of lists
   register_hook("list_shown", touchscreen_mangle_list_links, "touchscreen");
+  register_hook("contextmenu_shown", touchscreen_contextmenu_shown, "touchscreen");
 
   // load additional css file
   touchscreen_css=document.createElement("link");

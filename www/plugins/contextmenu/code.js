@@ -68,6 +68,8 @@ function contextmenu_rightclick(e) {
   contextmenu.style.top=posy+"px";
   contextmenu.style.left=posx+"px";
   contextmenu.style.display="block";
+
+  call_hooks("contextmenu_shown", contextmenu_pos);
 }
 
 function contextmenu_mouseout(e) {
@@ -82,7 +84,7 @@ function contextmenu_mouseout(e) {
   }
 
   if (nu) {
-    contextmenu_timer=window.setTimeout("document.getElementById('contextmenu').style.display='none'",500);
+    contextmenu_timer=window.setTimeout("contextmenu_hide()",500);
   }
 }
 
