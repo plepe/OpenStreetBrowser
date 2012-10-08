@@ -1,6 +1,5 @@
 var gps_follow_active=false;
 var gps_follow_input;
-var gps_follow_checking=false;
 //var gps_follow_vector;
 
 // returns a polygon covering a part of the available screen space
@@ -25,9 +24,6 @@ function gps_follow_polygon(size) {
 }
 
 function gps_follow_view_changed() {
-  if(gps_follow_checking)
-    return;
-
   var pos=gps_object.get_pos();
   if(!pos) {
     gps_follow_active=false;
@@ -64,8 +60,6 @@ function gps_follow_update(ob) {
     pos=new OpenLayers.LonLat(pos.lon, pos.lat);
     pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 
-    gps_follow_checking=true;
-
     var ppos=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
     // when loading map for the first time center on and zoom to location
     if(first_load) {
@@ -77,8 +71,6 @@ function gps_follow_update(ob) {
     else if(!gps_follow_polygon().containsPoint(ppos)) {
       map.panTo(pos);
     }
-
-    gps_follow_checking=false;
   }
 }
 
