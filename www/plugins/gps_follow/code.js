@@ -33,11 +33,16 @@ function gps_follow_view_changed() {
     return;
   }
 
+  // check if we want to follow gps
+  if((!gps_follow_active)&&(!json_decode(options_get("gps_follow"))))
+    return;
+
   // build a copy of pos (to not modify reference)
   var pos=new OpenLayers.LonLat(pos.lon, pos.lat);
   pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
   pos=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
 
+  // if position is inside polygon, re-activate following if it was temp. disabled
   if(gps_follow_polygon('full').containsPoint(pos)) {
     if(!gps_follow_active) {
       gps_follow_active=true;
@@ -45,6 +50,7 @@ function gps_follow_view_changed() {
 	gps_follow_input.checked=true;
     }
   }
+  // if position is outside polygon, deactivate temporarily
   else {
     gps_follow_active=false;
     if(gps_follow_input)
