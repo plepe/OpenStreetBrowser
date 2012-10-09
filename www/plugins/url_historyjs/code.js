@@ -169,9 +169,18 @@ function url(params, full) {
   return base+ret;
 }
 
-function set_url(params) {
+function set_url(params, push_state) {
+  if(!params)
+    params={};
+  if(!params.obj)
+    params.obj=".";
+
   var loc=url(params);
-  window.History.replaceState(null, null, loc);
+
+  if(push_state)
+    window.History.pushState(null, null, loc);
+  else
+    window.History.replaceState(null, null, loc);
 }
 
 register_hook("post_init", url_historyhs_init);
