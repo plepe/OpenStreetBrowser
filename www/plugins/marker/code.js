@@ -122,6 +122,9 @@ function marker(lon, lat) {
 
   // object_unselect
   this.object_unselect=function(pos) {
+    if(this.removed)
+      return;
+
     this.feature.style=marker_style;
     drag_layer.drawFeature(this.feature);
   }
@@ -199,6 +202,8 @@ function marker(lon, lat) {
     }
     drag_layer.unselect(this.feature);
     drag_layer.removeFeatures([this.feature]);
+    this.removed=true;
+    set_url({}, true);
     update_permalink();
     redraw();
 
