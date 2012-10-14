@@ -1,0 +1,2 @@
+<?
+$name="Right Bar";

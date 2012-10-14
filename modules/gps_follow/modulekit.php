@@ -1,0 +1,2 @@
+<?
+$depend=array("gps", "jquery");

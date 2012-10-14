@@ -1,0 +1,2 @@
+<?
+$name="Layer Chooser";

@@ -1,0 +1,2 @@
+<?
+$name="Render Daemon";

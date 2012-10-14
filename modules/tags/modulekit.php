@@ -1,0 +1,2 @@
+<?
+$uses=array("db");
