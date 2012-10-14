@@ -5,16 +5,30 @@ $name="OpenStreetBrowser";
 $id="openstreetbrowser";
 
 // these modules should be loaded first
-$depend=array("form", "lang");
+$depend=array("hooks");
 
-// these files will be included in this order:
-$include=array();
-$include['php']=array(
-  "inc/*.php",
+// include these files from modules:
+$default_include=array(
+  'php'=>array(
+    "code.php",
+  ),
+  'js'=>array(
+    "code.js",
+  ),
+  'css'=>array(
+    "style.css",
+  ),
 );
-$include['js']=array(
-  "inc/*.js",
-);
-$include['css']=array(
-  "inc/*.css",
+
+// these files will be included from base:
+$include=array(
+  'php'=>array(
+    "inc/*.php",
+  ),
+  'js'=>array(
+    "inc/*.js",
+  ),
+  'css'=>array(
+    "inc/*.css",
+  ),
 );

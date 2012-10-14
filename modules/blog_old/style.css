@@ -1,0 +1,16 @@
+div.blog_win {
+  width: 500px;
+}
+div.blog_content {
+  height: 200px;
+  overflow: auto;
+  padding: 3px;
+}
+h2.blog {
+  text-decoration: underline;
+  font-weight: bold;
+}
+div.blog_win input {
+  margin: 3px;
+  margin-top: 2px;
+}

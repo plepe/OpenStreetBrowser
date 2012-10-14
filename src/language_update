@@ -1,0 +1,10 @@
+#!/bin/bash
+git branch -d language-update
+
+git fetch osm@faye.openstreetbrowser.org:osb/data/translation
+git branch language-update FETCH_HEAD
+
+echo "Check renamend/removed language strings:"
+git log -p language-update..HEAD lang/en.php lang/*_en.php plugins/*/lang_en.php
+
+echo "now you can merge updates with 'git merge language-update'"
