@@ -4,11 +4,12 @@ function right_bar() {
 <div id='right_bar'>
 <!-- close button -->
 <div id='right_bar_hide'>
-<a href='javascript:right_bar_hide()'><img src='plugins/right_bar/close_dark.png' alt='X'></a>
+<a href='javascript:right_bar_hide()'><img src='<?=modulekit_file("right_bar", "close_dark.png")?>' alt='X'></a>
 </div>
 
 <?
   $content=array();
+  $paypal_url=modulekit_file("right_bar", "paypal_logo.png");
   $content[]=array(-5, "<h1>".lang("main:donate")."</h1>".
 <<<EOD
 <!-- FLATTR -->
@@ -27,13 +28,14 @@ function right_bar() {
 /* ]]> */
 </script>
 <!-- PAYPAL -->
-<a href='javascript:time_count_do_beg()' title='Donate via PayPal'><img src='plugins/right_bar/paypal_logo.png' alt='Donate via PayPal'></a>
+<a href='javascript:time_count_do_beg()' title='Donate via PayPal'><img src='$paypal_url' alt='Donate via PayPal'></a>
 EOD
   );
 
+  $url=modulekit_file("right_bar", "twitter.html");
   $content[]=array(5, <<<EOD
 <!-- TWITTERWALL -->
-<iframe id='twitter' src='plugins/right_bar/twitter.html'></iframe>
+<iframe id='twitter' src='$url'></iframe>
 <!-- END -->
 EOD
   );

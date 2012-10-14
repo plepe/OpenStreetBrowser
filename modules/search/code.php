@@ -59,7 +59,7 @@ function search_menu_show($list) {
     "<div id='search' class='search' style='position:absolute; top:143px;'>\n".
     "<form name='osb_search_form_name' id='osb_search_form' action='javascript:search()'>\n".
     "<input name='osb_search' id='search' style='border-color:#999999;' value='".lang('search_field')."' onFocus='search_focus(this)' onkeyup='search_brush(this,event)' onblur='search_onblur(this)' 'title='".lang('search_tip')."'/>\n".
-    "<img name='brush' src='plugins/search/brush.png' border='0' alt='' title='".lang('search_clear')."' style='position:absolute; right:3px; top:6px; visibility:hidden; cursor:pointer;' onclick='search_clear(document.osb_search_form_name.osb_search)' onmousedown='if (event.preventDefault) event.preventDefault()'>\n".
+    "<img name='brush' src='".modulekit_file("search", "brush.png")."' border='0' alt='' title='".lang('search_clear')."' style='position:absolute; right:3px; top:6px; visibility:hidden; cursor:pointer;' onclick='search_clear(document.osb_search_form_name.osb_search)' onmousedown='if (event.preventDefault) event.preventDefault()'>\n".
     "</form></div>\n");
 }
 

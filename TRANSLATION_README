@@ -4,13 +4,9 @@ note the following points:
 1. All language strings are defined in the following files, where XX is
   the abbreviation of the language (e.g. "en" for English, "en-gb" for
   British English):
-  - www/lang/XX.php
-  - www/lang/tags_XX.php
-  - www/plugins/*/lang_XX.php
-
-  There are still files www/lang/XX.js, but these should be removed soon
-  and replaced by entries in the XX.php, as all strings will be exported
-  to the JavaScript code.
+  - lang/XX.php
+  - lang/tags_XX.php
+  - modules/*/lang_XX.php
 
   Before reading the localized language file the English file will be
   read, therefore if a string is not defined in your language its
@@ -66,7 +62,7 @@ note the following points:
   There might also be more tag types soon and a way to format the output
   (e.g. "100.000 m" or "2010-12-24").
 
-4. Add your language to www/lang/list.php
+4. Add your language to lang/list.php
 
 5. You can check the state of the translation using the page
   http://ROOT_PATH/scripts/check_lang.php (e.g.
