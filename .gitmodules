@@ -1,0 +1,3 @@
+[submodule "modulekit"]
+	path = modulekit
+	url = https://github.com/plepe/modulekit.git
