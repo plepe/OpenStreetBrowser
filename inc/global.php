@@ -25,27 +25,6 @@ function print_add_html_headers() {
 }
 
 $export_vars_todo=array();
-$dir=opendir("inc/");
-while($r=readdir($dir)) {
-  unset($ext);
-  if(substr($r, 0, 1)!=".") {
-    $ext=substr($r, strrpos($r, ".")+1);
-  }
-
-  switch($ext) {
-    case "php":
-      require_once "inc/$r";
-      break;
-    case "js":
-      if(!in_array($r, array("hooks.js", "lang.js")))
-	add_html_header("<script type='text/javascript' src='inc/$r{$version_string}'></script>");
-      break;
-    case "css":
-      add_html_header("<link rel='stylesheet' type='text/css' href=\"inc/$r{$version_string}\">");
-  }
-}
-closedir($dir);
-unset($dir);
 
 function html_var_to_js($v) {
   if(!isset($v))
@@ -147,6 +126,5 @@ function real_export() {
   $export_vars_todo=array();
 }
 
-plugins_init();
 lang_init();
 register_hook("html_done", "real_export");

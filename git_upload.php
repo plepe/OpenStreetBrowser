@@ -1,7 +1,9 @@
 <?
 $design_hidden=1;
-include_once "../conf.php";
-include_once "inc/global.php";
+?>
+<?php include "conf.php"; /* load a local configuration */ ?>
+<?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
+<?
 user_check_auth();
 call_hooks("ajax_start");
 
