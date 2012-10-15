@@ -5,7 +5,7 @@ $name="OpenStreetBrowser";
 $id="openstreetbrowser";
 
 // these modules should be loaded first
-$depend=array("hooks");
+$depend=array("hooks", "lang");
 
 // include these files from modules:
 $default_include=array(
