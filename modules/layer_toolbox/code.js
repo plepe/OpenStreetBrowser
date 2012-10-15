@@ -3,7 +3,7 @@ var layer_toolbox;
 function layer_toolbox_class(options) {
   if(!options)
     options={};
-  options.icon="plugins/layer_toolbox/icon.png";
+  options.icon=modulekit_file("layer_toolbox", "icon.png");
   options.icon_title=lang("layer_toolbox:name");
   options.weight=5;
 

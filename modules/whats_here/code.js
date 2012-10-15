@@ -1,5 +1,5 @@
 var whats_here_style={
-    externalGraphic: 'plugins/whats_here/whats_here.png',
+    externalGraphic: modulekit_file("whats_here", "whats_here.png"),
     graphicWidth: 19,
     graphicHeight: 19,
     graphicXOffset: -10,
@@ -112,7 +112,7 @@ function whats_here_contextmenu(pos) {
 
 function whats_here_init() {
   if(plugins_loaded("contextmenu")) {
-    contextmenu_add("plugins/whats_here/icon.png", lang("whats_here:contextmenu"), whats_here_contextmenu, { weight: -10 });
+    contextmenu_add(modulekit_file("whats_here", "icon.png"), lang("whats_here:contextmenu"), whats_here_contextmenu, { weight: -10 });
   }
 }
 

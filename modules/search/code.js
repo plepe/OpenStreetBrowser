@@ -14,7 +14,7 @@ function search_keyshort() {
 
 function search_init() {
   search_toolbox=new toolbox({
-    icon: "plugins/search/icon.png",
+    icon: modulekit_file("search", "icon.png"),
     icon_title: lang("search:name"),
     callback_activate: search_toolbox_activate,
     callback_deactivate: search_toolbox_deactivate,
@@ -44,7 +44,7 @@ function search_init() {
 
   var img=dom_create_append(search_form, "img");
   img.name="brush";
-  img.src="plugins/search/brush.png";
+  img.src=modulekit_file("search", "brush.png");
   img.title=lang("search:clear");
   img.id="brush";
   img.className="invisible";

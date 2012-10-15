@@ -3,7 +3,7 @@ var gps_toolbox;
 function gps_toolbox_class(options) {
   if(!options)
     options={};
-  options.icon="plugins/gps_toolbox/icon.png";
+  options.icon=modulekit_file("gps_toolbox", "icon.png");
   options.icon_title=lang("gps_toolbox:name");
   options.weight=5;
 

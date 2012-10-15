@@ -17,7 +17,7 @@ gps.prototype.update=function(lonlat) {
   pos.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
   var geo_point=new OpenLayers.Geometry.Point(pos.lon, pos.lat);
   this.vector=new OpenLayers.Feature.Vector(geo_point, 0, {
-    externalGraphic: "plugins/gps/icon.png",
+    externalGraphic: modulekit_file("gps", "icon.png"),
     graphicWidth: 25,
     graphicHeight: 25,
     graphicXOffset: -13,

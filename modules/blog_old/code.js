@@ -102,7 +102,7 @@ function blog_show_startup(data) {
 }
 
 function blog_show_menu(data) {
-  ajax_direct("plugins/blog/rss.php", null, blog_show_menu_next);
+  ajax_direct(modulekit_file("blog", "rss.php"), null, blog_show_menu_next);
   blog_create_win();
 }
 
@@ -114,7 +114,7 @@ function blog_show_menu_next(data) {
 }
 
 function blog_init() {
-  ajax_direct("plugins/blog/rss.php", null, blog_show_startup);
+  ajax_direct(modulekit_file("blog", "rss.php"), null, blog_show_startup);
 }
 
 register_hook("init", blog_init);

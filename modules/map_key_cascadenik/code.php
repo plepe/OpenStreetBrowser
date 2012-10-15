@@ -168,11 +168,11 @@ class map_key_cascadenik extends map_key_entry {
         $param=implode("&", $p);
 
 	if($geom["poly"])
-	  $ret.="<div><embed width='30' height='12' type='image/svg+xml' src='plugins/map_key/symbol_polygon.php?$param' /></div>";
+	  $ret.="<div><embed width='30' height='12' type='image/svg+xml' src='".modulekit_file("map_key", "symbol_polygon.php?$param")."' /></div>";
 	elseif($geom["line"])
-	  $ret.="<div><embed width='30' height='12' type='image/svg+xml' src='plugins/map_key/symbol_line.php?$param' /></div>";
+	  $ret.="<div><embed width='30' height='12' type='image/svg+xml' src='".modulekit_file("map_key", "symbol_line.php?$param")."' /></div>";
 	elseif($geom["point"])
-	  $ret.="<div><embed width='30' height='30' type='image/svg+xml' src='plugins/map_key/symbol_point.php?$param' /></div>";
+	  $ret.="<div><embed width='30' height='30' type='image/svg+xml' src='".modulekit_file("map_key", "symbol_point.php?$param")."' /></div>";
         $ret.="</td><td>\n";
 
         // Compile name
@@ -253,7 +253,7 @@ function load_classes($file, $bounds) {
   if(!$class_info)
     $class_info=array();
 
-  $f=fopen("$root_path/www/plugins/basemap/$file.mss", "r");
+  $f=fopen(modulekit_file("basemap", "$file.mss", true), "r");
   $this_style_query=array();
   $mode=0;
 

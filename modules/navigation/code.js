@@ -9,21 +9,21 @@ var navigation_toolbox;
 var navigation_current_route=new navigation_route();
 
 var home_style={
-    externalGraphic: 'plugins/navigation/home.png',
+    externalGraphic: modulekit_file("navigation", "home.png"),
     graphicWidth: 26,
     graphicHeight: 22,
     graphicXOffset: -13,
     graphicYOffset: -22
   };
 var via_style={
-    externalGraphic: 'plugins/navigation/via.png',
+    externalGraphic: modulekit_file("navigation", "via.png"),
     graphicWidth: 25,
     graphicHeight: 22,
     graphicXOffset: -16,
     graphicYOffset: -22
   };
 var destination_style={
-    externalGraphic: 'plugins/navigation/destination.png',
+    externalGraphic: modulekit_file("navigation", "destination.png"),
     graphicWidth: 23,
     graphicHeight: 23,
     graphicXOffset: -4,
@@ -530,7 +530,7 @@ function navigation_toolboxtext() {
   td.className="icon";
   td.rowSpan=2;
   var img=dom_create_append(td, "img");
-  img.src="plugins/navigation/icon_home.png";
+  img.src=modulekit_file("navigation", "icon_home.png");
 
   var td=dom_create_append(tr, "td");
   td.rowSpan=2;
@@ -546,7 +546,7 @@ function navigation_toolboxtext() {
   td.className="remove";
 
   var img=dom_create_append(td, "img");
-  img.src="plugins/navigation/remove.png";
+  img.src=modulekit_file("navigation", "remove.png");
   img.onclick=navigation_remove_points.bind(this, "home");
 
   var td=dom_create_append(tr, "td");
@@ -558,7 +558,7 @@ function navigation_toolboxtext() {
   td.className="exchange";
 
   var img=dom_create_append(td, "img");
-  img.src="plugins/navigation/exchange.png";
+  img.src=modulekit_file("navigation", "exchange.png");
   img.onclick=navigation_exchange_points.bind(this, "home");
 
   // via
@@ -570,7 +570,7 @@ function navigation_toolboxtext() {
       td.className="icon";
       td.rowSpan=2;
       var img=dom_create_append(td, "img");
-      img.src="plugins/navigation/icon_via.png";
+      img.src=modulekit_file("navigation", "icon_via.png");
 
       var td=dom_create_append(tr, "td");
       td.rowSpan=2;
@@ -582,7 +582,7 @@ function navigation_toolboxtext() {
       td.className="remove";
 
       var img=dom_create_append(td, "img");
-      img.src="plugins/navigation/remove.png";
+      img.src=modulekit_file("navigation", "remove.png");
       img.onclick=navigation_remove_points.bind(this, i);
 
       var tr=dom_create_append(nav_table, "tr");
@@ -591,7 +591,7 @@ function navigation_toolboxtext() {
       td.className="exchange";
 
       var img=dom_create_append(td, "img");
-      img.src="plugins/navigation/exchange.png";
+      img.src=modulekit_file("navigation", "exchange.png");
       img.onclick=navigation_exchange_points.bind(this, i);
     }
   }
@@ -603,7 +603,7 @@ function navigation_toolboxtext() {
   td.rowSpan=2;
   td.className="icon";
   var img=dom_create_append(td, "img");
-  img.src="plugins/navigation/icon_destination.png";
+  img.src=modulekit_file("navigation", "icon_destination.png");
 
   var td=dom_create_append(tr, "td");
   td.rowSpan=2;
@@ -619,7 +619,7 @@ function navigation_toolboxtext() {
   td.className="remove";
 
   var img=dom_create_append(td, "img");
-  img.src="plugins/navigation/remove.png";
+  img.src=modulekit_file("navigation", "remove.png");
   img.onclick=navigation_remove_points.bind(this, "destination");
 
   var tr=dom_create_append(nav_table, "tr");
@@ -653,16 +653,16 @@ function navigation_current_route_go() {
 
 function navigation_init() {
   navigation_toolbox=new toolbox({
-    icon: "plugins/navigation/icon.png",
+    icon: modulekit_file("navigation", "icon.png"),
     icon_title: lang("navigation:name"),
     weight: -3,
   });
   register_toolbox(navigation_toolbox);
 
   if(plugins_loaded("contextmenu")) {
-    contextmenu_add("plugins/navigation/icon_home.png", lang("navigation:set_home"), navigation_set_home);
-    contextmenu_add("plugins/navigation/icon_via.png", lang("navigation:add_via"), navigation_add_via);
-    contextmenu_add("plugins/navigation/icon_destination.png", lang("navigation:set_destination"), navigation_set_destination);
+    contextmenu_add(modulekit_file("navigation", "icon_home.png"), lang("navigation:set_home"), navigation_set_home);
+    contextmenu_add(modulekit_file("navigation", "icon_via.png"), lang("navigation:add_via"), navigation_add_via);
+    contextmenu_add(modulekit_file("navigation", "icon_destination.png"), lang("navigation:set_destination"), navigation_set_destination);
   }
 
   this.toolbox_content=dom_create_append(navigation_toolbox.content, "div");

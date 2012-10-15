@@ -2,7 +2,7 @@ var help_toolbox;
 
 function help_init() {
   help_toolbox=new toolbox({
-    icon: "plugins/help/icon.png",
+    icon: modulekit_file("help", "icon.png"),
     icon_title: "help",
     weight: -1,
   });

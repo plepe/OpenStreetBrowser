@@ -93,7 +93,7 @@ function touchscreen_enable() {
   touchscreen_css=document.createElement("link");
   touchscreen_css.rel="stylesheet";
   touchscreen_css.type="text/css";
-  touchscreen_css.href="plugins/touchscreen/touchscreen.css";
+  touchscreen_css.href=modulekit_file("touchscreen", "touchscreen.css");
   document.head.appendChild(touchscreen_css);
 
   // create click handler (as normal click event does not work

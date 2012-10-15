@@ -44,7 +44,7 @@ function measure_init() {
   map.addControl(measure_control);
 
   measure_toolbox=new toolbox({
-    icon: "plugins/measure/icon.png",
+    icon: modulekit_file("measure", "icon.png"),
     icon_title: "measurements",
     callback_activate: measure_activate,
     callback_deactivate: measure_deactivate,
@@ -53,7 +53,7 @@ function measure_init() {
   register_toolbox(measure_toolbox);
 
   if(plugins_loaded("contextmenu")) {
-    contextmenu_add("plugins/measure/icon.png", "measurement tool", measure_click);
+    contextmenu_add(modulekit_file("measure", "icon.png"), "measurement tool", measure_click);
   }
 
   var text = "<i>Measurements</i><br/><br/><div id='measure_text'>Start your measurements by selecting your way on the map...</div><br/><br/>";

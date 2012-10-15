@@ -19,7 +19,7 @@ function debug_toolbox_hide() {
 
 function debug_toolbox_init() {
   debug_toolbox=new toolbox({
-    icon: "plugins/debug_toolbox/icon.png",
+    icon: modulekit_file("debug_toolbox", "icon.png"),
     icon_title: lang("debug_toolbox:name"),
     weight: 10,
   });

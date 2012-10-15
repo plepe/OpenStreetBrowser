@@ -105,7 +105,7 @@ function navigation_cloudmade() {
     }
 
     route.param=param;
-    ajax_direct("plugins/navigation_cloudmade/call.php", param, this.recv.bind(this, route));
+    ajax_direct(modulekit_file("navigation_cloudmade", "call.php"), param, this.recv.bind(this, route));
   }
 
   // recv

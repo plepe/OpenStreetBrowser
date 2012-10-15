@@ -37,6 +37,7 @@ if(!file_exists("lib/OpenLayers/OpenLayers.js")) {
 <title>OpenStreetBrowser</title>
 <script src="lib/OpenLayers/OpenLayers.js<?=$version_string?>"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+<?php print modulekit_to_javascript(); ?>
 <?php print modulekit_include_js(); /* prints all js-includes */ ?>
 <?php print modulekit_include_css(); /* prints all css-includes */ ?>
 <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">

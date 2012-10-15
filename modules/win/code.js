@@ -107,7 +107,7 @@ function win(options) {
   // Close Button
   var td=dom_create_append(tr, "td");
   var close_button=dom_create_append(td, "img");
-  close_button.src="plugins/win/close.png";
+  close_button.src=modulekit_file("win", "close.png");
   close_button.alt="close";
   close_button.className="win_close_button";
   close_button.onclick=this.close.bind(this);

@@ -3,14 +3,14 @@ var marker_drag_control;
 var marker_highest_id=0;
 
 var marker_style={
-    externalGraphic: 'plugins/marker/marker.png',
+    externalGraphic: modulekit_file("marker", "marker.png"),
     graphicWidth: 21,
     graphicHeight: 25,
     graphicXOffset: -11,
     graphicYOffset: -25
   };
 var marker_style_selected={
-    externalGraphic: 'plugins/marker/marker_selected.png',
+    externalGraphic: modulekit_file("marker", "marker_selected.png"),
     graphicWidth: 21,
     graphicHeight: 25,
     graphicXOffset: -11,
@@ -180,7 +180,7 @@ function marker(lon, lat) {
   this.write_list=function(ul) {
     var ret={};
 
-    ret.icon_url="plugins/marker/icon.png";
+    ret.icon_url=modulekit_file("marker", "icon.png");
     ret.name=this.name();
     ret.href=url({ obj: this.id });
     ret.highlight=this.feature.geometry.toString();
@@ -300,7 +300,7 @@ function marker_info(chapters, ob) {
 
 function marker_init() {
   if(plugins_loaded("contextmenu")) {
-    contextmenu_add("plugins/marker/icon.png", lang("marker:add_marker"), marker_add_context);
+    contextmenu_add(modulekit_file("marker", "icon.png"), lang("marker:add_marker"), marker_add_context);
   }
 }
 
