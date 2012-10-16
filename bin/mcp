@@ -1,6 +1,7 @@
 #!/usr/bin/php
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php
+$modulekit_debug="mcp_modulekit_debug";
 $modulekit_include_php="mcp";
 include "modulekit/loader.php"; /* loads all php-includes */
 ?>
@@ -23,6 +24,15 @@ function mcp_debug($entry) {
     );
 
   $debug_list=array();
+}
+
+function mcp_modulekit_debug($text, $level) {
+  mcp_debug(array(
+    'category'=>'modulekit',
+    'level'=>3-$level,
+    'text'=>$text,
+    'time'=>time(),
+  ));
 }
 
 debug("* MCP all plugins loaded, initializing", "mcp");
