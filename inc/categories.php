@@ -926,7 +926,7 @@ function category_save($request_id, $content, $param=array()) {
     "'$version', now());";
 
   // inform other cluster servers of new category
-  if(plugins_loaded("cluster_call")) {
+  if(modulekit_loaded("cluster_call")) {
     $sql.="select cluster_call('category_save', ".
       postgre_escape($id).");";
   }
@@ -1182,7 +1182,7 @@ function categories_init() {
 }
 
 function categories_mcp_start() {
-  if(plugins_loaded("cluster_call")) {
+  if(modulekit_loaded("cluster_call")) {
     cluster_call_register("category_save", "categories_has_saved");
   }
 }

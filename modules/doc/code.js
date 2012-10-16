@@ -19,7 +19,7 @@ function doc_close(w) {
 function doc_show(plugin) {
   var w=new win({ "class": "doc_win", "title": lang("head:doc") });
 
-  if(plugins_list.talk) {
+  if(modulekit_loaded("talk")) {
     // add tabs to window
     var tabs=new tab_manager(w.content);
     var doc_tab=new tab({ title: lang("head:doc") });

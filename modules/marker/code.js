@@ -299,7 +299,7 @@ function marker_info(chapters, ob) {
 }
 
 function marker_init() {
-  if(plugins_loaded("contextmenu")) {
+  if(modulekit_loaded("contextmenu")) {
     contextmenu_add(modulekit_file("marker", "icon.png"), lang("marker:add_marker"), marker_add_context);
   }
 }

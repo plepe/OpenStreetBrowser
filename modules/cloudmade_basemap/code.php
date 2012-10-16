@@ -7,4 +7,3 @@ function cloudmade_basemap_init() {
 }
 
 register_hook("init", "cloudmade_basemap_init");
-plugins_include_file("cloudmade_basemap", "cloudmade.js");

@@ -52,7 +52,7 @@ function measure_init() {
   });
   register_toolbox(measure_toolbox);
 
-  if(plugins_loaded("contextmenu")) {
+  if(modulekit_loaded("contextmenu")) {
     contextmenu_add(modulekit_file("measure", "icon.png"), "measurement tool", measure_click);
   }
 

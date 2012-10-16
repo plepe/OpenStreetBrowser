@@ -63,7 +63,7 @@ function favorites_add_context(pos) {
 }
 
 function favorites_init() {
-  if(plugins_loaded("contextmenu")) {
+  if(modulekit_loaded("contextmenu")) {
     contextmenu_add(modulekit_file("favorites", "icon.png"), "add favorite", favorites_add_context);
   }
 

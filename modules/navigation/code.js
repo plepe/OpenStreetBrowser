@@ -659,7 +659,7 @@ function navigation_init() {
   });
   register_toolbox(navigation_toolbox);
 
-  if(plugins_loaded("contextmenu")) {
+  if(modulekit_loaded("contextmenu")) {
     contextmenu_add(modulekit_file("navigation", "icon_home.png"), lang("navigation:set_home"), navigation_set_home);
     contextmenu_add(modulekit_file("navigation", "icon_via.png"), lang("navigation:add_via"), navigation_add_via);
     contextmenu_add(modulekit_file("navigation", "icon_destination.png"), lang("navigation:set_destination"), navigation_set_destination);

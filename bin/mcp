@@ -1,8 +1,10 @@
 #!/usr/bin/php
+<?php include "conf.php"; /* load a local configuration */ ?>
+<?php
+$modulekit_include_php="mcp";
+include "modulekit/loader.php"; /* loads all php-includes */
+?>
 <?
-include_once "inc/cli.php";
-include "$root_path/conf.php";
-include "inc/hooks.php";
 register_hook("debug", "mcp_debug");
 
 if(!isset($mcp_debug_level))
@@ -23,23 +25,6 @@ function mcp_debug($entry) {
   $debug_list=array();
 }
 
-include "inc/plugins.php";
-include "inc/lock.php";
-include "inc/number.php";
-include "inc/tags.php";
-include "inc/sql.php";
-include "inc/debug.php";
-include "inc/category.php";
-include "inc/categories.php";
-include "inc/process_category.php";
-include "inc/functions.php";
-include "inc/dom.php";
-include "inc/css.php";
-include "inc/postgis.php";
-include "inc/git_obj.php";
-include "inc/data_dir.php";
-$plugins[]="icon";
-plugins_init("mcp");
 debug("* MCP all plugins loaded, initializing", "mcp");
 
 define("MCP_READ",   0);

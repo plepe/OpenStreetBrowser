@@ -5,7 +5,6 @@ function osm_import_db_init() {
   global $osm_import_source;
   global $db_central;
   global $tmp_dir;
-  global $plugins_dir;
 
   // $res=sql_query("select * from pg_tables where schemaname='osm' and tablename='nodes'");
   $res=sql_query("select * from pg_tables where tablename='nodes'");
@@ -49,5 +48,5 @@ function osm_import_db_init() {
 
   // load db.sql which generates osm_point etc. tables
   debug("initializing database", "osm_import", D_NOTICE);
-  sql_query(file_get_contents("$plugins_dir/osm_import/init.sql"));
+  sql_query(file_get_contents(modulekit_file("osm_import", "init.sql")));
 }
