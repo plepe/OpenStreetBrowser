@@ -4,14 +4,14 @@ First run 'bin/init' to initialize database structure
 
 == Configure ==
 Copy conf.php-dist to conf.php and adapt to your needs.
-Especially choose plugins appropriate for your project.
+Especially choose modules appropriate for your project.
 
 == OpenStreetBrowser-Daemon ==
 Then run 'bin/osbd' which will initialize the rest and will take care of a
 clean database. It also re-compiles categories and similar stuff.
 
 There's a tiny command line interface. Supported commands:
-  status	Print status of all plugins which support it
+  status	Print status of all modules which support it
   stop		Shutdown daemon
   quit		Force daemon shutdown
 

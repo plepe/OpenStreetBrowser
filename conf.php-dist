@@ -87,9 +87,6 @@ $renderd_files=array(
 // $default_categories - Define a list of categories which should automatically be loaded
 $default_categories=array();
 
-// List of plugins which should be loaded - do not delete current values
-$plugins=array("win");
-
 // Which basemaps should be loaded
 //   'mapnik', 'osmarender' and 'cyclemap' are predefined values
 $basemaps=array(
@@ -109,7 +106,10 @@ $overlays_add=array(
 $mcp_debug_level=2;
 $www_debug_level=2;
 
-// Available plugins:
+// List of modules which should be loaded - do not delete current values
+$modulekit_load=array("win");
+
+// Available modules:
 // units - format length and area values
 // measure - do some measurement on the map
 // measure_obj - do measurements on the current object
