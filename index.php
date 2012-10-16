@@ -27,7 +27,7 @@ call_hooks("http_head");
 
 // check for installed OpenLayers instance
 if(!file_exists("lib/OpenLayers/OpenLayers.js")) {
-  print "Please download <a href='http://openlayers.org/'>OpenLayers</a> and extract to www/lib/OpenLayers/\n";
+  print "Please download <a href='http://openlayers.org/'>OpenLayers</a> and extract to lib/OpenLayers/\n";
   exit();
 }
 ?>

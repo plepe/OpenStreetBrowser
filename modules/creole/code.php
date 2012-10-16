@@ -9,20 +9,20 @@ function creole_init() {
 
   global $root_path;
 
-  if((!file_exists("$root_path/www/lib/simplewiki/"))||
-     (!file_exists("$root_path/www/lib/simplewiki/simplewiki.php"))) {
+  if((!file_exists("$root_path/lib/simplewiki/"))||
+     (!file_exists("$root_path/lib/simplewiki/simplewiki.php"))) {
     debug("Library 'Simplewiki' not found! Please install.", "creole", D_ERROR);
     return;
   }
 
-  include "$root_path/www/lib/simplewiki/muster_simplewiki_docnode.php";
-  include "$root_path/www/lib/simplewiki/simplewiki_docnode.php";
-  include "$root_path/www/lib/simplewiki/muster_simplewiki_parser.php";
-  include "$root_path/www/lib/simplewiki/simplewiki_parser.php";
-  include "$root_path/www/lib/simplewiki/muster_simplewiki_emitter.php";
-  include "$root_path/www/lib/simplewiki/simplewiki_emitter.php";
-  include "$root_path/www/lib/simplewiki/muster_simplewiki.php";
-  include "$root_path/www/lib/simplewiki/simplewiki.php";
+  include "$root_path/lib/simplewiki/muster_simplewiki_docnode.php";
+  include "$root_path/lib/simplewiki/simplewiki_docnode.php";
+  include "$root_path/lib/simplewiki/muster_simplewiki_parser.php";
+  include "$root_path/lib/simplewiki/simplewiki_parser.php";
+  include "$root_path/lib/simplewiki/muster_simplewiki_emitter.php";
+  include "$root_path/lib/simplewiki/simplewiki_emitter.php";
+  include "$root_path/lib/simplewiki/muster_simplewiki.php";
+  include "$root_path/lib/simplewiki/simplewiki.php";
 
   $creole_engine=new SimpleWiki();
 }

@@ -1,2 +1,2 @@
 Download Simplewiki (http://simplewiki.org) and extract to the subdirectory
-'www/lib/simplewiki/' (so that there's a file www/lib/simplewiki/simplewiki.php)
+'lib/simplewiki/' (so that there's a file lib/simplewiki/simplewiki.php)
