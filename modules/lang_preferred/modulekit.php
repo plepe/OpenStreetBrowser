@@ -1,2 +1,0 @@
-<?
-$name="Query preferred Languages";
