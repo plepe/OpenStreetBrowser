@@ -248,13 +248,13 @@ $lang_str["tag:railway=platform"]=array("Bahnsteig", "Bahnsteige");
 $lang_str["tag:real_ale"]="Richtiges Bier angeboten";
 
 // religion
-$lang_str["tag:religion"]="Religion";
+$lang_str["tag:religion"]=array(F, "Religion", "Religionen");
 $lang_str["tag:religion=christian"]="christlich";
 $lang_str["tag:religion=buddhist"]="buddhistisch";
 $lang_str["tag:religion=hindu"]="hindisch";
 $lang_str["tag:religion=jewish"]="jüdisch";
 $lang_str["tag:religion=muslim"]="muslimisch";
-$lang_str["tag:religion=multifaith"]="überreligiös";
+$lang_str["tag:religion=multifaith"]="multikonfessionell";
 
 // denomination
 $lang_str["tag:denomination"]="Konfession";
