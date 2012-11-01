@@ -1,21 +1,4 @@
 <?
-// All untranslated strings have a # in front. When you translate a string
-// please remove this hash.
-
-//  Every language string looks like this:
-//  $lang_str["restaurant"]=array("Restaurant", "Restaurants");
-//  the first entry is the translation of the language string in Singular,
-//  the second the Plural form.
-//
-//  Optionally you can define the Gender (F, M, N) of this word, e.g. the
-//  German translation for office:
-//  $lang_str["office"]=array(N, "Büro", "Büros");
-//
-//  If a Singular/Plural form is not
-//  suitable/necessary you can ignore the array, e.g.
-//  $lang_str["help"]="Help";
-$lang_str["lang:current"]="Magyar"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
-
 // General
 $lang_str["general_info"]="Általános információ";
 $lang_str["yes"]="igen";
