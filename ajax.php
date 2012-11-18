@@ -5,10 +5,10 @@
  */
 session_start();
 $design_hidden=1;
-//include "conf.php";
-include "code.php";
-require_once "inc/global.php";
-//$sql=new sql($mysql_data);
+?>
+<?php include "conf.php"; /* load a local configuration */ ?>
+<?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
+<?
 include "xml.php";
 user_check_auth();
 call_hooks("ajax_start", null);
