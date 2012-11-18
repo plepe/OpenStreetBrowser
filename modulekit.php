@@ -5,7 +5,7 @@ $name="OpenStreetBrowser";
 $id="openstreetbrowser";
 
 // these modules should be loaded first
-$depend=array("hooks", "lang",
+$depend=array("hooks", "lang", "pg_sql",
   "category",		// previously from inc/category.php
   "load_object",	// previously from inc/object.php
 );
