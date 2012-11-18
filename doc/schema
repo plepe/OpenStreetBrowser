@@ -5,6 +5,10 @@ create schema osmdb authorization osmdb;
 grant usage on schema osm to osmdb;
 grant select, insert, update, delete on all tables in schema osm to osmdb;
 
+# grant for user osmdb ob public
+grant usage on schema public to osb_marten;
+grant select on all tables in schema public to osb_marten;
+
 # grant for user osmdb on osmdb
 grant all privileges on schema osmdb to osmdb;
 grant all privileges on all tables in schema osmdb to osmdb;
