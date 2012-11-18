@@ -1,2 +1,2 @@
 <?
-$depend=array("db");
+$depend=array("pg_modules");

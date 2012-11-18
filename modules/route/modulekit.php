@@ -1,4 +1,4 @@
 <?
 $name="Route";
 
-$depend=array("db", "nat_sort");
+$depend=array("pg_modules", "nat_sort");

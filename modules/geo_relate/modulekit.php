@@ -1,4 +1,4 @@
 <?
 $name="Geo Relate";
 
-$depend=array("db");
+$depend=array("pg_modules");
