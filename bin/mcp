@@ -44,7 +44,7 @@ $streams=array(MCP_READ=>array(), MCP_WRITE=>array(), MCP_EXCEPT=>array());
 $streams_callback=array(MCP_READ=>array(), MCP_WRITE=>array(), MCP_EXCEPT=>array());
 
 // create temporary directory
-$tmp_dir="$root_path/tmp/".Date("Ymd-Hi");
+$tmp_dir="$data_path/tmp/".Date("Ymd-Hi");
 debug("Creating temporary directory $tmp_dir", "mcp");
 mkdir($tmp_dir);
 
