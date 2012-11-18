@@ -7,3 +7,6 @@
 [submodule "modules/database"]
 	path = modules/database
 	url = https://github.com/plepe/OpenStreetBrowser-database.git
+[submodule "modules/base"]
+	path = modules/base
+	url = https://github.com/plepe/modulekit-base.git
