@@ -7,7 +7,7 @@ function whats_here_find($param) {
 
   $srid=$DEFAULT_SRID;
   if(isset($param['srid']))
-    $srid=$param['srid'];
+    $srid=postgre_escape($param['srid']);
 
   $dist_mul=(19-$param['zoom'])*(19-$param['zoom']);
   $dist=3*$dist_mul;
