@@ -2,26 +2,24 @@ create or replace function _load_geo(text)
 returns geometry 
 as $$
 declare
-  x           text[];
   _osm_type   text;
   _osm_id     bigint;
   _osm_typeid alias for $1;
   rel_type    text;
 begin
-  x:=string_to_array(_osm_typeid, '_');
-  _osm_type:=x[1];
-  _osm_id:=x[2];
+  _osm_type:=substr(_osm_typeid, 1, 1);
+  _osm_id  :=substr(_osm_typeid, 2);
 
-  if(_osm_type='node') then
-    return (select osm_way from osm_point where osm_id=_osm_typeid);
-  elsif(_osm_type='way') then
-    return (select osm_way from osm_line where osm_id=_osm_typeid
+  if(_osm_type='N') then
+    return (select way from osm_point where id=_osm_typeid);
+  elsif(_osm_type='W') then
+    return (select way from osm_line where id=_osm_typeid
 	    union
-            select osm_way from osm_polygon where osm_id=_osm_typeid);
-  elsif(_osm_type='rel') then
-    return (select osm_way from osm_rel where osm_id=_osm_typeid
+            select way from osm_polygon where id=_osm_typeid);
+  elsif(_osm_type='R') then
+    return (select way from osm_rel where id=_osm_typeid
 	    union
-            select osm_way from osm_polygon where osm_id=_osm_typeid);
+            select way from osm_polygon where id=_osm_typeid);
   end if;
 
   return null;
