@@ -2,17 +2,19 @@
 //include "../../render/config_queries.php";
 function whats_here_find($param) {
   global $load_xml;
-//  global $query;
-  $srid=900913;
+  global $DEFAULT_SRID;
+  global $DB_SRID;
+
+  $srid=$DEFAULT_SRID;
   if(isset($param['srid']))
     $srid=$param['srid'];
 
   $dist_mul=(19-$param[zoom])*(19-$param[zoom]);
   $dist=3*$dist_mul;
 
-  $res=sql_query("select ST_Buffer(Geography(ST_Transform(GeomFromText('POINT({$param['lon']} {$param['lat']})', $srid), 4326)), $dist) as buffer");
+  $res=sql_query("select ST_Transform(ST_Envelope(Geometry(ST_Buffer(Geography(ST_Transform(GeomFromText('POINT({$param['lon']} {$param['lat']})', $srid), 4326)), $dist))), $DB_SRID) as bbox");
   $elem=pg_fetch_assoc($res);
-  $poly="'{$elem['buffer']}'";
+  $poly="'{$elem['bbox']}'";
 
   // use projection 900913 to calculate roughly distance and area/length
   // Geography(way) would be nicer (and more exact), but is much slower

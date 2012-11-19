@@ -35,7 +35,11 @@ $osmosis_db=&$db;
 # $osmosis_db['host']="localhost";
 # $osmosis_db['debug']=false;
 
-$SRID=900913;
+// default SRID which the OpenStreetBrowser API assumes for requests
+$DEFAULT_SRID=900913;
+
+// SRID for the database
+$DB_SRID=4326;
 
 $default_location=array('zoom'=>2, 'lat'=>28.43864, 'lon'=>18.61488);
 
