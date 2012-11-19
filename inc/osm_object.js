@@ -1,4 +1,4 @@
-var osm_object_valid_prefixes=[ "node", "way", "rel" ];
+var osm_object_valid_prefixes=[ "node_", "way_", "rel_", "N", "W", "R"];
 
 function osm_object(dom) {
   this.inheritFrom=geo_object;
@@ -277,8 +277,7 @@ function osm_object_load_callback(single_object, callback, response) {
 }
 
 function osm_object_search_object(ret, id, callback) {
-  var id_parts=id.split("_");
-  if(in_array(id_parts[0], osm_object_valid_prefixes)) {
+  if(id.match("^("+osm_object_valid_prefixes.join("|")+")")) {
     var ob=osm_object_load(id, callback);
     ret.push(ob);
   }
