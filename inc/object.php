@@ -262,15 +262,18 @@ class object {
 // tags (if not provided, it will be loaded by db) hash-array of tags
 
 // id should have the following form:
-// node|way|rel|coll_id ... e.g. node_35, rel_123
-// short forms:
-// [nwrc]id ... e.g. n35, rel135
-function load_object($elem=0, $tags=null) {
+// node|way|rel_id ... e.g. node_35, rel_123 or N35, W1234, R123
+function load_object($elem=0, $tags=null, $options=array()) {
+  global $DEFAULT_SRID;
   global $objects;
   global $object_types;
   global $tag_preloaded;
   global $object_element_shorts;
-  $object_elements=array("n"=>"node", "w"=>"way", "r"=>"rel", "c"=>"coll");
+  $object_elements=array("node"=>"N", "way"=>"W", "rel"=>"R", "relation"=>"R");
+  $object_place_types=array("N"=>"node", "W"=>"way", "R"=>"rel");
+  $srid=$DEFAULT_SRID;
+  if(isset($options['srid']))
+    $srid=postgre_escape($options['srid']);
 
   if(is_string($elem)) {
     $id=$elem;
@@ -299,15 +302,11 @@ function load_object($elem=0, $tags=null) {
         if((!$elem['member_ids'])||(!$elem['member_roles']))
 	  unset($elem);
 	break;
-      case "coll":
-        if((!$elem['member_ids'])||(!$elem['member_roles']))
-	  unset($elem);
-	break;
     }
   }
 
-  if(ereg("^([nwrc])([0-9]*)$", $id, $m)) {
-    $id=$object_element_shorts[$m[1]]."_".$m[2];
+  if(preg_match("/^(".implode("|", array_keys($object_elements)).")_([0-9]*)$", $id, $m)) {
+    $id=$object_elements[$m[1]].$m[2];
   }
 
   // if we've already loaded this object, we just return it
@@ -315,10 +314,10 @@ function load_object($elem=0, $tags=null) {
     return $objects[$id];
 
   // let's see if we have a valid object
-  if(ereg("^(node|way|rel|coll)_([0-9]+)(_.*)?$", $id, $m)) {
-    $object_place_type=$m[1];
+  if(preg_match("/^(".implode("|", $object_elements).")([0-9]+)(_(.*))?$/", $id, $m)) {
+    $object_place_type=$object_place_types[$m[1]];
     $object_id=$m[2];
-    $object_subid=substr($m[3], 1);
+    $object_subid=$m[4];
   }
   // if it's not a single id, we can receive data from tags if we supplied them
   elseif($tags) {
@@ -331,7 +330,7 @@ function load_object($elem=0, $tags=null) {
   // load data if necessary
   $add_tags=array();
   if(!isset($elem)) {
-    $qry="select astext(way) as \"way\", astext(way) as \"#geo\", astext(ST_Centroid(way)) as \"#geo:center\" from (select load_geo('$id') as way) x";
+    $qry="select astext(way) as \"way\", astext(way) as \"#geo\", astext(ST_Centroid(way)) as \"#geo:center\" from (select ST_Transform(load_geo('$id'), $srid) as way) x";
 /*    switch($object_place_type) {
       case "node":
         $qry="select astext(osm_way) as way from osm_nodes where osm_id='$id'";
@@ -378,9 +377,6 @@ function load_object($elem=0, $tags=null) {
       case "rel":
         $qry="select k, v from relation_tags where relation_id='$object_id'";
 	break;
-      case "coll":
-        $qry="select k, v from coll_tags where coll_id='$object_id'";
-	break;
     }
 
     $rest=sql_query($qry);
@@ -420,7 +416,7 @@ function register_object_type($key, $type, $class) {
 }
 
 // using load_objects is faster then loading each object by its own
-function load_objects($list) {
+function load_objects($list, $options=array()) {
   global $object_element_shorts;
   $list_by_type=array();
   $ret=array();
@@ -450,7 +446,7 @@ function load_objects($list) {
     $qry="select 'node' as element, id, lon, lat, astext(way) as way from planet_osm_nodes left join planet_osm_point on id=osm_id where id in (".implode(",", $list_by_type['node']).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
-      $ret[]=load_object($elem);
+      $ret[]=load_object($elem, null, $options);
     }
   }
 
@@ -464,7 +460,7 @@ function load_objects($list) {
     $qry="select 'way' as element, id, nodes, astext(CASE WHEN l.way is not null THEN l.way WHEN p.way is not null THEN p.way WHEN r.way is not null THEN r.way END) as way from planet_osm_ways left join planet_osm_line l on id=l.osm_id left join planet_osm_polygon p on id=p.osm_id left join relation_members r1 on r1.member_id=id and r1.member_role='outer' left join planet_osm_polygon r on r.osm_id=-r1.relation_id where id in (".implode(",", $list_by_type['way']).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
-      $ret[]=load_object($elem);
+      $ret[]=load_object($elem, null, $options);
     }
   }
 
@@ -478,7 +474,7 @@ function load_objects($list) {
     $qry="select 'rel' as element, id, (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from relation_members where relation_id=id) as member_ids, (select to_textarray(member_role) from relation_members where relation_id=id) as member_roles from planet_osm_rels where id in (".implode(",", $list_by_type['rel']).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
-      $ret[]=load_object($elem);
+      $ret[]=load_object($elem, null, $options);
     }
   }
 
@@ -492,7 +488,7 @@ function load_objects($list) {
     $qry="select 'coll' as element, id, (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from coll_members where coll_id=id) as member_ids, (select to_textarray(member_role) from coll_members where coll_id=id) as member_roles from planet_osm_colls where id in (".implode(",", $list_by_type['coll']).")";
     $res=sql_query($qry);
     while($elem=pg_fetch_assoc($res)) {
-      $ret[]=load_object($elem);
+      $ret[]=load_object($elem, null, $options);
     }
   }
 
@@ -500,7 +496,7 @@ function load_objects($list) {
 }
 
 function ajax_object_load_more_tags($param) {
-  $ob=load_object($param['id']);
+  $ob=load_object($param['id'], null, $param);
   $tags=explode(",", $param['tags']);
   $ret=array();
 
@@ -514,7 +510,7 @@ function ajax_object_load_more_tags($param) {
 }
 
 function ajax_load_object($param, $xml) {
-  $ob=load_object($param['ob']);
+  $ob=load_object($param['ob'], null, $param);
 
   $result=dom_create_append($xml, "result", $xml);
   $node=$ob->export_dom($xml);
