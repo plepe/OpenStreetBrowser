@@ -9,7 +9,7 @@ function whats_here_find($param) {
   if(isset($param['srid']))
     $srid=$param['srid'];
 
-  $dist_mul=(19-$param[zoom])*(19-$param[zoom]);
+  $dist_mul=(19-$param['zoom'])*(19-$param['zoom']);
   $dist=3*$dist_mul;
 
   $res=sql_query("select ST_Transform(ST_Envelope(Geometry(ST_Buffer(Geography(ST_Transform(GeomFromText('POINT({$param['lon']} {$param['lat']})', $srid), 4326)), $dist))), $DB_SRID) as bbox");
@@ -66,6 +66,3 @@ function ajax_whats_here_find($param, $xml) {
 
   $xml->appendChild($result);
 }
-
-
-
