@@ -408,3 +408,4 @@ alter function to_array(hstore) set schema osmdb;
 alter function to_intarray(bigint) set schema osmdb;
 alter function to_intarray(integer) set schema osmdb;
 alter function to_intarray(integer[]) set schema osmdb;
+alter function to_textarray(text) set schema osmdb;
