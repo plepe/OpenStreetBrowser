@@ -162,8 +162,8 @@ function osm_object(dom) {
 	this.load_more_tags(["#geo"], this.highlight_geo.bind(this), event.target);
       }
       else {
-	if(dom_ob) {
-	  add_css_class(dom_ob, "loaded");
+	if(event.target) {
+	  add_css_class(event.target, "loaded");
 	}
 	geos.push(geo);
       }
