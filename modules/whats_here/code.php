@@ -20,7 +20,10 @@ function whats_here_find($param) {
   // Geography(way) would be nicer (and more exact), but is much slower
   $distance="ST_Distance(ST_Transform(way, 900913), ST_Transform(GeometryFromText('POINT($param[lon] $param[lat])', $srid), 900913))";
 
-  $qry="select *, astext(ST_Transform(ST_Centroid(way), $srid)) as \"#geo:center\" from (".
+  $qry="select *,".
+    "astext(ST_Transform(ST_Centroid(way), $srid)) as \"#geo:center\", ".
+    "astext(ST_Transform(way, $srid)) as \"#geo\" ".
+    "from (".
     "select *, $distance-\"#dist_modi\"*$dist_mul as \"#distance\" from (".
     "select id, tags, way, 1 as \"#area\", 4 as \"#dist_modi\" from osm_point($poly)".
     " union all ".
@@ -35,8 +38,10 @@ function whats_here_find($param) {
   while($elem=pg_fetch_assoc($res)) {
     $osm_tags=parse_hstore($elem['tags']);
     foreach($elem as $k=>$v) {
-      if(substr($k, 0, 1)=="#")
-        $osm_tags[$k]=$v;
+      if(substr($k, 0, 1)=="#") {
+	if(strlen($v)<=256)
+	  $osm_tags[$k]=$v;
+      }
     }
 
     $ret[]=array("id"=>$elem['id'], "tags"=>new tags($osm_tags));
