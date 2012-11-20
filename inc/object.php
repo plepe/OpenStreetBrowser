@@ -5,7 +5,7 @@ $plugins[]="load_object";
 $objects=array();
 $object_types=array();
 $output_xml=array();
-$object_elements=array("node"=>"node", "rel"=>"relation", "way"=>"way", "coll"=>"coll");
+$object_elements=array("node"=>"N", "way"=>"W", "rel"=>"R", "relation"=>"R");
 $object_element_ids=array("node"=>1, "way"=>2, "rel"=>3, "coll"=>4);
 $object_element_shorts=array("n"=>"node", "r"=>"rel", "w"=>"way", "c"=>"coll");
 $object_element_data_type=array("N"=>"node", "R"=>"rel", "W"=>"way");
@@ -36,13 +36,14 @@ class object {
 
   function __construct($data) {
     global $object_element_ids;
+    global $object_elements;
     $this->data=$data;
     $this->tags=$data['tags'];
     $this->element=$data['element'];
     if($data['subid'])
-      $this->id="{$data['element']}_{$data['id']}_{$data['subid']}";
+      $this->id="{$object_elements[$data['element']]}{$data['id']}_{$data['subid']}";
     else
-      $this->id="{$data['element']}_{$data['id']}";
+      $this->id="{$object_elements[$data['element']]}{$data['id']}";
     $this->only_id=$data['id'];
     if($data['subid']) {
       $this->place_type="gen_node";
@@ -269,7 +270,7 @@ function load_object($elem=0, $tags=null, $options=array()) {
   global $object_types;
   global $tag_preloaded;
   global $object_element_shorts;
-  $object_elements=array("node"=>"N", "way"=>"W", "rel"=>"R", "relation"=>"R");
+  global $object_elements;
   $object_place_types=array("N"=>"node", "W"=>"way", "R"=>"rel");
   $srid=$DEFAULT_SRID;
   if(isset($options['srid']))
