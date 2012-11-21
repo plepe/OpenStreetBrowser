@@ -200,13 +200,12 @@ class object {
 
     switch($this->element) {
       case "rel":
-	 $id=substr($this->id, 4);
+	 $id=substr($this->id, 1);
 	 $ret=array();
 
          $res=sql_query("select * from relation_members where relation_id='$id'");
 	 while($elem=pg_fetch_assoc($res)) {
-	   $elem_id=$object_element_data_type[$elem['member_type']]."_".
-	            $elem['member_id'];
+	   $elem_id="{$elem['member_type']}{$elem['member_id']}";
            $ret[$elem_id]=$elem['member_role'];
 	 }
     }
@@ -228,13 +227,13 @@ class object {
     if(isset($this->member_of))
       return $this->member_of;
 
-    $id=explode("_", $this->id);
-    $data_type=array_search($id[0], $object_element_data_type);
+    $id=substr($this->id, 1);
+    $data_type=substr($this->id, 0, 1);
     $ret=array();
 
-    $res=sql_query("select * from relation_members where member_id='$id[1]' and member_type='$data_type'");
+    $res=sql_query("select * from relation_members where member_id='$id' and member_type='$data_type'");
     while($elem=pg_fetch_assoc($res)) {
-      $elem_id="rel_".$elem['relation_id'];
+      $elem_id="R{$elem['relation_id']}";
       $ret[$elem_id]=$elem['member_role'];
     }
 
