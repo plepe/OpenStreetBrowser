@@ -1,6 +1,6 @@
 <?
 // The version information which will be shown on the homepage. If you don't set it it will be set to "dev"
-$version="2.0"
+$version="2.0";
 
 // The $version_string will be added to included files (css, js) to force loading of correct version. If you don't set it (default) it will be generated from the current git commit.
 # $version_string="xxx"; 
@@ -63,8 +63,11 @@ $overlays=array("culture"=>"overlay_culture", "gastro"=>"overlay_food", "service
 // a valid API key here
 //$key_cloudmade_api="";
 
-// $root_path - where is all stuff
-$root_path="/home/osm";
+// $root_path - root of all code
+$root_path="/home/osm/osb";
+
+// $data_path - Where to put data; should not be reachable by the webserver
+$data_path="/home/osm/data";
 
 // $www_path - path of the www-directory as accessible from the interwebs
 $www_path="http://www.openstreetbrowser.org/";
@@ -94,7 +97,7 @@ $default_categories=array();
 // Which basemaps should be loaded
 //   'mapnik', 'osmarender' and 'cyclemap' are predefined values
 $basemaps=array(
-  "osb"=>array("http://www.openstreetbrowser.org/tiles/base/", array("numZoomLevels"=>19)),
+  "osb"=>array("http://tiles-base.openstreetbrowser.org/tiles/basemap_base/", array("numZoomLevels"=>19)),
   "mapnik"=>"mapnik",
 );
 
