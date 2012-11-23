@@ -43,27 +43,8 @@ function renderd_gen_conf() {
     fwrite($conf, $template);
   }
 
+  // TODO: maybe move to "renderd_categories" or so?
   foreach(category_list() as $f=>$tags) {
-    print "check state of category '$f'\n";
-    $category=new category($f);
-    $cat_version=$category->get_newest_version();
-    $recompile=false;
-
-    if(!file_exists("$lists_dir/$f.renderd")) {
-      $recompile=true;
-    }
-    else {
-      $c=$category->get_renderd_config();
-
-      if((!isset($c['VERSION']))||($cat_version!=$c['VERSION']))
-	$recompile=true;
-    }
-
-    if($recompile) {
-      print "  (re-)compiling $f\n";
-      $category->compile();
-    }
-
     $conf_part=file_get_contents("$lists_dir/$f.renderd");
     fwrite($conf, $conf_part);
   }

@@ -1185,6 +1185,34 @@ function categories_mcp_start() {
   if(modulekit_loaded("cluster_call")) {
     cluster_call_register("category_save", "categories_has_saved");
   }
+
+  categories_check_compile();
+}
+
+function categories_check_compile() {
+  global $lists_dir;
+
+  foreach(category_list() as $f=>$tags) {
+    print "check state of category '$f'\n";
+    $category=new category($f);
+    $cat_version=$category->get_newest_version();
+    $recompile=false;
+
+    if(!file_exists("$lists_dir/$f.renderd")) {
+      $recompile=true;
+    }
+    else {
+      $c=$category->get_renderd_config();
+
+      if((!isset($c['VERSION']))||($cat_version!=$c['VERSION']))
+	$recompile=true;
+    }
+
+    if($recompile) {
+      print "  (re-)compiling $f\n";
+      $category->compile();
+    }
+  }
 }
 
 register_hook("init", "categories_init");
