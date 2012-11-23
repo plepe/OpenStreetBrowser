@@ -15,17 +15,12 @@ options:
 example: 
   http://.../list.php?viewbox=1820510.3841097,6140479.7509884,1821443.1547203,6139601.9194918&zoom=17&category=gastro&ui_lang=en
 */
+session_start();
 $design_hidden=1;
-include "code.php";
-include "inc/sql.php";
-include "inc/debug.php";
-include "inc/tags.php";
-include "inc/object.php";
-include "inc/categories.php";
-include "inc/lock.php";
-include "inc/category.php";
-include "inc/postgis.php";
-include "inc/global.php";
+?>
+<?php include "conf.php"; /* load a local configuration */ ?>
+<?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
+<?
 call_hooks("list_start");
 
 $importance=array("global", "international", "national", "regional", "urban", "suburban", "local");

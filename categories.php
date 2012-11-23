@@ -1,21 +1,10 @@
 <?
+session_start();
 $design_hidden=true;
-include "../conf.php";
-include "inc/hooks.php";
-include "inc/lock.php";
-include "inc/tags.php";
-include "inc/sql.php";
-include "inc/debug.php";
-include "inc/category.php";
-include "inc/categories.php";
-include "inc/process_category.php";
-include "inc/functions.php";
-include "inc/css.php";
-include "inc/plugins.php";
-include "../src/wiki_stuff.php";
-include "inc/user.php";
-include "inc/git_obj.php";
-plugins_init();
+?>
+<?php include "conf.php"; /* load a local configuration */ ?>
+<?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
+<?
 sql_query("SET enable_seqscan='off'");
 
 user_check_auth();
