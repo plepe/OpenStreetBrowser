@@ -122,6 +122,8 @@ function postprocess() {
 function get_icon($file) {
   global $icon_dir;
 
+  if(!isset($icon_dir))
+    icon_init();
   $icon_obj=$icon_dir->get_obj($file);
 
   if($icon_obj)

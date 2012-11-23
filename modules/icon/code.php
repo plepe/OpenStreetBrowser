@@ -31,6 +31,9 @@ function icon_init() {
   global $icon_dir;
   global $data_dir;
 
+  if(isset($icon_dir))
+    return;
+
   $icon_dir=new git_dir($data_dir, "icons", "icon_obj");
 }
 

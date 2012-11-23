@@ -49,6 +49,8 @@ $include=array(
     "inc/postgis.php",
     "inc/git_obj.php",
     "inc/data_dir.php",
+    "inc/git_dir.php",
+    "inc/git_master.php",
   ),
   'js'=>array(
     "inc/*.js",
