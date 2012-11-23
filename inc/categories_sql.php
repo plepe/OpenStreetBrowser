@@ -1,5 +1,4 @@
 <?
-$maybe_delete_indexes=array();
 $default_tags=array(
   'point'=>array(
     'icon_text'=>"[name];[ref];[operator]",
@@ -11,71 +10,6 @@ $default_tags=array(
     'icon_text'=>"[name];[ref];[operator]",
   ),
 );
-
-function register_index($table, $key, $type, $id, $val=null) {
-  $key=postgre_escape($key);
-  $val=postgre_escape($val);
-  print "register index called: {$id} {$table} {$type} {$key} {$val}\n";
-
-  $res=sql_query("select * from indexes where _table='$table' and _key=$key and _type='$type' and _val=$val");
-  if(!pg_num_rows($res)) {
-    switch($type) {
-      case "tsvector":
-        sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gist(osm_way, to_tsvector('simple', osm_tags->$key))");
-	break;
-      case "highest_number":
-        //sql_query("create index \"osm_{$table}_{$type}_{$key}\" on osm_{$table} using gist(osm_way, parse_highest_number(osm_tags->$key))");
-	break;
-      case "gteq":
-        //sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), $val, true, null, null)");
-	break;
-      case "lteq":
-        //sql_query("create index \"osm_{$table}_{$type}_{$key}_{$val}\" on osm_{$table} using gist(osm_way, osm_tags) where oneof_between(split_semicolon(osm_tags->$key), null, null, $val, true)");
-	break;
-    }
-  }
-
-  sql_query("insert into indexes values ('$table', $key, '$type', $val, '$id')");
-}
-
-function tmp_delete_indexes($id) {
-  global $maybe_delete_indexes;
-
-  $res=sql_query("select *, (select count(*) from indexes it where i._table=it._table and i._key=it._key and i._type=it._type and id!='$id') as count from indexes i where id='$id'");
-  while($elem=pg_fetch_assoc($res)) {
-    if($elem[count]==0)
-      $maybe_delete_indexes[]=$elem;
-  }
-
-  print_r($maybe_delete_indexes);
-
-  sql_query("delete from indexes where id='$id'");
-}
-
-function delete_indexes($id) {
-  global $maybe_delete_indexes;
-
-  $res=sql_query("select * from indexes where id='$id'");
-  while($elem=pg_fetch_assoc($res)) {
-    $list[]=$elem;
-  }
-
-  print_r($list);
-
-  for($i=0; $i<sizeof($maybe_delete_indexes); $i++) {
-    $found=false;
-    for($j=0; $j<sizeof($list); $j++) {
-      if(($list['table']==$maybe_delete_indexes['table'])&&
-         ($list['key']==$maybe_delete_indexes['key'])&&
-         ($list['type']==$maybe_delete_indexes['type']))
-	$found=true;
-    }
-
-    if(!$found) {
-      sql_query("drop index \"osm_{$maybe_delete_indexes['table']}_{$maybe_delete_indexes['type']}_{$maybe_delete_indexes['key']}\"");
-    }
-  }
-}
 
 function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   $tag_list=array();
@@ -341,8 +275,6 @@ function match_to_sql($match, $table_def, $type="exact") {
 	    $ret[]=postgre_escape($match[$i]);
 	  }
 
-	  register_index($table_def['table'], $match[1], "tsvector", 
-	                 $table_def['id']);
 	  return "$not to_tsvector('simple', ".match_to_sql_colname($match[1], $table_def, $type).") @@ to_tsquery('simple', ".implode("||' | '||", $ret).")";
 	default:
 	  $ret=array();
@@ -366,8 +298,6 @@ function match_to_sql($match, $table_def, $type="exact") {
 	// units and change the select-statement accordingly
 	$same="true";
 	$number=pow(100, floor(log($number, 100)+0.000001));
-	register_index($table_def['table'], $match[1], "gteq", 
-		       $table_def['id'], $number);
 	$var="split_semicolon(".match_to_sql_colname($match[1], $table_def, $type).")";
       }
       else {
@@ -383,8 +313,6 @@ function match_to_sql($match, $table_def, $type="exact") {
       if($type=="index") {
 	$same="true";
 	$number=pow(100, ceil(log($number, 100)));
-	register_index($table_def['table'], $match[1], "lteq", 
-		       $table_def['id'], $number);
 	$var="split_semicolon(".match_to_sql_colname($match[1], $table_def, $type).")";
       }
       else {
