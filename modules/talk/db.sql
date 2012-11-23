@@ -1,5 +1,5 @@
-drop table if exists talk;
-create table talk (
+drop table if exists @userdata@.talk;
+create table @userdata@.talk (
   page		text		not null,
   version	varchar(32)	not null,
   tags		hstore		default ''::hstore,
@@ -9,8 +9,8 @@ create table talk (
   primary key(version)
 );
 
-drop table if exists talk_current;
-create table talk_current (
+drop table if exists @userdata@.talk_current;
+create table @userdata@.talk_current (
   page		text		not null,
   version	varchar(32)	not null,
   now		timestamp with time zone	not null,
