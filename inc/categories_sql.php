@@ -22,12 +22,12 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
   $select=array();
   $where=array();
 
-  $select[]="osm_id";
-  $select[]="osm_way as geo";
-  $select[]="osm_way_point as geo_point";
-  $select[]="osm_way_line as geo_line";
-  $select[]="osm_way_polygon as geo_polygon";
-  $select[]="osm_tags";
+  $select[]="id";
+  $select[]="way as geo";
+  $select[]="way_point as geo_point";
+  $select[]="way_line as geo_line";
+  $select[]="way_polygon as geo_polygon";
+  $select[]="tags";
   
   $or_list=array("or");
   $i=0;
@@ -42,14 +42,14 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
 
   $funname="classify_{$id}_{$table}";
 
-  $select[]="$funname(osm_id, osm_tags, osm_way) as result";
+  $select[]="$funname(id, tags, way) as result";
 
   //$where[]="(\"rule_$id\"='$importance' or \"rule_$id\" is null)";
 
 //  if(in_array($importance, array("global", "international", "national")))
 //    $where[]="Intersects(osm_way, !bbox!)";
 //  else
-  $where[]="osm_way&&!bbox!";
+  $where[]="way&&!bbox!";
 
   print "WHERE";
   print_r($where);
@@ -60,7 +60,7 @@ function build_sql_match_table($rules, $table="point", $id="tmp", $importance) {
     $where="";
 
   $select=implode(", ", $select);
-  return "select t2.osm_id as osm_id, t2.geo, t2.geo_point, t2.geo_line, t2.geo_polygon, t2.osm_tags as osm_tags, t2.result->'rule_id' as rule_id, t2.result->'importance' as importance, result as rule_tags from (select {$select} {$from} {$where}) as t2 where t2.result->'importance'='$importance'";// group by t2.result[1], t2.result[2], t2.result[3]";
+  return "select t2.id as id, t2.geo, t2.geo_point, t2.geo_line, t2.geo_polygon, t2.tags as tags, t2.result->'rule_id' as rule_id, t2.result->'importance' as importance, result as rule_tags from (select {$select} {$from} {$where}) as t2 where t2.result->'importance'='$importance'";// group by t2.result[1], t2.result[2], t2.result[3]";
   //return "select array_to_string(to_textarray(t2.osm_id), ';') as osm_id, ST_Collect(t2.geo) as geo, tags_merge(to_array(t2.osm_tags)) as osm_tags, t2.result[1] as rule_id, t2.result[2] as importance, tags_merge(to_array(cd.rule_tags)) as rule_tags from (select {$select} {$from} {$where}) as t2 join categories_def cd on cd.category_id='$id' and cd.rule_id=t2.result[1] and t2.result[2]='$importance' group by t2.result[1], t2.result[2], t2.result[3]";
 //select *, rule_tags->'display_name_pattern' as display_name_pattern, rule_tags->'display_type_pattern' as display_type_pattern, rule_tags->'icon_text_pattern' as icon_text_pattern from (
 }
@@ -90,7 +90,7 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
     foreach($part as $key=>$values) {
       if(!in_array($key, $add_columns)) {
 	$classify_function_declare.="  tag_{$i} text[];\n";
-	$classify_function_getdata.="  tag_{$i}:=split_semicolon(osm_tags->".postgre_escape($key).");\n";
+	$classify_function_getdata.="  tag_{$i}:=split_semicolon(tags->".postgre_escape($key).");\n";
 	$add_columns[]=$key;
 	$tag_list[$key]=$i;
 
@@ -113,10 +113,10 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
 
     if($x=$tags->get("group")) {
       $x=postgre_escape($x);
-      $group_id="tags_parse(_osm_id, osm_tags, osm_way, $x)";
+      $group_id="tags_parse(_id, tags, way, $x)";
     }
     else {
-      $group_id="_osm_id";
+      $group_id="_id";
     }
 
     $arr=$tags->data();
@@ -142,15 +142,15 @@ function create_sql_classify_fun($rules, $table="point", $id="tmp") {
   $classify_function.="create or replace function $funname(text, hstore, geometry)\n";
   $classify_function.="returns hstore as $$\n";
   $classify_function.="declare\n";
-  $classify_function.="  _osm_id   alias for $1;\n";
-  $classify_function.="  osm_tags  alias for $2;\n";
-  $classify_function.="  osm_way   alias for $3;\n";
+  $classify_function.="  _id   alias for $1;\n";
+  $classify_function.="  tags  alias for $2;\n";
+  $classify_function.="  way   alias for $3;\n";
   $classify_function.=$classify_function_declare;
   $classify_function.="begin\n";
   $classify_function.=$classify_function_getdata;
   $classify_function.=$classify_function_match;
   $classify_function.="  if result is not null then\n";
-  $classify_function.="    result:=result || ('importance'=>tags_parse(_osm_id, osm_tags, osm_way, result->'importance'))::hstore;\n";
+  $classify_function.="    result:=result || ('importance'=>tags_parse(_id, tags, way, result->'importance'))::hstore;\n";
   $classify_function.="  end if;\n";
   $classify_function.="  return result;\n";
   $classify_function.="end;\n";
@@ -207,7 +207,7 @@ function match_to_sql_colname($col, $table_def, $type="exact") {
   if($type=="exact")
     return "tag_{$table_def[$col]}";
   elseif($type=="index")
-    return "osm_tags->".postgre_escape($col);
+    return "tags->".postgre_escape($col);
 }
 
 // valid types:
@@ -247,11 +247,11 @@ function match_to_sql($match, $table_def, $type="exact") {
 	case "index":
 	  $ret=array();
 	  for($i=2; $i<sizeof($match); $i++) {
-	    $ret[]="osm_tags @> ".array_to_hstore(array($match[1]=>$match[$i]));
+	    $ret[]="tags @> ".array_to_hstore(array($match[1]=>$match[$i]));
 	  }
 
 	  if($not)
-	    $ret[]="osm_tags ? ".postgre_escape($match[1]);
+	    $ret[]="tags ? ".postgre_escape($match[1]);
 
 	  return "$not (".implode(") or (", $ret).")";
 	default:
@@ -261,9 +261,9 @@ function match_to_sql($match, $table_def, $type="exact") {
 	  }
 
 	  if($not)
-	    $not="not osm_tags ? ".postgre_escape($match[1])." or not";
+	    $not="not tags ? ".postgre_escape($match[1])." or not";
 
-	  return "($not coalesce(osm_tags->".postgre_escape($match[1]).", '') in (".implode(", ", $ret)."))";
+	  return "($not coalesce(tags->".postgre_escape($match[1]).", '') in (".implode(", ", $ret)."))";
 	}
     case "~is not":
       $not="not";
@@ -285,9 +285,9 @@ function match_to_sql($match, $table_def, $type="exact") {
 	  return "$not oneof_in(".match_to_sql_colname($match[1], $table_def, $type).", ARRAY[".implode(", ", $ret)."])";
 	}
     case "exist":
-      return "osm_tags ? ".postgre_escape($match[1]);
+      return "tags ? ".postgre_escape($match[1]);
     case "exist not":
-      return "not osm_tags ? ".postgre_escape($match[1]);
+      return "not tags ? ".postgre_escape($match[1]);
     case ">=":
       $same="true";
     case ">":

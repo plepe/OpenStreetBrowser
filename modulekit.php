@@ -10,6 +10,7 @@ $depend=array("hooks", "lang", "pg_sql",
   "load_object",	// previously from inc/object.php
   "pg_array",		// depend inc/object.php
   "parse_number",	// depend inc/number.php
+  "tags",		// depend inc/categor*.php
 );
 
 // include these files from modules:

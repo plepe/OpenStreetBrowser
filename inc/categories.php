@@ -138,12 +138,12 @@ function get_icon($file) {
 //   'columns'=>"function|param1|param2" or
 //   'columns'=>array("function|param1|param2", ...) 
 //                                         // list of pgsql-functions to be
-//                                         // called, parameters for those 
+//                                         // called, parameters for those
 //                                         // functions are:
 //                                         // osb_function(
-//                                         //   osm_id as text,
-//                                         //   osm_tags as hstore,
-//                                         //   osm_way as geometry, 
+//                                         //   id as text,
+//                                         //   tags as hstore,
+//                                         //   way as geometry,
 //                                         //   rule_tags as hstore,
 //                                         //   param1 as text
 //                                         //   param2 as text
@@ -652,7 +652,7 @@ function build_mapnik_style($id, $data, $global_tags) {
 
       foreach($columns as $col) {
 	$el=explode("|", $col);
-	$str="osb_$el[0](t.osm_id, t.osm_tags, t.geo, t.rule_tags";
+	$str="osb_$el[0](t.id, t.tags, t.geo, t.rule_tags";
 	for($i=1; $i<sizeof($el); $i++)
 	  $str.=", ".postgre_escape($el[$i]);
 	$str.=") as \"$el[1]\"";

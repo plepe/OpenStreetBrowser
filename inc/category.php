@@ -159,6 +159,12 @@ class category {
     global $importance;
     global $postgis_tables;
     global $lists_dir;
+    global $DEFAULT_SRID;
+    global $DB_SRID;
+
+    $srid=$DEFAULT_SRID;
+    if(isset($param['srid'])&&preg_match("/^[0-9]*$/", $param['srid']))
+      $srid=$param['srid'];
 
     $list_data=$this->data;
     if(!$this->data['_']['version']) {
@@ -184,11 +190,11 @@ class category {
       $excl_list=explode(",", $param['exclude']);
       $exclude_list=array();
       foreach($excl_list as $e) {
-	if(ereg("^(node|way|rel|coll)_([0-9]*)$", $e, $m))
+	if(ereg("^[NWR]([0-9]*)$", $e, $m))
 	  $exclude_list[]=$m[0];
       }
 
-      $sql_where['*'][]="osm_id not in ('".implode("', '", $exclude_list)."')";
+      $sql_where['*'][]="id not in ('".implode("', '", $exclude_list)."')";
 
 /*      foreach($exclude_list as $type=>$excl_list) {
 	$exclude_list[$type]=" not in (".implode(", ", $excl_list).")";
@@ -210,7 +216,7 @@ class category {
     // viewbox
     if($param['viewbox']) {
       $coord=explode(",", $param['viewbox']);
-      $sql_where['*'][]="CollectionIntersects(SnapToGrid(geo, 0.00001), PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913))";
+      $sql_where['*'][]="CollectionIntersects(SnapToGrid(geo, 0.00001), ST_Transform(PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', $srid), $DB_SRID))";
     }
 
   //// set some more vars
@@ -259,7 +265,7 @@ class category {
 	    $where="true";
 
           $sql=strtr($req_data['sql'], array(
-	    "!bbox!"=>"PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', 900913)",
+	    "!bbox!"=>"ST_Transform(PolyFromText('POLYGON(($coord[0] $coord[1], $coord[2] $coord[1], $coord[2] $coord[3], $coord[0] $coord[3], $coord[0] $coord[1]))', $srid), $DB_SRID)",
 	  ));
 
 	  // Build Query
@@ -269,10 +275,10 @@ class category {
 	  $qryc.="/* {$this->id}.get_list: z{$param['zoom']}, {$imp} */ ";
 
 	  // Main query
-	  $qryc.="select *, astext(ST_Centroid(geo)) as center from (";
+	  $qryc.="select *, astext(ST_Transform(ST_Centroid(geo), $srid)) as center from (";
 	  $qryc.=$sql;
 	  $qryc.=") as x where $where limit $max_count";
-	  //print "==\n$qryc\n==";
+	  // print "==\n$qryc\n==";
 	  
 	  $resc=sql_query($qryc);
 	  $max_count-=pg_num_rows($resc);
@@ -318,11 +324,11 @@ class category {
     $id=array();
 
     global $make_valid;
-    $id=$res['osm_id'];
+    $id=$res['id'];
 
     $rule_tags=new tags(parse_hstore($res['rule_tags']));
 
-    $tags=parse_hstore($res['osm_tags']);
+    $tags=parse_hstore($res['tags']);
 
     $ret="<match ";
     $ob=load_object($res, $tags);
