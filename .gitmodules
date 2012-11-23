@@ -10,3 +10,6 @@
 [submodule "modules/base"]
 	path = modules/base
 	url = https://github.com/plepe/modulekit-base.git
+[submodule "modules/render-backend"]
+	path = modules/render-backend
+	url = https://github.com/plepe/OpenStreetBrowser-render-backend.git
