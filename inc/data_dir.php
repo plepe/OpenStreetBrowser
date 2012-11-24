@@ -2,7 +2,7 @@
 include_once "git_master.php";
 include_once "user.php";
 
-$data_dir=new git_master($data_path);
+$data_dir=new git_master("$data_path/git");
 
 function get_git_directory($id) {
   global $data_dir;
