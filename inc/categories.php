@@ -527,7 +527,7 @@ function categories_insert_fontsets($map, $dom) {
     // insert list of possible face names to each fontset
     foreach($fonts as $font) {
       $f=dom_create_append($fontset, "Font", $dom);
-      $f->setAttribute("face_name", $font);
+      $f->setAttribute("face-name", $font);
 
       $font_replace[$font]=$name;
     }
