@@ -462,10 +462,12 @@ function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance
 
 function mapnik_get_layer($dom, $name, $sql, $shape_type="") {
   global $db;
+  global $DB_SRID;
+  global $DB_SRS;
 
   $layer=$dom->createElement("Layer");
   $layer->setAttribute("name", "$name");
-  $layer->setAttribute("srs", "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over");
+  $layer->setAttribute("srs", $DB_SRS);
   $layer->setAttribute("status", "on");
   $style_name=$dom->createElement("StyleName");
   $style_name->appendChild($dom->createTextNode("$name"));
@@ -510,7 +512,7 @@ function mapnik_get_layer($dom, $name, $sql, $shape_type="") {
   $parameter=$dom->createElement("Parameter");
   $datasource->appendChild($parameter);
   $parameter->setAttribute("name", "srid");
-  $parameter->appendChild($dom->createTextNode("900913"));
+  $parameter->appendChild($dom->createTextNode($DB_SRID));
 
   return $layer;
 }
