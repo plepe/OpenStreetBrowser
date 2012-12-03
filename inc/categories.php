@@ -654,9 +654,8 @@ function build_mapnik_style($id, $data, $global_tags) {
 
       foreach($columns as $col) {
 	$el=explode("|", $col);
-	$str="osb_$el[0](t.id, t.tags, t.geo, t.rule_tags";
-	for($i=1; $i<sizeof($el); $i++)
-	  $str.=", ".postgre_escape($el[$i]);
+	$str="$el[0](t.id, t.tags, t.geo, t.rule_tags->";
+	$str.=postgre_escape($el[1]);
 	$str.=") as \"$el[1]\"";
 	$sql_select[]=$str;
       }
