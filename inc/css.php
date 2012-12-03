@@ -24,15 +24,10 @@ class css {
 
   function dom_set_attributes($dom, $xml) {
     foreach($this->style as $key=>$value) {
-      $dom->setAttribute($key, $value);
-    }
-  }
+      // legacy: Mapnik 2.0 changed "_" in parameters to "-"
+      $key=strtr($key, array("_"=>"-"));
 
-  function dom_set_css_parameters($dom, $xml) {
-    foreach($this->style as $key=>$value) {
-      $el=dom_create_append($dom, "CssParameter", $xml);
-      $el->setAttribute("name", $key);
-      dom_create_append_text($el, $value, $xml);
+      $dom->setAttribute($key, $value);
     }
   }
 }

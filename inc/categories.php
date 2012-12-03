@@ -26,12 +26,12 @@ $scale_text=array("global"=>4, "international"=>8, "national"=>10, "regional"=>1
 include_once "categories_sql.php";
 $default_style=array(
   "point|icon_style"=>"allow_overlap: true;",
-  "point|icon_label_style"=>"fontset_name: book; fill: #000000; size: 8; allow_overlap: true; halo_fill: #ffffff; halo_radius: 1;",
-  "line_text_style"=>"fontset_name: book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;",
-  "point|icon_text_style"=>"fontset_name: book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1",
-  "line|icon_label_style"=>"fontset_name: book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; spacing: 200; placement: line; halo_fill: #ffffff; halo_radius: 1;",
-  "line|icon_text_style"=>"fontset_name: book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; placement: point; halo_fill: #ffffff; halo_radius: 1;",
-  "line_text_style"=>"fontset_name: book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;",
+  "point|icon_label_style"=>"fontset-name: book; fill: #000000; size: 8; allow_overlap: true; halo-fill: #ffffff; halo-radius: 1;",
+  "line_text_style"=>"fontset-name: book; fill: #000000; size: 10; halo-fill: #ffffff; halo-radius: 1; spacing: 300;",
+  "point|icon_text_style"=>"fontset-name: book; fill: #000000; size: 10; halo-fill: #ffffff; halo-radius: 1",
+  "line|icon_label_style"=>"fontset-name: book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; spacing: 200; placement: line; halo-fill: #ffffff; halo-radius: 1;",
+  "line|icon_text_style"=>"fontset-name: book; fill: #000000; size: 8; allow_overlap: false; min_distance: 15; placement: point; halo-fill: #ffffff; halo-radius: 1;",
+  "line_text_style"=>"fontset-name: book; fill: #000000; size: 10; halo-fill: #ffffff; halo-radius: 1; spacing: 300;",
   "line_style"=>"stroke-width: 2; stroke: #7f7f7f;",
   "polygon_style"=>"fill-opacity: 0.5; fill: #7f7f7f;",
 );
@@ -180,17 +180,13 @@ function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags, $importanc
   $sym=$dom->createElement("PointSymbolizer");
   $rule->appendChild($sym);
   $sym->setAttribute("file", "$icon");
-  $sym->setAttribute("type", "png");
 
   $size=getimagesize("$icon");
-
-  $sym->setAttribute("width", $size[0]);
-  $sym->setAttribute("height", $size[1]);
 
   $style=new css($default_style['point|icon_style']);
   $style->apply($global_tags->get("icon_style"));
   $style->apply($tags->get("icon_style"));
-  foreach(array("file", "width", "height", "type") as $a)
+  foreach(array("file") as $a)
     unset($style->style[$a]);
   $style->dom_set_attributes($sym, $dom);
 
@@ -198,13 +194,13 @@ function mapnik_style_point_icon($dom, $rule_id, $tags, $global_tags, $importanc
     $sym=$dom->createElement("TextSymbolizer");
     $rule->appendChild($sym);
 
-    $sym->setAttribute("name", "icon_label");
+    $sym->setAttribute("name", "[icon_label]");
     $sym->setAttribute("placement", "point");
 
     $style=new css($default_style['point|icon_label_style']);
     $style->apply($global_tags->get("icon_label_style"));
     $style->apply($tags->get("icon_label_style"));
-    foreach(array("vertical_alignment", "name", "dy") as $a)
+    foreach(array("vertical-alignment", "name", "dy") as $a)
       unset($style->style[$a]);
     $style->dom_set_attributes($sym, $dom);
     $add_columns[]="tags_parse|icon_label";
@@ -240,18 +236,18 @@ function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags, $importanc
 
 	$size=getimagesize("$icon");
 	$sym->setAttribute("dy", $size[1]/2+1);
-	$sym->setAttribute("vertical_alignment", "bottom");
+	$sym->setAttribute("vertical-alignment", "bottom");
       }
 
   $add_columns[]="tags_parse|icon_text";
-  $sym->setAttribute("name", "icon_text");
+  $sym->setAttribute("name", "[icon_text]");
   $sym->setAttribute("placement", "point");
 
   $style=new css($default_style['point|icon_text_style']);
   $style->apply($global_tags->get("icon_text_style"));
   $style->apply($tags->get("icon_text_style"));
   print_r($style);
-  foreach(array("vertical_alignment", "name", "dy") as $a)
+  foreach(array("vertical-alignment", "name", "dy") as $a)
     unset($style->style[$a]);
   $style->dom_set_attributes($sym, $dom);
 
@@ -261,18 +257,18 @@ function mapnik_style_point_text($dom, $rule_id, $tags, $global_tags, $importanc
 
     if($icon) {
       $sym->setAttribute("dy", $size[1]/2+1+$style->style['size']);
-      $sym->setAttribute("vertical_alignment", "bottom");
+      $sym->setAttribute("vertical-alignment", "bottom");
     }
 
     $add_columns[]="tags_parse|icon_text_data";
-    $sym->setAttribute("name", "icon_text_data");
+    $sym->setAttribute("name", "[icon_text_data]");
     $sym->setAttribute("placement", "point");
 
     $style=new css($default_style['point|icon_text_style']);
     $style->apply($global_tags->get("icon_text_style"));
     $style->apply($tags->get("icon_text_style"));
     $style->style['size']-=2;
-    foreach(array("vertical_alignment", "name", "dy") as $a)
+    foreach(array("vertical-alignment", "name", "dy") as $a)
       unset($style->style[$a]);
     $style->dom_set_attributes($sym, $dom);
   }
@@ -304,7 +300,7 @@ function mapnik_style_polygon_polygon($dom, $rule_id, $tags, $global_tags, $impo
   $style->apply($global_tags->get("polygon_style"));
   $style->apply($tags->get("polygon_style"));
 
-  $style->dom_set_css_parameters($sym, $dom);
+  $style->dom_set_attributes($sym, $dom);
 
   return array('rule'=>$rule);
 }
@@ -333,7 +329,7 @@ function mapnik_style_line_line($dom, $rule_id, $tags, $global_tags, $importance
   $style->apply($global_tags->get("line_style"));
   $style->apply($tags->get("line_style"));
 
-  $style->dom_set_css_parameters($sym, $dom);
+  $style->dom_set_attributes($sym, $dom);
 
   return array('rule'=>$rule);
 }
@@ -370,18 +366,14 @@ function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags, $importance
   $sym=$dom->createElement("ShieldSymbolizer");
   $rule->appendChild($sym);
   $sym->setAttribute("file", "$icon");
-  $sym->setAttribute("type", "png");
 
   $size=getimagesize("$icon");
-
-  $sym->setAttribute("width", $size[0]);
-  $sym->setAttribute("height", $size[1]);
 
   if($tags->get("icon_label")) {
     $style=new css($default_style['line|icon_label_style']);
 
     $add_columns[]="tags_parse|icon_label";
-    $sym->setAttribute("name", "icon_label");
+    $sym->setAttribute("name", "[icon_label]");
 
     $style->apply($global_tags->get("icon_label_style"));
     $style->apply($tags->get("icon_label_style"));
@@ -390,9 +382,9 @@ function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags, $importance
     $style=new css($default_style['line|icon_text_style']);
 
     $add_columns[]="tags_parse|icon_text";
-    $sym->setAttribute("name", "icon_text");
+    $sym->setAttribute("name", "[icon_text]");
     $sym->setAttribute("dy", $size[1]/2+4);
-    $sym->setAttribute("vertical_alignment", "bottom");
+    $sym->setAttribute("vertical-alignment", "bottom");
 
     $style->apply($global_tags->get("icon_text_style"));
     $style->apply($tags->get("icon_text_style"));
@@ -401,11 +393,11 @@ function mapnik_style_line_icon($dom, $rule_id, $tags, $global_tags, $importance
     $style=new css($default_style['line|icon_label_style']);
 
     $add_columns[]="empty_string|icon_label";
-    $sym->setAttribute("name", "icon_label");
+    $sym->setAttribute("name", "[icon_label]");
     $sym->setAttribute("no_text", "true");
   }
 
-  foreach(array("file", "width", "height", "type") as $a)
+  foreach(array("file") as $a)
     unset($style->style[$a]);
   $style->dom_set_attributes($sym, $dom);
 
@@ -433,7 +425,7 @@ function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance
   $sym=$dom->createElement("TextSymbolizer");
   $rule->appendChild($sym);
 
-  $sym->setAttribute("name", "line_text");
+  $sym->setAttribute("name", "[line_text]");
   $sym->setAttribute("placement", "line");
 
   $style=new css($default_style['line_text_style']);
@@ -449,7 +441,7 @@ function mapnik_style_line_text($dom, $rule_id, $tags, $global_tags, $importance
   $sym->setAttribute("name", "line_type");
   $sym->setAttribute("placement", "line");
 
-  $style=new css("fontset_name: book; fill: #000000; size: 10; halo_fill: #ffffff; halo_radius: 1; spacing: 300;");
+  $style=new css("fontset-name: book; fill: #000000; size: 10; halo-fill: #ffffff; halo-radius: 1; spacing: 300;");
   $style->apply($global_tags->get("display_style"));
   $style->apply($tags->get("display_style"));
   $style->style['size']-=2;
