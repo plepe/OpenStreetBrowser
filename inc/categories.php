@@ -497,10 +497,7 @@ function mapnik_get_layer($dom, $name, $sql, $shape_type="") {
   $parameter=$dom->createElement("Parameter");
   $datasource->appendChild($parameter);
   $parameter->setAttribute("name", "geometry_field");
-  if($shape_type!="") 
-    $parameter->appendChild($dom->createTextNode("geo_{$shape_type}"));
-  else
-    $parameter->appendChild($dom->createTextNode("geo"));
+  $parameter->appendChild($dom->createTextNode("geo"));
   $parameter=$dom->createElement("Parameter");
   $datasource->appendChild($parameter);
   $parameter->setAttribute("name", "srid");
