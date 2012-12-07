@@ -731,12 +731,14 @@ function category_check_state() {
 
   // $lists_dir set?
   if(!$lists_dir) {
-    return "Variable \$lists_dir is not set!";
+    global $data_path;
+
+    $lists_dir="$data_path/categories";
   }
 
   // No directory to change into ...
   if(!file_exists("$lists_dir")) {
-    return "$lists_dir does not exist!";
+    mkdir("$lists_dir");
   }
 
   // Check if git repository is ready
@@ -1166,6 +1168,14 @@ function categories_has_saved($id) {
 function categories_init() {
   global $default_categories;
   global $category_tiles_url;
+  global $lists_dir;
+
+  // $lists_dir set?
+  if(!isset($lists_dir)) {
+    global $data_path;
+
+    $lists_dir="$data_path/categories";
+  }
 
   if(isset($default_categories))
     html_export_var(array("default_categories"=>$default_categories));
@@ -1183,6 +1193,19 @@ function categories_mcp_start() {
 
 function categories_check_compile() {
   global $lists_dir;
+
+  // $lists_dir set?
+  if(!isset($lists_dir)) {
+    global $data_path;
+
+    $lists_dir="$data_path/categories";
+  }
+
+  // No directory to change into ...
+  if(!file_exists("$lists_dir")) {
+    debug("Creating categories directory '{$lists_dir}'", "categories");
+    mkdir("$lists_dir");
+  }
 
   foreach(category_list() as $f=>$tags) {
     print "check state of category '$f'\n";
@@ -1208,4 +1231,5 @@ function categories_check_compile() {
 }
 
 register_hook("init", "categories_init");
+register_hook("list_start", "categories_init");
 register_hook("mcp_start", "categories_mcp_start");

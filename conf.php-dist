@@ -73,9 +73,6 @@ $data_path="/home/osm/data";
 // $www_path - path of the www-directory as accessible from the interwebs
 $www_path="http://www.openstreetbrowser.org/";
 
-// $lists_dir - saves available categories (has to be writeable for www)
-$lists_dir="$root_path/data/lists";
-
 // $fifo_path - the pipe to the mcp-process
 $fifo_path="/tmp/mcp.fifo";
 
