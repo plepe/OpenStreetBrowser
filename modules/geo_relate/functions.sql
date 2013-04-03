@@ -92,7 +92,7 @@ DECLARE
   tags alias for $2;
   way alias for $3;
   max_dist alias for $4;
-  where_str text:=''; -- alias for $5
+  where_str text:=null; -- alias for $5
   ret record;
   result float[];
   line_point geometry;
@@ -103,6 +103,10 @@ DECLARE
   pos_p float;
   pos_n float;
   length float;
+  sql text;
+  way_900913 geometry;
+  ret_way_900913 geometry;
+  ret_pos float;
 BEGIN
   result:=cache_search(id, 'geo_relate_calc_angles|'||$5||'|'||max_dist);
   if result is not null then
@@ -110,20 +114,28 @@ BEGIN
   end if;
 
   if $5 != '' then
-    where_str:='and '||$5;
+    where_str:=$5;
   end if;
 
-  execute 'select *, line_locate_point(osm_way, $3) as "pos" from osm_line where osm_way && ST_Buffer($3, $4) ' || where_str || ' and Distance($3, osm_way)<$4 order by Distance($3, osm_way) asc limit 1' into ret using id, tags, way, max_dist;
+  sql:='select * from osm_line(ST_Buffer($3, $4), $xx$' || where_str || '$xx$) where Distance($3, way)<$4 order by Distance($3, way) asc limit 1';
+  sql:=replace(sql, 'OB_TAGS', quote_nullable(cast(tags as text)));
 
-  line_point:=line_interpolate_point(ret.osm_way, ret.pos);
+  execute sql into ret using id, tags, way, max_dist;
 
-  if ST_Length(ret.osm_way)=0 then
+  if ST_Length(ret.way)=0 then
     return null;
   end if;
 
-  length:=ST_Length(ret.osm_way);
-  pos_p:=ret.pos-0.001/length;
-  pos_n:=ret.pos+0.001/length;
+  way_900913=ST_Transform(way, 900913);
+  ret_way_900913=ST_Transform(ret.way, 900913);
+
+  ret_pos:=line_locate_point(ret_way_900913, way_900913);
+
+  line_point:=line_interpolate_point(ret_way_900913, ret_pos);
+
+  length:=ST_Length(ret_way_900913);
+  pos_p:=ret_pos-0.001/length;
+  pos_n:=ret_pos+0.001/length;
 
   if pos_p<0 then
     pos_p:=0;
@@ -135,11 +147,11 @@ BEGIN
 
   -- raise notice 'pos: % % - % - % %', 0, pos_p, ret.pos, pos_n, ST_Length(ret.osm_way);
 
-  angle:=ST_Azimuth(line_interpolate_point(ret.osm_way, pos_p), line_interpolate_point(ret.osm_way, pos_n));
+  angle:=ST_Azimuth(line_interpolate_point(ret_way_900913, pos_p), line_interpolate_point(ret_way_900913, pos_n));
 
-  angle_p:=ST_Azimuth(line_interpolate_point(ret.osm_way, pos_p), line_point);
+  angle_p:=ST_Azimuth(line_interpolate_point(ret_way_900913, pos_p), line_point);
 
-  angle_n:=ST_Azimuth(line_point, line_interpolate_point(ret.osm_way, pos_n));
+  angle_n:=ST_Azimuth(line_point, line_interpolate_point(ret_way_900913, pos_n));
 
   if angle_p is null then
     angle_p:=angle_n;
@@ -147,7 +159,7 @@ BEGIN
     angle_n:=angle_p;
   end if;
 
-  angle_norm:=ST_Azimuth(way, line_point)+(pi()/2);
+  angle_norm:=ST_Azimuth(ST_Transform(way, 900913), line_point)+(pi()/2);
   if angle_norm is null then
     angle_norm:=angle;
   end if;
