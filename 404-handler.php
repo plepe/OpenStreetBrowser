@@ -1,16 +1,16 @@
+<?php include "conf.php"; /* load a local configuration */ ?>
+<?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?
 Header("HTTP/1.1 404 Not Found");
 
-if(preg_match("~^/tiles/basemap_base/~", $_SERVER['REQUEST_URI'])) {
-  Header("content-type: image/png");
+$list=array(array(10, array(
+  'body'=>"The requested URL {$_SERVER['REQUEST_URI']} was not found on this server.",
+)));
+call_hooks("404", &$list, $_SERVER['REQUEST_URI']);
 
-  print file_get_contents("plugins/basemap/404.png");
+$list=weight_sort($list);
+if(isset($list[0]['header'])) {
+  foreach($list[0]['header'] as $header)
+    Header($header);
 }
-elseif(preg_match("~^/tiles/~", $_SERVER['REQUEST_URI'])) {
-  Header("content-type: image/png");
-
-  print file_get_contents("img/404.png");
-}
-else {
-  print "The requested URL {$_SERVER['REQUEST_URI']} was not found on this server.";
-}
+print $list[0]['body'];
