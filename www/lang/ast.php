@@ -2,7 +2,7 @@
 // In this editor you can translate all strings. In the third column you can compare the strings to another language (set it in the select box on the bottom of the window). Please note that changes will not appear right away, they need to be imported by a developer.
 // Every language string can have a singular and plural variant by separating them by ";", e.g. "Restaurant;Restaurants". The first string is the singular form, the second the plural form.  Optionally you can define the Gender (F, M, N) for the word by prepending one of those characters, e.g. "N;Büro;Büros" (German for "office").
 // When translating a language variant (e.g. 'British English', code 'en-gb') please translate only strings which are different from the base language.
-$lang_str["base_language"]="en"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
+$lang_str["base_language"]="es"; // Set the language code for a base language which should be used if a string has not been translated to this language. Usually you want to set it to 'en' (English), but for a language variants and dialects set it to the main language. Some world regions might also consider another base language as more appropriate.
 
 $lang_str["lang:current"]="Asturianu"; // The name of the current language in the native tongue (e.g. "Deutsch" for German)
 
@@ -22,6 +22,9 @@ $lang_str["choose"]="Escoyer";
 $lang_str["help"]="Ayuda";
 $lang_str["longitude"]=array("Llonxitú", "Llonxitúes");
 $lang_str["latitude"]=array("Llatitú", "Llatitúes");
+$lang_str["altitude"]=array("Altitú", "Altitúes");
+$lang_str["heading"]="Direición";
+$lang_str["speed"]="Velocidá";
 $lang_str["noname"]="(ensin nome)";
 $lang_str["info_back"]="dir a vista xeneral";
 $lang_str["info_zoom"]="zoom";
@@ -136,3 +139,10 @@ $lang_str["basemap:osb_light"]="OpenStreetBrowser (dilíu)";
 $lang_str["basemap:mapnik"]="Estándar (Mapnik)";
 $lang_str["basemap:osmarender"]="Estándar (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
+
+$lang_str["zoom_in"]="Ampliar";
+$lang_str["zoom_out"]="Reducir";
+$lang_str["pan_north"]="Mover al norte";
+$lang_str["pan_east"]="Mover al este";
+$lang_str["pan_south"]="Mover al sur";
+$lang_str["pan_west"]="Mover al oeste";
