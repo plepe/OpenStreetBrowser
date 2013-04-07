@@ -50,7 +50,7 @@ $lang_str["tag:admin_level=8"]="Stadt und Gemeinde";
 $lang_str["tag:admin_level=10"]="Stadtteil";
 
 // amenity
-$lang_str["tag:amenity"]="Einrichtung";
+$lang_str["tag:amenity"]=array("Einrichtung", "Einrichtungen");
 $lang_str["tag:amenity=cinema"]=array("Kino", "Kinos");
 $lang_str["tag:amenity=restaurant"]=array("Restaurant", "Restaurants");
 $lang_str["tag:amenity=pub"]=array("Pub", "Pubs");

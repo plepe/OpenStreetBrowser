@@ -15,6 +15,9 @@ $lang_str["choose"]="Auswählen";
 $lang_str["help"]="Hilfe";
 $lang_str["longitude"]=array("Longitude", "Longituden");
 $lang_str["latitude"]=array("Latitude", "Latituden");
+#$lang_str["altitude"]=array("Altitude", "Altitudes");
+#$lang_str["heading"]=array("Heading", "Headings");
+$lang_str["speed"]="Geschwindigkeit";
 $lang_str["noname"]="(kein Name)";
 $lang_str["info_back"]="zur Übersicht";
 $lang_str["info_zoom"]="zoomen";
@@ -27,6 +30,7 @@ $lang_str["unnamed"]="Namenlos";
 $lang_str["zoom"]="Zoomstufe";
 $lang_str["no_message"]=array("keine Nachricht", "keine Nachrichten");
 $lang_str["ad"]=array("Werbung", "Werbungen");
+#$lang_str["menu"]="Menu";
 
 // Headings
 $lang_str["head:general_info"]="Allgemeine Informationen";
@@ -129,3 +133,10 @@ $lang_str["basemap:osb_light"]="OpenStreetBrowser (blass)";
 $lang_str["basemap:mapnik"]="Standard (Mapnik)";
 $lang_str["basemap:osmarender"]="Standard (OsmaRender)";
 $lang_str["basemap:cyclemap"]="CycleMap";
+
+#$lang_str["zoom_in"]="zoom in";
+#$lang_str["zoom_out"]="zoom out";
+#$lang_str["pan_north"]="pan viewport North";
+#$lang_str["pan_east"]="pan viewport East";
+#$lang_str["pan_south"]="pan viewport South";
+#$lang_str["pan_west"]="pan viewport West";
