@@ -258,6 +258,17 @@ $lang_str["tag:religion=multifaith"]="delles relixones";
 
 // denomination
 $lang_str["tag:denomination"]="Denominación";
+$lang_str["tag:denomination=anglican"]="anglicana";
+$lang_str["tag:denomination=baptist"]="baptista";
+$lang_str["tag:denomination=catholic"]="católica";
+$lang_str["tag:denomination=greek_orthodox"]="ortodoxa griega";
+$lang_str["tag:denomination=lutheran"]="luterana";
+$lang_str["tag:denomination=orthodox"]="ortodoxa";
+$lang_str["tag:denomination=old-catholic"]="católica antigua";
+$lang_str["tag:denomination=protestant"]="protestante";
+$lang_str["tag:denomination=roman_catholic"]="católica romana";
+$lang_str["tag:denomination=russian_orthodox"]="ortodoxa rusa";
+$lang_str["tag:denomination=united_reformed"]="reformada unida";
 
 // route
 $lang_str["tag:route"]="Ruta";
@@ -393,6 +404,7 @@ $lang_str["tag:natural=glacier"]="Glaciar";
 $lang_str["tag:natural=volcano"]="Volcán";
 $lang_str["tag:natural=wood"]="Viesca";
 $lang_str["tag:natural=tree"]="Árbol";
+$lang_str["tag:natural=cliff"]="Cantil";
 
 // geological
 $lang_str["tag:geological"]="Xeolóxicu";
