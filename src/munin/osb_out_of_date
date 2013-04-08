@@ -1,14 +1,15 @@
 #!/usr/bin/php
 <?
-include "/home/osm/conf.php";
-include_once "/home/osm/conf.php";
+// Found root path of script
+$path=$argv[0];
+if(is_link($path))
+  $path=readlink($path);
+$path=realpath(dirname($path)."/../..");
+chdir($path);
 
-function register_hook($d1, $d2) {
-}
-
-include_once "/home/osm/src/inc/sql.php";
-
-include_once "$root_path/www/plugins/state_info/code.php";
+include "conf.php";
+$modulekit_load[]="state_info";
+include "modulekit/loader.php";
 
 function out_of_date() {
   global $root_path;
