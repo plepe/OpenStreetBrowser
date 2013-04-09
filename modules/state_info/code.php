@@ -1,6 +1,6 @@
 <?
 function state_info_date() {
-  $res=sql_query("select * from osm_status");
+  $res=sql_query("select tstamp as last_change from nodes where id=(select max(id) from nodes);");
   $elem=pg_fetch_assoc($res);
 
   $t=new DateTime($elem['last_change']);
