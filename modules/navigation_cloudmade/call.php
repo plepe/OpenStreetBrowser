@@ -1,5 +1,5 @@
 <?
-include "../../../conf.php";
+include "../../conf.php";
 
 $valid_cm_param=array("lang", "units");
 $param=$_REQUEST;
