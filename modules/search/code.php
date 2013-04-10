@@ -1,5 +1,6 @@
 <?
 function search($param) {
+  $type_mapping=array("node"=>"N", "way"=>"W", "relation"=>"R");
   $ret=array();
   $search_str=$param['value'];
   $add_param=array();
@@ -25,15 +26,13 @@ function search($param) {
   for($i=0; $i<$obl->length; $i++) {
     $ob=$obl->item($i);
 
-    $type=$ob->getAttribute("osm_type");
-    if($type=="relation")
-      $type="rel";
+    $type=$type_mapping[$ob->getAttribute("osm_type")];
     $id=$ob->getAttribute("osm_id");
 
     $nominatim_id=$ob->getAttribute("place_id");
 
     $ret_ob=array(
-      'osm_id'   =>"{$type}_{$id}",
+      'osm_id'   =>"{$type}{$id}",
       'osm_tags' =>array(),
     );
 
