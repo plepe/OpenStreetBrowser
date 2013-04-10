@@ -72,7 +72,6 @@ $lang_str["main:help"]="Ayuda";
 $lang_str["main:options"]="Opciones";
 $lang_str["main:about"]="Tocante a";
 $lang_str["main:donate"]="Donativos";
-$lang_str["main:licence"]="Datos del mapa: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> collaboradores de <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> y <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">collaboradores</a>";
 $lang_str["main:permalink"]="Enllaz permanente";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Nun s'alcontró l'oxetu</h1>Nun se pudo alcontrar l'oxetu cola ID \"%s\". Esto pue ser por una (o más) de les razones darréu:<ul><li>La ID ta enquivocada.</li><li>L'oxetu ta identificáu pol sitiu d'un terceru y (entá) nun ta disponible nel OpenStreetBrowser.</li><li>L'oxetu ta fuera del área con sofitu.</li><li>L'enllaz que siguisti ye antiguu y l'oxetu se desanició d'OpenStreetMap.</li></ul>";

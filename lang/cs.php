@@ -72,7 +72,6 @@ $lang_str["main:help"]="Nápověda";
 $lang_str["main:options"]="Nastavení";
 $lang_str["main:about"]="O Projektu";
 $lang_str["main:donate"]="Sponzorovat";
-$lang_str["main:licence"]="Data na mapě: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> přispěvatelé | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> a <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">přispěvatelé</a>";
 $lang_str["main:permalink"]="Trvalý odkaz";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>Nebyl nalezen žádný objekt s ID \"%s\". Toto nastalo z jednoho z (nebo více) následujících důvodů:<ul><li>ID je špatné.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>Objekt je mimo podporovanou oblast.</li><li>Váš odkaz je starý a objekt už byl pravděpodobně vymazán z OpenStreetMap.</li></ul>";

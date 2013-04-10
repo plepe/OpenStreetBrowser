@@ -69,7 +69,6 @@ $lang_str["main:help"]="Помощь";
 $lang_str["main:options"]="Настройки";
 $lang_str["main:about"]="Информация";
 $lang_str["main:donate"]="Помочь проекту";
-$lang_str["main:licence"]="Информация о карте: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> авторы | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Стефан Плепелти</a> и <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">другие</a>";
 $lang_str["main:permalink"]="Постоянная ссылка";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Объект не найден</h1>Объектов с ID \"%s\" не найдено. Это может быть связано с одной (или более) из следующих причин: <ul><li>Не правильный ID.</li><li>Объект был определен сайтами сторонних производителей и не является (пока) доступным в OpenStreetBrowser.</li><li>Объект находится вне поддерживается области.</li><li>Ссылка по которой Вы сюда пришли оказалась старой и объект уже был удалён из OpenStreetMap.</li></ul>";

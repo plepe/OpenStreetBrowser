@@ -69,7 +69,6 @@ $lang_str["main:help"]="Help";
 $lang_str["main:options"]="Opties";
 $lang_str["main:about"]="Over";
 $lang_str["main:donate"]="Doneer";
-$lang_str["main:licence"]="Kaartdata: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> bijdragers | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> en <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">bijdragers</a>";
 $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object niet gevonden</h1>Er kan geen object met het ID \"%s\" worden gevonden. Dit kan te wijten zijn aan een (of meer) van de volgende redenen:<ul><li>Het ID is fout.</li><li>Het object werd geïdentificeerd door een site van derden en is (nog) niet beschikbaar in de OpenStreetBrowser.</li><li>Het object valt buiten de ondersteunde gebied.</li><li>De link die u volgde was oud en het object is verwijderd uit OpenStreetMap.</li></ul>";

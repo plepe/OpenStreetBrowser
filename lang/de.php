@@ -73,7 +73,7 @@ $lang_str["main:help"]="Hilfe";
 $lang_str["main:options"]="Optionen";
 $lang_str["main:about"]="Impressum";
 $lang_str["main:donate"]="Spende";
-$lang_str["main:licence"]="Kartendaten: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a>-Mitwirkende | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> und <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">Mitwirkende</a>";
+$lang_str["main:licence"]="Kartendaten: <a href='http://www.openstreetmap.org/copyright'>© OpenStreetMap-Mitwirkende</a>, <a href='http://opendatacommons.org/licenses/odbl/'>ODbL</a> | Darstellung: <a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA 2.0</a> | Code: <a href='http://www.gnu.org/licenses/agpl.html'>AGPL 3.0</a> <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Bösch-Plepelits</a> und <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">Mitwirkende</a>";
 $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Objekt nicht gefunden</h1>Es konnte kein Objekt mit der ID \"%s\" gefunden werden. Dies kann einen (oder mehrere) der folgenden Gründe haben:<ul><li>Die ID ist falsch.</li><li>Das Objekt wurde durch Dritte identifiziert und ist (noch) nicht bei OpenStreetBrowser verfügbar.</li><li>Das Objekt liegt außerhalb des unterstützen Gebiets.</li><li>Der Link dem du gefolgt bist ist alt und das Objekt wurde zwischenzeitlich aus OpenStreetMap entfernt.</li></ul>";

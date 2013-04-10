@@ -72,7 +72,6 @@ $lang_str["main:help"]="Βοήθεια";
 $lang_str["main:options"]="Επιλογές";
 $lang_str["main:about"]="Περί";
 $lang_str["main:donate"]="Δωρεά";
-$lang_str["main:licence"]="Δεδομένα Χάρτη: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> συνεργάτες | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> και <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">συνεργάτες</a>";
 #$lang_str["main:permalink"]="Permalink";
 
 #$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";

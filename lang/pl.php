@@ -69,7 +69,6 @@ $lang_str["main:help"]="Pomoc";
 $lang_str["main:options"]="Opcje";
 $lang_str["main:about"]="O programie";
 $lang_str["main:donate"]="Podaruj";
-$lang_str["main:licence"]="Dane mapy: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> współpracownicy | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> i <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">współpracownicy OSM</a>";
 $lang_str["main:permalink"]="Stały link";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Obiekt nie został znaleziony</h1>Obiekt ID \"%s\" nie został znaleziony. Może wynikać z jednego (lub kilku) poniższych powodów:<ul><li>ID jest nieprawidłowe.</li><li>Obiekt został stworzony przez zewnętrzną witrynę i (jeszcze) nie jest dostępny w OpenStreetBrowser.</li><li>Obiekt znajduje się poza obszarem tej mapy.</li><li>Link, którego użyłeś, był stary i obiekt został już skasowany z OpenStreetMap.</li></ul>";

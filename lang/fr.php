@@ -69,7 +69,6 @@ $lang_str["main:help"]="Aide";
 $lang_str["main:options"]="Options";
 $lang_str["main:about"]="À Propos de";
 $lang_str["main:donate"]="Faire un don";
-$lang_str["main:licence"]="Données : <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributeurs | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> et <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">contributeurs</a>";
 $lang_str["main:permalink"]="Lien permanent";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Objet non trouvé</h1>Aucun objet avec l'ID \"%s\" n'a pu être trouvé. Ceci peut être dû à une (ou plus) des raisons suivantes::<ul><li>L'ID est inexistant.</li><li>L'objet a été identifié par un site tiers et n'est pas encore disponible dans OpenStreetBrowser.</li><li>L'objet n'est pas dans la zone supportée.</li><li>Le lien que vous suivez est ancien et a été effacé sur OpenStreetMap.</li></ul>";

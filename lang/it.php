@@ -67,7 +67,6 @@ $lang_str["list_leisure_sport_tourism"]="Tempo libero, sport e turismo";
 $lang_str["main:options"]="Opzioni";
 $lang_str["main:about"]="Informazioni";
 $lang_str["main:donate"]="Donazioni";
-$lang_str["main:licence"]="Dati cartografici: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap</a> contributors | OSB: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> e <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">collaboratori</a>";
 $lang_str["main:permalink"]="Permalink";
 
 $lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Oggetto non trovato</h1>Non è stato trovato alcun oggetto con ID \"%s\". Ciò può essere dovuto ad uno (o più) dei seguenti motivi:<ul><li>L'ID è sbagliato.</li><li>L'oggetto è stato identificato tramite strumenti di terze parti, ma non è ancora disponibile in OpenStreetBrowser.</li><li>L'oggetto è situato all'esterno dell'area supportata.</li><li>Il link che hai seguito è obsoleto e nel frattempo l'oggetto è stato eliminato da OpenStreetMap.</li></ul>";

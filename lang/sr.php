@@ -69,7 +69,6 @@ $lang_str["main:help"]="Помоћ";
 $lang_str["main:options"]="Опције";
 $lang_str["main:about"]="О";
 $lang_str["main:donate"]="Донирај";
-$lang_str["main:licence"]="Картографски подаци: <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">cc-by-sa</a> <a href=\"http://www.openstreetmap.org\">OpenStreetMap (ОтворенаУличнаКарта)</a> учествовали | ОУК: <a href=\"http://wiki.openstreetmap.org/wiki/User:Skunk\">Stephan Plepelits</a> and <a href=\"http://wiki.openstreetmap.org/wiki/OpenStreetBrowser#People_involved\">contributors</a>";
 #$lang_str["main:permalink"]="Permalink";
 
 #$lang_str["help:no_object"]="<div class='obj_actions'><a class='zoom' href='#'></a></div><h1>Object not found</h1>No object with the ID \"%s\" could be found. This can be due to one (or more) of the following reasons:<ul><li>The ID is wrong.</li><li>The object has been identified by a third party site and is not (yet) available in the OpenStreetBrowser.</li><li>The object is outside of the supported area.</li><li>The link you were following was old and the object has been deleted from OpenStreetMap.</li></ul>";
