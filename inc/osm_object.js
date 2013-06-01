@@ -1,4 +1,5 @@
 var osm_object_valid_prefixes=[ "node_", "way_", "rel_", "N", "W", "R"];
+var osm_object_types={ 'N': 'node', 'W': 'way', 'R': 'relation' };
 
 function osm_object(dom) {
   this.inheritFrom=geo_object;
@@ -99,12 +100,11 @@ function osm_object(dom) {
   // info
   this.info=function(chapters) {
     if(this.id_split.length==1) {
-      var id=this.id.split("_");
-      if(id[0]=="rel")
-	id[0]="relation";
+      var id=this.id.substr(1);
+      var id_type=osm_object_types[this.id.substr(0, 1)];
 
       var a=document.createElement("a");
-      a.href="http://www.openstreetmap.org/browse/"+id[0]+"/"+id[1];
+      a.href="http://www.openstreetmap.org/browse/"+id_type+"/"+id;
       dom_create_append_text(a, lang("action_browse"));
 
       chapters.push({
