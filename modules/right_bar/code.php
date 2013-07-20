@@ -32,10 +32,12 @@ function right_bar() {
 EOD
   );
 
-  $url=modulekit_file("right_bar", "twitter.html");
   $content[]=array(5, <<<EOD
 <!-- TWITTERWALL -->
-<iframe id='twitter' src='$url'></iframe>
+<div id='twitterwall'>
+<a class="twitter-timeline"  href="https://twitter.com/search?q=%40osb_cc+OR+%23osb_cc+OR+from%3Aosb_cc+OR+OpenStreetBrowser"  data-widget-id="358461684668567552">Tweets about "@osb_cc OR #osb_cc OR from:osb_cc OR OpenStreetBrowser"</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
 <!-- END -->
 EOD
   );

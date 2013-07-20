@@ -10,9 +10,19 @@ function right_bar_hide() {
   div.parentNode.removeChild(div);
 }
 
-function right_bar_window_resize() {
-  var twitter_frame=document.getElementById("twitter");
-  twitter_frame.style.height=(window.innerHeight-twitter_frame.offsetTop);
+function right_bar_init() {
+  var iframe=document.getElementById("twitterwall");
+  if(!iframe)
+    return;
+  
+  iframe=iframe.getElementsByTagName("iframe");
+  if(!iframe.length)
+    return;
+  
+  iframe=iframe[0];
+
+  iframe.style.minWidth="150px";
+  iframe.width=150
 }
 
-register_hook("window_resize", right_bar_window_resize);
+register_hook("init", right_bar_init);
