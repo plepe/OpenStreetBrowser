@@ -1,4 +1,8 @@
-#right_bar {
+body #right_bar {
+  display: none;
+}
+body.has_right_bar #right_bar {
+  display: block;
   position: absolute;
   right: 0px;
   top: 0px;
@@ -8,38 +12,33 @@
   overflow: hidden;
   border-left: 1px solid #999;
 }
-#right_bar XXXiframe {
+body.has_right_bar #right_bar XXXiframe {
   height: 640px;
   width: 120px;
   border: none;
   padding: 0px;
   margin: 0px;
 }
-#right_bar iframe#twitter {
-  width: 150px;
-  border: none;
-  height: 356px;
-}
-#right_bar .stuff {
+body.has_right_bar #right_bar .stuff {
   text-align: center;
 }
-#right_bar .tip {
+body.has_right_bar #right_bar #right_bar .tip {
   margin-left: 5px;
   margin-right: 5px;
 }
-div#content {
+body.has_right_bar div#content {
   right: 153px;
 }
-div#right_bar_hide {
+body.has_right_bar div#right_bar_hide {
   position: absolute;
   right: 0px;
   top: 0px;
 }
 @media only screen and (max-width: 800px) {
-#right_bar {
+body.has_right_bar #right_bar {
   display: none;
 }
-div#content {
+body.has_right_bar div#content {
   right: 0px;
 }
 }

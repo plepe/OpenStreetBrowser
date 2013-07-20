@@ -1,13 +1,6 @@
 function right_bar_hide() {
-  var links=document.getElementsByTagName("link");
-  for(var i=0; i<links.length; i++) {
-    if(links[i].href.match(modulekit_file("right_bar", "style.css"))) {
-      links[i].parentNode.removeChild(links[i]);
-    }
-  }
-
-  var div=document.getElementById("right_bar");
-  div.parentNode.removeChild(div);
+  var x=document.body.className.match(/^(.*) has_right_bar(.*)$/);
+  document.body.className=x[1]+x[2];
 }
 
 function right_bar_init() {
@@ -23,6 +16,9 @@ function right_bar_init() {
 
   iframe.style.minWidth="150px";
   iframe.width=150
+
+  if(document.getElementById("right_bar"))
+    document.body.className+=" has_right_bar";
 }
 
 register_hook("init", right_bar_init);
