@@ -1,4 +1,5 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
+<?$modulekit_debug=0;?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?
 Header("HTTP/1.1 404 Not Found");
