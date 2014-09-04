@@ -13,4 +13,10 @@ if(isset($list[0]['header'])) {
   foreach($list[0]['header'] as $header)
     Header($header);
 }
+
+$refresh = 20;
+Header("Refresh: {$refresh}");
+Header("Retry-After: {$refresh}");
+Header("Expires: " . Date("r", time() + $refresh));
+
 print $list[0]['body'];
