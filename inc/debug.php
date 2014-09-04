@@ -31,7 +31,7 @@ function debug($text, $category="unknown", $level=D_NOTICE) {
   );
 
   $debug_list[]=$debug_entry;
-  call_hooks("debug", &$debug_entry);
+  call_hooks("debug", $debug_entry);
 }
 
 function debug_write($xml) {

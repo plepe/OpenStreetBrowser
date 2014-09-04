@@ -18,7 +18,7 @@ function format_time($sec) {
   return implode(" ", $t);
 }
 
-function routing($ret, $object, $param) {
+function routing(&$ret, $object, $param) {
   global $key_cloudmade_api;
   global $routing_gpx;
   global $routing_end_pos;

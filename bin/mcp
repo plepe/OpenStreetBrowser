@@ -10,7 +10,7 @@ register_hook("debug", "mcp_debug");
 
 if(!isset($mcp_debug_level))
   $mcp_debug_level=2;
-function mcp_debug($entry) {
+function mcp_debug(&$entry) {
   global $debug_list;
   global $debug_levels_abbr;
   global $mcp_debug_level;

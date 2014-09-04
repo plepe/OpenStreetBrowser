@@ -26,7 +26,7 @@ function tip_of_the_day_html() {
   return creole_html(lang($tip_of_the_day_list[$i]));
 }
 
-function tip_of_the_day_right_bar($content) {
+function tip_of_the_day_right_bar(&$content) {
   $ret="";
 
   $ret.="<h1>".lang("tip_of_the_day:name")."</h1>\n";

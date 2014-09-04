@@ -1,5 +1,5 @@
 <?
-function route_info($ret, $object) {
+function route_info(&$ret, $object) {
   global $route_types;
   global $network_names;
 

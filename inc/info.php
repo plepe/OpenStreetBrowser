@@ -29,7 +29,7 @@ function ajax_info($param, $xml) {
     return 0;
 
   $chapters=array();
-  call_hooks("info", &$chapters, $ob);
+  call_hooks("info", $chapters, $ob);
 
   return $chapters;
 }

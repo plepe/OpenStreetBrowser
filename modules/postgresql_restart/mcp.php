@@ -1,5 +1,5 @@
 <?
-function postgresql_restart_do($conn) {
+function postgresql_restart_do(&$conn) {
   global $postgresql_restart_cmd;
 
   debug("Restarting PostgreSQL server", "postgresql_restart");

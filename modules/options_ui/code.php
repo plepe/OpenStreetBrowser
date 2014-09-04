@@ -1,5 +1,5 @@
 <?
-function options_ui_main_menu($list) {
+function options_ui_main_menu(&$list) {
   $list[]=
     array(0, "<a href='javascript:show_options()'>".lang("main:options")."</a>");
 }

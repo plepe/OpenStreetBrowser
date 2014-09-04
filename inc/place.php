@@ -267,7 +267,7 @@ class place_coll extends place {
   }
 }
 
-function places_geometry($list) {
+function places_geometry(&$list) {
   $nlist=array();
   foreach($list as $l) {
     $ob=load_object($l);

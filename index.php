@@ -118,12 +118,12 @@ $main_links=array(
   array(1, "<a href='http://wiki.openstreetmap.org/wiki/OpenStreetBrowser' target='_new'>".lang("main:about")."</a>"),
   array(5, "<a href='javascript:time_count_do_beg()'>".lang("main:donate")."</a>")
 );
-call_hooks("main_links", &$main_links);
+call_hooks("main_links", $main_links);
 $main_links=weight_sort($main_links);
 $main_links=implode(" |\n", $main_links);
 
 $menu_short=array();
-call_hooks("main_menu_short", &$menu_short);
+call_hooks("main_menu_short", $menu_short);
 $menu_short=weight_sort($menu_short);
 $menu_short=implode(" |\n", $menu_short);
 
@@ -134,7 +134,7 @@ $menu_list[]=array(5,
   "<div id='menu_short'>{$menu_short}</div>\n".
   "</div>\n");
 
-call_hooks("menu_show", &$menu_list);
+call_hooks("menu_show", $menu_list);
 
 $menu_list=weight_sort($menu_list);
 foreach($menu_list as $entry) {

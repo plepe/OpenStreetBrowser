@@ -13,7 +13,7 @@ function wikipedia_streetnames_parse($article, $object) {
   }
 }
 
-function wikipedia_streetnames_info($info_ret, $object) {
+function wikipedia_streetnames_info(&$info_ret, $object) {
   global $data_lang;
   $text="";
 

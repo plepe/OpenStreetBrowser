@@ -53,7 +53,7 @@ function ajax_search($param, $xml) {
   return search($param);
 }
 
-function search_menu_show($list) {
+function search_menu_show(&$list) {
   $menu_list[]=array(-6,
     "<div id='search' class='search' style='position:absolute; top:143px;'>\n".
     "<form name='osb_search_form_name' id='osb_search_form' action='javascript:search()'>\n".

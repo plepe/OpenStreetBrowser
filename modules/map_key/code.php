@@ -29,7 +29,7 @@ class map_key_entry {
   }
 }
 
-function map_key_main_links($links) {
+function map_key_main_links(&$links) {
   $links[]=array(-5, "<a href='javascript:map_key_toggle()'>".lang("map_key:name")."</a>");
 }
 
@@ -47,7 +47,7 @@ function map_key_export() {
 
 function ajax_map_key($param) {
   $list=array();
-  call_hooks("map_key", &$list, $param);
+  call_hooks("map_key", $list, $param);
 
   foreach($list as $i=>$l) {
     $list[$i]=array($l[0], $l[1]->show_info($param), get_class($l[1]));

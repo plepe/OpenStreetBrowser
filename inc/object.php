@@ -64,7 +64,7 @@ class object {
 
   function list_description($list) {
     $ret=array();
-    call_hooks("list_description", &$ret, $this, $list);
+    call_hooks("list_description", $ret, $this, $list);
 
     return $ret;
   }
@@ -94,7 +94,7 @@ class object {
 
     $data=array();
 
-    call_hooks("info", &$data, $this, $param);
+    call_hooks("info", $data, $this, $param);
 
     $chapter=array();
 

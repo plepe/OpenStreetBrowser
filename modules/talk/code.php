@@ -132,7 +132,7 @@ function ajax_talk_history($param) {
   return $page->history($param['start'], $param['count']);
 }
 
-function talk_recent_changes($list) {
+function talk_recent_changes(&$list) {
   $res=sql_query("select * from talk order by version_tags->'date' desc limit 10");
   while($elem=pg_fetch_assoc($res)) {
     $elem['version_tags']=parse_hstore($elem['version_tags']);

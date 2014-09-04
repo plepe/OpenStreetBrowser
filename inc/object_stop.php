@@ -50,7 +50,7 @@ class object_stop extends object {
   }
 }
 
-function stop_info($ret, $object) {
+function stop_info(&$ret, $object) {
   global $stop_types;
 
   $is_stop=0;

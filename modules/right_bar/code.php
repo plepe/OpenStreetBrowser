@@ -40,7 +40,7 @@ EOD
 EOD
   );
 
-  call_hooks("right_bar_content", &$content);
+  call_hooks("right_bar_content", $content);
 
   $content=weight_sort($content);
   print implode("\n<hr>\n", $content);

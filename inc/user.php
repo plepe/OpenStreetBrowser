@@ -120,7 +120,7 @@ class User {
     else {
       // Other methods for auth, e.g. OpenID
       $other_auth=null;
-      call_hooks("user_is_valid", &$other_auth, $param);
+      call_hooks("user_is_valid", $other_auth, $param);
       if($other_auth) {
 	$this->username=$other_auth['username'];
 	$this->pg_username=postgre_escape($other_auth['username']);
@@ -229,7 +229,7 @@ function user_list() {
     $user_list[]=$elem['username'];
   }
 
-  call_hooks("user_list", &$user_list);
+  call_hooks("user_list", $user_list);
 
   return $user_list;
 }

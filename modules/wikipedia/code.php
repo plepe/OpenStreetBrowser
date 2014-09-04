@@ -186,7 +186,7 @@ function wikipedia_get_lang_page($object, $tag_prefix="wikipedia") {
   return array("page"=>$page, "lang"=>$lang);
 }
 
-function wikipedia_info($info_ret, $object) {
+function wikipedia_info(&$info_ret, $object) {
   $ret="";
   global $data_lang;
 

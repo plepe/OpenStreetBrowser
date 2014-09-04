@@ -147,7 +147,7 @@ class map_key_basemap extends map_key_cascadenik {
   }
 }
 
-function map_key_basemap_map_key($list, $entries) {
+function map_key_basemap_map_key(&$list, $entries) {
   $key=new map_key_basemap();
   $list[]=array(-10, $key);
 }

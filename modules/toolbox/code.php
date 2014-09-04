@@ -1,5 +1,5 @@
 <?
-function toolbox_menu_show($list) {
+function toolbox_menu_show(&$list) {
   $entry=
     "<div id='toolboxbuttons_container'>\n".
     "<div id='toolboxbuttons'>\n".
