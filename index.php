@@ -50,9 +50,6 @@ call_hooks("html_head", $dummy);
 <body>
 <?
 call_hooks("html_start");
-?>
-<script type="text/javascript">
-<?
 unset($my_lat);
 
 function maskErrors() {
@@ -88,6 +85,9 @@ if(isset($_REQUEST['zoom']))
 
 html_export_var(array("start_location"=>$start_location, "first_load"=>$first_load));
 
+?>
+<script type="text/javascript">
+<?
 if(isset($mlon))
   print "var marker_pos={ lon: $mlon, lat: $mlat };\n";
 else

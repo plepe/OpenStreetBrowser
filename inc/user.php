@@ -190,7 +190,7 @@ class User {
 
   function transfer_user_info() {
     print "<script type='text/javascript'>\n";
-    print "var current_user=new user(\"{$this->username}\", ".html_var_to_js($this->tags->data()).");\n";
+    print "var current_user=new user(\"{$this->username}\", ".json_encode($this->tags->data()).");\n";
     print "</script>\n";
   }
 
