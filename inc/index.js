@@ -66,7 +66,7 @@ function hide() {
 }
 
 function hide_features() {
-  vector_layer.removeFeatures(shown_features);
+  vector_layer.getSource().clear();
   shown_features=[];
   call_hooks("hide_features");
 }
@@ -141,11 +141,10 @@ function redraw() {
   call_hooks("unselect_all");
 
   if(location_params.lat&&location_params.lon) {
-    var lonlat = new OpenLayers.LonLat(location_params.lon, location_params.lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+    var lonlat = ol.proj.transform([ location_params.lon, location_params.lat ], 'EPSG:4326', 'EPSG:3857');
+    map.getView().setCenter(lonlat);
     if(location_params.zoom)
-      map.setCenter(lonlat, location_params.zoom);
-    else
-      map.setCenter(lonlat);
+      map.getView().setZoom(location_params.zoom);
   }
   else if(location_params.zoom) {
     map.zoomTo(location_params.zoom);
@@ -261,8 +260,9 @@ function get_permalink_for_control() {
 
 // update_permalink ... forces an update of the permalink
 function update_permalink() {
-  permalink_control.updateLink();
-  call_hooks("permalink_update", permalink_current);
+  // TODO!
+  //permalink_control.updateLink();
+  //call_hooks("permalink_update", permalink_current);
 }
 
 function get_baseurl() {
@@ -270,24 +270,21 @@ function get_baseurl() {
 }
 
 function init() {
-  map = new OpenLayers.Map("map",
-	  { maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
-	    numZoomLevels: 19,
-	    maxResolution: 156543.0399,
-	    units: 'm',
-	    projection: new OpenLayers.Projection("EPSG:900913"),
-	    displayProjection: new OpenLayers.Projection("EPSG:4326"),
-	    controls: [ new OpenLayers.Control.PanZoomBar(),
-			new OpenLayers.Control.Navigation() ]
-	  });
+  map = new ol.Map({
+            target: "map",
+            view: new ol.View({
+                center: ol.proj.transform([ 0, 0 ], 'EPSG:4326', 'EPSG:3857'),
+                zoom: 4
+            })
+      });
 
-  map.addControl(new OpenLayers.Control.ScaleLine({ geodesic: true }));
+  map.addControl(new ol.control.ScaleLine({ geodesic: true }));
 
   register_hook("hash_changed", redraw);
 
-  map.events.register("moveend", map, view_changed);
-  map.events.register("movestart", map, view_changed_start);
-  map.events.register("click", map, view_click);
+  map.on("moveend", view_changed);
+  map.on("movestart", view_changed_start);
+  map.on("click", view_click);
 
   overlays_init();
 
@@ -296,9 +293,9 @@ function init() {
   call_hooks("init");
 
   var permalink=document.getElementById("permalink");
-  permalink_control=new OpenLayers.Control.Permalink(permalink, url({}, true));
-  map.addControl(permalink_control);
-  permalink_control.createParams=get_permalink_for_control;
+//  permalink_control=new OpenLayers.Control.Permalink(permalink, url({}, true));
+//  map.addControl(permalink_control);
+// permalink_control.createParams=get_permalink_for_control;
 
   if(start_location&&(first_load)) {
     set_location(start_location);

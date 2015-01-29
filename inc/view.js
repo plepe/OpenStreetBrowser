@@ -1,7 +1,8 @@
 var click_override=null;
 
 function view_click(event) {
-  var pos=map.getLonLatFromPixel(event.xy);
+  event = event.originalEvent;
+  var pos=map.getEventCoordinate(event);
   first_load=0;
 
   call_hooks("view_click", event, pos);

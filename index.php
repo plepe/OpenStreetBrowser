@@ -26,8 +26,8 @@ call_hooks("init", $dummy);
 call_hooks("http_head");
 
 // check for installed OpenLayers instance
-if(!file_exists("lib/OpenLayers/OpenLayers.js")) {
-  print "Please download <a href='http://openlayers.org/'>OpenLayers</a> and extract to lib/OpenLayers/\n";
+if(!file_exists("lib/ol3/build/ol.js")) {
+  print "Please download <a href='http://openlayers.org/'>OpenLayers</a> and extract to lib/ol3/ (so that lib/ol3/build/ol.js exists)\n";
   exit();
 }
 ?>
@@ -35,7 +35,8 @@ if(!file_exists("lib/OpenLayers/OpenLayers.js")) {
 <html>
   <head>
 <title>OpenStreetBrowser</title>
-<script src="lib/OpenLayers/OpenLayers.js<?=$version_string?>"></script>
+<script src="lib/ol3/build/ol.js<?=$version_string?>"></script>
+<link rel="stylesheet" href="lib/ol3/css/ol.css" type="text/css">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 <?php print modulekit_to_javascript(); ?>
 <?php print modulekit_include_js(); /* prints all js-includes */ ?>

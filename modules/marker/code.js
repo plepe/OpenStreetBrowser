@@ -2,21 +2,20 @@ var marker_list=[];
 var marker_drag_control;
 var marker_highest_id=0;
 
-var marker_style={
-    externalGraphic: modulekit_file("marker", "marker.png"),
-    graphicWidth: 21,
-    graphicHeight: 25,
-    graphicXOffset: -11,
-    graphicYOffset: -25
-  };
-var marker_style_selected={
-    externalGraphic: modulekit_file("marker", "marker_selected.png"),
-    graphicWidth: 21,
-    graphicHeight: 25,
-    graphicXOffset: -11,
-    graphicYOffset: -25
-  };
-
+var marker_style = new ol.style.Style({
+  image: new ol.style.Icon({
+    src: modulekit_file("marker", "marker.png"),
+    anchor: [ 0.5, 1 ]
+  }),
+  opacity: 1
+});
+var marker_style_selected = new ol.style.Style({
+  image: new ol.style.Icon({
+    src: modulekit_file("marker", "marker_selected.png"),
+    anchor: [ 0.5, 1 ]
+  }),
+  opacity: 1
+});
 
 function marker_update(new_hash) {
   // no mlat / mlon in new_hash
@@ -114,8 +113,7 @@ function marker(lon, lat) {
 
   // object_select
   this.object_select=function(pos) {
-    this.feature.style=marker_style_selected;
-    drag_layer.drawFeature(this.feature);
+    this.feature.setStyle(marker_style_selected);
 
     set_url({ obj: this.id });
   }
@@ -125,8 +123,7 @@ function marker(lon, lat) {
     if(this.removed)
       return;
 
-    this.feature.style=marker_style;
-    drag_layer.drawFeature(this.feature);
+    this.feature.setStyle(marker_style);
   }
 
   this.info_hide=this.object_unselect;
@@ -222,10 +219,14 @@ function marker(lon, lat) {
   this.id="marker_"+this.lon.toFixed(5)+","+this.lat.toFixed(5);
 
   // create the new marker
-  var pos = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject())
-  var geo = new OpenLayers.Geometry.Point(pos.lon, pos.lat);
-  this.feature = new OpenLayers.Feature.Vector(geo, 0, marker_style);
-  drag_layer.addFeatures([this.feature]);
+  var pos = ol.proj.transform([this.lon, this.lat], "EPSG:4326", "EPSG:3857");
+  var geo = new ol.geom.Point(pos);
+  this.feature = new ol.Feature({
+    geometry: geo,
+    name: 'Marker',
+  });
+  this.feature.setStyle(marker_style);
+  drag_layer.getSource().addFeature(this.feature);
   this.feature.ob=this;
 
   // save marker in marker_list
@@ -250,7 +251,7 @@ function marker_add(lon, lat) {
 
 function marker_add_context(pos) {
   // add a marker on the pos
-  var marker=marker_add(pos.lon, pos.lat);
+  var marker=marker_add(pos[0], pos[1]);
 
   // redirect to marker-page
   set_url({ obj: marker.id });

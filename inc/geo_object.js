@@ -56,11 +56,14 @@ function geo_object() {
 
   // geo_get_extent
   this.get_extent=function() {
-    var extent=new OpenLayers.Bounds();
+    var extent=null;
     var geos=this.geo();
 
     for(var i=0; i<geos.length; i++) {
-      extent.extend(geos[i].geometry.getBounds());
+      if(!extent)
+        extent = geos[i].getGeometry().getExtent();
+      else
+        ol.extent.extend(extent, geos[i].getGeometry().getExtent());
     }
 
     return extent;
@@ -69,26 +72,19 @@ function geo_object() {
   // geo_zoom_to
   this.geo_zoom_to=function() {
     var extent=this.get_extent();
+    var current_zoom=map.getView().getZoom();
 
-    var zoom=map.getZoomForExtent(extent);
-    if((map.getExtent().intersectsBounds(extent))&&(map.zoom>15)) {
-      if(zoom>map.zoom)
-	zoom=map.zoom;
+    var resolution=map.getView().fitExtent(extent, map.getSize());
+    var new_zoom=map.getView().getZoom();
+
+    if(new_zoom > current_zoom) {
+      if(current_zoom >= 15)
+        map.getView().setZoom(current_zoom);
+      else
+        map.getView().setZoom(15);
     }
-    else {
-      if(zoom>15)
-	zoom=15;
-    }
 
-    var center=this.geo_center();
-    if(center&&center.length)
-      center=center[0];
-    if(center&&center.geometry)
-      center=center.geometry;
-    else
-      center=extent.getCenterPixel();
-
-    pan_to_highlight(center.x, center.y, zoom);
+    // TODO: panning
   }
 
   // lonlat

@@ -16,6 +16,7 @@ function contextmenu_rightclick(e) {
   }
   else {
     // calculate positions from map click
+    alert(map.getEventPixel(e));
     var posx = e.xy.x;
     var posy = e.xy.y;
 
@@ -30,8 +31,8 @@ function contextmenu_rightclick(e) {
     }
   }
 
-  var pos=map.getLonLatFromPixel(e.xy);
-  contextmenu_pos=pos.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+  var pos=map.getEventCoordinate(e);
+  contextmenu_pos=ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
 
   var contextmenu=document.getElementById("contextmenu");
   contextmenu_compile();

@@ -81,7 +81,7 @@ function overlay(id, _tags) {
   if(!name)
     name=this.id;
 
-  this.layer=new OpenLayers.Layer.OSM(name, "tiles/"+this.id, {numZoomLevels: 19, isBaseLayer: false, visibility: false, getURL: this.build_url.bind(this) });
+  this.layer=new ol.layer.OSM(name, "tiles/"+this.id, {numZoomLevels: 19, isBaseLayer: false, visibility: false, getURL: this.build_url.bind(this) });
   map.addLayer(this.layer);
   overlays_list[this.id]=this;
 
@@ -155,61 +155,66 @@ function overlays_init() {
   if(!category_tiles_url)
     category_tiles_url="tiles/";
 
-  vector_layer=new OpenLayers.Layer.Vector(t("overlay:data"), { weight: 10 });
+  vector_layer=new ol.layer.Vector({
+      title: t("overlay:data"),
+      weight: 10,
+      source: new ol.source.Vector()
+  });
   vector_layer.setOpacity(0.7);
-  drag_layer=new OpenLayers.Layer.Vector(t("overlay:draggable"), { weight: 11 });
+  drag_layer=new ol.layer.Vector({
+      title: t("overlay:draggable"),
+      weight: 11,
+      source: new ol.source.Vector()
+  });
 
-  var mod_feature=new OpenLayers.Control.ModifyFeature(drag_layer);
-  drag_layer.select=mod_feature.selectControl.select.bind(mod_feature.selectControl);
-  drag_layer.unselect=mod_feature.selectControl.unselect.bind(mod_feature.selectControl);
-  drag_layer.unselectAll=mod_feature.selectControl.unselectAll.bind(mod_feature.selectControl);
+//  var mod_feature=new ol.control.ModifyFeature(drag_layer);
+//  drag_layer.select=mod_feature.selectControl.select.bind(mod_feature.selectControl);
+//  drag_layer.unselect=mod_feature.selectControl.unselect.bind(mod_feature.selectControl);
+//  drag_layer.unselectAll=mod_feature.selectControl.unselectAll.bind(mod_feature.selectControl);
 
   map.addLayer(vector_layer);
   map.addLayer(drag_layer);
-  map.addControl(mod_feature);
+//  map.addControl(mod_feature);
 
-  mod_feature.mode |= OpenLayers.Control.ModifyFeature.DRAG;
-  mod_feature.dragComplete=finish_drag;
-  mod_feature.dragVertex=next_drag;
+//  mod_feature.mode |= OpenLayers.Control.ModifyFeature.DRAG;
+//  mod_feature.dragComplete=finish_drag;
+//  mod_feature.dragVertex=next_drag;
 //  mod_feature.dragStart=start_drag; -- with this activated selecting objects doesn't work
-  drag_layer.events.on({
-    'featureselected': object_select,
-    'featureunselected': object_unselect
-  });
+  drag_layer.on('featureselected', object_select);
+  drag_layer.on('featureunselected', object_unselect);
 
-  mod_feature.activate();
+//  mod_feature.activate();
 
   layers_reorder();
 }
 
 function overlays_unselect() {
-  drag_layer.unselectAll();
+  // TODO!
+  // drag_layer.unselectAll();
 }
 
 function layers_reorder() {
+  // TODO!
   var list_overlays=[];
   var list_basemaps=[];
 
-  for(var i=0; i<map.layers.length; i++) {
-    var w=map.layers[i].options.weight;
-    if(!w)
-      w=0;
-
-    if(map.layers[i].isBaseLayer)
-      list_basemaps.push([ w, map.layers[i] ]);
+  map.getLayers().forEach(function (f) {
+    var w=f.getProperties().weight;
+    if(f.getProperties().baselayer)
+      list_basemaps.push([ w||0, f ]);
     else
-      list_overlays.push([ w, map.layers[i] ]);
-  }
+      list_overlays.push([ w||0, f ]);
+  });
 
   list_basemaps=weight_sort(list_basemaps);
   list_overlays=weight_sort(list_overlays);
 
   for(var i=0; i<list_basemaps.length; i++) {
-    map.setLayerIndex(list_basemaps[i], i);
+    map.getLayers().setAt(i, list_basemaps[i]);
   }
 
   for(var i=0; i<list_overlays.length; i++) {
-    map.setLayerIndex(list_overlays[i], i+list_basemaps.length);
+    map.getLayers().setAt(i + list_basemaps.length, list_overlays[i]);
   }
 }
 

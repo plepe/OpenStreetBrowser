@@ -1,5 +1,5 @@
 function get_viewbox() {
-  var x=map.calculateBounds();
+  var x=map.getView().calculateExtent(map.getSize());
   return x.left +","+ x.top +","+ x.right +","+ x.bottom;
 }
 

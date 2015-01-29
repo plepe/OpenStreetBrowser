@@ -132,7 +132,8 @@ function unset_highlight() {
     }
   }
 
-  vector_layer.removeFeatures(highlight_feature);
+  for(var i = 0; i < highlight_feature.length; i++)
+    vector_layer.getSource().removeFeature(highlight_feature[i]);
   highlight_feature=[];
   last_highlight_request=[];
 
