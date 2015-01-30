@@ -17,8 +17,8 @@ function postgis(text) {
     if(this.ob)
       return this.ob;
 
-    var parser=new OpenLayers.Format.WKT();
-    this.ob=parser.read(this.text);
+    var parser=new ol.format.WKT();
+    this.ob=parser.readGeometry(this.text);
 
     if(!this.ob)
       this.ob=[];

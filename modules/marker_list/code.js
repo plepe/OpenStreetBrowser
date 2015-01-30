@@ -25,10 +25,10 @@ function marker_list_category(id) {
     dom_clean(div.data);
 
     var show_list=[];
-    var bounds=map.calculateBounds().toGeometry();
+    var bounds=map.getView().calculateExtent(map.getSize());
     for(var i=0; i<marker_list.length; i++) {
       var marker=marker_list[i];
-      if(bounds.intersects(marker.feature.geometry)) {
+      if(marker.feature.getGeometry().intersectsExtent(bounds)) {
         show_list.push(marker.write_list());
       }
     }

@@ -180,8 +180,8 @@ function marker(lon, lat) {
     ret.icon_url=modulekit_file("marker", "icon.png");
     ret.name=this.name();
     ret.href=url({ obj: this.id });
-    ret.highlight=this.feature.geometry.toString();
-    ret.highlight_center=this.feature.geometry.toString();
+    ret.highlight=new ol.format.WKT().writeFeature(this.feature);
+    ret.highlight_center=new ol.format.WKT().writeFeature(this.feature);
 
     return ret;
   }
