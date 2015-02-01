@@ -27,12 +27,14 @@ function mcp_debug(&$entry) {
 }
 
 function mcp_modulekit_debug($text, $level) {
-  mcp_debug(array(
+  $p = array(
     'category'=>'modulekit',
     'level'=>3-$level,
     'text'=>$text,
     'time'=>time(),
-  ));
+  );
+
+  mcp_debug($p);
 }
 
 debug("* MCP all plugins loaded, initializing", "mcp");
@@ -153,7 +155,7 @@ while(1) {
 
   unset($_streams);
   array_deep_copy($streams, $_streams);
-  stream_select(&$_streams[MCP_READ], &$_streams[MCP_WRITE], &$_streams[MCP_EXCEPT], 10);
+  stream_select($_streams[MCP_READ], $_streams[MCP_WRITE], $_streams[MCP_EXCEPT], 10);
 
   foreach($_streams as $type=>$type_streams) {
     foreach($type_streams as $str) {

@@ -37,7 +37,7 @@ function parse_src_more($str) {
 $imp_match=array();
 foreach($wiki_data["Values"] as $src) {
   $list_columns=array();
-  $l=parse_wholekey($src[keys], &$list_columns);
+  $l=parse_wholekey($src[keys], $list_columns);
 
   $r="'$src[desc]||";
   if(eregi("^\[\[(.*)\.svg\]\]", $src[icon], $m))
@@ -149,7 +149,7 @@ foreach($req as $category=>$d1) {
   }
 }
 
-function to_cat_list($cat_list, $cat_part) {
+function to_cat_list(&$cat_list, $cat_part) {
   $t=$cat_part[0];
   array_shift($cat_part);
 
@@ -157,7 +157,7 @@ function to_cat_list($cat_list, $cat_part) {
     $cat_list[$t]=array();
  
   if(sizeof($cat_part))
-    to_cat_list(&$cat_list[$t], $cat_part);
+    to_cat_list($cat_list[$t], $cat_part);
 }
 
 $f=fopen("request.save", "w");
@@ -168,7 +168,7 @@ $overlays=array();
 
 foreach($wiki_data[Categories] as $cat=>$data) {
   $cat_part=explode("/", $data[category]);
-  to_cat_list(&$cat_list, $cat_part);
+  to_cat_list($cat_list, $cat_part);
 
   if($data[overlay]) {
     $overlays[$data[category]]=$data[overlay];

@@ -63,7 +63,7 @@ function read_wiki() {
   return $data;
 }
 
-function parse_key($key, $list_columns) {
+function parse_key($key, &$list_columns) {
   $ret="";
 
   if(eregi("\{\{Tag\|(.*)\|(.*)\}\}", $key, $m)) {
@@ -114,7 +114,7 @@ function parse_key($key, $list_columns) {
   return $ret;
 }
 
-function parse_wholekey($k, $list_columns) {
+function parse_wholekey($k, &$list_columns) {
   $ret=array();
 
   $keys_list=explode(",", $k);
@@ -123,7 +123,7 @@ function parse_wholekey($k, $list_columns) {
 
     $l=array();
     foreach($keys as $i=>$k) {
-      $l1=parse_key($k, &$list_columns);
+      $l1=parse_key($k, $list_columns);
       if($l1) $l[]=$l1;
     }
 
