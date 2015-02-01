@@ -177,6 +177,7 @@ function overlays_init() {
   var select = new ol.interaction.Select({
     layers: [ drag_layer ]
   });
+  drag_layer.interaction_select = select;
 
   var modify = new ol.interaction.Modify({
     features: select.getFeatures(),
@@ -196,6 +197,19 @@ function overlays_init() {
   var coll = select.getFeatures();
   coll.on('add', object_select);
   coll.on('remove', object_unselect);
+
+  drag_layer.select = function(feature) {
+    drag_layer.interaction_select.getFeatures().push(feature);
+  }
+  drag_layer.unselect = function(feature) {
+    drag_layer.interaction_select.getFeatures().remove(feature);
+  }
+  drag_layer.add_feature = function(feature) {
+    drag_layer.getSource().addFeature(feature);
+  }
+  drag_layer.remove_feature = function(feature) {
+    drag_layer.getSource().removeFeature(feature);
+  }
 
   layers_reorder();
 }

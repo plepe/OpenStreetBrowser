@@ -198,7 +198,7 @@ function marker(lon, lat) {
         marker_list=marker_list.slice(0, i).concat(marker_list.slice(i+1));
     }
     drag_layer.unselect(this.feature);
-    drag_layer.removeFeatures([this.feature]);
+    drag_layer.remove_feature(this.feature);
     this.removed=true;
     set_url({}, true);
     update_permalink();
@@ -226,8 +226,9 @@ function marker(lon, lat) {
     name: 'Marker',
   });
   this.feature.setStyle(marker_style);
-  drag_layer.getSource().addFeature(this.feature);
+  drag_layer.add_feature(this.feature);
   this.feature.ob=this;
+  drag_layer.select(this.feature);
 
   // save marker in marker_list
   marker_list.push(this);
