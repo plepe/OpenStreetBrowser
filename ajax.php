@@ -17,10 +17,10 @@ function error($msg) {
   /// Do something with this error
 }
 
-function build_request($param, $prefix, $ret) {
+function build_request($param, $prefix, &$ret) {
   if(is_array($param)) {
     foreach($param as $k=>$v) {
-      build_request($v, "{$prefix}[$k]", &$ret);
+      build_request($v, "{$prefix}[$k]", $ret);
     }
   }
   else {
