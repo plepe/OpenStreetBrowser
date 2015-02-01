@@ -164,7 +164,7 @@ class map_key_cascadenik extends map_key_entry {
 
       if(sizeof($geom)) {
         $ret.="<tr><td>\n";
-        build_request($s, "param", &$p);
+        build_request($s, "param", $p);
         $param=implode("&", $p);
 
 	if($geom["poly"])
