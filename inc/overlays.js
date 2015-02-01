@@ -121,19 +121,23 @@ function next_drag(feature) {
 }
 
 function object_select(ev) {
-  var feature=ev.feature;
-  var pos=feature.geometry.getCentroid();
+  var feature=ev.element;
+  var pos=null; // TODO: features without ob?
   if(feature.ob&&feature.ob.object_select)
     feature.ob.object_select(pos);
+  if(feature.ob&&feature.ob.geo_center())
+    pos=feature.ob.geo_center();
 
   call_hooks("object_select", feature, pos);
 }
 
 function object_unselect(ev) {
-  var feature=ev.feature;
-  var pos=feature.geometry.getCentroid();
+  var feature=ev.element;
+  var pos=null; // TODO: features without ob?
   if(feature.ob&&feature.ob.object_unselect)
     feature.ob.object_unselect(pos);
+  if(feature.ob&&feature.ob.geo_center())
+    pos=feature.ob.geo_center();
 
   call_hooks("object_unselect", feature, pos);
 }
@@ -167,23 +171,31 @@ function overlays_init() {
       source: new ol.source.Vector()
   });
 
-//  var mod_feature=new ol.control.ModifyFeature(drag_layer);
-//  drag_layer.select=mod_feature.selectControl.select.bind(mod_feature.selectControl);
-//  drag_layer.unselect=mod_feature.selectControl.unselect.bind(mod_feature.selectControl);
-//  drag_layer.unselectAll=mod_feature.selectControl.unselectAll.bind(mod_feature.selectControl);
-
   map.addLayer(vector_layer);
   map.addLayer(drag_layer);
-//  map.addControl(mod_feature);
+
+  var select = new ol.interaction.Select({
+    layers: [ drag_layer ]
+  });
+
+  var modify = new ol.interaction.Modify({
+    features: select.getFeatures(),
+    style: new ol.style.Style({
+      stroke: null,
+      fill: null
+    })
+  });
+  map.addInteraction(select);
+  map.addInteraction(modify);
 
 //  mod_feature.mode |= OpenLayers.Control.ModifyFeature.DRAG;
 //  mod_feature.dragComplete=finish_drag;
 //  mod_feature.dragVertex=next_drag;
 //  mod_feature.dragStart=start_drag; -- with this activated selecting objects doesn't work
-  drag_layer.on('featureselected', object_select);
-  drag_layer.on('featureunselected', object_unselect);
 
-//  mod_feature.activate();
+  var coll = select.getFeatures();
+  coll.on('add', object_select);
+  coll.on('remove', object_unselect);
 
   layers_reorder();
 }
