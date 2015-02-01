@@ -85,9 +85,10 @@ function real_set_highlight() {
     }
   }
 
-  vector_layer.addFeatures(new_highlight_feature);
-  for(var i in new_highlight_feature)
+  for(var i in new_highlight_feature) {
+    vector_layer.getSource().addFeature(new_highlight_feature[i]);
     highlight_feature.push(new_highlight_feature[i]);
+  }
 }
 
 function set_highlight(list, dont_load) {
@@ -157,7 +158,8 @@ function highlight(geos, center) {
     var too_big=false;
 
     if(this.features) {
-      vector_layer.addFeatures(this.features);
+      for(var i=0; i<this.features.length; i++)
+        vector_layer.getSource().addFeature(this.features[i]);
 
       var size=calc_size_on_map(this.features);
       if((size.w>30) || (size.h>30))
@@ -166,9 +168,11 @@ function highlight(geos, center) {
 
     if(this.center_feature) {
       if(too_big)
-	vector_layer.removeFeatures(this.center_feature);
+        for(var i=0; i<this.center_feature.length; i++)
+          vector_layer.getSource().removeFeature(this.center_feature[i]);
       else
-	vector_layer.addFeatures(this.center_feature);
+        for(var i=0; i<this.center_feature.length; i++)
+          vector_layer.getSource().addFeature(this.center_feature[i]);
     }
 
     this.shown=true;
@@ -178,9 +182,11 @@ function highlight(geos, center) {
 
   // hide
   this.hide=function() {
-    vector_layer.removeFeatures(this.features);
+    for(var i=0; i<this.features.length; i++)
+      vector_layer.getSource().removeFeature(this.features[i]);
     if(this.center_feature)
-      vector_layer.removeFeatures(this.center_feature);
+        for(var i=0; i<this.center_feature.length; i++)
+          vector_layer.getSource().removeFeature(this.center_feature[i]);
     this.shown=false;
 
     delete(highlight_current_active.id);
