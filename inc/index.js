@@ -139,7 +139,7 @@ function redraw() {
   call_hooks("unselect_all");
 
   if(location_params.lat&&location_params.lon) {
-    var lonlat = ol.proj.transform([ location_params.lon, location_params.lat ], 'EPSG:4326', 'EPSG:3857');
+    var lonlat = ol.proj.transform([ parseFloat(location_params.lon), parseFloat(location_params.lat) ], 'EPSG:4326', 'EPSG:3857');
     map.getView().setCenter(lonlat);
     if(location_params.zoom)
       map.getView().setZoom(location_params.zoom);
