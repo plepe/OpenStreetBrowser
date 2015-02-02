@@ -11,7 +11,7 @@ $design_hidden=1;
 <?
 include "xml.php";
 user_check_auth();
-call_hooks("ajax_start", null);
+call_hooks("ajax_start");
 
 function error($msg) {
   /// Do something with this error

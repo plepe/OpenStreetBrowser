@@ -160,8 +160,8 @@ foreach($menu_list as $entry) {
 </div> <!-- #map_container -->
 </div> <!-- #content -->
 <?
-call_hooks("html_done", null);
-call_hooks("html_end", null);
+call_hooks("html_done");
+call_hooks("html_end");
 ?>
 </body>
 </html>
