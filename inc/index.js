@@ -14,10 +14,8 @@ var loaded_list={};
 var view_changed_last;
 var data_dir;
 var location_params={};
-var permalink_current;
 
 var polygon_control;
-var permalink_control;
 
 function details_content_submit(event) {
   // Sometimes it happens, that it want to submit to the form. 
@@ -221,50 +219,6 @@ function view_changed(event) {
   call_hooks("view_changed", event);
 }
 
-// get_permalink ... returns current view as hash array
-// PARAMETERS:
-//   none
-// RETURNS:
-//   a hash array describing the current view
-function get_permalink() {
-  var center=map.getCenter().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
-
-  var permalink = {
-    zoom: map.zoom,
-    lat: center.lat.toFixed(5),
-    lon: center.lon.toFixed(5)
-  };
-
-  if(location_params.obj)
-    permalink.obj=location_params.obj;
-
-  call_hooks("get_permalink", permalink);
-
-  permalink_current=permalink;
-  return permalink;
-}
-
-function get_permalink_for_control() {
-  var permalink=new clone(get_permalink());
-
-  var _url={};
-  if(permalink.obj) {
-    _url.obj=permalink.obj;
-    delete(permalink.obj);
-  }
-
-  permalink_control.base=url(_url, 1);
-
-  return permalink;
-}
-
-// update_permalink ... forces an update of the permalink
-function update_permalink() {
-  // TODO!
-  //permalink_control.updateLink();
-  //call_hooks("permalink_update", permalink_current);
-}
-
 function get_baseurl() {
   return location.protocol+"//"+location.hostname+location.pathname;
 }
@@ -291,11 +245,6 @@ function init() {
   data_dir=new git_master();
 
   call_hooks("init");
-
-  var permalink=document.getElementById("permalink");
-//  permalink_control=new OpenLayers.Control.Permalink(permalink, url({}, true));
-//  map.addControl(permalink_control);
-// permalink_control.createParams=get_permalink_for_control;
 
   if(start_location&&(first_load)) {
     set_location(start_location);
