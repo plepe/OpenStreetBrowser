@@ -9,6 +9,32 @@ function layer_ol4pgm_category(id) {
   }, map);
 
   this.tags.set("name", "OSB");
+  // shall_reload
+
+  this.shall_reload = function(list, parent_div, viewbox) {
+    var div=parent_div.child_divs[this.id];
+
+    if(!div.open)
+      return;
+
+    this.write_div();
+  }
+
+  this.inherit_write_div=this.write_div;
+  this.write_div=function(div) {
+    this.inherit_write_div(div);
+
+    if(!div)
+      return;
+    if(!div.open)
+      return;
+
+    dom_clean(div.data);
+
+    show_list = this.ol4pgm.getFeaturesInExtent();
+
+    new list(div.data, show_list, null, { });
+  }
 }
 
 register_hook("init", function() {
