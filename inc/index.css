@@ -271,15 +271,6 @@ li.listitem_notfound {
   border: 2px solid black;
   z-index: 10001;
 }
-div.permalink {
-  right: 3px;
-  bottom: 1.5em;
-  display: block;
-  position: absolute;
-  font-size: smaller;
-  text-shadow: 0.1em 0.1em 0.1em #ffffff;
-  z-index: 1005;
-} 
 .help {
   font-size: 8pt;
   font-style: italic;

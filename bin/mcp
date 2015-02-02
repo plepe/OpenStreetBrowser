@@ -144,13 +144,13 @@ function mcp_command($p) {
 mcp_register_stream(MCP_READ, STDIN, "mcp_command");
 
 while(1) {
-  call_hooks("mcp_tick", null);
+  call_hooks("mcp_tick");
 
   if($mcp_next_clean_up<=time()) {
     $mcp_next_clean_up=time()+60*60;
-    call_hooks("mcp_clean_up", null);
+    call_hooks("mcp_clean_up");
     if(isset($db_central['master'])&&($db_central['master']))
-      call_hooks("mcp_clean_up_master", null);
+      call_hooks("mcp_clean_up_master");
   }
 
   unset($_streams);
