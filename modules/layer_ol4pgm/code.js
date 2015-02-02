@@ -32,6 +32,9 @@ function layer_ol4pgm_category(id) {
     dom_clean(div.data);
 
     show_list = this.ol4pgm.getFeaturesInExtent();
+    for(var i=0; i<show_list.length; i++) {
+      show_list[i] = new object_ol4pgm(show_list[i]);
+    }
 
     new list(div.data, show_list, null, { });
   }
