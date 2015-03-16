@@ -5,6 +5,8 @@ function object_ol4pgm(feature) {
 
   this.feature = feature;
   this.name = this.feature.getProperties().results[0]['text'] || lang("unnamed");
+  this.highlight = new ol.format.WKT().writeFeature(this.feature);
+  this.highlight_center=new ol.format.WKT().writeGeometry(new ol.geom.Point(ol.extent.getCenter(this.feature.getGeometry().getExtent())));
 
   this.geo = function() {
     return [this.feature];
