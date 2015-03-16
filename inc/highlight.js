@@ -204,16 +204,15 @@ function highlight(geos, center) {
       this.features=this.features.concat(new_features);
 
       set_feature_style(this.features, 
-	{
-	  strokeWidth: 4,
-	  strokeColor: "black",
-	  externalGraphic: "img/big_node.png",
-	  graphicWidth: 11,
-	  graphicHeight: 11,
-	  graphicXOffset: -6,
-	  graphicYOffset: -6,
-	  fill: "none"
-	});
+        new ol.style.Style({
+          "stroke": new ol.style.Stroke({
+            "color": "black",
+            "width": 4,
+          }),
+          "image": new ol.style.Icon({
+            "src": "img/big_node.png"
+          })
+        }));
     }
 
     if(this.shown)
@@ -227,12 +226,10 @@ function highlight(geos, center) {
     this.center_feature=wkt_to_features(center);
 
     set_feature_style(this.center_feature, 
-      {
-	externalGraphic: "img/hi_node.png",
-	graphicWidth: 25,
-	graphicHeight: 25,
-	graphicXOffset: -13,
-	graphicYOffset: -13,
-      });
+      new ol.style.Style({
+        "image": new ol.style.Icon({
+          "src": "img/hi_node.png"
+        })
+      }));
   }
 }

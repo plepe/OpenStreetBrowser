@@ -4,7 +4,7 @@ var tag_to_place_type={ "relation": "rel", "way": "way", "node": "node", "coll":
 
 function set_feature_style(highlights, style) {
   for(var i=0; i<highlights.length; i++) {
-    highlights[i].style=style;
+    highlights[i].setStyle(style);
   }
 }
 
@@ -82,16 +82,15 @@ function place(data, obj) {
 
     this.highlight=this.get_geo();
     set_feature_style(this.highlight, 
-      {
-	strokeWidth: 4,
-	strokeColor: "black",
-	externalGraphic: "img/hi_node.png",
-	graphicWidth: 25,
-	graphicHeight: 25,
-	graphicXOffset: -13,
-	graphicYOffset: -13,
-	fill: "none"
-      });
+      new ol.style.Style({
+        "stroke": new ol.style.Stroke({
+          "color": "black",
+          "width": 4,
+        }),
+        "image": new ol.style.Icon({
+          "src": "img/hi_node.png"
+        })
+      }));
 
     return this.highlight;
   }
@@ -102,16 +101,15 @@ function place(data, obj) {
 
     this.display_features=this.get_geo();
     set_feature_style(this.display_features,
-      {
-	strokeWidth: 2,
-	strokeColor: "black",
-	externalGraphic: "img/big_node.png",
-	graphicWidth: 11,
-	graphicHeight: 11,
-	graphicXOffset: -6,
-	graphicYOffset: -6,
-	fill: "none"
-      });
+      new ol.style.Style({
+        "stroke": new ol.style.Stroke({
+          "color": "black",
+          "width": 2,
+        }),
+        "image": new ol.style.Icon({
+          "src": "img/big_node.png"
+        })
+      }));
 
     return this.display_features;
   }

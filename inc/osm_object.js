@@ -67,16 +67,15 @@ function osm_object(dom) {
     this.info_features=wkt_to_features(geo);
 
     set_feature_style(this.info_features,
-      {
-	strokeWidth: 2,
-	strokeColor: "black",
-	externalGraphic: "img/big_node.png",
-	graphicWidth: 11,
-	graphicHeight: 11,
-	graphicXOffset: -6,
-	graphicYOffset: -6,
-	fill: "none"
-      });
+      new ol.style.Style({
+        "stroke": new ol.style.Stroke({
+          "color": "black",
+          "width": 2,
+        }),
+        "image": new ol.style.Icon({
+          "src": "img/big_node.png"
+        })
+      }));
     vector_layer.addFeatures(this.info_features);
 
     return this.info_features;
