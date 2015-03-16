@@ -4,19 +4,21 @@ var highlight_feature_timer;
 var highlight_next_no_zoom=false; // when set to true, next 'pan_to_highlight' does not zoom, only center
 
 function calc_size_on_map(features) {
-  var size=0;
-  var extent=new OpenLayers.Bounds();
+  if(features.length == 0)
+    return { w: 0, h: 0 };
 
-  for(var i=0; i<features.length; i++) {
-    extent.extend(features[i].geometry.getBounds());
+  var extent = features[0].getGeometry().getExtent();
+  for(var i=1; i<features.length; i++) {
+    extent = ol.extent.extend(extent, features[i].getGeometry().getExtent());
   }
 
-  var leftupper=map.getViewPortPxFromLonLat(new OpenLayers.LonLat(extent.left, extent.top));
-  var rightbottom=map.getViewPortPxFromLonLat(new OpenLayers.LonLat(extent.right, extent.bottom));
+  var leftupper=map.getPixelFromCoordinate(ol.extent.getTopLeft(extent));
+  var rightbottom=map.getPixelFromCoordinate(ol.extent.getBottomRight(extent));
 
-  var size={ w: rightbottom.x-leftupper.x, h: rightbottom.y-leftupper.y };
-
-  return size;
+  return {
+    w: rightbottom[0] - leftupper[0],
+    h: rightbottom[1] - leftupper[1]
+  };
 }
 
 function pan_to_highlight(lon, lat, zoom) {
