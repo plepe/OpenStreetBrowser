@@ -7,6 +7,7 @@ function layer_ol4pgm_category(id) {
     maxZoom: 17,
     tileSize: 1024
   }, map);
+  this.ol4pgm.onchange = this.write_div.bind(this);
 
   this.tags.set("name", "OSB");
   // shall_reload
