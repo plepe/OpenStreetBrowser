@@ -15,4 +15,8 @@ function object_ol4pgm(feature) {
   this.geo_center = function() {
     return [this.feature]; // todo
   }
+
+  this.list_weight = function() {
+    return -parseFloat(this.feature.getProperties().results[0]['z-index']) || 0.0;
+  }.bind(this);
 }
