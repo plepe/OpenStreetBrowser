@@ -97,6 +97,8 @@ function list(div, elements, request_more, options) {
 
   // show
   this.show=function() {
+    this.elements = weight_sort(this.elements, 'list_weight');
+
     while((this.elements.length>this.shown)&&
           (this.elements[this.shown]!=null)&&
           (this.shown<this.should_shown)) {

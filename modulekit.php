@@ -12,6 +12,7 @@ $depend=array("hooks", "lang", "pg_sql",
   "parse_number",	// depend inc/number.php
   "tags",		// depend inc/categor*.php
   "permalink",
+  "weight_sort",
 );
 
 // include these files from modules:
