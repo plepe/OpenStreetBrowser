@@ -71,8 +71,7 @@ function place(data, obj) {
     if(this.geo)
       return this.geo;
 
-    this.way=new postgis(this.data.getAttribute("way"));
-    this.geo=this.way.geo();
+    this.geo=wkt_to_features(this.data.getAttribute("way"));
 
     return this.geo;
   }

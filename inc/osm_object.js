@@ -64,8 +64,7 @@ function osm_object(dom) {
       return;
     }
 
-    var way=new postgis(geo);
-    this.info_features=way.geo();
+    this.info_features=wkt_to_features(geo);
 
     set_feature_style(this.info_features,
       {
@@ -89,8 +88,7 @@ function osm_object(dom) {
       return this._geo_center;
 
     if(this.tags.get("#geo:center")) {
-      var x=new postgis(this.tags.get("#geo:center"));
-      this._geo_center=x.geo();
+      this._geo_center=wkt_to_features(this.tags.get("#geo:center"));
     }
 
     return this._geo_center;

@@ -200,8 +200,7 @@ function highlight(geos, center) {
     for(var i=0; i<geos.length; i++) {
       var geo=geos[i];
 
-      var way=new postgis(geo);
-      var new_features=way.geo();
+      var new_features=wkt_to_features(geo);
       this.features=this.features.concat(new_features);
 
       set_feature_style(this.features, 
@@ -225,8 +224,7 @@ function highlight(geos, center) {
   this.add_geo(geos);
 
   if(center) {
-    var way=new postgis(center);
-    this.center_feature=way.geo();
+    this.center_feature=wkt_to_features(center);
 
     set_feature_style(this.center_feature, 
       {

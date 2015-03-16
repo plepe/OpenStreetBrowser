@@ -15,7 +15,7 @@ function dyn_overlay_show(cat, match_ob) {
     return;
   }
 
-  var p=new postgis(geo).geo();
+  var p=wkt_to_features(geo);
 
   if(!dyn_overlay[category])
     dyn_overlay[category]={ current_features: [] };
