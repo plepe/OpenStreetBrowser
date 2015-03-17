@@ -9,6 +9,9 @@ function layer_ol4pgm_category(id) {
   }, map);
   this.ol4pgm.onchange = this.write_div.bind(this);
 
+  // TODO: maybe register_layer or so?
+  layers[this.id] = this;
+
   this.tags.set("name", "OSB");
   // shall_reload
 
@@ -38,6 +41,18 @@ function layer_ol4pgm_category(id) {
     }
 
     new list(div.data, show_list, null, { });
+  }
+
+  this.search_object=function(id) {
+    var all_features = this.ol4pgm.getFeatures();
+    for(var i = 0; i < all_features.length; i++) {
+      var feature = all_features[i];
+
+      if(feature.getProperties()['osm:id'] == id)
+        return new object_ol4pgm(feature, this);
+    }
+
+    // TODO: what if the object has not been loaded yet?
   }
 }
 
