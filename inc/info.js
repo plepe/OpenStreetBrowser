@@ -82,7 +82,10 @@ function info(ob) {
 
     // header
     var h1=dom_create_append(this.div, "h1");
-    dom_create_append_text(h1, this.ob.name());
+    var text = this.ob.name;
+    if(typeof text == "function")
+      text = text();
+    dom_create_append_text(h1, text);
 
     // buttons
     this.buttons=new buttons();
