@@ -4,6 +4,7 @@ function layer_ol4pgm_category(id) {
 
   this.ol4pgm = new ol4pgmLayer({
     url: id + ".py?x={x}&y={y}&z={z}&format=geojson-separate&tilesize=1024&srs=3857",
+    single_url: id + ".py?id={id}&zoom={zoom}&format=geojson-separate&srs=3857",
     maxZoom: 17,
     tileSize: 1024
   }, map);
@@ -43,16 +44,15 @@ function layer_ol4pgm_category(id) {
     new list(div.data, show_list, null, { });
   }
 
-  this.search_object=function(id) {
-    var all_features = this.ol4pgm.getFeatures();
-    for(var i = 0; i < all_features.length; i++) {
-      var feature = all_features[i];
+  this.search_object=function(id, callback) {
+    this.ol4pgm.getFeature(id, function(callback, feature) {
+      if(feature)
+        callback(new object_ol4pgm(feature, this));
+      else
+        callback(null);
+    }.bind(this, callback));
 
-      if(feature.getProperties()['osm:id'] == id)
-        return new object_ol4pgm(feature, this);
-    }
-
-    // TODO: what if the object has not been loaded yet?
+    return null;
   }
 }
 
