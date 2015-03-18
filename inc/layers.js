@@ -28,7 +28,7 @@ function layers_hash_changed(new_hash) {
   }
 }
 
-register_hook("search_object", function(ret, id) {
+register_hook("search_object", function(ret, id, callback) {
   var m;
 
   if(m = id.match(/^(.*)\/([^\/]+)$/)) {
@@ -41,8 +41,8 @@ register_hook("search_object", function(ret, id) {
 
     if(layer_id in layers) {
       if(layers[layer_id].search_object) {
-        var ob = layers[layer_id].search_object(ob_id);
-        if(ob)
+        var ob = layers[layer_id].search_object(ob_id, callback);
+        if(ob != false)
           ret.push(ob);
       }
     }
