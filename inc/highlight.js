@@ -170,8 +170,7 @@ function highlight(geos, center) {
 
     if(this.center_feature) {
       if(too_big)
-        for(var i=0; i<this.center_feature.length; i++)
-          vector_layer.getSource().removeFeature(this.center_feature[i]);
+        layer_remove_features(vector_layer, this.center_feature);
       else
         for(var i=0; i<this.center_feature.length; i++)
           vector_layer.getSource().addFeature(this.center_feature[i]);
@@ -184,11 +183,8 @@ function highlight(geos, center) {
 
   // hide
   this.hide=function() {
-    for(var i=0; i<this.features.length; i++)
-      vector_layer.getSource().removeFeature(this.features[i]);
-    if(this.center_feature)
-        for(var i=0; i<this.center_feature.length; i++)
-          vector_layer.getSource().removeFeature(this.center_feature[i]);
+    layer_remove_features(vector_layer, this.features);
+    layer_remove_features(vector_layer, this.center_feature);
     this.shown=false;
 
     delete(highlight_current_active.id);

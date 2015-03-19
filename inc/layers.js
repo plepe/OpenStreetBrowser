@@ -49,5 +49,11 @@ register_hook("search_object", function(ret, id, callback) {
   }
 });
 
+function layer_remove_features(layer, features) {
+  for(var i = 0; i < features.length; i++)
+    if(layer.getSource().getFeatures().indexOf(features[i]) != -1)
+      layer.getSource().removeFeature(features[i]);
+}
+
 register_hook("get_permalink", layers_permalink);
 register_hook("hash_changed", layers_hash_changed);
