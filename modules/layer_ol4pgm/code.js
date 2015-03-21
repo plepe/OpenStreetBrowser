@@ -3,7 +3,7 @@ function layer_ol4pgm_category(id) {
   this.inheritFrom(id);
 
   this.ol4pgm = new ol4pgmLayer({
-    url: id + ".py?x={x}&y={y}&z={z}&format=geojson-separate&tilesize=1024&srs=3857",
+    url: "data.php?id="+ id +"&x={x}&y={y}&z={z}&format=geojson-separate&tilesize=1024&srs=3857",
     single_url: id + ".py?id={id}&zoom={zoom}&format=geojson-separate&srs=3857",
     maxZoom: 17,
     tileSize: 1024
@@ -57,5 +57,5 @@ function layer_ol4pgm_category(id) {
 }
 
 register_hook("init", function() {
-  category_root.register_sub_category(new layer_ol4pgm_category("osb"));
+  category_root.register_sub_category(new layer_ol4pgm_category("foo"));
 });
