@@ -35,6 +35,13 @@ $osmosis_db=&$db;
 # $osmosis_db['host']="localhost";
 # $osmosis_db['debug']=false;
 
+// configuration for pgmapcss
+$pgmapcss = array(
+  "path" => "pgmapcss",
+  "template" => "ol4pgm-0.1",
+  "config_options" => "",
+);
+
 // default SRID which the OpenStreetBrowser API assumes for requests
 $DEFAULT_SRID=900913;
 
