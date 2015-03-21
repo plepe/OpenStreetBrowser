@@ -13,3 +13,9 @@
 [submodule "modules/render-backend"]
 	path = modules/render-backend
 	url = https://github.com/plepe/OpenStreetBrowser-render-backend.git
+[submodule "modules/form"]
+	path = modules/form
+	url = https://github.com/plepe/modulekit-form.git
+[submodule "modules/adv_exec"]
+	path = modules/adv_exec
+	url = https://github.com/plepe/adv_exec.git
