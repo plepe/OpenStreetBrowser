@@ -12,16 +12,16 @@ if(!preg_match("/^[a-zA-Z0-9_]+$/", $_REQUEST['id'], $m)) {
   exit;
 }
 
-$cache_path = "{$data_path}/cache/{$_REQUEST['id']}/{$_REQUEST['z']}/{$_REQUEST['x']}/{$_REQUEST['y']}.json";
+$cache_path = "{$data_path}/cache/{$_REQUEST['id']}/{$_REQUEST['z']}/{$_REQUEST['x']}/{$_REQUEST['y']}.json.gz";
 
 // TODO: invalidate cache
 if(file_exists($cache_path)) {
-  $fp = fopen($cache_path, "r");
+  $fp = gzopen($cache_path, "r");
   $cache_fp = null;
 }
 else {
   mkdir(dirname($cache_path), 0777, true);
-  $cache_fp = fopen($cache_path, "w");
+  $cache_fp = gzopen($cache_path, "w");
 
   $script = "{$data_path}/categories/{$_REQUEST['id']}.py";
 
