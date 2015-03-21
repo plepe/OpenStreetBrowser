@@ -13,17 +13,26 @@ if(!preg_match("/^[a-zA-Z0-9_]+$/", $_REQUEST['id'], $m)) {
 }
 
 $cache_path = "{$data_path}/cache/{$_REQUEST['id']}/{$_REQUEST['z']}/{$_REQUEST['x']}/{$_REQUEST['y']}.json.gz";
+$script = "{$data_path}/categories/{$_REQUEST['id']}.py";
+$mapcss = "{$data_path}/categories/{$_REQUEST['id']}.mapcss";
+
+$read_from_cache = true;
+
+if(!file_exists($cache_path))
+  $read_from_cache = false;
+elseif(filemtime($cache_path) < filemtime($mapcss))
+  $read_from_cache = false;
+elseif(filemtime($cache_path) < time() - 86400*10)
+  $read_from_cache = false;
 
 // TODO: invalidate cache
-if(file_exists($cache_path)) {
+if($read_from_cache) {
   $fp = gzopen($cache_path, "r");
   $cache_fp = null;
 }
 else {
   mkdir(dirname($cache_path), 0777, true);
   $cache_fp = gzopen($cache_path, "w");
-
-  $script = "{$data_path}/categories/{$_REQUEST['id']}.py";
 
   $descriptorspec = array(
      0 => array("pipe", "r"),
