@@ -81,13 +81,15 @@ mapcss_editor.prototype.save = function() {
 mapcss_editor.prototype.save_callback = function(data) {
   data = data.return_value;
 
-  if(data === true)
-    alert("Saved.");
+  if(typeof(data) != "object")
+    alert("An error occured while saving.");
   else {
     if('error' in data)
       alert("An error occured while saving: " + data.error);
+    else if('compile_log' in data)
+      alert("Saved. Compile log:\n" + data['compile_log']);
     else
-      alert("An error occured while saving.");
+      alert("Saved.");
   }
 
   this.win.close();

@@ -38,5 +38,8 @@ function ajax_mapcss_editor_save($param, $document, $data) {
   @mkdir("{$data_path}/categories/", 0777, true);
   file_put_contents("{$data_path}/categories/{$id}.mapcss", $data['content']);
 
-  return true;
+  $ret = array();
+  call_hooks("mapcss_saved", $ret, $id);
+
+  return $ret;
 }
