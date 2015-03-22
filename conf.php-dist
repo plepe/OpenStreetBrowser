@@ -51,6 +51,8 @@ $DB_SRS="+proj=latlong +datum=WGS84 +over";
 
 $default_location=array('zoom'=>2, 'lat'=>28.43864, 'lon'=>18.61488);
 
+$git_commit_options = "-c user.name='OpenStreetBrowser' -c user.email='webmaster@openstreetbrowser.org'";
+
 $type_list=array("w"=>"way", "n"=>"node", "r"=>"relation");
 $type_list_short=array("w"=>"way", "n"=>"node", "r"=>"rel");
 $type_list_plural=array("w"=>"ways", "n"=>"nodes", "r"=>"rels");
