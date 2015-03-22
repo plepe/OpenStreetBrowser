@@ -3,7 +3,7 @@ register_hook("main_links", function(&$list) {
   $list[] = array(5, "<a href='javascript:mapcss_editor_open(\"foo\")'>MapCSS</a>");
 });
 
-function ajax_mapcss_editor_load($param, $document, $data) {
+function ajax_mapcss_editor_load($param, $data) {
   global $data_path;
 
   $id = $param['id'];
@@ -18,10 +18,8 @@ function ajax_mapcss_editor_load($param, $document, $data) {
   return $ret;
 }
 
-function ajax_mapcss_editor_save($param, $document, $data) {
+function ajax_mapcss_editor_save($param, $data) {
   global $data_path;
-
-  $data = json_decode($data, true);
 
   if(!array_key_exists('content', $data))
     return array("error" => "No content defined");

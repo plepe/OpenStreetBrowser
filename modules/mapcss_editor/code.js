@@ -17,8 +17,7 @@ function mapcss_editor(id) {
 
   if(this.id) {
     this.win.content.innerHTML = "Loading ...";
-    ajax("mapcss_editor_load", { id: id }, null, function(data) {
-      data = data.return_value;
+    new ajax_json("mapcss_editor_load", { id: id }, function(data) {
       this.open(data);
     }.bind(this));
   }
@@ -71,16 +70,14 @@ mapcss_editor.prototype.save = function() {
     return;
   }
 
-  var param = JSON.stringify(this.form.get_data());
+  var param = this.form.get_data();
 
-  ajax("mapcss_editor_save", { id: this.id }, param, this.save_callback.bind(this));
+  new ajax_json("mapcss_editor_save", { id: this.id }, param, this.save_callback.bind(this));
 
   return false;
 }
 
 mapcss_editor.prototype.save_callback = function(data) {
-  data = data.return_value;
-
   if(typeof(data) != "object")
     alert("An error occured while saving.");
   else {
