@@ -102,3 +102,7 @@ function coalesce() {
       return $args[$i];
   }
 }
+
+function shell_escape($str) {
+  return '"' . strtr($str, array('"' => '\\"')) . '"';
+}

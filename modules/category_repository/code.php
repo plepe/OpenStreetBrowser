@@ -38,7 +38,7 @@ class CategoryRepository {
 
     // read categories and indexes
     $data['categories'] = array();
-    $f = popen("git ls-tree -r {$this->branch} --name-only", "r");
+    $f = popen("git ls-tree -r ". shell_escape($this->branch) ." --name-only", "r");
     while($r = chop(fgets($f))) {
       if(preg_match("/^(.*)\.mapcss$/", $r, $m)) {
         $data['categories'][$m[1]] = array(
@@ -77,7 +77,7 @@ function create_category_repository($id) {
     json_encode($init_index, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
 
   system("git add index.json");
-  $result = adv_exec("git {$git_commit_options} commit -m 'Initial commit' --author='". strtr($current_user->get_author(), array("'" => "\\'")) . "'");
+  $result = adv_exec("git {$git_commit_options} commit -m 'Initial commit' --author=". shell_escape($current_user->get_author()));
 
   if($result[0])
     return $result[0];
