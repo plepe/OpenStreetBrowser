@@ -321,3 +321,72 @@ function ajax_post(url, getparam, postdata, _callback) {
   return req;
 }
 
+function ajax_json(funcname, param_get, param_post, callback) {
+  this.funcname = funcname;
+  this.param_get = param_get;
+  this.param_post = param_post;
+  this.callback = callback;
+
+  // branch for native XMLHttpRequest object
+  if(window.XMLHttpRequest) {
+    try {
+      this.req = new XMLHttpRequest();
+    }
+    catch(e) {
+      alert("XMLHttpRequest not supported!");
+      return;
+    }
+    // branch for IE/Windows ActiveX version
+  } else if(window.ActiveXObject) {
+    try {
+      this.req = new ActiveXObject("Msxml2.XMLHTTP");
+    }
+    catch(e) {
+      try {
+        this.req = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      catch(e) {
+        alert("XMLHttpRequest not supported!");
+        return;
+      }
+    }
+  }
+
+  var param_get_url = [];
+  ajax_build_request(this.param_get, "param", param_get_url);
+  param_get_url = param_get_url.join("&");
+
+  if(typeof(this.param_post) == "function") {
+    this.callback = this.param_post;
+    this.param_post = null;
+  }
+
+  if(this.param_post)
+    var param_post_enc = JSON.stringify(this.param_post);
+
+  this.req.onreadystatechange = this.req_change.bind(this);
+  var sync = (callback != null);
+  this.req.open((param_post_enc == "" ? "GET" : "POST"),
+           "ajax_json.php?func=" + this.funcname + "&" + param_get_url,
+           sync);
+
+  if(this.param_post !== null) {
+    this.req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    this.req.setRequestHeader("Content-length", param_post_enc.length);
+    this.req.setRequestHeader("Connection", "close");
+  }
+
+  this.req.send(param_post_enc);
+}
+
+ajax_json.prototype.req_change = function() {
+  if(this.req.readyState == 4) {
+    if(this.req.status == 0)
+      return;
+
+    this.result = JSON.parse(this.req.responseText);
+
+    if(this.callback)
+      this.callback(this.result);
+  }
+}
