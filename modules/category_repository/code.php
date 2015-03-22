@@ -89,3 +89,8 @@ function ajax_category_repository_load($param) {
   $category_repository = new CategoryRepository($param['id'], $param['branch']);
   return $category_repository->data();
 }
+
+// TODO: remove
+register_hook("main_links", function(&$list) {
+  $list[] = array(5, "<a href='javascript:category_repository_browser_open(\"main\")'>Repo</a>");
+});
