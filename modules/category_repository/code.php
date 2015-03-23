@@ -19,16 +19,19 @@ class CategoryRepository {
     $this->branch = $branch;
   }
 
-  function data() {
+  function path() {
     global $data_path;
-    $path = "{$data_path}/categories/{$this->id}";
 
-    $data = json_decode(file_get_contents("{$path}/index.json", "r"), true);
+    return "{$data_path}/categories/{$this->id}";
+  }
+
+  function data() {
+    $data = json_decode(file_get_contents("{$this->path()}/index.json", "r"), true);
 
     $data['branch'] = $this->branch;
     $data['other_branches'] = array();
 
-    chdir($path);
+    chdir($this->path());
 
     $f = popen("git for-each-ref --format '%(refname)%09%(objectname)%09%(authordate:iso8601)%09%(subject)' refs/heads", "r");
     while($r = chop(fgets($f))) {
