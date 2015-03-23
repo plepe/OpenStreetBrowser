@@ -6,7 +6,6 @@ $id="openstreetbrowser";
 
 // these modules should be loaded first
 $depend=array("hooks", "lang", "pg_sql",
-  "category",		// previously from inc/category.php
   "load_object",	// previously from inc/object.php
   "pg_array",		// depend inc/object.php
   "parse_number",	// depend inc/number.php
@@ -44,7 +43,6 @@ $include=array(
     "inc/tags.php",
     "inc/sql.php",
     "inc/debug.php",
-    "inc/category.php",
     "inc/categories.php",
     "inc/process_category.php",
     "inc/functions.php",
