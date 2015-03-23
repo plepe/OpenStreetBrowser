@@ -1,4 +1,4 @@
-new ajax_json(funcname, param_get, [[param_post], callback])
+[new] ajax_json(funcname, param_get, [[param_post], callback])
 
 * funcname: function name on the server to be called (function name will be
   prefixed by 'ajax_' -> func 'foo' called 'ajax_foo')

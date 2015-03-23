@@ -322,6 +322,9 @@ function ajax_post(url, getparam, postdata, _callback) {
 }
 
 function ajax_json(funcname, param_get, param_post, callback) {
+  if(this == window)
+    return new ajax_json(funcname, param_get, param_post, callback);
+
   this.funcname = funcname;
   this.param_get = param_get;
   this.param_post = param_post;
@@ -365,7 +368,7 @@ function ajax_json(funcname, param_get, param_post, callback) {
     var param_post_enc = JSON.stringify(this.param_post);
 
   this.req.onreadystatechange = this.req_change.bind(this);
-  var sync = (callback != null);
+  var sync = (this.callback != null);
   this.req.open((param_post_enc == "" ? "GET" : "POST"),
            "ajax_json.php?func=" + this.funcname + "&" + param_get_url,
            sync);
