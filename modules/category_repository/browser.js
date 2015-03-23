@@ -5,7 +5,7 @@ function CategoryRepositoryBrowser(id, branch) {
   });
   this.win.content.innerHTML = "Loading ...";
 
-  this.category_repository = new CategoryRepository(id, branch);
+  this.category_repository = get_category_repository(id, branch);
   this.category_repository.data(this.show.bind(this));
 }
 

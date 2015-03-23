@@ -1,3 +1,18 @@
+var category_repository_cache = {};
+
+function get_category_repository(id, branch) {
+  if(!(id in category_repository_cache))
+    category_repository_cache[id] = {};
+
+  if(!branch)
+    branch = "master";
+
+  if(!(branch in category_repository_cache[id]))
+    category_repository_cache[id][branch] = new CategoryRepository(id, branch);
+
+  return category_repository_cache[id][branch];
+}
+
 function CategoryRepository(id, branch) {
   this.id = id;
   if(branch)

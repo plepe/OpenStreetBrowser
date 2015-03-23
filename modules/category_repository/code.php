@@ -1,4 +1,18 @@
 <?php
+$category_repository_cache = array();
+
+function get_category_repository($id, $branch="master") {
+  global $category_repository_cache;
+
+  if(!array_key_exists($id, $category_repository_cache))
+    $category_repository_cache[$id] = array();
+
+  if(!array_key_exists($branch, $category_repository_cache[$id]))
+    $category_repository_cache[$id][$branch] = new CategoryRepository($id, $branch);
+
+  return $category_repository_cache[$id][$branch];
+}
+
 class CategoryRepository {
   function __construct($id, $branch="master") {
     $this->id = $id;
