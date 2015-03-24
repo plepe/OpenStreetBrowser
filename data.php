@@ -12,9 +12,16 @@ if(!preg_match("/^[a-zA-Z0-9_]+$/", $_REQUEST['id'], $m)) {
   exit;
 }
 
-$cache_path = "{$data_path}/cache/{$_REQUEST['id']}/{$_REQUEST['z']}/{$_REQUEST['x']}/{$_REQUEST['y']}.json.gz";
-$script = "{$data_path}/categories/{$_REQUEST['id']}.py";
-$mapcss = "{$data_path}/categories/{$_REQUEST['id']}.mapcss";
+$repo = $_REQUEST['repo'];
+$id = $_REQUEST['id'];
+$branch = $_REQUEST['branch'] ?: "master";
+
+$category = get_mapcss_category($repo, $id, $branch);
+$category->compile();
+
+$cache_path = "{$data_path}/cache/{$repo}/{$id}/{$branch}/{$_REQUEST['z']}/{$_REQUEST['x']}/{$_REQUEST['y']}.json.gz";
+$script = $category->repo->path() . "/{$id}.py";
+$mapcss = $category->repo->path() . "/{$id}.mapcss";
 
 $read_from_cache = true;
 

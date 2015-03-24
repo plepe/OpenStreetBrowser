@@ -57,6 +57,30 @@ class mapcss_Category {
 
     return $result;
   }
+
+  // if necessary (or $force=true) compiles the style
+  function compile($force=false) {
+    global $pgmapcss;
+    global $db;
+
+    chdir($this->repo->path());
+    system("git checkout ". shell_escape($this->repo->branch));
+
+    if((!$force)&&
+       file_exists($this->id .".py") &&
+       (filemtime($this->id .".py") > filemtime($this->id .".mapcss")))
+      return;
+
+    $config_options = "";
+    if($pgmapcss['config_options'])
+      $config_options = "-c {$pgmapcss['config_options']}";
+
+    $id = $this->id;
+
+    $f=adv_exec("{$pgmapcss['path']} {$config_options} --mode standalone -d'{$db['name']}' -u'{$db['user']}' -p'{$db['passwd']}' -H'{$db['host']}' -t'{$pgmapcss['template']}' '{$id}' 2>&1", $this->repo->path(), array("LC_CTYPE"=>"en_US.UTF-8"));
+
+    return $f[1];
+  }
 }
 
 function ajax_mapcss_category_load($param) {
