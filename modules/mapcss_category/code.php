@@ -37,8 +37,32 @@ class mapcss_Category {
 
     return $ret;
   }
+
+  function save($data) {
+    global $git_commit_options;
+    global $current_user;
+
+    chdir($this->repo->path());
+    system("git checkout ". shell_escape($this->repo->branch));
+
+    file_put_contents($this->id .".mapcss", $data['content']);
+
+    system("git add ". shell_escape($this->id) .".mapcss");
+
+    $msg = "update category {$this->id}";
+    if(array_key_exists('commit_msg', $data) && $data['commit_msg'])
+      $msg = $data['commit_msg'];
+
+    $result = adv_exec("git {$git_commit_options} commit -m ". shell_escape($msg) ." --author=". shell_escape($current_user->get_author()));
+
+    return $result;
+  }
 }
 
 function ajax_mapcss_category_load($param) {
   return get_mapcss_category($param['repo'], $param['id'], $param['branch'])->data();
+}
+
+function ajax_mapcss_category_save($param, $post) {
+  return get_mapcss_category($param['repo'], $param['id'], $param['branch'])->save($post);
 }
