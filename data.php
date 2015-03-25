@@ -27,7 +27,7 @@ $read_from_cache = true;
 
 if(!file_exists($cache_path))
   $read_from_cache = false;
-elseif(filemtime($cache_path) < filemtime($mapcss))
+elseif(filemtime($cache_path) < $category->last_modified())
   $read_from_cache = false;
 elseif(filemtime($cache_path) < time() - 86400*10)
   $read_from_cache = false;

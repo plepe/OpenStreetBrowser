@@ -58,6 +58,14 @@ class mapcss_Category {
     return $result;
   }
 
+  function last_modified() {
+    chdir($this->repo->path());
+
+    $result = adv_exec("git log -1 --format='%at' ". shell_escape($this->repo->branch) ." ". shell_escape($this->id.".mapcss"), $this->repo->path());
+
+    return (int)$result[1];
+  }
+
   // if necessary (or $force=true) compiles the style
   function compile($force=false) {
     global $pgmapcss;
@@ -68,7 +76,7 @@ class mapcss_Category {
 
     if((!$force)&&
        file_exists($this->id .".py") &&
-       (filemtime($this->id .".py") > filemtime($this->id .".mapcss")))
+       (filemtime($this->id .".py") > $this->last_modified()))
       return;
 
     $config_options = "";
