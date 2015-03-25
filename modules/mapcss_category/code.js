@@ -77,5 +77,9 @@ mapcss_Category.prototype.save = function(data) {
     this.data(function() {}, true);
 
     alert("Saved.");
+
+    this.editor.close();
   }.bind(this));
+
+  return false;
 }

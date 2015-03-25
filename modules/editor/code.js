@@ -64,9 +64,10 @@ editor.prototype.save = function() {
     return false;
   }
 
-  this.options.onsave(this.form.get_data());
+  var ret = this.options.onsave(this.form.get_data());
 
-  this.win.close();
+  if(ret !== false)
+    this.close();
 
   return false;
 }
@@ -75,5 +76,9 @@ editor.prototype.cancel = function() {
   if(this.options.oncancel)
     this.options.oncancel(this.form.get_data());
 
+  this.close();
+}
+
+editor.prototype.close = function() {
   this.win.close();
 }
