@@ -68,7 +68,8 @@ mapcss_Category.prototype.edit = function() {
     onsave: this.save.bind(this)
   });
 
-  this.data(this.editor.set_data.bind(this.editor));
+  // force loading of current version
+  this.data(this.editor.set_data.bind(this.editor), true);
 }
 
 mapcss_Category.prototype.save = function(data) {
