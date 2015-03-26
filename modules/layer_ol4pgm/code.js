@@ -6,7 +6,8 @@ function layer_ol4pgm_category(id) {
     url: "data.php?repo=main&id="+ id +"&x={x}&y={y}&z={z}&format=geojson-separate&tilesize=1024&srs=3857",
     single_url: id + ".py?id={id}&zoom={zoom}&format=geojson-separate&srs=3857",
     maxZoom: 17,
-    tileSize: 1024
+    tileSize: 1024,
+    visible: false
   }, map);
   this.ol4pgm.onchange = this.write_div.bind(this);
 
@@ -53,6 +54,16 @@ function layer_ol4pgm_category(id) {
     }.bind(this, callback));
 
     return null;
+  }
+
+  // unhide_category
+  this.on_unhide_category=function(div) {
+    this.ol4pgm.setVisible(true);
+  }
+
+  // hide_category
+  this.on_hide_category=function(div) {
+    this.ol4pgm.setVisible(false);
   }
 }
 
