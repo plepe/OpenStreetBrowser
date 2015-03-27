@@ -6,15 +6,15 @@ function CategoryRepositoryBrowser(id, branch) {
   this.win.content.innerHTML = "Loading ...";
   this.win.onclose = this.close.bind(this);
 
-  this.category_repository = get_category_repository(id, branch);
-  this.category_repository.data(this.show.bind(this));
-  this.category_repository.onload = function() {
-    this.category_repository.data(this.show.bind(this));
-  }.bind(this);
+  get_category_repository(id, branch, function(ob) {
+    this.category_repository = ob;
+    this.show();
+    this.category_repository.on('load', this.show.bind(this), this);
+  }.bind(this));
 }
 
-CategoryRepositoryBrowser.prototype.show = function(data) {
-  this.data = data;
+CategoryRepositoryBrowser.prototype.show = function() {
+  this.data = this.category_repository.data();
 
   dom_clean(this.win.content);
 
@@ -83,7 +83,7 @@ CategoryRepositoryBrowser.prototype.show = function(data) {
 }
 
 CategoryRepositoryBrowser.prototype.close = function() {
-  this.category_repository.onload = null;
+  this.category_repository.off(null, null, this);
 }
 
 function category_repository_browser_open(id) {
