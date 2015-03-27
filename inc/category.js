@@ -282,6 +282,7 @@ function category(id) {
   // register_sub_category
   this.register_sub_category=function(ob) {
     this.sub_categories.push(ob);
+    this.write_div();
   }
 
   // constructor
