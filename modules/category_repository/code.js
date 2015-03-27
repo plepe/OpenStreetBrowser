@@ -33,6 +33,9 @@ CategoryRepository.prototype.load = function() {
       this.data_callbacks[i](this._data);
     }
     this.data_callbacks = [];
+
+    if(this.onload)
+      this.onload();
   }.bind(this));
 }
 
