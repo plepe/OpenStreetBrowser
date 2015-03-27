@@ -76,6 +76,8 @@ mapcss_Category.prototype.save = function(data) {
   new ajax_json("mapcss_category_save", { repo: this.repo.id, id: this.id, branch: this.repo.branch }, data, function(result) {
     // force reload
     this.data(function() {}, true);
+    // force reload of category repository
+    this.repo.data(function() {}, true);
 
     alert("Saved.");
 
