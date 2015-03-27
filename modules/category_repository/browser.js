@@ -25,29 +25,27 @@ CategoryRepositoryBrowser.prototype.show = function() {
   var ul = document.createElement("ul");
 
   for(var k in this.data.categories) {
-    var category = this.data.categories[k];
+    var cat = load_mapcss_category(this.category_repository.id, k, this.category_repository.branch, this, this.data.categories[k]);
+
     var li = document.createElement("li");
 
     var a = document.createElement("a");
-    a.onclick = function(repo, id, branch) {
-      get_mapcss_category(repo, id, branch, function(cat) {
-        var layer = cat.Layer()
+    a.onclick = function(cat) {
+      var layer = cat.Layer()
 
-        if(layer)
-          category_root.register_sub_category(layer);
-        else
-          alert("Can't create layer from category!");
-      }.bind(this));
-    }.bind(this, this.category_repository.id, k, this.category_repository.branch);
+      if(layer)
+        category_root.register_sub_category(layer);
+      else
+        alert("Can't create layer from category!");
+    }.bind(this, cat);
+
     a.appendChild(document.createTextNode(k));
     li.appendChild(a);
 
     var a = document.createElement("a");
-    a.onclick = function(repo, id, branch) {
-      get_mapcss_category(repo, id, branch, function(cat) {
-        cat.edit();
-      }.bind(this));
-    }.bind(this, this.category_repository.id, k, this.category_repository.branch);
+    a.onclick = function(cat) {
+      cat.edit();
+    }.bind(this, cat);
     a.appendChild(document.createTextNode(" (edit)"));
     li.appendChild(a);
 

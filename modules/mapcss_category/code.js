@@ -23,16 +23,40 @@ function get_mapcss_category(repo, id, branch, callback) {
   return null;
 }
 
-function mapcss_Category(repo, id, branch) {
+function load_mapcss_category(repo, id, branch, repository, data) {
+  if(!branch)
+    branch = "master";
+
+  if(!(repo in mapcss_category_cache))
+    mapcss_category_cache[repo] = {};
+
+  if(!(id in mapcss_category_cache[repo]))
+    mapcss_category_cache[repo][id] = {}
+
+  if(!(branch in mapcss_category_cache[repo][id]))
+    mapcss_category_cache[repo][id][branch] = new mapcss_Category(repo, id, branch, repository, data);
+
+  return mapcss_category_cache[repo][id][branch];
+}
+
+function mapcss_Category(repo, id, branch, repository, data) {
   Eventify.enable(this);
   this.is_loaded = false;
 
   this.id = id;
 
-  get_category_repository(repo, branch, function(ob) {
-    this.repo = ob;
-    this.load();
-  }.bind(this));
+  if(repository) {
+    this.repo = repository;
+    this._data = data;
+    this.is_loaded = true;
+    this.trigger("load", data);
+  }
+  else {
+    get_category_repository(repo, branch, function(ob) {
+      this.repo = ob;
+      this.load();
+    }.bind(this));
+  }
 }
 
 mapcss_Category.prototype.load = function(callback) {
