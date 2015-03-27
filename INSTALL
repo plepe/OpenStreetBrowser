@@ -16,3 +16,8 @@ There's a tiny command line interface. Supported commands:
   quit		Force daemon shutdown
 
 'MCP' is an alias for the OpenStreetBrowser-Daemon, used internally
+
+== Libraries ==
+```sh
+git clone https://github.com/bermi/eventify.git lib/eventify
+```

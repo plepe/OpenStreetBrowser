@@ -56,6 +56,7 @@ $include=array(
   ),
   'js'=>array(
     "inc/*.js",
+    "lib/eventify/dist/eventify.min.js",
   ),
   'css'=>array(
     "inc/*.css",
