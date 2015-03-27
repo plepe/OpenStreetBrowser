@@ -30,27 +30,26 @@ CategoryRepositoryBrowser.prototype.show = function() {
 
     var a = document.createElement("a");
     a.onclick = function(repo, id, branch) {
-      var cat = new get_mapcss_category(repo, id, branch);
-      var layer = cat.Layer()
+      get_mapcss_category(repo, id, branch, function(cat) {
+        var layer = cat.Layer()
 
-      if(layer)
-        category_root.register_sub_category(layer);
-      else
-        alert("Can't create layer from category!");
-
+        if(layer)
+          category_root.register_sub_category(layer);
+        else
+          alert("Can't create layer from category!");
+      }.bind(this));
     }.bind(this, this.category_repository.id, k, this.category_repository.branch);
     a.appendChild(document.createTextNode(k));
     li.appendChild(a);
 
     var a = document.createElement("a");
     a.onclick = function(repo, id, branch) {
-      var cat = new get_mapcss_category(repo, id, branch);
-      cat.edit();
+      get_mapcss_category(repo, id, branch, function(cat) {
+        cat.edit();
+      }.bind(this));
     }.bind(this, this.category_repository.id, k, this.category_repository.branch);
     a.appendChild(document.createTextNode(" (edit)"));
     li.appendChild(a);
-
-
 
     ul.appendChild(li);
   }
@@ -72,8 +71,9 @@ CategoryRepositoryBrowser.prototype.show = function() {
       data: {},
       title: "Create new category",
       onsave: function(repo, data) {
-        var cat = new get_mapcss_category(repo.id, data.id, repo.branch);
-        cat.edit();
+        get_mapcss_category(repo.id, data.id, repo.branch, function(cat) {
+          cat.edit();
+        }.bind(this));
       }.bind(this, repo)
     });
 
