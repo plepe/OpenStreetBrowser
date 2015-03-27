@@ -22,15 +22,31 @@ CategoryRepositoryBrowser.prototype.show = function(data) {
 
   for(var k in this.data.categories) {
     var category = this.data.categories[k];
+    var li = document.createElement("li");
 
     var a = document.createElement("a");
     a.onclick = function(repo, id, branch) {
-      new mapcss_editor(repo, id, branch);
-    }.bind(this, this.category_repository.id, k, this.category_repository.branch);
+      var cat = new get_mapcss_category(repo, id, branch);
+      var layer = cat.Layer()
 
-    var li = document.createElement("li");
+      if(layer)
+        category_root.register_sub_category(layer);
+      else
+        alert("Can't create layer from category!");
+
+    }.bind(this, this.category_repository.id, k, this.category_repository.branch);
     a.appendChild(document.createTextNode(k));
     li.appendChild(a);
+
+    var a = document.createElement("a");
+    a.onclick = function(repo, id, branch) {
+      var cat = new get_mapcss_category(repo, id, branch);
+      cat.edit();
+    }.bind(this, this.category_repository.id, k, this.category_repository.branch);
+    a.appendChild(document.createTextNode(" (edit)"));
+    li.appendChild(a);
+
+
 
     ul.appendChild(li);
   }
