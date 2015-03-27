@@ -52,6 +52,30 @@ CategoryRepositoryBrowser.prototype.show = function(data) {
   }
 
   this.win.content.appendChild(ul);
+
+  var a = document.createElement("a");
+  a.onclick = function(repo) {
+    var form_def = {
+      'id': {
+        'type': 'text',
+        'name': 'ID',
+        'req': true
+      }
+    };
+
+    new editor({
+      form_def: form_def,
+      data: {},
+      title: "Create new category",
+      onsave: function(repo, data) {
+        var cat = new get_mapcss_category(repo.id, data.id, repo.branch);
+        cat.edit();
+      }.bind(this, repo)
+    });
+
+  }.bind(this, this.category_repository);
+  a.appendChild(document.createTextNode("New category"));
+  this.win.content.appendChild(a);
 }
 
 function category_repository_browser_open(id) {

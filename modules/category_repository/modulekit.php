@@ -1,4 +1,6 @@
 <?php
+$depend = array("editor");
+
 $include = array(
   'php' => array(
     'code.php',
