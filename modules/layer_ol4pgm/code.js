@@ -1,9 +1,9 @@
-function layer_ol4pgm_category(id) {
+function layer_ol4pgm_category(id, url) {
   this.inheritFrom=category;
   this.inheritFrom(id);
 
   this.ol4pgm = new ol4pgmLayer({
-    url: "data.php?repo=main&id="+ id +"&x={x}&y={y}&z={z}&format=geojson-separate&tilesize=1024&srs=3857",
+    url: url,
     single_url: id + ".py?id={id}&zoom={zoom}&format=geojson-separate&srs=3857",
     maxZoom: 17,
     tileSize: 1024,
@@ -14,7 +14,7 @@ function layer_ol4pgm_category(id) {
   // TODO: maybe register_layer or so?
   layers[this.id] = this;
 
-  this.tags.set("name", "OSB");
+  this.tags.set("name", id);
   // shall_reload
 
   this.shall_reload = function(list, parent_div, viewbox) {
@@ -66,7 +66,3 @@ function layer_ol4pgm_category(id) {
     this.ol4pgm.setVisible(false);
   }
 }
-
-register_hook("init", function() {
-  category_root.register_sub_category(new layer_ol4pgm_category("foo"));
-});
