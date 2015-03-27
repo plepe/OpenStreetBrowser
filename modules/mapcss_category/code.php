@@ -36,6 +36,9 @@ class mapcss_Category {
       $ret['content'] .= $r;
     pclose($f);
 
+    if(file_exists($this->id . ".json"))
+      $ret['info'] = json_decode(file_get_contents($this->id . ".json"), true);
+
     return $ret;
   }
 
