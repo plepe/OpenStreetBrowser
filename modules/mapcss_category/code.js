@@ -1,5 +1,5 @@
 var mapcss_category_cache = {};
-function get_mapcss_category(repo, id, branch) {
+function get_mapcss_category(repo, id, branch, callback) {
   if(!branch)
     branch = "master";
 
@@ -12,41 +12,43 @@ function get_mapcss_category(repo, id, branch) {
   if(!(branch in mapcss_category_cache[repo][id]))
     mapcss_category_cache[repo][id][branch] = new mapcss_Category(repo, id, branch);
 
-  return mapcss_category_cache[repo][id][branch];
+  var ob = mapcss_category_cache[repo][id][branch];
+  if(ob.is_loaded)
+    callback(ob);
+  else
+    ob.once('load', function(callback, ob, data) {
+      callback(ob);
+    }.bind(this, callback, ob));
+
+  return null;
 }
 
 function mapcss_Category(repo, id, branch) {
-  this.repo = get_category_repository(repo, branch);
+  Eventify.enable(this);
+  this.is_loaded = false;
+
   this.id = id;
 
-  this.data_callbacks = [];
-
-  this.load();
-}
-
-mapcss_Category.prototype.load = function(data) {
-  new ajax_json("mapcss_category_load", { repo: this.repo.id, id: this.id, branch: this.repo.branch }, function(data) {
-    this._data = data;
-
-    for(var i = 0; i < this.data_callbacks.length; i++) {
-      this.data_callbacks[i](this._data);
-    }
-    this.data_callbacks = [];
+  get_category_repository(repo, branch, function(ob) {
+    this.repo = ob;
+    this.load();
   }.bind(this));
 }
 
-mapcss_Category.prototype.data = function(callback, force) {
-  if(this._data) {
-    if(force) {
-      this.load();
-    }
-    else {
-      callback(this._data);
-      return;
-    }
-  }
+mapcss_Category.prototype.load = function(callback) {
+  new ajax_json("mapcss_category_load", { repo: this.repo.id, id: this.id, branch: this.repo.branch }, function(callback, data) {
+    this._data = data;
 
-  this.data_callbacks.push(callback);
+    this.is_loaded = true;
+    this.trigger("load", data);
+
+    if(callback)
+      callback();
+  }.bind(this, callback));
+}
+
+mapcss_Category.prototype.data = function() {
+  return this._data;
 }
 
 mapcss_Category.prototype.edit = function() {
@@ -69,15 +71,17 @@ mapcss_Category.prototype.edit = function() {
   });
 
   // force loading of current version
-  this.data(this.editor.set_data.bind(this.editor), true);
+  this.load(function() {
+    this.editor.set_data(this.data());
+  }.bind(this));
 }
 
 mapcss_Category.prototype.save = function(data) {
   new ajax_json("mapcss_category_save", { repo: this.repo.id, id: this.id, branch: this.repo.branch }, data, function(result) {
     // force reload
-    this.data(function() {}, true);
+    this.load();
     // force reload of category repository
-    this.repo.data(function() {}, true);
+    this.repo.load();
 
     alert("Saved.");
 
