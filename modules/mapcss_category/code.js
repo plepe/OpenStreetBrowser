@@ -84,3 +84,21 @@ mapcss_Category.prototype.save = function(data) {
 
   return false;
 }
+
+mapcss_Category.prototype.Layer = function() {
+  if(!this.layer) {
+    var url_param = [];
+    ajax_build_request({
+         repo: this.repo.id,
+         id: this.id,
+         branch: this.repo.branch
+      }, null, url_param);
+    url_param = url_param.join("&");
+
+    var url = "data.php?" + url_param + "&x={x}&y={y}&z={z}&format=geojson-separate&tilesize=1024&srs=3857";
+
+    this.layer = new layer_ol4pgm_category(this.id, url);
+  }
+
+ return this.layer;
+}
