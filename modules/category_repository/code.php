@@ -58,9 +58,7 @@ class CategoryRepository {
     $f = popen("git ls-tree -r ". shell_escape($this->branch) ." --name-only", "r");
     while($r = chop(fgets($f))) {
       if(preg_match("/^(.*)\.mapcss$/", $r, $m)) {
-        $data['categories'][$m[1]] = array(
-          'type' => "category",
-        );
+        $data['categories'][$m[1]] = get_mapcss_category($this->id, $m[1], $this->branch)->data();
       }
       elseif(preg_match("/^(.*)\.list$/", $r, $m)) {
         $data['categories'][$m[1]] = array(

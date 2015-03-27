@@ -25,6 +25,7 @@ class mapcss_Category {
       'id' => $this->id,
       'repo' => $this->repo->id,
       'branch' => $this->repo->branch,
+      'type' => 'mapcss_category',
     );
 
     chdir($this->repo->path());
