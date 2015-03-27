@@ -39,7 +39,7 @@ CategoryRepositoryBrowser.prototype.show = function() {
         alert("Can't create layer from category!");
     }.bind(this, cat);
 
-    a.appendChild(document.createTextNode(k));
+    a.appendChild(document.createTextNode(cat.title()));
     li.appendChild(a);
 
     var a = document.createElement("a");

@@ -20,6 +20,15 @@ class mapcss_Category {
     $this->id = $id;
   }
 
+  function title() {
+    $data = $this->data();
+
+    if(array_key_exists("info", $data) && array_key_exists("meta", $data['info']) && array_key_exists("title", $data['info']['meta']))
+      return $data['info']['meta']['title'];
+
+    return $this->id;
+  }
+
   function data() {
     $ret = array(
       'id' => $this->id,

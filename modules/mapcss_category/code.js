@@ -59,6 +59,15 @@ function mapcss_Category(repo, id, branch, repository, data) {
   }
 }
 
+mapcss_Category.prototype.title = function() {
+  var data = this.data();
+
+  if(('info' in data) && ('meta' in data.info) && ('title' in data.info.meta))
+    return data.info.meta.title;
+
+  return this.id;
+}
+
 mapcss_Category.prototype.load = function(callback) {
   new ajax_json("mapcss_category_load", { repo: this.repo.id, id: this.id, branch: this.repo.branch }, function(callback, data) {
     this._data = data;
