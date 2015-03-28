@@ -37,6 +37,7 @@ function CategoryRepository(id, branch) {
 CategoryRepository.prototype.load = function(callback) {
   new ajax_json("category_repository_load", { id: this.id, branch: this.branch }, function(callback, data) {
     this._data = data;
+    this.categories = null;
 
     this.is_loaded = true;
     this.trigger("load", data);
@@ -44,6 +45,22 @@ CategoryRepository.prototype.load = function(callback) {
     if(callback)
       callback();
   }.bind(this, callback));
+}
+
+CategoryRepository.prototype.get_categories = function(callback) {
+  if(!this.categories) {
+    this.categories = {};
+
+    for(var k in this._data.categories) {
+      var category_data = this._data.categories[k];
+
+      this.categories[k] = load_mapcss_category(this.id, k, this.branch, this, category_data);
+    }
+
+    this.categories
+  }
+
+  callback(this.categories);
 }
 
 CategoryRepository.prototype.data = function() {

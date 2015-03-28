@@ -14,6 +14,10 @@ function CategoryRepositoryBrowser(id, branch) {
 }
 
 CategoryRepositoryBrowser.prototype.show = function() {
+  this.category_repository.get_categories(this.show_1.bind(this));
+}
+
+CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
   this.data = this.category_repository.data();
 
   dom_clean(this.win.content);
@@ -24,8 +28,8 @@ CategoryRepositoryBrowser.prototype.show = function() {
 
   var ul = document.createElement("ul");
 
-  for(var k in this.data.categories) {
-    var cat = load_mapcss_category(this.category_repository.id, k, this.category_repository.branch, this, this.data.categories[k]);
+  for(var k in categories) {
+    var cat = categories[k];
 
     var li = document.createElement("li");
 
