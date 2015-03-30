@@ -88,8 +88,7 @@ function create_category_repository($id) {
     "maintainers" => array($current_user->username)
   );
 
-  file_put_contents("{$path}/index.json",
-    json_encode($init_index, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+  file_put_contents("{$path}/index.json", json_readable_encode($init_index));
 
   system("git add index.json");
   $result = adv_exec("git {$git_commit_options} commit -m 'Initial commit' --author=". shell_escape($current_user->get_author()));
