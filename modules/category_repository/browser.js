@@ -31,6 +31,11 @@ function CategoryRepositoryBrowser(id, branch) {
     }.bind(this, this.category_repository);
     a.appendChild(document.createTextNode("New category repository"));
     this.win.content.appendChild(a);
+
+    var div = document.createElement("div");
+    div.innerHTML = "Loading ...";
+    this.win.content.appendChild(div);
+    ajax_json('category_repository_list', {}, this.show_list.bind(this, div));
   }
   else {
     this.win.content.innerHTML = "Loading ...";
@@ -41,6 +46,14 @@ function CategoryRepositoryBrowser(id, branch) {
       this.category_repository.on('load', this.show.bind(this), this);
     }.bind(this));
   }
+}
+
+CategoryRepositoryBrowser.prototype.show_list = function(div, data) {
+  dom_clean(div);
+
+  var pre = document.createElement("pre");
+  div.appendChild(pre);
+  pre.appendChild(document.createTextNode(JSON.stringify(data)));
 }
 
 CategoryRepositoryBrowser.prototype.show = function() {

@@ -27,6 +27,8 @@ class CategoryRepository {
 
   function data() {
     $data = json_decode(file_get_contents("{$this->path()}/index.json", "r"), true);
+    if(!$data)
+      $data = array();
 
     $data['branch'] = $this->branch;
     $data['other_branches'] = array();
@@ -99,13 +101,27 @@ function create_category_repository($id) {
   return true;
 }
 
+function ajax_category_repository_create($param) {
+  return create_category_repository($param['id']);
+}
+
 function ajax_category_repository_load($param) {
   $category_repository = new CategoryRepository($param['id'], $param['branch']);
   return $category_repository->data();
 }
 
-function ajax_category_repository_create($param) {
-  create_category_repository($param['id']);
+function ajax_category_repository_list($param) {
+  global $data_path;
+  $ret = array();
+
+  $repo_list = opendir("{$data_path}/categories/");
+  while($repo = readdir($repo_list)) {
+    if($repo[0] != '.')
+      $ret[$repo] = get_category_repository($repo);
+  }
+  closedir($repo_list);
+
+  return $ret;
 }
 
 // TODO: remove
