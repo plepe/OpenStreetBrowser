@@ -32,6 +32,10 @@ function CategoryRepositoryBrowser(id, branch) {
     a.appendChild(document.createTextNode("New category repository"));
     this.win.content.appendChild(a);
 
+    var h = document.createElement("h4");
+    h.appendChild(document.createTextNode("Repositories"));
+    this.win.content.appendChild(h);
+
     var div = document.createElement("div");
     div.innerHTML = "Loading ...";
     this.win.content.appendChild(div);
@@ -51,9 +55,22 @@ function CategoryRepositoryBrowser(id, branch) {
 CategoryRepositoryBrowser.prototype.show_list = function(div, data) {
   dom_clean(div);
 
-  var pre = document.createElement("pre");
-  div.appendChild(pre);
-  pre.appendChild(document.createTextNode(JSON.stringify(data)));
+  var ul = document.createElement("ul");
+  for(var id in data) {
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+
+    a.onclick = function(id) {
+      category_repository_browser_open(id);
+      this.win.close();
+    }.bind(this, id);
+
+    a.appendChild(document.createTextNode(id));
+    li.appendChild(a);
+    ul.appendChild(li);
+  }
+
+  div.appendChild(ul);
 }
 
 CategoryRepositoryBrowser.prototype.show = function() {
@@ -128,7 +145,8 @@ CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
 }
 
 CategoryRepositoryBrowser.prototype.close = function() {
-  this.category_repository.off(null, null, this);
+  if(this.category_repository)
+    this.category_repository.off(null, null, this);
 }
 
 function category_repository_browser_open(id) {
