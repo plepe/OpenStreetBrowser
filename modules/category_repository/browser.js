@@ -1,16 +1,46 @@
 function CategoryRepositoryBrowser(id, branch) {
   this.win = new win({
-    title: "Repository \"" + id + "\"",
+    title: id ? "Repository \"" + id + "\"" : "Repository overview",
     class: "category_repository_browser"
   });
-  this.win.content.innerHTML = "Loading ...";
   this.win.onclose = this.close.bind(this);
 
-  get_category_repository(id, branch, function(ob) {
-    this.category_repository = ob;
-    this.show();
-    this.category_repository.on('load', this.show.bind(this), this);
-  }.bind(this));
+  if(!id) {
+    var a = document.createElement("a");
+    a.onclick = function(repo) {
+      var form_def = {
+        'id': {
+          'type': 'text',
+          'name': 'ID',
+          'req': true
+        }
+      };
+
+      new editor({
+        form_def: form_def,
+        data: {},
+        title: "Create new category repository",
+        onsave: function(data) {
+          ajax_json('category_repository_create', data, function(id) {
+            category_repository_browser_open(id);
+            this.win.close();
+          }.bind(this, id));
+        }.bind(this)
+      });
+
+    }.bind(this, this.category_repository);
+    a.appendChild(document.createTextNode("New category repository"));
+    this.win.content.appendChild(a);
+  }
+  else {
+    this.win.content.innerHTML = "Loading ...";
+
+    get_category_repository(id, branch, function(ob) {
+      this.category_repository = ob;
+      this.show();
+      this.category_repository.on('load', this.show.bind(this), this);
+    }.bind(this));
+  }
 }
 
 CategoryRepositoryBrowser.prototype.show = function() {

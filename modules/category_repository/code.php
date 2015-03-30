@@ -104,7 +104,11 @@ function ajax_category_repository_load($param) {
   return $category_repository->data();
 }
 
+function ajax_category_repository_create($param) {
+  create_category_repository($param['id']);
+}
+
 // TODO: remove
 register_hook("main_links", function(&$list) {
-  $list[] = array(5, "<a href='javascript:category_repository_browser_open(\"main\")'>Repo</a>");
+  $list[] = array(5, "<a href='javascript:category_repository_browser_open()'>Repo</a>");
 });
