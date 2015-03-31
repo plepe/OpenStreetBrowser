@@ -54,11 +54,33 @@ class mapcss_Category {
   function save($data) {
     global $git_commit_options;
     global $current_user;
+    $old_content = null;
 
     chdir($this->repo->path());
     adv_exec("git checkout ". shell_escape($this->repo->branch));
 
+    if(file_exists($this->id .".mapcss"))
+      $old_content = file_get_contents($this->id .".mapcss");
+
     file_put_contents($this->id .".mapcss", $data['content']);
+
+    $result = array(
+      "error" => 0,
+      "message" => array()
+    );
+
+    $r = $this->compile(true);
+    $result['error'] = $r['error'];
+    $result['message'] = array_merge($result['message'], $r['message']);
+
+    if($r['error'] != 0) {
+      if($old_content === null)
+        unlink($this->id .".mapcss");
+      else
+        file_put_contents($this->id .".mapcss", $old_content);
+
+      return $result;
+    }
 
     adv_exec("git add ". shell_escape($this->id) .".mapcss");
 
@@ -66,17 +88,14 @@ class mapcss_Category {
     if(array_key_exists('commit_msg', $data) && $data['commit_msg'])
       $msg = $data['commit_msg'];
 
-    $result = adv_exec("git {$git_commit_options} commit -m ". shell_escape($msg) ." --author=". shell_escape($current_user->get_author()));
-    $result = array("error" => $result[0], "message" => array("git" => $result[1] . "\n" . $result[2]));
+    $r = adv_exec("git {$git_commit_options} commit -m ". shell_escape($msg) ." --author=". shell_escape($current_user->get_author()));
+    $result['error'] = $r[0];
+    $result['message'] = array_merge($result['message'], array("git" => $r[1]));
 
     if(!in_array($result['error'], array(null, 0, 1)))
       return $result;
     else
       $result['error'] = 0;
-
-    $r = $this->compile(true);
-    $result['error'] = $r['error'];
-    $result['message'] = array_merge($result['message'], $r['message']);
 
     return $result;
   }
