@@ -57,8 +57,11 @@ CategoryRepositoryBrowser.prototype.show_list = function(div, data) {
 
   var ul = document.createElement("ul");
   for(var id in data) {
+    var repo = data[id];
+    repo.title = id;
+
     var li = document.createElement("li");
-    li.innerHTML = twig_render_custom("<a action='show'>{{ id }}</a>", data[id]);
+    li.innerHTML = twig_render_custom("<a action='show'>{{ id }}</a>", repo);
     link_actions(li, {
       'show': function(id) {
         category_repository_browser_open(id);
@@ -90,9 +93,10 @@ CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
   for(var k in categories) {
     var cat = categories[k];
     cat.id = k;
+    cat.title = cat.title.bind(cat);
 
     var li = document.createElement("li");
-    li.innerHTML = twig_render_custom("<a action='add'>{{ id }}</a> (<a action='edit'>edit</a>)", cat);
+    li.innerHTML = twig_render_custom("<a action='add'>{{ title }}</a> (<a action='edit'>edit</a>)", cat);
 
     link_actions(li, {
       'add': function(cat) {
