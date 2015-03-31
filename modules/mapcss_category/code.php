@@ -56,11 +56,11 @@ class mapcss_Category {
     global $current_user;
 
     chdir($this->repo->path());
-    system("git checkout ". shell_escape($this->repo->branch));
+    adv_exec("git checkout ". shell_escape($this->repo->branch));
 
     file_put_contents($this->id .".mapcss", $data['content']);
 
-    system("git add ". shell_escape($this->id) .".mapcss");
+    adv_exec("git add ". shell_escape($this->id) .".mapcss");
 
     $msg = "update category {$this->id}";
     if(array_key_exists('commit_msg', $data) && $data['commit_msg'])
@@ -95,7 +95,7 @@ class mapcss_Category {
     global $db;
 
     chdir($this->repo->path());
-    system("git checkout ". shell_escape($this->repo->branch));
+    adv_exec("git checkout ". shell_escape($this->repo->branch));
 
     if((!$force)&&
        file_exists($this->id .".py") &&
