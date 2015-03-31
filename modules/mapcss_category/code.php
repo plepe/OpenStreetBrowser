@@ -67,6 +67,16 @@ class mapcss_Category {
       $msg = $data['commit_msg'];
 
     $result = adv_exec("git {$git_commit_options} commit -m ". shell_escape($msg) ." --author=". shell_escape($current_user->get_author()));
+    $result = array("error" => $result[0], "message" => array("git" => $result[1] . "\n" . $result[2]));
+
+    if(!in_array($result['error'], array(null, 0, 1)))
+      return $result;
+    else
+      $result['error'] = 0;
+
+    $r = $this->compile(true);
+    $result['error'] = $r['error'];
+    $result['message'] = array_merge($result['message'], $r['message']);
 
     return $result;
   }
@@ -100,7 +110,7 @@ class mapcss_Category {
 
     $f=adv_exec("{$pgmapcss['path']} {$config_options} --mode standalone -d'{$db['name']}' -u'{$db['user']}' -p'{$db['passwd']}' -H'{$db['host']}' -t'{$pgmapcss['template']}' '{$id}' 2>&1", $this->repo->path(), array("LC_CTYPE"=>"en_US.UTF-8"));
 
-    return $f[1];
+    return array("error"=>$f[0], "message"=>array("compile" => $f[1]));
   }
 }
 
