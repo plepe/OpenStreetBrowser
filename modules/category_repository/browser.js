@@ -58,15 +58,14 @@ CategoryRepositoryBrowser.prototype.show_list = function(div, data) {
   var ul = document.createElement("ul");
   for(var id in data) {
     var li = document.createElement("li");
-    var a = document.createElement("a");
+    li.innerHTML = twig_render_custom("<a action='show'>{{ id }}</a>", data[id]);
+    link_actions(li, {
+      'show': function(id) {
+        category_repository_browser_open(id);
+        this.win.close();
+      }.bind(this, id)
+    });
 
-    a.onclick = function(id) {
-      category_repository_browser_open(id);
-      this.win.close();
-    }.bind(this, id);
-
-    a.appendChild(document.createTextNode(id));
-    li.appendChild(a);
     ul.appendChild(li);
   }
 
@@ -90,28 +89,24 @@ CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
 
   for(var k in categories) {
     var cat = categories[k];
+    cat.id = k;
 
     var li = document.createElement("li");
+    li.innerHTML = twig_render_custom("<a action='add'>{{ id }}</a> (<a action='edit'>edit</a>)", cat);
 
-    var a = document.createElement("a");
-    a.onclick = function(cat) {
-      var layer = cat.Layer()
+    link_actions(li, {
+      'add': function(cat) {
+          var layer = cat.Layer()
 
-      if(layer)
-        category_root.register_sub_category(layer);
-      else
-        alert("Can't create layer from category!");
-    }.bind(this, cat);
-
-    a.appendChild(document.createTextNode(cat.title()));
-    li.appendChild(a);
-
-    var a = document.createElement("a");
-    a.onclick = function(cat) {
-      cat.edit();
-    }.bind(this, cat);
-    a.appendChild(document.createTextNode(" (edit)"));
-    li.appendChild(a);
+          if(layer)
+            category_root.register_sub_category(layer);
+          else
+            alert("Can't create layer from category!");
+        }.bind(this, cat),
+      'edit': function(cat) {
+          cat.edit();
+        }.bind(this, cat)
+    });
 
     ul.appendChild(li);
   }
@@ -139,6 +134,7 @@ CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
       }.bind(this, repo)
     });
 
+    this.win.close();
   }.bind(this, this.category_repository);
   a.appendChild(document.createTextNode("New category"));
   this.win.content.appendChild(a);
