@@ -91,8 +91,15 @@ function create_category_repository($id) {
   );
 
   file_put_contents("{$path}/index.json", json_readable_encode($init_index));
+  file_put_contents("{$path}/.gitignore", <<<EOT
+*.py
+*.output
+*.icons/
+*.mapnik
+EOT
+  );
 
-  system("git add index.json");
+  system("git add index.json .gitignore");
   $result = adv_exec("git {$git_commit_options} commit -m 'Initial commit' --author=". shell_escape($current_user->get_author()));
 
   if($result[0])
