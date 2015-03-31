@@ -1262,3 +1262,23 @@ function coalesce() {
     if(arguments[i]!==null)
       return arguments[i];
 }
+
+// set onclick actions on links in dom node, according to action
+function link_actions(dom, actions) {
+  var links = dom.getElementsByTagName("a");
+
+  for(var i = 0; i < links.length; i++) {
+    var a = links[i];
+    var action;
+
+    action = a.getAttribute("action");
+    if(action) {
+      if(action in actions) {
+        a.onclick = actions[action];
+      }
+      else {
+        alert("link_actions: unknown action '" + action + "'");
+      }
+    }
+  }
+}
