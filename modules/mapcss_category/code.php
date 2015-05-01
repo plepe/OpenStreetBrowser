@@ -54,6 +54,7 @@ class mapcss_Category {
   function save($data) {
     global $git_commit_options;
     global $current_user;
+    $ret = array();
 
     chdir($this->repo->path());
     system("git checkout ". shell_escape($this->repo->branch));
@@ -68,7 +69,17 @@ class mapcss_Category {
 
     $result = adv_exec("git {$git_commit_options} commit -m ". shell_escape($msg) ." --author=". shell_escape($current_user->get_author()));
 
-    return $result;
+    $ret['save'] = in_array($result[0], array(0, 1));
+
+    if(in_array($result[0], array(0, 1))) {
+      $result = $this->compile(true);
+      if($result[0] != 0)
+        $ret['save'] = $result[1];
+
+      $ret['message'] = $result[1];
+    }
+
+    return $ret;
   }
 
   function last_modified() {
@@ -100,7 +111,7 @@ class mapcss_Category {
 
     $f=adv_exec("{$pgmapcss['path']} {$config_options} --mode standalone -d'{$db['name']}' -u'{$db['user']}' -p'{$db['passwd']}' -H'{$db['host']}' -t'{$pgmapcss['template']}' '{$id}' 2>&1", $this->repo->path(), array("LC_CTYPE"=>"en_US.UTF-8"));
 
-    return $f[1];
+    return $f;
   }
 }
 

@@ -116,9 +116,13 @@ mapcss_Category.prototype.save = function(data) {
     // force reload of category repository
     this.repo.load();
 
-    alert("Saved.");
-
-    this.editor.close();
+    if(result.save !== true) {
+      alert("An error occured while saving:\n" + result.message);
+    }
+    else {
+      alert(lang("saved"));
+      this.editor.close();
+    }
   }.bind(this));
 
   return false;
