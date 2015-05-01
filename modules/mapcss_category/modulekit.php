@@ -1,2 +1,2 @@
 <?
-$depend = array("editor");
+$depend = array("editor", "adv_exec");
