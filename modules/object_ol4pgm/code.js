@@ -10,6 +10,11 @@ function object_ol4pgm(feature, category) {
   this.id = this.feature.getProperties()['osm:id'];
   this.href = url({ obj: category.id + "/" + this.id });
 
+  var t = this.feature.getProperties();
+  delete(t.results);
+  delete(t.geometry);
+  this.tags = new tags(t);
+
   this.highlight = new ol.format.WKT().writeFeature(this.feature);
   this.highlight_center=new ol.format.WKT().writeGeometry(new ol.geom.Point(ol.extent.getCenter(this.feature.getGeometry().getExtent())));
 
