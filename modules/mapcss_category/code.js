@@ -130,6 +130,10 @@ mapcss_Category.prototype.save = function(data) {
   return false;
 }
 
+mapcss_Category.prototype.search_object = function(object_id, callback) {
+  return this.Layer().search_object(object_id, callback);
+}
+
 mapcss_Category.prototype.Layer = function() {
   if(!this.layer) {
     var url_param = [];
