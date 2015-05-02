@@ -43,7 +43,9 @@ function mapcss_Category(repo, id, branch, repository, data) {
   Eventify.enable(this);
   this.is_loaded = false;
 
+  this.repo_id = repo;
   this.id = id;
+  this.branch_id = branch;
 
   if(repository) {
     this.repo = repository;
@@ -69,7 +71,7 @@ mapcss_Category.prototype.title = function() {
 }
 
 mapcss_Category.prototype.load = function(callback) {
-  new ajax_json("mapcss_category_load", { repo: this.repo.id, id: this.id, branch: this.repo.branch }, function(callback, data) {
+  new ajax_json("mapcss_category_load", { repo: this.repo_id, id: this.id, branch: this.branch_id }, function(callback, data) {
     this._data = data;
 
     this.is_loaded = true;
@@ -132,9 +134,9 @@ mapcss_Category.prototype.Layer = function() {
   if(!this.layer) {
     var url_param = [];
     ajax_build_request({
-         repo: this.repo.id,
+         repo: this.repo_id,
          category: this.id,
-         branch: this.repo.branch
+         branch: this.branch_id
       }, null, url_param);
     url_param = url_param.join("&");
 
