@@ -47,8 +47,12 @@ function layer_ol4pgm_category(id, options) {
 
   this.search_object=function(id, callback) {
     this.ol4pgm.getFeature(id, function(callback, feature) {
-      if(feature)
+      if(feature) {
+        // TODO: when leaving object, unset visibility
+        this.ol4pgm.setVisible(true);
+
         callback(new object_ol4pgm(feature, this));
+      }
       else
         callback(null);
     }.bind(this, callback));
