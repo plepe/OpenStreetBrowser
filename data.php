@@ -19,27 +19,39 @@ $branch = $_REQUEST['branch'] ?: "master";
 $category = get_mapcss_category($repo, $category_id, $branch);
 $category->compile();
 
-$cache_path = "{$data_path}/cache/{$repo}/{$category_id}/{$branch}/{$_REQUEST['z']}/{$_REQUEST['x']}/{$_REQUEST['y']}.json.gz";
 $script = $category->repo->path() . "/{$category_id}.py";
 $mapcss = $category->repo->path() . "/{$category_id}.mapcss";
 
-$read_from_cache = true;
-
-if(!file_exists($cache_path))
+if(!array_key_exists('x', $_REQUEST) &&
+   !array_key_exists('y', $_REQUEST) &&
+   !array_key_exists('z', $_REQUEST)) {
   $read_from_cache = false;
-elseif(filemtime($cache_path) < $category->last_modified())
-  $read_from_cache = false;
-elseif(filemtime($cache_path) < time() - 86400*10)
-  $read_from_cache = false;
-
-// TODO: invalidate cache
-if($read_from_cache) {
-  $fp = gzopen($cache_path, "r");
-  $cache_fp = null;
 }
 else {
-  mkdir(dirname($cache_path), 0777, true);
-  $cache_fp = gzopen($cache_path, "w");
+  $cache_path = "{$data_path}/cache/{$repo}/{$category_id}/{$branch}/{$_REQUEST['z']}/{$_REQUEST['x']}/{$_REQUEST['y']}.json.gz";
+
+  $read_from_cache = true;
+}
+
+if($read_from_cache) {
+  if(!file_exists($cache_path))
+    $read_from_cache = false;
+  elseif(filemtime($cache_path) < $category->last_modified())
+    $read_from_cache = false;
+  elseif(filemtime($cache_path) < time() - 86400*10)
+    $read_from_cache = false;
+}
+
+// TODO: invalidate cache
+$cache_fp = null;
+if($read_from_cache) {
+  $fp = gzopen($cache_path, "r");
+}
+else {
+  if(isset($cache_path)) {
+    mkdir(dirname($cache_path), 0777, true);
+    $cache_fp = gzopen($cache_path, "w");
+  }
 
   $descriptorspec = array(
      0 => array("pipe", "r"),
