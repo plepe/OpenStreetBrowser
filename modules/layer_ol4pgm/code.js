@@ -1,10 +1,10 @@
-function layer_ol4pgm_category(id, url) {
+function layer_ol4pgm_category(id, options) {
   this.inheritFrom=category;
   this.inheritFrom(id);
 
   this.ol4pgm = new ol4pgmLayer({
-    url: url,
-    single_url: id + ".py?id={id}&zoom={zoom}&format=geojson-separate&srs=3857",
+    url: options.url,
+    single_url: options.single_url,
     maxZoom: 17,
     tileSize: 1024,
     visible: false
