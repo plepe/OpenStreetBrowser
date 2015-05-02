@@ -1,6 +1,4 @@
 <?
-$plugins[]="load_object";
-
 // global vars
 $objects=array();
 $object_types=array();
@@ -263,147 +261,50 @@ class object {
 
 // id should have the following form:
 // node|way|rel_id ... e.g. node_35, rel_123 or N35, W1234, R123
-function load_object($elem=0, $tags=null, $options=array()) {
-  global $DEFAULT_SRID;
+function load_object($id, $tags=null, $options=array()) {
   global $objects;
-  global $object_types;
-  global $tag_preloaded;
-  global $object_element_shorts;
-  global $object_elements;
-  $object_place_types=array("N"=>"node", "W"=>"way", "R"=>"rel");
-  $srid=$DEFAULT_SRID;
-  if(isset($options['srid']))
-    $srid=postgre_escape($options['srid']);
 
-  if(is_string($elem)) {
-    $id=$elem;
-    unset($elem);
-  }
-  else {
-    if(isset($elem['element']))
-      $id="{$elem['element']}_{$elem['id']}";
-    elseif(isset($elem['osm_type']))
-      $id="{$elem['osm_type']}_{$elem['osm_id']}";
-    elseif(isset($elem['osm_id']))
-      $id="{$elem['osm_id']}";
-    else
-      $id=$elem['id'];
+  $object_place_types=array("n"=>"node", "w"=>"way", "r"=>"relation");
 
-    if(isset($elem['element'])) switch($elem['element']) {
-      case "node":
-        if((!$elem['lon'])||(!$elem['lat'])||(!$elem['way']))
-	  unset($elem);
-	break;
-      case "way":
-        if((!$elem['nodes'])||(!$elem['way']))
-	  unset($elem);
-	break;
-      case "rel":
-        if((!$elem['member_ids'])||(!$elem['member_roles']))
-	  unset($elem);
-	break;
-    }
+  if(!is_string($id)) {
+    print "\$elem not string: ". print_r($id, 1);
+    exit;
   }
 
-  if(preg_match("/^(".implode("|", array_keys($object_elements)).")_([0-9]*)$", $id, $m)) {
-    $id=$object_elements[$m[1]].$m[2];
-  }
-
-  // if we've already loaded this object, we just return it
-  if(isset($objects[$id]))
+  // cache
+  if(array_key_exists($id, $objects))
     return $objects[$id];
 
-  // let's see if we have a valid object
-  if(preg_match("/^(".implode("|", $object_elements).")([0-9]+)(_(.*))?$/", $id, $m)) {
-    $object_place_type=$object_place_types[$m[1]];
-    $object_id=$m[2];
-    $object_subid=$m[4];
-  }
-  // if it's not a single id, we can receive data from tags if we supplied them
-  elseif($tags) {
+  if(preg_match("/^([" . implode("", array_keys($object_place_types)) . "])([0-9]+)$/", $id, $m)) {
+    $type = $object_place_types[$m[1]];
+    $num_id = $m[2];
   }
   else {
-    // id can't be identified
     return null;
   }
 
-  // load data if necessary
-  $add_tags=array();
-  if(!isset($elem)) {
-    $qry="select astext(way) as \"way\", astext(way) as \"#geo\", astext(ST_Centroid(way)) as \"#geo:center\" from (select ST_Transform(load_geo('$id'), $srid) as way) x";
-/*    switch($object_place_type) {
-      case "node":
-        $qry="select astext(osm_way) as way from osm_nodes where osm_id='$id'";
-	break;
-      case "way":
-        $qry="select nodes, astext(CASE WHEN l.way is not null THEN l.way WHEN p.way is not null THEN p.way WHEN r.way is not null THEN r.way END) as way from planet_osm_ways left join planet_osm_line l on id=l.osm_id left join planet_osm_polygon p on id=p.osm_id left join relation_members r1 on r1.member_id=id and r1.member_role='outer' left join planet_osm_polygon r on r.osm_id=-r1.relation_id where id='$object_id'";
-	break;
-      case "rel":
-	$qry="select (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from relation_members where relation_id=id) as member_ids, (select to_textarray(member_role) from relation_members where relation_id=id) as member_roles from planet_osm_rels where id='$object_id'";
-	break;
-      case "coll":
-	$qry="select (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from coll_members where coll_id=id) as member_ids, (select to_textarray(member_role) from coll_members where coll_id=id) as member_roles from planet_osm_colls where id='$object_id'";
-	break;
-    } */
+  $elements = overpass_query("[out:json];$type($num_id);out meta geom;");
 
-    $res=sql_query($qry);
-    $elem=pg_fetch_assoc($res);
-
-    foreach($elem as $k=>$v) {
-      if(substr($k, 0, 1)=="#")
-        $add_tags[$k]=$v;
-    }
-  }
-
-  if(!$elem)
+  if(sizeof($elements) == 0)
     return null;
 
-  // load tags
-  if($tags)
-    // already loaded
-    $elem['tags']=new tags($tags);
-  elseif($tags=$tag_preloaded[$elem['element']][$elem['id']]) {
-    unset($tag_preloaded[$elem['element']][$elem['id']]);
-    $elem['tags']=new tags($tags);
-  }
-  else {
-    switch($object_place_type) {
-      case "node":
-        $qry="select k, v from node_tags where node_id='$object_id'";
-	break;
-      case "way":
-        $qry="select k, v from way_tags where way_id='$object_id'";
-	break;
-      case "rel":
-        $qry="select k, v from relation_tags where relation_id='$object_id'";
-	break;
-    }
+  $element = $elements[0];
 
-    $rest=sql_query($qry);
-    $tags=array();
-    while($elemt=pg_fetch_assoc($rest)) {
-      $tags[$elemt['k']]=$elemt['v'];
-    }
+  $tags = $element['tags'];
+  $tags['osm:id'] = $element['id'];
+  $tags['osm:timestamp'] = $element['timestamp'];
+  $tags['osm:version'] = $element['version'];
+  $tags['osm:user'] = $element['user'];
+  $tags['osm:user_id'] = $element['uid'];
+  $tags['osm:changeset'] = $element['changeset'];
 
-    $tags=array_merge($tags, $add_tags);
+  $elem = array(
+    'id' => $element['id'],
+    'element' => $type,
+    'tags' => new tags($tags),
+  );
 
-    $elem['tags']=new tags($tags);
-  }
-
-  // now that we have tags we can look what kind of object we are going to load
-  $class="object";
-  foreach($object_types as $key=>$values) {
-    $obj_val=$elem['tags']->get($key);
-    foreach($values as $type=>$c) {
-      if($obj_val==$type)
-	$class=$c;
-    }
-  }
-
-  $elem['element']=$object_place_type;
-  $elem['id']=$object_id;
-  $elem['subid']=$object_subid;
-  $o=new $class($elem);
+  $o = new object($elem);
   $objects[$id]=$o;
 
   return $o;

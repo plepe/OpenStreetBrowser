@@ -35,11 +35,16 @@ $osmosis_db=&$db;
 # $osmosis_db['host']="localhost";
 # $osmosis_db['debug']=false;
 
+// configuration for overpass
+$overpass = array(
+  'url' => 'http://overpass-api.de/api/interpreter',
+);
+
 // configuration for pgmapcss
 $pgmapcss = array(
   "path" => "pgmapcss",
   "template" => "ol4pgm-0.1",
-  "config_options" => "",
+  "config_options" => "db.overpass-url={$overpass['url']}",
 );
 
 // default SRID which the OpenStreetBrowser API assumes for requests

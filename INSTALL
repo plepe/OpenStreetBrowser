@@ -2,6 +2,11 @@
 You need PostgreSQL 9.0 and PostGIS 1.5 installed.
 First run 'bin/init' to initialize database structure
 
+Install:
+```sh
+apt-get install php5-curl
+```
+
 == Configure ==
 Copy conf.php-dist to conf.php and adapt to your needs.
 Especially choose modules appropriate for your project.
