@@ -2,26 +2,26 @@
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php
 /* data.php -> wrapper script for ol4pgm layers */
-if(!array_key_exists('id', $_REQUEST)) {
-  print "No id supplied";
+if(!array_key_exists('category', $_REQUEST)) {
+  print "No category id supplied";
   exit;
 }
 
-if(!preg_match("/^[a-zA-Z0-9_]+$/", $_REQUEST['id'], $m)) {
-  print "Illegal ID";
+if(!preg_match("/^[a-zA-Z0-9_]+$/", $_REQUEST['category'], $m)) {
+  print "Illegal category ID";
   exit;
 }
 
 $repo = $_REQUEST['repo'];
-$id = $_REQUEST['id'];
+$category_id = $_REQUEST['category'];
 $branch = $_REQUEST['branch'] ?: "master";
 
-$category = get_mapcss_category($repo, $id, $branch);
+$category = get_mapcss_category($repo, $category_id, $branch);
 $category->compile();
 
-$cache_path = "{$data_path}/cache/{$repo}/{$id}/{$branch}/{$_REQUEST['z']}/{$_REQUEST['x']}/{$_REQUEST['y']}.json.gz";
-$script = $category->repo->path() . "/{$id}.py";
-$mapcss = $category->repo->path() . "/{$id}.mapcss";
+$cache_path = "{$data_path}/cache/{$repo}/{$category_id}/{$branch}/{$_REQUEST['z']}/{$_REQUEST['x']}/{$_REQUEST['y']}.json.gz";
+$script = $category->repo->path() . "/{$category_id}.py";
+$mapcss = $category->repo->path() . "/{$category_id}.mapcss";
 
 $read_from_cache = true;
 

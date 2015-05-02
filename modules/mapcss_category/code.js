@@ -133,7 +133,7 @@ mapcss_Category.prototype.Layer = function() {
     var url_param = [];
     ajax_build_request({
          repo: this.repo.id,
-         id: this.id,
+         category: this.id,
          branch: this.repo.branch
       }, null, url_param);
     url_param = url_param.join("&");
