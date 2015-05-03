@@ -7,6 +7,7 @@ $object_elements=array("node"=>"N", "way"=>"W", "rel"=>"R", "relation"=>"R");
 $object_element_ids=array("node"=>1, "way"=>2, "rel"=>3, "coll"=>4);
 $object_element_shorts=array("n"=>"node", "r"=>"rel", "w"=>"way", "c"=>"coll");
 $object_element_data_type=array("N"=>"node", "R"=>"rel", "W"=>"way");
+$object_place_types=array("n"=>"node", "w"=>"way", "r"=>"relation");
 $tag_preloaded=array();
 $priority_chapter=array(
   "general_info"=>-5,
@@ -32,25 +33,40 @@ class object {
   public $place_type;
   public $place_type_id;
 
-  function __construct($data) {
-    global $object_element_ids;
-    global $object_elements;
-    $this->data=$data;
-    $this->tags=$data['tags'];
-    $this->element=$data['element'];
-    if($data['subid'])
-      $this->id="{$object_elements[$data['element']]}{$data['id']}_{$data['subid']}";
-    else
-      $this->id="{$object_elements[$data['element']]}{$data['id']}";
-    $this->only_id=$data['id'];
-    if($data['subid']) {
-      $this->place_type="gen_node";
-      $this->place_type_id="1";
+  function __construct($id, $data=null) {
+    global $object_place_types;
+
+    $this->id = $id;
+
+    if(preg_match("/^([" . implode("", array_keys($object_place_types)) . "])([0-9]+)$/", $this->id, $m)) {
+      $this->type = $object_place_types[$m[1]];
+      $this->num_id= $m[2];
     }
     else {
-      $this->place_type=$data['element'];
-      $this->place_type_id=$object_element_ids[$data['element']];
+      throw new Exception("object: illegal ID");
     }
+
+    if($data === null) {
+      $r = overpass_query("[out:json];{$this->type}({$this->num_id});out meta geom;");
+
+      if((!$r) ||
+         (!sizeof($r))) {
+        throw new Exception("object {$this->id} does not exist");
+      }
+
+      $data = $r[0];
+    }
+
+    $tags = $data['tags'];
+    $tags['osm:id'] = $data['id'];
+    $tags['osm:timestamp'] = $data['timestamp'];
+    $tags['osm:version'] = $data['version'];
+    $tags['osm:user'] = $data['user'];
+    $tags['osm:user_id'] = $data['uid'];
+    $tags['osm:changeset'] = $data['changeset'];
+
+    $this->data = $data;
+    $this->tags = new tags($tags);
   }
 
   function long_name($lang="", $name_def=0) {
@@ -241,73 +257,28 @@ class object {
   }
 }
 
-// elem can by either a string or an array. if id is a string it has to be
-// the identifier for a object. see below for details.
+// id                      object identifier, e.g. 'n1234'
+// data                    data from overpass query (or null)
 //
-// if elem is provided as array it should contain the following fields. If
-// any of those are omitted, they will be loaded as soon as they are being
-// accessed:
-// element                    ("node", "way", "rel", "coll")
-// id                         integer
-//                              element and id can also be combined as element_id
-//                              in the value of id
-// lon, lat (for nodes)       float
-// nodes (for ways)           array(node_id, node_id, ...) 
-//                              e.g. array(node_1, 35, ...)
-// members (for rels)         array(node_id=>role, way_id=>role, ...
-//                              e.g.: array(node_1=>, n35=>stop, ...)
-
-// tags (if not provided, it will be loaded by db) hash-array of tags
-
-// id should have the following form:
-// node|way|rel_id ... e.g. node_35, rel_123 or N35, W1234, R123
-function load_object($id, $tags=null, $options=array()) {
+// returns: an object of type 'object' or null if object does not exist
+function load_object($id, $data=null) {
   global $objects;
 
-  $object_place_types=array("n"=>"node", "w"=>"way", "r"=>"relation");
+  // obsolete function
+  if(!is_string($id))
+    throw new Exception("\$elem not string: ". print_r($id, 1));
 
-  if(!is_string($id)) {
-    print "\$elem not string: ". print_r($id, 1);
-    exit;
+  if(!array_key_exists($id, $objects)) {
+    try {
+      $objects[$id] = new object($id, $data);
+    }
+    catch(Exception $e) {
+      $objects[$id] = null;
+      return null;
+    }
   }
 
-  // cache
-  if(array_key_exists($id, $objects))
-    return $objects[$id];
-
-  if(preg_match("/^([" . implode("", array_keys($object_place_types)) . "])([0-9]+)$/", $id, $m)) {
-    $type = $object_place_types[$m[1]];
-    $num_id = $m[2];
-  }
-  else {
-    return null;
-  }
-
-  $elements = overpass_query("[out:json];$type($num_id);out meta geom;");
-
-  if(sizeof($elements) == 0)
-    return null;
-
-  $element = $elements[0];
-
-  $tags = $element['tags'];
-  $tags['osm:id'] = $element['id'];
-  $tags['osm:timestamp'] = $element['timestamp'];
-  $tags['osm:version'] = $element['version'];
-  $tags['osm:user'] = $element['user'];
-  $tags['osm:user_id'] = $element['uid'];
-  $tags['osm:changeset'] = $element['changeset'];
-
-  $elem = array(
-    'id' => $element['id'],
-    'element' => $type,
-    'tags' => new tags($tags),
-  );
-
-  $o = new object($elem);
-  $objects[$id]=$o;
-
-  return $o;
+  return $objects[$id];
 }
 
 function register_object_type($key, $type, $class) {
@@ -318,79 +289,44 @@ function register_object_type($key, $type, $class) {
 
 // using load_objects is faster then loading each object by its own
 function load_objects($list, $options=array()) {
-  global $object_element_shorts;
-  $list_by_type=array();
-  $ret=array();
-
-  if(!$list)
-    return $ret;
+  global $objects;
+  global $object_place_types;
+  $ret = array();
+  $todo = array();
+  $query = "";
 
   foreach($list as $id) {
-    if(is_array($id)) {
-      $list_by_type[$id['element']][]=$id['id'];
+    if(array_key_exists($id, $objects)) {
+      $ret[$id] = $objects[$id];
     }
-    else if(ereg("^(node|way|rel|coll)_([0-9]+)$", $id, $m)) {
-      $list_by_type[$m[1]][]=$m[2];
-    }
-    else if(ereg("^([nwrc])([0-9]+)$", $id, $m)) {
-      $list_by_type[$object_element_shorts[$m[1]]][]=$m[2];
-    }
-  }
-
-  if($list_by_type['node']) {
-    $qry="select 'node' as element, node_id as id, k, v from node_tags where node_id in (".implode(",", $list_by_type['node']).")";
-    $res=sql_query($qry);
-    while($elem=pg_fetch_assoc($res)) {
-      tag_preload($elem);
-    }
-
-    $qry="select 'node' as element, id, lon, lat, astext(way) as way from planet_osm_nodes left join planet_osm_point on id=osm_id where id in (".implode(",", $list_by_type['node']).")";
-    $res=sql_query($qry);
-    while($elem=pg_fetch_assoc($res)) {
-      $ret[]=load_object($elem, null, $options);
+    else {
+      if(preg_match("/^([" . implode("", array_keys($object_place_types)) . "])([0-9]+)$/", $id, $m)) {
+        $type = $object_place_types[$m[1]];
+        $num_id= $m[2];
+        $query .= "{$type}({$num_id});";
+        $todo[$id] = true;
+      }
     }
   }
 
-  if($list_by_type['way']) {
-    $qry="select 'way' as element, way_id as id, k, v from way_tags where way_id in (".implode(",", $list_by_type['way']).")";
-    $res=sql_query($qry);
-    while($elem=pg_fetch_assoc($res)) {
-      tag_preload($elem);
-    }
+  if(strlen($query)) {
+    $query = "[out:json];({$query});out meta geom;";
 
-    $qry="select 'way' as element, id, nodes, astext(CASE WHEN l.way is not null THEN l.way WHEN p.way is not null THEN p.way WHEN r.way is not null THEN r.way END) as way from planet_osm_ways left join planet_osm_line l on id=l.osm_id left join planet_osm_polygon p on id=p.osm_id left join relation_members r1 on r1.member_id=id and r1.member_role='outer' left join planet_osm_polygon r on r.osm_id=-r1.relation_id where id in (".implode(",", $list_by_type['way']).")";
-    $res=sql_query($qry);
-    while($elem=pg_fetch_assoc($res)) {
-      $ret[]=load_object($elem, null, $options);
-    }
+    $r = overpass_query($query);
+    // print "$query"; print_r($r);
+
+    if($r)
+      foreach($r as $e) {
+        $id = substr($e['type'], 0, 1) . $e['id'];
+        $o = load_object($id, $e);
+
+        $ret[$id] = $o;
+        unset($todo[$id]);
+      }
   }
 
-  if($list_by_type['rel']) {
-    $qry="select 'rel' as element, relation_id as id, k, v from relation_tags where relation_id in (".implode(",", $list_by_type['rel']).")";
-    $res=sql_query($qry);
-    while($elem=pg_fetch_assoc($res)) {
-      tag_preload($elem);
-    }
-
-    $qry="select 'rel' as element, id, (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from relation_members where relation_id=id) as member_ids, (select to_textarray(member_role) from relation_members where relation_id=id) as member_roles from planet_osm_rels where id in (".implode(",", $list_by_type['rel']).")";
-    $res=sql_query($qry);
-    while($elem=pg_fetch_assoc($res)) {
-      $ret[]=load_object($elem, null, $options);
-    }
-  }
-
-  if($list_by_type['coll']) {
-    $qry="select 'coll' as element, coll_id as id, k, v from coll_tags where coll_id in (".implode(",", $list_by_type['coll']).")";
-    $res=sql_query($qry);
-    while($elem=pg_fetch_assoc($res)) {
-      tag_preload($elem);
-    }
-
-    $qry="select 'coll' as element, id, (select to_textarray((CASE WHEN member_type='N' THEN 'n' WHEN member_type='W' THEN 'w' WHEN member_type='R' THEN 'r' ELSE 'c' END) || member_id) from coll_members where coll_id=id) as member_ids, (select to_textarray(member_role) from coll_members where coll_id=id) as member_roles from planet_osm_colls where id in (".implode(",", $list_by_type['coll']).")";
-    $res=sql_query($qry);
-    while($elem=pg_fetch_assoc($res)) {
-      $ret[]=load_object($elem, null, $options);
-    }
+  if(sizeof($todo)) {
+    trigger_error("load_objects(): objects " . implode(", ", array_keys($todo)) . " could not be loaded");
   }
 
   return $ret;
