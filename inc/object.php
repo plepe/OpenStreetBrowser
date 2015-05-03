@@ -202,56 +202,72 @@ class object {
   }
 
   /**
-   * returns list of members, e.g. array("way_123"=>"stop", ...)
-   * @return array key: member_id, value: member_role
+   * returns list of members, e.g. array(array('id' => 'w123', 'role' => 'stop'), array('id' => 'w124', 'role' => ''))
    */
   function members() {
-    global $object_element_data_type;
-    $ret=null;
+    switch($this->type) {
+      case "node":
+        return array();
 
-    if(isset($this->members))
-      return $this->members;
+      case "way":
+        return array_map(function($x) {
+          return array(
+            'id' => "n{$x}",
+          );
+        }, $this->data['nodes']);
 
-    switch($this->element) {
-      case "rel":
-	 $id=substr($this->id, 1);
-	 $ret=array();
-
-         $res=sql_query("select * from relation_members where relation_id='$id'");
-	 while($elem=pg_fetch_assoc($res)) {
-	   $elem_id="{$elem['member_type']}{$elem['member_id']}";
-           $ret[$elem_id]=$elem['member_role'];
-	 }
+      case "relation":
+        return array_map(function($x) {
+          return array(
+            'id' => substr($x['type'], 0, 1) . $x['ref'],
+            'role' => $x['role'],
+          );
+        }, $this->data['members']);
     }
-
-    $this->members=$ret;
-
-    return $ret;
   }
 
   /**
-   * returns list of relations this object is member of, e.g.
-   * array("rel_123"=>"stop", ...)
-   * @return array key: relation_id, value: member_role
+   * returns list of relations/ways this object is member of including the role
+   * and the sequence_id this object has in the parent object, e.g.
+   * array(array('id' => 'r123', 'role' => "stop", 'sequence_id' => 2), ...)
    */
   function member_of() {
-    global $object_element_data_type;
-    $ret=null;
+    global $object_place_types;
+    $ret = array();
 
-    if(isset($this->member_of))
-      return $this->member_of;
-
-    $id=substr($this->id, 1);
-    $data_type=substr($this->id, 0, 1);
-    $ret=array();
-
-    $res=sql_query("select * from relation_members where member_id='$id' and member_type='$data_type'");
-    while($elem=pg_fetch_assoc($res)) {
-      $elem_id="R{$elem['relation_id']}";
-      $ret[$elem_id]=$elem['member_role'];
+    if($this->type == "node") {
+      $query = "[out:json];node({$this->num_id})->.a;(relation(bn.a);way(bn.a););out;";
+    }
+    else {
+      $short_type = substr($this->type, 0, 1);
+      $query = "[out:json];{$this->type}({$this->num_id})->.a;relation(b{$short_type}.a);out;";
     }
 
-    $this->member_of=$ret;
+    foreach(overpass_query($query) as $e) {
+      switch($e['type']) {
+        case 'way':
+          foreach($e['nodes'] as $seq_id => $id)
+            if($id == $this->num_id) {
+              $ret[] = array(
+                'id' => "w{$e['id']}",
+                'sequence_id' => $seq_id,
+              );
+            }
+          break;
+
+        case 'relation':
+          foreach($e['members'] as $seq_id => $f)
+            if(($f['ref'] == $this->num_id) && ($f['type'] == $this->type)) {
+              $ret[] = array(
+                'id' => "r{$e['id']}",
+                'role' => $f['role'],
+                'sequence_id' => $seq_id,
+              );
+            }
+          break;
+
+      }
+    }
 
     return $ret;
   }
