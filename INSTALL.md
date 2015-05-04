@@ -27,6 +27,7 @@ There's a tiny command line interface. Supported commands:
 git clone https://github.com/bermi/eventify.git lib/eventify
 git clone git://github.com/twigphp/Twig.git lib/Twig
 git clone https://github.com/justjohn/twig.js lib/twig.js/
+git clone https://github.com/plepe/ol4pgm.git lib/ol4pgm
 
 # ol3
 wget https://github.com/openlayers/ol3/releases/download/v3.4.0/v3.4.0-dist.zip

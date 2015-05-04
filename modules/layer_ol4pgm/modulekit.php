@@ -4,11 +4,12 @@
 $depend = array("object_ol4pgm");
 
 $include = array(
+  'php' => array(
+    'code.php',
+  ),
   'js'  => array(
     'code.js',
-    'ol4pgm/ol4pgm.js',
   ),
   'css'  => array(
-    'ol4pgm/ol4pgm.css',
   ),
 );
