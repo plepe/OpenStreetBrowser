@@ -29,8 +29,8 @@ git clone git://github.com/twigphp/Twig.git lib/Twig
 git clone https://github.com/justjohn/twig.js lib/twig.js/
 
 # ol3
-wget https://github.com/openlayers/ol3/archive/v3.4.0.tar.gz
-mkdir lib/ol3
-tar xz -C lib/ol3 --strip-components=1 -f v3.4.0.tar.gz
-rm v3.4.0.tar.gz
+wget https://github.com/openlayers/ol3/releases/download/v3.4.0/v3.4.0-dist.zip
+unzip -d lib/ v3.4.0-dist.zip
+mv lib/v3.4.0-dist lib/ol3
+v3.4.0-dist.zip
 ```
