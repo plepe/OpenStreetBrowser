@@ -54,7 +54,6 @@ class mapcss_Category {
   function save($data) {
     global $git_commit_options;
     global $current_user;
-    $ret = array();
     $old_content = null;
 
     chdir($this->repo->path());
@@ -98,9 +97,7 @@ class mapcss_Category {
     else
       $result['error'] = 0;
 
-    $ret['save'] = in_array($result[0], array(0, 1));
-
-    return $ret;
+    return $result;
   }
 
   function last_modified() {

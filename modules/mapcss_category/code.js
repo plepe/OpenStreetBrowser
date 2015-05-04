@@ -120,7 +120,7 @@ mapcss_Category.prototype.save = function(data) {
       var txt = "";
       var success = false;
 
-      if([0, null].indexOf(result.error) != -1) {
+      if([0, null, undefined].indexOf(result.error) != -1) {
         txt += "Saved. Messages:";
         success = true;
       }
@@ -132,23 +132,16 @@ mapcss_Category.prototype.save = function(data) {
 
       alert(txt);
 
-      if(success)
+      if(success) {
         this.editor.close();
 
+        // force reload
+        this.load();
+        // force reload of category repository
+        this.repo.load();
+      }
+
       return;
-    }
-
-    // force reload
-    this.load();
-    // force reload of category repository
-    this.repo.load();
-
-    if(result.save !== true) {
-      alert("An error occured while saving:\n" + result.message);
-    }
-    else {
-      alert(lang("saved"));
-      this.editor.close();
     }
   }.bind(this));
 
