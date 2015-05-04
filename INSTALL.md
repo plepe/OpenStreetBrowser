@@ -33,4 +33,6 @@ wget https://github.com/openlayers/ol3/releases/download/v3.4.0/v3.4.0-dist.zip
 unzip -d lib/ v3.4.0-dist.zip
 mv lib/v3.4.0-dist lib/ol3
 v3.4.0-dist.zip
+
+wget -O lib/jquery.min.js http://code.jquery.com/jquery-2.1.3.min.js
 ```
