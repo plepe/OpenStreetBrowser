@@ -55,29 +55,50 @@ class mapcss_Category {
     global $git_commit_options;
     global $current_user;
     $ret = array();
+    $old_content = null;
 
     chdir($this->repo->path());
-    system("git checkout ". shell_escape($this->repo->branch));
+    adv_exec("git checkout ". shell_escape($this->repo->branch));
+
+    if(file_exists($this->id .".mapcss"))
+      $old_content = file_get_contents($this->id .".mapcss");
 
     file_put_contents($this->id .".mapcss", $data['content']);
 
-    system("git add ". shell_escape($this->id) .".mapcss");
+    $result = array(
+      "error" => 0,
+      "message" => array()
+    );
+
+    $r = $this->compile(true);
+    $result['error'] = $r['error'];
+    $result['message'] = array_merge($result['message'], $r['message']);
+
+    if($r['error'] != 0) {
+      if($old_content === null)
+        unlink($this->id .".mapcss");
+      else
+        file_put_contents($this->id .".mapcss", $old_content);
+
+      return $result;
+    }
+
+    adv_exec("git add ". shell_escape($this->id) .".mapcss");
 
     $msg = "update category {$this->id}";
     if(array_key_exists('commit_msg', $data) && $data['commit_msg'])
       $msg = $data['commit_msg'];
 
-    $result = adv_exec("git {$git_commit_options} commit -m ". shell_escape($msg) ." --author=". shell_escape($current_user->get_author()));
+    $r = adv_exec("git {$git_commit_options} commit -m ". shell_escape($msg) ." --author=". shell_escape($current_user->get_author()));
+    $result['error'] = $r[0];
+    $result['message'] = array_merge($result['message'], array("git" => $r[1]));
+
+    if(!in_array($result['error'], array(null, 0, 1)))
+      return $result;
+    else
+      $result['error'] = 0;
 
     $ret['save'] = in_array($result[0], array(0, 1));
-
-    if(in_array($result[0], array(0, 1))) {
-      $result = $this->compile(true);
-      if($result[0] != 0)
-        $ret['save'] = $result[1];
-
-      $ret['message'] = $result[1];
-    }
 
     return $ret;
   }
@@ -96,7 +117,7 @@ class mapcss_Category {
     global $db;
 
     chdir($this->repo->path());
-    system("git checkout ". shell_escape($this->repo->branch));
+    adv_exec("git checkout ". shell_escape($this->repo->branch));
 
     if((!$force)&&
        file_exists($this->id .".py") &&
@@ -111,7 +132,7 @@ class mapcss_Category {
 
     $f=adv_exec("{$pgmapcss['path']} {$config_options} --mode standalone -d'{$db['name']}' -u'{$db['user']}' -p'{$db['passwd']}' -H'{$db['host']}' -t'{$pgmapcss['template']}' '{$id}' 2>&1", $this->repo->path(), array("LC_CTYPE"=>"en_US.UTF-8"));
 
-    return $f;
+    return array("error"=>$f[0], "message"=>array("compile" => $f[1]));
   }
 }
 

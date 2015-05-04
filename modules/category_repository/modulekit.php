@@ -1,5 +1,5 @@
 <?php
-$depend = array("editor", "mapcss_category");
+$depend = array("editor", "mapcss_category", "twig");
 
 $include = array(
   'php' => array(

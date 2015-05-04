@@ -40,7 +40,7 @@ $param_post = json_decode($param_post, true);
 $fun="ajax_{$_REQUEST['func']}";
 
 $return = call_user_func($fun, $_REQUEST["param"], $param_post);
-$return = json_encode($return, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
+$return = json_readable_encode($return);
 
 call_hooks("ajax_json_done", $return);
 

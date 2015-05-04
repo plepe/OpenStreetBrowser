@@ -27,6 +27,8 @@ class CategoryRepository {
 
   function data() {
     $data = json_decode(file_get_contents("{$this->path()}/index.json", "r"), true);
+    if(!$data)
+      $data = array();
 
     $data['branch'] = $this->branch;
     $data['other_branches'] = array();
@@ -88,10 +90,16 @@ function create_category_repository($id) {
     "maintainers" => array($current_user->username)
   );
 
-  file_put_contents("{$path}/index.json",
-    json_encode($init_index, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+  file_put_contents("{$path}/index.json", json_readable_encode($init_index));
+  file_put_contents("{$path}/.gitignore", <<<EOT
+*.py
+*.output
+*.icons/
+*.mapnik
+EOT
+  );
 
-  system("git add index.json");
+  system("git add index.json .gitignore");
   $result = adv_exec("git {$git_commit_options} commit -m 'Initial commit' --author=". shell_escape($current_user->get_author()));
 
   if($result[0])
@@ -100,12 +108,30 @@ function create_category_repository($id) {
   return true;
 }
 
+function ajax_category_repository_create($param) {
+  return create_category_repository($param['id']);
+}
+
 function ajax_category_repository_load($param) {
   $category_repository = new CategoryRepository($param['id'], $param['branch']);
   return $category_repository->data();
 }
 
+function ajax_category_repository_list($param) {
+  global $data_path;
+  $ret = array();
+
+  $repo_list = opendir("{$data_path}/categories/");
+  while($repo = readdir($repo_list)) {
+    if($repo[0] != '.')
+      $ret[$repo] = get_category_repository($repo);
+  }
+  closedir($repo_list);
+
+  return $ret;
+}
+
 // TODO: remove
 register_hook("main_links", function(&$list) {
-  $list[] = array(5, "<a href='javascript:category_repository_browser_open(\"main\")'>Repo</a>");
+  $list[] = array(5, "<a href='javascript:category_repository_browser_open()'>Repo</a>");
 });

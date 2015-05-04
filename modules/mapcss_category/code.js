@@ -113,6 +113,31 @@ mapcss_Category.prototype.edit = function() {
 
 mapcss_Category.prototype.save = function(data) {
   new ajax_json("mapcss_category_save", { repo: this.repo.id, id: this.id, branch: this.repo.branch }, data, function(result) {
+    if(!result) {
+      alert("An unknown error occured when saving.");
+    }
+    else {
+      var txt = "";
+      var success = false;
+
+      if([0, null].indexOf(result.error) != -1) {
+        txt += "Saved. Messages:";
+        success = true;
+      }
+      else
+        txt += "An error occured when saving:";
+
+      for(var k in result.message)
+        txt += "\n\n" + k + ":\n" + result.message[k];
+
+      alert(txt);
+
+      if(success)
+        this.editor.close();
+
+      return;
+    }
+
     // force reload
     this.load();
     // force reload of category repository
