@@ -7,7 +7,8 @@ function layer_ol4pgm_category(id, options) {
     single_url: options.single_url,
     maxZoom: 17,
     tileSize: 1024,
-    visible: false
+    visible: false,
+    icons_parent_path: 'icons/'
   }, map);
   this.ol4pgm.onchange = this.write_div.bind(this);
 
