@@ -37,3 +37,10 @@ v3.4.0-dist.zip
 
 wget -O lib/jquery.min.js http://code.jquery.com/jquery-2.1.3.min.js
 ```
+
+Other stuff:
+```sh
+# create icons directory -> make writeable for web server
+mkdir icons
+chmod 777 icons
+```

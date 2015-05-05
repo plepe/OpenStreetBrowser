@@ -19,7 +19,8 @@ $branch = $_REQUEST['branch'] ?: "master";
 $category = get_mapcss_category($repo, $category_id, $branch);
 $category->compile();
 
-$script = $category->repo->path() . "/{$category_id}.py";
+$compiled_categories = "{$data_path}/compiled_categories";
+$script = "{$compiled_categories}/{$category->full_id}.py";
 $mapcss = $category->repo->path() . "/{$category_id}.mapcss";
 
 if(!array_key_exists('x', $_REQUEST) &&

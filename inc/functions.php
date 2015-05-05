@@ -107,6 +107,23 @@ function shell_escape($str) {
   return '"' . strtr($str, array('"' => '\\"')) . '"';
 }
 
+function id_escape($str) {
+  $ret = "";
+
+  for($i = 0; $i < strlen($str); $i++) {
+    $c = substr($str, $i, 1);
+
+    if(preg_match("/^[0-9a-zA-Z]$/", $c))
+      $ret .= $c;
+    elseif($c == "_")
+      $ret .= "__";
+    elseif($c == "/")
+      $ret .= "_";
+  }
+
+  return $ret;
+}
+
 function json_readable_encode($data) {
   if(version_compare(PHP_VERSION, '5.4.0') >= 0)
     return json_encode($data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);

@@ -18,6 +18,8 @@ class mapcss_Category {
   function __construct($repo, $id, $branch="master") {
     $this->repo = get_category_repository($repo, $branch);
     $this->id = $id;
+
+    $this->full_id = id_escape($repo) . "_" . id_escape($id) . "_" . id_escape($branch);
   }
 
   function title() {
@@ -111,14 +113,20 @@ class mapcss_Category {
   // if necessary (or $force=true) compiles the style
   function compile($force=false) {
     global $pgmapcss;
+    global $data_path;
+    global $root_path;
     global $db;
 
     chdir($this->repo->path());
     adv_exec("git checkout ". shell_escape($this->repo->branch));
 
+    $compiled_categories = "{$data_path}/compiled_categories";
+    @mkdir($compiled_categories);
+    $script = "{$compiled_categories}/{$this->full_id}.py";
+
     if((!$force)&&
-       file_exists($this->id .".py") &&
-       (filemtime($this->id .".py") > $this->last_modified()))
+       file_exists($script) &&
+       (filemtime($script) > $this->last_modified()))
       return;
 
     $config_options = "";
@@ -127,7 +135,9 @@ class mapcss_Category {
 
     $id = $this->id;
 
-    $f=adv_exec("{$pgmapcss['path']} {$config_options} --mode standalone -d'{$db['name']}' -u'{$db['user']}' -p'{$db['passwd']}' -H'{$db['host']}' -t'{$pgmapcss['template']}' '{$id}' 2>&1", $this->repo->path(), array("LC_CTYPE"=>"en_US.UTF-8"));
+    $file = $this->repo->path() . "/" . $this->id . ".mapcss";
+
+    $f=adv_exec("{$pgmapcss['path']} {$config_options} --mode standalone -d'{$db['name']}' -u'{$db['user']}' -p'{$db['passwd']}' -H'{$db['host']}' -t'{$pgmapcss['template']}' --file='{$file}' --icons-parent-dir='{$root_path}/icons/' '{$this->full_id}' 2>&1", $compiled_categories, array("LC_CTYPE"=>"en_US.UTF-8"));
 
     return array("error"=>$f[0], "message"=>array("compile" => $f[1]));
   }
