@@ -47,8 +47,21 @@ class mapcss_Category {
       $ret['content'] .= $r;
     pclose($f);
 
-    if(file_exists($this->id . ".json"))
-      $ret['info'] = json_decode(file_get_contents($this->id . ".json"), true);
+    global $data_path;
+    $compiled_categories = "{$data_path}/compiled_categories";
+    $script = "{$compiled_categories}/{$this->full_id}.py";
+
+    if(!file_exists($script))
+      $this->compile();
+
+    if(file_exists($script)) {
+      $result = adv_exec("{$script} --meta only");
+      if($result[0] == 0) {
+        $meta = json_decode($result[1], true);
+        if(array_key_exists('meta', $meta))
+          $ret['meta'] = $meta['meta'];
+      }
+    }
 
     return $ret;
   }

@@ -64,8 +64,8 @@ function mapcss_Category(repo, id, branch, repository, data) {
 mapcss_Category.prototype.title = function() {
   var data = this.data();
 
-  if(('info' in data) && ('meta' in data.info) && ('title' in data.info.meta))
-    return data.info.meta.title;
+  if(('meta' in data) && ('title' in data.meta))
+    return data.meta.title;
 
   return this.id;
 }
