@@ -162,7 +162,10 @@ mapcss_Category.prototype.Layer = function() {
       }, null, url_param);
     url_param = url_param.join("&");
 
+    var data = this.data();
+
     this.layer = new layer_ol4pgm_category(this.id, {
+      meta: data.meta,
       url: "data.php?" + url_param + "&x={x}&y={y}&z={z}&format=geojson-separate&tilesize=1024&srs=3857",
       single_url: "data.php?" + url_param + "&id={id}&zoom={zoom}&format=geojson-separate&srs=3857"
     });

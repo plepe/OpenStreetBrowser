@@ -15,7 +15,10 @@ function layer_ol4pgm_category(id, options) {
   // TODO: maybe register_layer or so?
   layers[this.id] = this;
 
-  this.tags.set("name", id);
+  if(options.meta && options.meta.title)
+    this.tags.set("name", options.meta.title);
+  else
+    this.tags.set("name", id);
   // shall_reload
 
   this.shall_reload = function(list, parent_div, viewbox) {
