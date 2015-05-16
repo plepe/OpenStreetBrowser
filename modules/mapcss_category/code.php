@@ -55,8 +55,24 @@ class mapcss_Category {
       $this->compile();
 
     if(file_exists($script)) {
-      $result = adv_exec("{$script} --meta only");
+      $params = $_SERVER;
+
+      if(array_key_exists('QUERY_STRING', $params))
+        $params['QUERY_STRING'] .= "&meta=only";
+      else
+        $params['QUERY_STRING'] = "meta=only";
+
+      $result = adv_exec($script, null, $params);
       if($result[0] == 0) {
+        $p = strpos($result[1], "\n\n");
+        if($p === false) {
+          $p = strpos($result[1], "\r\n\r\n");
+          if($p !== false)
+            $result[1] = substr($result[1], $p + 4);
+        }
+        else
+          $result[1] = substr($result[1], $p + 2);
+
         $meta = json_decode($result[1], true);
         if(array_key_exists('meta', $meta))
           $ret['meta'] = $meta['meta'];
