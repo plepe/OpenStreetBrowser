@@ -114,6 +114,7 @@ class mapcss_Category {
     }
 
     adv_exec("git add ". shell_escape($this->id) .".mapcss");
+    adv_exec("git add translation/template.json");
 
     $msg = "update category {$this->id}";
     if(array_key_exists('commit_msg', $data) && $data['commit_msg'])
@@ -158,9 +159,9 @@ class mapcss_Category {
        (filemtime($script) > $this->last_modified()))
       return;
 
-    $config_options = "";
+    $config_options = "-c translation_dir=" . shell_escape($this->repo->path() . "/translation") . " translation_update=true";
     if($pgmapcss['config_options'])
-      $config_options = "-c {$pgmapcss['config_options']}";
+      $config_options .= "-c {$pgmapcss['config_options']}";
 
     $id = $this->id;
 
