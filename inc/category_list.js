@@ -93,9 +93,10 @@ function _category_list() {
 
     var cats=data.getElementsByTagName("category");
     for(var cati=0; cati<cats.length; cati++) {
-      var ob=get_category("osm:"+cats[cati].getAttribute("id"));
-      if(ob)
-	ob.recv(cats[cati], viewbox);
+      get_category("osm:"+cats[cati].getAttribute("id"), function(cat, viewbox, ob) {
+        if(ob)
+          ob.recv(cat, viewbox);
+      }.bind(cats[cati], viewbox));
     }
   }
 

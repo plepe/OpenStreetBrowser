@@ -102,12 +102,12 @@ function category_osm_info_cat_construct(ob) {
 
     var ul=document.createElement("ul");
     for(var i=0; i<list.length; i++) {
-      var ob=get_category("osm:"+list[i]);
-
-      var li=ob.category_osm_info();
-      if(li)
-	ul.appendChild(li);
-    }
+      get_category("osm:"+list[i], function(ob) {
+        var li=ob.category_osm_info();
+        if(li)
+          ul.appendChild(li);
+      }
+    }.bind(this, ul));
 
     return ul;
   }

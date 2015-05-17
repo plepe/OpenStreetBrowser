@@ -1,8 +1,16 @@
 var categories={};
 var category_types={};
 
-function get_category(id, param) {
-  var x=id.split(/:/);
+function get_category(id, param, callback) {
+  if(typeof param == "function") {
+    callback = param;
+    param = null;
+  }
+
+  if(!callback) {
+    alert("get_category() - no callback supplied!");
+    return;
+  }
 
   if(!category_types[x[0]]) {
     alert("category type "+x[0]+" unknown!");
@@ -16,13 +24,15 @@ function get_category(id, param) {
   if(!categories[id])
     categories[id]={};
 
-  if(categories[id][sub_id])
-    return categories[id][sub_id];
+  if(categories[id][sub_id]) {
+    callback(categories[id][sub_id]);
+    return;
+  }
 
   var ob=new category_types[x[0]](x[1], param);
   categories[id][sub_id]=ob;
 
-  return ob;
+  callback(ob);
 }
 
 function category(id) {
@@ -143,13 +153,18 @@ function category(id) {
       }
 
       if(!found) {
-        found=get_category("osm:"+l);
-        this.register_sub_category(found);
-        found.attach_div(this.divs[0].sub);
-      }
+        get_category("osm:"+l, function(l, found) {
+          this.register_sub_category(found);
+          found.attach_div(this.divs[0].sub);
 
-      found.open_category(this.divs[0].sub.child_divs[l]);
-      found.open_list(list[l]);
+          found.open_category(this.divs[0].sub.child_divs[l]);
+          found.open_list(list[l]);
+        }.bind(this, l));
+      }
+      else {
+        found.open_category(this.divs[0].sub.child_divs[l]);
+        found.open_list(list[l]);
+      }
     }
   }
 
@@ -228,10 +243,15 @@ function category(id) {
 
       dom_clean(div.sub);
       for(var i=0; i<this.sub_categories.length; i++) {
-	if(typeof this.sub_categories[i]=="string")
-	  this.sub_categories[i]=get_category(this.sub_categories[i]);
+	if(typeof this.sub_categories[i]=="string") {
+	  get_category(this.sub_categories[i], function(i, div, ob) {
+            this.sub_categories[i] = ob;
 
-	this.sub_categories[i].attach_div(div.sub);
+            this.sub_categories[i].attach_div(div.sub);
+          }.bind(this, i, div));
+        }
+        else
+          this.sub_categories[i].attach_div(div.sub);
       }
     }
 

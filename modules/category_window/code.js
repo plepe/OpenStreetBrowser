@@ -49,7 +49,9 @@ function category_window_start_window(category) {
 }
 
 function category_show(id, param) {
-  new category_window(get_category(id, param));
+  get_category(id, param, function(ob) {
+    new category_window(ob);
+  })
 }
 
 function category_window_create_category() {
