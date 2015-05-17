@@ -93,7 +93,7 @@ class CategoryRepository {
 
             if(!array_key_exists($d, $dir)) {
               $dir[$d] = array(
-                'id' => $dir_id,
+                'id' => "{$this->id}/{$dir_id}",
                 'type' => 'dir',
                 'meta' => array(
                   'id' => $dir_id,
