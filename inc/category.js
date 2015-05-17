@@ -1,13 +1,8 @@
 var categories={};
 var category_types={};
 
-function get_category(id, param, callback) {
-  if(typeof param == "function") {
-    callback = param;
-    param = null;
-  }
-
-  if(!callback) {
+function get_category(id, callback) {
+  if((!callback) || (typeof callback != "function")) {
     alert("get_category() - no callback supplied!");
     return;
   }
@@ -17,20 +12,13 @@ function get_category(id, param, callback) {
     return;
   }
 
-  var sub_id="";
-  if(param)
-    sub_id=json_encode(param);
-
-  if(!categories[id])
-    categories[id]={};
-
-  if(categories[id][sub_id]) {
-    callback(categories[id][sub_id]);
+  if(categories[id]) {
+    callback(categories[id]);
     return;
   }
 
-  var ob=new category_types[x[0]](x[1], param);
-  categories[id][sub_id]=ob;
+  var ob=new category_types[x[0]](x[1]);
+  categories[id]=ob;
 
   callback(ob);
 }

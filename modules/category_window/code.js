@@ -48,8 +48,8 @@ function category_window_start_window(category) {
   new category_window(category);
 }
 
-function category_show(id, param) {
-  get_category(id, param, function(ob) {
+function category_show(id) {
+  get_category(id, function(ob) {
     new category_window(ob);
   })
 }
