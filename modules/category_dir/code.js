@@ -62,6 +62,17 @@ this.Layer = function() {
   return this;
 }
 
+this.get_category = function(id, callback) {
+  for(var k in this.categories) {
+    if(this.categories[k].id == id) {
+      callback(this.categories[k]);
+      return;
+    }
+  }
+
+  callback(null);
+}
+
 // constructor
   if(repository) {
     this.repo = repository;

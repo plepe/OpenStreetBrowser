@@ -14,26 +14,33 @@ function get_category_repository(id, callback) {
   return null;
 }
 
-function CategoryRepository(id) {
+function CategoryRepository(id, data) {
   Eventify.enable(this);
   this.is_loaded = false;
 
   this.id = id;
 
-  this.load();
+  if(data) {
+    this.load_callback(null, data);
+  }
+  else {
+    this.load();
+  }
 }
 
 CategoryRepository.prototype.load = function(callback) {
-  new ajax_json("category_repository_load", { id: this.id }, function(callback, data) {
-    this._data = data;
-    this.categories = null;
+  new ajax_json("category_repository_load", { id: this.id }, this.load_callback.bind(this, callback));
+}
 
-    this.is_loaded = true;
-    this.trigger("load", data);
+CategoryRepository.prototype.load_callback = function(callback, data) {
+  this._data = data;
+  this.categories = null;
 
-    if(callback)
-      callback();
-  }.bind(this, callback));
+  this.is_loaded = true;
+  this.trigger("load", data);
+
+  if(callback)
+    callback();
 }
 
 CategoryRepository.prototype.get_categories = function(callback) {
@@ -54,11 +61,22 @@ CategoryRepository.prototype.get_categories = function(callback) {
           alert('unknown category type "' + category_data.type + '"');
       }
     }
-
-    this.categories
   }
 
   callback(this.categories);
+}
+
+CategoryRepository.prototype.get_category = function(id, callback) {
+  this.get_categories(function(id, callback) {
+    for(var k in this.categories) {
+      if(this.categories[k].id == id) {
+        callback(this.categories[k]);
+        return;
+      }
+    }
+
+    callback(null);
+  }.bind(this, id, callback));
 }
 
 CategoryRepository.prototype.data = function() {

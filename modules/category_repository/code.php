@@ -36,6 +36,7 @@ class CategoryRepository {
     if(!$data)
       $data = array();
 
+    $data['type'] = 'CategoryRepository';
     $data['branch'] = $this->branch;
     $data['other_branches'] = array();
 
@@ -174,4 +175,11 @@ function ajax_category_repository_list($param) {
 // TODO: remove
 register_hook("main_links", function(&$list) {
   $list[] = array(5, "<a href='javascript:category_repository_browser_open()'>Repo</a>");
+});
+register_hook("get_category", function($id, $param) {
+  global $data_path;
+
+  $path = "{$data_path}/categories/{$id}";
+  if(file_exists($path))
+    return get_category_repository($id);
 });
