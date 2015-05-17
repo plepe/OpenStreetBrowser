@@ -54,7 +54,16 @@ CategoryRepository.prototype.get_categories = function(callback) {
     for(var k in this._data.categories) {
       var category_data = this._data.categories[k];
 
-      this.categories[k] = load_mapcss_category(this.id, k, this.branch, this, category_data);
+      switch(category_data.type) {
+        case 'mapcss_category':
+          this.categories[k] = load_mapcss_category(this.id, k, this.branch, this, category_data);
+          break;
+        case 'dir':
+          this.categories[k] = load_category_dir(this.id, k, this.branch, this, category_data);
+          break;
+        default:
+          alert('unknown category type "' + category_data.type + '"');
+      }
     }
 
     this.categories
