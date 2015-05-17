@@ -59,13 +59,47 @@ class CategoryRepository {
     $data['categories'] = array();
     $f = popen("git ls-tree -r ". shell_escape($this->branch) ." --name-only", "r");
     while($r = chop(fgets($f))) {
+      $dir = &$data['categories'];
+
+      $category_index = null;
+      $category = null;
       if(preg_match("/^(.*)\.mapcss$/", $r, $m)) {
-        $data['categories'][$m[1]] = get_mapcss_category($this->id, $m[1], $this->branch)->data();
+        $category_index = basename($m[1]);
+        $category = get_mapcss_category($this->id, $m[1], $this->branch)->data();
       }
       elseif(preg_match("/^(.*)\.list$/", $r, $m)) {
-        $data['categories'][$m[1]] = array(
+        $category_index = basename($m[1]);
+        $category = array(
           'type' => "list",
         );
+      }
+
+      if($category) {
+        if(strpos($r, "/") !== false) {
+          $dir_path = explode("/", dirname($r));
+          $dir_id = "";
+
+          foreach($dir_path as $d) {
+            if($dir_id == "")
+              $dir_id = $d;
+            else
+              $dir_id = "{$dir_id}/{$d}";
+
+            if(!array_key_exists($d, $dir)) {
+              $dir[$d] = array(
+                'id' => $dir_id,
+                'type' => 'dir',
+                'meta' => array(
+                  'id' => $dir_id,
+                ),
+                'categories' => array(),
+              );
+              $dir = &$dir[$d]['categories'];
+            }
+          }
+        }
+
+        $dir[$category_index] = $category;
       }
     }
     pclose($f);
