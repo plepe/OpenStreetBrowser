@@ -3,12 +3,7 @@ var category_types={};
 
 function get_category(id, callback) {
   if((!callback) || (typeof callback != "function")) {
-    alert("get_category() - no callback supplied!");
-    return;
-  }
-
-  if(!category_types[x[0]]) {
-    alert("category type "+x[0]+" unknown!");
+    alert("get_category(" + id + ") - no callback supplied!");
     return;
   }
 
@@ -17,10 +12,57 @@ function get_category(id, callback) {
     return;
   }
 
-  var ob=new category_types[x[0]](x[1]);
-  categories[id]=ob;
+  // if id has several parts (separated by /), iterate to the root category and
+  // request its data - which should contain data for sub categories
+  var id_parts = id.split("/");
+  if(id_parts.length == 1) {
+    ajax_json("get_category", { id: id }, function(id, callback, data) {
+      if(!data) {
+        alert("get_category(" + id + "): no such category");
+        return;
+      }
 
-  callback(ob);
+      if(!data.type) {
+        alert("get_category(" + id + "): cannot parse result");
+        return;
+      }
+
+      if(typeof window[data.type] != 'function') {
+        alert("get_category(" + id + "): unknown category type " + data.type);
+        return;
+      }
+
+      var ob = new window[data.type](id, data);
+
+      categories[id] = ob;
+
+      callback(ob);
+    }.bind(this, id, callback));
+  }
+  else {
+    get_category(id_parts.slice(0, -1).join('/'), function(id, callback, ob) {
+      if(!ob) {
+        alert("get_category(" + id + "): no such category");
+        return;
+      }
+
+      if(typeof ob.get_category != "function") {
+        alert("get_category(" + id + "): category does not have sub categories");
+        return;
+      }
+
+      ob.get_category(id, function(id, callback, ob) {
+        if(!ob) {
+          alert("get_category(" + id + "): no such category");
+          return;
+        }
+
+        categories[id] = ob;
+
+        callback(ob);
+      }.bind(this, id, callback));
+    }.bind(this, id, callback));
+  }
 }
 
 function category(id) {
