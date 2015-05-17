@@ -1,18 +1,9 @@
 var mapcss_category_cache = {};
-function get_mapcss_category(repo, id, branch, callback) {
-  if(!branch)
-    branch = "master";
+function get_mapcss_category(id, callback) {
+  if(!(id in mapcss_category_cache))
+    mapcss_category_cache[id] = new mapcss_Category(id);
 
-  if(!(repo in mapcss_category_cache))
-    mapcss_category_cache[repo] = {};
-
-  if(!(id in mapcss_category_cache[repo]))
-    mapcss_category_cache[repo][id] = {}
-
-  if(!(branch in mapcss_category_cache[repo][id]))
-    mapcss_category_cache[repo][id][branch] = new mapcss_Category(repo, id, branch);
-
-  var ob = mapcss_category_cache[repo][id][branch];
+  var ob = mapcss_category_cache[id];
   if(ob.is_loaded)
     callback(ob);
   else
@@ -23,29 +14,21 @@ function get_mapcss_category(repo, id, branch, callback) {
   return null;
 }
 
-function load_mapcss_category(repo, id, branch, repository, data) {
-  if(!branch)
-    branch = "master";
+function load_mapcss_category(id, repository, data) {
+  if(!(id in mapcss_category_cache))
+    mapcss_category_cache[id] = new mapcss_Category(id, repository, data);
 
-  if(!(repo in mapcss_category_cache))
-    mapcss_category_cache[repo] = {};
-
-  if(!(id in mapcss_category_cache[repo]))
-    mapcss_category_cache[repo][id] = {}
-
-  if(!(branch in mapcss_category_cache[repo][id]))
-    mapcss_category_cache[repo][id][branch] = new mapcss_Category(repo, id, branch, repository, data);
-
-  return mapcss_category_cache[repo][id][branch];
+  return mapcss_category_cache[id];
 }
 
-function mapcss_Category(repo, id, branch, repository, data) {
+function mapcss_Category(id, repository, data) {
   Eventify.enable(this);
   this.is_loaded = false;
 
-  this.repo_id = repo;
   this.id = id;
-  this.branch_id = branch;
+  var p = id.split("/");
+  this.repo_id = p.splice(0, 1)[0];
+  this.pure_id = p.join("/");
 
   if(repository) {
     this.repo = repository;
@@ -54,7 +37,7 @@ function mapcss_Category(repo, id, branch, repository, data) {
     this.trigger("load", data);
   }
   else {
-    get_category_repository(repo, branch, function(ob) {
+    get_category_repository(this.repo_id, function(ob) {
       this.repo = ob;
       this.load();
     }.bind(this));
@@ -67,11 +50,11 @@ mapcss_Category.prototype.title = function() {
   if(('meta' in data) && ('title' in data.meta))
     return data.meta.title;
 
-  return this.id;
+  return this.pure_id;
 }
 
 mapcss_Category.prototype.load = function(callback) {
-  new ajax_json("mapcss_category_load", { repo: this.repo_id, id: this.id, branch: this.branch_id }, function(callback, data) {
+  new ajax_json("mapcss_category_load", { id: this.id }, function(callback, data) {
     this._data = data;
 
     this.is_loaded = true;
@@ -101,7 +84,7 @@ mapcss_Category.prototype.edit = function() {
 
   this.editor = new editor({
     form_def: form_def,
-    title: "Edit category '" + this.id + "'",
+    title: "Edit category '" + this.pure_id + "'",
     onsave: this.save.bind(this)
   });
 
@@ -112,7 +95,7 @@ mapcss_Category.prototype.edit = function() {
 }
 
 mapcss_Category.prototype.save = function(data) {
-  new ajax_json("mapcss_category_save", { repo: this.repo.id, id: this.id, branch: this.repo.branch }, data, function(result) {
+  new ajax_json("mapcss_category_save", { id: this.id }, data, function(result) {
     if(!result) {
       alert("An unknown error occured when saving.");
     }
@@ -156,9 +139,7 @@ mapcss_Category.prototype.Layer = function() {
   if(!this.layer) {
     var url_param = [];
     ajax_build_request({
-         repo: this.repo_id,
          category: this.id,
-         branch: this.branch_id
       }, null, url_param);
     url_param = url_param.join("&");
 

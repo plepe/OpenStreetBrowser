@@ -113,7 +113,7 @@ function id_escape($str) {
   for($i = 0; $i < strlen($str); $i++) {
     $c = substr($str, $i, 1);
 
-    if(preg_match("/^[0-9a-zA-Z]$/", $c))
+    if(preg_match("/^[0-9a-zA-Z@]$/", $c))
       $ret .= $c;
     elseif($c == "_")
       $ret .= "__";

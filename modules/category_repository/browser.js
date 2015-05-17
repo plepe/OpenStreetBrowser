@@ -44,7 +44,7 @@ function CategoryRepositoryBrowser(id, branch) {
   else {
     this.win.content.innerHTML = "Loading ...";
 
-    get_category_repository(id, branch, function(ob) {
+    get_category_repository(id, function(ob) {
       this.category_repository = ob;
       this.show();
       this.category_repository.on('load', this.show.bind(this), this);
@@ -92,8 +92,6 @@ CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
 
   for(var k in categories) {
     var cat = categories[k];
-    cat.id = k;
-    cat.title = cat.title.bind(cat);
 
     var li = document.createElement("li");
     li.innerHTML = twig_render_custom("<a action='add'>{{ title }}</a> (<a action='edit'>edit</a>)", cat);
@@ -132,7 +130,7 @@ CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
       data: {},
       title: "Create new category",
       onsave: function(repo, data) {
-        get_mapcss_category(repo.id, data.id, repo.branch, function(cat) {
+        get_mapcss_category(data.id, function(cat) {
           cat.edit();
         }.bind(this));
       }.bind(this, repo)

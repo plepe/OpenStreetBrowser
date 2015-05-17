@@ -1,28 +1,34 @@
 <?php
 $category_repository_cache = array();
 
-function get_category_repository($id, $branch="master") {
+function get_category_repository($id) {
   global $category_repository_cache;
 
   if(!array_key_exists($id, $category_repository_cache))
-    $category_repository_cache[$id] = array();
+    $category_repository_cache[$id] = new CategoryRepository($id);
 
-  if(!array_key_exists($branch, $category_repository_cache[$id]))
-    $category_repository_cache[$id][$branch] = new CategoryRepository($id, $branch);
-
-  return $category_repository_cache[$id][$branch];
+  return $category_repository_cache[$id];
 }
 
 class CategoryRepository {
-  function __construct($id, $branch="master") {
+  function __construct($id) {
     $this->id = $id;
-    $this->branch = $branch;
+    $p = explode("@", $this->id);
+
+    if(sizeof($p) == 2) {
+      $this->pure_id = $p[0];
+      $this->branch = $p[1];
+    }
+    else {
+      $this->pure_id = $this->id;
+      $this->branch = "master";
+    }
   }
 
   function path() {
     global $data_path;
 
-    return "{$data_path}/categories/{$this->id}";
+    return "{$data_path}/categories/{$this->pure_id}";
   }
 
   function data() {
@@ -65,7 +71,7 @@ class CategoryRepository {
       $category = null;
       if(preg_match("/^(.*)\.mapcss$/", $r, $m)) {
         $category_index = basename($m[1]);
-        $category = get_mapcss_category($this->id, $m[1], $this->branch)->data();
+        $category = get_mapcss_category("{$this->id}/{$m[1]}")->data();
       }
       elseif(preg_match("/^(.*)\.list$/", $r, $m)) {
         $category_index = basename($m[1]);
@@ -147,7 +153,7 @@ function ajax_category_repository_create($param) {
 }
 
 function ajax_category_repository_load($param) {
-  $category_repository = new CategoryRepository($param['id'], $param['branch']);
+  $category_repository = new CategoryRepository($param['id']);
   return $category_repository->data();
 }
 

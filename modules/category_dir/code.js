@@ -1,31 +1,21 @@
 var category_dir_cache = {};
 
-function load_category_dir(repo, id, branch, repository, data) {
-  if(!branch)
-    branch = "master";
+function load_category_dir(id, repository, data) {
+  if(!(id in category_dir_cache))
+    category_dir_cache[id] = new category_dir(id, repository, data);
 
-  if(!(repo in category_dir_cache))
-    category_dir_cache[repo] = {};
-
-  if(!(id in category_dir_cache[repo]))
-    category_dir_cache[repo][id] = {}
-
-  if(!(branch in category_dir_cache[repo][id]))
-    category_dir_cache[repo][id][branch] = new category_dir(repo, id, branch, repository, data);
-
-  return category_dir_cache[repo][id][branch];
+  return category_dir_cache[id];
 }
 
-function category_dir(repo, id, branch, repository, data) {
+function category_dir(id, repository, data) {
   this.inheritFrom=category;
   this.inheritFrom(id);
 
   Eventify.enable(this);
 
-  this.repo_id = repo;
-  this.id = id;
-  this.branch_id = branch;
-
+  var p = id.split("/");
+  this.repo_id = p.splice(0, 1)[0];
+  this.pure_id = p.join("/");
 
 this.data = function() {
   return this._data;
@@ -45,10 +35,10 @@ this.load_sub_categories = function(callback) {
 
     switch(category_data.type) {
       case 'mapcss_category':
-        this.categories[k] = load_mapcss_category(this.repo.id, category_data.id, this.branch, this, category_data);
+        this.categories[k] = load_mapcss_category(category_data.id, this, category_data);
         break;
       case 'dir':
-        this.categories[k] = load_category_dir(this.repo.id, category_data.id, this.branch, this, category_data);
+        this.categories[k] = load_category_dir(category_data.id, this, category_data);
         break;
       default:
         alert('unknown category type "' + category_data.type + '"');
@@ -65,7 +55,7 @@ this.load_sub_categories = function(callback) {
 }
 
 this.title = function() {
-  return this.id;
+  return this.pure_id;
 }
 
 this.Layer = function() {
@@ -79,7 +69,7 @@ this.Layer = function() {
     this.load_sub_categories();
   }
   else {
-    get_category_repository(repo, branch, function(ob) {
+    get_category_repository(repo, function(ob) {
       this.repo = ob;
       this.load();
     }.bind(this));

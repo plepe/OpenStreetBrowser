@@ -1,16 +1,9 @@
 var category_repository_cache = {};
 
-function get_category_repository(id, branch, callback) {
-  if(!(id in category_repository_cache))
-    category_repository_cache[id] = {};
+function get_category_repository(id, callback) {
+  category_repository_cache[id] = new CategoryRepository(id);
 
-  if(!branch)
-    branch = "master";
-
-  if(!(branch in category_repository_cache[id]))
-    category_repository_cache[id][branch] = new CategoryRepository(id, branch);
-
-  var ob = category_repository_cache[id][branch];
+  var ob = category_repository_cache[id];
   if(ob.is_loaded)
     callback(ob);
   else
@@ -21,21 +14,17 @@ function get_category_repository(id, branch, callback) {
   return null;
 }
 
-function CategoryRepository(id, branch) {
+function CategoryRepository(id) {
   Eventify.enable(this);
   this.is_loaded = false;
 
   this.id = id;
-  if(branch)
-    this.branch = branch;
-  else
-    this.branch = "master";
 
   this.load();
 }
 
 CategoryRepository.prototype.load = function(callback) {
-  new ajax_json("category_repository_load", { id: this.id, branch: this.branch }, function(callback, data) {
+  new ajax_json("category_repository_load", { id: this.id }, function(callback, data) {
     this._data = data;
     this.categories = null;
 
@@ -56,10 +45,10 @@ CategoryRepository.prototype.get_categories = function(callback) {
 
       switch(category_data.type) {
         case 'mapcss_category':
-          this.categories[k] = load_mapcss_category(this.id, k, this.branch, this, category_data);
+          this.categories[k] = load_mapcss_category(category_data.id, this, category_data);
           break;
         case 'dir':
-          this.categories[k] = load_category_dir(this.id, k, this.branch, this, category_data);
+          this.categories[k] = load_category_dir(category_data.id, this, category_data);
           break;
         default:
           alert('unknown category type "' + category_data.type + '"');

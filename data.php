@@ -12,11 +12,9 @@ if(!preg_match("/^[a-z\/A-Z0-9_]+$/", $_REQUEST['category'], $m)) {
   exit;
 }
 
-$repo = $_REQUEST['repo'];
 $category_id = $_REQUEST['category'];
-$branch = $_REQUEST['branch'] ?: "master";
 
-$category = get_mapcss_category($repo, $category_id, $branch);
+$category = get_mapcss_category($category_id);
 $category->compile();
 
 $compiled_categories = "{$data_path}/compiled_categories";
@@ -29,7 +27,8 @@ if(!array_key_exists('x', $_REQUEST) &&
   $read_from_cache = false;
 }
 else {
-  $cache_path = "{$data_path}/cache/{$repo}/{$category_id}/{$branch}/{$_REQUEST['z']}/{$_REQUEST['x']}/{$_REQUEST['y']}.json.gz";
+  $esc_category_id = id_escape($category_id);
+  $cache_path = "{$data_path}/cache/{$esc_category_id}/{$_REQUEST['z']}/{$_REQUEST['x']}/{$_REQUEST['y']}.json.gz";
 
   $read_from_cache = true;
 }

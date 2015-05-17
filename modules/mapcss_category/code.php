@@ -1,25 +1,24 @@
 <?php
 global $mapcss_category_cache;
 
-function get_mapcss_category($repo, $id, $branch="master") {
-  if(!array_key_exists($repo, $mapcss_category_cache))
-    $mapcss_category_cache[$repo] = array();
+function get_mapcss_category($id) {
+  if(!array_key_exists($id, $mapcss_category_cache))
+    $mapcss_category_cache[$id] = new mapcss_Category($id);
 
-  if(!array_key_exists($id, $mapcss_category_cache[$repo]))
-    $mapcss_category_cache[$repo][$id] = array();
-
-  if(!array_key_exists($branch, $mapcss_category_cache[$repo][$id]))
-    $mapcss_category_cache[$repo][$id][$branch] = new mapcss_Category($repo, $id, $branch);
-
-  return $mapcss_category_cache[$repo][$id][$branch];
+  return $mapcss_category_cache[$id];
 }
 
 class mapcss_Category {
-  function __construct($repo, $id, $branch="master") {
-    $this->repo = get_category_repository($repo, $branch);
+  function __construct($id) {
+    $p = explode("/", $id);
+    $repo = array_shift($p);
+    $pure_id = implode("/", $p);
+
+    $this->repo = get_category_repository($repo);
+    $this->pure_id = $pure_id;
     $this->id = $id;
 
-    $this->full_id = id_escape($repo) . "_" . id_escape($id) . "_" . id_escape($branch);
+    $this->full_id = id_escape($id);
   }
 
   function title() {
@@ -42,7 +41,7 @@ class mapcss_Category {
     chdir($this->repo->path());
 
     $ret['content'] = "";
-    $f = popen("git show ". shell_escape($this->repo->branch) .":". shell_escape($this->id .".mapcss"), "r");
+    $f = popen("git show ". shell_escape($this->repo->branch) .":". shell_escape($this->pure_id .".mapcss"), "r");
     while($r = fread($f, 1024))
       $ret['content'] .= $r;
     pclose($f);
@@ -90,10 +89,10 @@ class mapcss_Category {
     chdir($this->repo->path());
     adv_exec("git checkout ". shell_escape($this->repo->branch));
 
-    if(file_exists($this->id .".mapcss"))
-      $old_content = file_get_contents($this->id .".mapcss");
+    if(file_exists($this->pure_id .".mapcss"))
+      $old_content = file_get_contents($this->pure_id .".mapcss");
 
-    file_put_contents($this->id .".mapcss", $data['content']);
+    file_put_contents($this->pure_id .".mapcss", $data['content']);
 
     $result = array(
       "error" => 0,
@@ -106,14 +105,14 @@ class mapcss_Category {
 
     if($r['error'] != 0) {
       if($old_content === null)
-        unlink($this->id .".mapcss");
+        unlink($this->pure_id .".mapcss");
       else
-        file_put_contents($this->id .".mapcss", $old_content);
+        file_put_contents($this->pure_id .".mapcss", $old_content);
 
       return $result;
     }
 
-    adv_exec("git add ". shell_escape($this->id) .".mapcss");
+    adv_exec("git add ". shell_escape($this->pure_id) .".mapcss");
     adv_exec("git add translation/template.json");
 
     $msg = "update category {$this->id}";
@@ -135,7 +134,7 @@ class mapcss_Category {
   function last_modified() {
     chdir($this->repo->path());
 
-    $result = adv_exec("git log -1 --format='%at' ". shell_escape($this->repo->branch) ." ". shell_escape($this->id.".mapcss"), $this->repo->path());
+    $result = adv_exec("git log -1 --format='%at' ". shell_escape($this->repo->branch) ." ". shell_escape($this->pure_id.".mapcss"), $this->repo->path());
 
     return (int)$result[1];
   }
@@ -165,7 +164,7 @@ class mapcss_Category {
 
     $id = $this->id;
 
-    $file = $this->repo->path() . "/" . $this->id . ".mapcss";
+    $file = $this->repo->path() . "/" . $this->pure_id . ".mapcss";
 
     $f=adv_exec("{$pgmapcss['path']} {$config_options} --mode standalone -d'{$db['name']}' -u'{$db['user']}' -p'{$db['passwd']}' -H'{$db['host']}' -t'{$pgmapcss['template']}' --file='{$file}' --icons-parent-dir='{$root_path}/icons/' '{$this->full_id}' 2>&1", $compiled_categories, array("LC_CTYPE"=>"en_US.UTF-8"));
 
@@ -174,9 +173,9 @@ class mapcss_Category {
 }
 
 function ajax_mapcss_category_load($param) {
-  return get_mapcss_category($param['repo'], $param['id'], $param['branch'])->data();
+  return get_mapcss_category($param['id'])->data();
 }
 
 function ajax_mapcss_category_save($param, $post) {
-  return get_mapcss_category($param['repo'], $param['id'], $param['branch'])->save($post);
+  return get_mapcss_category($param['id'])->save($post);
 }
