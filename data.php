@@ -7,7 +7,7 @@ if(!array_key_exists('category', $_REQUEST)) {
   exit;
 }
 
-if(!preg_match("/^[a-zA-Z0-9_]+$/", $_REQUEST['category'], $m)) {
+if(!preg_match("/^[a-z\/A-Z0-9_]+$/", $_REQUEST['category'], $m)) {
   print "Illegal category ID";
   exit;
 }
