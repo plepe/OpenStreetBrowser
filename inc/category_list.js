@@ -122,7 +122,7 @@ function category_list_init() {
 
   if(default_categories) {
     for(var i=0; i<default_categories.length; i++) {
-      category_root.sub_categories.push("osm:"+default_categories[i]);
+      category_root.sub_categories.push(default_categories[i]);
     }
   }
 }
