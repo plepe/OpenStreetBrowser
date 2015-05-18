@@ -1,13 +1,25 @@
 var categories={};
+var get_category_requests = {};
 var category_types={};
 
-function call_category_requests(ob, callback) {
-  if(ob.is_loaded)
-    callback(ob);
+function call_category_requests(id) {
+  var ob = categories[id];
+
+  if(ob.is_loaded) {
+    for(var i = 0; i < get_category_requests[id].length; i++)
+      get_category_requests[id][i](ob);
+
+    delete(get_category_requests[i]);
+  }
   else
-    ob.once('load', function(ob) {
-      callback(ob);
-    }.bind(this, ob));
+    ob.once('load', function(id) {
+      var ob = categories[id];
+
+      for(var i = 0; i < get_category_requests[id].length; i++)
+        get_category_requests[i](ob);
+
+      delete(get_category_requests[i]);
+    }.bind(this, id));
 }
 
 function get_category(id, callback) {
@@ -21,11 +33,19 @@ function get_category(id, callback) {
     return;
   }
 
+  // there's already an active request -> add current request and wait
+  if(id in get_category_requests) {
+    get_category_requests[id].push(callback);
+    return;
+  }
+
+  get_category_requests[id] = [ callback ];
+
   // if id has several parts (separated by /), iterate to the root category and
   // request its data - which should contain data for sub categories
   var id_parts = id.split("/");
   if(id_parts.length == 1) {
-    ajax_json("get_category", { id: id }, function(id, callback, data) {
+    ajax_json("get_category", { id: id }, function(id, data) {
       if(!data) {
         alert("get_category(" + id + "): no such category");
         return;
@@ -43,12 +63,12 @@ function get_category(id, callback) {
 
       var ob = new window[data.type](id, data);
       categories[id] = ob;
-      call_category_requests(ob, callback);
+      call_category_requests(id);
 
-    }.bind(this, id, callback));
+    }.bind(this, id));
   }
   else {
-    get_category(id_parts.slice(0, -1).join('/'), function(id, callback, ob) {
+    get_category(id_parts.slice(0, -1).join('/'), function(id, ob) {
       if(!ob) {
         alert("get_category(" + id + "): no such category");
         return;
@@ -59,17 +79,17 @@ function get_category(id, callback) {
         return;
       }
 
-      ob.get_category(id, function(id, callback, ob) {
+      ob.get_category(id, function(id, ob) {
         if(!ob) {
           alert("get_category(" + id + "): no such category");
           return;
         }
 
         categories[id] = ob;
-        call_category_requests(ob, callback);
+        call_category_requests(id);
 
-      }.bind(this, id, callback));
-    }.bind(this, id, callback));
+      }.bind(this, id));
+    }.bind(this, id));
   }
 }
 
