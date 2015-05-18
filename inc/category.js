@@ -1,6 +1,15 @@
 var categories={};
 var category_types={};
 
+function call_category_requests(ob, callback) {
+  if(ob.is_loaded)
+    callback(ob);
+  else
+    ob.once('load', function(ob) {
+      callback(ob);
+    }.bind(this, ob));
+}
+
 function get_category(id, callback) {
   if((!callback) || (typeof callback != "function")) {
     alert("get_category(" + id + ") - no callback supplied!");
@@ -33,10 +42,9 @@ function get_category(id, callback) {
       }
 
       var ob = new window[data.type](id, data);
-
       categories[id] = ob;
+      call_category_requests(ob, callback);
 
-      callback(ob);
     }.bind(this, id, callback));
   }
   else {
@@ -58,8 +66,8 @@ function get_category(id, callback) {
         }
 
         categories[id] = ob;
+        call_category_requests(ob, callback);
 
-        callback(ob);
       }.bind(this, id, callback));
     }.bind(this, id, callback));
   }
