@@ -98,7 +98,7 @@ register_hook("search_object", function(ret, id, callback) {
   // if category is loaded, it will react on search_object request by itself
   if(!category.is_loaded) {
     category.once('load', function(object_id, callback) {
-      category_root.register_sub_category(category.Layer());
+      category_root.register_sub_category(category);
       category.search_object(object_id, callback);
     }.bind(this, object_id, callback));
 

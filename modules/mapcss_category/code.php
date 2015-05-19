@@ -1,6 +1,11 @@
 <?php
 global $mapcss_category_cache;
 
+register_hook("init", function() {
+  add_html_header("<script src='lib/ol4pgm/ol4pgm.js'></script>");
+  add_html_header("<link href='lib/ol4pgm/ol4pgm.css' media='all' rel='stylesheet' />");
+});
+
 function get_mapcss_category($id) {
   if(!array_key_exists($id, $mapcss_category_cache))
     $mapcss_category_cache[$id] = new mapcss_Category($id);

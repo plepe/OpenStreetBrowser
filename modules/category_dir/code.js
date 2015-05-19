@@ -44,7 +44,7 @@ this.load_sub_categories = function(callback) {
         alert('unknown category type "' + category_data.type + '"');
     }
 
-    this.register_sub_category(this.categories[k].Layer());
+    this.register_sub_category(this.categories[k]);
   }
 
   this.trigger("load");
@@ -56,10 +56,6 @@ this.load_sub_categories = function(callback) {
 
 this.title = function() {
   return this.pure_id;
-}
-
-this.Layer = function() {
-  return this;
 }
 
 this.get_category = function(id, callback) {

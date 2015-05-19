@@ -98,10 +98,8 @@ CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
 
     link_actions(li, {
       'add': function(cat) {
-          var layer = cat.Layer()
-
-          if(layer)
-            category_root.register_sub_category(layer);
+          if(cat)
+            category_root.register_sub_category(cat);
           else
             alert("Can't create layer from category!");
         }.bind(this, cat),

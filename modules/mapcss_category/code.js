@@ -22,54 +22,37 @@ function load_mapcss_category(id, repository, data) {
 }
 
 function mapcss_Category(id, repository, data) {
-  Eventify.enable(this);
-  this.is_loaded = false;
+  this.inheritFrom=category;
+  this.inheritFrom(id);
 
-  this.id = id;
-  var p = id.split("/");
-  this.repo_id = p.splice(0, 1)[0];
-  this.pure_id = p.join("/");
-
-  if(repository) {
-    this.repo = repository;
-    this._data = data;
-    this.is_loaded = true;
-    this.trigger("load", data);
-  }
-  else {
-    get_category_repository(this.repo_id, function(ob) {
-      this.repo = ob;
-      this.load();
-    }.bind(this));
-  }
-}
-
-mapcss_Category.prototype.title = function() {
+this.title = function() {
   var data = this.data();
 
-  if(('meta' in data) && ('title' in data.meta))
+  if(data && ('meta' in data) && ('title' in data.meta))
     return data.meta.title;
 
   return this.pure_id;
 }
 
-mapcss_Category.prototype.load = function(callback) {
+this.load = function(callback) {
   new ajax_json("mapcss_category_load", { id: this.id }, function(callback, data) {
     this._data = data;
 
     this.is_loaded = true;
     this.trigger("load", data);
 
+    this.tags.set("name", this.title());
+
     if(callback)
       callback();
   }.bind(this, callback));
 }
 
-mapcss_Category.prototype.data = function() {
+this.data = function() {
   return this._data;
 }
 
-mapcss_Category.prototype.edit = function() {
+this.edit = function() {
   var form_def = {
     'content': {
       'type': 'textarea',
@@ -94,7 +77,7 @@ mapcss_Category.prototype.edit = function() {
   }.bind(this));
 }
 
-mapcss_Category.prototype.save = function(data) {
+this.save = function(data) {
   new ajax_json("mapcss_category_save", { id: this.id }, data, function(result) {
     if(!result) {
       alert("An unknown error occured when saving.");
@@ -131,11 +114,7 @@ mapcss_Category.prototype.save = function(data) {
   return false;
 }
 
-mapcss_Category.prototype.search_object = function(object_id, callback) {
-  return this.Layer().search_object(object_id, callback);
-}
-
-mapcss_Category.prototype.Layer = function() {
+this.Layer = function() {
   if(!this.layer) {
     var url_param = [];
     ajax_build_request({
@@ -145,12 +124,97 @@ mapcss_Category.prototype.Layer = function() {
 
     var data = this.data();
 
-    this.layer = new layer_ol4pgm_category(this.id, {
-      meta: data.meta,
+    this.layer = new ol4pgmLayer({
       url: "data.php?" + url_param + "&x={x}&y={y}&z={z}&format=geojson-separate&tilesize=1024&srs=3857",
-      single_url: "data.php?" + url_param + "&id={id}&zoom={zoom}&format=geojson-separate&srs=3857"
-    });
+      single_url: "data.php?" + url_param + "&id={id}&zoom={zoom}&format=geojson-separate&srs=3857",
+      maxZoom: 17,
+      tileSize: 1024,
+      visible: false,
+      icons_parent_path: 'icons/'
+    }, map);
+    this.layer.onchange = this.write_div.bind(this);
   }
 
  return this.layer;
+}
+
+this.shall_reload = function(list, parent_div, viewbox) {
+  var div=parent_div.child_divs[this.id];
+
+  if(!div.open)
+    return;
+
+  this.write_div();
+}
+
+this.inherit_write_div=this.write_div;
+this.write_div=function(div) {
+  this.inherit_write_div(div);
+
+  if(!div)
+    return;
+  if(!div.open)
+    return;
+
+  dom_clean(div.data);
+
+  show_list = this.Layer().getFeaturesInExtent();
+  for(var i=0; i<show_list.length; i++) {
+    show_list[i] = new object_ol4pgm(show_list[i], this);
+  }
+
+  new list(div.data, show_list, null, { });
+}
+
+this.search_object=function(id, callback) {
+  this.Layer().getFeature(id, function(callback, feature) {
+    if(feature) {
+      // TODO: when leaving object, unset visibility
+      this.layer.setVisible(true);
+
+      callback(new object_ol4pgm(feature, this));
+    }
+    else
+      callback(null);
+  }.bind(this, callback));
+
+  return null;
+}
+
+// unhide_category
+this.on_unhide_category=function(div) {
+  this.Layer().setVisible(true);
+}
+
+// hide_category
+this.on_hide_category=function(div) {
+  this.Layer().setVisible(false);
+}
+
+// constructor
+  Eventify.enable(this);
+  this.is_loaded = false;
+
+  this.id = id;
+  var p = id.split("/");
+  this.repo_id = p.splice(0, 1)[0];
+  this.pure_id = p.join("/");
+
+  // TODO: maybe register_layer or so?
+  layers[this.id] = this;
+
+  if(repository) {
+    this.repo = repository;
+    this._data = data;
+    this.is_loaded = true;
+    this.trigger("load", data);
+
+    this.tags.set("name", this.title());
+  }
+  else {
+    get_category_repository(this.repo_id, function(ob) {
+      this.repo = ob;
+      this.load();
+    }.bind(this));
+  }
 }
