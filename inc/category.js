@@ -373,3 +373,27 @@ function category(id) {
 
   call_hooks("category_construct", this);
 }
+
+register_hook("search_object", function(ret, id, callback) {
+  var id_parts = id.split("/");
+
+  if(id_parts.length == 1)
+    return;
+
+  var category_id = id_parts.slice(0, id_parts.length - 1).join("/");
+  var object_id = id_parts[id_parts.length - 1];
+
+  get_category(category_id, function(object_id, callback, category) {
+    if((category === null) || (!category.search_object)){
+      callback(null);
+      return;
+    }
+
+    category.search_object(object_id, function(category, callback, ob) {
+      category_root.register_sub_category(category);
+      callback(ob);
+    }.bind(this, category, callback));
+  }.bind(this, object_id, callback));
+
+  ret.push(null);
+});

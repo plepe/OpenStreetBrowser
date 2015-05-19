@@ -82,26 +82,3 @@ CategoryRepository.prototype.get_category = function(id, callback) {
 CategoryRepository.prototype.data = function() {
   return this._data;
 }
-
-register_hook("search_object", function(ret, id, callback) {
-  var id_parts = id.split("/");
-
-  if(id_parts.length == 1)
-    return;
-
-  var category_id = id_parts.slice(0, id_parts.length - 1).join("/");
-  var repo_id = "main"; //id_parts[0];
-  var object_id = id_parts[id_parts.length - 1];
-
-  var category = load_mapcss_category(repo_id, category_id);
-
-  // if category is loaded, it will react on search_object request by itself
-  if(!category.is_loaded) {
-    category.once('load', function(object_id, callback) {
-      category_root.register_sub_category(category);
-      category.search_object(object_id, callback);
-    }.bind(this, object_id, callback));
-
-    ret.push(null);
-  }
-});
