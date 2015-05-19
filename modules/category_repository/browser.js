@@ -88,28 +88,7 @@ CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
   h.appendChild(document.createTextNode("Categories"));
   this.win.content.appendChild(h);
 
-  var ul = document.createElement("ul");
-
-  for(var k in categories) {
-    var cat = categories[k];
-
-    var li = document.createElement("li");
-    li.innerHTML = twig_render_custom("<a action='add'>{{ title }}</a> (<a action='edit'>edit</a>)", cat);
-
-    link_actions(li, {
-      'add': function(cat) {
-          if(cat)
-            category_root.register_sub_category(cat);
-          else
-            alert("Can't create layer from category!");
-        }.bind(this, cat),
-      'edit': function(cat) {
-          cat.edit();
-        }.bind(this, cat)
-    });
-
-    ul.appendChild(li);
-  }
+  var ul = this.show_sub_categories(categories);
 
   this.win.content.appendChild(ul);
 
@@ -138,6 +117,38 @@ CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
   }.bind(this, this.category_repository);
   a.appendChild(document.createTextNode("New category"));
   this.win.content.appendChild(a);
+}
+
+CategoryRepositoryBrowser.prototype.show_sub_categories = function(categories) {
+  var ul = document.createElement("ul");
+
+  for(var k in categories) {
+    var cat = categories[k];
+
+    var li = document.createElement("li");
+    li.innerHTML = twig_render_custom("<a action='add'>{{ title }}</a> (<a action='edit'>edit</a>)", cat);
+
+    link_actions(li, {
+      'add': function(cat) {
+          if(cat)
+            category_root.register_sub_category(cat);
+          else
+            alert("Can't create layer from category!");
+        }.bind(this, cat),
+      'edit': function(cat) {
+          cat.edit();
+        }.bind(this, cat)
+    });
+
+    ul.appendChild(li);
+
+    if(cat.data().type == 'dir') {
+      var sub_ul = this.show_sub_categories(cat.categories);
+      ul.appendChild(sub_ul);
+    }
+  }
+
+  return ul;
 }
 
 CategoryRepositoryBrowser.prototype.close = function() {
