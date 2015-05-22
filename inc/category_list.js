@@ -52,7 +52,8 @@ function _category_list() {
     var viewbox=get_viewbox();
 
     for(var i=0; i<this.sub_categories.length; i++) {
-      this.sub_categories[i].shall_reload(list, div.sub, viewbox);
+      if((typeof this.sub_categories[i] == 'function') && this.sub_categories[i].shall_reload)
+        this.sub_categories[i].shall_reload(list, div.sub, viewbox);
     }
 
     if(!keys(list).length)
