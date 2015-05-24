@@ -117,6 +117,22 @@ class mapcss_Category {
       return $result;
     }
 
+    # read template.json translation file
+    if(file_exists("translation/template.json"))
+      $lang_strings = json_decode(file_get_contents("translation/template.json"), true);
+    else
+      $lang_strings = array();
+
+    # create entries in translation/template.json for directory parts
+    $dir_parts = explode("/", $this->pure_id);
+    for($i = 1; $i < sizeof($dir_parts); $i++) {
+      $lang_strings["dir:" . implode(array_slice($dir_parts, 0, $i))] = "";
+    }
+
+    # write template.json translation file
+    ksort($lang_strings);
+    file_put_contents("translation/template.json", json_readable_encode($lang_strings));
+
     adv_exec("git add ". shell_escape($this->pure_id) .".mapcss");
     adv_exec("git add translation/template.json");
 

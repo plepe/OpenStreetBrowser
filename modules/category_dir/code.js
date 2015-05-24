@@ -55,6 +55,9 @@ this.load_sub_categories = function(callback) {
 }
 
 this.title = function() {
+  if(this._data.meta && this._data.meta.title)
+    return this._data.meta.title;
+
   return this.pure_id;
 }
 
@@ -74,6 +77,8 @@ this.get_category = function(id, callback) {
     this.repo = repository;
     this._data = data;
     this.load_sub_categories();
+
+    this.tags.set("name", this.title());
   }
   else {
     get_category_repository(repo, function(ob) {

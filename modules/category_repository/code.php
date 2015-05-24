@@ -31,6 +31,18 @@ class CategoryRepository {
     return "{$data_path}/categories/{$this->pure_id}";
   }
 
+  function lang($key=null) {
+    global $ui_lang;
+
+    if(!isset($this->lang_strings)) {
+      $this->lang_strings = json_decode(file_get_contents($this->path() . "/translation/{$ui_lang}.json"), true);
+    }
+
+    if($key === null)
+      return $this->lang_strings;
+    return $this->lang_strings[$key];
+  }
+
   function data() {
     $data = json_decode(file_get_contents("{$this->path()}/index.json", "r"), true);
     if(!$data)
@@ -93,7 +105,7 @@ class CategoryRepository {
               $dir_id = "{$dir_id}/{$d}";
 
             if(!array_key_exists($d, $dir)) {
-              $dir[$d] = array(
+              $subdir = array(
                 'id' => "{$this->id}/{$dir_id}",
                 'type' => 'dir',
                 'meta' => array(
@@ -101,6 +113,11 @@ class CategoryRepository {
                 ),
                 'categories' => array(),
               );
+
+              if($v = $this->lang("dir:{$dir_id}"))
+                $subdir['meta']['title'] = $v;
+
+              $dir[$d] = $subdir;
               $dir = &$dir[$d]['categories'];
             }
           }
