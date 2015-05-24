@@ -83,7 +83,26 @@ while($r = fread($fp, 1024*1024)) {
     fwrite($cache_fp, $r);
 }
 
-if(isset($process))
+$error = false;
+
+if(isset($process)) {
+  $stat = proc_get_status($process);
+
+  if($stat['exitcode'] != 0) {
+    $error = true;
+  }
+
   proc_close($process);
+}
+
 if($cache_fp)
   fclose($cache_fp);
+
+// TODO: maybe record error somewhere?
+// TODO: first fill cache then print, so that http error codes can be used?
+// TODO: blacklist script?
+// if an error occured, remove the cache file
+if($error) {
+  unlink($cache_path);
+  exit(1);
+}
