@@ -123,10 +123,3 @@ function id_escape($str) {
 
   return $ret;
 }
-
-function json_readable_encode($data) {
-  if(version_compare(PHP_VERSION, '5.4.0') >= 0)
-    return json_encode($data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
-  else
-    return json_encode($data);
-}

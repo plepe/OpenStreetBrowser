@@ -13,6 +13,7 @@ $depend=array("hooks", "lang", "pg_sql",
   "permalink",
   "weight_sort",
   "overpass",
+  "json_readable_encode",
 );
 
 // include these files from modules:
