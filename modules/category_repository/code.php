@@ -118,8 +118,9 @@ class CategoryRepository {
                 $subdir['meta']['title'] = $v;
 
               $dir[$d] = $subdir;
-              $dir = &$dir[$d]['categories'];
             }
+
+            $dir = &$dir[$d]['categories'];
           }
         }
 
