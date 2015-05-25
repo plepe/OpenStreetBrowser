@@ -5,8 +5,9 @@ function object_ol4pgm(feature, category) {
   this.feature = feature;
   this.category = category;
 
-  this.name = this.feature.getProperties().results[0]['text'] || lang("unnamed");
-  this.type = this.feature.getProperties().results[0]['type'];
+  this.result = this.feature.getProperties().results[0];
+  this.name = this.result['list-text'] || this.result['text'] || lang("unnamed");
+  this.type = this.result['list-type'];
   this.id = this.feature.getProperties()['osm:id'];
   this.href = url({ obj: category.id + "/" + this.id });
 
@@ -27,6 +28,6 @@ function object_ol4pgm(feature, category) {
   }
 
   this.list_weight = function() {
-    return -parseFloat(this.feature.getProperties().results[0]['z-index']) || 0.0;
+    return -parseFloat(this.result['z-index']) || 0.0;
   }.bind(this);
 }
