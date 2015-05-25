@@ -8,6 +8,8 @@ function object_ol4pgm(feature, category) {
   this.result = this.feature.getProperties().results[0];
   this.name = this.result['list-text'] || this.result['text'] || lang("unnamed");
   this.type = this.result['list-type'];
+  if(this.result['final-list-icon-image'])
+    this.icon_url = 'icons/' + escape(this.result['final-list-icon-image']);
   this.id = this.feature.getProperties()['osm:id'];
   this.href = url({ obj: category.id + "/" + this.id });
 
