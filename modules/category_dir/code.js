@@ -72,6 +72,17 @@ this.get_category = function(id, callback) {
   callback(null);
 }
 
+this.shall_reload = function(list, parent_div, viewbox) {
+  if((!parent_div.child_divs) || (!parent_div.child_divs[this.id]))
+    return;
+
+  var div=parent_div.child_divs[this.id];
+
+  for(var i=0; i<this.sub_categories.length; i++) {
+    this.sub_categories[i].shall_reload(list, div.sub, viewbox);
+  }
+}
+
 // constructor
   if(repository) {
     this.repo = repository;

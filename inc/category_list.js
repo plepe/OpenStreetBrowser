@@ -52,7 +52,7 @@ function _category_list() {
     var viewbox=get_viewbox();
 
     for(var i=0; i<this.sub_categories.length; i++) {
-      if((typeof this.sub_categories[i] == 'function') && this.sub_categories[i].shall_reload)
+      if((typeof this.sub_categories[i] == 'object') && this.sub_categories[i].shall_reload)
         this.sub_categories[i].shall_reload(list, div.sub, viewbox);
     }
 

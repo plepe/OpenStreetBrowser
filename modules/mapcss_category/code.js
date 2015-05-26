@@ -140,6 +140,9 @@ this.Layer = function() {
 }
 
 this.shall_reload = function(list, parent_div, viewbox) {
+  if((!parent_div.child_divs) || (!parent_div.child_divs[this.id]))
+    return;
+
   var div=parent_div.child_divs[this.id];
 
   if(!div.open)
