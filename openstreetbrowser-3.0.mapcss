@@ -1,0 +1,27 @@
+@import ol4pgm-0.1;
+
+@type list-text tag_value;
+@type list-icon-image icon;
+@type list-icon-color color;
+
+@default_other list-text text;
+@default_other list-icon-image icon-image;
+@default_other list-icon-color icon-color;
+
+@values list-icon-width "12;18;24";
+
+@postprocess final-list-icon-image eval(cond(
+  prop('list-icon-image') && (!regexp_test('\\.', prop('list-icon-image'))),
+    style_id() . '.icons/' . prop('list-icon-image') . '-' . prop('list-icon-color') . '-' . prop('list-icon-width'). '.svg',
+    prop('list-icon-image')
+  ));
+
+@depend_property list-text "list-type";
+@depend_property list-icon-image "final-list-icon-image;list-icon-color;list-icon-width";
+
+@style_element_property list "list-text";
+
+@default_value list-icon-width 12;
+@default_value list-icon-color #444444;
+@default_value list-icon-image ;
+@default_value final-list-icon-image ; // used internally
