@@ -57,6 +57,7 @@ this.edit = function() {
     'content': {
       'type': 'textarea',
       'name': "MapCSS code",
+      'hide_label': true,
       'req': true
     },
     'commit_msg': {
