@@ -77,8 +77,15 @@ function list(div, elements, request_more, options) {
     dom_create_append_text(a, element.name);
 
     // type
-    if(element.type)
-      dom_create_append_text(li, " ("+element.type+")");
+    if(element.type) {
+      dom_create_append_text(li, " ");
+
+      var span_type = document.createElement("span");
+      span_type.className = 'list-type';
+      dom_create_append_text(span_type, element.type);
+
+      li.appendChild(span_type);
+    }
 
     // highlight
     if(element.highlight) {

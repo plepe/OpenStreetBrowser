@@ -4,3 +4,8 @@ li.list-image {
   padding-left: 20px;
   background-repeat: no-repeat;
 }
+li.list .list-type {
+  color: #909090;
+  font-size: 7pt;
+  font-style: italic;
+}
