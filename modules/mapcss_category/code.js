@@ -126,7 +126,7 @@ this.Layer = function() {
     var data = this.data();
 
     this.layer = new ol4pgmLayer({
-      url: "data.php?" + url_param + "&x={x}&y={y}&z={z}&format=geojson-separate&tilesize=1024&srs=3857",
+      url: "data.php?" + url_param + "&x={x}&y={y}&z={z}&tilesize=1024&srs=3857",
       single_url: "data.php?" + url_param + "&id={id}&zoom={zoom}&format=geojson-separate&srs=3857",
       maxZoom: 17,
       tileSize: 1024,
