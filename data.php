@@ -48,6 +48,9 @@ if($read_from_cache) {
   $fp = gzopen($cache_path, "r");
 }
 else {
+  $semaphore = sem_get(1, $pgmapcss['max_parallel']);
+  sem_acquire($semaphore);
+
   if(isset($cache_path)) {
     mkdir(dirname($cache_path), 0777, true);
     $cache_fp = gzopen($cache_path, "w");
@@ -97,6 +100,9 @@ if(isset($process)) {
 
 if($cache_fp)
   fclose($cache_fp);
+
+if(isset($semaphore))
+  sem_release($semaphore);
 
 // TODO: maybe record error somewhere?
 // TODO: first fill cache then print, so that http error codes can be used?

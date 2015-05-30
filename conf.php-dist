@@ -45,6 +45,8 @@ $pgmapcss = array(
   "path" => "pgmapcss",
   "template" => "ol4pgm-0.1",
   "config_options" => "db.overpass-url={$overpass['url']}",
+  // When querying categories, how many processes may be executed in parallel
+  'max_parallel' => 2,
 );
 
 // default SRID which the OpenStreetBrowser API assumes for requests
