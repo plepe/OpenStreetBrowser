@@ -9,4 +9,7 @@ $include = array(
     'code.js',
     'browser.js',
   ),
+  'css' => array(
+    'style.css',
+  ),
 );
