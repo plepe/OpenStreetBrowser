@@ -79,76 +79,69 @@ CategoryRepositoryBrowser.prototype.show = function() {
   this.category_repository.get_categories(this.show_1.bind(this));
 }
 
+CategoryRepositoryBrowser.prototype.get_category_from_data = function(id) {
+  var id_path = id.split("/");
+  var d = this.data;
+
+  if(id_path[0] == this.id)
+    return null;
+  id_path.splice(0, 1);
+
+  while(id_path.length) {
+    if(!(id_path[0] in d.categories))
+      return null;
+
+    d = d.categories[id_path[0]];
+    id_path.splice(0, 1);
+  }
+
+  return d;
+}
+
 CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
   this.data = this.category_repository.data();
 
-  dom_clean(this.win.content);
+  twig_render_into(this.win.content, "category_repository_overview.html", this.data, function(dom) {
+    link_actions(dom, {
+      'add': function(id) {
+          this.category_repository.get_category(id, function(cat) {
+            if(cat)
+              category_root.register_sub_category(cat);
+            else
+              alert("Can't create layer from category!");
+          }.bind(this));
+        }.bind(this),
 
-  var h = document.createElement("h4");
-  h.appendChild(document.createTextNode("Categories"));
-  this.win.content.appendChild(h);
+      'edit': function(id) {
+          this.category_repository.get_category(id, function(cat) {
+            cat.edit();
+          }.bind(this));
+        }.bind(this),
 
-  var ul = this.show_sub_categories(categories);
+      'new': function() {
+        var form_def = {
+          'id': {
+            'type': 'text',
+            'name': 'ID',
+            'req': true
+          }
+        };
 
-  this.win.content.appendChild(ul);
+        new editor({
+          form_def: form_def,
+          data: {},
+          title: "Create new category",
+          onsave: function(data) {
+            get_mapcss_category(this.data.id + "/" + data.id, function(cat) {
+              cat.edit();
+            }.bind(this));
+          }.bind(this)
+        });
 
-  var a = document.createElement("a");
-  a.onclick = function(repo) {
-    var form_def = {
-      'id': {
-        'type': 'text',
-        'name': 'ID',
-        'req': true
-      }
-    };
-
-    new editor({
-      form_def: form_def,
-      data: {},
-      title: "Create new category",
-      onsave: function(repo, data) {
-        get_mapcss_category(repo.id + "/" + data.id, function(cat) {
-          cat.edit();
-        }.bind(this));
-      }.bind(this, repo)
+        this.win.close();
+      }.bind(this)
     });
-
-    this.win.close();
-  }.bind(this, this.category_repository);
-  a.appendChild(document.createTextNode("New category"));
-  this.win.content.appendChild(a);
-}
-
-CategoryRepositoryBrowser.prototype.show_sub_categories = function(categories) {
-  var ul = document.createElement("ul");
-
-  for(var k in categories) {
-    var cat = categories[k];
-
-    var li = document.createElement("li");
-    li.innerHTML = twig_render_custom("<a action='add'>{{ title }}</a> (<a action='edit'>edit</a>)", cat);
-
-    link_actions(li, {
-      'add': function(cat) {
-          if(cat)
-            category_root.register_sub_category(cat);
-          else
-            alert("Can't create layer from category!");
-        }.bind(this, cat),
-      'edit': function(cat) {
-          cat.edit();
-        }.bind(this, cat)
-    });
-
-    ul.appendChild(li);
-
-    if(cat.data().type == 'dir') {
-      var sub_ul = this.show_sub_categories(cat.categories);
-      ul.appendChild(sub_ul);
-    }
-  }
-
-  return ul;
+  }.bind(this));
 }
 
 CategoryRepositoryBrowser.prototype.close = function() {

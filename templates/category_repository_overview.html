@@ -1,0 +1,20 @@
+{% macro sub_categories(categories) %}
+  {% import _self as macros %}
+  <ul>
+  {% for category in categories %}
+    <li><a action='add?{{ category.id }}'>{{ category.id }}</a>
+    (<a action='edit?{{ category.id }}'>edit</a>)
+    {% if category.categories %}
+      {{ macros.sub_categories(category.categories) }}
+    {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+{% endmacro %}
+
+{% import _self as macros %}
+
+<h4>Categories</h4>
+{{ macros.sub_categories(categories) }}
+
+<a action='new'>New category</a>
