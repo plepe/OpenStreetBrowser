@@ -1269,12 +1269,19 @@ function link_actions(dom, actions) {
 
   for(var i = 0; i < links.length; i++) {
     var a = links[i];
-    var action;
 
-    action = a.getAttribute("action");
+    var action = a.getAttribute("action");
+    var param = null;
+
+    var m;
+    if((m = action.indexOf("?")) != -1) {
+      param = action.substr(m + 1);
+      action = action.substr(0, m);
+    }
+
     if(action) {
       if(action in actions) {
-        a.onclick = actions[action];
+        a.onclick = actions[action].bind(this, param);
       }
       else {
         alert("link_actions: unknown action '" + action + "'");
