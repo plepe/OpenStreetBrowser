@@ -97,6 +97,9 @@ class mapcss_Category {
     if(file_exists($this->pure_id .".mapcss"))
       $old_content = file_get_contents($this->pure_id .".mapcss");
 
+    if(strpos($this->pure_id, "/"))
+      mkdir(dirname($this->pure_id), 0777, true);
+
     file_put_contents($this->pure_id .".mapcss", $data['content']);
 
     $result = array(
