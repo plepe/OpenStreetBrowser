@@ -107,7 +107,7 @@ CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
       data: {},
       title: "Create new category",
       onsave: function(repo, data) {
-        get_mapcss_category(data.id, function(cat) {
+        get_mapcss_category(repo.id + "/" + data.id, function(cat) {
           cat.edit();
         }.bind(this));
       }.bind(this, repo)
