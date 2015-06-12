@@ -58,16 +58,25 @@ this.get_categories = function(callback) {
   callback(this.categories);
 }
 
+this._get_category = function(id_parts, list) {
+  if(id_parts[0] in list) {
+    if(id_parts.length == 1)
+      return list[id_parts[0]];
+    else
+      return this._get_category(id_parts.slice(1), list[id_parts[0]].categories);
+  }
+
+  return null;
+}
+
 this.get_category = function(id, callback) {
   this.get_categories(function(id, callback) {
-    for(var k in this.categories) {
-      if(this.categories[k].id == id) {
-        callback(this.categories[k]);
-        return;
-      }
-    }
+    var id_parts = id.split("/");
+    if(id_parts[0] != this.id)
+      return null;
 
-    callback(null);
+    var ret = this._get_category(id_parts.slice(1), this.categories, callback);
+    callback(ret);
   }.bind(this, id, callback));
 }
 
