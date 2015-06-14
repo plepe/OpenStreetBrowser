@@ -139,7 +139,12 @@ CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
         });
 
         this.win.close();
+      }.bind(this),
+
+      'category_repository_browser': function(id) {
+        category_repository_browser_open(id);
       }.bind(this)
+
     });
   }.bind(this));
 }

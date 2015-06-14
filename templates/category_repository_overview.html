@@ -18,3 +18,15 @@
 {{ macros.sub_categories(categories) }}
 
 <a action='new'>New category</a>
+
+<h4>Branches</h4>
+<p>Current branch: {{ branch }} (modified: {{ last_modified|date('Y-m-d G:i') }}, message: {{ last_message }})
+</p>
+
+<p>Further branches:
+<ul>
+{% for branch_id, branch in other_branches %}
+<li><a action='category_repository_browser?{{ id }}@{{ branch_id }}'>{{ branch_id }}</a>, {{ branch.last_modified|date('Y-m-d G:i') }}, {{ branch.last_message }}
+{% endfor %}
+</ul>
+</p>
