@@ -19,15 +19,29 @@
 
 <a action='new'>New category</a>
 
-<h4>Branches</h4>
-<p>Current branch: {{ branch }} (modified: {{ last_modified|date('Y-m-d G:i') }}, message: {{ last_message }})
-</p>
-
-<p>Further branches:
+<h4>History</h4>
 <ul>
-{% for branch_id, branch in other_branches %}
-<li><a action='category_repository_browser?{{ id }}@{{ branch_id }}'>{{ branch_id }}</a>, {{ branch.last_modified|date('Y-m-d G:i') }}, {{ branch.last_message }}
-{% endfor %}
+<li> {{ last_message }} ({{ last_modified|date('Y-m-d G:i') }})
 </ul>
+
+<h4>Branches</h4>
+<p>Currently using branch {{ branch }}.</p>
+<p>
+{% if other_branches|length %}
+<table>
+  <tr>
+    <td>Branch</td>
+    <td>Last modified</td>
+    <td>Last message</td>
+  </tr>
+{% for branch_id, branch in other_branches %}
+  <tr>
+     <td><a action='category_repository_browser?{{ id }}@{{ branch_id }}'>{{ branch_id }}</a></td>
+     <td>{{ branch.last_modified|date('Y-m-d G:i') }}</td>
+     <td>{{ branch.last_message }}</td>
+   </tr>
+{% endfor %}
+</table>
+{% endif %}
 <a action='fork_repository'>Fork a new branch</a></li>
 </p>
