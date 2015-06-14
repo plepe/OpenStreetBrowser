@@ -21,7 +21,9 @@
 
 <h4>History</h4>
 <ul>
-<li> {{ last_message }} ({{ last_modified|date('Y-m-d G:i') }})
+{% for commit in history %}
+  <li> <a target='_new' href='gitweb/?p={{ id }}/.git;a=commit;h={{ commit.rev }}'>{{ commit.message }}</a> ({{ commit.modified|date('Y-m-d G:i') }})
+{% endfor %}
 </ul>
 <a target='_new' href='gitweb/?p={{ id }}/.git;a=shortlog;h=refs/heads/{{ branch }}'>Further commits &amp; details on Gitweb</a></td>
 

@@ -74,6 +74,18 @@ class CategoryRepository {
     }
     pclose($f);
 
+    // read history
+    $data['history'] = array();
+    $f = popen("git log --max-count=10 --pretty=format:'%H%x09%ai%x09%s' " . shell_escape($this->branch), "r");
+    while($r = chop(fgets($f))) {
+      $r = explode("\t", $r);
+      $data['history'][] = array(
+        'rev' => $r[0],
+        'modified' => $r[1],
+        'message' => $r[2],
+      );
+    }
+
     // read categories and indexes
     $data['categories'] = array();
     $f = popen("git ls-tree -r ". shell_escape($this->branch) ." --name-only", "r");
