@@ -7,7 +7,7 @@ if(!array_key_exists('category', $_REQUEST)) {
   exit;
 }
 
-if(!preg_match("/^[a-z\/A-Z0-9_]+$/", $_REQUEST['category'], $m)) {
+if(!preg_match("/^[a-z\/A-Z0-9_\@]+$/", $_REQUEST['category'], $m)) {
   print "Illegal category ID";
   exit;
 }
@@ -18,7 +18,7 @@ $category = get_mapcss_category($category_id);
 $category->compile();
 
 $compiled_categories = "{$data_path}/compiled_categories";
-$script = "{$compiled_categories}/{$category->full_id}.py";
+$script = "{$compiled_categories}/{$category->script_id}.py";
 $mapcss = $category->repo->path() . "/{$category_id}.mapcss";
 
 if(!array_key_exists('x', $_REQUEST) &&

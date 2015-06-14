@@ -25,6 +25,10 @@ class mapcss_Category {
     $this->id = $id;
 
     $this->full_id = id_escape($id);
+    $this->script_id = strtr($this->full_id, array(
+      '_'       => '__',
+      '@'       => '_at_',
+    ));
   }
 
   function title() {
@@ -54,7 +58,7 @@ class mapcss_Category {
 
     global $data_path;
     $compiled_categories = "{$data_path}/compiled_categories";
-    $script = "{$compiled_categories}/{$this->full_id}.py";
+    $script = "{$compiled_categories}/{$this->script_id}.py";
 
     if(!file_exists($script))
       $this->compile();
@@ -176,7 +180,7 @@ class mapcss_Category {
 
     $compiled_categories = "{$data_path}/compiled_categories";
     @mkdir($compiled_categories);
-    $script = "{$compiled_categories}/{$this->full_id}.py";
+    $script = "{$compiled_categories}/{$this->script_id}.py";
 
     if((!$force)&&
        file_exists($script) &&
@@ -191,7 +195,7 @@ class mapcss_Category {
 
     $file = $this->repo->path() . "/" . $this->pure_id . ".mapcss";
 
-    $f=adv_exec("{$pgmapcss['path']} {$config_options} --mode standalone -d'{$db['name']}' -u'{$db['user']}' -p'{$db['passwd']}' -H'{$db['host']}' -t'{$pgmapcss['template']}' --file='{$file}' --icons-parent-dir='{$root_path}/icons/' '{$this->full_id}' 2>&1", $compiled_categories, array("LC_CTYPE"=>"en_US.UTF-8"));
+    $f=adv_exec("{$pgmapcss['path']} {$config_options} --mode standalone -d'{$db['name']}' -u'{$db['user']}' -p'{$db['passwd']}' -H'{$db['host']}' -t'{$pgmapcss['template']}' --file='{$file}' --icons-parent-dir='{$root_path}/icons/' '{$this->script_id}' 2>&1", $compiled_categories, array("LC_CTYPE"=>"en_US.UTF-8"));
 
     return array("error"=>$f[0], "message"=>array("compile" => $f[1]));
   }
