@@ -2,7 +2,7 @@
   {% import _self as macros %}
   <ul>
   {% for category in categories %}
-    <li><a action='add?{{ category.id }}'>{{ category.id }}</a>
+    <li><a action='add?{{ category.id }}'>{{ category.meta.title|default(category.id) }}</a>
     (<a action='edit?{{ category.id }}'>edit</a>)
     {% if category.categories %}
       {{ macros.sub_categories(category.categories) }}
