@@ -1,5 +1,6 @@
 <?php
 global $mapcss_category_cache;
+$mapcss_category_cache = array();
 
 register_hook("init", function() {
   add_html_header("<script src='lib/ol4pgm/ol4pgm.js'></script>");
