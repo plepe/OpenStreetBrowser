@@ -1271,6 +1271,8 @@ function link_actions(dom, actions) {
     var a = links[i];
 
     var action = a.getAttribute("action");
+    if(!action)
+      continue;
     var param = null;
 
     var m;
