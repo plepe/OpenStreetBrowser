@@ -131,6 +131,11 @@ class CategoryRepository {
 
     return $data;
   }
+
+  function fork($branch_id) {
+    chdir($this->path());
+    system("git checkout -b " . shell_escape($branch_id) . " " . shell_escape($this->branch));
+  }
 }
 
 function create_category_repository($id) {
@@ -173,6 +178,13 @@ function ajax_category_repository_create($param) {
 
 function ajax_category_repository_load($param) {
   $category_repository = new CategoryRepository($param['id']);
+  return $category_repository->data();
+}
+
+function ajax_category_repository_fork($param) {
+  $category_repository = new CategoryRepository($param['id']);
+  $category_repository->fork($param['branch']);
+
   return $category_repository->data();
 }
 

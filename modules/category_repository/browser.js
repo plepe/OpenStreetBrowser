@@ -143,6 +143,29 @@ CategoryRepositoryBrowser.prototype.show_1 = function(categories) {
 
       'category_repository_browser': function(id) {
         category_repository_browser_open(id);
+      }.bind(this),
+
+      'fork_repository': function(id) {
+        var form_def = {
+          'branch_id': {
+            'type': 'text',
+            'name': 'Branch ID',
+            'req': true
+          }
+        };
+
+        new editor({
+          form_def: form_def,
+          data: {},
+          title: "Fork category repository",
+          onsave: function(data) {
+            this.category_repository.fork(data.branch_id, function(data) {
+              category_repository_browser_open(this.category_repository.id + "@" + data.branch_id);
+            }.bind(this, data));
+          }.bind(this)
+        });
+
+        this.win.close();
       }.bind(this)
 
     });

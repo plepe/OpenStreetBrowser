@@ -22,6 +22,10 @@ this.load = function(callback) {
   new ajax_json("category_repository_load", { id: this.id }, this.load_callback.bind(this, callback));
 }
 
+this.fork = function(branch_id, callback) {
+  new ajax_json("category_repository_fork", { id: this.id, branch: branch_id }, this.load_callback.bind(this, callback));
+}
+
 this.load_callback = function(callback, data) {
   this._data = data;
   this.categories = null;
