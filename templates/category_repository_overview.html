@@ -23,6 +23,7 @@
 <ul>
 <li> {{ last_message }} ({{ last_modified|date('Y-m-d G:i') }})
 </ul>
+<a target='_new' href='gitweb/?p={{ id }}/.git;a=shortlog;h=refs/heads/{{ branch }}'>Further commits &amp; details on Gitweb</a></td>
 
 <h4>Branches</h4>
 <p>Currently using branch {{ branch }}.</p>
@@ -33,12 +34,14 @@
     <td>Branch</td>
     <td>Last modified</td>
     <td>Last message</td>
+    <td>Links</td>
   </tr>
 {% for branch_id, branch in other_branches %}
   <tr>
      <td><a action='category_repository_browser?{{ id }}@{{ branch_id }}'>{{ branch_id }}</a></td>
      <td>{{ branch.last_modified|date('Y-m-d G:i') }}</td>
      <td>{{ branch.last_message }}</td>
+     <td><a target='_new' href='gitweb/?p={{ id }}/.git;a=shortlog;h=refs/heads/{{ branch_id }}'>Gitweb</a></td>
    </tr>
 {% endfor %}
 </table>
