@@ -54,7 +54,7 @@ class CategoryRepository {
 
     chdir($this->path());
 
-    $f = popen("git for-each-ref --format '%(refname)%09%(objectname)%09%(authordate:iso8601)%09%(subject)' refs/heads", "r");
+    $f = popen("git for-each-ref --format '%(refname)%09%(objectname)%09%(authordate:iso8601)%09%(subject)%09%(authorname)%09%(authoremail)' refs/heads", "r");
     while($r = chop(fgets($f))) {
       $r = explode("\t", $r);
       $head = substr($r[0], 11);
@@ -69,6 +69,8 @@ class CategoryRepository {
           'rev' => $r[1],
           'last_modified' => $r[2],
           'last_message' => $r[3],
+          'last_authorname' => $r[4],
+          'last_authoremail' => $r[5],
         );
       }
     }
@@ -76,13 +78,15 @@ class CategoryRepository {
 
     // read history
     $data['history'] = array();
-    $f = popen("git log --max-count=10 --pretty=format:'%H%x09%ai%x09%s' " . shell_escape($this->branch), "r");
+    $f = popen("git log --max-count=10 --pretty=format:'%H%x09%ai%x09%s%x09%an%x09%ae' " . shell_escape($this->branch), "r");
     while($r = chop(fgets($f))) {
       $r = explode("\t", $r);
       $data['history'][] = array(
         'rev' => $r[0],
         'modified' => $r[1],
         'message' => $r[2],
+        'authorname' => $r[3],
+        'authoremail' => "<{$r[4]}>",
       );
     }
 

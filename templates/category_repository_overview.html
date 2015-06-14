@@ -22,7 +22,7 @@
 <h4>History</h4>
 <ul>
 {% for commit in history %}
-  <li> <a target='_new' href='gitweb/?p={{ id }}/.git;a=commit;h={{ commit.rev }}'>{{ commit.message }}</a> ({{ commit.modified|date('Y-m-d G:i') }})
+  <li> <a target='_new' href='gitweb/?p={{ id }}/.git;a=commit;h={{ commit.rev }}'>{{ commit.message }}</a> ({{ commit.modified|date('Y-m-d G:i') }} by {{ commit.authorname }})
 {% endfor %}
 </ul>
 <a target='_new' href='gitweb/?p={{ id }}/.git;a=shortlog;h=refs/heads/{{ branch }}'>Further commits &amp; details on Gitweb</a></td>
@@ -36,6 +36,7 @@
     <td>Branch</td>
     <td>Last modified</td>
     <td>Last message</td>
+    <td>Last author</td>
     <td>Links</td>
   </tr>
 {% for branch_id, branch in other_branches %}
@@ -43,6 +44,7 @@
      <td><a action='category_repository_browser?{{ id }}@{{ branch_id }}'>{{ branch_id }}</a></td>
      <td>{{ branch.last_modified|date('Y-m-d G:i') }}</td>
      <td>{{ branch.last_message }}</td>
+     <td>{{ branch.last_authorname }}</td>
      <td><a target='_new' href='gitweb/?p={{ id }}/.git;a=shortlog;h=refs/heads/{{ branch_id }}'>Gitweb</a></td>
    </tr>
 {% endfor %}
