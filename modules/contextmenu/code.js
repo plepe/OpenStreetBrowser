@@ -35,7 +35,7 @@ function contextmenu_rightclick(e) {
   contextmenu_pos=ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
 
   var contextmenu=document.getElementById("contextmenu");
-  contextmenu_compile();
+  contextmenu_compile(contextmenu_pos);
 
   var contextWidth = contextmenu.offsetWidth;
   var contextHeight = contextmenu.offsetHeight;
@@ -130,15 +130,20 @@ function contextmenu_add(img, text, fun, options) {
   return entry;
 }
 
-function contextmenu_compile() {
+function contextmenu_compile(contextmenu_pos) {
   // add a row to the table of the contextmenu
   var tab=document.getElementById("contextmenu_table");
   dom_clean(tab);
 
+  var contextmenu_add_items = [];
+  call_hooks("contextmenu_add_items", contextmenu_add_items, contextmenu_pos);
+
+  var items = contextmenu_items.concat(contextmenu_add_items);
+
   // prepare weightsort
   var list=[];
-  for(var i=0; i<contextmenu_items.length; i++) {
-    var item=contextmenu_items[i];
+  for(var i=0; i<items.length; i++) {
+    var item=items[i];
 
     list.push([ item.options.weight, item ]);
   }
