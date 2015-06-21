@@ -111,7 +111,13 @@ function contextmenu_entry(options, fun) {
 
   // create entry in menu
   this.div.onclick=this.contextmenu_fire.bind(this);
-  this.div.innerHTML="<img src=\""+this.options.img+"\" border=\"0\" title=\"\"> "+this.options.text;
+
+  var text = "";
+  if(this.options.img)
+    text += "<img src=\""+this.options.img+"\" border=\"0\" title=\"\"> ";
+  text += this.options.text;
+
+  this.div.innerHTML = text;
 }
 
 function contextmenu_add(img, text, fun, options) {

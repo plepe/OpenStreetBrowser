@@ -170,6 +170,25 @@ this.write_div=function(div) {
   new list(div.data, show_list, null, { });
 }
 
+register_hook("contextmenu_add_items", function(list, pos) {
+  if((!this.Layer) || (!this.Layer().getVisible()))
+    return;
+
+  var pixel = map.getPixelFromCoordinate(ol.proj.transform(pos, 'EPSG:4326', 'EPSG:3857'));
+  var items = this.Layer().featuresAtPixel(pixel);
+  for(var i = 0; i < items.length; i++) {
+    var item = items[i];
+    var result = item.getProperties().results[0];
+
+    list.push(new contextmenu_entry({
+        img: result['final-list-icon-image'] ? 'icons/' + escape(result['final-list-icon-image']) : null,
+        text: result['list-text']
+      }, function(item) {
+        set_url({ obj: this.id + "/" + item.getProperties()['osm:id'] });
+      }.bind(this, item)));
+  }
+}.bind(this), this);
+
 this.search_object=function(id, callback) {
   this.Layer().getFeature(id, function(callback, feature) {
     if(feature) {
