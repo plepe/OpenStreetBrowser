@@ -182,7 +182,7 @@ register_hook("contextmenu_add_items", function(list, pos) {
 
     list.push(new contextmenu_entry({
         img: result['final-list-icon-image'] ? 'icons/' + escape(result['final-list-icon-image']) : null,
-        text: result['list-text']
+        text: result['list-text'] + (result['list-type'] ? "<span class='list-type'>" + result['list-type'] + "<span>" : "")
       }, function(item) {
         set_url({ obj: this.id + "/" + item.getProperties()['osm:id'] });
       }.bind(this, item)));

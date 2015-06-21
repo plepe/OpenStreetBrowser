@@ -97,6 +97,7 @@ if(isset($my_lat))
   print "var my_pos={ lon: $my_lon, lat: $my_lat };\n";
 else
   print "var my_pos=null;\n";
+print "var data_lang = 'de';\n";
 ?>
 </script>
 

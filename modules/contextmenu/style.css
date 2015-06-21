@@ -8,6 +8,9 @@ td.contextmenu_entry:hover {
   background:#CECECE;
   cursor:pointer;
 }
-
-
-
+.contextmenu_entry span.list-type {
+  margin-left: 1em;
+  color: #909090;
+  font-size: 7pt;
+  font-style: italic;
+}
