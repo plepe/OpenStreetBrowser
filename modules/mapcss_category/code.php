@@ -71,6 +71,9 @@ class mapcss_Category {
       else
         $params['QUERY_STRING'] = "meta=only";
 
+      if(array_key_exists('ui_lang', $_COOKIE))
+        $params['QUERY_STRING'] .= "&lang=" . $_COOKIE['ui_lang'];
+
       $result = adv_exec($script, null, $params);
       if($result[0] == 0) {
         $p = strpos($result[1], "\n\n");
