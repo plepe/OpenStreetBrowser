@@ -15,7 +15,6 @@ if(!preg_match("/^[a-z\/A-Z0-9_\@]+$/", $_REQUEST['category'], $m)) {
 $category_id = $_REQUEST['category'];
 
 $category = get_mapcss_category($category_id);
-$category->compile();
 
 $mapcss = $category->repo->path() . "/{$category_id}.mapcss";
 
@@ -41,33 +40,33 @@ if($read_from_cache) {
 }
 
 if(!$read_from_cache) {
-// TODO: invalidate cache
-  $semaphore = sem_get(1, $pgmapcss['max_parallel']);
-  sem_acquire($semaphore);
+  sql_query("insert into data_request values (now(), " . postgre_escape($category_id) . ", " . postgre_escape(serialize($_SERVER)) . ", " . postgre_escape($cache_path) . ")");
 
   if(isset($cache_path)) {
     mkdir(dirname($cache_path), 0777, true);
   }
 
-  $error = $category->execute($_SERVER, $cache_path);
+  Header("Status: 404");
+  print "Not rendered yet\n";
+  exit(0);
 }
+else {
 
-$fp = gzopen($cache_path, "r");
+  $fp = gzopen($cache_path, "r");
 
-// first read and set headers
-while($r = trim(fgets($fp))) {
-  Header($r);
+  // first read and set headers
+  while($r = trim(fgets($fp))) {
+    Header($r);
+  }
+
+  // now print the body
+  while($r = fread($fp, 1024*1024)) {
+    print $r;
+  }
+
+  fclose($fp);
+
 }
-
-// now print the body
-while($r = fread($fp, 1024*1024)) {
-  print $r;
-}
-
-fclose($fp);
-
-if(isset($semaphore))
-  sem_release($semaphore);
 
 // TODO: maybe record error somewhere?
 // TODO: first fill cache then print, so that http error codes can be used?

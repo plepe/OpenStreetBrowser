@@ -8,6 +8,8 @@ register_hook("init", function() {
 });
 
 function get_mapcss_category($id) {
+  global $mapcss_category_cache;
+
   if(!array_key_exists($id, $mapcss_category_cache))
     $mapcss_category_cache[$id] = new mapcss_Category($id);
 
@@ -231,8 +233,6 @@ class mapcss_Category {
     $error = $stat['exitcode'];
 
     proc_close($process);
-    fclose($pipes[0]);
-    fclose($pipes[1]);
     fclose($cache_fp);
 
     return $error;
@@ -246,3 +246,23 @@ function ajax_mapcss_category_load($param) {
 function ajax_mapcss_category_save($param, $post) {
   return get_mapcss_category($param['id'])->save($post);
 }
+
+register_hook("mcp_tick", function() {
+  $list = array();
+
+  sql_query("begin");
+  $res = sql_query("select * from data_request where status=0 limit 1");
+  if($elem = pg_fetch_assoc($res)) {
+    $list[] = $elem;
+    sql_query("update data_request set status=1 where timestamp=" . postgre_escape($elem['timestamp']));
+  }
+  sql_query("commit");
+
+  foreach($list as $elem) {
+    $category = get_mapcss_category($elem['category_id']);
+    $category->compile();
+    $result = $category->execute(unserialize($elem['data']), $elem['cache_path']);
+
+    sql_query("update data_request set status=2, exit_code=" . postgre_escape($result) . " where timestamp=" . postgre_escape($elem['timestamp']));
+  }
+});
