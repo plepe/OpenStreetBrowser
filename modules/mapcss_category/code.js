@@ -167,7 +167,7 @@ this.write_div=function(div) {
     show_list[i] = new object_ol4pgm(show_list[i], this);
   }
 
-  new list(div.data, show_list, null, { });
+  new list(div.data, show_list, null, { is_loading: this.Layer().is_loading() });
 }
 
 register_hook("contextmenu_add_items", function(list, pos) {
