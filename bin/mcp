@@ -94,7 +94,7 @@ debug("* MCP up and running", "mcp");
 // mcp_register_stream(MCP_READ, $p, "test");
 // Function "test" will be called everytime data is available on /dev/zero
 // Function "test" will be passed the current $stream
-function mcp_register_stream($type, $stream, $callback) {
+function mcp_register_stream($type, &$stream, $callback) {
   global $streams;
   global $streams_callback;
 
@@ -140,7 +140,7 @@ function mcp_command($p) {
   }
 }
 
-mcp_register_stream(MCP_READ, STDIN, "mcp_command");
+mcp_register_stream(MCP_READ, fopen('php://stdin', 'r'), "mcp_command");
 
 while(1) {
   call_hooks("mcp_tick");
