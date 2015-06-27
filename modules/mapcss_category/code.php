@@ -279,7 +279,9 @@ register_hook("mcp_tick", function() {
     return;
 
   sql_query("begin");
-  $res = sql_query("select * from data_request where status=0 limit " . postgre_escape($mapcss_max_parallel));
+  // render requests in order of their request with the exception of very
+  // current requests (requested during last minute)
+  $res = sql_query("select * from data_request where status=0 order by now() - last_timestamp < '0:01' desc, last_timestamp asc limit " . postgre_escape($mapcss_max_parallel));
   while($elem = pg_fetch_assoc($res)) {
     $list[] = $elem;
     sql_query("update data_request set status=1 where timestamp=" . postgre_escape($elem['timestamp']));
