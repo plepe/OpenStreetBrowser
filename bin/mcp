@@ -2,7 +2,6 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php
 $modulekit_debug="mcp_modulekit_debug";
-$modulekit_include_php="mcp";
 include "modulekit/loader.php"; /* loads all php-includes */
 ?>
 <?
