@@ -39,7 +39,12 @@ if($read_from_cache) {
 }
 
 if(!$read_from_cache) {
-  sql_query("insert into data_request values (now(), " . postgre_escape($category_id) . ", " . postgre_escape(serialize($_SERVER)) . ", " . postgre_escape($cache_path) . ")");
+  sql_query("begin");
+  $res = sql_query("select * from data_request where cache_path=" . postgre_escape($cache_path) . " and status<2");
+  if(!pg_num_rows($res)) {
+    sql_query("insert into data_request values (now(), " . postgre_escape($category_id) . ", " . postgre_escape(serialize($_SERVER)) . ", " . postgre_escape($cache_path) . ")");
+  }
+  sql_query("commit");
 
   if(isset($cache_path)) {
     mkdir(dirname($cache_path), 0777, true);
