@@ -1,6 +1,9 @@
 <?php
 global $mapcss_category_cache;
 $mapcss_category_cache = array();
+$mapcss_max_parallel = 2;
+if(array_key_exists('max_parallel', $pgmapcss))
+  $mapcss_max_parallel = $pgmapcss['max_parallel'];
 
 register_hook("init", function() {
   add_html_header("<script src='lib/ol4pgm/ol4pgm.js'></script>");
@@ -254,11 +257,16 @@ function ajax_mapcss_category_save($param, $post) {
 }
 
 register_hook("mcp_tick", function() {
+  global $mapcss_max_parallel;
   $list = array();
 
+  print "$mapcss_max_parallel\n";
+  if($mapcss_max_parallel <= 0)
+    return;
+
   sql_query("begin");
-  $res = sql_query("select * from data_request where status=0 limit 1");
-  if($elem = pg_fetch_assoc($res)) {
+  $res = sql_query("select * from data_request where status=0 limit " . postgre_escape($mapcss_max_parallel));
+  while($elem = pg_fetch_assoc($res)) {
     $list[] = $elem;
     sql_query("update data_request set status=1 where timestamp=" . postgre_escape($elem['timestamp']));
   }
@@ -268,9 +276,13 @@ register_hook("mcp_tick", function() {
     $category = get_mapcss_category($elem['category_id']);
     $category->compile();
     print "START\n";
+    $mapcss_max_parallel--;
     $category->execute(unserialize($elem['data']), $elem['cache_path'], function($result, $timestamp) {
+      global $mapcss_max_parallel;
+
       sql_query("update data_request set status=2, exit_code=" . postgre_escape($result) . " where timestamp=" . postgre_escape($timestamp));
       print "DONE\n";
+      $mapcss_max_parallel++;
     }, $elem['timestamp']);
   }
 });
