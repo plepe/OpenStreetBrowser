@@ -17,8 +17,6 @@ $category_id = $_REQUEST['category'];
 $category = get_mapcss_category($category_id);
 $category->compile();
 
-$compiled_categories = "{$data_path}/compiled_categories";
-$script = "{$compiled_categories}/{$category->script_id}.py";
 $mapcss = $category->repo->path() . "/{$category_id}.mapcss";
 
 if(!array_key_exists('x', $_REQUEST) &&
@@ -42,64 +40,31 @@ if($read_from_cache) {
     $read_from_cache = false;
 }
 
+if(!$read_from_cache) {
 // TODO: invalidate cache
-$cache_fp = null;
-if($read_from_cache) {
-  $fp = gzopen($cache_path, "r");
-}
-else {
   $semaphore = sem_get(1, $pgmapcss['max_parallel']);
   sem_acquire($semaphore);
 
   if(isset($cache_path)) {
     mkdir(dirname($cache_path), 0777, true);
-    $cache_fp = gzopen($cache_path, "w");
   }
 
-  $descriptorspec = array(
-     0 => array("pipe", "r"),
-     1 => array("pipe", "w"),
-     2 => array("pipe", "w")
-  );
-
-  // execute external script as CGI
-  $process = proc_open($script, $descriptorspec, $pipes, getcwd(), $_SERVER);
-  $fp = $pipes[1];
+  $error = $category->execute($_SERVER, $cache_path);
 }
+
+$fp = gzopen($cache_path, "r");
 
 // first read and set headers
 while($r = trim(fgets($fp))) {
   Header($r);
-
-  if($cache_fp)
-    fwrite($cache_fp, "$r\n");
 }
-
-if($cache_fp)
-  fwrite($cache_fp, "\n");
 
 // now print the body
 while($r = fread($fp, 1024*1024)) {
   print $r;
-
-  if($cache_fp)
-    fwrite($cache_fp, $r);
 }
 
-$error = false;
-
-if(isset($process)) {
-  $stat = proc_get_status($process);
-
-  if($stat['exitcode'] != 0) {
-    $error = true;
-  }
-
-  proc_close($process);
-}
-
-if($cache_fp)
-  fclose($cache_fp);
+fclose($fp);
 
 if(isset($semaphore))
   sem_release($semaphore);

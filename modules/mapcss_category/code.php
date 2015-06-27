@@ -202,6 +202,41 @@ class mapcss_Category {
 
     return array("error"=>$f[0], "message"=>array("compile" => $f[1]));
   }
+
+  function execute($params, $cache_path) {
+    global $data_path;
+
+    $compiled_categories = "{$data_path}/compiled_categories";
+    $script = "{$compiled_categories}/{$this->script_id}.py";
+
+    $error = 255;
+    $cache_fp = gzopen($cache_path, "w");
+
+    $descriptorspec = array(
+       0 => array("pipe", "r"),
+       1 => array("pipe", "w"),
+       2 => array("file", "/tmp/foo.log", "a")
+    );
+
+    // execute external script as CGI
+    $process = proc_open($script, $descriptorspec, $pipes, getcwd(), $params);
+    $fp = $pipes[1];
+
+    while($r = fread($fp, 1024*1024)) {
+      fwrite($cache_fp, $r);
+    }
+
+    $stat = proc_get_status($process);
+
+    $error = $stat['exitcode'];
+
+    proc_close($process);
+    fclose($pipes[0]);
+    fclose($pipes[1]);
+    fclose($cache_fp);
+
+    return $error;
+  }
 }
 
 function ajax_mapcss_category_load($param) {
