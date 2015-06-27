@@ -205,7 +205,7 @@ class mapcss_Category {
     return array("error"=>$f[0], "message"=>array("compile" => $f[1]));
   }
 
-  function execute($params, $cache_path) {
+  function execute($params, $cache_path, $callback, $callback_param) {
     global $data_path;
 
     $compiled_categories = "{$data_path}/compiled_categories";
@@ -224,18 +224,24 @@ class mapcss_Category {
     $process = proc_open($script, $descriptorspec, $pipes, getcwd(), $params);
     $fp = $pipes[1];
 
-    while($r = fread($fp, 1024*1024)) {
+    mcp_register_stream(MCP_READ, $fp, function($fp, $add_param) {
+      list($cache_fp, $process, $callback, $callback_param) = $add_param;
+      $r = stream_get_contents($fp, 1024*1024);
       fwrite($cache_fp, $r);
-    }
 
-    $stat = proc_get_status($process);
+      if($r)
+        return;
 
-    $error = $stat['exitcode'];
+      mcp_unregister_stream(MCP_READ, $fp);
+      $stat = proc_get_status($process);
 
-    proc_close($process);
-    fclose($cache_fp);
+      $error = $stat['exitcode'];
 
-    return $error;
+      proc_close($process);
+      fclose($cache_fp);
+
+      $callback($error, $callback_param);
+    }, array($cache_fp, $process, $callback, $callback_param));
   }
 }
 
@@ -261,8 +267,10 @@ register_hook("mcp_tick", function() {
   foreach($list as $elem) {
     $category = get_mapcss_category($elem['category_id']);
     $category->compile();
-    $result = $category->execute(unserialize($elem['data']), $elem['cache_path']);
-
-    sql_query("update data_request set status=2, exit_code=" . postgre_escape($result) . " where timestamp=" . postgre_escape($elem['timestamp']));
+    print "START\n";
+    $category->execute(unserialize($elem['data']), $elem['cache_path'], function($result, $timestamp) {
+      sql_query("update data_request set status=2, exit_code=" . postgre_escape($result) . " where timestamp=" . postgre_escape($timestamp));
+      print "DONE\n";
+    }, $elem['timestamp']);
   }
 });
