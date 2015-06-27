@@ -24,8 +24,7 @@ if(!array_key_exists('x', $_REQUEST) &&
   $read_from_cache = false;
 }
 else {
-  $esc_category_id = id_escape($category_id);
-  $cache_path = "{$data_path}/cache/{$esc_category_id}/{$_REQUEST['z']}/{$_REQUEST['x']}/{$_REQUEST['y']}.json.gz";
+  $cache_path = $category->cache_path($_SERVER);
 
   $read_from_cache = true;
 }

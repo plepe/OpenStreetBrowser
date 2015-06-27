@@ -208,6 +208,14 @@ class mapcss_Category {
     return array("error"=>$f[0], "message"=>array("compile" => $f[1]));
   }
 
+  function cache_path($params) {
+    global $data_path;
+
+    parse_str($params['QUERY_STRING'], $req);
+
+    return "{$data_path}/cache/{$this->full_id}/{$req['z']}/{$req['x']}/{$req['y']}.json.gz";
+  }
+
   function execute($params, $cache_path, $callback, $callback_param) {
     global $data_path;
 
@@ -267,7 +275,6 @@ register_hook("mcp_tick", function() {
   global $mapcss_max_parallel;
   $list = array();
 
-  print "$mapcss_max_parallel\n";
   if($mapcss_max_parallel <= 0)
     return;
 
