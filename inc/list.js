@@ -15,6 +15,8 @@
 //   shown - How many elements are shown right now
 //   should_shown - How many elements should be shown right now (waiting for
 //     recv)
+//   is_loading - indicates if the parent function is currently loading
+//     (true/false)
 //
 // elements: An array of hash arrays, looking like this (see next paragraph):
 // [ { name: 'The Old Pub', href='#node_1234', icon: 'pub' }, ..., null ]
@@ -114,7 +116,8 @@ function list(div, elements, request_more, options) {
     }
 
     dom_clean(this.div_more);
-    if(this.elements.length==0) {
+    // if list is still loading, don't show empty text
+    if((this.elements.length==0) && (!this.options.is_loading)) {
       this.div_more.innerHTML=this.options.empty_text;
     }
     else if(this.elements.length==this.shown) {
@@ -133,6 +136,13 @@ function list(div, elements, request_more, options) {
       var more=request_more(this.elements);
       if(more)
         this.recv(more);
+    }
+
+    if(this.options.is_loading) {
+      this.div_loading.innerHTML="<img class='loading' src='img/ajax_loader.gif'> "+this.options.loading_text+"...";
+    }
+    else {
+      dom_clean(this.div_loading);
     }
 
     call_hooks("list_shown", this, this.ul);
@@ -166,6 +176,8 @@ function list(div, elements, request_more, options) {
   this.should_shown=this.options.show_count;
   this.elements=elements;
   this.div=div;
+  this.div_loading=dom_create_append(div, "div");
+  this.div_loading.className="loading_indicator";
   this.ul=dom_create_append(div, "ul");
   this.div_more=dom_create_append(div, "div");
   this.div_more.className="search_more";
