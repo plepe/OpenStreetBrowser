@@ -211,11 +211,16 @@ class mapcss_Category {
   function execute($params, $cache_path, $callback, $callback_param) {
     global $data_path;
 
+    if(file_exists($cache_path) || file_exists($cache_path . '.tmp')) {
+      $callback(-1, $callback_param);
+      return;
+    }
+
     $compiled_categories = "{$data_path}/compiled_categories";
     $script = "{$compiled_categories}/{$this->script_id}.py";
 
     $error = 255;
-    $cache_fp = gzopen($cache_path, "w");
+    $cache_fp = gzopen($cache_path . '.tmp', "w");
 
     $descriptorspec = array(
        0 => array("pipe", "r"),
@@ -228,7 +233,7 @@ class mapcss_Category {
     $fp = $pipes[1];
 
     mcp_register_stream(MCP_READ, $fp, function($fp, $add_param) {
-      list($cache_fp, $process, $callback, $callback_param) = $add_param;
+      list($cache_fp, $process, $cache_path, $callback, $callback_param) = $add_param;
       $r = stream_get_contents($fp, 1024*1024);
       fwrite($cache_fp, $r);
 
@@ -243,8 +248,10 @@ class mapcss_Category {
       proc_close($process);
       fclose($cache_fp);
 
+      rename($cache_path . '.tmp', $cache_path);
+
       $callback($error, $callback_param);
-    }, array($cache_fp, $process, $callback, $callback_param));
+    }, array($cache_fp, $process, $cache_path, $callback, $callback_param));
   }
 }
 
@@ -275,13 +282,13 @@ register_hook("mcp_tick", function() {
   foreach($list as $elem) {
     $category = get_mapcss_category($elem['category_id']);
     $category->compile();
-    print "START\n";
+    print "START {$elem['timestamp']}\n";
     $mapcss_max_parallel--;
     $category->execute(unserialize($elem['data']), $elem['cache_path'], function($result, $timestamp) {
       global $mapcss_max_parallel;
 
       sql_query("update data_request set status=2, exit_code=" . postgre_escape($result) . " where timestamp=" . postgre_escape($timestamp));
-      print "DONE\n";
+      print "DONE {$timestamp} -> {$result}\n";
       $mapcss_max_parallel++;
     }, $elem['timestamp']);
   }
