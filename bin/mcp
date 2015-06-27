@@ -94,7 +94,7 @@ debug("* MCP up and running", "mcp");
 // mcp_register_stream(MCP_READ, $p, "test");
 // Function "test" will be called everytime data is available on /dev/zero
 // Function "test" will be passed the current $stream
-function mcp_register_stream($type, &$stream, $callback) {
+function mcp_register_stream($type, &$stream, $callback, $callback_param=null) {
   global $streams;
   global $streams_callback;
 
@@ -104,7 +104,7 @@ function mcp_register_stream($type, &$stream, $callback) {
   }
 
   $streams[$type][]=$stream;
-  $streams_callback[$type][]=array($stream, $callback);
+  $streams_callback[$type][]=array($stream, $callback, $callback_param);
 }
 
 function mcp_unregister_stream($type, $stream) {
@@ -160,7 +160,7 @@ while(1) {
     foreach($type_streams as $str) {
       if(($pos=array_search($str, $streams[$type]))!==false) {
         $fun=$streams_callback[$type][$pos][1];
-        $fun($str);
+        $fun($str, $streams_callback[$type][$pos][2]);
       }
     }
   }
