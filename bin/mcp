@@ -142,8 +142,22 @@ function mcp_command($p) {
 
 mcp_register_stream(MCP_READ, fopen('php://stdin', 'r'), "mcp_command");
 
-while(1) {
+$mcp_tick_active = false;
+function mcp_tick() {
+  global $mcp_tick_active;
+
+  if($mcp_tick_active)
+    return;
+
+  $mcp_tick_active = true;
+
   call_hooks("mcp_tick");
+
+  $mcp_tick_active = false;
+}
+
+while(1) {
+  mcp_tick();
 
   if($mcp_next_clean_up<=time()) {
     $mcp_next_clean_up=time()+60*60;

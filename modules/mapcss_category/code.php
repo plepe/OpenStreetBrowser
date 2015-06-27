@@ -290,6 +290,8 @@ register_hook("mcp_tick", function() {
       sql_query("update data_request set status=2, exit_code=" . postgre_escape($result) . " where timestamp=" . postgre_escape($timestamp));
       print "DONE {$timestamp} -> {$result}\n";
       $mapcss_max_parallel++;
+
+      mcp_tick();
     }, $elem['timestamp']);
   }
 });
