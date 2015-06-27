@@ -42,7 +42,10 @@ if(!$read_from_cache) {
   sql_query("begin");
   $res = sql_query("select * from data_request where cache_path=" . postgre_escape($cache_path) . " and status<2");
   if(!pg_num_rows($res)) {
-    sql_query("insert into data_request values (now(), " . postgre_escape($category_id) . ", " . postgre_escape(serialize($_SERVER)) . ", " . postgre_escape($cache_path) . ")");
+    sql_query("insert into data_request values (now(), now(), " . postgre_escape($category_id) . ", " . postgre_escape(serialize($_SERVER)) . ", " . postgre_escape($cache_path) . ")");
+  }
+  else {
+    sql_query("update data_request set last_timestamp=now() where cache_path=" . postgre_escape($cache_path) . " and status<2");
   }
   sql_query("commit");
 

@@ -8,9 +8,11 @@ create table plugins (
 drop table if exists data_request;
 create table data_request (
   timestamp     timestamp       not null,
+  last_timestamp timestamp      not null,
   category_id   text            not null,
   data          text            not null,
   cache_path    text            not null,
   status        int             not null default 0,
-  exit_code     int             null
+  exit_code     int             null,
+  primary key(timestamp)
 );
