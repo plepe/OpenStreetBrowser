@@ -46,7 +46,7 @@ if(!$read_from_cache) {
     mkdir(dirname($cache_path), 0777, true);
   }
 
-  Header("Status: 404");
+  Header("HTTP/1.1 200 Not rendered yet");
   print "Not rendered yet\n";
   exit(0);
 }
