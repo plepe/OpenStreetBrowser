@@ -230,17 +230,19 @@ function layers_reorder() {
       list_basemaps.push([ w||0, f ]);
     else
       list_overlays.push([ w||0, f ]);
+
+    map.getLayers().remove(f);
   });
 
   list_basemaps=weight_sort(list_basemaps);
   list_overlays=weight_sort(list_overlays);
 
   for(var i=0; i<list_basemaps.length; i++) {
-    map.getLayers().setAt(i, list_basemaps[i]);
+    map.getLayers().insertAt(i, list_basemaps[i]);
   }
 
   for(var i=0; i<list_overlays.length; i++) {
-    map.getLayers().setAt(i + list_basemaps.length, list_overlays[i]);
+    map.getLayers().insertAt(i + list_basemaps.length, list_overlays[i]);
   }
 }
 
