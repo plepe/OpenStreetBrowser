@@ -13,7 +13,7 @@
 @postprocess final-list-icon-image eval(cond(
   prop('list-icon-image') && (!regexp_test('\\.', prop('list-icon-image'))),
     style_id() . '.icons/' . prop('list-icon-image') . '-' . prop('list-icon-color') . '-' . prop('list-icon-width'). '.svg',
-    prop('list-icon-image')
+    style_id() . '.icons/' . prop('list-icon-image')
   ));
 
 @depend_property list-text "list-type";
