@@ -1232,4 +1232,4 @@ function categories_check_compile() {
 
 register_hook("init", "categories_init");
 register_hook("list_start", "categories_init");
-register_hook("mcp_start", "categories_mcp_start");
+//register_hook("mcp_start", "categories_mcp_start");
