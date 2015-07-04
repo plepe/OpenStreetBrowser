@@ -219,7 +219,8 @@ class mapcss_Category {
   function execute($params, $cache_path, $callback, $callback_param) {
     global $data_path;
 
-    if(file_exists($cache_path) || file_exists($cache_path . '.tmp')) {
+    if((file_exists($cache_path) && (filemtime($cache_path) > time() - 86400*10)) ||
+       (file_exists($cache_path . '.tmp') && (filemtime($cache_path . '.tmp') > time() - 86400))) {
       $callback(-1, $callback_param);
       return;
     }
