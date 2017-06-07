@@ -1,0 +1,114 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OverpassFrontend example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
+  <style>
+.leaflet-popup-content {
+  max-height: 250px;
+  overflow: auto;
+}
+.leaflet-popup-content pre {
+  font-size: 8px;
+}
+.overpass-layer-icon div {
+  position: relative;
+  top: -37px;
+  font-size: 12px;
+  width: 25px;
+  text-align: center;
+}
+  </style>
+  <script src="node_modules/leaflet/dist/leaflet.js"></script>
+  <script src="dist/openstreetbrowser.js"></script>
+  <script type='text/javascript'>
+var map
+var overpassFrontend
+
+window.onload = function() {
+  map = L.map('map').setView([51.505, -0.09], 18)
+  overpassFrontend = new OverpassFrontend('http://overpass.osm.rambler.ru/cgi/interpreter', {
+    timeGap: 10,
+    effortPerRequest: 100
+  })
+
+  var osm_mapnik = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }
+  )
+  osm_mapnik.addTo(map)
+
+  var overpass_layer = new OverpassLayer('node[natural=tree];', {
+    style: {
+          nodeFeature: 'CircleMarker',
+          color: 'red',
+          fillColor: 'red',
+          fillOpacity: 0.1,
+          weight: 1,
+          radius: 6
+    },
+    marker: {
+        iconUrl: 'img/map_pointer.png',
+        iconSize: [ 25, 42 ],
+        iconAnchor: [ 13, 42 ]
+    },
+    minZoom: 17,
+    featureTitle: '{{ tags.species|default("Tree") }}',
+    featureBody: function(ob) {
+      return '<pre>' + JSON.stringify(ob.tags, null, '  ') + '</pre>'
+    }
+  })
+  overpass_layer.addTo(map)
+
+  var overpass_layer2 = new OverpassLayer('(way[leisure=park];relation[leisure=park];);', {
+    style: function(ob) {
+      return {
+          nodeFeature: 'CircleMarker',
+          color: 'green',
+          fillColor: 'green',
+          fillOpacity: 0.2,
+          weight: 1,
+          radius: 6
+      }
+    },
+    minZoom: 14,
+    featureBody: function(ob) {
+      return '<pre>' + JSON.stringify(ob.tags, null, '  ') + '</pre>'
+    }
+  })
+  overpass_layer2.addTo(map)
+
+  var overpass_layer3 = new OverpassLayer('(node[amenity=restaurant];way[amenity=restaurant];relation[amenity=restaurant];);', {
+    style:
+      "{% if tags.cuisine == 'italian' %}\n" +
+      "  color: #003f7f\n" +
+      "  fillColor: #003f7f\n" +
+      "{% else %}\n" +
+      "  color: blue\n" +
+      "  fillColor: blue  \n" +
+      "{% endif %}\n" +
+      "fillOpacity: 0.2\n" +
+      "weight: 2\n" +
+      "radius: 9\n",
+    minZoom: 16,
+    markerSign: '&#127860;',
+    featureBody: "Cuisine: {{ tags.cuisine|default('unknown') }}"
+  })
+  overpass_layer3.addTo(map)
+  overpass_layer3.onAppear = function (ob, data) {
+    console.log('appear ' + ob.id)
+  }
+  overpass_layer3.onDisappear = function (ob, data) {
+    console.log('disappear ' + ob.id)
+  }
+
+}
+  </script>
+</head>
+<body>
+  <div id='map' style='position: absolute; left: 0; top: 0; bottom: 0; right: 0'></div>
+</body>
+</html>
