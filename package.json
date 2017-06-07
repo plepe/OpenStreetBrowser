@@ -1,0 +1,9 @@
+{
+  "name": "openstreetbrowser",
+  "version": "0.0.0",
+  "description": "A re-make of the famous OpenStreetBrowser (pure JS, using Overpass API)",
+  "main": "index.js",
+  "repository": "https://github.com/plepe/openstreetbrowser",
+  "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
+  "license": "GPL-3.0"
+}
