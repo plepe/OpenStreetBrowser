@@ -7,6 +7,19 @@
   "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
   "license": "GPL-3.0",
   "dependencies": {
+    "leaflet": "^1.0.3",
     "overpass-layer": "https://github.com/plepe/overpass-layer#marker"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify index.js -o dist/openstreetbrowser.js",
+    "watch": "watchify --debug index.js -o dist/openstreetbrowser.js -v",
+    "prepublish": "npm run build && npm run lint",
+    "lint": "standard src/*.js"
+  },
+  "devDependencies": {
+    "browserify": "^14.4.0",
+    "standard": "^10.0.2",
+    "watchify": "^3.9.0"
   }
 }
