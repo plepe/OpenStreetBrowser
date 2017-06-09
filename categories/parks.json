@@ -1,0 +1,10 @@
+{
+    "query": "(way[leisure=park];relation[leisure=park];)",
+    "style": {
+        "color": "green",
+        "fillColor": "green",
+        "fillOpacity": 0.2,
+        "weight": 2
+    },
+    "minZoom": 14
+}

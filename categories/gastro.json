@@ -1,0 +1,6 @@
+{
+    "query": "(node[amenity~'^(restaurant|cafe)$'];way[amenity~'^(restaurant|cafe)$'];relation[amenity~'^(restaurant|cafe)$'];);",
+    "minZoom": 16,
+    "markerSign": "{% if tags.amenity=='restaurant' %}&#127860;{% else %}&#9749;{% endif %}",
+    "featureBody": "{{ tags.amenity }}<br/>Cuisine: {{ tags.cuisine|default('unknown') }}"
+}
