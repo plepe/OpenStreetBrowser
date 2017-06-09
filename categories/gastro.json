@@ -1,6 +1,6 @@
 {
-    "query": "(node[amenity~'^(restaurant|cafe)$'];way[amenity~'^(restaurant|cafe)$'];relation[amenity~'^(restaurant|cafe)$'];);",
+    "query": "(node[amenity~'^(bar|biergarten|cafe|fast_food|ice_cream|pub|restaurant)$'];way[amenity~'^(bar|biergarten|cafe|fast_food|ice_cream|pub|restaurant)$'];relation[amenity~'^(bar|biergarten|cafe|fast_food|ice_cream|pub|restaurant)$'];);",
     "minZoom": 16,
-    "markerSign": "{% if tags.amenity=='restaurant' %}&#127860;{% else %}&#9749;{% endif %}",
+    "markerSign": "{% if tags.amenity=='bar' %}&#127864;{% elseif tags.amenity=='biergarten'%}&#127867;{% elseif tags.amenity=='cafe' %}&#9749;{% elseif tags.amenity=='fast_food' %}&#127828;{% elseif tags.amenity=='ice_cream' %}&#127848;{% elseif tags.amenity=='pub' %}&#127866;{% else %}&#127860;{% endif %}",
     "featureBody": "{{ tags.amenity }}<br/>Cuisine: {{ tags.cuisine|default('unknown') }}"
 }
