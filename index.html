@@ -5,6 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
   <style>
+ul.overpass-layer-list {
+}
+ul.overpass-layer-list > li {
+  position: relative;
+  list-style: none;
+  min-height: 30px;
+}
+ul.overpass-layer-list > li > .markerParent {
+  position: absolute;
+  margin-left: -35px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  display: block;
+  color: black;
+  text-decoration: none;
+}
+ul.overpass-layer-list > li > .markerParent > .marker {
+}
+ul.overpass-layer-list > li > .markerParent > .icon {
+  text-align: center;
+  position: absolute;
+  top: 5;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: inline-block;
+}
+ul.overpass-layer-list > li > a.title {
+  display: inline-block;
+  color: black;
+  text-decoration: none;
+}
+ul.overpass-layer-list > li > a.title:hover,
+ul.overpass-layer-list > li > a.title:active {
+  text-decoration: underline;
+}
 .leaflet-popup-content {
   max-height: 250px;
   overflow: auto;
@@ -18,6 +55,24 @@
   font-size: 12px;
   width: 25px;
   text-align: center;
+}
+#map {
+  position: absolute;
+  left: 201px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+#info {
+  position: absolute;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 200px;
+  bottom: 0;
+  background: white;
+  border-right: 1px solid black;
+  overflow: auto;
 }
   </style>
   <script src="node_modules/leaflet/dist/leaflet.js"></script>
@@ -61,7 +116,7 @@ window.onload = function() {
       return '<pre>' + JSON.stringify(ob.tags, null, '  ') + '</pre>'
     }
   })
-  overpass_layer.addTo(map)
+  //overpass_layer.addTo(map)
 
   var overpass_layer2 = new OverpassLayer('(way[leisure=park];relation[leisure=park];);', {
     style: function(ob) {
@@ -79,9 +134,9 @@ window.onload = function() {
       return '<pre>' + JSON.stringify(ob.tags, null, '  ') + '</pre>'
     }
   })
-  overpass_layer2.addTo(map)
+  //overpass_layer2.addTo(map)
 
-  var overpass_layer3 = new OverpassLayer('(node[amenity=restaurant];way[amenity=restaurant];relation[amenity=restaurant];);', {
+  var overpass_layer3 = new OverpassLayer('(node[amenity~"^(restaurant|cafe)$"];way[amenity~"^(restaurant|cafe)$"];relation[amenity~"^(restaurant|cafe)$"];);', {
     style:
       "{% if tags.cuisine == 'italian' %}\n" +
       "  color: #003f7f\n" +
@@ -94,21 +149,16 @@ window.onload = function() {
       "weight: 2\n" +
       "radius: 9\n",
     minZoom: 16,
-    markerSign: '&#127860;',
-    featureBody: "Cuisine: {{ tags.cuisine|default('unknown') }}"
+    markerSign: '{% if tags.amenity=="restaurant" %}&#127860;{% else %}&#9749;{% endif %}',
+    featureBody: "{{ tags.amenity }}<br/>Cuisine: {{ tags.cuisine|default('unknown') }}"
   })
   overpass_layer3.addTo(map)
-  overpass_layer3.onAppear = function (ob, data) {
-    console.log('appear ' + ob.id)
-  }
-  overpass_layer3.onDisappear = function (ob, data) {
-    console.log('disappear ' + ob.id)
-  }
-
+  new OverpassLayerList(document.getElementById('info'), overpass_layer3);
 }
   </script>
 </head>
 <body>
-  <div id='map' style='position: absolute; left: 0; top: 0; bottom: 0; right: 0'></div>
+  <div id='map'></div>
+  <div id='info'></div>
 </body>
 </html>
