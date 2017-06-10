@@ -11,7 +11,27 @@ OpenStreetBrowserCategory.prototype.addTo = function (map, parentDom) {
   this.parentDom = parentDom
 
   this.layer.addTo(this.map)
-  new OverpassLayerList(this.parentDom, this.layer);
+
+  if (!this.list) {
+    this.list = new OverpassLayerList(this.parentDom, this.layer)
+  }
+
+  this.isOpen = true
+}
+
+OpenStreetBrowserCategory.prototype.remove = function () {
+  this.layer.remove()
+  this.list.remove()
+
+  this.isOpen = false
+}
+
+OpenStreetBrowserCategory.prototype.toggle = function () {
+  if (this.isOpen) {
+    this.remove()
+  } else {
+    this.addTo(this.map, this.parentDom)
+  }
 }
 
 module.exports = OpenStreetBrowserCategory

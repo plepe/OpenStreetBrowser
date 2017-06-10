@@ -29,8 +29,12 @@ window.onload = function() {
 }
 
 window.toggleCategory = function (id) {
-  OpenStreetBrowserLoader(id, function (err, category) {
-    categories[category.id] = category
-    category.addTo(map, document.getElementById('category-' + id).lastChild)
-  })
+  if (id in categories) {
+    categories[id].toggle()
+  } else {
+    OpenStreetBrowserLoader(id, function (err, category) {
+      categories[category.id] = category
+      category.addTo(map, document.getElementById('category-' + id).lastChild)
+    })
+  }
 }
