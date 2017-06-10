@@ -8,7 +8,7 @@ function OpenStreetBrowserCategory (id) {
     this.layer = new OverpassLayer(data.query, data)
 
     if (this.autoAdd) {
-      this.addTo(this.map)
+      this.addTo(this.map, this.parentDom)
       this.autoAdd = false
     }
   }
@@ -19,12 +19,13 @@ function OpenStreetBrowserCategory (id) {
   req.send()
 }
 
-OpenStreetBrowserCategory.prototype.addTo = function (map) {
+OpenStreetBrowserCategory.prototype.addTo = function (map, parentDom) {
   this.map = map
+  this.parentDom = parentDom
 
   if (this.layer) {
     this.layer.addTo(this.map)
-    new OverpassLayerList(document.getElementById('info'), this.layer);
+    new OverpassLayerList(this.parentDom, this.layer);
   } else {
     this.autoAdd = true
   }

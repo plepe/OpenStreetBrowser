@@ -21,5 +21,5 @@ window.onload = function() {
   osm_mapnik.addTo(map)
 
   var category = new OpenStreetBrowserCategory("gastro")
-  category.addTo(map)
+  category.addTo(map, document.getElementById('info'))
 }
