@@ -5,7 +5,11 @@ function OpenStreetBrowserLoader (id, callback) {
   function reqListener (req) {
     var data = JSON.parse(req.responseText)
 
-    var layer = new OpenStreetBrowserCategory(data)
+    if (data.type && data.type === 'index') {
+      var layer = new OpenStreetBrowserIndex(data)
+    } else {
+      var layer = new OpenStreetBrowserCategory(data)
+    }
 
     callback(null, layer)
   }

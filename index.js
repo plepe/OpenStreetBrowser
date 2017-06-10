@@ -21,7 +21,13 @@ window.onload = function() {
   osm_mapnik.addTo(map)
 
 
-  OpenStreetBrowserLoader('gastro', function (err, category) {
+  OpenStreetBrowserLoader('index', function (err, category) {
     category.addTo(map, document.getElementById('info'))
+  })
+}
+
+window.toggleCategory = function (id) {
+  OpenStreetBrowserLoader(id, function (err, category) {
+    category.addTo(map, document.getElementById('category-' + id).lastChild)
   })
 }

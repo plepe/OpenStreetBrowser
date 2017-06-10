@@ -1,0 +1,17 @@
+{
+    "type": "index",
+    "subCategories": [
+        {
+            "id": "gastro",
+            "name:en": "Gastronomy"
+        },
+        {
+            "id": "trees",
+            "name:en": "Trees"
+        },
+        {
+            "id": "parks",
+            "name:en": "Parks"
+        }
+    ]
+}
