@@ -1,3 +1,5 @@
+var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
+
 function OpenStreetBrowserIndex (id, data) {
   this.id = id
   this.data = data
@@ -23,4 +25,5 @@ OpenStreetBrowserIndex.prototype.addTo = function (map, parentDom) {
   }
 }
 
+OpenStreetBrowserLoader.registerType('index', OpenStreetBrowserIndex)
 module.exports = OpenStreetBrowserIndex

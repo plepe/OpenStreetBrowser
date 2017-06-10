@@ -3,6 +3,9 @@ var OverpassLayerList = require('overpass-layer').List
 var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./src/OpenStreetBrowserLoader')
 
+require('./src/OpenStreetBrowserCategory')
+require('./src/OpenStreetBrowserIndex')
+
 var map
 var categories = {}
 
@@ -21,8 +24,7 @@ window.onload = function() {
   )
   osm_mapnik.addTo(map)
 
-
-  OpenStreetBrowserLoader('index', function (err, category) {
+  OpenStreetBrowserLoader.load('index', function (err, category) {
     if (err) {
       alert(err)
       return
@@ -38,7 +40,7 @@ window.toggleCategory = function (id) {
   if (id in categories) {
     categories[id].toggle()
   } else {
-    OpenStreetBrowserLoader(id, function (err, category) {
+    OpenStreetBrowserLoader.load(id, function (err, category) {
       if (err) {
         alert(err)
         return

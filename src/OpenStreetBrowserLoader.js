@@ -1,7 +1,9 @@
-var OpenStreetBrowserIndex = require('./OpenStreetBrowserIndex')
-var OpenStreetBrowserCategory = require('./OpenStreetBrowserCategory')
+function OpenStreetBrowserLoader () {
+  this.types = {}
+}
 
-function OpenStreetBrowserLoader (id, callback) {
+
+OpenStreetBrowserLoader.prototype.load = function (id, callback) {
   function reqListener (req) {
     if (req.status !== 200) {
       console.log(req)
@@ -10,10 +12,14 @@ function OpenStreetBrowserLoader (id, callback) {
 
     var data = JSON.parse(req.responseText)
 
-    if (data.type && data.type === 'index') {
-      var layer = new OpenStreetBrowserIndex(id, data)
+    if (!data.type) {
+      callback('no type defined', null)
+      return
+    } else if (!(data.type in this.types)) {
+      callback('unknown type', null)
+      return
     } else {
-      var layer = new OpenStreetBrowserCategory(id, data)
+      var layer = new this.types[data.type](id, data)
     }
 
     callback(null, layer)
@@ -25,4 +31,8 @@ function OpenStreetBrowserLoader (id, callback) {
   req.send()
 }
 
-module.exports = OpenStreetBrowserLoader
+OpenStreetBrowserLoader.prototype.registerType = function (type, classObject) {
+  this.types[type] = classObject
+}
+
+module.exports = new OpenStreetBrowserLoader()

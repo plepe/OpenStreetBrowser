@@ -1,3 +1,4 @@
+var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 
@@ -34,4 +35,5 @@ OpenStreetBrowserCategory.prototype.toggle = function () {
   }
 }
 
+OpenStreetBrowserLoader.registerType('category', OpenStreetBrowserCategory)
 module.exports = OpenStreetBrowserCategory

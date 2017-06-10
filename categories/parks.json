@@ -1,4 +1,5 @@
 {
+    "type": "category",
     "query": "(way[leisure=park];relation[leisure=park];)",
     "style": {
         "color": "green",

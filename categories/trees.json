@@ -1,4 +1,5 @@
 {
+    "type": "category",
     "query": "node[natural=tree];",
     "style": {
           "nodeFeature": "CircleMarker",
