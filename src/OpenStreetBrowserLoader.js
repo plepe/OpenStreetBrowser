@@ -3,6 +3,11 @@ var OpenStreetBrowserCategory = require('./OpenStreetBrowserCategory')
 
 function OpenStreetBrowserLoader (id, callback) {
   function reqListener (req) {
+    if (req.status !== 200) {
+      console.log(req)
+      return callback(req.statusText, null)
+    }
+
     var data = JSON.parse(req.responseText)
 
     if (data.type && data.type === 'index') {

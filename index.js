@@ -23,8 +23,14 @@ window.onload = function() {
 
 
   OpenStreetBrowserLoader('index', function (err, category) {
+    if (err) {
+      alert(err)
+      return
+    }
+
     categories[category.id] = category
     category.addTo(map, document.getElementById('info'))
+
   })
 }
 
@@ -33,6 +39,11 @@ window.toggleCategory = function (id) {
     categories[id].toggle()
   } else {
     OpenStreetBrowserLoader(id, function (err, category) {
+      if (err) {
+        alert(err)
+        return
+      }
+
       categories[category.id] = category
       category.addTo(map, document.getElementById('category-' + id).lastChild)
     })
