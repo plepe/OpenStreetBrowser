@@ -5,17 +5,17 @@ function OpenStreetBrowserIndex (id, data) {
 
 OpenStreetBrowserIndex.prototype.addTo = function (map, parentDom) {
   for (var i = 0; i < this.data.subCategories.length; i++) {
-    var d = this.data.subCategories[i]
+    var data = this.data.subCategories[i]
     var dom = document.createElement('div')
-    dom.id = 'category-' + d.id
+    dom.id = 'category-' + data.id
     parentDom.appendChild(dom)
 
     var domHeader = document.createElement('header')
     dom.appendChild(domHeader)
 
     var a = document.createElement('a')
-    a.appendChild(document.createTextNode(d['name:en']))
-    a.href = 'javascript:toggleCategory(' + JSON.stringify(d.id) + ')'
+    a.appendChild(document.createTextNode(data['name:en']))
+    a.href = 'javascript:toggleCategory(' + JSON.stringify(data.id) + ')'
     domHeader.appendChild(a)
 
     var domContent = document.createElement('div')
