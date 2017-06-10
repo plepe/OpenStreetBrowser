@@ -6,9 +6,9 @@ function OpenStreetBrowserLoader (id, callback) {
     var data = JSON.parse(req.responseText)
 
     if (data.type && data.type === 'index') {
-      var layer = new OpenStreetBrowserIndex(data)
+      var layer = new OpenStreetBrowserIndex(id, data)
     } else {
-      var layer = new OpenStreetBrowserCategory(data)
+      var layer = new OpenStreetBrowserCategory(id, data)
     }
 
     callback(null, layer)

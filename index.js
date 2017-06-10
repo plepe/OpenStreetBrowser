@@ -4,6 +4,7 @@ var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./src/OpenStreetBrowserLoader')
 
 var map
+var categories = {}
 
 window.onload = function() {
   map = L.map('map').setView([51.505, -0.09], 18)
@@ -22,12 +23,14 @@ window.onload = function() {
 
 
   OpenStreetBrowserLoader('index', function (err, category) {
+    categories[category.id] = category
     category.addTo(map, document.getElementById('info'))
   })
 }
 
 window.toggleCategory = function (id) {
   OpenStreetBrowserLoader(id, function (err, category) {
+    categories[category.id] = category
     category.addTo(map, document.getElementById('category-' + id).lastChild)
   })
 }

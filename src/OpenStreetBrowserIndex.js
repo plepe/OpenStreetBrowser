@@ -1,4 +1,5 @@
-function OpenStreetBrowserIndex (data) {
+function OpenStreetBrowserIndex (id, data) {
+  this.id = id
   this.data = data
 }
 

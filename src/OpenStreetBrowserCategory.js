@@ -1,7 +1,8 @@
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 
-function OpenStreetBrowserCategory (data) {
+function OpenStreetBrowserCategory (id, data) {
+  this.id = id
   this.layer = new OverpassLayer(data.query, data)
 }
 
