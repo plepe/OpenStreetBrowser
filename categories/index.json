@@ -6,6 +6,10 @@
             "name:en": "Gastronomy"
         },
         {
+            "id": "shop",
+            "name:en": "Shopping"
+        },
+        {
             "id": "trees",
             "name:en": "Trees"
         },

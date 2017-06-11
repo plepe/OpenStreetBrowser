@@ -1,0 +1,9 @@
+{
+    "type": "category",
+    "query": "(node[shop];way[shop];relation[shop];);",
+    "minZoom": 16,
+    "markerSign": "{% set c = { alcohol: 'fa-beer', baby_goods: '&#128700;', bag: 'fa-shopping-bag', bakery: 'fa-birthday-cake', beverages: 'fa-beer', boutique: '&#128090;', butcher: 'fa-cutlery', cheese: 'fa-cutlery', chocolate: 'fa-cutlery', clothes: '&#128090;', coffee: 'ia-coffee', confectionery: 'fa-birthday-cake', convenience: 'fa-shopping-basket', deli: 'fa-cutlery', dairy: 'fa-cutlery', department_store: 'fa-building', fabric: '&#128090;', farm: 'fa-cutlery', fashion: '&#128090;', general: 'fa-shopping-bag', greengrocer: 'fa-cutlery', hairdresser: '&#128113;', ice_cream: '&#127848;', jewelry: '&#128141;', kiosk: 'fa-newspaper-o', leather: '&#128090;', mall: 'fa-building', pasta: 'fa-cutlery', pastry: 'fa-birthday-cake', seafood: 'fa-cutlery', sewing: '&#128090;', shoes: '&#128095;', spices: 'fa-cutlery', supermarket: 'fa-shopping-cart', tailor: '&#128090;', tea: 'fa-coffee', watches: '&#8986;' }[tags.shop]|default('fa-shopping-bag') %}{% if c|slice(0, 3) == 'fa-' %}<i class=\"fa {{ c }}\"></i>{% else %}{{ c|raw }}{% endif %}",
+    "__": "need better icons for: bakery, butcher, cheese, ice_cream, ",
+    "__": "no icons for: brewing_supplies, charity, second_hand, variety_store", 
+    "featureBody": "{{ tags.shop }}"
+}
