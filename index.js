@@ -37,14 +37,3 @@ window.onload = function() {
     category.open()
   })
 }
-
-window.toggleCategory = function (id) {
-  OpenStreetBrowserLoader.getCategory(id, function (err, category) {
-    if (err) {
-      alert(err)
-      return
-    }
-
-    category.toggle()
-  })
-}
