@@ -24,6 +24,7 @@ OpenStreetBrowserIndex.prototype.open = function () {
   for (var i = 0; i < this.data.subCategories.length; i++) {
     var data = this.data.subCategories[i]
     var dom = document.createElement('div')
+    dom.className = 'category'
     this.parentDom.appendChild(dom)
 
     var domHeader = document.createElement('header')
@@ -37,8 +38,7 @@ OpenStreetBrowserIndex.prototype.open = function () {
 
     var domContent = document.createElement('div')
     this.childrenDoms[data.id] = domContent
-    this.parentDom.appendChild(domContent)
-
+    dom.appendChild(domContent)
     this.childrenCategories[data.id] = null
 
     if ('type' in data) {
