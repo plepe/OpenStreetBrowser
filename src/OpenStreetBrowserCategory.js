@@ -5,11 +5,21 @@ var OverpassLayerList = require('overpass-layer').List
 function OpenStreetBrowserCategory (id, data) {
   this.id = id
   this.layer = new OverpassLayer(data.query, data)
+  this.isOpen = false
 }
 
-OpenStreetBrowserCategory.prototype.addTo = function (map, parentDom) {
+OpenStreetBrowserCategory.prototype.setMap = function (map) {
   this.map = map
+}
+
+OpenStreetBrowserCategory.prototype.setParentDom = function (parentDom) {
   this.parentDom = parentDom
+}
+
+OpenStreetBrowserCategory.prototype.open = function () {
+  if (typeof this.parentDom === 'string') {
+    this.parentDom = document.getElementById(this.parentDom)
+  }
 
   this.layer.addTo(this.map)
 
@@ -31,7 +41,7 @@ OpenStreetBrowserCategory.prototype.toggle = function () {
   if (this.isOpen) {
     this.remove()
   } else {
-    this.addTo(this.map, this.parentDom)
+    this.open()
   }
 }
 

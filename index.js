@@ -2,12 +2,12 @@ var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./src/OpenStreetBrowserLoader')
+window.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 
 require('./src/OpenStreetBrowserCategory')
 require('./src/OpenStreetBrowserIndex')
 
 var map
-var categories = {}
 
 window.onload = function() {
   map = L.map('map').setView([51.505, -0.09], 18)
@@ -24,30 +24,27 @@ window.onload = function() {
   )
   osm_mapnik.addTo(map)
 
-  OpenStreetBrowserLoader.load('index', function (err, category) {
+  OpenStreetBrowserLoader.setMap(map)
+  OpenStreetBrowserLoader.setParentDom(document.getElementById('info'))
+
+  OpenStreetBrowserLoader.getCategory('index', function (err, category) {
     if (err) {
       alert(err)
       return
     }
 
-    categories[category.id] = category
-    category.addTo(map, document.getElementById('info'))
-
+    category.setParentDom(document.getElementById('info'))
+    category.open()
   })
 }
 
 window.toggleCategory = function (id) {
-  if (id in categories) {
-    categories[id].toggle()
-  } else {
-    OpenStreetBrowserLoader.load(id, function (err, category) {
-      if (err) {
-        alert(err)
-        return
-      }
+  OpenStreetBrowserLoader.getCategory(id, function (err, category) {
+    if (err) {
+      alert(err)
+      return
+    }
 
-      categories[category.id] = category
-      category.addTo(map, document.getElementById('category-' + id).lastChild)
-    })
-  }
+    category.toggle()
+  })
 }

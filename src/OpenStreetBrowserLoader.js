@@ -1,9 +1,22 @@
 function OpenStreetBrowserLoader () {
   this.types = {}
+  this.categories = {}
 }
 
+OpenStreetBrowserLoader.prototype.setMap = function (map) {
+  this.map = map
+}
 
-OpenStreetBrowserLoader.prototype.load = function (id, callback) {
+OpenStreetBrowserLoader.prototype.setParentDom = function (parentDom) {
+  this.parentDom = parentDom
+}
+
+OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
+  if (id in this.categories) {
+    callback(null, this.categories[id])
+    return
+  }
+
   function reqListener (req) {
     if (req.status !== 200) {
       console.log(req)
@@ -21,6 +34,11 @@ OpenStreetBrowserLoader.prototype.load = function (id, callback) {
     } else {
       var layer = new this.types[data.type](id, data)
     }
+
+    layer.setMap(this.map)
+    layer.setParentDom('category-' + id)
+
+    this.categories[id] = layer
 
     callback(null, layer)
   }
