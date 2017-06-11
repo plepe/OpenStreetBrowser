@@ -40,6 +40,24 @@ OpenStreetBrowserIndex.prototype.open = function () {
     this.parentDom.appendChild(domContent)
 
     this.childrenCategories[data.id] = null
+
+    if ('type' in data) {
+      OpenStreetBrowserLoader.getCategoryFromData(data.id, data, function (err, category) {
+        if (err) {
+          return
+        }
+
+        this.childrenCategories[category.id] = category
+      }.bind(this))
+    }
+  }
+}
+
+OpenStreetBrowserIndex.prototype.toggle = function () {
+  if (this.isOpen) {
+    // this.remove()
+  } else {
+    this.open()
   }
 }
 

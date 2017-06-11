@@ -2,12 +2,19 @@
     "type": "index",
     "subCategories": [
         {
-            "id": "gastro",
-            "name:en": "Gastronomy"
-        },
-        {
-            "id": "shop",
-            "name:en": "Shopping"
+            "id": "leisure",
+            "type": "index",
+            "name:en": "Leisure, Sport and Shopping",
+            "subCategories": [
+                {
+                    "id": "gastro",
+                    "name:en": "Gastronomy"
+                },
+                {
+                    "id": "shop",
+                    "name:en": "Shopping"
+                }
+            ]
         },
         {
             "id": "trees",

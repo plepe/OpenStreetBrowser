@@ -25,15 +25,24 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
 
     var data = JSON.parse(req.responseText)
 
-    if (!data.type) {
-      callback('no type defined', null)
-      return
-    } else if (!(data.type in this.types)) {
-      callback('unknown type', null)
-      return
-    } else {
-      var layer = new this.types[data.type](id, data)
-    }
+    this.getCategoryFromData(id, data, callback)
+  }
+
+  var req = new XMLHttpRequest()
+  req.addEventListener("load", reqListener.bind(this, req))
+  req.open("GET", "categories/" + id + ".json")
+  req.send()
+}
+
+OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, data, callback) {
+  if (!data.type) {
+    callback('no type defined', null)
+    return
+  } else if (!(data.type in this.types)) {
+    callback('unknown type', null)
+    return
+  } else {
+    var layer = new this.types[data.type](id, data)
 
     layer.setMap(this.map)
     layer.setParentDom('category-' + id)
@@ -42,11 +51,6 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
 
     callback(null, layer)
   }
-
-  var req = new XMLHttpRequest()
-  req.addEventListener("load", reqListener.bind(this, req))
-  req.open("GET", "categories/" + id + ".json")
-  req.send()
 }
 
 OpenStreetBrowserLoader.prototype.registerType = function (type, classObject) {
