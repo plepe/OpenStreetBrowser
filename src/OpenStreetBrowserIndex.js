@@ -5,7 +5,7 @@ function OpenStreetBrowserIndex (id, data) {
   this.data = data
   this.isOpen = false
   this.childrenDoms = {}
-  this.childrenCategories = {}
+  this.childrenCategories = null
 }
 
 OpenStreetBrowserIndex.prototype.setMap = function (map) {
@@ -17,6 +17,17 @@ OpenStreetBrowserIndex.prototype.setParentDom = function (parentDom) {
 }
 
 OpenStreetBrowserIndex.prototype.open = function () {
+  if (this.isOpen)
+    return
+
+  if (this.childrenCategories !== null) {
+    this.parentDom.style.display = 'block'
+    this.isOpen = true
+    return
+  }
+
+  this.childrenCategories = {}
+
   if (typeof this.parentDom === 'string') {
     this.parentDom = document.getElementById(this.parentDom)
   }
@@ -51,11 +62,28 @@ OpenStreetBrowserIndex.prototype.open = function () {
       }.bind(this))
     }
   }
+
+  this.isOpen = true
+}
+
+OpenStreetBrowserIndex.prototype.close = function () {
+  if (!this.isOpen)
+    return
+
+  for (var k in this.childrenCategories) {
+    if (this.childrenCategories[k]) {
+      this.childrenCategories[k].close()
+    }
+  }
+
+  this.parentDom.style.display = 'none'
+
+  this.isOpen = false
 }
 
 OpenStreetBrowserIndex.prototype.toggle = function () {
   if (this.isOpen) {
-    // this.remove()
+    this.close()
   } else {
     this.open()
   }

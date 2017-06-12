@@ -17,6 +17,9 @@ OpenStreetBrowserCategory.prototype.setParentDom = function (parentDom) {
 }
 
 OpenStreetBrowserCategory.prototype.open = function () {
+  if (this.isOpen)
+    return
+
   if (typeof this.parentDom === 'string') {
     this.parentDom = document.getElementById(this.parentDom)
   }
@@ -30,7 +33,10 @@ OpenStreetBrowserCategory.prototype.open = function () {
   this.isOpen = true
 }
 
-OpenStreetBrowserCategory.prototype.remove = function () {
+OpenStreetBrowserCategory.prototype.close = function () {
+  if (!this.isOpen)
+    return
+
   this.layer.remove()
   this.list.remove()
 
@@ -39,7 +45,7 @@ OpenStreetBrowserCategory.prototype.remove = function () {
 
 OpenStreetBrowserCategory.prototype.toggle = function () {
   if (this.isOpen) {
-    this.remove()
+    this.close()
   } else {
     this.open()
   }
