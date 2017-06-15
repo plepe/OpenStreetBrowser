@@ -43,6 +43,14 @@ OpenStreetBrowserCategory.prototype.close = function () {
   this.isOpen = false
 }
 
+OpenStreetBrowserCategory.prototype.get = function (id, callback) {
+  this.layer.get(id, callback)
+}
+
+OpenStreetBrowserCategory.prototype.show = function (data) {
+  this.layer.show(data)
+}
+
 OpenStreetBrowserCategory.prototype.toggle = function () {
   if (this.isOpen) {
     this.close()

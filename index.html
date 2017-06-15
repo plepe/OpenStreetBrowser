@@ -80,6 +80,18 @@ ul.overpass-layer-list > li > a.title:active {
   border-right: 1px solid black;
   overflow: auto;
 }
+#object {
+  position: absolute;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 200px;
+  bottom: 0;
+  background: white;
+  border-right: 1px solid black;
+  overflow: auto;
+  display: none;
+}
   </style>
   <script src="node_modules/leaflet/dist/leaflet.js"></script>
   <script src="dist/openstreetbrowser.js"></script>
@@ -87,5 +99,6 @@ ul.overpass-layer-list > li > a.title:active {
 <body>
   <div id='map'></div>
   <div id='info'></div>
+  <div id='object'></div>
 </body>
 </html>
