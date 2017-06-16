@@ -47,8 +47,8 @@ OpenStreetBrowserCategory.prototype.get = function (id, callback) {
   this.layer.get(id, callback)
 }
 
-OpenStreetBrowserCategory.prototype.show = function (data) {
-  this.layer.show(data)
+OpenStreetBrowserCategory.prototype.show = function (id, options, callback) {
+  this.layer.show(id, options, callback)
 }
 
 OpenStreetBrowserCategory.prototype.toggle = function () {

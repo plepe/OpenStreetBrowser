@@ -11,7 +11,7 @@ var map
 
 window.onload = function() {
   map = L.map('map').setView([51.505, -0.09], 18)
-  overpassFrontend = new OverpassFrontend('http://overpass.osm.rambler.ru/cgi/interpreter', {
+  overpassFrontend = new OverpassFrontend('//overpass-api.de/api/interpreter', {
     timeGap: 10,
     effortPerRequest: 100
   })
@@ -60,25 +60,27 @@ function show (id, callback) {
       return
     }
 
-    category.get(id[1], function (err, data) {
-      if (err) {
-        alert('error loading object "' + id[0] + '/' + id[1] +'": ' + err)
-        return
+    category.show(
+      id[1],
+      {
+      },
+      function (err, data) {
+        if (err) {
+          alert('error loading object "' + id[0] + '/' + id[1] +'": ' + err)
+          return
+        }
+
+        show1(data, category, callback)
+
+        callback(err)
       }
+    )
 
-      show1(data, category, callback)
-
-      callback(err)
-    })
-
-    category.setMap(map)
-    category.setParentDom(document.getElementById('info'))
     category.open()
   })
 }
 
 function show1 (data, category) {
-  category.show(data)
   data.feature.openPopup()
 
   var dom = document.getElementById('object')
