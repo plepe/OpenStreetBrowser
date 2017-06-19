@@ -1,3 +1,107 @@
+/***** GENERAL LAYOUT *****/
+body {
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  font-family:Tahoma,Arial,Verdana;
+  font-size: 11px;
+  color:#333;
+}
+
+#sidebar {
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 250px;
+  padding-left:10px;
+  padding-right:10px;
+  position: absolute;
+}
+#map {
+  position: absolute;
+  left: 270px;
+  border-left: 1px solid #999;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+#mapShadow {
+  position: absolute;
+  left: 271px;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  z-index: 10000;
+  background-image: url(img/shadow_left.png);
+  background-repeat: repeat-y;
+}
+
+#sidebar {
+  display: flex;
+  flex-direction: column;
+}
+#sidebar > #header {
+  padding-top: 27px;
+  height:110px;
+  font-size:18px;
+  color:#333;
+  line-height:130%;
+  margin-top:5px;
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+#sidebar > #header > img {
+  float: left;
+  margin-top: -17px;
+  padding-right: 10px;
+}
+#sidebar > #header > .large {
+  font-size: 28px;
+  display: block;
+}
+#sidebar > #header > .version {
+  text-align: right;
+  padding-right: 24px;
+  float: right;
+  font-size: 16px;
+}
+
+#sidebar > #content {
+  flex: 1;
+  flex-shrink: 0;
+  overflow: auto;
+}
+#sidebar > #content > #info,
+#sidebar > #content > #object {
+}
+#object {
+  display: none;
+}
+
+#sidebar > #footer {
+  flex: 0;
+}
+
+
+/***** CATEGORY *****/
+#info .category header {
+  padding-top: 3px;
+  margin-bottom: 3px;
+  border-bottom: 1px dotted #999;
+  user-select: none;
+  font-size: 15px;
+}
+#info .category header > a {
+  text-decoration: none;
+  color: black;
+}
+#info .category header > a:active,
+#info .category header > a:hover {
+  text-decoration: underline;
+}
+
 #info .category > div > .category {
   margin-left: 1em;
 }
@@ -53,34 +157,4 @@ ul.overpass-layer-list > li > a.title:active {
   font-size: 12px;
   width: 25px;
   text-align: center;
-}
-#map {
-  position: absolute;
-  left: 201px;
-  top: 0;
-  bottom: 0;
-  right: 0;
-}
-#info {
-  position: absolute;
-  z-index: 10000;
-  top: 0;
-  left: 0;
-  width: 200px;
-  bottom: 0;
-  background: white;
-  border-right: 1px solid black;
-  overflow: auto;
-}
-#object {
-  position: absolute;
-  z-index: 10000;
-  top: 0;
-  left: 0;
-  width: 200px;
-  bottom: 0;
-  background: white;
-  border-right: 1px solid black;
-  overflow: auto;
-  display: none;
 }
