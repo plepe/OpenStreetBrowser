@@ -4,7 +4,7 @@ var OverpassLayerList = require('overpass-layer').List
 
 function OpenStreetBrowserCategory (id, data) {
   this.id = id
-  this.layer = new OverpassLayer(data.query, data)
+  this.layer = new OverpassLayer(data)
   this.isOpen = false
 }
 

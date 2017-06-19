@@ -1,19 +1,21 @@
 {
     "type": "category",
     "query": "node[natural=tree];",
-    "style": {
-          "nodeFeature": "CircleMarker",
-          "color": "red",
-          "fillColor": "red",
-          "fillOpacity": 0.1,
-          "weight": 1,
-          "radius": 6
-    },
-    "marker": {
-        "iconUrl": "img/map_pointer.png",
-        "iconSize": [ 25, 42 ],
-        "iconAnchor": [ 13, 42 ]
-    },
     "minZoom": 17,
-    "featureTitle": "{{ tags.species|default('Tree') }}"
+    "feature": {
+        "title": "{{ tags.species|default('Tree') }}",
+        "style": {
+              "nodeFeature": "CircleMarker",
+              "color": "red",
+              "fillColor": "red",
+              "fillOpacity": 0.1,
+              "weight": 1,
+              "radius": 6
+        },
+        "marker": {
+            "iconUrl": "img/map_pointer.png",
+            "iconSize": [ 25, 42 ],
+            "iconAnchor": [ 13, 42 ]
+        }
+    }
 }

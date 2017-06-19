@@ -2,6 +2,8 @@
     "type": "category",
     "query": "(node[leisure~'^(playground|summer_camp|indoor_play)$'];way[leisure~'^(playground|summer_camp|indoor_play)$'];relation[leisure~'^(playground|summer_camp|indoor_play)$'];node[shop~'^(baby_goods|toys)$'];way[shop~'^(baby_goods|toys)$'];relation[shop~'^(baby_goods|toys)$'];node[amenity=toilets][diaper];way[amenity=toilets][diaper];relation[amenity=toilets][diaper];node[kids_area];way[kids_area];relation[kids_area];);",
     "minZoom": 15,
-    "markerSign": "{% if tags.leisure=='playground' %}&#9977;{% elseif tags.leisure=='summer_camp'%}&#127957;{% elseif tags.leisure=='indoor_play' or tags.kids_area %}&#127968;{% elseif tags.shop=='baby_goods' or tags.shop=='toys' %}<i class=\"fa fa-shopping-cart\"></i>{% elseif tags.amenity=='toilets' and tags.diaper %}&#128701;&#128700;{% endif %}",
-    "featureBody": "{% if tags.leisure=='playground' %}playground{% elseif tags.leisure=='summer_camp'%}summer_camp{% elseif tags.leisure=='indoor_play' %}indoor_play{% elseif tags.kids_area %}kids_area{% elseif tags.shop=='baby_goods' or tags.shop=='toys' %}shop for {{ tags.shop }}{% elseif tags.amenity=='toilets' and tags.diaper %}toilets with diaper changing table{% endif %}"
+    "feature": {
+        "markerSign": "{% if tags.leisure=='playground' %}&#9977;{% elseif tags.leisure=='summer_camp'%}&#127957;{% elseif tags.leisure=='indoor_play' or tags.kids_area %}&#127968;{% elseif tags.shop=='baby_goods' or tags.shop=='toys' %}<i class=\"fa fa-shopping-cart\"></i>{% elseif tags.amenity=='toilets' and tags.diaper %}&#128701;&#128700;{% endif %}",
+        "body": "{% if tags.leisure=='playground' %}playground{% elseif tags.leisure=='summer_camp'%}summer_camp{% elseif tags.leisure=='indoor_play' %}indoor_play{% elseif tags.kids_area %}kids_area{% elseif tags.shop=='baby_goods' or tags.shop=='toys' %}shop for {{ tags.shop }}{% elseif tags.amenity=='toilets' and tags.diaper %}toilets with diaper changing table{% endif %}"
+    }
 }
