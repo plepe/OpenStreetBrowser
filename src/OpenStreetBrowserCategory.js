@@ -24,6 +24,8 @@ OpenStreetBrowserCategory.prototype.open = function () {
     this.parentDom = document.getElementById(this.parentDom)
   }
 
+  this.parentDom.parentNode.classList.add('open')
+
   this.layer.addTo(this.map)
 
   if (!this.list) {
@@ -39,6 +41,8 @@ OpenStreetBrowserCategory.prototype.close = function () {
 
   this.layer.remove()
   this.list.remove()
+
+  this.parentDom.parentNode.classList.remove('open')
 
   this.isOpen = false
 }

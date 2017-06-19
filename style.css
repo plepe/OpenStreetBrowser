@@ -88,7 +88,6 @@ body {
 /***** CATEGORY *****/
 #info .category header {
   padding-top: 3px;
-  margin-bottom: 3px;
   border-bottom: 1px dotted #999;
   user-select: none;
   font-size: 15px;
@@ -100,6 +99,14 @@ body {
 #info .category header > a:active,
 #info .category header > a:hover {
   text-decoration: underline;
+}
+#info .category ul.overpass-layer-list {
+  display: none;
+}
+#info .category.open ul.overpass-layer-list {
+  display: block;
+  padding-top: 3px;
+  background: #efefef;
 }
 
 #info .category > div > .category {
