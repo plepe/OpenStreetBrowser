@@ -151,6 +151,11 @@ ul.overpass-layer-list > li > a.title:hover,
 ul.overpass-layer-list > li > a.title:active {
   text-decoration: underline;
 }
+ul.overpass-layer-list > li > div.description {
+  font-style: italic;
+  color: #707070;
+  float: right;
+}
 .leaflet-popup-content {
   max-height: 250px;
   overflow: auto;

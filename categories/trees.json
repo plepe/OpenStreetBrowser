@@ -3,7 +3,9 @@
     "query": "node[natural=tree];",
     "minZoom": 17,
     "feature": {
-        "title": "{{ tags.species|default('Tree') }}",
+        "title": "{% if tags.ref %}{{ tags.ref }} - {% endif %}{{ tags.name|default('Tree') }}",
+        "description": "{{ tags.species }}",
+        "body": "{{ tags.species }}",
         "style": {
               "nodeFeature": "CircleMarker",
               "color": "red",
