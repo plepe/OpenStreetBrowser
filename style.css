@@ -155,6 +155,12 @@ ul.overpass-layer-list > li > div.description {
   font-style: italic;
   color: #707070;
   float: right;
+  text-align: right;
+}
+ul.overpass-layer-list > li:after {
+  content: '';
+  display: table;
+  clear: both;
 }
 .leaflet-popup-content {
   max-height: 250px;
