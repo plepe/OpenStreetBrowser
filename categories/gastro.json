@@ -4,7 +4,7 @@
     "minZoom": 16,
     "feature": {
         "markerSign": "{% if tags.amenity=='bar' %}&#127864;{% elseif tags.amenity=='biergarten'%}&#127867;{% elseif tags.amenity=='cafe' %}&#9749;{% elseif tags.amenity=='fast_food' %}&#127828;{% elseif tags.amenity=='ice_cream' %}&#127848;{% elseif tags.amenity=='pub' %}&#127866;{% else %}&#127860;{% endif %}",
-        "body": "{{ tags.amenity }}<br/>Cuisine: {{ tags.cuisine|default('unknown') }}",
-        "description": "{{ tags.amenity }}"
+        "body": "{{ tagTrans('amenity', tags.amenity) }}<br/>{{ tagTrans('cuisine') }}: {{ tagTrans('cuisine', tags.cuisine)|default('unknown') }}",
+        "description": "{{ tagTrans('amenity', tags.amenity) }}"
     }
 }
