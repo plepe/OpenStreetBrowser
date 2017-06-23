@@ -27,6 +27,10 @@
         {
             "id": "parks",
             "name:en": "Parks"
+        },
+        {
+            "id": "places",
+            "name:en": "Places"
         }
     ]
 }

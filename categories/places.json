@@ -1,0 +1,10 @@
+{
+    "type": "category",
+    "query": "node[place]",
+    "minZoom": 14,
+    "feature": {
+        "title": "{% set loc_name = localizedTag(tags, 'name') %}{{ loc_name }}{% if loc_name != tags.name %} ({{ tags.name }}){% endif %}",
+        "body": "{{ tagTrans('place', tags.place) }}",
+        "description": "{{ tagTrans('place', tags.place) }}"
+    }
+}
