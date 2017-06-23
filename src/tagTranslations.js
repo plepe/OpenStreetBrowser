@@ -1,8 +1,8 @@
 var OverpassLayer = require('overpass-layer')
 var translations = null
 
-OverpassLayer.twig.extendFunction('tagTrans', function (key, value, count) {
-  return tagTranslationsTrans(key, value, count)
+OverpassLayer.twig.extendFunction('tagTrans', function () {
+  return tagTranslationsTrans.apply(this, arguments)
 })
 
 function tagTranslationsLoad (path, lang, callback) {
@@ -27,9 +27,19 @@ function tagTranslationsLoad (path, lang, callback) {
   req.send()
 }
 
-function tagTranslationsTrans (tag, value, count) {
+function tagTranslationsTrans () {
   var ret = null
   var fallback = null
+
+  tag = arguments[0]
+  value = undefined
+  count = undefined
+  if (arguments.length > 1) {
+    value = typeof arguments[1] === 'undefined' ? null : arguments[1]
+  }
+  if (arguments.length > 2) {
+    count = arguments[2]
+  }
 
   if (typeof value === 'undefined') {
     fallback = tag

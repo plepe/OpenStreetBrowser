@@ -47,6 +47,7 @@ window.onload = function() {
     }
 
     console.log(tagTranslations.trans('amenity'))
+    console.log(tagTranslations.trans('amenity', undefined))
     console.log(tagTranslations.trans('amenity', 'restaurant'))
     console.log(tagTranslations.trans('amenity', 'restaurant', 5))
   })
