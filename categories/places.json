@@ -1,10 +1,19 @@
 {
     "type": "category",
-    "query": "node[place]",
-    "minZoom": 14,
+    "query": {
+        "0": "node[place~'^(continent)$']",
+        "4": "node[place~'^(continent|country)$']",
+        "6": "node[place~'^(country|city)$']",
+        "8": "node[place~'^(country|city|state)$']",
+        "11": "node[place~'^(city|state|region|town|village)$']",
+        "13": "node[place~'^(city|state|region|town|village|suburb|hamlet|quarter)$']",
+        "15": "node[place~'^(city|region|town|village|suburb|hamlet|quarter)$']",
+        "16": "(node[place~'^(region|town|village|suburb|hamlet|quarter|islet|isolated_dwelling|neighbourhood|farm)$'];way[place~'^(isolated_dwelling|neighbourhood|farm)$'];relation[place~'^(isolated_dwelling|neighbourhood|farm)$'];);"
+    },
+    "minZoom": 0,
     "feature": {
         "title": "{% set loc_name = localizedTag(tags, 'name') %}{{ loc_name }}{% if loc_name != tags.name %} ({{ tags.name }}){% endif %}",
-        "body": "{{ tagTrans('place', tags.place) }}",
+        "body": "{{ tagTrans('place', tags.place) }}\n{% if tags.population %}<br/>{{ tagTrans('population') }}: {{ tags.population }}{% endif %} \n",
         "description": "{{ tagTrans('place', tags.place) }}"
     }
 }
