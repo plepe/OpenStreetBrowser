@@ -6,6 +6,7 @@ window.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 
 require('./src/OpenStreetBrowserCategory')
 require('./src/OpenStreetBrowserIndex')
+var tagTranslations = require('./src/tagTranslations')
 
 var map
 
@@ -39,7 +40,16 @@ window.onload = function() {
 
   show('gastro/n281657531', function () {})
 
+  tagTranslations.load('node_modules/openstreetmap-tag-translations', 'de', function (err) {
+    if (err) {
+      alert('Error loading translations: ' + err)
+      return
+    }
 
+    console.log(tagTranslations.trans('amenity'))
+    console.log(tagTranslations.trans('amenity', 'restaurant'))
+    console.log(tagTranslations.trans('amenity', 'restaurant', 5))
+  })
 }
 
 function show (id, callback) {

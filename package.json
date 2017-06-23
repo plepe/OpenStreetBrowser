@@ -9,6 +9,7 @@
   "dependencies": {
     "font-awesome": "^4.7.0",
     "leaflet": "^1.0.3",
+    "openstreetmap-tag-translations": "^1.0.0",
     "overpass-layer": "https://github.com/plepe/overpass-layer#marker"
   },
   "scripts": {
