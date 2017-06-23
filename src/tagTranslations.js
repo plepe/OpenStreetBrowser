@@ -24,32 +24,44 @@ function tagTranslationsLoad (path, lang, callback) {
 
 function tagTranslationsTrans (tag, value, count) {
   var ret = null
+  var fallback = null
 
   if (typeof value === 'undefined') {
+    fallback = tag
+
     if (translations && 'tag:' + tag in translations) {
       ret = translations['tag:' + tag]
-    } else {
-      ret = tag
     }
-  }
-  else if (translations && 'tag:' + tag + '=' + value in translations) {
-    ret = translations['tag:' + tag + '=' + value]
   } else {
-    ret = value
+    fallback = value
+
+    if (translations && 'tag:' + tag + '=' + value in translations) {
+      ret = translations['tag:' + tag + '=' + value]
+    }
   }
 
   if (ret && typeof ret === 'object') {
     if (typeof count !== 'undefined') {
       if (count > 1 && '!=1' in ret) {
         return ret['!=1']
-      } else {
+      } else if ('message' in ret) {
         return ret['message']
+      } else {
+        return fallback
       }
     } else {
-      return ret['message']
+      if ('message' in ret) {
+        return ret['message']
+      } else {
+        return fallback
+      }
     }
   } else {
-    return ret
+    if (ret !== null) {
+      return ret
+    } else {
+      return fallback
+    }
   }
 }
 
