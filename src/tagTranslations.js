@@ -1,4 +1,9 @@
+var OverpassLayer = require('overpass-layer')
 var translations = null
+
+OverpassLayer.twig.extendFunction('tagTrans', function (key, value, count) {
+  return tagTranslationsTrans(key, value, count)
+})
 
 function tagTranslationsLoad (path, lang, callback) {
   var req = new XMLHttpRequest()
