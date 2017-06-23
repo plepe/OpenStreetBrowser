@@ -40,6 +40,7 @@ window.onload = function() {
 
   show('gastro/n281657531', function () {})
 
+  tagTranslations.setTagLanguage('de')
   tagTranslations.load('node_modules/openstreetmap-tag-translations', 'de', function (err) {
     if (err) {
       alert('Error loading translations: ' + err)

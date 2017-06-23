@@ -1,8 +1,16 @@
 var OverpassLayer = require('overpass-layer')
 var translations = null
+var tagLang = null
 
 OverpassLayer.twig.extendFunction('tagTrans', function () {
   return tagTranslationsTrans.apply(this, arguments)
+})
+OverpassLayer.twig.extendFunction('localizedTag', function (tags, id) {
+  if (tagLang && id + ':' + tagLang in tags) {
+    return tags[id + ':' + tagLang]
+  }
+
+  return tags[id]
 })
 
 function tagTranslationsLoad (path, lang, callback) {
@@ -82,5 +90,8 @@ function tagTranslationsTrans () {
 
 module.exports = {
   load: tagTranslationsLoad,
-  trans: tagTranslationsTrans
+  trans: tagTranslationsTrans,
+  setTagLanguage: function (lang) {
+    tagLang = lang
+  }
 }
