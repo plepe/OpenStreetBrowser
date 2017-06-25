@@ -14,6 +14,7 @@
     "feature": {
         "title": "{% set loc_name = localizedTag(tags, 'name') %}{{ loc_name }}{% if loc_name != tags.name %} ({{ tags.name }}){% endif %}",
         "body": "{{ tagTrans('place', tags.place) }}\n{% if tags.population %}<br/>{{ tagTrans('population') }}: {{ tags.population }}{% endif %} \n",
-        "description": "{{ tagTrans('place', tags.place) }}"
+        "description": "{{ tagTrans('place', tags.place) }}",
+        "priority": "{% set priorities = { 'continent': 0, 'country': 1, 'state': 2, 'region': 3, 'city': 4, 'town': 5, 'village': 6, 'suburb': 7, 'hamlet': 8, 'quarter': 9, neighbourhood: 10, 'isolated_dwelling': 11, 'farm': 12 } %}{{ priorities[tags.place] }}"
     }
 }
