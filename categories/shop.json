@@ -1,7 +1,10 @@
 {
     "type": "category",
-    "query": "(node[shop];way[shop];relation[shop];);",
-    "minZoom": 16,
+    "query": {
+        "14": "(node[shop~'^(mall|department_store)$'];way[shop~'^(mall|department_store)$'];relation[shop~'^(mall|department_store)$'];);",
+        "16": "(node[shop];way[shop];relation[shop];);"
+    },
+    "minZoom": 14,
     "feature": {
         "pre": "{% set current = const.default %}{% for v in const.shops %}{% if tags.shop in v.types %}{% set current = v %}{% endif %}{% endfor %}",
         "body": "{{ tagTrans('shop', tags.shop) }}",
