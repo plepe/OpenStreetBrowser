@@ -52,7 +52,12 @@ window.onload = function() {
 
   if (location.hash && location.hash.length > 1) {
     var url = location.hash.substr(1)
-    show(url, function () {})
+
+    options = {
+      showDetails: false
+    }
+
+    show(url, options, function () {})
   }
 
   tagTranslations.setTagLanguage('de')
@@ -69,10 +74,12 @@ window.onload = function() {
   })
 }
 
-function show (id, callback) {
-  document.getElementById('info').style.display = 'none'
-  document.getElementById('object').style.display = 'block'
-  document.getElementById('object').innerHTML = 'Loading ...'
+function show (id, options, callback) {
+  if (options.showDetails) {
+    document.getElementById('info').style.display = 'none'
+    document.getElementById('object').style.display = 'block'
+    document.getElementById('object').innerHTML = 'Loading ...'
+  }
 
   id = id.split('/')
 
@@ -97,7 +104,11 @@ function show (id, callback) {
           return
         }
 
-        show1(data, category, callback)
+        data.feature.openPopup()
+
+        if (options.showDetails) {
+          showDetails(data, category)
+        }
 
         callback(err)
       }
@@ -107,9 +118,7 @@ function show (id, callback) {
   })
 }
 
-function show1 (data, category) {
-  data.feature.openPopup()
-
+function showDetails (data, category) {
   var dom = document.getElementById('object')
 
   dom.innerHTML = ''
