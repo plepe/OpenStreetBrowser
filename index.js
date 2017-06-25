@@ -2,6 +2,7 @@ var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./src/OpenStreetBrowserLoader')
+var hash = require('sheet-router/hash')
 window.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 
 require('./src/OpenStreetBrowserCategory')
@@ -59,6 +60,18 @@ window.onload = function() {
 
     show(url, options, function () {})
   }
+
+  hash(function (loc) {
+    if (loc.length > 1) {
+      var url = loc.substr(1)
+
+      options = {
+        showDetails: false
+      }
+
+      show(url, options, function () {})
+    }
+  })
 
   tagTranslations.setTagLanguage('de')
   tagTranslations.load('node_modules/openstreetmap-tag-translations', 'de', function (err) {

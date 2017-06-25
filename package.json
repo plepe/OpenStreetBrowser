@@ -10,7 +10,8 @@
     "font-awesome": "^4.7.0",
     "leaflet": "^1.0.3",
     "openstreetmap-tag-translations": "^1.0.0",
-    "overpass-layer": "https://github.com/plepe/overpass-layer#marker"
+    "overpass-layer": "https://github.com/plepe/overpass-layer#marker",
+    "sheet-router": "^4.2.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
