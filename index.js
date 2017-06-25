@@ -37,7 +37,23 @@ window.onload = function() {
     category.open()
   })
 
-  show('gastro/n281657531', function () {})
+  map.on('popupopen', function (e) {
+    if (e.popup.object) {
+      var url = e.popup.object.layer_id + '/' + e.popup.object.id
+      if (location.hash !== url) {
+        history.pushState(null, null, '#' + url)
+      }
+    }
+  })
+  map.on('popupclose', function (e) {
+    history.pushState(null, null, '#')
+    hide()
+  })
+
+  if (location.hash && location.hash.length > 1) {
+    var url = location.hash.substr(1)
+    show(url, function () {})
+  }
 
   tagTranslations.setTagLanguage('de')
   tagTranslations.load('node_modules/openstreetmap-tag-translations', 'de', function (err) {
@@ -150,4 +166,9 @@ function show1 (data, category) {
     div.appendChild(dd)
   }
   dom.appendChild(div)
+}
+
+function hide () {
+  document.getElementById('info').style.display = 'block'
+  document.getElementById('object').style.display = 'none'
 }
