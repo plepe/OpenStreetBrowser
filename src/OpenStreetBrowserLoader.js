@@ -48,7 +48,6 @@ OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, data, call
     var layer = new this.types[data.type](id, data)
 
     layer.setMap(this.map)
-    layer.setParentDom('category-' + id)
 
     this.categories[id] = layer
 

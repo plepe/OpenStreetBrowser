@@ -18,6 +18,10 @@ OpenStreetBrowserCategory.prototype.setParentDom = function (parentDom) {
   this.parentDom = parentDom
   if (typeof this.parentDom !== 'string') {
     this.parentDom.appendChild(this.dom)
+
+    if (this.isOpen) {
+      this.parentDom.parentNode.classList.add('open')
+    }
   }
 }
 

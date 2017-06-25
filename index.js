@@ -107,6 +107,10 @@ function show (id, options, callback) {
       return
     }
 
+    if (!category.parentDom) {
+      category.setParentDom(document.getElementById('info'))
+    }
+
     category.show(
       id[1],
       {
