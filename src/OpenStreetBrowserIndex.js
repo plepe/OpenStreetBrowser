@@ -6,6 +6,7 @@ function OpenStreetBrowserIndex (id, data) {
   this.isOpen = false
   this.childrenDoms = {}
   this.childrenCategories = null
+  this.dom = document.createElement('div')
 }
 
 OpenStreetBrowserIndex.prototype.setMap = function (map) {
@@ -14,6 +15,9 @@ OpenStreetBrowserIndex.prototype.setMap = function (map) {
 
 OpenStreetBrowserIndex.prototype.setParentDom = function (parentDom) {
   this.parentDom = parentDom
+  if (typeof this.parentDom !== 'string') {
+    this.parentDom.appendChild(this.dom)
+  }
 }
 
 OpenStreetBrowserIndex.prototype.open = function () {
@@ -21,7 +25,7 @@ OpenStreetBrowserIndex.prototype.open = function () {
     return
 
   if (this.childrenCategories !== null) {
-    this.parentDom.style.display = 'block'
+    this.dom.style.display = 'block'
     this.isOpen = true
     return
   }
@@ -30,13 +34,14 @@ OpenStreetBrowserIndex.prototype.open = function () {
 
   if (typeof this.parentDom === 'string') {
     this.parentDom = document.getElementById(this.parentDom)
+    this.parentDom.appendChild(this.dom)
   }
 
   for (var i = 0; i < this.data.subCategories.length; i++) {
     var data = this.data.subCategories[i]
     var dom = document.createElement('div')
     dom.className = 'category'
-    this.parentDom.appendChild(dom)
+    this.dom.appendChild(dom)
 
     var domHeader = document.createElement('header')
     dom.appendChild(domHeader)
@@ -76,7 +81,7 @@ OpenStreetBrowserIndex.prototype.close = function () {
     }
   }
 
-  this.parentDom.style.display = 'none'
+  this.dom.style.display = 'none'
 
   this.isOpen = false
 }
@@ -96,7 +101,6 @@ OpenStreetBrowserIndex.prototype.toggleCategory = function (id) {
       return
     }
 
-    category.setMap(this.map)
     category.setParentDom(this.childrenDoms[id])
     this.childrenCategories[id] = category
 

@@ -6,6 +6,7 @@ function OpenStreetBrowserCategory (id, data) {
   this.id = id
   this.layer = new OverpassLayer(data)
   this.isOpen = false
+  this.dom = document.createElement('div')
 }
 
 OpenStreetBrowserCategory.prototype.setMap = function (map) {
@@ -14,6 +15,9 @@ OpenStreetBrowserCategory.prototype.setMap = function (map) {
 
 OpenStreetBrowserCategory.prototype.setParentDom = function (parentDom) {
   this.parentDom = parentDom
+  if (typeof this.parentDom !== 'string') {
+    this.parentDom.appendChild(this.dom)
+  }
 }
 
 OpenStreetBrowserCategory.prototype.open = function () {
@@ -21,15 +25,21 @@ OpenStreetBrowserCategory.prototype.open = function () {
     return
 
   if (typeof this.parentDom === 'string') {
-    this.parentDom = document.getElementById(this.parentDom)
+    var d = document.getElementById(this.parentDom)
+    if (d) {
+      this.parentDom = d
+      this.parentDom.appendChild(this.dom)
+    }
   }
 
-  this.parentDom.parentNode.classList.add('open')
+  if (this.parentDom && this.parentDom.parentNode) {
+    this.parentDom.parentNode.classList.add('open')
+  }
 
   this.layer.addTo(this.map)
 
   if (!this.list) {
-    this.list = new OverpassLayerList(this.parentDom, this.layer)
+    this.list = new OverpassLayerList(this.dom, this.layer)
   }
 
   this.isOpen = true
@@ -42,7 +52,9 @@ OpenStreetBrowserCategory.prototype.close = function () {
   this.layer.remove()
   this.list.remove()
 
-  this.parentDom.parentNode.classList.remove('open')
+  if (this.parentDom && this.parentDom.parentNode) {
+    this.parentDom.parentNode.classList.remove('open')
+  }
 
   this.isOpen = false
 }

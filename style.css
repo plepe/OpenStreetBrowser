@@ -109,7 +109,7 @@ body {
   background: #efefef;
 }
 
-#info .category > div > .category {
+#info .category > div > div> .category {
   margin-left: 1em;
 }
 ul.overpass-layer-list {

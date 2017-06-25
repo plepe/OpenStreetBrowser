@@ -26,7 +26,6 @@ window.onload = function() {
   osm_mapnik.addTo(map)
 
   OpenStreetBrowserLoader.setMap(map)
-  OpenStreetBrowserLoader.setParentDom(document.getElementById('info'))
 
   OpenStreetBrowserLoader.getCategory('index', function (err, category) {
     if (err) {

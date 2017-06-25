@@ -7,10 +7,6 @@ OpenStreetBrowserLoader.prototype.setMap = function (map) {
   this.map = map
 }
 
-OpenStreetBrowserLoader.prototype.setParentDom = function (parentDom) {
-  this.parentDom = parentDom
-}
-
 OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
   if (id in this.categories) {
     callback(null, this.categories[id])
@@ -25,7 +21,14 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
 
     var data = JSON.parse(req.responseText)
 
-    this.getCategoryFromData(id, data, callback)
+    this.getCategoryFromData(id, data, function (err, category) {
+      if (category) {
+        category.setMap(this.map)
+      }
+
+      callback(err, category)
+    }.bind(this))
+
   }
 
   var req = new XMLHttpRequest()
