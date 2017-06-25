@@ -4,6 +4,7 @@ var OverpassLayerList = require('overpass-layer').List
 
 function OpenStreetBrowserCategory (id, data) {
   this.id = id
+  data.id = id
   this.layer = new OverpassLayer(data)
   this.isOpen = false
   this.dom = document.createElement('div')
