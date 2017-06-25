@@ -8,10 +8,15 @@ function OpenStreetBrowserCategory (id, data) {
   this.layer = new OverpassLayer(data)
   this.isOpen = false
   this.dom = document.createElement('div')
+  this.parent = null
 }
 
 OpenStreetBrowserCategory.prototype.setMap = function (map) {
   this.map = map
+}
+
+OpenStreetBrowserCategory.prototype.setParent = function (parent) {
+  this.parent = parent
 }
 
 OpenStreetBrowserCategory.prototype.setParentDom = function (parentDom) {
@@ -28,6 +33,10 @@ OpenStreetBrowserCategory.prototype.setParentDom = function (parentDom) {
 OpenStreetBrowserCategory.prototype.open = function () {
   if (this.isOpen)
     return
+
+  if (this.parent) {
+    this.parent.open()
+  }
 
   if (typeof this.parentDom === 'string') {
     var d = document.getElementById(this.parentDom)

@@ -7,10 +7,15 @@ function OpenStreetBrowserIndex (id, data) {
   this.childrenDoms = {}
   this.childrenCategories = null
   this.dom = document.createElement('div')
+  this.parent = null
 }
 
 OpenStreetBrowserIndex.prototype.setMap = function (map) {
   this.map = map
+}
+
+OpenStreetBrowserIndex.prototype.setParent = function (parent) {
+  this.parent = parent
 }
 
 OpenStreetBrowserIndex.prototype.setParentDom = function (parentDom) {
@@ -27,6 +32,10 @@ OpenStreetBrowserIndex.prototype.setParentDom = function (parentDom) {
 OpenStreetBrowserIndex.prototype.open = function () {
   if (this.isOpen)
     return
+
+  if (this.parent) {
+    this.parent.open()
+  }
 
   if (this.childrenCategories !== null) {
     this.dom.style.display = 'block'
@@ -67,6 +76,8 @@ OpenStreetBrowserIndex.prototype.open = function () {
           return
         }
 
+        category.setParent(this)
+
         this.childrenCategories[category.id] = category
       }.bind(this))
     }
@@ -105,6 +116,7 @@ OpenStreetBrowserIndex.prototype.toggleCategory = function (id) {
       return
     }
 
+    category.setParent(this)
     category.setParentDom(this.childrenDoms[id])
     this.childrenCategories[id] = category
 
