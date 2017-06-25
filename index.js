@@ -100,12 +100,12 @@ function show1 (data, category) {
 
   var div = document.createElement('h1')
   div.className = 'title'
-  div.innerHTML = data.data.featureTitle
+  div.innerHTML = data.data.title
   dom.appendChild(div)
 
   var div = document.createElement('div')
   div.className = 'body'
-  div.innerHTML = data.data.featureBody
+  div.innerHTML = data.data.body
   dom.appendChild(div)
 
   var h = document.createElement('h3')
