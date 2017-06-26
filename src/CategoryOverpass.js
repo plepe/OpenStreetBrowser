@@ -20,7 +20,7 @@ CategoryOverpass.prototype.open = function () {
   this.layer.addTo(this.map)
 
   if (!this.list) {
-    this.list = new OverpassLayerList(this.dom, this.layer)
+    this.list = new OverpassLayerList(this.domContent, this.layer)
   }
 
   this.isOpen = true

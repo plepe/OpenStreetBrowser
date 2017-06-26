@@ -86,6 +86,10 @@ body {
 
 
 /***** CATEGORY *****/
+/* root category */
+#info > .category > .content > .categoryWrapper > .category {
+  margin-left: 0;
+}
 #info .category header {
   padding-top: 3px;
   border-bottom: 1px dotted #999;
@@ -100,11 +104,13 @@ body {
 #info .category header > a:hover {
   text-decoration: underline;
 }
-#info .category ul.overpass-layer-list {
+#info .category > .content {
   display: none;
 }
-#info .category.open ul.overpass-layer-list {
+#info .category.open > .content {
   display: block;
+}
+#info .category > .content > ul.overpass-layer-list {
   padding-top: 3px;
   background: #efefef;
 }

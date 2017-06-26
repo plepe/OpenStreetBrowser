@@ -1,5 +1,6 @@
 {
     "type": "overpass",
+    "name:en": "Trees",
     "query": "node[natural=tree];",
     "minZoom": 17,
     "feature": {

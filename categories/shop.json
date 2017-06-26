@@ -1,5 +1,6 @@
 {
     "type": "overpass",
+    "name:en": "Shopping",
     "query": {
         "14": "(node[shop~'^(mall|department_store)$'];way[shop~'^(mall|department_store)$'];relation[shop~'^(mall|department_store)$'];);",
         "16": "(node[shop];way[shop];relation[shop];);"

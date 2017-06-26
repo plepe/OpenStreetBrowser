@@ -1,5 +1,6 @@
 {
     "type": "overpass",
+    "name:en": "Communication",
     "query": {
       "13": "(node[amenity~'^(post_office|internet_cafe)$'];node[amenity~'^(post_office|internet_cafe)$'];node[amenity~'^(post_office|internet_cafe)$'];);",
       "16": "(node[amenity~'^(post_office|internet_cafe|post_box|telephone)$'];node[amenity~'^(post_office|internet_cafe)$'];node[amenity~'^(post_office|internet_cafe)$'];);"

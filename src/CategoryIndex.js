@@ -17,7 +17,6 @@ CategoryIndex.prototype.open = function () {
   CategoryBase.prototype.open.call(this)
 
   if (this.childrenCategories !== null) {
-    this.dom.style.display = 'block'
     this.isOpen = true
     return
   }
@@ -26,36 +25,30 @@ CategoryIndex.prototype.open = function () {
 
   for (var i = 0; i < this.data.subCategories.length; i++) {
     var data = this.data.subCategories[i]
-    var dom = document.createElement('div')
-    dom.className = 'category'
-    this.dom.appendChild(dom)
+    var childDom = document.createElement('div')
+    childDom.className = 'categoryWrapper'
+    this.domContent.appendChild(childDom)
+    this.childrenDoms[data.id] = childDom
 
-    var domHeader = document.createElement('header')
-    dom.appendChild(domHeader)
-
-    var a = document.createElement('a')
-    a.appendChild(document.createTextNode(data['name:en']))
-    a.href = '#'
-    a.onclick = this.toggleCategory.bind(this, data.id)
-    domHeader.appendChild(a)
-
-    var domContent = document.createElement('div')
-    this.childrenDoms[data.id] = domContent
-    dom.appendChild(domContent)
     this.childrenCategories[data.id] = null
 
     if ('type' in data) {
-      OpenStreetBrowserLoader.getCategoryFromData(data.id, data, function (err, category) {
-        if (err) {
-          return
-        }
-
-        category.setParent(this)
-
-        this.childrenCategories[category.id] = category
-      }.bind(this))
+      OpenStreetBrowserLoader.getCategoryFromData(data.id, data, this._loadChildCategory.bind(this))
+    } else {
+      OpenStreetBrowserLoader.getCategory(data.id, this._loadChildCategory.bind(this))
     }
   }
+}
+
+CategoryIndex.prototype._loadChildCategory = function (err, category) {
+  if (err) {
+    return
+  }
+
+  this.childrenCategories[category.id] = category
+
+  category.setParent(this)
+  category.setParentDom(this.childrenDoms[category.id])
 }
 
 CategoryIndex.prototype.close = function () {

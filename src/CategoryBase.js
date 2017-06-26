@@ -4,6 +4,22 @@ function CategoryBase (id, data) {
   this.data = data
   this.isOpen = false
   this.dom = document.createElement('div')
+  this.dom.className = 'category category-' + data.type
+
+  if (this.id !== 'index') {
+    var domHeader = document.createElement('header')
+    this.dom.appendChild(domHeader)
+
+    var a = document.createElement('a')
+    a.appendChild(document.createTextNode(this.data['name:en']))
+    a.href = '#'
+    a.onclick = this.toggle.bind(this)
+    domHeader.appendChild(a)
+  }
+
+  this.domContent = document.createElement('div')
+  this.domContent.className = 'content'
+  this.dom.appendChild(this.domContent)
 }
 
 CategoryBase.prototype.setMap = function (map) {
@@ -41,9 +57,7 @@ CategoryBase.prototype.open = function () {
     }
   }
 
-  if (this.parentDom && this.parentDom.parentNode) {
-    this.parentDom.parentNode.classList.add('open')
-  }
+  this.dom.classList.add('open')
 
   this.isOpen = true
 }
@@ -52,9 +66,7 @@ CategoryBase.prototype.close = function () {
   if (!this.isOpen)
     return
 
-  if (this.parentDom && this.parentDom.parentNode) {
-    this.parentDom.parentNode.classList.remove('open')
-  }
+  this.dom.classList.remove('open')
 
   this.isOpen = false
 }
@@ -65,6 +77,8 @@ CategoryBase.prototype.toggle = function () {
   } else {
     this.open()
   }
+
+  return false
 }
 
 module.exports = CategoryBase

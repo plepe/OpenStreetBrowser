@@ -7,30 +7,34 @@
             "name:en": "Leisure, Sport and Shopping",
             "subCategories": [
                 {
-                    "id": "gastro",
-                    "name:en": "Gastronomy"
+                    "id": "gastro"
                 },
                 {
-                    "id": "shop",
-                    "name:en": "Shopping"
+                    "id": "shop"
                 },
                 {
-                    "id": "children",
-                    "name:en": "Children"
+                    "id": "children"
                 }
             ]
         },
         {
-            "id": "trees",
-            "name:en": "Trees"
+            "id": "services",
+            "type": "index",
+            "name:en": "Services",
+            "subCategories": [
+                {
+                    "id": "communication"
+                }
+            ]
         },
         {
-            "id": "parks",
-            "name:en": "Parks"
+            "id": "trees"
         },
         {
-            "id": "places",
-            "name:en": "Places"
+            "id": "parks"
+        },
+        {
+            "id": "places"
         }
     ]
 }
