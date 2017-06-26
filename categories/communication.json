@@ -1,0 +1,15 @@
+{
+    "type": "overpass",
+    "query": {
+      "13": "(node[amenity~'^(post_office|internet_cafe)$'];node[amenity~'^(post_office|internet_cafe)$'];node[amenity~'^(post_office|internet_cafe)$'];);",
+      "16": "(node[amenity~'^(post_office|internet_cafe|post_box|telephone)$'];node[amenity~'^(post_office|internet_cafe)$'];node[amenity~'^(post_office|internet_cafe)$'];);"
+    },
+    "minZoom": 13,
+    "feature": {
+        "title": "{{ tags.name|default(tags.operator)|default(tagTrans('amenity', tags.amenity)) }}",
+        "markerSign": "{% if tags.amenity=='post_office' %}&#127972;{% elseif tags.amenity=='post_box'%}&#128238;{% elseif tags.amenity=='internet_cafe' %}&#128187;{% elseif tags.amenity=='telephone' %}&#9990;{% endif %}",
+        "body": "{{ tagTrans('amenity', tags.amenity) }}<br/>{% if tags.operator %}Operator: {{ tags.operator }}<br/>{% endif %}",
+        "description": "{{ tagTrans('amenity', tags.amenity) }}"
+    }
+}
+
