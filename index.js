@@ -5,8 +5,8 @@ var OpenStreetBrowserLoader = require('./src/OpenStreetBrowserLoader')
 var hash = require('sheet-router/hash')
 window.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 
-require('./src/OpenStreetBrowserCategory')
-require('./src/OpenStreetBrowserIndex')
+require('./src/CategoryIndex')
+require('./src/CategoryOverpass')
 var tagTranslations = require('./src/tagTranslations')
 
 var map

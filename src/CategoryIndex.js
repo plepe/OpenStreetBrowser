@@ -1,41 +1,20 @@
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
+var CategoryBase = require('./CategoryBase')
 
-function OpenStreetBrowserIndex (id, data) {
-  this.id = id
-  this.data = data
-  this.isOpen = false
+CategoryIndex.prototype = Object.create(CategoryBase.prototype)
+CategoryIndex.prototype.constructor = CategoryIndex
+function CategoryIndex (id, data) {
+  CategoryBase.call(this, id, data)
+
   this.childrenDoms = {}
   this.childrenCategories = null
-  this.dom = document.createElement('div')
-  this.parent = null
 }
 
-OpenStreetBrowserIndex.prototype.setMap = function (map) {
-  this.map = map
-}
-
-OpenStreetBrowserIndex.prototype.setParent = function (parent) {
-  this.parent = parent
-}
-
-OpenStreetBrowserIndex.prototype.setParentDom = function (parentDom) {
-  this.parentDom = parentDom
-  if (typeof this.parentDom !== 'string') {
-    this.parentDom.appendChild(this.dom)
-
-    if (this.isOpen) {
-      this.parentDom.parentNode.classList.add('open')
-    }
-  }
-}
-
-OpenStreetBrowserIndex.prototype.open = function () {
+CategoryIndex.prototype.open = function () {
   if (this.isOpen)
     return
 
-  if (this.parent) {
-    this.parent.open()
-  }
+  CategoryBase.prototype.open.call(this)
 
   if (this.childrenCategories !== null) {
     this.dom.style.display = 'block'
@@ -44,11 +23,6 @@ OpenStreetBrowserIndex.prototype.open = function () {
   }
 
   this.childrenCategories = {}
-
-  if (typeof this.parentDom === 'string') {
-    this.parentDom = document.getElementById(this.parentDom)
-    this.parentDom.appendChild(this.dom)
-  }
 
   for (var i = 0; i < this.data.subCategories.length; i++) {
     var data = this.data.subCategories[i]
@@ -82,34 +56,22 @@ OpenStreetBrowserIndex.prototype.open = function () {
       }.bind(this))
     }
   }
-
-  this.isOpen = true
 }
 
-OpenStreetBrowserIndex.prototype.close = function () {
+CategoryIndex.prototype.close = function () {
   if (!this.isOpen)
     return
+
+  CategoryBase.prototype.close.call(this)
 
   for (var k in this.childrenCategories) {
     if (this.childrenCategories[k]) {
       this.childrenCategories[k].close()
     }
   }
-
-  this.dom.style.display = 'none'
-
-  this.isOpen = false
 }
 
-OpenStreetBrowserIndex.prototype.toggle = function () {
-  if (this.isOpen) {
-    this.close()
-  } else {
-    this.open()
-  }
-}
-
-OpenStreetBrowserIndex.prototype.toggleCategory = function (id) {
+CategoryIndex.prototype.toggleCategory = function (id) {
   OpenStreetBrowserLoader.getCategory(id, function (err, category) {
     if (err) {
       alert(err)
@@ -124,5 +86,5 @@ OpenStreetBrowserIndex.prototype.toggleCategory = function (id) {
   }.bind(this))
 }
 
-OpenStreetBrowserLoader.registerType('index', OpenStreetBrowserIndex)
-module.exports = OpenStreetBrowserIndex
+OpenStreetBrowserLoader.registerType('index', CategoryIndex)
+module.exports = CategoryIndex

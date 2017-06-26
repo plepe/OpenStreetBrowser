@@ -1,5 +1,5 @@
 {
-    "type": "category",
+    "type": "overpass",
     "query": {
         "0": "node[place~'^(continent)$']",
         "4": "node[place~'^(continent|country)$']",

@@ -1,5 +1,5 @@
 {
-    "type": "category",
+    "type": "overpass",
     "query": "node[natural=tree];",
     "minZoom": 17,
     "feature": {

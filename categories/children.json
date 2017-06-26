@@ -1,5 +1,5 @@
 {
-    "type": "category",
+    "type": "overpass",
     "query": "(node[leisure~'^(playground|summer_camp|indoor_play)$'];way[leisure~'^(playground|summer_camp|indoor_play)$'];relation[leisure~'^(playground|summer_camp|indoor_play)$'];node[shop~'^(baby_goods|toys)$'];way[shop~'^(baby_goods|toys)$'];relation[shop~'^(baby_goods|toys)$'];node[amenity=toilets][diaper];way[amenity=toilets][diaper];relation[amenity=toilets][diaper];node[kids_area];way[kids_area];relation[kids_area];);",
     "minZoom": 15,
     "feature": {

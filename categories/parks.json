@@ -1,5 +1,5 @@
 {
-    "type": "category",
+    "type": "overpass",
     "query": "(way[leisure=park];relation[leisure=park];)",
     "minZoom": 14,
     "feature": {

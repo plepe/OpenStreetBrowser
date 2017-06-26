@@ -1,5 +1,5 @@
 {
-    "type": "category",
+    "type": "overpass",
     "query": "(node[amenity~'^(bar|biergarten|cafe|fast_food|ice_cream|pub|restaurant)$'];way[amenity~'^(bar|biergarten|cafe|fast_food|ice_cream|pub|restaurant)$'];relation[amenity~'^(bar|biergarten|cafe|fast_food|ice_cream|pub|restaurant)$'];);",
     "minZoom": 16,
     "feature": {
