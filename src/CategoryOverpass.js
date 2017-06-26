@@ -8,6 +8,8 @@ CategoryOverpass.prototype.constructor = CategoryOverpass
 function CategoryOverpass (id, data) {
   CategoryBase.call(this, id, data)
 
+  data.id = this.id
+  data.feature.appUrl = '#' + this.id + '/{{ id }}'
   this.layer = new OverpassLayer(data)
 }
 
