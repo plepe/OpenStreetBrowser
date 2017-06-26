@@ -10,6 +10,8 @@ function CategoryOverpass (id, data) {
 
   data.id = this.id
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
+  data.feature.body = (typeof data.feature.body === 'string' ? data.feature.body : '') + '<a class="showDetails" href="#' + this.id + '/{{ id }}/details">show details</a>'
+
   this.layer = new OverpassLayer(data)
 }
 

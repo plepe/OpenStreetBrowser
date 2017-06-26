@@ -182,3 +182,9 @@ ul.overpass-layer-list > li:after {
   width: 25px;
   text-align: center;
 }
+#object a.showDetails {
+  display: none;
+}
+a.showDetails {
+  display: block;
+}

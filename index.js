@@ -55,7 +55,7 @@ window.onload = function() {
     var url = location.hash.substr(1)
 
     options = {
-      showDetails: false
+      showDetails: !!location.hash.match(/\/details$/)
     }
 
     show(url, options, function () {})
@@ -66,7 +66,7 @@ window.onload = function() {
       var url = loc.substr(1)
 
       options = {
-        showDetails: false
+        showDetails: !!loc.match(/\/details$/)
       }
 
       show(url, options, function () {})
