@@ -1,19 +1,5 @@
 var ipLocation = require('./ip-location')
-ipLocation.httpGet = function (url, callback) {
-  var xhr = new XMLHttpRequest()
-  xhr.open('get', url, true)
-  xhr.responseType = 'text'
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        callback(null, { body: xhr.responseText })
-      } else {
-        callback(xhr.responseText)
-      }
-    }
-  }
-  xhr.send()
-}
+var LeafletGeoSearch = require('leaflet-geosearch')
 
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
@@ -38,6 +24,15 @@ window.onload = function() {
       map.setView([ 51.505, -0.09 ], 14)
     }
   })
+
+  // Add Geo Search
+  var provider = new LeafletGeoSearch.OpenStreetMapProvider()
+  var searchControl = new LeafletGeoSearch.GeoSearchControl({
+    provider: provider,
+    showMarker: false,
+    retainZoomLevel: true
+  })
+  map.addControl(searchControl)
 
   overpassFrontend = new OverpassFrontend('//overpass-api.de/api/interpreter', {
     timeGap: 10,

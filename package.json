@@ -10,6 +10,7 @@
     "font-awesome": "^4.7.0",
     "ip-location": "^1.0.1",
     "leaflet": "^1.0.3",
+    "leaflet-geosearch": "^2.4.0",
     "openstreetmap-tag-translations": "^1.0.0",
     "overpass-layer": "https://github.com/plepe/overpass-layer#marker",
     "sheet-router": "^4.2.3"
