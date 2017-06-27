@@ -118,12 +118,15 @@ body {
 #info .category header > a:hover {
   text-decoration: underline;
 }
-#info .category > .content {
+#info .category > .content,
+#info .category > .status {
   display: none;
 }
-#info .category.open > .content {
+#info .category.open > .content,
+#info .category.open > .status {
   display: block;
 }
+#info .category > .status,
 #info .category > .content > ul.overpass-layer-list {
   padding-top: 3px;
   background: #efefef;

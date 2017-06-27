@@ -25,6 +25,33 @@ function CategoryOverpass (id, data) {
   p.className = 'loadingIndicator'
   p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
   this.dom.appendChild(p)
+
+  this.domStatus = document.createElement('div')
+  this.domStatus.className = 'status'
+
+  this.dom.appendChild(this.domStatus)
+}
+
+CategoryOverpass.prototype.setMap = function (map) {
+  CategoryBase.prototype.setMap.call(this, map)
+
+  this.map.on('zoomend', this.updateStatus.bind(this))
+  this.updateStatus()
+}
+
+CategoryOverpass.prototype.updateStatus = function () {
+  this.domStatus.innerHTML = ''
+
+  if (typeof this.data.query === 'object') {
+    var highestZoom = Object.keys(this.data.query).reverse()[0]
+    if (this.map.getZoom() < highestZoom) {
+      this.domStatus.innerHTML = 'zoom in for more map features'
+    }
+  }
+
+  if ('minZoom' in this.data && this.map.getZoom() < this.data.minZoom) {
+    this.domStatus.innerHTML = 'zoom in for map features to appear'
+  }
 }
 
 CategoryOverpass.prototype.open = function () {
