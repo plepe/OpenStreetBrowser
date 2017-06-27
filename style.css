@@ -90,6 +90,20 @@ body {
 #info > .category > .content > .categoryWrapper > .category {
   margin-left: 0;
 }
+#info .category {
+  position: relative;
+}
+#info .category > .loadingIndicator {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 15px;
+  display: none;
+}
+#info .category.loading > .loadingIndicator {
+  padding-top: 2px;
+  display: block;
+}
 #info .category header {
   padding-top: 3px;
   border-bottom: 1px dotted #999;

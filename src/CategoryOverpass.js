@@ -13,6 +13,18 @@ function CategoryOverpass (id, data) {
   data.feature.body = (typeof data.feature.body === 'string' ? data.feature.body : '') + '<a class="showDetails" href="#' + this.id + '/{{ id }}/details">show details</a>'
 
   this.layer = new OverpassLayer(data)
+
+  this.layer.onLoadStart = function (ev) {
+    this.dom.classList.add('loading')
+  }.bind(this)
+  this.layer.onLoadEnd = function (ev) {
+    this.dom.classList.remove('loading')
+  }.bind(this)
+
+  var p = document.createElement('div')
+  p.className = 'loadingIndicator'
+  p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
+  this.dom.appendChild(p)
 }
 
 CategoryOverpass.prototype.open = function () {
