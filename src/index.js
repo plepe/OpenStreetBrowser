@@ -1,3 +1,20 @@
+var ipLocation = require('./ip-location')
+ipLocation.httpGet = function (url, callback) {
+  var xhr = new XMLHttpRequest()
+  xhr.open('get', url, true)
+  xhr.responseType = 'text'
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(null, { body: xhr.responseText })
+      } else {
+        callback(xhr.responseText)
+      }
+    }
+  }
+  xhr.send()
+}
+
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var OverpassFrontend = require('overpass-frontend')
@@ -12,7 +29,16 @@ var tagTranslations = require('./tagTranslations')
 var map
 
 window.onload = function() {
-  map = L.map('map').setView([51.505, -0.09], 18)
+  map = L.map('map')
+
+  ipLocation('', function (err, ipLoc) {
+    if (typeof ipLoc === 'object' && 'latitude' in ipLoc) {
+      map.setView([ ipLoc.latitude, ipLoc.longitude ], 14)
+    } else {
+      map.setView([ 51.505, -0.09 ], 14)
+    }
+  })
+
   overpassFrontend = new OverpassFrontend('//overpass-api.de/api/interpreter', {
     timeGap: 10,
     effortPerRequest: 100

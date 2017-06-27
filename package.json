@@ -8,6 +8,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "font-awesome": "^4.7.0",
+    "ip-location": "^1.0.1",
     "leaflet": "^1.0.3",
     "openstreetmap-tag-translations": "^1.0.0",
     "overpass-layer": "https://github.com/plepe/overpass-layer#marker",
