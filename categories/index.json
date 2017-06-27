@@ -24,6 +24,9 @@
             "subCategories": [
                 {
                     "id": "communication"
+                },
+                {
+                    "id": "public"
                 }
             ]
         },
