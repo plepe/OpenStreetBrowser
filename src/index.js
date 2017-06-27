@@ -1,13 +1,13 @@
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var OverpassFrontend = require('overpass-frontend')
-var OpenStreetBrowserLoader = require('./src/OpenStreetBrowserLoader')
+var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var hash = require('sheet-router/hash')
 window.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 
-require('./src/CategoryIndex')
-require('./src/CategoryOverpass')
-var tagTranslations = require('./src/tagTranslations')
+require('./CategoryIndex')
+require('./CategoryOverpass')
+var tagTranslations = require('./tagTranslations')
 
 var map
 
