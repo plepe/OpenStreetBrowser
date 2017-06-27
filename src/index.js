@@ -34,6 +34,14 @@ window.onload = function() {
   })
   map.addControl(searchControl)
 
+  // Geo location
+  L.control.locate({
+    keepCurrentZoomLevel: true,
+    drawCircle: false,
+    drawMarker: false,
+    showPopup: false
+  }).addTo(map);
+
   overpassFrontend = new OverpassFrontend('//overpass-api.de/api/interpreter', {
     timeGap: 10,
     effortPerRequest: 100
