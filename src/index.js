@@ -110,11 +110,6 @@ window.onload = function() {
       alert('Error loading translations: ' + err)
       return
     }
-
-    console.log(tagTranslations.trans('amenity'))
-    console.log(tagTranslations.trans('amenity', undefined))
-    console.log(tagTranslations.trans('amenity', 'restaurant'))
-    console.log(tagTranslations.trans('amenity', 'restaurant', 5))
   })
 }
 
