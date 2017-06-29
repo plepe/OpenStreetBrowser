@@ -4,6 +4,7 @@ $depend = array(
   'hooks',
   'html',
   'modulekit-lang',
+  'openstreetbrowser-categories-main',
 );
 $include = array(
 );

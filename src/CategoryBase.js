@@ -10,8 +10,10 @@ function CategoryBase (id, data) {
     var domHeader = document.createElement('header')
     this.dom.appendChild(domHeader)
 
+    var name = ('name:' + ui_lang) in this.data ? this.data['name:en'] : lang('category:' + this.id)
+
     var a = document.createElement('a')
-    a.appendChild(document.createTextNode(this.data['name:en']))
+    a.appendChild(document.createTextNode(name))
     a.href = '#'
     a.onclick = this.toggle.bind(this)
     domHeader.appendChild(a)
