@@ -7,9 +7,9 @@
     },
     "minZoom": 14,
     "feature": {
-        "pre": "{% set current = const.default %}{% for v in const.shops %}{% if tags.shop in v.types %}{% set current = v %}{% endif %}{% endfor %}",
-        "body": "{{ tagTrans('shop', tags.shop) }}",
-        "description": "{{ tagTrans('shop', tags.shop) }}",
+        "pre": "{% set shop0 = tags.shop|split(';')[0] %}{% set current = const.default %}{% for v in const.shops %}{% if shop0 in v.types %}{% set current = v %}{% endif %}{% endfor %}",
+        "body": "{{ tagTransList('shop', tags.shop) }}",
+        "description": "{{ tagTransList('shop', tags.shop) }}",
         "markerSign": "{% set c = current.sign %}{% if c|slice(0, 3) == 'fa-' %}<i class=\"fa {{ c }}\"></i>{% else %}{{ c|raw }}{% endif %}",
         "__": "need better icons for: bakery, butcher, cheese, ice_cream, ",
         "__": "no icons for: brewing_supplies, charity, second_hand, variety_store"
