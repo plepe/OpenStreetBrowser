@@ -29,7 +29,7 @@ html_export_var(array(
   <div id='map'></div>
   <div id='mapShadow'></div>
   <div id='sidebar'>
-    <div id='header'><img src='img/osb_logo.png'>OpenStreet <span class='large'>Browser</span><div class='version'>3.x-dev</div></div>
+    <div id='header'><img src='img/osb_logo.png'>OpenStreet <span class='large'>Browser</span><div class='version' title='<?=$modulekit['version']?>'><?php print substr($modulekit['version'], 0, strpos($modulekit['version'], '+')); ?></div></div>
     <div id='content'>
       <div id='info'></div>
       <div id='object'></div>
