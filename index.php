@@ -1,3 +1,6 @@
+<?php include "conf.php"; /* load a local configuration */ ?>
+<?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
+<?php call_hooks("init"); /* initialize submodules */ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +15,10 @@
   <script src="node_modules/leaflet/dist/leaflet.js"></script>
   <script src="dist/openstreetbrowser.js"></script>
   <script src="node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
+  <?php print modulekit_to_javascript(); /* pass modulekit configuration to JavaScript */ ?>
+  <?php print modulekit_include_js(); /* prints all js-includes */ ?>
+  <?php print modulekit_include_css(); /* prints all css-includes */ ?>
+  <?php print_add_html_headers(); /* print additional html headers */ ?>
 </head>
 <body>
   <div id='map'></div>

@@ -15,6 +15,8 @@ var tagTranslations = require('./tagTranslations')
 var map
 
 window.onload = function() {
+  call_hooks('init')
+
   map = L.map('map')
 
   ipLocation('', function (err, ipLoc) {
