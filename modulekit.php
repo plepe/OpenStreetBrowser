@@ -3,6 +3,7 @@ $id = "openstreetbrowser";
 $depend = array(
   'hooks',
   'html',
+  'modulekit-lang',
 );
 $include = array(
 );

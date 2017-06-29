@@ -4,3 +4,6 @@
 [submodule "lib/modulekit/base"]
 	path = lib/modulekit/base
 	url = https://github.com/plepe/modulekit-base.git
+[submodule "lib/modulekit/lang"]
+	path = lib/modulekit/lang
+	url = https://github.com/plepe/modulekit-lang.git
