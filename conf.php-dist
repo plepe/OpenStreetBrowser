@@ -1,1 +1,2 @@
 <?php
+$categories_dir = 'node_modules/openstreetbrowser-categories-main';

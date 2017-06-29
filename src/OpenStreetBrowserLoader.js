@@ -33,7 +33,7 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
 
   var req = new XMLHttpRequest()
   req.addEventListener("load", reqListener.bind(this, req))
-  req.open("GET", "categories/" + id + ".json")
+  req.open("GET", categories_dir + '/' + id + ".json")
   req.send()
 }
 

@@ -12,6 +12,7 @@
     "leaflet": "^1.0.3",
     "leaflet-geosearch": "^2.4.0",
     "leaflet.locatecontrol": "^0.61.0",
+    "openstreetbrowser-categories-main": "https://github.com/plepe/openstreetbrowser-categories-main#branch-3.x",
     "openstreetmap-tag-translations": "^1.0.0",
     "overpass-layer": "https://github.com/plepe/overpass-layer#marker",
     "sheet-router": "^4.2.3"
