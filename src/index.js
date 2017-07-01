@@ -1,4 +1,3 @@
-var ipLocation = require('./ip-location')
 var LeafletGeoSearch = require('leaflet-geosearch')
 
 var OverpassLayer = require('overpass-layer')
@@ -11,12 +10,13 @@ window.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 require('./CategoryIndex')
 require('./CategoryOverpass')
 
-var map
+global.map
 var baseCategory
 
 // Optional modules
 require('./options')
 require('./language')
+require('./location')
 
 window.onload = function() {
   map = L.map('map')
@@ -26,14 +26,6 @@ window.onload = function() {
 }
 
 function onload2 () {
-  ipLocation('', function (err, ipLoc) {
-    if (typeof ipLoc === 'object' && 'latitude' in ipLoc) {
-      map.setView([ ipLoc.latitude, ipLoc.longitude ], 14)
-    } else {
-      map.setView([ 51.505, -0.09 ], 14)
-    }
-  })
-
   // Add Geo Search
   var provider = new LeafletGeoSearch.OpenStreetMapProvider()
   var searchControl = new LeafletGeoSearch.GeoSearchControl({
