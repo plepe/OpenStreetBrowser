@@ -13,6 +13,7 @@ require('./CategoryOverpass')
 var tagTranslations = require('./tagTranslations')
 
 var map
+var baseCategory
 
 window.onload = function() {
   call_hooks('init')
@@ -65,7 +66,8 @@ window.onload = function() {
       return
     }
 
-    category.setParentDom(document.getElementById('info'))
+    baseCategory = category
+    category.setParentDom(document.getElementById('content'))
     category.open()
   })
 
@@ -115,9 +117,7 @@ window.onload = function() {
 
 function show (id, options, callback) {
   if (options.showDetails) {
-    document.getElementById('info').style.display = 'none'
-    document.getElementById('object').style.display = 'block'
-    document.getElementById('object').innerHTML = 'Loading ...'
+    document.getElementById('content').innerHTML = 'Loading ...'
   }
 
   id = id.split('/')
@@ -134,7 +134,7 @@ function show (id, options, callback) {
     }
 
     if (!category.parentDom) {
-      category.setParentDom(document.getElementById('info'))
+      category.setParentDom(document.getElementById('content'))
     }
 
     category.show(
@@ -162,7 +162,9 @@ function show (id, options, callback) {
 }
 
 function showDetails (data, category) {
-  var dom = document.getElementById('object')
+  var dom = document.getElementById('content')
+
+
 
   dom.innerHTML = ''
 
@@ -221,6 +223,10 @@ function showDetails (data, category) {
 }
 
 function hide () {
-  document.getElementById('info').style.display = 'block'
-  document.getElementById('object').style.display = 'none'
+  var content = document.getElementById('content')
+  content.innerHTML = ''
+
+  if (baseCategory) {
+    baseCategory.setParentDom(content)
+  }
 }

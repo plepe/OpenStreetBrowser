@@ -7,3 +7,6 @@
 [submodule "lib/modulekit/lang"]
 	path = lib/modulekit/lang
 	url = https://github.com/plepe/modulekit-lang.git
+[submodule "lib/modulekit/form"]
+	path = lib/modulekit/form
+	url = https://github.com/plepe/modulekit-form.git

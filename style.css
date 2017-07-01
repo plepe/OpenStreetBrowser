@@ -73,12 +73,6 @@ body {
   flex-shrink: 0;
   overflow: auto;
 }
-#sidebar > #content > #info,
-#sidebar > #content > #object {
-}
-#object {
-  display: none;
-}
 
 #sidebar > #footer {
   flex: 0;
@@ -87,52 +81,52 @@ body {
 
 /***** CATEGORY *****/
 /* root category */
-#info > .category > .content > .categoryWrapper > .category {
+#content > .category > .content > .categoryWrapper > .category {
   margin-left: 0;
 }
-#info .category {
+#content .category {
   position: relative;
 }
-#info .category > .loadingIndicator {
+#content .category > .loadingIndicator {
   position: absolute;
   right: 0;
   top: 0;
   font-size: 15px;
   display: none;
 }
-#info .category.loading > .loadingIndicator {
+#content .category.loading > .loadingIndicator {
   padding-top: 2px;
   display: block;
 }
-#info .category header {
+#content .category header {
   padding-top: 3px;
   border-bottom: 1px dotted #999;
   user-select: none;
   font-size: 15px;
 }
-#info .category header > a {
+#content .category header > a {
   text-decoration: none;
   color: black;
 }
-#info .category header > a:active,
-#info .category header > a:hover {
+#content .category header > a:active,
+#content .category header > a:hover {
   text-decoration: underline;
 }
-#info .category > .content,
-#info .category > .status {
+#content .category > .content,
+#content .category > .status {
   display: none;
 }
-#info .category.open > .content,
-#info .category.open > .status {
+#content .category.open > .content,
+#content .category.open > .status {
   display: block;
 }
-#info .category > .status,
-#info .category > .content > ul.overpass-layer-list {
+#content .category > .status,
+#content .category > .content > ul.overpass-layer-list {
   padding-top: 3px;
   background: #efefef;
 }
 
-#info .category > div > div> .category {
+#content .category > div > div> .category {
   margin-left: 1em;
 }
 ul.overpass-layer-list {
@@ -199,7 +193,7 @@ ul.overpass-layer-list > li:after {
   width: 25px;
   text-align: center;
 }
-#object a.showDetails {
+#content a.showDetails {
   display: none;
 }
 a.showDetails {
