@@ -10,3 +10,10 @@ register_hook('init_callback', function (callback) {
     callback(err)
   })
 })
+
+register_hook('options_form', function (def) {
+  def.ui_lang = {
+    'name': 'UI Language',
+    'type': 'text'
+  }
+})

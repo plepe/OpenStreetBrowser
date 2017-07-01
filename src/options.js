@@ -12,12 +12,9 @@ register_hook('init', function () {
 })
 
 moduleOptions.open = function () {
-  var def = {
-    'ui_lang': {
-      'name': 'UI Language',
-      'type': 'text'
-    }
-  }
+  var def = {}
+
+  call_hooks('options_form', def)
 
   var options_form = new form('options', def)
   var dom = document.getElementById('content')
