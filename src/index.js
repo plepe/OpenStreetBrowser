@@ -10,13 +10,13 @@ window.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 
 require('./CategoryIndex')
 require('./CategoryOverpass')
-var tagTranslations = require('./tagTranslations')
 
 var map
 var baseCategory
 
 // Optional modules
 require('./options')
+require('./language')
 
 window.onload = function() {
   map = L.map('map')
@@ -109,14 +109,6 @@ function onload2 () {
       }
 
       show(url, options, function () {})
-    }
-  })
-
-  tagTranslations.setTagLanguage(ui_lang)
-  tagTranslations.load('node_modules/openstreetmap-tag-translations', ui_lang, function (err) {
-    if (err) {
-      alert('Error loading translations: ' + err)
-      return
     }
   })
 }
