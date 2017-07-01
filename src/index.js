@@ -15,6 +15,9 @@ var tagTranslations = require('./tagTranslations')
 var map
 var baseCategory
 
+// Optional modules
+require('./options')
+
 window.onload = function() {
   call_hooks('init')
 
@@ -164,8 +167,6 @@ function show (id, options, callback) {
 function showDetails (data, category) {
   var dom = document.getElementById('content')
 
-
-
   dom.innerHTML = ''
 
   var div = document.createElement('h1')
@@ -230,3 +231,4 @@ function hide () {
     baseCategory.setParentDom(content)
   }
 }
+window.showRootContent = hide
