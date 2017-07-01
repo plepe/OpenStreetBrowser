@@ -19,10 +19,13 @@ var baseCategory
 require('./options')
 
 window.onload = function() {
-  call_hooks('init')
-
   map = L.map('map')
 
+  call_hooks('init')
+  call_hooks_callback('init_callback', onload2)
+}
+
+function onload2 () {
   ipLocation('', function (err, ipLoc) {
     if (typeof ipLoc === 'object' && 'latitude' in ipLoc) {
       map.setView([ ipLoc.latitude, ipLoc.longitude ], 14)
