@@ -1,3 +1,6 @@
 <?php
 // Directory from which to read the categories.
 $config['categoriesDir'] = 'node_modules/openstreetbrowser-categories-main';
+
+// URL of the Overpass API
+$config['overpassUrl'] = '//overpass-api.de/api/interpreter';

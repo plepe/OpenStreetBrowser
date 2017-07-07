@@ -44,7 +44,7 @@ window.onload = function() {
     showPopup: false
   }).addTo(map);
 
-  overpassFrontend = new OverpassFrontend('//overpass-api.de/api/interpreter', {
+  overpassFrontend = new OverpassFrontend(config.overpassUrl, {
     timeGap: 10,
     effortPerRequest: 100
   })
