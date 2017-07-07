@@ -23,7 +23,7 @@ window.onload = function() {
     if (typeof ipLoc === 'object' && 'latitude' in ipLoc) {
       map.setView([ ipLoc.latitude, ipLoc.longitude ], 14)
     } else {
-      map.setView([ 51.505, -0.09 ], 14)
+      map.setView(config.defaultView, 'zoom' in config.defaultView ? config.defaultView.zoom : 14)
     }
   })
 
