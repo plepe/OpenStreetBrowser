@@ -1,2 +1,3 @@
 <?php
-$categories_dir = 'node_modules/openstreetbrowser-categories-main';
+// Directory from which to read the categories.
+$config['categoriesDir'] = 'node_modules/openstreetbrowser-categories-main';
