@@ -16,28 +16,6 @@ OverpassLayer.twig.extendFunction('localizedTag', function (tags, id) {
   return tags[id]
 })
 
-function tagTranslationsLoad (path, lang, callback) {
-  var req = new XMLHttpRequest()
-
-  req.addEventListener('load', function () {
-    if (req.status === 200) {
-      translations = JSON.parse(req.responseText)
-      callback(null)
-    } else {
-      callback(req.statusText)
-    }
-  })
-
-  req.addEventListener('error', function () {
-    console.log(req)
-    callback('error')
-  })
-
-  req.open('GET', path + '/tags/' + lang + '.json')
-
-  req.send()
-}
-
 function tagTranslationsTrans () {
   var ret = null
   var fallback = null
@@ -53,41 +31,9 @@ function tagTranslationsTrans () {
   }
 
   if (typeof value === 'undefined') {
-    fallback = tag
-
-    if (translations && 'tag:' + tag in translations) {
-      ret = translations['tag:' + tag]
-    }
+    return lang('tag:' + tag, count)
   } else {
-    fallback = value
-
-    if (translations && 'tag:' + tag + '=' + value in translations) {
-      ret = translations['tag:' + tag + '=' + value]
-    }
-  }
-
-  if (ret && typeof ret === 'object') {
-    if (typeof count !== 'undefined') {
-      if (count > 1 && '!=1' in ret) {
-        return ret['!=1']
-      } else if ('message' in ret) {
-        return ret['message']
-      } else {
-        return fallback
-      }
-    } else {
-      if ('message' in ret) {
-        return ret['message']
-      } else {
-        return fallback
-      }
-    }
-  } else {
-    if (ret !== null) {
-      return ret
-    } else {
-      return fallback
-    }
+    return lang('tag:' + tag + '=' + value, count)
   }
 }
 
@@ -110,7 +56,6 @@ function tagTranslationsTransList (key, values) {
 }
 
 module.exports = {
-  load: tagTranslationsLoad,
   trans: tagTranslationsTrans,
   setTagLanguage: function (lang) {
     tagLang = lang

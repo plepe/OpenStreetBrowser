@@ -105,12 +105,6 @@ window.onload = function() {
   })
 
   tagTranslations.setTagLanguage(ui_lang)
-  tagTranslations.load('node_modules/openstreetmap-tag-translations', ui_lang, function (err) {
-    if (err) {
-      alert('Error loading translations: ' + err)
-      return
-    }
-  })
 }
 
 function show (id, options, callback) {
