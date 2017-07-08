@@ -1,2 +1,9 @@
 <?php
-$categories_dir = 'node_modules/openstreetbrowser-categories-main';
+// Directory from which to read the categories.
+$config['categoriesDir'] = 'node_modules/openstreetbrowser-categories-main';
+
+// URL of the Overpass API
+$config['overpassUrl'] = '//overpass-api.de/api/interpreter';
+
+// Location of the initial view if no IP-location can be resolved. 'zoom' is optional.
+$config['defaultView'] = array('lat' => 51.505, 'lon' => -0.09, 'zoom' => 18);

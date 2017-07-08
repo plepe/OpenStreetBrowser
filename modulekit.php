@@ -6,6 +6,7 @@ $depend = array(
   'modulekit-lang',
   'modulekit-form',
   'openstreetbrowser-categories-main',
+  'openstreetmap-tag-translations',
 );
 $include = array(
 );

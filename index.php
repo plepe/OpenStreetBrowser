@@ -3,7 +3,7 @@
 <?php call_hooks("init"); /* initialize submodules */ ?>
 <?php
 html_export_var(array(
-  'categories_dir' => $categories_dir,
+  'config' => $config,
 ));
 ?>
 <!DOCTYPE html>
