@@ -11,7 +11,7 @@ require('./CategoryIndex')
 require('./CategoryOverpass')
 
 global.map
-var baseCategory
+window.baseCategory
 
 // Optional modules
 require('./options')
