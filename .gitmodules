@@ -10,3 +10,6 @@
 [submodule "lib/modulekit/form"]
 	path = lib/modulekit/form
 	url = https://github.com/plepe/modulekit-form.git
+[submodule "lib/modulekit/ajax"]
+	path = lib/modulekit/ajax
+	url = https://github.com/plepe/modulekit-ajax.git

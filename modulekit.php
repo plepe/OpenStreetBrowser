@@ -5,6 +5,7 @@ $depend = array(
   'html',
   'modulekit-lang',
   'modulekit-form',
+  'modulekit-ajax',
   'openstreetbrowser-categories-main',
   'openstreetmap-tag-translations',
 );
