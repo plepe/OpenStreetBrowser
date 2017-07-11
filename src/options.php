@@ -10,3 +10,5 @@ function ajax_options_save($get_param, $post_param) {
 if (!array_key_exists('options', $_SESSION)) {
   $_SESSION['options'] = array();
 }
+
+html_export_var(array('options' => $_SESSION['options']));

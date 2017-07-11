@@ -20,6 +20,8 @@ moduleOptions.open = function () {
   var dom = document.getElementById('content')
   dom.innerHTML = ''
 
+  options_form.set_data(options)
+
   var f = document.createElement('form')
   f.onsubmit = moduleOptions.submit.bind(this, options_form)
   dom.appendChild(f)
@@ -37,8 +39,9 @@ moduleOptions.submit = function (options_form) {
   var data = options_form.get_data()
 
   ajax('options_save', null, data, function (ret) {
-    console.log(ret)
     call_hooks('options_save', data)
+
+    options = data
 
     showRootContent()
   })
