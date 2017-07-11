@@ -1,5 +1,7 @@
 {
+    "main:options": "Optionen",
     "options:data_lang": "Datensprache",
     "options:data_lang:local": "Lokale Sprache",
-    "options:ui_lang": "Anwendungssprache"
+    "options:ui_lang": "Anwendungssprache",
+    "save": "Speichern"
 }

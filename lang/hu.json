@@ -1,5 +1,7 @@
 {
+    "main:options": "Beállítások",
     "options:data_lang": "Adatnyelv",
     "options:data_lang:local": "Helyi nyelv",
-    "options:ui_lang": "Menünyelv"
+    "options:ui_lang": "Menünyelv",
+    "save": "Mentés"
 }

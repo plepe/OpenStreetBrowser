@@ -1,6 +1,8 @@
 {
+    "main:options": "",
     "options:data_lang": "",
     "options:data_lang:desc": "",
     "options:data_lang:local": "",
-    "options:ui_lang": ""
+    "options:ui_lang": "",
+    "save": ""
 }

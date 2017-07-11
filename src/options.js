@@ -4,7 +4,7 @@ register_hook('init', function () {
   var footer = document.getElementById('footer')
 
   var link = document.createElement('a')
-  link.innerHTML = 'Options'
+  link.innerHTML = lang('main:options')
   link.href = '#options'
   link.onclick = moduleOptions.open
 
@@ -29,7 +29,7 @@ moduleOptions.open = function () {
   options_form.show(f)
 
   var input = document.createElement('button')
-  input.innerHTML = 'Save'
+  input.innerHTML = lang('save')
   f.appendChild(input)
 
   return false

@@ -1,5 +1,7 @@
 {
+    "main:options": "Optiuni",
     "options:data_lang": "Limba date",
     "options:data_lang:local": "Limba locala",
-    "options:ui_lang": "Limba interfata"
+    "options:ui_lang": "Limba interfata",
+    "save": "Salveaza"
 }

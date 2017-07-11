@@ -1,5 +1,7 @@
 {
+    "main:options": "Options",
     "options:data_lang": "Langue des données",
     "options:data_lang:local": "Langue locale",
-    "options:ui_lang": "Langue de l'interface"
+    "options:ui_lang": "Langue de l'interface",
+    "save": "Sauvegarder"
 }

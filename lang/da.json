@@ -1,5 +1,7 @@
 {
+    "main:options": "Indstillinger",
     "options:data_lang": "Data sprog",
     "options:data_lang:local": "Lokalt sprog",
-    "options:ui_lang": "Brugerfladesprog"
+    "options:ui_lang": "Brugerfladesprog",
+    "save": "Gem"
 }
