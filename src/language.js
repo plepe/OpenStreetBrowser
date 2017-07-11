@@ -24,7 +24,7 @@ register_hook('options_form', function (def) {
   }
 
   def.ui_lang = {
-    'name': 'UI Language',
+    'name': lang('options:ui_lang'),
     'type': 'select',
     'values': languages,
     'req': true,
@@ -32,11 +32,12 @@ register_hook('options_form', function (def) {
   }
 
   def.data_lang = {
-    'name': 'data language',
+    'name': lang('options:data_lang'),
+    'desc': lang('options:data_lang:desc'),
     'type': 'select',
     'values': languages,
     'default': ui_lang,
-    'placeholder': 'Native language'
+    'placeholder': lang('options:data_lang:local')
   }
 })
 
