@@ -12,6 +12,7 @@ $depend = array(
 $include = array(
   'php' => array(
     'src/options.php',
+    'src/language.php',
   ),
 );
 $version = "3.x-dev";
