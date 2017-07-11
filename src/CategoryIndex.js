@@ -40,6 +40,14 @@ CategoryIndex.prototype.open = function () {
   }
 }
 
+CategoryIndex.prototype.recalc = function () {
+  for (var k in this.childrenCategories) {
+    if (this.childrenCategories[k]) {
+      this.childrenCategories[k].recalc()
+    }
+  }
+}
+
 CategoryIndex.prototype._loadChildCategory = function (err, category) {
   if (err) {
     return

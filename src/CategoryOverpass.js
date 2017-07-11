@@ -69,6 +69,10 @@ CategoryOverpass.prototype.open = function () {
   this.isOpen = true
 }
 
+CategoryOverpass.prototype.recalc = function () {
+  this.layer.recalc()
+}
+
 CategoryOverpass.prototype.close = function () {
   if (!this.isOpen)
     return

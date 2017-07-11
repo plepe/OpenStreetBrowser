@@ -83,4 +83,7 @@ CategoryBase.prototype.toggle = function () {
   return false
 }
 
+CategoryBase.prototype.recalc = function () {
+}
+
 module.exports = CategoryBase
