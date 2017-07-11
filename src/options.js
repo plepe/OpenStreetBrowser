@@ -35,9 +35,13 @@ moduleOptions.open = function () {
 
 moduleOptions.submit = function (options_form) {
   var data = options_form.get_data()
-  console.log(data)
 
-  showRootContent()
+  ajax('options_save', null, data, function (ret) {
+    console.log(ret)
+    call_hooks('options_save', data)
+
+    showRootContent()
+  })
 
   return false
 }
