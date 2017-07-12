@@ -4,5 +4,6 @@
     "options:data_lang:local": "Lokale Sprache",
     "options:ui_lang": "Anwendungssprache",
     "save": "Speichern",
+    "unknown": "unbekannt",
     "unnamed": "Namenlos"
 }
