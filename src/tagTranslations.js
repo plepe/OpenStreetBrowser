@@ -15,6 +15,9 @@ OverpassLayer.twig.extendFunction('localizedTag', function (tags, id) {
 
   return tags[id]
 })
+OverpassLayer.twig.extendFunction('trans', function () {
+  return lang.apply(this, arguments)
+})
 
 function tagTranslationsTrans () {
   var ret = null
