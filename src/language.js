@@ -1,10 +1,19 @@
 var tagTranslations = require('./tagTranslations')
 
+function getPreferredDataLanguage () {
+  var m = (navigator.language || navigator.userLanguage).match(/^([^\-]+)(\-.*|)$/)
+  if (m) {
+    return m[1].toLocaleLowerCase()
+  } else {
+    return ui_lang
+  }
+}
+
 register_hook('init_callback', function (callback) {
   if ('data_lang' in options) {
     tagTranslations.setTagLanguage(options.data_lang)
   } else {
-    tagTranslations.setTagLanguage(ui_lang)
+    tagTranslations.setTagLanguage(getPreferredDataLanguage())
   }
 
   callback(null)
@@ -36,7 +45,7 @@ register_hook('options_form', function (def) {
     'desc': lang('options:data_lang:desc'),
     'type': 'select',
     'values': languages,
-    'default': ui_lang,
+    'default': getPreferredDataLanguage(),
     'placeholder': lang('options:data_lang:local')
   }
 })
