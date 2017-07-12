@@ -7,3 +7,27 @@ $config['overpassUrl'] = '//overpass-api.de/api/interpreter';
 
 // Location of the initial view if no IP-location can be resolved. 'zoom' is optional.
 $config['defaultView'] = array('lat' => 51.505, 'lon' => -0.09, 'zoom' => 18);
+
+// List of available user interface languages
+$languages = array(
+  "ast", // Asturian
+  "ca", // Catalan
+  "cs", // Czech
+  "da", // Danish
+  "de", // German
+  "el", // Greek
+  "en", // English
+  "es", // Spanish
+  "et", // Estonian
+  "fr", // French
+  "hu", // Hungarian
+  "it", // Italian
+  "ja", // Japanese
+  "nl", // Dutch
+  "pl", // Polish
+  "pt-br", // Portugese (Brazil)
+  "ro", // Romanian
+  "ru", // Russian
+  "sr", // Serbian
+  "uk", // Ukrainian
+);

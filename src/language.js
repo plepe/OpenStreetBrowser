@@ -9,6 +9,72 @@ function getPreferredDataLanguage () {
   }
 }
 
+function getAcceptLanguages () {
+  return navigator.languages || [ navigator.language || navigator.userLanguage ]
+}
+
+function getUiLanguages () {
+  var ret = {}
+  var acceptLanguages = getAcceptLanguages()
+
+  for (var i = 0; i < acceptLanguages.length; i++) {
+    var code = acceptLanguages[i]
+    if (languages.indexOf(code) !== -1) {
+      ret[code] = langName(code)
+    }
+  }
+
+  for (var i = 0; i < languages.length; i++) {
+    var code = languages[i]
+    if (!(code in ret)) {
+      ret[code] = langName(code)
+    }
+  }
+
+  return ret
+}
+
+function getDataLanguages () {
+  var ret = {}
+  var acceptLanguages = getAcceptLanguages()
+
+  for (var i = 0; i < acceptLanguages.length; i++) {
+    var code = acceptLanguages[i]
+    ret[code] = langName(code)
+  }
+
+  for (var k in lang_str) {
+    var m
+    if (m = k.match(/^lang:(.*)$/)) {
+      var code = m[1]
+      if (code === 'current') {
+        continue
+      }
+      if (!(code in ret)) {
+        ret[code] = langName(code)
+      }
+    }
+  }
+
+  return ret
+}
+
+function langName (code) {
+  var ret = ''
+
+  if (('lang_native:' + code) in lang_str && lang_str['lang_native:' + code]) {
+    ret += lang_str['lang_native:' + code]
+  } else {
+    ret += 'Language "' + code + '"'
+  }
+
+  if (('lang:' + code) in lang_str && lang_str['lang:' + code]) {
+    ret += ' (' + lang_str['lang:' + code] + ')'
+  }
+
+  return ret
+}
+
 register_hook('init_callback', function (callback) {
   if ('data_lang' in options) {
     tagTranslations.setTagLanguage(options.data_lang)
@@ -20,22 +86,10 @@ register_hook('init_callback', function (callback) {
 })
 
 register_hook('options_form', function (def) {
-  var languages = {}
-  for (var k in lang_str) {
-    var m
-    if (m = k.match(/^lang:(.*)$/)) {
-      if (m[1] === 'current') {
-        continue
-      }
-
-      languages[m[1]] = lang_str['lang_native:' + m[1]] + ' (' + lang_str[k] + ')'
-    }
-  }
-
   def.ui_lang = {
     'name': lang('options:ui_lang'),
     'type': 'select',
-    'values': languages,
+    'values': getUiLanguages(),
     'req': true,
     'default': ui_lang
   }
@@ -44,7 +98,7 @@ register_hook('options_form', function (def) {
     'name': lang('options:data_lang'),
     'desc': lang('options:data_lang:desc'),
     'type': 'select',
-    'values': languages,
+    'values': getDataLanguages(),
     'default': getPreferredDataLanguage(),
     'placeholder': lang('options:data_lang:local')
   }
