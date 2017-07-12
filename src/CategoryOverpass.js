@@ -7,6 +7,9 @@ var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
     markerSign: ""
+  },
+  queryOptions: {
+    split: 64
   }
 }
 
