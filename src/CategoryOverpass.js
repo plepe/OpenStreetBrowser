@@ -2,6 +2,13 @@ var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var CategoryBase = require('./CategoryBase')
+var defaultValues = {
+  minZoom: 14,
+  feature: {
+    title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
+    markerSign: ""
+  }
+}
 
 CategoryOverpass.prototype = Object.create(CategoryBase.prototype)
 CategoryOverpass.prototype.constructor = CategoryOverpass
@@ -9,6 +16,26 @@ function CategoryOverpass (id, data) {
   CategoryBase.call(this, id, data)
 
   data.id = this.id
+
+  // set undefined data properties from defaultValues
+  for (var k1 in defaultValues) {
+    if (!(k1 in data)) {
+      data[k1] = defaultValues[k1]
+    } else if (typeof defaultValues[k1] === 'object') {
+      for (var k2 in defaultValues[k1]) {
+        if (!(k2 in data[k1])) {
+          data[k1][k2] = defaultValues[k1][k2]
+        } else if (typeof defaultValues[k1][k2] === 'object') {
+          for (var k3 in defaultValues[k1][k2]) {
+            if (!(k3 in data[k1][k2])) {
+              data[k1][k2][k3] = defaultValues[k1][k2][k3]
+            }
+          }
+        }
+      }
+    }
+  }
+
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
   data.feature.body = (typeof data.feature.body === 'string' ? data.feature.body : '') + '<a class="showDetails" href="#' + this.id + '/{{ id }}/details">show details</a>'
 

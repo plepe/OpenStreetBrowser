@@ -3,5 +3,6 @@
     "options:data_lang": "Језик подетака",
     "options:data_lang:local": "Локални језик",
     "options:ui_lang": "Језик интерфејса",
-    "save": "Запамти"
+    "save": "Запамти",
+    "unnamed": "без имена"
 }

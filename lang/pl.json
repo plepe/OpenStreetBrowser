@@ -3,5 +3,6 @@
     "options:data_lang": "Język danych",
     "options:data_lang:local": "Język lokalny",
     "options:ui_lang": "Język interfejsu",
-    "save": "Zapisz"
+    "save": "Zapisz",
+    "unnamed": "nienazwane"
 }

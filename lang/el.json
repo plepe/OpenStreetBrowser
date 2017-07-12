@@ -3,5 +3,6 @@
     "options:data_lang": "Γλωσσα δεδομένων",
     "options:data_lang:local": "Τοπική γλώσσα",
     "options:ui_lang": "Γλώσσα διεπαφής",
-    "save": "Αποθήκευση"
+    "save": "Αποθήκευση",
+    "unnamed": "ανώνυμο"
 }
