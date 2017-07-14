@@ -56,6 +56,11 @@ function CategoryOverpass (id, data) {
   p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
   this.dom.appendChild(p)
 
+  var p = document.createElement('div')
+  p.className = 'loadingIndicator2'
+  p.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>'
+  this.dom.appendChild(p)
+
   this.domStatus = document.createElement('div')
   this.domStatus.className = 'status'
 
