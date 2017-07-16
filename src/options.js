@@ -1,14 +1,17 @@
 var moduleOptions = {}
 
 register_hook('init', function () {
-  var footer = document.getElementById('footer')
+  var menu = document.getElementById('menu')
+
+  var li = document.createElement('li')
+  menu.appendChild(li)
 
   var link = document.createElement('a')
   link.innerHTML = lang('main:options')
   link.href = '#options'
   link.onclick = moduleOptions.open
 
-  footer.appendChild(link)
+  li.appendChild(link)
 })
 
 moduleOptions.open = function () {

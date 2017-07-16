@@ -251,3 +251,25 @@ ul.overpass-layer-list > li:after {
 a.showDetails {
   display: block;
 }
+
+/* Footer */
+#menu {
+  margin: 0 0;
+  padding: 0 0;
+}
+#menu li {
+  display: inline-block;
+}
+#menu a {
+  text-decoration: none;
+  color: black;
+}
+#menu a:hover {
+  text-decoration: underline;
+}
+#menu li::after {
+  content: ' |';
+}
+#menu li:last-of-type::after {
+  content: '';
+}
