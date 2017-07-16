@@ -3,7 +3,10 @@
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php call_hooks("init"); /* initialize submodules */ ?>
 <?php
-if (isset($config['categoriesDir'])) {
+if (isset($config['categoriesAlwaysReload']) && $config['categoriesAlwaysReload']) {
+  $config['categoriesRev'] = uniqid();
+}
+elseif (isset($config['categoriesDir'])) {
   if (file_exists("{$config['categoriesDir']}/.git")) {
     exec("chdir " . escapeShellArg($config['categoriesDir']) . "; git rev-parse --short HEAD", $x);
     $config['categoriesRev'] = $x[0];
