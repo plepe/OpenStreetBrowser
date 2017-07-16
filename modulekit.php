@@ -14,5 +14,8 @@ $include = array(
     'src/options.php',
     'src/language.php',
   ),
+  'css' => array(
+    'style.css',
+  ),
 );
 $version = "3.x-dev";
