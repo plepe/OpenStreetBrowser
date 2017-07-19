@@ -12,6 +12,12 @@ var defaultValues = {
     split: 64
   }
 }
+var showValuesFeature = {
+  style: {
+    color: 'black',
+    fillColor: 'black'
+  }
+}
 
 CategoryOverpass.prototype = Object.create(CategoryBase.prototype)
 CategoryOverpass.prototype.constructor = CategoryOverpass
@@ -123,6 +129,24 @@ CategoryOverpass.prototype.get = function (id, callback) {
 }
 
 CategoryOverpass.prototype.show = function (id, options, callback) {
+  if (typeof options === 'undefined') {
+    options = {}
+  }
+
+  options.feature = JSON.parse(JSON.stringify(this.options.feature))
+  for (var k1 in showValuesFeature) {
+    if (typeof showValuesFeature[k1] === 'object') {
+      if (k1 in options.feature) {
+        for (var k2 in showValuesFeature[k1]) {
+          options.feature[k1][k2] = showValuesFeature[k1][k2]
+        }
+      } else {
+        options.feature[k1] = showValuesFeature[k1]
+      }
+    } else {
+      options.feature[k1] = showValuesFeature[k1]
+    }
+  }
   this.layer.show(id, options, callback)
 }
 
