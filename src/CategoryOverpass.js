@@ -49,6 +49,10 @@ function CategoryOverpass (id, data) {
   }.bind(this)
   this.layer.onLoadEnd = function (ev) {
     this.dom.classList.remove('loading')
+
+    if (ev.error && ev.error !== 'abort') {
+      alert('Error loading data from Overpass API: ' + ev.error)
+    }
   }.bind(this)
 
   var p = document.createElement('div')
