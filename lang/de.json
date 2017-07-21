@@ -1,7 +1,9 @@
 {
+    "default": "Standard",
     "main:options": "Optionen",
     "options:data_lang": "Datensprache",
     "options:data_lang:local": "Lokale Sprache",
+    "options:overpassUrl": "OverpassAPI Adresse",
     "options:ui_lang": "Anwendungssprache",
     "save": "Speichern",
     "unknown": "unbekannt",

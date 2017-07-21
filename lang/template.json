@@ -1,8 +1,10 @@
 {
+    "default": "",
     "main:options": "",
     "options:data_lang": "",
     "options:data_lang:desc": "",
     "options:data_lang:local": "",
+    "options:overpassUrl": "",
     "options:ui_lang": "",
     "save": "",
     "unknown": "",

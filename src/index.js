@@ -13,11 +13,13 @@ require('./CategoryOverpass')
 global.map
 window.baseCategory
 window.overpassUrl
+window.overpassFrontend
 
 // Optional modules
 require('./options')
 require('./language')
 require('./location')
+require('./overpassChooser')
 
 window.onload = function() {
   map = L.map('map')
