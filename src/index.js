@@ -12,6 +12,7 @@ require('./CategoryOverpass')
 
 global.map
 window.baseCategory
+window.overpassUrl
 
 // Optional modules
 require('./options')
@@ -43,7 +44,14 @@ function onload2 () {
     showPopup: false
   }).addTo(map);
 
-  overpassFrontend = new OverpassFrontend(config.overpassUrl, {
+  if (typeof overpassUrl === 'undefined') {
+    overpassUrl = config.overpassUrl
+    if (Array.isArray(overpassUrl) && overpassUrl.length) {
+      overpassUrl = overpassUrl[0]
+    }
+  }
+
+  overpassFrontend = new OverpassFrontend(overpassUrl, {
     timeGap: 10,
     effortPerRequest: 100
   })

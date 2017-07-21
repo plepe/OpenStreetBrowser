@@ -6,7 +6,10 @@ $config['categoriesDir'] = 'node_modules/openstreetbrowser-categories-main';
 $config['categoriesAlwaysReload'] = true;
 
 // URL of the Overpass API
-$config['overpassUrl'] = '//overpass-api.de/api/interpreter';
+$config['overpassUrl'] = array(
+  '//overpass-api.de/api/interpreter',
+  '//api.openstreetmap.fr/oapi/interpreter',
+);
 
 // Location of the initial view if no IP-location can be resolved. 'zoom' is optional.
 $config['defaultView'] = array('lat' => 51.505, 'lon' => -0.09, 'zoom' => 18);
