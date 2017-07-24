@@ -14,6 +14,9 @@ $config['overpassUrl'] = array(
 // Location of the initial view if no IP-location can be resolved. 'zoom' is optional.
 $config['defaultView'] = array('lat' => 51.505, 'lon' => -0.09, 'zoom' => 18);
 
+// Shall the initial map view be retrieved via IP location? (default: true)
+$config['checkIpLocation'] = true;
+
 // List of available user interface languages
 $languages = array(
   "ast", // Asturian
