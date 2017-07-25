@@ -6,7 +6,14 @@ var defaultValues = {
   minZoom: 14,
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
-    markerSign: ""
+    markerSign: "",
+    'style:hover': {
+      color: 'black',
+      weight: 3,
+      opacity: 1,
+      radius: 12,
+      fill: false
+    }
   },
   queryOptions: {
     split: 64
