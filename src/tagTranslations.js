@@ -2,6 +2,9 @@ var OverpassLayer = require('overpass-layer')
 var translations = null
 var tagLang = null
 
+OverpassLayer.twig.extendFunction('keyTrans', function () {
+  return tagTranslationsTrans.apply(this, arguments)
+})
 OverpassLayer.twig.extendFunction('tagTrans', function () {
   return tagTranslationsTrans.apply(this, arguments)
 })
