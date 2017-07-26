@@ -86,7 +86,7 @@ The following values are possible for categories (the only mandatory value is qu
 * maxZoom: Show layer only up to the given zoom level (default: no limit).
 * feature: an object describing how the feature will be formated resp. styled.
   * style: a Leaflet style.
-    * stroke: Whether to draw stroke along the path. Set it to false to disable borders on polygons or circles. (boolean, true)
+    * stroke: Whether to draw stroke along the path. Set it to false or empty string to disable borders on polygons or circles. (boolean, true)
     * weight: Stroke width in pixels (number, 3)
     * color: Stroke color (string, '#3388ff')
     * opacity: Stroke opacity (number, 1.0)
@@ -94,7 +94,7 @@ The following values are possible for categories (the only mandatory value is qu
     * lineJoin: shape at corners of the stroke (string, 'round')
     * dashArray: stroke dash pattern (string, null)
     * dashOffset: distrance into the dash pattern to start dash (string, null)
-    * fill: whether to fill the path with color. Set it to false to disable filling on polygons or circles. (boolean, depends)
+    * fill: whether to fill the path with color. Set it to false or empty string to disable filling on polygons or circles. (boolean, depends)
     * fillColor: Fill color. Defaults to the value of the color option. (string)
     * fillOpacity: Fill opacity. (number, 0.2)
     * fillRule: define how the inside of a shape is determined. (string, 'evenodd')
