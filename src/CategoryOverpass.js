@@ -61,6 +61,17 @@ function CategoryOverpass (id, data) {
       alert('Error loading data from Overpass API: ' + ev.error)
     }
   }.bind(this)
+  this.layer.onAppear = function (ob) {
+    // HOVER
+    if (ob.listItem) {
+      ob.listItem.onmouseover = function (id) {
+        this.layer.show(id, { styles: [ 'hover' ] }, function () {})
+      }.bind(this, ob.id)
+      ob.listItem.onmouseout = function (id) {
+        this.layer.hide(id)
+      }.bind(this, ob.id)
+    }
+  }.bind(this)
 
   var p = document.createElement('div')
   p.className = 'loadingIndicator'
