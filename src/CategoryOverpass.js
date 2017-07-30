@@ -3,7 +3,6 @@ var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var CategoryBase = require('./CategoryBase')
 var defaultValues = {
-  minZoom: 14,
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
     markerSign: "",
@@ -44,6 +43,15 @@ function CategoryOverpass (id, data) {
         }
       }
     }
+  }
+
+  // get minZoom
+  if ('minZoom' in data) {
+    // has minZoom
+  } else if (typeof data.query === 'object') {
+    data.minZoom = Object.keys(data.query)[0]
+  } else {
+    data.minZoom = 14
   }
 
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
