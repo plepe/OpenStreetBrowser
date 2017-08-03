@@ -21,3 +21,9 @@ var fullscreenControl = L.Control.extend({
 register_hook('init', function (callback) {
   map.addControl(new fullscreenControl())
 })
+
+register_hook('show', function (url, options) {
+  if (options.showDetails) {
+    document.body.classList.remove('fullscreen')
+  }
+})
