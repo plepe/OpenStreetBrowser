@@ -57,14 +57,16 @@ body {
   margin-top: -17px;
   padding-right: 10px;
 }
-#sidebar > #header > .large {
+#sidebar > #header > #title {
+  float: left;
+  width: 110px;
+}
+#sidebar > #header > #title > .large {
   font-size: 28px;
   display: block;
 }
-#sidebar > #header > .version {
-  text-align: right;
-  padding-right: 24px;
-  float: right;
+#sidebar > #header > #title > .version {
+  display: block;
   font-size: 16px;
 }
 
