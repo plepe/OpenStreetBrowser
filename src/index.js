@@ -20,6 +20,7 @@ require('./options')
 require('./language')
 require('./location')
 require('./overpassChooser')
+require('./fullscreen')
 
 window.onload = function() {
   map = L.map('map')
@@ -100,6 +101,7 @@ function onload2 () {
     }
 
     show(url, options, function () {})
+    call_hooks('show', url, options)
   }
 
   hash(function (loc) {
@@ -111,6 +113,7 @@ function onload2 () {
       }
 
       show(url, options, function () {})
+      call_hooks('show', url, options)
     }
   })
 }

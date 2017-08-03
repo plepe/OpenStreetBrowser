@@ -5,12 +5,23 @@ function CategoryBase (id, data) {
   this.isOpen = false
   this.dom = document.createElement('div')
   this.dom.className = 'category category-' + data.type
+  var name
 
   if (this.id !== 'index') {
     var domHeader = document.createElement('header')
     this.dom.appendChild(domHeader)
 
-    var name = ('name:' + ui_lang) in this.data ? this.data['name:en'] : lang('category:' + this.id)
+    if ('name' in this.data) {
+      if (typeof this.data.name === 'object') {
+        name = lang(this.data.name)
+      } else {
+        name = this.data.name
+      }
+    } else if (('name:' + ui_lang) in this.data) {
+      name = this.data['name:' + ui_lang]
+    } else {
+      name = lang('category:' + this.id)
+    }
 
     var a = document.createElement('a')
     a.appendChild(document.createTextNode(name))

@@ -57,14 +57,16 @@ body {
   margin-top: -17px;
   padding-right: 10px;
 }
-#sidebar > #header > .large {
+#sidebar > #header > #title {
+  float: left;
+  width: 110px;
+}
+#sidebar > #header > #title > .large {
   font-size: 28px;
   display: block;
 }
-#sidebar > #header > .version {
-  text-align: right;
-  padding-right: 24px;
-  float: right;
+#sidebar > #header > #title > .version {
+  display: block;
   font-size: 16px;
 }
 
@@ -105,7 +107,6 @@ body {
 
 /* Source: http://tobiasahlin.com/spinkit/ */
 #content .category.loading > .loadingIndicator2 {
-  width: 100%;
   text-align: left;
   display: block;
   background: #efefef;
@@ -272,4 +273,102 @@ a.showDetails {
 }
 #menu li:last-of-type::after {
   content: '';
+}
+
+@media all and (max-height: 400px) {
+#sidebar {
+  overflow: auto;
+}
+#sidebar > #content {
+  overflow: visible;
+}
+}
+
+@media all and (max-width: 500px) {
+#sidebar {
+  top: 0;
+  height: 250px;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  width: auto;
+  overflow: auto;
+}
+#map {
+  left: 0;
+  bottom: 0;
+  top: 270px;
+  right: 0;
+  border-left: none;
+  border-top: 1px solid #999;
+}
+#mapShadow {
+  left: 0;
+  right: 0;
+  top: 271px;
+  bottom: auto;
+  height: 5px;
+  width: auto;
+  background-image: url(img/shadow_top.png);
+  background-repeat: repeat-x;
+}
+#sidebar > #content {
+  overflow: visible;
+}
+}
+
+@media all and (max-width: 500px) and (max-height: 500px) {
+#sidebar {
+  height: 220px;
+}
+#map {
+  top: 220px;
+}
+#mapShadow {
+  top: 221px;
+}
+}
+
+@media all and (max-width: 500px) and (max-height: 460px) {
+#sidebar {
+  height: 200px;
+}
+#map {
+  top: 200px;
+}
+#mapShadow {
+  top: 201px;
+}
+}
+
+@media all and (max-width: 500px) and (max-height: 420px) {
+#sidebar {
+  height: 180px;
+}
+#map {
+  top: 180px;
+}
+#mapShadow {
+  top: 181px;
+}
+}
+
+/* FULLSCREEN */
+.leaflet-control-fullscreen {
+  font-size: 20px;
+}
+.fullscreen #sidebar {
+  display: none;
+}
+.fullscreen #map {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  border: none;
+}
+.fullscreen #mapShadow {
+  display: none;
 }
