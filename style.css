@@ -106,7 +106,7 @@ body {
 }
 
 /* Source: http://tobiasahlin.com/spinkit/ */
-#content .category.loading > .loadingIndicator2 {
+#content .category.open.loading > .loadingIndicator2 {
   text-align: left;
   display: block;
   background: #efefef;
