@@ -20,6 +20,7 @@ require('./options')
 require('./language')
 require('./location')
 require('./overpassChooser')
+require('./fullscreen')
 
 window.onload = function() {
   map = L.map('map')
