@@ -372,3 +372,31 @@ a.showDetails {
 .fullscreen #mapShadow {
   display: none;
 }
+#loadingIndicator {
+  display: none;
+}
+.loading > #loadingIndicator {
+  display: block;
+  z-index: 10000;
+  height: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: black;
+}
+#loadingIndicator:before {
+  display: block;
+  position: absolute;
+  content: "";
+  left: -200px;
+  right: 200px;
+  height: 4px;
+  background: red;
+  animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+  from: { left: -200px; width: 30%; }
+  to:
+}

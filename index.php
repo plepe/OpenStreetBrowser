@@ -54,5 +54,7 @@ html_export_var(array(
       </ul>
     </div>
   </div>
+  <div id='loadingIndicator'>
+  </div>
 </body>
 </html>
