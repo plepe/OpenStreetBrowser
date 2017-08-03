@@ -101,6 +101,7 @@ function onload2 () {
     }
 
     show(url, options, function () {})
+    call_hooks('show', url, options)
   }
 
   hash(function (loc) {
@@ -112,6 +113,7 @@ function onload2 () {
       }
 
       show(url, options, function () {})
+      call_hooks('show', url, options)
     }
   })
 }
