@@ -6,6 +6,7 @@
     "options:overpassUrl": "OverpassAPI Adresse",
     "options:ui_lang": "Anwendungssprache",
     "save": "Speichern",
+    "toggle_fullscreen": "(De-)aktiviere Vollbildmodus",
     "unknown": "unbekannt",
     "unnamed": "Namenlos"
 }
