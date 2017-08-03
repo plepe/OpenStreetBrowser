@@ -1,6 +1,7 @@
 function CategoryBase (id, data) {
   this.id = id
   this.parentCategory = null
+  this.childrenLoadingCount = 0
   this.data = data
   this.isOpen = false
   this.dom = document.createElement('div')
@@ -40,7 +41,7 @@ CategoryBase.prototype.setMap = function (map) {
 }
 
 CategoryBase.prototype.setParent = function (parent) {
-  this.parent = parent
+  this.parentCategory = parent
 }
 
 CategoryBase.prototype.setParentDom = function (parentDom) {
@@ -95,6 +96,26 @@ CategoryBase.prototype.toggle = function () {
 }
 
 CategoryBase.prototype.recalc = function () {
+}
+
+CategoryBase.prototype.notifyChildLoadStart = function (category) {
+  console.log(this.id, this.childrenLoadingCount)
+  if (this.childrenLoadingCount === 0 && this.parentCategory) {
+    this.parentCategory.notifyChildLoadStart(this)
+  } else {
+    document.body.classList.add('loading')
+  }
+  this.childrenLoadingCount++
+}
+
+CategoryBase.prototype.notifyChildLoadEnd = function (category) {
+  console.log(this.id, this.childrenLoadingCount)
+  this.childrenLoadingCount--
+  if (this.childrenLoadingCount === 0 && this.parentCategory) {
+    this.parentCategory.notifyChildLoadEnd(this)
+  } else {
+    document.body.classList.remove('loading')
+  }
 }
 
 module.exports = CategoryBase

@@ -61,9 +61,15 @@ function CategoryOverpass (id, data) {
 
   this.layer.onLoadStart = function (ev) {
     this.dom.classList.add('loading')
+    if (this.parentCategory) {
+      this.parentCategory.notifyChildLoadStart(this)
+    }
   }.bind(this)
   this.layer.onLoadEnd = function (ev) {
     this.dom.classList.remove('loading')
+    if (this.parentCategory) {
+      this.parentCategory.notifyChildLoadEnd(this)
+    }
 
     if (ev.error && ev.error !== 'abort') {
       alert('Error loading data from Overpass API: ' + ev.error)
