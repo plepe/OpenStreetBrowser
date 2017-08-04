@@ -100,8 +100,14 @@ function onload2 () {
       showDetails: !!location.hash.match(/\/details$/)
     }
 
-    show(url, options, function () {})
-    call_hooks('show', url, options)
+    show(url, options, function (err) {
+      if (err) {
+        alert(err)
+        return
+      }
+
+      call_hooks('show', url, options)
+    })
   }
 
   hash(function (loc) {
@@ -112,8 +118,14 @@ function onload2 () {
         showDetails: !!loc.match(/\/details$/)
       }
 
-      show(url, options, function () {})
-      call_hooks('show', url, options)
+      show(url, options, function (err) {
+        if (err) {
+          alert(err)
+          return
+        }
+
+        call_hooks('show', url, options)
+      })
     }
   })
 }
@@ -126,14 +138,12 @@ function show (id, options, callback) {
   id = id.split('/')
 
   if (id.length < 2) {
-    alert('unknown request')
-    return
+    return callback('unknown request')
   }
 
   OpenStreetBrowserLoader.getCategory(id[0], function (err, category) {
     if (err) {
-      alert('error loading category "' + id[0] + '": ' + err)
-      return
+      return callback('error loading category "' + id[0] + '": ' + err)
     }
 
     if (!category.parentDom) {
@@ -146,8 +156,7 @@ function show (id, options, callback) {
       },
       function (err, data) {
         if (err) {
-          alert('error loading object "' + id[0] + '/' + id[1] +'": ' + err)
-          return
+          return callback('error loading object "' + id[0] + '/' + id[1] +'": ' + err)
         }
 
         data.feature.openPopup()
