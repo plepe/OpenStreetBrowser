@@ -39,10 +39,15 @@ function CategoryBase (id, data) {
       a.className = 'reload'
       a.onclick = function () {
         var id = this.id
+        var isOpen = this.isOpen
 
-        this.reload(function (err) {
+        this.reload(function (err, category) {
           if (err) {
             alert('Error reloading category ' + id + ': ' + err)
+          }
+
+          if (isOpen) {
+            category.open()
           }
         })
       }.bind(this)
