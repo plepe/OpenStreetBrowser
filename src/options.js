@@ -15,7 +15,13 @@ register_hook('init', function () {
 })
 
 moduleOptions.open = function () {
-  var def = {}
+  var def = {
+    'debug': {
+      'type': 'boolean',
+      'name': 'Debug mode',
+      'weight': 10
+    }
+  }
 
   call_hooks('options_form', def)
 
