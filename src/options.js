@@ -19,7 +19,8 @@ moduleOptions.open = function () {
     'debug': {
       'type': 'boolean',
       'name': 'Debug mode',
-      'weight': 10
+      'weight': 10,
+      'reloadOnChange': true
     }
   }
 
@@ -46,6 +47,17 @@ moduleOptions.open = function () {
 
 moduleOptions.submit = function (options_form) {
   var data = options_form.get_data()
+
+  var reload = false
+  for (var k in data) {
+    if (options_form.def[k].reloadOnChange && options[k] != data[k]) {
+      reload = true
+    }
+  }
+
+  if (reload) {
+    location.reload()
+  }
 
   ajax('options_save', null, data, function (ret) {
     call_hooks('options_save', data)

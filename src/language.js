@@ -91,7 +91,8 @@ register_hook('options_form', function (def) {
     'type': 'select',
     'values': getUiLanguages(),
     'req': true,
-    'default': ui_lang
+    'default': ui_lang,
+    'reloadOnChange': true
   }
 
   def.data_lang = {
@@ -105,10 +106,6 @@ register_hook('options_form', function (def) {
 })
 
 register_hook('options_save', function (data) {
-  if ('ui_lang' in data && data.ui_lang !== ui_lang) {
-    location.reload()
-  }
-
   if ('data_lang' in data) {
     if ('data_lang' in options && options.data_lang !== data.data_lang) {
       tagTranslations.setTagLanguage(data.data_lang)
