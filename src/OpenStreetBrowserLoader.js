@@ -56,6 +56,11 @@ OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, data, call
   }
 }
 
+OpenStreetBrowserLoader.prototype.forget = function (id) {
+  this.categories[id].remove()
+  delete this.categories[id]
+}
+
 OpenStreetBrowserLoader.prototype.registerType = function (type, classObject) {
   this.types[type] = classObject
 }

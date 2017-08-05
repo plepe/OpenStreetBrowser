@@ -1,3 +1,5 @@
+var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
+
 function CategoryBase (id, data) {
   this.id = id
   this.parentCategory = null
@@ -29,6 +31,23 @@ function CategoryBase (id, data) {
     a.href = '#'
     a.onclick = this.toggle.bind(this)
     domHeader.appendChild(a)
+
+    if (options.debug) {
+      var a = document.createElement('a')
+      a.appendChild(document.createTextNode('⟳'))
+      a.title = lang('reload')
+      a.className = 'reload'
+      a.onclick = function () {
+        var id = this.id
+
+        this.reload(function (err) {
+          if (err) {
+            alert('Error reloading category ' + id + ': ' + err)
+          }
+        })
+      }.bind(this)
+      domHeader.appendChild(a)
+    }
   }
 
   this.domContent = document.createElement('div')
@@ -93,6 +112,33 @@ CategoryBase.prototype.toggle = function () {
   }
 
   return false
+}
+
+CategoryBase.prototype.reload = function (callback) {
+  var parentCategory = this.parentCategory
+  var parentDom = this.parentDom
+
+  OpenStreetBrowserLoader.forget(this.id)
+  this.remove()
+
+  OpenStreetBrowserLoader.getCategory(this.id, function (err, category) {
+    if (err) {
+      return callback(err)
+    }
+
+    category.setParent(parentCategory)
+    category.setParentDom(parentDom)
+
+    callback(null, category)
+  })
+}
+
+CategoryBase.prototype.remove = function () {
+  this.close()
+
+  if (this.parentDom) {
+    this.parentDom.removeChild(this.dom)
+  }
 }
 
 CategoryBase.prototype.recalc = function () {

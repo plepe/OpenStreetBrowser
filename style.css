@@ -165,6 +165,9 @@ body {
 #content .category header > a:hover {
   text-decoration: underline;
 }
+#content .category header > a.reload {
+  float: right;
+}
 #content .category > .content,
 #content .category > .status {
   display: none;
