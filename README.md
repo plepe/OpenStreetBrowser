@@ -128,7 +128,7 @@ The following properties are available:
 There are several extra functions defined for the TwigJS language:
 * function `keyTrans`: return the translation of the given key. Parameters: key (required, e.g. 'amenity').
 * function `tagTrans`: return the translation of the given tag. Parameters: key (required, e.g. 'amenity'), value (required, e.g. 'bar'), count (optional, default 1).
-* function `tagTranList`: return the translations of the given tag for tags with multiple values separated by ';' (e.g. 'cuisine'). Parameters: key (required, e.g. 'cuisine'), value (required, e.g. 'kebab' or 'kebab;pizza;noodles;burger').
+* function `tagTransList`: return the translations of the given tag for tags with multiple values separated by ';' (e.g. 'cuisine'). Parameters: key (required, e.g. 'cuisine'), value (required, e.g. 'kebab' or 'kebab;pizza;noodles;burger').
 * function `localizedTag`: return a localized tag if available (e.g. 'name:de' for the german translation of the tag). Parameters: tags (the tags property), key prefix (e.g. 'name'). Which language will be returned depends on the "data language" which can be set via Options. If no localized tag is available, the tag value itself will be returned (e.g. value of 'name').
 * function `trans`: return the translation of the given string (e.g. 'save', 'unknown', 'unnamed', ...). Parameters: string (the string to translate).
 
