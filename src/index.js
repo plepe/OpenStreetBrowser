@@ -21,6 +21,7 @@ require('./language')
 require('./location')
 require('./overpassChooser')
 require('./fullscreen')
+require('./twigFunctions')
 
 window.onload = function() {
   map = L.map('map')
