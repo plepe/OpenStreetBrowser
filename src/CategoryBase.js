@@ -124,7 +124,6 @@ CategoryBase.prototype.reload = function (callback) {
   var parentDom = this.parentDom
 
   OpenStreetBrowserLoader.forget(this.id)
-  this.remove()
 
   OpenStreetBrowserLoader.getCategory(this.id, function (err, category) {
     if (err) {
