@@ -55,7 +55,6 @@ function CategoryOverpass (id, data) {
   }
 
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
-  data.feature.body = (typeof data.feature.body === 'string' ? data.feature.body : '') + '<a class="showDetails" href="#' + this.id + '/{{ id }}/details">show details</a>'
 
   this.layer = new OverpassLayer(data)
 
@@ -85,6 +84,13 @@ function CategoryOverpass (id, data) {
         this.layer.hide(id)
       }.bind(this, ob.id)
     }
+  }.bind(this)
+  this.layer.onUpdate = function (ob) {
+    if (!ob.popup || !ob.popup._contentNode) {
+      return
+    }
+
+    this.updatePopupContent(ob, ob.popup)
   }.bind(this)
 
   var p = document.createElement('div')
@@ -160,6 +166,18 @@ CategoryOverpass.prototype.get = function (id, callback) {
 
 CategoryOverpass.prototype.show = function (id, options, callback) {
   this.layer.show(id, options, callback)
+}
+
+CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
+  this.updatePopupContent(object, popup)
+}
+
+CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
+  var footer = document.createElement('div')
+  footer.className = 'footer'
+  var footerContent = '<a class="showDetails" href="#' + this.id + '/' + object.id + '/details">show details</a>'
+  footer.innerHTML = footerContent
+  popup._contentNode.appendChild(footer)
 }
 
 OpenStreetBrowserLoader.registerType('overpass', CategoryOverpass)

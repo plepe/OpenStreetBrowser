@@ -86,6 +86,11 @@ function onload2 () {
       if (location.hash !== url) {
         history.pushState(null, null, '#' + url)
       }
+
+      OpenStreetBrowserLoader.getCategory(e.popup.object.layer_id, function (err, category) {
+        category.notifyPopupOpen(e.popup.object, e.popup)
+
+      })
     }
   })
   map.on('popupclose', function (e) {
