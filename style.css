@@ -409,3 +409,22 @@ a.showDetails {
     margin-left: 100%;
   }
 }
+
+.leaflet-popup-content ul {
+  margin: 0;
+  padding-left: 20px;
+}
+.leaflet-popup-content ul > li {
+  list-style: none;
+}
+.leaflet-popup-content ul > li > .symbol {
+  position: absolute;
+  margin-left: -15px;
+  padding-top: 2px;
+}
+.leaflet-popup-content ul > li > .key {
+  font-weight: bold;
+}
+.leaflet-popup-content ul > li > .key::after {
+  content: ':';
+}
