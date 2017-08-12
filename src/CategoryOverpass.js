@@ -109,6 +109,10 @@ function CategoryOverpass (id, data) {
   this.dom.appendChild(this.domStatus)
 }
 
+CategoryOverpass.prototype.load = function (callback) {
+  callback(null)
+}
+
 CategoryOverpass.prototype.setMap = function (map) {
   CategoryBase.prototype.setMap.call(this, map)
 

@@ -52,7 +52,13 @@ OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, data, call
 
     this.categories[id] = layer
 
-    callback(null, layer)
+    if ('load' in layer) {
+      layer.load(function (err) {
+        callback(err, layer)
+      })
+    } else {
+      callback(null, layer)
+    }
   }
 }
 
