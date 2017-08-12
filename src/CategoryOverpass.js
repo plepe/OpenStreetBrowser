@@ -110,7 +110,15 @@ function CategoryOverpass (id, data) {
 }
 
 CategoryOverpass.prototype.load = function (callback) {
-  callback(null)
+  OpenStreetBrowserLoader.getTemplate('commonBody', function (err, template) {
+    if (err) {
+      console.log("can't load commonBody.html")
+    } else {
+      this.commonBodyTemplate = template
+    }
+
+    callback(null)
+  }.bind(this))
 }
 
 CategoryOverpass.prototype.setMap = function (map) {
@@ -177,6 +185,15 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
 }
 
 CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
+  if (this.commonBodyTemplate) {
+    var commonBody = document.createElement('div')
+    commonBody.className = 'commonBody'
+    popup._contentNode.appendChild(commonBody)
+
+    var data = this.layer.twigData(object.object)
+    commonBody.innerHTML = this.commonBodyTemplate.render(data)
+  }
+
   var footer = document.createElement('div')
   footer.className = 'footer'
   var footerContent = '<a class="showDetails" href="#' + this.id + '/' + object.id + '/details">show details</a>'
