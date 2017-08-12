@@ -1,6 +1,9 @@
+var OverpassLayer = require('overpass-layer')
+
 function OpenStreetBrowserLoader () {
   this.types = {}
   this.categories = {}
+  this.templates = {}
 }
 
 OpenStreetBrowserLoader.prototype.setMap = function (map) {
@@ -34,6 +37,30 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
   var req = new XMLHttpRequest()
   req.addEventListener("load", reqListener.bind(this, req))
   req.open("GET", config.categoriesDir + '/' + id + ".json?" + config.categoriesRev)
+  req.send()
+
+}
+
+OpenStreetBrowserLoader.prototype.getTemplate = function (id, callback) {
+  if (id in this.templates) {
+    callback(null, this.templates[id])
+    return
+  }
+
+  function reqListener (req) {
+    if (req.status !== 200) {
+      console.log(req)
+      return callback(req.statusText, null)
+    }
+
+    this.templates[id] = OverpassLayer.twig.twig({ data: req.responseText, autoescape: true })
+
+    callback(null, this.templates[id])
+  }
+
+  var req = new XMLHttpRequest()
+  req.addEventListener("load", reqListener.bind(this, req))
+  req.open("GET", config.categoriesDir + '/' + id + ".html?" + config.categoriesRev)
   req.send()
 
 }
