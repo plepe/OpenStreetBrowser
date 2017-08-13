@@ -21,6 +21,7 @@ require('./language')
 require('./location')
 require('./overpassChooser')
 require('./fullscreen')
+require('./mapLayers')
 
 window.onload = function() {
   map = L.map('map')
@@ -58,14 +59,6 @@ function onload2 () {
     timeGap: 10,
     effortPerRequest: 100
   })
-
-  var osm_mapnik = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {
-      maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }
-  )
-  osm_mapnik.addTo(map)
 
   OpenStreetBrowserLoader.setMap(map)
 
