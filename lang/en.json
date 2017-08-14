@@ -5,6 +5,7 @@
     "options:data_lang:desc": "Many map features have their name (and other tags) translated to different languages (e.g. with 'name:en', 'name:de'). Specify which language should be used for displaying, or 'Local language' so that always the untranslated value (e.g. 'name') will be used",
     "options:data_lang:local": "Local language",
     "options:overpassUrl": "OverpassAPI URL",
+    "options:preferredBaseMap": "Preferred base map",
     "options:ui_lang": "Interface language",
     "save": "Save",
     "toggle_fullscreen": "Toggle full screen mode",
