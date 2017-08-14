@@ -17,6 +17,9 @@ $config['defaultView'] = array('lat' => 51.505, 'lon' => -0.09, 'zoom' => 18);
 // Shall the initial map view be retrieved via IP location? (default: true)
 $config['checkIpLocation'] = true;
 
+// maxZoom (tiles will be scaled if higher than native zoom level). Default: 19.
+$config['maxZoom'] = 19;
+
 // Available base maps; first is default
 $config['baseMaps'] = array(
   array(

@@ -2,7 +2,7 @@ register_hook('init', function () {
   if (!config.baseMaps) {
     var osm_mapnik = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       {
-        maxZoom: 19,
+        maxZoom: config.maxZoom || 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }
     )
@@ -21,7 +21,7 @@ register_hook('init', function () {
       {
         attribution: def.attribution,
         maxNativeZoom: def.maxZoom,
-        maxZoom: 19
+        maxZoom: config.maxZoom || 19
       }
     )
 
