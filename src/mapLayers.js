@@ -1,4 +1,5 @@
 var mapLayers = {}
+var currentMapLayer = null
 
 register_hook('init', function () {
   if (!config.baseMaps) {
@@ -40,6 +41,10 @@ register_hook('init', function () {
 
   preferredLayer.addTo(map)
   L.control.layers(layers).addTo(map)
+
+  map.on('baselayerchange', function (e) {
+    currentMapLayer = e.layer
+  })
 })
 
 register_hook('options_form', function (def) {
@@ -53,5 +58,15 @@ register_hook('options_form', function (def) {
     'name': lang('options:preferredBaseMap'),
     'type': 'select',
     'values': baseMaps
+  }
+})
+
+register_hook('options_save', function (data) {
+  if ('preferredBaseMap' in data && data.preferredBaseMap in mapLayers) {
+    if (currentMapLayer) {
+      map.removeLayer(currentMapLayer)
+    }
+
+    map.addLayer(mapLayers[data.preferredBaseMap])
   }
 })
