@@ -23,18 +23,21 @@ $config['maxZoom'] = 19;
 // Available base maps; first is default
 $config['baseMaps'] = array(
   array(
+    'id' => 'osm-mapnik',
     'name' => 'OSM Default',
     'attribution' => '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     'url' => '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     'maxZoom' => 19,
   ),
   array(
+    'id' => 'osm-cyle',
     'name' => 'OSM CycleMap',
     'attribution' => '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Tiles: <a href="http://www.thunderforest.com/">Andy Allan</a>',
     'url' => '//{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png',
     'maxZoom' => 18,
   ),
   array(
+    'id' => 'opentopomap',
     'name' => 'OpenTopoMap',
     'attribution' => '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Tiles: <a href="http://opentopomap.org/">OpenTopoMap</a>',
     'url' => '//{s}.tile.opentopomap.org/{z}/{x}/{y}.png',

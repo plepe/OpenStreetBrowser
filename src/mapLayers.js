@@ -1,3 +1,5 @@
+var mapLayers = {}
+
 register_hook('init', function () {
   if (!config.baseMaps) {
     var osm_mapnik = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -30,6 +32,7 @@ register_hook('init', function () {
     }
 
     layers[def.name] = layer
+    mapLayers[def.id] = layer
   }
 
   firstLayer.addTo(map)
