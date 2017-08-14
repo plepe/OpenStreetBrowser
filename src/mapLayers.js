@@ -14,7 +14,7 @@ register_hook('init', function () {
   }
 
   var layers = {}
-  var firstLayer = null
+  var preferredLayer = null
   for (var i = 0; i < config.baseMaps.length; i++) {
     var def = config.baseMaps[i]
 
@@ -27,14 +27,31 @@ register_hook('init', function () {
       }
     )
 
-    if (firstLayer === null) {
-      firstLayer = layer
+    if (preferredLayer === null) {
+      preferredLayer = layer
+    }
+    if (def.id === options.preferredBaseMap) {
+      preferredLayer = layer
     }
 
     layers[def.name] = layer
     mapLayers[def.id] = layer
   }
 
-  firstLayer.addTo(map)
+  preferredLayer.addTo(map)
   L.control.layers(layers).addTo(map)
+})
+
+register_hook('options_form', function (def) {
+  var baseMaps = {}
+
+  for (var i = 0; i < config.baseMaps.length; i++) {
+    baseMaps[config.baseMaps[i].id] = config.baseMaps[i].name
+  }
+
+  def.preferredBaseMap = {
+    'name': lang('options:preferredBaseMap'),
+    'type': 'select',
+    'values': baseMaps
+  }
 })
