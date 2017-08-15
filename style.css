@@ -454,6 +454,8 @@ a.showDetails {
 }
 .body ul > li.hasSymbol > i,
 .leaflet-popup-content ul > li.hasSymbol > i,
+.body ul > li.hasSymbol > .symbol,
+.leaflet-popup-content ul > li.hasSymbol > .symbol,
 .body ul > li.hasSymbol > img,
 .leaflet-popup-content ul > li.hasSymbol > img {
   position: absolute;

@@ -194,6 +194,13 @@ function showDetails (data, category) {
   div.innerHTML = data.data.body
   dom.appendChild(div)
 
+  var div = document.createElement('div')
+  div.className = 'body'
+  dom.appendChild(div)
+  category.renderTemplate(data, 'detailsBody', function (div, err, result) {
+    div.innerHTML = result
+  }.bind(this, div))
+
   var h = document.createElement('h3')
   h.innerHTML = 'Attributes'
   dom.appendChild(h)

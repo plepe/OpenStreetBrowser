@@ -201,5 +201,19 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
   popup._contentNode.appendChild(footer)
 }
 
+CategoryOverpass.prototype.renderTemplate = function (object, templateId, callback) {
+  OpenStreetBrowserLoader.getTemplate(templateId, function (err, template) {
+    if (err) {
+      err = "can't load " + templateId + ": " + err
+      return callback(err, null)
+    }
+
+    var data = this.layer.twigData(object.object)
+    var result = template.render(data)
+
+    callback(null, result)
+  }.bind(this))
+}
+
 OpenStreetBrowserLoader.registerType('overpass', CategoryOverpass)
 module.exports = CategoryOverpass
