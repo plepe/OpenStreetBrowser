@@ -61,6 +61,9 @@ function onload2 (initState) {
     showPopup: false
   }).addTo(map)
 
+  // Scale bar
+  L.control.scale().addTo(map)
+
   if (!overpassUrl) {
     overpassUrl = config.overpassUrl
     if (Array.isArray(overpassUrl) && overpassUrl.length) {
