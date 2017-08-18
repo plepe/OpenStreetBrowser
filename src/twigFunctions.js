@@ -1,4 +1,5 @@
 var OverpassLayer = require('overpass-layer')
+var OpeningHours = require('opening_hours')
 
 OverpassLayer.twig.extendFunction('tagsPrefix', function (tags, prefix) {
   var ret = {}
@@ -16,4 +17,9 @@ OverpassLayer.twig.extendFunction('tagsPrefix', function (tags, prefix) {
   }
 
   return ret
+})
+
+OverpassLayer.twig.extendFunction('openingHoursState', function (opening_hours) {
+  var oh = new OpeningHours(opening_hours)
+  return oh.getStateString(new Date(), true)
 })
