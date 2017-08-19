@@ -9,6 +9,7 @@
         "!=1": "Fehler"
     },
     "facilities": "Einrichtungen",
+    "filter_results": "Ergebnisse einschränken",
     "header:attributes": "Attribute",
     "header:osm_meta": "OSM Meta",
     "images": "Bilder",

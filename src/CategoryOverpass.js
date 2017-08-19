@@ -126,7 +126,48 @@ function CategoryOverpass (options, data) {
     }
   }.bind(this)
 
-  p = document.createElement('div')
+  if (this.data.filter) {
+    this.domFilter = document.createElement('form')
+
+    this.formFilter = new form(this.id, this.data.filter,
+      {
+        'type': 'form_chooser',
+        'button:add_element': '-- ' + lang('filter_results') + ' --',
+        'order': false
+      }
+    )
+    this.formFilter.show(this.domFilter)
+    this.formFilter.onchange = function () {
+      var data = this.formFilter.get_data()
+
+      this.additionalFilter = []
+      for (var k in data) {
+        if (data[k] === null) {
+          continue
+        }
+
+        var d = this.data.filter[k]
+
+        var v  = {
+          key: k,
+          value: data[k],
+          op: '='
+        }
+
+        if ('op' in d) {
+          v.op = d.op
+        }
+
+        this.additionalFilter.push(v)
+      }
+
+      this.layer.options.queryOptions.filter = this.additionalFilter
+      this.layer.check_update_map()
+    }.bind(this)
+    this.dom.insertBefore(this.domFilter, this.domContent)
+  }
+
+  var p = document.createElement('div')
   p.className = 'loadingIndicator'
   p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">' + lang('loading') + '</span>'
   this.dom.appendChild(p)
@@ -203,6 +244,14 @@ CategoryOverpass.prototype.load = function (callback) {
 
     callback(null)
   }.bind(this))
+}
+
+CategoryOverpass.prototype.setParentDom = function (parentDom) {
+  CategoryBase.prototype.setParentDom.call(this, parentDom)
+
+  if (this.formFilter) {
+    this.formFilter.resize()
+  }
 }
 
 CategoryOverpass.prototype.setMap = function (map) {

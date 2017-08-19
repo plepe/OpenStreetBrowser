@@ -9,6 +9,7 @@
         "!=1": "Errors"
     },
     "facilities": "Facilities",
+    "filter_results": "Filter results",
     "header:attributes": "Attributes",
     "header:osm_meta": "OSM Meta",
     "images": "Images",

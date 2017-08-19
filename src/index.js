@@ -72,7 +72,7 @@ function onload2 (initState) {
   // Scale bar
   L.control.scale().addTo(map)
 
-  if (typeof overpassUrl === 'undefined') {
+  if (!overpassUrl) {
     overpassUrl = config.overpassUrl
     if (Array.isArray(overpassUrl) && overpassUrl.length) {
       overpassUrl = overpassUrl[0]
