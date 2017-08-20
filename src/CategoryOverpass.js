@@ -127,6 +127,43 @@ function CategoryOverpass (options, data) {
   }.bind(this)
 
   if (this.data.filter) {
+    for (var k in this.data.filter) {
+      var f = this.data.filter[k]
+      f.name = lang(f.name)
+
+      if (!('key' in f)) {
+        f.key = k
+      }
+
+      if (f.values === 'auto') {
+        delete f.values
+        f.values_func = { js: function (f) {
+          var ret = {}
+          var counts = {}
+
+          for (var k in this.layer.visibleFeatures) {
+            var ob = this.layer.visibleFeatures[k].object
+            var v = 'tags' in ob ? ob.tags[f.key] : null
+
+            if (v) {
+              if (v in ret) {
+                counts[v]++
+              } else {
+                ret[v] = lang('tag:' + f.key + '=' + v)
+                counts[v] = 1
+              }
+            }
+          }
+
+          for (var k in ret) {
+            ret[k] = ret[k] + ' (' + counts[k] + ')'
+          }
+
+          return ret
+        }.bind(this, f) }
+      }
+    }
+
     this.domFilter = document.createElement('form')
 
     this.formFilter = new form(this.id, this.data.filter,
