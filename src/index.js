@@ -165,7 +165,9 @@ function show (id, options, callback) {
           return callback('error loading object "' + id[0] + '/' + id[1] +'": ' + err)
         }
 
-        data.feature.openPopup()
+        if (!map._popup || map._popup !== data.popup) {
+          data.feature.openPopup()
+        }
 
         if (options.showDetails) {
           showDetails(data, category)
