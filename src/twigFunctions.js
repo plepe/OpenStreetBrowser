@@ -20,6 +20,12 @@ OverpassLayer.twig.extendFunction('tagsPrefix', function (tags, prefix) {
 })
 
 OverpassLayer.twig.extendFunction('openingHoursState', function (opening_hours) {
-  var oh = new OpeningHours(opening_hours)
+  try {
+    var oh = new OpeningHours(opening_hours)
+  } catch (err) {
+    console.log("Error in opening_hours: " + err)
+    return 'unknown'
+  }
+
   return oh.getStateString(new Date(), true)
 })
