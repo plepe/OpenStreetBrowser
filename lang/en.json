@@ -1,6 +1,7 @@
 {
     "closed": "closed",
     "default": "default",
+    "facilities": "Facilities",
     "main:options": "Options",
     "open": "open",
     "options:data_lang": "Data language",
