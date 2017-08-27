@@ -185,6 +185,14 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
 }
 
 CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
+  if (object.data.popupDescription || object.data.description) {
+    var div = document.createElement('div')
+    div.className = 'description'
+    div.innerHTML = object.data.popupDescription || object.data.description
+    popup._contentNode.insertBefore(div, popup._contentNode.firstChild.nextSibling)
+
+  }
+
   if (this.commonBodyTemplate) {
     var commonBody = document.createElement('div')
     commonBody.className = 'commonBody'

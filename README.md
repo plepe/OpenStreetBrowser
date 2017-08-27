@@ -69,7 +69,7 @@ File: foo.json
         "markerSign": "{% if tags.highway == 'motorway_junction' %}↗{% elseif tags.highway == 'mini_roundabout' %}↻{% elseif tags.highway == 'crossing' %}▤{% endif %}",
         "title": "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
         "description": "{{ tagTrans('highway', tags.highway) }}",
-        "body": "{{ tagTrans('highway', tags.highway) }}<br/>Foo value: {{ const.foo }}"
+        "body": "Foo value: {{ const.foo }}"
     },
     "const": {
         "foo": "foo value"
@@ -104,6 +104,7 @@ The following values are possible for categories (the only mandatory value is qu
   * title: the title of the feature popup, the object in the list and the details page. (default: localized tags for 'name', 'operator' or 'ref', default: 'unknown')
   * body: the body for the feature popup and the details page.
   * description: a short description shown in the list next to the title.
+  * popupDescription: like description, but an alternative if the description in popups should be different from the list.
   * markerSign: a HTML string which will be shown within the marker and in the list. (default: '')
   * priority: a numeric value by which the elements in the list will be sorted (lower values first)
 * const: an object variable which is available as prefix in twig functions.
