@@ -186,6 +186,11 @@ function showDetails (data, category) {
   dom.appendChild(div)
 
   var div = document.createElement('div')
+  div.className = 'description'
+  div.innerHTML = data.data.description
+  dom.appendChild(div)
+
+  var div = document.createElement('div')
   div.className = 'body'
   div.innerHTML = data.data.body
   dom.appendChild(div)

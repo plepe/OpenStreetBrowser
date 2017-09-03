@@ -426,8 +426,17 @@ a.showDetails {
 .leaflet-popup-content {
   min-width: 200px;
 }
+#content {
+  font-size: 12px;
+  font-family: "Helvetica Neue", "Arial", "Helvetica", sans-serif;
+  line-height: 1.4;
+}
+#content h1,
 .leaflet-popup-content > h1 {
   margin: 0;
+}
+#contentDetails a {
+  color: #0078A8;
 }
 
 .yes {
@@ -440,13 +449,13 @@ a.showDetails {
   color: red;
 }
 
-.body .description,
+.description,
 .leaflet-popup-content .description {
   display: block;
   text-align: right;
   font-style: italic;
 }
-.body .description:after,
+.description:after,
 .leaflet-popup-content .description:after {
   content: '';
   clear: right;
