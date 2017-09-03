@@ -69,7 +69,7 @@ File: foo.json
         "markerSign": "{% if tags.highway == 'motorway_junction' %}↗{% elseif tags.highway == 'mini_roundabout' %}↻{% elseif tags.highway == 'crossing' %}▤{% endif %}",
         "title": "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
         "description": "{{ tagTrans('highway', tags.highway) }}",
-        "body": "{{ tagTrans('highway', tags.highway) }}<br/>Foo value: {{ const.foo }}"
+        "body": "Foo value: {{ const.foo }}"
     },
     "const": {
         "foo": "foo value"
@@ -104,6 +104,7 @@ The following values are possible for categories (the only mandatory value is qu
   * title: the title of the feature popup, the object in the list and the details page. (default: localized tags for 'name', 'operator' or 'ref', default: 'unknown')
   * body: the body for the feature popup and the details page.
   * description: a short description shown in the list next to the title.
+  * popupDescription: like description, but an alternative if the description in popups should be different from the list.
   * markerSign: a HTML string which will be shown within the marker and in the list. (default: '')
   * priority: a numeric value by which the elements in the list will be sorted (lower values first)
 * const: an object variable which is available as prefix in twig functions.
@@ -131,6 +132,8 @@ There are several extra functions defined for the TwigJS language:
 * function `tagTransList`: return the translations of the given tag for tags with multiple values separated by ';' (e.g. 'cuisine'). Parameters: key (required, e.g. 'cuisine'), value (required, e.g. 'kebab' or 'kebab;pizza;noodles;burger').
 * function `localizedTag`: return a localized tag if available (e.g. 'name:de' for the german translation of the tag). Parameters: tags (the tags property), key prefix (e.g. 'name'). Which language will be returned depends on the "data language" which can be set via Options. If no localized tag is available, the tag value itself will be returned (e.g. value of 'name').
 * function `trans`: return the translation of the given string (e.g. 'save', 'unknown', 'unnamed', ...). Parameters: string (the string to translate).
+* function `tagsPrefix(tags, prefix)`: return all tags with the specified prefix. The result will be an array with `{ "en": "name:en", "de": "name:de" }` (for the input `{ "name": "foo", "name:en": "english foo", "name:de": "german foo" }` and the prefix "name:").
+* function openingHoursState(opening_hours_definition): returns state of object as string: 'closed', 'open' or 'unknown'.
 
 Notes:
 * Variables will automatically be HTML escaped, if not the filter raw is used, e.g.: {{ tags.name|raw }}

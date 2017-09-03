@@ -55,7 +55,6 @@ function CategoryOverpass (id, data) {
   }
 
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
-  data.feature.body = (typeof data.feature.body === 'string' ? data.feature.body : '') + '<a class="showDetails" href="#' + this.id + '/{{ id }}/details">show details</a>'
 
   this.layer = new OverpassLayer(data)
 
@@ -86,6 +85,13 @@ function CategoryOverpass (id, data) {
       }.bind(this, ob.id)
     }
   }.bind(this)
+  this.layer.onUpdate = function (ob) {
+    if (!ob.popup || !ob.popup._contentNode) {
+      return
+    }
+
+    this.updatePopupContent(ob, ob.popup)
+  }.bind(this)
 
   var p = document.createElement('div')
   p.className = 'loadingIndicator'
@@ -101,6 +107,18 @@ function CategoryOverpass (id, data) {
   this.domStatus.className = 'status'
 
   this.dom.appendChild(this.domStatus)
+}
+
+CategoryOverpass.prototype.load = function (callback) {
+  OpenStreetBrowserLoader.getTemplate('commonBody', function (err, template) {
+    if (err) {
+      console.log("can't load commonBody.html")
+    } else {
+      this.commonBodyTemplate = template
+    }
+
+    callback(null)
+  }.bind(this))
 }
 
 CategoryOverpass.prototype.setMap = function (map) {
@@ -160,6 +178,49 @@ CategoryOverpass.prototype.get = function (id, callback) {
 
 CategoryOverpass.prototype.show = function (id, options, callback) {
   this.layer.show(id, options, callback)
+}
+
+CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
+  this.updatePopupContent(object, popup)
+}
+
+CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
+  if (object.data.popupDescription || object.data.description) {
+    var div = document.createElement('div')
+    div.className = 'description'
+    div.innerHTML = object.data.popupDescription || object.data.description
+    popup._contentNode.insertBefore(div, popup._contentNode.firstChild.nextSibling)
+
+  }
+
+  if (this.commonBodyTemplate) {
+    var commonBody = document.createElement('div')
+    commonBody.className = 'commonBody'
+    popup._contentNode.appendChild(commonBody)
+
+    var data = this.layer.twigData(object.object)
+    commonBody.innerHTML = this.commonBodyTemplate.render(data)
+  }
+
+  var footer = document.createElement('div')
+  footer.className = 'footer'
+  var footerContent = '<a class="showDetails" href="#' + this.id + '/' + object.id + '/details">show details</a>'
+  footer.innerHTML = footerContent
+  popup._contentNode.appendChild(footer)
+}
+
+CategoryOverpass.prototype.renderTemplate = function (object, templateId, callback) {
+  OpenStreetBrowserLoader.getTemplate(templateId, function (err, template) {
+    if (err) {
+      err = "can't load " + templateId + ": " + err
+      return callback(err, null)
+    }
+
+    var data = this.layer.twigData(object.object)
+    var result = template.render(data)
+
+    callback(null, result)
+  }.bind(this))
 }
 
 OpenStreetBrowserLoader.registerType('overpass', CategoryOverpass)

@@ -22,6 +22,7 @@ require('./location')
 require('./overpassChooser')
 require('./fullscreen')
 require('./mapLayers')
+require('./twigFunctions')
 
 window.onload = function() {
   map = L.map('map')
@@ -79,6 +80,11 @@ function onload2 () {
       if (location.hash !== url) {
         history.pushState(null, null, '#' + url)
       }
+
+      OpenStreetBrowserLoader.getCategory(e.popup.object.layer_id, function (err, category) {
+        category.notifyPopupOpen(e.popup.object, e.popup)
+
+      })
     }
   })
   map.on('popupclose', function (e) {
@@ -153,7 +159,9 @@ function show (id, options, callback) {
           return callback('error loading object "' + id[0] + '/' + id[1] +'": ' + err)
         }
 
-        data.feature.openPopup()
+        if (!map._popup || map._popup !== data.popup) {
+          data.feature.openPopup()
+        }
 
         if (options.showDetails) {
           showDetails(data, category)
@@ -181,6 +189,13 @@ function showDetails (data, category) {
   div.className = 'body'
   div.innerHTML = data.data.body
   dom.appendChild(div)
+
+  var div = document.createElement('div')
+  div.className = 'body'
+  dom.appendChild(div)
+  category.renderTemplate(data, 'detailsBody', function (div, err, result) {
+    div.innerHTML = result
+  }.bind(this, div))
 
   var h = document.createElement('h3')
   h.innerHTML = 'Attributes'

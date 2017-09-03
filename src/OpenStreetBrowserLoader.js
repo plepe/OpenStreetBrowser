@@ -1,6 +1,9 @@
+var OverpassLayer = require('overpass-layer')
+
 function OpenStreetBrowserLoader () {
   this.types = {}
   this.categories = {}
+  this.templates = {}
 }
 
 OpenStreetBrowserLoader.prototype.setMap = function (map) {
@@ -38,6 +41,30 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
 
 }
 
+OpenStreetBrowserLoader.prototype.getTemplate = function (id, callback) {
+  if (id in this.templates) {
+    callback(null, this.templates[id])
+    return
+  }
+
+  function reqListener (req) {
+    if (req.status !== 200) {
+      console.log(req)
+      return callback(req.statusText, null)
+    }
+
+    this.templates[id] = OverpassLayer.twig.twig({ data: req.responseText, autoescape: true })
+
+    callback(null, this.templates[id])
+  }
+
+  var req = new XMLHttpRequest()
+  req.addEventListener("load", reqListener.bind(this, req))
+  req.open("GET", config.categoriesDir + '/' + id + ".html?" + config.categoriesRev)
+  req.send()
+
+}
+
 OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, data, callback) {
   if (!data.type) {
     callback('no type defined', null)
@@ -52,7 +79,13 @@ OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, data, call
 
     this.categories[id] = layer
 
-    callback(null, layer)
+    if ('load' in layer) {
+      layer.load(function (err) {
+        callback(err, layer)
+      })
+    } else {
+      callback(null, layer)
+    }
   }
 }
 
