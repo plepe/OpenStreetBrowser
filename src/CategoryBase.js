@@ -66,6 +66,10 @@ CategoryBase.prototype.setMap = function (map) {
 
 CategoryBase.prototype.setParent = function (parent) {
   this.parentCategory = parent
+
+  if (this.isOpen) {
+    this.parentCategory.open()
+  }
 }
 
 CategoryBase.prototype.setParentDom = function (parentDom) {

@@ -50,6 +50,10 @@ register_hook('init', function () {
 register_hook('options_form', function (def) {
   var baseMaps = {}
 
+  if (!config.baseMaps) {
+    return
+  }
+
   for (var i = 0; i < config.baseMaps.length; i++) {
     baseMaps[config.baseMaps[i].id] = config.baseMaps[i].name
   }

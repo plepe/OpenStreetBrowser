@@ -27,7 +27,8 @@ moduleOptions.open = function () {
   call_hooks('options_form', def)
 
   var options_form = new form('options', def)
-  var dom = document.getElementById('content')
+  document.getElementById('content').className = 'options'
+  var dom = document.getElementById('contentOptions')
   dom.innerHTML = ''
 
   options_form.set_data(options)

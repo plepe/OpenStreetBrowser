@@ -69,7 +69,7 @@ function onload2 () {
     }
 
     baseCategory = category
-    category.setParentDom(document.getElementById('content'))
+    category.setParentDom(document.getElementById('contentList'))
     category.open()
   })
 
@@ -125,7 +125,8 @@ function onload2 () {
 
 function show (id, options, callback) {
   if (options.showDetails) {
-    document.getElementById('content').innerHTML = 'Loading ...'
+    document.getElementById('content').className = 'details'
+    document.getElementById('contentDetails').innerHTML = 'Loading ...'
   }
 
   id = id.split('/')
@@ -140,7 +141,7 @@ function show (id, options, callback) {
     }
 
     if (!category.parentDom) {
-      category.setParentDom(document.getElementById('content'))
+      category.setParentDom(document.getElementById('contentList'))
     }
 
     category.show(
@@ -167,7 +168,7 @@ function show (id, options, callback) {
 }
 
 function showDetails (data, category) {
-  var dom = document.getElementById('content')
+  var dom = document.getElementById('contentDetails')
 
   dom.innerHTML = ''
 
@@ -226,11 +227,7 @@ function showDetails (data, category) {
 }
 
 function hide () {
-  var content = document.getElementById('content')
-  content.innerHTML = ''
-
-  if (baseCategory) {
-    baseCategory.setParentDom(content)
-  }
+  document.getElementById('content').className = 'list'
 }
+
 window.showRootContent = hide
