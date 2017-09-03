@@ -77,7 +77,8 @@ function onload2 () {
   map.on('popupopen', function (e) {
     if (e.popup.object) {
       var url = e.popup.object.layer_id + '/' + e.popup.object.id
-      if (location.hash !== url) {
+      if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/' ) {
+
         history.pushState(null, null, '#' + url)
       }
 
