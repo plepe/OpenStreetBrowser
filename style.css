@@ -80,10 +80,23 @@ body {
   flex: 0;
 }
 
+#content > div {
+  display: none;
+}
+#content.list > #contentList {
+  display: block;
+}
+#content.details > #contentDetails {
+  display: block;
+}
+#content.options > #contentOptions {
+  display: block;
+}
+
 
 /***** CATEGORY *****/
 /* root category */
-#content > .category > .content > .categoryWrapper > .category {
+#content > #contentList > .category > .content > .categoryWrapper > .category {
   margin-left: 0;
 }
 #content .category {
