@@ -98,39 +98,26 @@ function onload2 () {
   })
 
   if (location.hash && location.hash.length > 1) {
-    var url = location.hash.substr(1)
-
-    options = {
-      showDetails: !!location.hash.match(/\/details$/)
-    }
-
-    show(url, options, function (err) {
-      if (err) {
-        alert(err)
-        return
-      }
-
-      call_hooks('show', url, options)
-    })
+    readState(location.hash.substr(1))
   }
 
   hash(function (loc) {
-    if (loc.length > 1) {
-      var url = loc.substr(1)
+    readState(loc.substr(1))
+  })
+}
 
-      options = {
-        showDetails: !!loc.match(/\/details$/)
-      }
+function readState (url) {
+  options = {
+    showDetails: !!url.match(/\/details$/)
+  }
 
-      show(url, options, function (err) {
-        if (err) {
-          alert(err)
-          return
-        }
-
-        call_hooks('show', url, options)
-      })
+  show(url, options, function (err) {
+    if (err) {
+      alert(err)
+      return
     }
+
+    call_hooks('show', url, options)
   })
 }
 
