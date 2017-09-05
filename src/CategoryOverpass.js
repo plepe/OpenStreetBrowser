@@ -110,11 +110,11 @@ function CategoryOverpass (id, data) {
 }
 
 CategoryOverpass.prototype.load = function (callback) {
-  OpenStreetBrowserLoader.getTemplate('commonBody', function (err, template) {
+  OpenStreetBrowserLoader.getTemplate('popupBody', function (err, template) {
     if (err) {
-      console.log("can't load commonBody.html")
+      console.log("can't load popupBody.html")
     } else {
-      this.commonBodyTemplate = template
+      this.popupBodyTemplate = template
     }
 
     callback(null)
@@ -193,13 +193,13 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
 
   }
 
-  if (this.commonBodyTemplate) {
-    var commonBody = document.createElement('div')
-    commonBody.className = 'commonBody'
-    popup._contentNode.appendChild(commonBody)
+  if (this.popupBodyTemplate) {
+    var popupBody = document.createElement('div')
+    popupBody.className = 'popupBody'
+    popup._contentNode.appendChild(popupBody)
 
     var data = this.layer.twigData(object.object)
-    commonBody.innerHTML = this.commonBodyTemplate.render(data)
+    popupBody.innerHTML = this.popupBodyTemplate.render(data)
   }
 
   var footer = document.createElement('div')
