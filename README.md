@@ -109,33 +109,4 @@ The following values are possible for categories (the only mandatory value is qu
   * priority: a numeric value by which the elements in the list will be sorted (lower values first)
 * const: an object variable which is available as prefix in twig functions.
 
-#### TwigJS templates
-All values in the "feature" section may use the TwigJS language for evaluation.
-
-The following properties are available:
-* id (the id of the object is always available, prefixed 'n' for nodes, 'w' for ways and 'r' for relations; e.g. 'n1234')
-* osm_id (the numerical id of the object)
-* layer_id (the id of the category)
-* type ('node', 'way' or 'relation')
-* tags.* (all tags are available with the prefix tags., e.g. tags.amenity)
-* meta.timestamp (timestamp of last modification)
-* meta.version (version of the object)
-* meta.changeset (ID of the changeset, the object was last modified in)
-* meta.user (Username of the user, who changed the object last)
-* meta.uid (UID of the user, who changed the object last)
-* map.zoom (Current zoom level)
-* const.* (Values from the 'const' option)
-
-There are several extra functions defined for the TwigJS language:
-* function `keyTrans`: return the translation of the given key. Parameters: key (required, e.g. 'amenity').
-* function `tagTrans`: return the translation of the given tag. Parameters: key (required, e.g. 'amenity'), value (required, e.g. 'bar'), count (optional, default 1).
-* function `tagTransList`: return the translations of the given tag for tags with multiple values separated by ';' (e.g. 'cuisine'). Parameters: key (required, e.g. 'cuisine'), value (required, e.g. 'kebab' or 'kebab;pizza;noodles;burger').
-* function `localizedTag`: return a localized tag if available (e.g. 'name:de' for the german translation of the tag). Parameters: tags (the tags property), key prefix (e.g. 'name'). Which language will be returned depends on the "data language" which can be set via Options. If no localized tag is available, the tag value itself will be returned (e.g. value of 'name').
-* function `trans`: return the translation of the given string (e.g. 'save', 'unknown', 'unnamed', ...). Parameters: string (the string to translate).
-* function `tagsPrefix(tags, prefix)`: return all tags with the specified prefix. The result will be an array with `{ "en": "name:en", "de": "name:de" }` (for the input `{ "name": "foo", "name:en": "english foo", "name:de": "german foo" }` and the prefix "name:").
-* function openingHoursState(opening_hours_definition): returns state of object as string: 'closed', 'open' or 'unknown'.
-
-Notes:
-* Variables will automatically be HTML escaped, if not the filter raw is used, e.g.: {{ tags.name|raw }}
-* The templates will be rendered when the object becomes visible and when the zoom level changes.
-* If you set an arbitrary value within a twig template (e.g.: {% set foo = "bar" %}), it will also be available in further templates of the same object by using (e.g.: {{ foo }}). The templates will be evaluated in the order as they are defined.
+All values in the "feature" section may use the [TwigJS language](doc/TwigJS.md) for evaluation.
