@@ -96,6 +96,23 @@ function onload2 () {
     updateState(true)
     hide()
   })
+  map.on('moveend', function (e) {
+    var center = map.getCenter()
+    var zoom = map.getZoom()
+    var precision =
+      zoom > 16 ? 5 :
+      zoom >  8 ? 4 :
+      zoom >  4 ? 3 :
+      zoom >  2 ? 2 :
+      zoom >  1 ? 1 : 0
+
+    state.map =
+      map.getZoom() + '/' +
+      center.lat.toFixed(precision) + '/' +
+      center.lng.toFixed(precision)
+
+    updateState()
+  })
 
   if (location.hash && location.hash.length > 1) {
     readState(location.hash.substr(1))
@@ -135,6 +152,11 @@ function readState (url) {
   newState = queryString.parse(urlNonPathPart)
   if (newPath !== '') {
     newState.path = newPath
+  }
+
+  if ('map' in newState) {
+    var parts = newState.map.split('/')
+    map.flyTo({ lat: parts[1], lng: parts[2] }, parts[0])
   }
 
   if (newPath === '') {
