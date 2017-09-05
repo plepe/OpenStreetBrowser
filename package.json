@@ -18,6 +18,7 @@
     "openstreetbrowser-categories-main": "https://github.com/plepe/openstreetbrowser-categories-main",
     "openstreetmap-tag-translations": "https://github.com/plepe/openstreetmap-tag-translations",
     "overpass-layer": "https://github.com/plepe/overpass-layer",
+    "query-string": "^5.0.0",
     "sheet-router": "^4.2.3"
   },
   "scripts": {

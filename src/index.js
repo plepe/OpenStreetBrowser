@@ -5,6 +5,7 @@ var OverpassLayerList = require('overpass-layer').List
 var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var hash = require('sheet-router/hash')
+var queryString = require('query-string')
 window.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 
 require('./CategoryIndex')
@@ -14,6 +15,7 @@ global.map
 window.baseCategory
 window.overpassUrl
 window.overpassFrontend
+var state = {}
 
 // Optional modules
 require('./options')
@@ -79,7 +81,8 @@ function onload2 () {
       var url = e.popup.object.layer_id + '/' + e.popup.object.id
       if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/' ) {
 
-        history.pushState(null, null, '#' + url)
+        state.path = url
+        updateState(true)
       }
 
       OpenStreetBrowserLoader.getCategory(e.popup.object.layer_id, function (err, category) {
@@ -89,7 +92,8 @@ function onload2 () {
     }
   })
   map.on('popupclose', function (e) {
-    history.pushState(null, null, '#')
+    delete state.path
+    updateState(true)
     hide()
   })
 
@@ -128,6 +132,28 @@ function onload2 () {
       })
     }
   })
+}
+
+function updateState (push) {
+  var tmpState = JSON.parse(JSON.stringify(state))
+  var path = tmpState.path
+  delete tmpState.path
+
+  var newHash = queryString.stringify(tmpState)
+
+  if (typeof path === 'undefined') {
+    newHash = '#' + newHash
+  } else {
+    newHash = '#' + path + (newHash !== '' ? '&' + newHash : '')
+  }
+
+  newHash = newHash.replace(/%2F/g, '/')
+
+  if (push) {
+    history.pushState(null, null, newHash)
+  } else if (location.hash !== newHash && (location.hash !== '' || newHash !== '#')) {
+    history.replaceState(null, null, newHash)
+  }
 }
 
 function show (id, options, callback) {
