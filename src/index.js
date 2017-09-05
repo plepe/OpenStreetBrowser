@@ -107,17 +107,52 @@ function onload2 () {
 }
 
 function readState (url) {
-  options = {
-    showDetails: !!url.match(/\/details$/)
+  var firstEquals = url.search('=')
+  var firstAmp = url.search('&')
+  var urlNonPathPart = ''
+  var newState = {}
+  var newPath = ''
+
+  if (url === '') {
+    // nothing
+  } else if (firstEquals === -1) {
+    if (firstAmp === -1) {
+      newPath = url
+    } else {
+      newPath = url.substr(0, firstAmp)
+    }
+  } else {
+     if (firstAmp === -1) {
+      urlNonPathPart = url
+    } else if (firstAmp < firstEquals) {
+      newPath = url.substr(0, firstAmp)
+      urlNonPathPart = url.substr(firstAmp + 1)
+    } else {
+      urlNonPathPart = url
+    }
   }
 
-  show(url, options, function (err) {
+  newState = queryString.parse(urlNonPathPart)
+  if (newPath !== '') {
+    newState.path = newPath
+  }
+
+  if (newPath === '') {
+    map.closePopup()
+    return
+  }
+
+  options = {
+    showDetails: !!newPath.match(/\/details$/)
+  }
+
+  show(newPath, options, function (err) {
     if (err) {
       alert(err)
       return
     }
 
-    call_hooks('show', url, options)
+    call_hooks('show', newPath, options)
   })
 }
 
