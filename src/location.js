@@ -7,6 +7,11 @@ register_hook('init_callback', function (callback) {
   }
 
   ipLocation('', function (err, ipLoc) {
+    // initial map location already set
+    if (typeof map.getZoom() !== 'undefined') {
+      return callback()
+    }
+
     if (typeof ipLoc === 'object' && 'latitude' in ipLoc) {
       map.setView([ ipLoc.latitude, ipLoc.longitude ], 14)
     } else {

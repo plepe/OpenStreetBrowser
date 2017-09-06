@@ -31,6 +31,11 @@ window.onload = function() {
   map = L.map('map')
 
   call_hooks('init')
+
+  if (location.hash && location.hash.length > 1) {
+    readState(location.hash.substr(1))
+  }
+
   call_hooks_callback('init_callback', onload2)
 }
 
@@ -105,10 +110,6 @@ function onload2 () {
     updateState()
   })
 
-  if (location.hash && location.hash.length > 1) {
-    readState(location.hash.substr(1))
-  }
-
   hash(function (loc) {
     readState(loc.substr(1))
   })
@@ -166,7 +167,11 @@ function readState (url) {
 
   if ('map' in newState) {
     var parts = newState.map.split('/')
-    map.flyTo({ lat: parts[1], lng: parts[2] }, parts[0])
+    if (typeof map.getZoom() === 'undefined') {
+      map.setView({ lat: parts[1], lng: parts[2] }, parts[0])
+    } else {
+      map.flyTo({ lat: parts[1], lng: parts[2] }, parts[0])
+    }
   }
 
   state = newState
