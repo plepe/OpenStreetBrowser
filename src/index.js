@@ -159,6 +159,8 @@ function readState (url) {
     map.flyTo({ lat: parts[1], lng: parts[2] }, parts[0])
   }
 
+  state = newState
+
   if (newPath === '') {
     map.closePopup()
     return
