@@ -97,20 +97,7 @@ function onload2 () {
     hide()
   })
   map.on('moveend', function (e) {
-    var center = map.getCenter()
-    var zoom = map.getZoom()
-    var precision =
-      zoom > 16 ? 5 :
-      zoom >  8 ? 4 :
-      zoom >  4 ? 3 :
-      zoom >  2 ? 2 :
-      zoom >  1 ? 1 : 0
-
-    state.map =
-      map.getZoom() + '/' +
-      center.lat.toFixed(precision) + '/' +
-      center.lng.toFixed(precision)
-
+    getStateMap()
     updateState()
   })
 
@@ -121,6 +108,25 @@ function onload2 () {
   hash(function (loc) {
     readState(loc.substr(1))
   })
+
+  getStateMap()
+  updateState()
+}
+
+function getStateMap () {
+  var center = map.getCenter()
+  var zoom = map.getZoom()
+  var precision =
+    zoom > 16 ? 5 :
+    zoom >  8 ? 4 :
+    zoom >  4 ? 3 :
+    zoom >  2 ? 2 :
+    zoom >  1 ? 1 : 0
+
+  state.map =
+    map.getZoom() + '/' +
+    center.lat.toFixed(precision) + '/' +
+    center.lng.toFixed(precision)
 }
 
 function readState (url) {
