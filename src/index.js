@@ -28,18 +28,15 @@ require('./mapLayers')
 require('./twigFunctions')
 
 window.onload = function() {
+  var initState = {}
+
   map = L.map('map')
 
   call_hooks('init')
-
-  if (location.hash && location.hash.length > 1) {
-    applyState(readState(location.hash.substr(1)))
-  }
-
-  call_hooks_callback('init_callback', onload2)
+  call_hooks_callback('init_callback', initState, onload2.bind(this, initState))
 }
 
-function onload2 () {
+function onload2 (initState) {
   // Add Geo Search
   var provider = new LeafletGeoSearch.OpenStreetMapProvider()
   var searchControl = new LeafletGeoSearch.GeoSearchControl({
@@ -70,6 +67,20 @@ function onload2 () {
   })
 
   OpenStreetBrowserLoader.setMap(map)
+
+  var newState
+  if (location.hash && location.hash.length > 1) {
+    newState = readState(location.hash.substr(1))
+  } else {
+    newState = initState
+  }
+
+  // make sure the map has an initial location
+  if (!('map' in newState)) {
+    newState.map = initState.map
+  }
+
+  applyState(newState)
 
   OpenStreetBrowserLoader.getCategory('index', function (err, category) {
     if (err) {
@@ -119,6 +130,10 @@ function onload2 () {
 }
 
 function getStateMap () {
+  if (typeof map.getZoom() === 'undefined') {
+    return
+  }
+
   var center = map.getCenter()
   var zoom = map.getZoom()
   var precision =
