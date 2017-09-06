@@ -33,7 +33,7 @@ window.onload = function() {
   call_hooks('init')
 
   if (location.hash && location.hash.length > 1) {
-    readState(location.hash.substr(1))
+    applyState(readState(location.hash.substr(1)))
   }
 
   call_hooks_callback('init_callback', onload2)
@@ -111,7 +111,7 @@ function onload2 () {
   })
 
   hash(function (loc) {
-    readState(loc.substr(1))
+    applyState(readState(loc.substr(1)))
   })
 
   getStateMap()
@@ -165,6 +165,12 @@ function readState (url) {
     newState.path = newPath
   }
 
+  return newState
+}
+
+function applyState (newState) {
+  state = newState
+
   if ('map' in newState) {
     var parts = newState.map.split('/')
     if (typeof map.getZoom() === 'undefined') {
@@ -174,24 +180,22 @@ function readState (url) {
     }
   }
 
-  state = newState
-
-  if (newPath === '') {
+  if (!newState.path) {
     map.closePopup()
     return
   }
 
   options = {
-    showDetails: !!newPath.match(/\/details$/)
+    showDetails: !!newState.path.match(/\/details$/)
   }
 
-  show(newPath, options, function (err) {
+  show(newState.path, options, function (err) {
     if (err) {
       alert(err)
       return
     }
 
-    call_hooks('show', newPath, options)
+    call_hooks('show', newState.path, options)
   })
 }
 
