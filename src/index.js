@@ -16,6 +16,7 @@ window.baseCategory
 window.overpassUrl
 window.overpassFrontend
 var state = {}
+var lastPopupClose = 0
 
 // Optional modules
 require('./options')
@@ -82,7 +83,9 @@ function onload2 () {
       if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/' ) {
 
         state.path = url
-        updateState(true)
+        // only push state, when last popup close happened >1sec earlier
+        updateState(Date.now() - lastPopupClose > 1000)
+
       }
 
       OpenStreetBrowserLoader.getCategory(e.popup.object.layer_id, function (err, category) {
@@ -92,6 +95,7 @@ function onload2 () {
     }
   })
   map.on('popupclose', function (e) {
+    lastPopupClose = Date.now()
     delete state.path
     updateState(true)
     hide()
