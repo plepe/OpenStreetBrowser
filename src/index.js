@@ -4,6 +4,7 @@ var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
+var state = require('./state')
 var hash = require('sheet-router/hash')
 var queryString = require('query-string')
 window.OpenStreetBrowserLoader = OpenStreetBrowserLoader
@@ -15,7 +16,7 @@ global.map
 window.baseCategory
 window.overpassUrl
 window.overpassFrontend
-var state = {}
+window.currentPath = null
 var lastPopupClose = 0
 
 // Optional modules
@@ -70,7 +71,7 @@ function onload2 (initState) {
 
   var newState
   if (location.hash && location.hash.length > 1) {
-    newState = readState(location.hash.substr(1))
+    newState = state.parse(location.hash.substr(1))
   } else {
     newState = initState
   }
@@ -80,7 +81,7 @@ function onload2 (initState) {
     newState.map = initState.map
   }
 
-  applyState(newState)
+  state.apply(newState)
 
   OpenStreetBrowserLoader.getCategory('index', function (err, category) {
     if (err) {
@@ -98,9 +99,9 @@ function onload2 (initState) {
       var url = e.popup.object.layer_id + '/' + e.popup.object.id
       if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/' ) {
 
-        state.path = url
+        currentPath = url
         // only push state, when last popup close happened >1sec earlier
-        updateState(Date.now() - lastPopupClose > 1000)
+        state.update(null, Date.now() - lastPopupClose > 1000)
 
       }
 
@@ -112,128 +113,41 @@ function onload2 (initState) {
   })
   map.on('popupclose', function (e) {
     lastPopupClose = Date.now()
-    delete state.path
-    updateState(true)
+    currentPath = null
+    state.update(null, true)
     hide()
   })
   map.on('moveend', function (e) {
-    getStateMap()
-    updateState()
+    state.update()
   })
 
   hash(function (loc) {
-    applyState(readState(loc.substr(1)))
+    state.apply(state.parse(loc.substr(1)))
   })
 
-  getStateMap()
-  updateState()
+  state.update()
 }
 
-function getStateMap () {
-  if (typeof map.getZoom() === 'undefined') {
-    return
-  }
+window.setPath = function (path) {
+  currentPath = path
 
-  var center = map.getCenter()
-  var zoom = map.getZoom()
-  var precision =
-    zoom > 16 ? 5 :
-    zoom >  8 ? 4 :
-    zoom >  4 ? 3 :
-    zoom >  2 ? 2 :
-    zoom >  1 ? 1 : 0
-
-  state.map =
-    map.getZoom() + '/' +
-    center.lat.toFixed(precision) + '/' +
-    center.lng.toFixed(precision)
-}
-
-function readState (url) {
-  var firstEquals = url.search('=')
-  var firstAmp = url.search('&')
-  var urlNonPathPart = ''
-  var newState = {}
-  var newPath = ''
-
-  if (url === '') {
-    // nothing
-  } else if (firstEquals === -1) {
-    if (firstAmp === -1) {
-      newPath = url
-    } else {
-      newPath = url.substr(0, firstAmp)
-    }
-  } else {
-     if (firstAmp === -1) {
-      urlNonPathPart = url
-    } else if (firstAmp < firstEquals) {
-      newPath = url.substr(0, firstAmp)
-      urlNonPathPart = url.substr(firstAmp + 1)
-    } else {
-      urlNonPathPart = url
-    }
-  }
-
-  newState = queryString.parse(urlNonPathPart)
-  if (newPath !== '') {
-    newState.path = newPath
-  }
-
-  return newState
-}
-
-function applyState (newState) {
-  state = newState
-
-  if ('map' in newState) {
-    var parts = newState.map.split('/')
-    if (typeof map.getZoom() === 'undefined') {
-      map.setView({ lat: parts[1], lng: parts[2] }, parts[0])
-    } else {
-      map.flyTo({ lat: parts[1], lng: parts[2] }, parts[0])
-    }
-  }
-
-  if (!newState.path) {
+  if (!path) {
     map.closePopup()
     return
   }
 
   options = {
-    showDetails: !!newState.path.match(/\/details$/)
+    showDetails: !!path.match(/\/details$/)
   }
 
-  show(newState.path, options, function (err) {
+  show(path, options, function (err) {
     if (err) {
       alert(err)
       return
     }
 
-    call_hooks('show', newState.path, options)
+    call_hooks('show', path, options)
   })
-}
-
-function updateState (push) {
-  var tmpState = JSON.parse(JSON.stringify(state))
-  var path = tmpState.path
-  delete tmpState.path
-
-  var newHash = queryString.stringify(tmpState)
-
-  if (typeof path === 'undefined') {
-    newHash = '#' + newHash
-  } else {
-    newHash = '#' + path + (newHash !== '' ? '&' + newHash : '')
-  }
-
-  newHash = newHash.replace(/%2F/g, '/')
-
-  if (push) {
-    history.pushState(null, null, newHash)
-  } else if (location.hash !== newHash && (location.hash !== '' || newHash !== '#')) {
-    history.replaceState(null, null, newHash)
-  }
 }
 
 function show (id, options, callback) {
