@@ -20,6 +20,9 @@ function get () {
   state.lon = center.lng
   state.zoom = zoom
 
+  // other modules
+  call_hooks('state-get', state)
+
   // done
   return state
 }
@@ -36,6 +39,9 @@ function apply (state) {
       map.flyTo({ lat: state.lat, lng: state.lon }, state.zoom)
     }
   }
+
+  // other modules
+  call_hooks('state-apply', state)
 }
 
 function stringify (state) {

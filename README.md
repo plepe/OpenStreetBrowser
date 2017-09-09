@@ -110,3 +110,9 @@ The following values are possible for categories (the only mandatory value is qu
 * const: an object variable which is available as prefix in twig functions.
 
 All values in the "feature" section may use the [TwigJS language](doc/TwigJS.md) for evaluation.
+
+### Hooks
+With the function `register_hook` you can hook into several functions. The following hooks are available:
+
+* `state-get`: modules can add values into the current state. Parameters: `state`: an object, which can be modified by modules.
+* `state-apply`: when a state is applied to the app. Parameters: `state`: state which should be applied.
