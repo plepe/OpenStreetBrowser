@@ -21,6 +21,18 @@ CategoryIndex.prototype.open = function () {
     return
   }
 
+  this._loadChildrenCategories()
+}
+
+CategoryIndex.prototype.recalc = function () {
+  for (var k in this.childrenCategories) {
+    if (this.childrenCategories[k]) {
+      this.childrenCategories[k].recalc()
+    }
+  }
+}
+
+CategoryIndex.prototype._loadChildrenCategories = function () {
   this.childrenCategories = {}
 
   for (var i = 0; i < this.data.subCategories.length; i++) {
@@ -36,14 +48,6 @@ CategoryIndex.prototype.open = function () {
       OpenStreetBrowserLoader.getCategoryFromData(data.id, data, this._loadChildCategory.bind(this))
     } else {
       OpenStreetBrowserLoader.getCategory(data.id, this._loadChildCategory.bind(this))
-    }
-  }
-}
-
-CategoryIndex.prototype.recalc = function () {
-  for (var k in this.childrenCategories) {
-    if (this.childrenCategories[k]) {
-      this.childrenCategories[k].recalc()
     }
   }
 }
