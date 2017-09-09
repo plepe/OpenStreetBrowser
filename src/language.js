@@ -75,7 +75,7 @@ function langName (code) {
   return ret
 }
 
-register_hook('init_callback', function (callback) {
+register_hook('init_callback', function (initState, callback) {
   if ('data_lang' in options) {
     tagTranslations.setTagLanguage(options.data_lang)
   } else {

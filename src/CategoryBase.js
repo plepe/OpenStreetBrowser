@@ -87,8 +87,8 @@ CategoryBase.prototype.open = function () {
   if (this.isOpen)
     return
 
-  if (this.parent) {
-    this.parent.open()
+  if (this.parentCategory) {
+    this.parentCategory.open()
   }
 
   if (typeof this.parentDom === 'string') {

@@ -1,16 +1,17 @@
 var ipLocation = require('./ip-location')
 
-register_hook('init_callback', function (callback) {
+register_hook('init_callback', function (initState, callback) {
+  initState.map = ('zoom' in config.defaultView ? config.defaultView.zoom : 14) + '/' + config.defaultView.lat + '/' + config.defaultView.lon
+
   if ('checkIpLocation' in config && !config.checkIpLocation) {
-    map.setView(config.defaultView, 'zoom' in config.defaultView ? config.defaultView.zoom : 14)
     return callback()
   }
 
   ipLocation('', function (err, ipLoc) {
+    var ret
+
     if (typeof ipLoc === 'object' && 'latitude' in ipLoc) {
-      map.setView([ ipLoc.latitude, ipLoc.longitude ], 14)
-    } else {
-      map.setView(config.defaultView, 'zoom' in config.defaultView ? config.defaultView.zoom : 14)
+      initState.map = '14/' + ipLoc.latitude + '/' + ipLoc.longitude
     }
 
     callback()

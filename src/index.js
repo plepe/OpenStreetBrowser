@@ -4,7 +4,9 @@ var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
+var state = require('./state')
 var hash = require('sheet-router/hash')
+var queryString = require('query-string')
 window.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 
 require('./CategoryIndex')
@@ -14,6 +16,8 @@ global.map
 window.baseCategory
 window.overpassUrl
 window.overpassFrontend
+window.currentPath = null
+var lastPopupClose = 0
 
 // Optional modules
 require('./options')
@@ -23,15 +27,18 @@ require('./overpassChooser')
 require('./fullscreen')
 require('./mapLayers')
 require('./twigFunctions')
+require('./categories')
 
 window.onload = function() {
+  var initState = {}
+
   map = L.map('map')
 
   call_hooks('init')
-  call_hooks_callback('init_callback', onload2)
+  call_hooks_callback('init_callback', initState, onload2.bind(this, initState))
 }
 
-function onload2 () {
+function onload2 (initState) {
   // Add Geo Search
   var provider = new LeafletGeoSearch.OpenStreetMapProvider()
   var searchControl = new LeafletGeoSearch.GeoSearchControl({
@@ -63,6 +70,20 @@ function onload2 () {
 
   OpenStreetBrowserLoader.setMap(map)
 
+  var newState
+  if (location.hash && location.hash.length > 1) {
+    newState = state.parse(location.hash.substr(1))
+  } else {
+    newState = initState
+  }
+
+  // make sure the map has an initial location
+  if (!('map' in newState)) {
+    newState.map = initState.map
+  }
+
+  state.apply(newState)
+
   OpenStreetBrowserLoader.getCategory('index', function (err, category) {
     if (err) {
       alert(err)
@@ -79,7 +100,10 @@ function onload2 () {
       var url = e.popup.object.layer_id + '/' + e.popup.object.id
       if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/' ) {
 
-        history.pushState(null, null, '#' + url)
+        currentPath = url
+        // only push state, when last popup close happened >1sec earlier
+        state.update(null, Date.now() - lastPopupClose > 1000)
+
       }
 
       OpenStreetBrowserLoader.getCategory(e.popup.object.layer_id, function (err, category) {
@@ -89,44 +113,41 @@ function onload2 () {
     }
   })
   map.on('popupclose', function (e) {
-    history.pushState(null, null, '#')
+    lastPopupClose = Date.now()
+    currentPath = null
+    state.update(null, true)
     hide()
   })
-
-  if (location.hash && location.hash.length > 1) {
-    var url = location.hash.substr(1)
-
-    options = {
-      showDetails: !!location.hash.match(/\/details$/)
-    }
-
-    show(url, options, function (err) {
-      if (err) {
-        alert(err)
-        return
-      }
-
-      call_hooks('show', url, options)
-    })
-  }
+  map.on('moveend', function (e) {
+    state.update()
+  })
 
   hash(function (loc) {
-    if (loc.length > 1) {
-      var url = loc.substr(1)
+    state.apply(state.parse(loc.substr(1)))
+  })
 
-      options = {
-        showDetails: !!loc.match(/\/details$/)
-      }
+  state.update()
+}
 
-      show(url, options, function (err) {
-        if (err) {
-          alert(err)
-          return
-        }
+window.setPath = function (path) {
+  currentPath = path
 
-        call_hooks('show', url, options)
-      })
+  if (!path) {
+    map.closePopup()
+    return
+  }
+
+  options = {
+    showDetails: !!path.match(/\/details$/)
+  }
+
+  show(path, options, function (err) {
+    if (err) {
+      alert(err)
+      return
     }
+
+    call_hooks('show', path, options)
   })
 }
 

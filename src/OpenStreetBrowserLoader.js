@@ -4,6 +4,7 @@ function OpenStreetBrowserLoader () {
   this.types = {}
   this.categories = {}
   this.templates = {}
+  this._loadClash = {} // if a category is being loaded multiple times, collect callbacks
 }
 
 OpenStreetBrowserLoader.prototype.setMap = function (map) {
@@ -15,6 +16,13 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
     callback(null, this.categories[id])
     return
   }
+
+  if (id in this._loadClash) {
+    this._loadClash[id].push(callback)
+    return
+  }
+
+  this._loadClash[id] = []
 
   function reqListener (req) {
     if (req.status !== 200) {
@@ -30,8 +38,12 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
       }
 
       callback(err, category)
-    }.bind(this))
 
+      this._loadClash[id].forEach(function (c) {
+        c(err, category)
+      })
+      delete this._loadClash[id]
+    }.bind(this))
   }
 
   var req = new XMLHttpRequest()

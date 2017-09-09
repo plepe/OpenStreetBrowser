@@ -2,6 +2,7 @@ var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var CategoryBase = require('./CategoryBase')
+var state = require('./state')
 var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
@@ -107,6 +108,31 @@ function CategoryOverpass (id, data) {
   this.domStatus.className = 'status'
 
   this.dom.appendChild(this.domStatus)
+
+  register_hook('state-get', function (state) {
+    if (this.isOpen) {
+      if (state.categories) {
+        state.categories += ','
+      } else {
+        state.categories = ''
+      }
+
+      state.categories += this.id
+    }
+  }.bind(this))
+
+  register_hook('state-apply', function (state) {
+    if (!('categories' in state)) {
+      return
+    }
+
+    var list = state.categories.split(',')
+    if (list.indexOf(this.id) === -1) {
+      this.close()
+    }
+
+    // opening categories is handled by src/categories.js
+  }.bind(this))
 }
 
 CategoryOverpass.prototype.load = function (callback) {
@@ -156,6 +182,8 @@ CategoryOverpass.prototype.open = function () {
   }
 
   this.isOpen = true
+
+  state.update()
 }
 
 CategoryOverpass.prototype.recalc = function () {
@@ -170,6 +198,8 @@ CategoryOverpass.prototype.close = function () {
 
   this.layer.remove()
   this.list.remove()
+
+  state.update()
 }
 
 CategoryOverpass.prototype.get = function (id, callback) {
