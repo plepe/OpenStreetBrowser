@@ -21,7 +21,6 @@ var lastPopupClose = 0
 // Optional modules
 require('./options')
 require('./language')
-require('./location')
 require('./overpassChooser')
 require('./fullscreen')
 require('./mapLayers')

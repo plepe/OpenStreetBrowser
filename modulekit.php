@@ -13,6 +13,7 @@ $include = array(
   'php' => array(
     'src/options.php',
     'src/language.php',
+    'src/ip-location.php',
   ),
   'css' => array(
     'style.css',

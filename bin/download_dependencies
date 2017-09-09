@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mkdir -p data/GeoIP
+cd data/GeoIP
+wget -O- http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz | tar --strip-components=1 -xvzf -

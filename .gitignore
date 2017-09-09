@@ -1,1 +1,4 @@
 /conf.php
+/vendor/
+/data/
+/composer.lock

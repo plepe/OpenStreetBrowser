@@ -1,5 +1,6 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php session_start(); ?>
+<?php require 'vendor/autoload.php'; /* composer includes */ ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php call_hooks("init"); /* initialize submodules */ ?>
 <?php
