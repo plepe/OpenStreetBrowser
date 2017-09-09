@@ -27,6 +27,7 @@ require('./overpassChooser')
 require('./fullscreen')
 require('./mapLayers')
 require('./twigFunctions')
+require('./categories')
 
 window.onload = function() {
   var initState = {}
