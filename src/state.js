@@ -82,7 +82,10 @@ function stringify (state) {
   }
 
   var newHash = queryString.stringify(tmpState)
+
+  // Characters we dont's want escaped
   newHash = newHash.replace(/%2F/g, '/')
+  newHash = newHash.replace(/%2C/g, ',')
 
   if (newHash !== '') {
     link += (link === '' ? '' : '&') + newHash
