@@ -1,3 +1,4 @@
+/* global lang, ui_lang, options, alert */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
 function CategoryBase (id, data) {
@@ -9,6 +10,7 @@ function CategoryBase (id, data) {
   this.dom = document.createElement('div')
   this.dom.className = 'category category-' + data.type
   var name
+  var a
 
   if (this.id !== 'index') {
     var domHeader = document.createElement('header')
@@ -26,14 +28,14 @@ function CategoryBase (id, data) {
       name = lang('category:' + this.id)
     }
 
-    var a = document.createElement('a')
+    a = document.createElement('a')
     a.appendChild(document.createTextNode(name))
     a.href = '#'
     a.onclick = this.toggle.bind(this)
     domHeader.appendChild(a)
 
     if (options.debug) {
-      var a = document.createElement('a')
+      a = document.createElement('a')
       a.appendChild(document.createTextNode('⟳'))
       a.title = lang('reload')
       a.className = 'reload'
@@ -84,8 +86,9 @@ CategoryBase.prototype.setParentDom = function (parentDom) {
 }
 
 CategoryBase.prototype.open = function () {
-  if (this.isOpen)
+  if (this.isOpen) {
     return
+  }
 
   if (this.parentCategory) {
     this.parentCategory.open()
@@ -105,8 +108,9 @@ CategoryBase.prototype.open = function () {
 }
 
 CategoryBase.prototype.close = function () {
-  if (!this.isOpen)
+  if (!this.isOpen) {
     return
+  }
 
   this.dom.classList.remove('open')
 
@@ -153,7 +157,6 @@ CategoryBase.prototype.recalc = function () {
 }
 
 CategoryBase.prototype.notifyChildLoadStart = function (category) {
-  console.log(this.id, this.childrenLoadingCount)
   if (this.childrenLoadingCount === 0 && this.parentCategory) {
     this.parentCategory.notifyChildLoadStart(this)
   } else {
@@ -163,7 +166,6 @@ CategoryBase.prototype.notifyChildLoadStart = function (category) {
 }
 
 CategoryBase.prototype.notifyChildLoadEnd = function (category) {
-  console.log(this.id, this.childrenLoadingCount)
   this.childrenLoadingCount--
   if (this.childrenLoadingCount === 0 && this.parentCategory) {
     this.parentCategory.notifyChildLoadEnd(this)

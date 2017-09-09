@@ -1,3 +1,5 @@
+/* globals overpassUrl:true */
+
 register_hook('init', function () {
   if (options.overpassUrl) {
     overpassUrl = options.overpassUrl

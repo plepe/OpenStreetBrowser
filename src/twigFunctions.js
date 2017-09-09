@@ -12,18 +12,18 @@ OverpassLayer.twig.extendFunction('tagsPrefix', function (tags, prefix) {
     }
   }
 
-  if (count == 0) {
+  if (count === 0) {
     return null
   }
 
   return ret
 })
 
-OverpassLayer.twig.extendFunction('openingHoursState', function (opening_hours) {
+OverpassLayer.twig.extendFunction('openingHoursState', function (openingHours) {
   try {
-    var oh = new OpeningHours(opening_hours)
+    var oh = new OpeningHours(openingHours)
   } catch (err) {
-    console.log("Error in opening_hours: " + err)
+    console.log('Error in opening_hours: ' + err)
     return 'unknown'
   }
 

@@ -6,7 +6,7 @@ var state = require('./state')
 var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
-    markerSign: "",
+    markerSign: '',
     'style:hover': {
       color: 'black',
       weight: 3,
@@ -23,6 +23,8 @@ var defaultValues = {
 CategoryOverpass.prototype = Object.create(CategoryBase.prototype)
 CategoryOverpass.prototype.constructor = CategoryOverpass
 function CategoryOverpass (id, data) {
+  var p
+
   CategoryBase.call(this, id, data)
 
   data.id = this.id
@@ -94,12 +96,12 @@ function CategoryOverpass (id, data) {
     this.updatePopupContent(ob, ob.popup)
   }.bind(this)
 
-  var p = document.createElement('div')
+  p = document.createElement('div')
   p.className = 'loadingIndicator'
   p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
   this.dom.appendChild(p)
 
-  var p = document.createElement('div')
+  p = document.createElement('div')
   p.className = 'loadingIndicator2'
   p.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>'
   this.dom.appendChild(p)
@@ -170,8 +172,9 @@ CategoryOverpass.prototype.updateStatus = function () {
 }
 
 CategoryOverpass.prototype.open = function () {
-  if (this.isOpen)
+  if (this.isOpen) {
     return
+  }
 
   CategoryBase.prototype.open.call(this)
 
@@ -191,8 +194,9 @@ CategoryOverpass.prototype.recalc = function () {
 }
 
 CategoryOverpass.prototype.close = function () {
-  if (!this.isOpen)
+  if (!this.isOpen) {
     return
+  }
 
   CategoryBase.prototype.close.call(this)
 
@@ -220,7 +224,6 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
     div.className = 'description'
     div.innerHTML = object.data.popupDescription || object.data.description
     popup._contentNode.insertBefore(div, popup._contentNode.firstChild.nextSibling)
-
   }
 
   if (this.popupBodyTemplate) {
@@ -242,7 +245,7 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
 CategoryOverpass.prototype.renderTemplate = function (object, templateId, callback) {
   OpenStreetBrowserLoader.getTemplate(templateId, function (err, template) {
     if (err) {
-      err = "can't load " + templateId + ": " + err
+      err = "can't load " + templateId + ': ' + err
       return callback(err, null)
     }
 

@@ -9,7 +9,7 @@ register_hook('state-apply', function (state) {
   list.forEach(function (id) {
     OpenStreetBrowserLoader.getCategory(id, function (err, category) {
       if (err) {
-        console.log("Can't load category " + id + ": ", err)
+        console.log("Can't load category " + id + ': ', err)
         return
       }
 
@@ -22,4 +22,4 @@ register_hook('state-apply', function (state) {
       }
     })
   })
-}.bind(this))
+})

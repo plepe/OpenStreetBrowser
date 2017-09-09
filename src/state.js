@@ -1,3 +1,5 @@
+/* globals setPath, history */
+
 var queryString = require('query-string')
 
 function get () {
@@ -63,11 +65,12 @@ function stringify (state) {
   var locPrecision = 5
   if (state.zoom) {
     locPrecision =
-      state.zoom > 16 ? 5 :
-      state.zoom >  8 ? 4 :
-      state.zoom >  4 ? 3 :
-      state.zoom >  2 ? 2 :
-      state.zoom >  1 ? 1 : 0
+      state.zoom > 16 ? 5
+      : state.zoom > 8 ? 4
+      : state.zoom > 4 ? 3
+      : state.zoom > 2 ? 2
+      : state.zoom > 1 ? 1
+      : 0
   }
 
   if (state.zoom && state.lat && state.lon) {
@@ -110,7 +113,7 @@ function parse (link) {
       newPath = link.substr(0, firstAmp)
     }
   } else {
-     if (firstAmp === -1) {
+    if (firstAmp === -1) {
       urlNonPathPart = link
     } else if (firstAmp < firstEquals) {
       newPath = link.substr(0, firstAmp)
@@ -145,13 +148,8 @@ function update (state, push) {
 
   if (push) {
     history.pushState(null, null, newHash)
-    console.log('push', newHash, state)
   } else if (location.hash !== newHash && (location.hash !== '' || newHash !== '#')) {
-
     history.replaceState(null, null, newHash)
-    console.log('replace', newHash, state)
-  } else {
-    console.log('ignore', newHash, state)
   }
 }
 

@@ -1,7 +1,8 @@
+/* global languages:false, lang_str:false */
 var tagTranslations = require('./tagTranslations')
 
 function getPreferredDataLanguage () {
-  var m = (navigator.language || navigator.userLanguage).match(/^([^\-]+)(\-.*|)$/)
+  var m = (navigator.language || navigator.userLanguage).match(/^([^-]+)(-.*|)$/)
   if (m) {
     return m[1].toLocaleLowerCase()
   } else {
@@ -14,18 +15,19 @@ function getAcceptLanguages () {
 }
 
 function getUiLanguages () {
+  var i, code
   var ret = {}
   var acceptLanguages = getAcceptLanguages()
 
-  for (var i = 0; i < acceptLanguages.length; i++) {
-    var code = acceptLanguages[i]
+  for (i = 0; i < acceptLanguages.length; i++) {
+    code = acceptLanguages[i]
     if (languages.indexOf(code) !== -1) {
       ret[code] = langName(code)
     }
   }
 
-  for (var i = 0; i < languages.length; i++) {
-    var code = languages[i]
+  for (i = 0; i < languages.length; i++) {
+    code = languages[i]
     if (!(code in ret)) {
       ret[code] = langName(code)
     }
@@ -35,18 +37,19 @@ function getUiLanguages () {
 }
 
 function getDataLanguages () {
+  var code
   var ret = {}
   var acceptLanguages = getAcceptLanguages()
 
   for (var i = 0; i < acceptLanguages.length; i++) {
-    var code = acceptLanguages[i]
+    code = acceptLanguages[i]
     ret[code] = langName(code)
   }
 
   for (var k in lang_str) {
-    var m
-    if (m = k.match(/^lang:(.*)$/)) {
-      var code = m[1]
+    var m = k.match(/^lang:(.*)$/)
+    if (m) {
+      code = m[1]
       if (code === 'current') {
         continue
       }

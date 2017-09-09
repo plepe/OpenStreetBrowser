@@ -1,7 +1,7 @@
-var fullscreenControl = L.Control.extend({
+var FullscreenControl = L.Control.extend({
   options: {
-    position: 'topleft' 
-    //control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
+    position: 'topleft'
+    // control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
   },
   onAdd: function (map) {
     var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control-fullscreen')
@@ -19,7 +19,7 @@ var fullscreenControl = L.Control.extend({
 })
 
 register_hook('init', function (callback) {
-  map.addControl(new fullscreenControl())
+  map.addControl(new FullscreenControl())
 })
 
 register_hook('show', function (url, options) {

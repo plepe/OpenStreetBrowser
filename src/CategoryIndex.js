@@ -1,3 +1,4 @@
+/* global alert */
 var async = require('async')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var CategoryBase = require('./CategoryBase')
@@ -10,20 +11,22 @@ function CategoryIndex (id, data) {
   this.childrenDoms = {}
   this.childrenCategories = null
 
-
   this._loadChildrenCategories(function (err) {
+    if (err) {
+      console.log('error loading child categories:', err)
+    }
   })
 }
 
 CategoryIndex.prototype.open = function () {
-  if (this.isOpen)
+  if (this.isOpen) {
     return
+  }
 
   CategoryBase.prototype.open.call(this)
 
   if (this.childrenCategories !== null) {
     this.isOpen = true
-    return
   }
 }
 
@@ -75,8 +78,9 @@ CategoryIndex.prototype._loadChildCategory = function (callback, err, category) 
 }
 
 CategoryIndex.prototype.close = function () {
-  if (!this.isOpen)
+  if (!this.isOpen) {
     return
+  }
 
   CategoryBase.prototype.close.call(this)
 

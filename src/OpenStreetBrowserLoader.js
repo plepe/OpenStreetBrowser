@@ -47,10 +47,9 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
   }
 
   var req = new XMLHttpRequest()
-  req.addEventListener("load", reqListener.bind(this, req))
-  req.open("GET", config.categoriesDir + '/' + id + ".json?" + config.categoriesRev)
+  req.addEventListener('load', reqListener.bind(this, req))
+  req.open('GET', config.categoriesDir + '/' + id + '.json?' + config.categoriesRev)
   req.send()
-
 }
 
 OpenStreetBrowserLoader.prototype.getTemplate = function (id, callback) {
@@ -71,33 +70,32 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, callback) {
   }
 
   var req = new XMLHttpRequest()
-  req.addEventListener("load", reqListener.bind(this, req))
-  req.open("GET", config.categoriesDir + '/' + id + ".html?" + config.categoriesRev)
+  req.addEventListener('load', reqListener.bind(this, req))
+  req.open('GET', config.categoriesDir + '/' + id + '.html?' + config.categoriesRev)
   req.send()
-
 }
 
 OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, data, callback) {
   if (!data.type) {
-    callback('no type defined', null)
-    return
-  } else if (!(data.type in this.types)) {
-    callback('unknown type', null)
-    return
+    return callback(new Error('no type defined'), null)
+  }
+
+  if (!(data.type in this.types)) {
+    return callback(new Error('unknown type'), null)
+  }
+
+  var layer = new this.types[data.type](id, data)
+
+  layer.setMap(this.map)
+
+  this.categories[id] = layer
+
+  if ('load' in layer) {
+    layer.load(function (err) {
+      callback(err, layer)
+    })
   } else {
-    var layer = new this.types[data.type](id, data)
-
-    layer.setMap(this.map)
-
-    this.categories[id] = layer
-
-    if ('load' in layer) {
-      layer.load(function (err) {
-        callback(err, layer)
-      })
-    } else {
-      callback(null, layer)
-    }
+    callback(null, layer)
   }
 }
 

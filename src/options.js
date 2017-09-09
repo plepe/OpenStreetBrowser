@@ -1,3 +1,4 @@
+/* globals form, ajax, options:true, showRootContent */
 var moduleOptions = {}
 
 register_hook('init', function () {
@@ -26,18 +27,18 @@ moduleOptions.open = function () {
 
   call_hooks('options_form', def)
 
-  var options_form = new form('options', def)
+  var optionsForm = new form('options', def)
   document.getElementById('content').className = 'options'
   var dom = document.getElementById('contentOptions')
   dom.innerHTML = ''
 
-  options_form.set_data(options)
+  optionsForm.set_data(options)
 
   var f = document.createElement('form')
-  f.onsubmit = moduleOptions.submit.bind(this, options_form)
+  f.onsubmit = moduleOptions.submit.bind(this, optionsForm)
   dom.appendChild(f)
 
-  options_form.show(f)
+  optionsForm.show(f)
 
   var input = document.createElement('button')
   input.innerHTML = lang('save')
@@ -46,12 +47,12 @@ moduleOptions.open = function () {
   return false
 }
 
-moduleOptions.submit = function (options_form) {
-  var data = options_form.get_data()
+moduleOptions.submit = function (optionsForm) {
+  var data = optionsForm.get_data()
 
   var reload = false
   for (var k in data) {
-    if (options_form.def[k].reloadOnChange && options[k] != data[k]) {
+    if (optionsForm.def[k].reloadOnChange && options[k] !== data[k]) {
       reload = true
     }
   }

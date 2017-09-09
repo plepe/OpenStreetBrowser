@@ -8,12 +8,10 @@ register_hook('init_callback', function (initState, callback) {
   }
 
   ipLocation('', function (err, ipLoc) {
-    var ret
-
     if (typeof ipLoc === 'object' && 'latitude' in ipLoc) {
       initState.map = '14/' + ipLoc.latitude + '/' + ipLoc.longitude
     }
 
-    callback()
+    callback(err)
   })
 })
