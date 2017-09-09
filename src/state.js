@@ -11,16 +11,14 @@ function get () {
   }
 
   // location
-  if (typeof map.getZoom() === 'undefined') {
-    return
+  if (typeof map.getZoom() !== 'undefined') {
+    var center = map.getCenter()
+    var zoom = map.getZoom()
+
+    state.lat = center.lat
+    state.lon = center.lng
+    state.zoom = zoom
   }
-
-  var center = map.getCenter()
-  var zoom = map.getZoom()
-
-  state.lat = center.lat
-  state.lon = center.lng
-  state.zoom = zoom
 
   // other modules
   call_hooks('state-get', state)
