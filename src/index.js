@@ -29,7 +29,7 @@ require('./twigFunctions')
 require('./categories')
 
 window.onload = function () {
-  var initState = {}
+  initState = config.defaultView
 
   map = L.map('map')
 
@@ -77,8 +77,10 @@ function onload2 (initState) {
   }
 
   // make sure the map has an initial location
-  if (!('map' in newState)) {
-    newState.map = initState.map
+  if (!('zoom' in newState) && !('lat' in newState) && !('lon' in newState)) {
+    newState.zoom = initState.zoom
+    newState.lat = initState.lat
+    newState.lon = initState.lon
   }
 
   state.apply(newState)
