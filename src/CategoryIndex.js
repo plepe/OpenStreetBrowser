@@ -9,6 +9,10 @@ function CategoryIndex (id, data) {
 
   this.childrenDoms = {}
   this.childrenCategories = null
+
+
+  this._loadChildrenCategories(function (err) {
+  })
 }
 
 CategoryIndex.prototype.open = function () {
@@ -21,10 +25,6 @@ CategoryIndex.prototype.open = function () {
     this.isOpen = true
     return
   }
-
-  this._loadChildrenCategories(function (err) {
-    console.log(err)
-  })
 }
 
 CategoryIndex.prototype.recalc = function () {
