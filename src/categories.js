@@ -6,8 +6,13 @@ register_hook('state-apply', function (state) {
   }
 
   var list = state.categories.split(',')
-  for (var i = 0; i < list.length; i++) {
-    OpenStreetBrowserLoader.getCategory(list[i], function (err, category) {
+  list.forEach(function (id) {
+    OpenStreetBrowserLoader.getCategory(id, function (err, category) {
+      if (err) {
+        console.log("Can't load category " + id + ": ", err)
+        return
+      }
+
       if (category) {
         category.open()
 
@@ -16,5 +21,5 @@ register_hook('state-apply', function (state) {
         }
       }
     })
-  }
+  })
 }.bind(this))
