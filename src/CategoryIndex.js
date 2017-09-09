@@ -1,3 +1,4 @@
+var async = require('async')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var CategoryBase = require('./CategoryBase')
 
@@ -21,7 +22,9 @@ CategoryIndex.prototype.open = function () {
     return
   }
 
-  this._loadChildrenCategories()
+  this._loadChildrenCategories(function (err) {
+    console.log(err)
+  })
 }
 
 CategoryIndex.prototype.recalc = function () {
@@ -32,35 +35,43 @@ CategoryIndex.prototype.recalc = function () {
   }
 }
 
-CategoryIndex.prototype._loadChildrenCategories = function () {
+CategoryIndex.prototype._loadChildrenCategories = function (callback) {
   this.childrenCategories = {}
 
-  for (var i = 0; i < this.data.subCategories.length; i++) {
-    var data = this.data.subCategories[i]
-    var childDom = document.createElement('div')
-    childDom.className = 'categoryWrapper'
-    this.domContent.appendChild(childDom)
-    this.childrenDoms[data.id] = childDom
+  async.forEach(this.data.subCategories,
+    function (data, callback) {
+      var childDom = document.createElement('div')
+      childDom.className = 'categoryWrapper'
+      this.domContent.appendChild(childDom)
+      this.childrenDoms[data.id] = childDom
 
-    this.childrenCategories[data.id] = null
+      this.childrenCategories[data.id] = null
 
-    if ('type' in data) {
-      OpenStreetBrowserLoader.getCategoryFromData(data.id, data, this._loadChildCategory.bind(this))
-    } else {
-      OpenStreetBrowserLoader.getCategory(data.id, this._loadChildCategory.bind(this))
+      if ('type' in data) {
+        OpenStreetBrowserLoader.getCategoryFromData(data.id, data, this._loadChildCategory.bind(this, callback))
+      } else {
+        OpenStreetBrowserLoader.getCategory(data.id, this._loadChildCategory.bind(this, callback))
+      }
+    }.bind(this),
+    function (err) {
+      if (callback) {
+        callback(err)
+      }
     }
-  }
+  )
 }
 
-CategoryIndex.prototype._loadChildCategory = function (err, category) {
+CategoryIndex.prototype._loadChildCategory = function (callback, err, category) {
   if (err) {
-    return
+    return callback(err)
   }
 
   this.childrenCategories[category.id] = category
 
   category.setParent(this)
   category.setParentDom(this.childrenDoms[category.id])
+
+  callback(err, category)
 }
 
 CategoryIndex.prototype.close = function () {
