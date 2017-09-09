@@ -3,12 +3,14 @@
 git clone https://github.com/plepe/openstreetbrowser.git
 cd openstreetbrowser
 npm install
+composer install
 git submodule init
 git submodule update
 cp conf.php-dist conf.php
 nano conf.php
 npm run build
 modulekit/build_cache
+bin/download_dependencies
 ```
 
 ### Upgrade

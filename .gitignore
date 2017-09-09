@@ -1,4 +1,9 @@
 /conf.php
+/dist/
+/node_modules/
+/npm-debug.log
 /vendor/
 /data/
 /composer.lock
+/yarn.lock
+*.swp
