@@ -58,6 +58,13 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, callback) {
     return
   }
 
+  if (id in this._loadClash) {
+    this._loadClash[id].push(callback)
+    return
+  }
+
+  this._loadClash[id] = []
+
   function reqListener (req) {
     if (req.status !== 200) {
       console.log(req)
@@ -67,6 +74,10 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, callback) {
     this.templates[id] = OverpassLayer.twig.twig({ data: req.responseText, autoescape: true })
 
     callback(null, this.templates[id])
+
+    this._loadClash[id].forEach(function (c) {
+      c(null, this.templates[id])
+    }.bind(this))
   }
 
   var req = new XMLHttpRequest()
