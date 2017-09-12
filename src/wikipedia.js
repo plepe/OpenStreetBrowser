@@ -51,7 +51,7 @@ function get (value, callback) {
   ajax('wikipedia',
     {
       page: value,
-      lang: lang
+      lang: options.data_lang
     },
     function (result) {
       if (!result.content) {
