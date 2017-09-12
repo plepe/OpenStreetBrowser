@@ -111,10 +111,10 @@ register_hook('options_form', function (def) {
   }
 })
 
-register_hook('options_save', function (data) {
-  if ('data_lang' in data) {
-    if ('data_lang' in options && options.data_lang !== data.data_lang) {
-      tagTranslations.setTagLanguage(data.data_lang)
+register_hook('options_save', function (options, old_options) {
+  if ('data_lang' in options) {
+    if (old_options.data_lang !== options.data_lang) {
+      tagTranslations.setTagLanguage(options.data_lang)
       baseCategory.recalc()
     }
   }
