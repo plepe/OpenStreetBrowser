@@ -30,10 +30,12 @@ function ajax_wikipedia ($param) {
 
   if ($wp_lang !== $param['lang'] && array_key_exists($param['lang'], $langList)) {
     $content = file_get_contents($langList[$param['lang']]);
+    $wp_lang = $param['lang'];
   }
 
   return array(
     'content' => $content,
     'languages' => $langList,
+    'language' => $wp_lang,
   );
 }
