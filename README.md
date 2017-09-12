@@ -118,3 +118,4 @@ With the function `register_hook` you can hook into several functions. The follo
 
 * `state-get`: modules can add values into the current state. Parameters: `state`: an object, which can be modified by modules.
 * `state-apply`: when a state is applied to the app. Parameters: `state`: state which should be applied.
+* `show-details`: called when details are being displayed. Parameters: data (see properties in doc/TwigJS.md), category, dom, callback.

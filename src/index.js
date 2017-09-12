@@ -228,6 +228,15 @@ function showDetails (data, category) {
     div.innerHTML = result
   }.bind(this, div))
 
+
+  call_hooks_callback('show-details', data, category, dom,
+    function (err) {
+      if (err.length) {
+        console.log('show-details produced errors:', err)
+      }
+    }
+  )
+
   h = document.createElement('h3')
   h.innerHTML = 'Attributes'
   dom.appendChild(h)
