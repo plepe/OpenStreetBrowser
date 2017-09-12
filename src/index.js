@@ -140,17 +140,17 @@ window.setPath = function (path) {
     return
   }
 
-  options = {
+  var param = {
     showDetails: !!path.match(/\/details$/)
   }
 
-  show(path, options, function (err) {
+  show(path, param, function (err) {
     if (err) {
       alert(err)
       return
     }
 
-    call_hooks('show', path, options)
+    call_hooks('show', path, param)
   })
 }
 
