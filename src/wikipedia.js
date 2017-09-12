@@ -74,6 +74,11 @@ register_hook('show-details', function (data, category, dom, callback) {
   block.className = 'loading'
   dom.appendChild(block)
 
+  var l = document.createElement('div')
+  l.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
+  l.className = 'loadingIndicator'
+  block.appendChild(l)
+
   var h = document.createElement('h3')
   h.appendChild(document.createTextNode(lang('tag:wikipedia')))
   block.appendChild(h)

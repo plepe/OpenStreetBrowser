@@ -488,3 +488,11 @@ a.showDetails {
 .leaflet-popup-content ul > li > .key {
   font-weight: bold;
 }
+
+#contentDetails div > .loadingIndicator {
+  display: none;
+}
+#contentDetails div.loading > .loadingIndicator {
+  float: right;
+  display: block;
+}
