@@ -79,11 +79,14 @@ function langName (code) {
 }
 
 register_hook('init_callback', function (initState, callback) {
-  if ('data_lang' in options) {
-    tagTranslations.setTagLanguage(options.data_lang)
-  } else {
-    tagTranslations.setTagLanguage(getPreferredDataLanguage())
+  if (!('ui_lang' in options)) {
+    options.ui_lang = ui_lang
   }
+
+  if (!('data_lang' in options)) {
+    options.data_lang = getPreferredDataLanguage()
+  }
+  tagTranslations.setTagLanguage(options.data_lang)
 
   callback(null)
 })
