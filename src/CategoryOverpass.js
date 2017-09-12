@@ -94,6 +94,10 @@ function CategoryOverpass (id, data) {
     }
 
     this.updatePopupContent(ob, ob.popup)
+
+    if (document.getElementById('content').className === 'details') {
+      showDetails(ob, this)
+    }
   }.bind(this)
 
   p = document.createElement('div')
