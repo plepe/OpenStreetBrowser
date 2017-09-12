@@ -59,16 +59,17 @@ moduleOptions.submit = function (optionsForm) {
     }
   }
 
-  if (reload) {
-    location.reload()
-  }
-
   ajax('options_save', null, data, function (ret) {
-    call_hooks('options_save', data)
-
+    old_options = options
     options = data
 
     document.getElementById('content').className = prevPage
+
+    call_hooks('options_save', data, old_options)
+
+    if (reload) {
+      location.reload()
+    }
   })
 
   return false
