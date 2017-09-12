@@ -1,5 +1,6 @@
 /* globals form, ajax, options:true, showRootContent */
 var moduleOptions = {}
+var prevPage
 
 register_hook('init', function () {
   var menu = document.getElementById('menu')
@@ -28,6 +29,7 @@ moduleOptions.open = function () {
   call_hooks('options_form', def)
 
   var optionsForm = new form('options', def)
+  prevPage = document.getElementById('content').className
   document.getElementById('content').className = 'options'
   var dom = document.getElementById('contentOptions')
   dom.innerHTML = ''
@@ -66,7 +68,7 @@ moduleOptions.submit = function (optionsForm) {
 
     options = data
 
-    showRootContent()
+    document.getElementById('content').className = prevPage
   })
 
   return false
