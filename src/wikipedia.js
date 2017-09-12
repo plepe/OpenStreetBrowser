@@ -58,7 +58,10 @@ function get (value, callback) {
         callback('error', null)
       }
 
-      callback(null, prepare(result.content))
+      var text = prepare(result.content)
+      text += ' <a target="_blank" href="' + result.languages[result.language] + '">' + lang('more') + '</a>'
+
+      callback(null, text)
     }
   )
 }
