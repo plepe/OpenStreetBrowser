@@ -11,7 +11,29 @@ function ajax_wikipedia ($param) {
 
   $wp_url = "https://{$wp_lang}.wikipedia.org/wiki/" . urlencode(strtr($wp_page, array(" " => "_")));
 
+  $content = file_get_contents($wp_url);
+
+  $langList = array($wp_lang => $wp_url);
+
+  $dom = new DOMDocument();
+  $dom->loadHTML($content);
+
+  $langDiv = $dom->getElementsByTagName('li');//interlanguage-link interwiki-bar');
+  for ($i = 0; $i < $langDiv->length; $i++) {
+    $li = $langDiv->item($i);
+
+    if (preg_match('/^interlanguage-link interwiki-(.*)$/', $li->getAttribute('class'), $m)) {
+      $a = $li->firstChild;
+      $langList[$m[1]] = $a->getAttribute('href');
+    }
+  }
+
+  if ($wp_lang !== $param['lang'] && array_key_exists($param['lang'], $langList)) {
+    $content = file_get_contents($langList[$param['lang']]);
+  }
+
   return array(
-    'content' => file_get_contents($wp_url),
+    'content' => $content,
+    'languages' => $langList,
   );
 }
