@@ -12,5 +12,6 @@
     "save": "Speichern",
     "toggle_fullscreen": "(De-)aktiviere Vollbildmodus",
     "unknown": "unbekannt",
-    "unnamed": "Namenlos"
+    "unnamed": "Namenlos",
+    "wikipedia:no-url-parse": "Konnte Wikipedia Adresse nicht erkennen"
 }

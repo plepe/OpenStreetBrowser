@@ -26,6 +26,7 @@ require('./fullscreen')
 require('./mapLayers')
 require('./twigFunctions')
 require('./categories')
+require('./wikipedia')
 
 window.onload = function () {
   initState = config.defaultView

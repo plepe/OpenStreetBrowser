@@ -14,6 +14,7 @@ $include = array(
     'src/options.php',
     'src/language.php',
     'src/ip-location.php',
+    'src/wikipedia.php',
   ),
   'css' => array(
     'style.css',

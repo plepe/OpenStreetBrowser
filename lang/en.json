@@ -13,5 +13,6 @@
     "save": "Save",
     "toggle_fullscreen": "Toggle full screen mode",
     "unknown": "unknown",
-    "unnamed": "unnamed"
+    "unnamed": "unnamed",
+    "wikipedia:no-url-parse": "Could not parse Wikipedia URL"
 }
