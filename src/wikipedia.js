@@ -36,12 +36,15 @@ function prepare (text) {
     return null
   }
 
-  var p = content.getElementsByTagName('p')
-  if (!p.length) {
+  var p = content.firstChild.firstChild
+  while (p && p.tagName !== 'P') {
+    p = p.nextSibling
+  }
+
+  if (!p) {
     return null
   }
 
-  p = p[0]
   stripLinks(p)
 
   return p.innerHTML
