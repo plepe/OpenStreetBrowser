@@ -205,7 +205,7 @@ function show (id, options, callback) {
   })
 }
 
-function showDetails (data, category) {
+window.showDetails = function (data, category) {
   var div, h, dt, dd
   var k
   var dom = document.getElementById('contentDetails')
