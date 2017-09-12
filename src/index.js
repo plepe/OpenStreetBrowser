@@ -33,6 +33,11 @@ window.onload = function () {
 
   map = L.map('map')
 
+  // due to php export, options may be an array -> fix
+  if (Array.isArray(options)) {
+    options = {}
+  }
+
   call_hooks('init')
   call_hooks_callback('init_callback', initState, onload2.bind(this, initState))
 }
