@@ -20,12 +20,13 @@ function stripLinks (dom) {
 
 function prepare (text) {
   var ret = ''
+  var i
 
   var div = document.createElement('div')
   div.innerHTML = text
 
   var contents = div.getElementsByTagName('div')
-  for (var i = 0; i < contents.length; i++) {
+  for (i = 0; i < contents.length; i++) {
     if (contents[i].id === 'mw-content-text') {
       var content = contents[i]
       break
@@ -46,6 +47,18 @@ function prepare (text) {
   }
 
   stripLinks(p)
+
+  // first image
+  var imgs = div.getElementsByTagName('img')
+  for (i = 0; i < imgs.length; i++) {
+    var img = imgs[i]
+
+    img.removeAttribute('width')
+    img.removeAttribute('height')
+    p.insertBefore(img, p.firstChild)
+
+    break;
+  }
 
   return p.innerHTML
 }
@@ -76,6 +89,7 @@ register_hook('show-details', function (data, category, dom, callback) {
   var errs = []
   var h
   var div = document.createElement('div')
+  div.className = 'wikipedia'
 
   if ('wikipedia' in ob.tags) {
     found++
