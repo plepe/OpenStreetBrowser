@@ -71,11 +71,51 @@ function get (value, callback) {
 
 register_hook('show-details', function (data, category, dom, callback) {
   var ob = data.object
+  var found = 0
+  var finished = 0
+  var errs = []
+  var h
+  var div = document.createElement('div')
 
-  if (!('wikipedia' in ob.tags)) {
-    return
+  if ('wikipedia' in ob.tags) {
+    found++
+    showWikipedia(ob.tags.wikipedia, div, done)
   }
 
+  for (var k in ob.tags) {
+    var m
+    if (m = k.match(/^(.*):wikipedia$/)) {
+      h = document.createElement('h4')
+      h.appendChild(document.createTextNode(lang('tag:' + m[1])))
+      div.appendChild(h)
+
+      found++
+      showWikipedia(ob.tags[k], div, done)
+    }
+  }
+
+  if (found) {
+    h = document.createElement('h3')
+    h.appendChild(document.createTextNode(lang('tag:wikipedia')))
+    dom.appendChild(h)
+
+    dom.appendChild(div)
+  }
+
+  function done (err) {
+    finished++
+
+    if (err) {
+      errs.push(err)
+    }
+
+    if (found === finished) {
+      callback(errs.length ? errs : null)
+    }
+  }
+})
+
+function showWikipedia (tagValue, dom, callback) {
   var block = document.createElement('div')
   block.className = 'loading'
   dom.appendChild(block)
@@ -85,11 +125,7 @@ register_hook('show-details', function (data, category, dom, callback) {
   l.className = 'loadingIndicator'
   block.appendChild(l)
 
-  var h = document.createElement('h3')
-  h.appendChild(document.createTextNode(lang('tag:wikipedia')))
-  block.appendChild(h)
-
-  get(ob.tags.wikipedia, function (err, text) {
+  get(tagValue, function (err, text) {
     if (!text) {
       block.appendChild(document.createTextNode(lang('wikipedia:no-url-parse')))
     }
@@ -102,4 +138,4 @@ register_hook('show-details', function (data, category, dom, callback) {
 
     callback(err)
   })
-})
+}
