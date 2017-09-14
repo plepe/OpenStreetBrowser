@@ -1,21 +1,16 @@
 function stripLinks (dom) {
-  var current = dom.firstChild
+  var as = dom.getElementsByTagName('a')
+  var as = Array.prototype.slice.call(as)
 
-  while (current) {
-    var next = current.nextSibling
+  as.forEach(function (current) {
+    var c
 
-    if (current.tagName === 'A') {
-      var c
-
-      while (c = current.firstChild) {
-        dom.insertBefore(c, current)
-      }
-
-      dom.removeChild(current)
+    while (c = current.firstChild) {
+      current.parentNode.insertBefore(c, current)
     }
 
-    current = next
-  }
+    current.parentNode.removeChild(current)
+  })
 }
 
 function prepare (text) {
