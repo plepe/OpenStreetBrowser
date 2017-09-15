@@ -48,6 +48,11 @@ function prepare (text) {
   for (i = 0; i < imgs.length; i++) {
     var img = imgs[i]
 
+    // ignore icons
+    if (img.width <= 64 && img.height <= 64) {
+      continue
+    }
+
     img.removeAttribute('width')
     img.removeAttribute('height')
     p.insertBefore(img, p.firstChild)
