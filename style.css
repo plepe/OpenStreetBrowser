@@ -13,9 +13,7 @@ body {
   top: 0px;
   bottom: 0px;
   left: 0px;
-  width: 250px;
-  padding-left:10px;
-  padding-right:10px;
+  width: 270px;
   position: absolute;
 }
 #map {
@@ -43,6 +41,7 @@ body {
 }
 #sidebar > #header {
   padding-top: 27px;
+  padding-left: 10px;
   height:110px;
   font-size:18px;
   color:#333;
@@ -74,6 +73,8 @@ body {
   flex: 1;
   flex-shrink: 0;
   overflow: auto;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 #sidebar > #footer {
@@ -501,12 +502,19 @@ a.showDetails {
 .wikipedia img {
   max-width: 100px;
   max-height: 100px;
-  float: left;
-  margin-right: 0.5em;
+  float: right;
+  margin-left: 0.5em;
   margin-bottom: 0.5em;
 }
-.wikipedia h4 {
-  clear: left;
+.wikipedia div {
+  text-align: justify;
+}
+#contentDetails h3 {
+  border-bottom: 1px solid black;
+  clear: both;
+}
+#contentDetails h4 {
+  clear: both;
 }
 .wikipedia .reference {
   display: none;
