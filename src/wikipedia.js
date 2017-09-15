@@ -1,3 +1,5 @@
+var cache = {}
+
 function stripLinks (dom) {
   var as = dom.getElementsByTagName('a')
   var as = Array.prototype.slice.call(as)
@@ -64,6 +66,11 @@ function prepare (text) {
 }
 
 function get (value, callback) {
+  var cacheId = options.data_lang + ':' + value
+  if (cacheId in cache) {
+    return callback(null, cache[cacheId])
+  }
+
   ajax('wikipedia',
     {
       page: value,
@@ -71,11 +78,13 @@ function get (value, callback) {
     },
     function (result) {
       if (!result.content) {
-        callback('error', null)
+        return callback('error', null)
       }
 
       var text = prepare(result.content)
       text += ' <a target="_blank" href="' + result.languages[result.language] + '">' + lang('more') + '</a>'
+
+      cache[cacheId] = text
 
       callback(null, text)
     }
