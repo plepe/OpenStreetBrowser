@@ -115,6 +115,17 @@ register_hook('show-details', function (data, category, dom, callback) {
       found++
       showWikipedia(ob.tags[k], div, done)
     }
+
+    if (m = k.match(/^((.*):)?wikipedia:(.*)$/)) {
+      if (m[1]) {
+        h = document.createElement('h4')
+        h.appendChild(document.createTextNode(lang('tag:' + m[1])))
+        div.appendChild(h)
+      }
+
+      found++
+      showWikipedia(m[3] + ':' + ob.tags[k], div, done)
+    }
   }
 
   if (found) {
