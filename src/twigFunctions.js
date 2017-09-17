@@ -29,3 +29,6 @@ OverpassLayer.twig.extendFunction('openingHoursState', function (openingHours) {
 
   return oh.getStateString(new Date(), true)
 })
+OverpassLayer.twig.extendFilter('matches', function (value, match) {
+  return value.match(match)
+})
