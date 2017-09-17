@@ -1,5 +1,6 @@
 {
     "main:options": "Opciones",
+    "more": "más",
     "options:data_lang": "Llingua de los datos",
     "options:data_lang:local": "Llingua llocal",
     "options:ui_lang": "Llingua de la interfaz",

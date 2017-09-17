@@ -1,5 +1,6 @@
 /* globals form, ajax, options:true, showRootContent */
 var moduleOptions = {}
+var prevPage
 
 register_hook('init', function () {
   var menu = document.getElementById('menu')
@@ -28,6 +29,7 @@ moduleOptions.open = function () {
   call_hooks('options_form', def)
 
   var optionsForm = new form('options', def)
+  prevPage = document.getElementById('content').className
   document.getElementById('content').className = 'options'
   var dom = document.getElementById('contentOptions')
   dom.innerHTML = ''
@@ -57,16 +59,17 @@ moduleOptions.submit = function (optionsForm) {
     }
   }
 
-  if (reload) {
-    location.reload()
-  }
-
   ajax('options_save', null, data, function (ret) {
-    call_hooks('options_save', data)
-
+    old_options = options
     options = data
 
-    showRootContent()
+    document.getElementById('content').className = prevPage
+
+    call_hooks('options_save', data, old_options)
+
+    if (reload) {
+      location.reload()
+    }
   })
 
   return false

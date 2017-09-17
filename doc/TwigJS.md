@@ -24,6 +24,7 @@ There are several extra functions defined for the TwigJS language:
 
 Extra filters:
 * filter websiteUrl: return a valid http link. Example: `{{ "www.google.com"|websiteUrl }}` -> "http://www.google.com"; `{{ "https://google.com"|websiteUrl }}` -> "https://google.com"
+* filter `matches`: regular expression match. e.g. `{{ "test"|matches("e(st)$") }}` returns `[ "est", "st" ]`. Returns null if it does not match.
 
 Notes:
 * Variables will automatically be HTML escaped, if not the filter raw is used, e.g.: {{ tags.name|raw }}

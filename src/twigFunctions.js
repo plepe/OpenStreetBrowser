@@ -36,3 +36,6 @@ OverpassLayer.twig.extendFilter('websiteUrl', function (value) {
 
   return 'http://' + value
 })
+OverpassLayer.twig.extendFilter('matches', function (value, match) {
+  return value.match(match)
+})

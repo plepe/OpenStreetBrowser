@@ -1,8 +1,13 @@
 {
     "closed": "geschlossen",
     "default": "Standard",
+    "error": {
+        "message": "Fehler",
+        "!=1": "Fehler"
+    },
     "facilities": "Einrichtungen",
     "main:options": "Optionen",
+    "more": "mehr",
     "open": "geöffnet",
     "options:data_lang": "Datensprache",
     "options:data_lang:local": "Lokale Sprache",
@@ -13,5 +18,6 @@
     "show details": "zeige Details",
     "toggle_fullscreen": "(De-)aktiviere Vollbildmodus",
     "unknown": "unbekannt",
-    "unnamed": "Namenlos"
+    "unnamed": "Namenlos",
+    "wikipedia:no-url-parse": "Konnte Wikipedia Adresse nicht erkennen"
 }

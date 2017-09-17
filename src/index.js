@@ -26,11 +26,17 @@ require('./fullscreen')
 require('./mapLayers')
 require('./twigFunctions')
 require('./categories')
+require('./wikipedia')
 
 window.onload = function () {
   initState = config.defaultView
 
   map = L.map('map')
+
+  // due to php export, options may be an array -> fix
+  if (Array.isArray(options)) {
+    options = {}
+  }
 
   call_hooks('init')
   call_hooks_callback('init_callback', initState, onload2.bind(this, initState))
@@ -139,17 +145,17 @@ window.setPath = function (path) {
     return
   }
 
-  options = {
+  var param = {
     showDetails: !!path.match(/\/details$/)
   }
 
-  show(path, options, function (err) {
+  show(path, param, function (err) {
     if (err) {
       alert(err)
       return
     }
 
-    call_hooks('show', path, options)
+    call_hooks('show', path, param)
   })
 }
 
@@ -199,7 +205,7 @@ function show (id, options, callback) {
   })
 }
 
-function showDetails (data, category) {
+window.showDetails = function (data, category) {
   var div, h, dt, dd
   var k
   var dom = document.getElementById('contentDetails')
@@ -227,6 +233,15 @@ function showDetails (data, category) {
   category.renderTemplate(data, 'detailsBody', function (div, err, result) {
     div.innerHTML = result
   }.bind(this, div))
+
+
+  call_hooks_callback('show-details', data, category, dom,
+    function (err) {
+      if (err.length) {
+        console.log('show-details produced errors:', err)
+      }
+    }
+  )
 
   h = document.createElement('h3')
   h.innerHTML = 'Attributes'

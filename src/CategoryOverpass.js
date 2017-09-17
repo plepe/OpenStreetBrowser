@@ -94,6 +94,10 @@ function CategoryOverpass (id, data) {
     }
 
     this.updatePopupContent(ob, ob.popup)
+
+    if (document.getElementById('content').className === 'details') {
+      showDetails(ob, this)
+    }
   }.bind(this)
 
   p = document.createElement('div')
@@ -219,6 +223,14 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
 }
 
 CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
+  call_hooks_callback('show-popup', object, this, popup._contentNode,
+    function (err) {
+      if (err.length) {
+        console.log('show-popup produced errors:', err)
+      }
+    }
+  )
+
   if (object.data.popupDescription || object.data.description) {
     var div = document.createElement('div')
     div.className = 'description'

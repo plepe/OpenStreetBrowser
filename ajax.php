@@ -22,6 +22,6 @@ if ($postdata) {
 }
 
 $fun = "ajax_{$_REQUEST['__func']}";
-$return = $fun($_REQUEST["param"], $postdata);
+$return = $fun($_REQUEST, $postdata);
 
 print json_encode($return);
