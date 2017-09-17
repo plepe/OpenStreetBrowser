@@ -1,6 +1,10 @@
 {
     "closed": "closed",
     "default": "default",
+    "error": {
+        "message": "Error",
+        "!=1": "Errors"
+    },
     "facilities": "Facilities",
     "main:options": "Options",
     "more": "more",
