@@ -237,7 +237,7 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
 
   var footer = document.createElement('div')
   footer.className = 'footer'
-  var footerContent = '<a class="showDetails" href="#' + this.id + '/' + object.id + '/details">show details</a>'
+  var footerContent = '<a class="showDetails" href="#' + this.id + '/' + object.id + '/details">' + lang('show details') + '</a>'
   footer.innerHTML = footerContent
   popup._contentNode.appendChild(footer)
 }
