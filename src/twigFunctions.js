@@ -29,3 +29,10 @@ OverpassLayer.twig.extendFunction('openingHoursState', function (openingHours) {
 
   return oh.getStateString(new Date(), true)
 })
+OverpassLayer.twig.extendFilter('websiteUrl', function (value) {
+  if (value.match(/^https?:\/\//)) {
+    return value
+  }
+
+  return 'http://' + value
+})

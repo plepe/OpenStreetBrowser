@@ -22,6 +22,9 @@ There are several extra functions defined for the TwigJS language:
 * function `tagsPrefix(tags, prefix)`: return all tags with the specified prefix. The result will be an array with `{ "en": "name:en", "de": "name:de" }` (for the input `{ "name": "foo", "name:en": "english foo", "name:de": "german foo" }` and the prefix "name:").
 * function openingHoursState(opening_hours_definition): returns state of object as string: 'closed', 'open' or 'unknown'.
 
+Extra filters:
+* filter websiteUrl: return a valid http link. Example: `{{ "www.google.com"|websiteUrl }}` -> "http://www.google.com"; `{{ "https://google.com"|websiteUrl }}` -> "https://google.com"
+
 Notes:
 * Variables will automatically be HTML escaped, if not the filter raw is used, e.g.: {{ tags.name|raw }}
 * The templates will be rendered when the object becomes visible and when the zoom level changes.
