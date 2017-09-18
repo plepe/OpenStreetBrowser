@@ -1,3 +1,5 @@
+var wikidata = require('./wikidata')
+
 function showImage (url, dom) {
   var div = document.createElement('div')
   div.innerHTML = '<img src="' + url + '">'
@@ -32,6 +34,18 @@ register_hook('show-details', function (data, category, dom, callback) {
       showImage(img, div)
       found++
     }
+  }
+
+  if (data.object.tags.wikidata) {
+    found++
+
+    wikidata.load(data.object.tags.wikidata, function (err, result) {
+      if (result.claims && result.claims.P18) {
+        result.claims.P18.forEach(function (d) {
+          showWikimediaImage(d.mainsnak.datavalue.value, div)
+        })
+      }
+    })
   }
 
   if (found) {
