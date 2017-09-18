@@ -2,7 +2,7 @@ var wikidata = require('./wikidata')
 
 function showImage (url, dom) {
   var div = document.createElement('div')
-  div.innerHTML = '<img src="' + url + '">'
+  div.innerHTML = '<a target="_blank" href="' + url +'"><img src="' + url + '"></a>'
 
   dom.appendChild(div)
 }
@@ -10,7 +10,10 @@ function showImage (url, dom) {
 function showWikimediaImage (value, dom) {
   var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(value) + '&w=' + 235 //imgSize
 
-  showImage(url, dom)
+  var div = document.createElement('div')
+  div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(value) + '"><img src="' + url + '"/></a>'
+
+  dom.appendChild(div)
 }
 
 register_hook('show-details', function (data, category, dom, callback) {
