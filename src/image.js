@@ -51,6 +51,19 @@ register_hook('show-details', function (data, category, dom, callback) {
     })
   }
 
+  if (!data.object.tags.wikidata && data.object.tags.wikimedia_commons) {
+    found++
+
+    ajax('wikimedia', { page: data.object.tags.wikimedia_commons }, function (result) {
+      if (result.images) {
+        result.images.forEach(function (d) {
+          showWikimediaImage(d, div)
+
+        })
+      }
+    })
+  }
+
   if (found) {
     h = document.createElement('h3')
     h.appendChild(document.createTextNode(lang('images')))
