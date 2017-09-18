@@ -18,22 +18,28 @@ function showWikimediaImage (value, dom) {
 
 register_hook('show-details', function (data, category, dom, callback) {
   var found = 0
+  var img
+  var foundImages = []
   var div = document.createElement('div')
   div.className = 'images'
 
   if (data.object.tags.image) {
-    var img = data.object.tags.image
+    img = data.object.tags.image
 
     if (img.indexOf('File:') === 0) {
       showWikimediaImage(img.substr(5), div)
+      foundImages.push(img.substr(5))
       found++
     } else if (img.indexOf('http://commons.wikimedia.org/wiki/File:') === 0) {
       showWikimediaImage(decodeURIComponent(img.substr(39)), div)
+      foundImages.push(img.substr(39))
       found++
     } else if (img.indexOf('https://commons.wikimedia.org/wiki/File:') === 0) {
       showWikimediaImage(decodeURIComponent(img.substr(40)), div)
+      foundImages.push(img.substr(40))
       found++
     } else {
+      foundImages.push(img)
       showImage(img, div)
       found++
     }
@@ -45,7 +51,12 @@ register_hook('show-details', function (data, category, dom, callback) {
     wikidata.load(data.object.tags.wikidata, function (err, result) {
       if (result.claims && result.claims.P18) {
         result.claims.P18.forEach(function (d) {
-          showWikimediaImage(d.mainsnak.datavalue.value, div)
+          img = d.mainsnak.datavalue.value
+
+          if (foundImages.indexOf(img) === -1) {
+            showWikimediaImage(img, div)
+            foundImages.push(img)
+          }
         })
       }
     })
@@ -59,13 +70,19 @@ register_hook('show-details', function (data, category, dom, callback) {
       ajax('wikimedia', { page: value }, function (result) {
         if (result.images) {
           result.images.forEach(function (d) {
-            showWikimediaImage(d, div)
+            if (foundImages.indexOf(d) === -1) {
+              showWikimediaImage(d, div)
+              foundImages.push(d)
+            }
           })
         }
       })
     } else if (value.substr(0, 5) === 'File:') {
       found++
-      showWikimediaImage(value.substr(5), div)
+      if (foundImages.indexOf(value.substr(5)) === -1) {
+        showWikimediaImage(value.substr(5), div)
+        foundImages.push(d)
+      }
     }
   }
 
