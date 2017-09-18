@@ -22,6 +22,7 @@ register_hook('show-details', function (data, category, dom, callback) {
   var foundImages = []
   var div = document.createElement('div')
   div.className = 'images'
+  var callbackCount = 1
 
   if (data.object.tags.image) {
     img = data.object.tags.image
@@ -59,7 +60,11 @@ register_hook('show-details', function (data, category, dom, callback) {
           }
         })
       }
+
+      checkCallback()
     })
+
+    callbackCount++
   }
 
   if (!data.object.tags.wikidata && data.object.tags.wikimedia_commons) {
@@ -76,7 +81,11 @@ register_hook('show-details', function (data, category, dom, callback) {
             }
           })
         }
+
+        checkCallback()
       })
+
+      callbackCount++
     } else if (value.substr(0, 5) === 'File:') {
       found++
       if (foundImages.indexOf(value.substr(5)) === -1) {
@@ -93,5 +102,13 @@ register_hook('show-details', function (data, category, dom, callback) {
     dom.appendChild(div)
   }
 
-  callback(null)
+  checkCallback()
+
+  function checkCallback () {
+    callbackCount--
+
+    if (callbackCount === 0) {
+      callback(null)
+    }
+  }
 })
