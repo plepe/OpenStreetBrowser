@@ -52,16 +52,21 @@ register_hook('show-details', function (data, category, dom, callback) {
   }
 
   if (!data.object.tags.wikidata && data.object.tags.wikimedia_commons) {
-    found++
+    var value = data.object.tags.wikimedia_commons
 
-    ajax('wikimedia', { page: data.object.tags.wikimedia_commons }, function (result) {
-      if (result.images) {
-        result.images.forEach(function (d) {
-          showWikimediaImage(d, div)
-
-        })
-      }
-    })
+    if (value.substr(0, 9) === 'Category:') {
+      found++
+      ajax('wikimedia', { page: value }, function (result) {
+        if (result.images) {
+          result.images.forEach(function (d) {
+            showWikimediaImage(d, div)
+          })
+        }
+      })
+    } else if (value.substr(0, 5) === 'File:') {
+      found++
+      showWikimediaImage(value.substr(5), div)
+    }
   }
 
   if (found) {
