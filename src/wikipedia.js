@@ -1,3 +1,5 @@
+var wikidata = require('./wikidata')
+
 var cache = {}
 
 function stripLinks (dom) {
@@ -96,7 +98,7 @@ register_hook('show-details', function (data, category, dom, callback) {
   var found = 0
   var finished = 0
   var errs = []
-  var h
+  var h, k, m
   var div = document.createElement('div')
   div.className = 'wikipedia'
 
@@ -105,8 +107,7 @@ register_hook('show-details', function (data, category, dom, callback) {
     showWikipedia(ob.tags.wikipedia, div, done)
   }
 
-  for (var k in ob.tags) {
-    var m
+  for (k in ob.tags) {
     if (m = k.match(/^(.*):wikipedia$/)) {
       h = document.createElement('h4')
       h.appendChild(document.createTextNode(lang('tag:' + m[1])))
@@ -125,6 +126,39 @@ register_hook('show-details', function (data, category, dom, callback) {
 
       found++
       showWikipedia(m[3] + ':' + ob.tags[k], div, done)
+    }
+  }
+
+  for (k in ob.tags) {
+    if (k === 'wikidata' && !found) {
+      found++
+
+      wikidata.load(ob.tags[k], function (err, result) {
+        var x
+
+        if (err) {
+          return done(err)
+        }
+
+        if (!result.sitelinks) {
+          return done(new Error('No Wikipedia links defined for Wikidata'))
+        }
+
+        if (options.data_lang + 'wiki' in result.sitelinks) {
+          x = result.sitelinks[options.data_lang + 'wiki']
+          return showWikipedia(options.data_lang + ':' + x.title, div, done)
+        }
+
+        for (k in result.sitelinks) {
+          if (k === 'commonswiki') {
+            continue
+          }
+
+          x = result.sitelinks[k]
+          m = k.match(/^(.*)wiki$/)
+          return showWikipedia(m[1] + ':' + x.title, div, done)
+        }
+      })
     }
   }
 
