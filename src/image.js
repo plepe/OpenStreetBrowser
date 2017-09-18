@@ -1,0 +1,45 @@
+function showImage (url, dom) {
+  var div = document.createElement('div')
+  div.innerHTML = '<img src="' + url + '">'
+
+  dom.appendChild(div)
+}
+
+function showWikimediaImage (value, dom) {
+  var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(value) + '&w=' + 235 //imgSize
+
+  showImage(url, dom)
+}
+
+register_hook('show-details', function (data, category, dom, callback) {
+  var found = 0
+  var div = document.createElement('div')
+  div.className = 'images'
+
+  if (data.object.tags.image) {
+    var img = data.object.tags.image
+
+    if (img.indexOf('File:') === 0) {
+      showWikimediaImage(img.substr(5), div)
+      found++
+    } else if (img.indexOf('http://commons.wikimedia.org/wiki/File:') === 0) {
+      showWikimediaImage(decodeURIComponent(img.substr(39)), div)
+      found++
+    } else if (img.indexOf('https://commons.wikimedia.org/wiki/File:') === 0) {
+      showWikimediaImage(decodeURIComponent(img.substr(40)), div)
+      found++
+    } else {
+      showImage(img, div)
+      found++
+    }
+  }
+
+  if (found) {
+    h = document.createElement('h3')
+    h.appendChild(document.createTextNode(lang('images')))
+    dom.appendChild(h)
+    dom.appendChild(div)
+  }
+
+  callback(null)
+})

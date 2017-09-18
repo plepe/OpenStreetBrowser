@@ -27,6 +27,7 @@ require('./mapLayers')
 require('./twigFunctions')
 require('./categories')
 require('./wikipedia')
+require('./image')
 
 window.onload = function () {
   initState = config.defaultView
