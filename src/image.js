@@ -21,8 +21,13 @@ register_hook('show-details', function (data, category, dom, callback) {
   var img
   var foundImages = []
   var div = document.createElement('div')
-  div.className = 'images'
+  div.className = 'images loading'
   var callbackCount = 1
+
+  var l = document.createElement('div')
+  l.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
+  l.className = 'loadingIndicator'
+  div.appendChild(l)
 
   if (data.object.tags.image) {
     img = data.object.tags.image
@@ -99,6 +104,7 @@ register_hook('show-details', function (data, category, dom, callback) {
     h = document.createElement('h3')
     h.appendChild(document.createTextNode(lang('images')))
     dom.appendChild(h)
+
     dom.appendChild(div)
   }
 
@@ -108,6 +114,7 @@ register_hook('show-details', function (data, category, dom, callback) {
     callbackCount--
 
     if (callbackCount === 0) {
+      div.classList.remove('loading')
       callback(null)
     }
   }
