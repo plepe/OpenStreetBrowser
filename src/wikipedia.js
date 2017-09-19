@@ -108,6 +108,7 @@ function get (value, callback) {
 register_hook('show-details', function (data, category, dom, callback) {
   var ob = data.object
   var found = 0
+  var foundPrefixes = []
   var finished = 0
   var errs = []
   var h, k, m
@@ -116,6 +117,8 @@ register_hook('show-details', function (data, category, dom, callback) {
 
   if ('wikipedia' in ob.tags) {
     found++
+    foundPrefixes.push('')
+
     showWikipedia(ob.tags.wikipedia, div, done)
   }
 
@@ -126,10 +129,18 @@ register_hook('show-details', function (data, category, dom, callback) {
       div.appendChild(h)
 
       found++
+      foundPrefixes.push(m[1])
       showWikipedia(ob.tags[k], div, done)
     }
 
     if (m = k.match(/^((.*):)?wikipedia:(.*)$/)) {
+      if (typeof m[1] === 'undefined' && foundPrefixes.indexOf('') !== -1) {
+        continue
+      }
+      if (foundPrefixes.indexOf(m[1]) !== -1) {
+        continue
+      }
+
       if (m[1]) {
         h = document.createElement('h4')
         h.appendChild(document.createTextNode(lang('tag:' + m[1])))
@@ -137,12 +148,14 @@ register_hook('show-details', function (data, category, dom, callback) {
       }
 
       found++
+      foundPrefixes.push(m[1])
       showWikipedia(m[3] + ':' + ob.tags[k], div, done)
     }
   }
 
-  if (ob.tags.wikidata && !found) {
+  if (ob.tags.wikidata && foundPrefixes.indexOf('') === -1) {
     found++
+    foundPrefixes.push('')
 
     wikidata.load(ob.tags[k], function (err, result) {
       var x
@@ -177,6 +190,10 @@ register_hook('show-details', function (data, category, dom, callback) {
   for (k in ob.tags) {
     if (m = k.match(/^(.*):wikidata$/)) {
       found ++
+      if (foundPrefixes.indexOf(m[1]) !== -1) {
+        continue
+      }
+      foundPrefixes.push(m[1])
 
       wikidata.load(ob.tags[k], function (prefix, err, result) {
         var x
