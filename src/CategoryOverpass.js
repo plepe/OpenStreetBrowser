@@ -89,7 +89,7 @@ function CategoryOverpass (id, data) {
     }
   }.bind(this)
   this.layer.onUpdate = function (ob) {
-    if (!ob.popup || !ob.popup._contentNode) {
+    if (!ob.popup || !ob.popup._contentNode || map._popup !== ob.popup) {
       return
     }
 
