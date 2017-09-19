@@ -1,6 +1,7 @@
 var wikidata = require('./wikidata')
 
 var cache = {}
+var loadClash = {}
 
 function stripLinks (dom) {
   var as = dom.getElementsByTagName('a')
@@ -73,6 +74,12 @@ function get (value, callback) {
     return callback(null, cache[cacheId])
   }
 
+  if (cacheId in loadClash) {
+    loadClash[cacheId].push(callback)
+    return
+  }
+  loadClash[cacheId] = []
+
   ajax('wikipedia',
     {
       page: value,
@@ -89,6 +96,11 @@ function get (value, callback) {
       cache[cacheId] = text
 
       callback(null, text)
+
+      loadClash[cacheId].forEach(function (d) {
+        d(null, text)
+      })
+      delete loadClash[cacheId]
     }
   )
 }
