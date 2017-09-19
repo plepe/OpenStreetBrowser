@@ -22,7 +22,7 @@ function ajax_wikipedia ($param) {
   for ($i = 0; $i < $langDiv->length; $i++) {
     $li = $langDiv->item($i);
 
-    if (preg_match('/^interlanguage-link interwiki-(.*)$/', $li->getAttribute('class'), $m)) {
+    if (preg_match('/^interlanguage-link interwiki-([a-z\-]+)( .*|)$/', $li->getAttribute('class'), $m)) {
       $a = $li->firstChild;
       $langList[$m[1]] = $a->getAttribute('href');
     }
