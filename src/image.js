@@ -1,4 +1,5 @@
 var wikidata = require('./wikidata')
+var cache = {}
 
 function showImage (url, dom) {
   var div = document.createElement('div')
@@ -20,7 +21,16 @@ function showWikimediaImage (value, dom) {
 function imageLoadAll(data, featureCallback, finalCallback) {
   var id
   var foundImages = []
+  var ret = []
+  var r
   var callbackCount = 1
+
+  if (data.id in cache) {
+    cache[data.id].forEach(function (d) {
+      featureCallback(null, d)
+    })
+    return finalCallback(null)
+  }
 
   if (data.object.tags.image) {
     img = data.object.tags.image
@@ -28,30 +38,38 @@ function imageLoadAll(data, featureCallback, finalCallback) {
     if (img.indexOf('File:') === 0) {
       id = img.substr(5)
       foundImages.push(id)
-      featureCallback(null, {
+      r = {
         id: id,
         type: 'wikimedia'
-      })
+      }
+      ret.push(r)
+      featureCallback(null, r)
     } else if (img.indexOf('http://commons.wikimedia.org/wiki/File:') === 0) {
       id = decodeURIComponent(img.substr(39))
       foundImages.push(id)
-      featureCallback(null, {
+      r = {
         id: id,
         type: 'wikimedia'
-      })
+      }
+      ret.push(r)
+      featureCallback(null, r)
     } else if (img.indexOf('https://commons.wikimedia.org/wiki/File:') === 0) {
       id = decodeURIComponent(img.substr(40))
       foundImages.push(id)
-      featureCallback(null, {
+      r = {
         id: id,
         type: 'wikimedia'
-      })
+      }
+      ret.push(r)
+      featureCallback(null, r)
     } else {
       foundImages.push(img)
-      featureCallback(null, {
+      r = {
         id: img,
         type: 'url'
-      })
+      }
+      ret.push(r)
+      featureCallback(null, r)
     }
   }
 
@@ -62,10 +80,12 @@ function imageLoadAll(data, featureCallback, finalCallback) {
           id = d.mainsnak.datavalue.value
 
           if (foundImages.indexOf(id) === -1) {
-            featureCallback(null, {
+            r = {
               id: id,
               type: 'wikimedia'
-            })
+            }
+            ret.push(r)
+            featureCallback(null, r)
             foundImages.push(id)
           }
         })
@@ -86,10 +106,12 @@ function imageLoadAll(data, featureCallback, finalCallback) {
           result.images.forEach(function (d) {
             if (foundImages.indexOf(d) === -1) {
               foundImages.push(d)
-	      featureCallback(null, {
+	      r = {
 		id: d,
 		type: 'wikimedia'
-	      })
+	      }
+              ret.push(r)
+              featureCallback(null, r)
             }
           })
         }
@@ -102,10 +124,12 @@ function imageLoadAll(data, featureCallback, finalCallback) {
       var id = value.substr(5)
       if (foundImages.indexOf(id) === -1) {
         foundImages.push(id)
-        featureCallback(null, {
+        r = {
           id: id,
           type: 'wikimedia'
-        })
+        }
+        ret.push(r)
+        featureCallback(null, r)
       }
     }
   }
@@ -116,6 +140,7 @@ function imageLoadAll(data, featureCallback, finalCallback) {
     callbackCount--
 
     if (callbackCount === 0) {
+      cache[data.id] = ret
       finalCallback(null)
     }
   }
