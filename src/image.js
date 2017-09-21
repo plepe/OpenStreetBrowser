@@ -72,7 +72,7 @@ register_hook('show-details', function (data, category, dom, callback) {
     callbackCount++
   }
 
-  if (!data.object.tags.wikidata && data.object.tags.wikimedia_commons) {
+  if (data.object.tags.wikimedia_commons) {
     var value = data.object.tags.wikimedia_commons
 
     if (value.substr(0, 9) === 'Category:') {
