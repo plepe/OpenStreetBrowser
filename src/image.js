@@ -146,6 +146,18 @@ function imageLoadAll(data, featureCallback, finalCallback) {
   }
 }
 
+function show(img, options, div) {
+  switch (img.type) {
+    case 'wikimedia':
+      showWikimediaImage(img.id, div)
+      break;
+    case 'url':
+      showImage(img.id, div)
+      break;
+    default:
+  }
+}
+
 register_hook('show-details', function (data, category, dom, callback) {
   var found = 0
   var div = document.createElement('div')
@@ -168,15 +180,7 @@ register_hook('show-details', function (data, category, dom, callback) {
 
       found++
 
-      switch (img.type) {
-        case 'wikimedia':
-          showWikimediaImage(img.id, div)
-          break;
-        case 'url':
-          showImage(img.id, div)
-          break;
-        default:
-      }
+      show(img, {}, div)
     },
     function (err) {
       div.classList.remove('loading')
