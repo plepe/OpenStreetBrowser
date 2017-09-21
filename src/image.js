@@ -16,52 +16,57 @@ function showWikimediaImage (value, dom) {
   dom.appendChild(div)
 }
 
-register_hook('show-details', function (data, category, dom, callback) {
-  var found = 0
-  var img
+// feature: { id: 'File:xxx.jpg', type: 'wikimedia|url', url: 'https://...' }
+function imageLoadAll(data, featureCallback, finalCallback) {
+  var id
   var foundImages = []
-  var div = document.createElement('div')
-  div.className = 'images loading'
   var callbackCount = 1
-
-  var l = document.createElement('div')
-  l.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
-  l.className = 'loadingIndicator'
-  div.appendChild(l)
 
   if (data.object.tags.image) {
     img = data.object.tags.image
 
     if (img.indexOf('File:') === 0) {
-      showWikimediaImage(img.substr(5), div)
-      foundImages.push(img.substr(5))
-      found++
+      id = img.substr(5)
+      foundImages.push(id)
+      featureCallback(null, {
+        id: id,
+        type: 'wikimedia'
+      })
     } else if (img.indexOf('http://commons.wikimedia.org/wiki/File:') === 0) {
-      showWikimediaImage(decodeURIComponent(img.substr(39)), div)
-      foundImages.push(img.substr(39))
-      found++
+      id = decodeURIComponent(img.substr(39))
+      foundImages.push(id)
+      featureCallback(null, {
+        id: id,
+        type: 'wikimedia'
+      })
     } else if (img.indexOf('https://commons.wikimedia.org/wiki/File:') === 0) {
-      showWikimediaImage(decodeURIComponent(img.substr(40)), div)
-      foundImages.push(img.substr(40))
-      found++
+      id = decodeURIComponent(img.substr(40))
+      foundImages.push(id)
+      featureCallback(null, {
+        id: id,
+        type: 'wikimedia'
+      })
     } else {
       foundImages.push(img)
-      showImage(img, div)
-      found++
+      featureCallback(null, {
+        id: img,
+        type: 'url'
+      })
     }
   }
 
   if (data.object.tags.wikidata) {
-    found++
-
     wikidata.load(data.object.tags.wikidata, function (err, result) {
       if (result.claims && result.claims.P18) {
         result.claims.P18.forEach(function (d) {
-          img = d.mainsnak.datavalue.value
+          id = d.mainsnak.datavalue.value
 
-          if (foundImages.indexOf(img) === -1) {
-            showWikimediaImage(img, div)
-            foundImages.push(img)
+          if (foundImages.indexOf(id) === -1) {
+            featureCallback(null, {
+              id: id,
+              type: 'wikimedia'
+            })
+            foundImages.push(id)
           }
         })
       }
@@ -76,13 +81,15 @@ register_hook('show-details', function (data, category, dom, callback) {
     var value = data.object.tags.wikimedia_commons
 
     if (value.substr(0, 9) === 'Category:') {
-      found++
       ajax('wikimedia', { page: value }, function (result) {
         if (result.images) {
           result.images.forEach(function (d) {
             if (foundImages.indexOf(d) === -1) {
-              showWikimediaImage(d, div)
               foundImages.push(d)
+	      featureCallback(null, {
+		id: d,
+		type: 'wikimedia'
+	      })
             }
           })
         }
@@ -92,20 +99,15 @@ register_hook('show-details', function (data, category, dom, callback) {
 
       callbackCount++
     } else if (value.substr(0, 5) === 'File:') {
-      found++
-      if (foundImages.indexOf(value.substr(5)) === -1) {
-        showWikimediaImage(value.substr(5), div)
-        foundImages.push(d)
+      var id = value.substr(5)
+      if (foundImages.indexOf(id) === -1) {
+        foundImages.push(id)
+        featureCallback(null, {
+          id: id,
+          type: 'wikimedia'
+        })
       }
     }
-  }
-
-  if (found) {
-    h = document.createElement('h3')
-    h.appendChild(document.createTextNode(lang('images')))
-    dom.appendChild(h)
-
-    dom.appendChild(div)
   }
 
   checkCallback()
@@ -114,8 +116,46 @@ register_hook('show-details', function (data, category, dom, callback) {
     callbackCount--
 
     if (callbackCount === 0) {
-      div.classList.remove('loading')
-      callback(null)
+      finalCallback(null)
     }
   }
+}
+
+register_hook('show-details', function (data, category, dom, callback) {
+  var found = 0
+  var div = document.createElement('div')
+  div.className = 'images loading'
+
+  dom.appendChild(div)
+
+  var l = document.createElement('div')
+  l.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
+  l.className = 'loadingIndicator'
+  div.appendChild(l)
+
+  imageLoadAll(data,
+    function (err, img) {
+      if (found === 0) {
+        h = document.createElement('h3')
+        h.appendChild(document.createTextNode(lang('images')))
+        div.insertBefore(h, div.firstChild)
+      }
+
+      found++
+
+      switch (img.type) {
+        case 'wikimedia':
+          showWikimediaImage(img.id, div)
+          break;
+        case 'url':
+          showImage(img.id, div)
+          break;
+        default:
+      }
+    },
+    function (err) {
+      div.classList.remove('loading')
+      callback(err)
+    }
+  )
 })

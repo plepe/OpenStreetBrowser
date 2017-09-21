@@ -512,6 +512,7 @@ a.showDetails {
 #contentDetails h3 {
   border-bottom: 1px solid black;
   clear: both;
+  text-align: left;
 }
 #contentDetails h4 {
   clear: both;
