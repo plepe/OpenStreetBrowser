@@ -1,5 +1,6 @@
 var wikidata = require('./wikidata')
 var cache = {}
+var showTimer
 
 function showImage (url, dom) {
   var div = document.createElement('div')
@@ -147,6 +148,8 @@ function imageLoadAll(data, featureCallback, finalCallback) {
 }
 
 function show(img, options, div) {
+  div.innerHTML = ''
+
   switch (img.type) {
     case 'wikimedia':
       showWikimediaImage(img.id, div)
@@ -327,29 +330,61 @@ register_hook('show-details', function (data, category, dom, callback) {
   var found = 0
   var div = document.createElement('div')
   div.className = 'images loading'
+  var imageWrapper = document.createElement('div')
+  imageWrapper.className = 'imageWrapper'
 
   dom.appendChild(div)
+
+  if (showTimer) {
+    window.clearInterval(showTimer)
+  }
 
   var l = document.createElement('div')
   l.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
   l.className = 'loadingIndicator'
   div.appendChild(l)
 
-  imageLoadAll(data,
-    function (err, img) {
-      if (found === 0) {
-        h = document.createElement('h3')
-        h.appendChild(document.createTextNode(lang('images')))
-        div.insertBefore(h, div.firstChild)
+  div.appendChild(imageWrapper)
+
+  var currentLoader = imageLoader(data)
+
+  currentLoader.next(function (err, img) {
+    div.classList.remove('loading')
+
+    if (!img) {
+      return callback(err)
+    }
+
+    h = document.createElement('h3')
+    h.appendChild(document.createTextNode(lang('images')))
+    div.insertBefore(h, div.firstChild)
+
+    showTimer = window.setInterval(loadNext, 5000)
+
+    show(img, {}, imageWrapper)
+  })
+
+  function loadNext () {
+    currentLoader.next(function (err, img) {
+      if (img === null) {
+        currentLoader.first(function (err, img) {
+          if (!img) {
+            return window.clearInterval(timer)
+          }
+
+          show(img, {}, imageWrapper)
+        })
+
+        return
       }
 
-      found++
+      show(img, {}, imageWrapper)
+    })
+  }
+})
 
-      show(img, {}, div)
-    },
-    function (err) {
-      div.classList.remove('loading')
-      callback(err)
-    }
-  )
+register_hook('hide-details', function () {
+  if (showTimer) {
+    window.clearInterval(showTimer)
+  }
 })
