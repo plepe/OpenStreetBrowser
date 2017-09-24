@@ -75,7 +75,6 @@ function imageLoader (data) {
       this.found.push(img)
       this.data[img] = {
         id: img,
-
         type: 'url'
       }
     }
@@ -164,7 +163,7 @@ imageLoader.prototype.handlePending = function () {
   }.bind(this))
 }
 
-imageLoader.prototype.callbackCurrent = function (callback) {
+imageLoader.prototype.callbackCurrent = function (callback, wrap) {
   if (this.index < this.found.length) {
     return callback(null, this.data[this.found[this.index]])
   }
@@ -187,6 +186,11 @@ imageLoader.prototype.callbackCurrent = function (callback) {
     return
   }
 
+  if (wrap && this.found.length) {
+    this.index = 0
+    return this.callbackCurrent(callback)
+  }
+
   callback(null, null)
 }
 
@@ -204,6 +208,16 @@ imageLoader.prototype.next = function (callback) {
   }
 
   this.callbackCurrent(callback)
+}
+
+imageLoader.prototype.nextWrap = function (callback) {
+  if (this.index === null) {
+    this.index = 0
+  } else {
+    this.index ++
+  }
+
+  this.callbackCurrent(callback, true)
 }
 
 window.imageLoader = imageLoader
@@ -227,7 +241,7 @@ register_hook('show-details', function (data, category, dom, callback) {
 
   var currentLoader = imageLoader(data)
 
-  currentLoader.next(function (err, img) {
+  currentLoader.nextWrap(function (err, img) {
     div.classList.remove('loading')
 
     if (!img) {
@@ -248,19 +262,7 @@ register_hook('show-details', function (data, category, dom, callback) {
   })
 
   function loadNext () {
-    currentLoader.next(function (err, img) {
-      if (img === null) {
-        currentLoader.first(function (err, img) {
-          if (!img) {
-            return window.clearInterval(timer)
-          }
-
-          show(img, {}, imageWrapper)
-        })
-
-        return
-      }
-
+    currentLoader.nextWrap(function (err, img) {
       show(img, {}, imageWrapper)
     })
   }
