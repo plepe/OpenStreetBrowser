@@ -34,8 +34,8 @@ function show(img, options, div) {
 }
 
 function imageLoader (data) {
-  var index = null
   var state = {
+    index: null,
     sources: [],
     found: [],
     data: {}
@@ -159,8 +159,8 @@ function imageLoader (data) {
   }
 
   function callbackCurrent (callback) {
-    if (index < state.found.length) {
-      return callback(null, state.data[state.found[index]])
+    if (state.index < state.found.length) {
+      return callback(null, state.data[state.found[state.index]])
     }
 
     if (state.pendingCallbacks) {
@@ -186,16 +186,16 @@ function imageLoader (data) {
 
   return {
     first: function (callback) {
-      index = 0
+      state.index = 0
 
       callbackCurrent(callback)
     },
 
     next: function (callback) {
-      if (index === null) {
-        index = 0
+      if (state.index === null) {
+        state.index = 0
       } else {
-        index ++
+        state.index ++
       }
 
       callbackCurrent(callback)
