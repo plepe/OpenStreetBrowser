@@ -55,14 +55,14 @@ function imageLoader (data) {
           type: 'wikimedia'
         }
       } else if (img.indexOf('http://commons.wikimedia.org/wiki/File:') === 0) {
-        id = decodeURIComponent(img.substr(39))
+        id = decodeURIComponent(img.substr(39)).replace(/_/g, ' ')
         state.found.push(id)
         state.data[id] = {
           id: id,
           type: 'wikimedia'
         }
       } else if (img.indexOf('https://commons.wikimedia.org/wiki/File:') === 0) {
-        id = decodeURIComponent(img.substr(40))
+        id = decodeURIComponent(img.substr(40)).replace(/_/g, ' ')
         state.found.push(id)
         state.data[id] = {
           id: id,
