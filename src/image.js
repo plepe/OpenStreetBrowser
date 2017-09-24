@@ -208,8 +208,7 @@ register_hook('show-details', function (data, category, dom, callback) {
   var found = 0
   var div = document.createElement('div')
   div.className = 'images loading'
-  var imageWrapper = document.createElement('div')
-  imageWrapper.className = 'imageWrapper'
+  var imageWrapper
 
   dom.appendChild(div)
 
@@ -221,8 +220,6 @@ register_hook('show-details', function (data, category, dom, callback) {
   l.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
   l.className = 'loadingIndicator'
   div.appendChild(l)
-
-  div.appendChild(imageWrapper)
 
   var currentLoader = imageLoader(data)
 
@@ -236,6 +233,10 @@ register_hook('show-details', function (data, category, dom, callback) {
     h = document.createElement('h3')
     h.appendChild(document.createTextNode(lang('images')))
     div.insertBefore(h, div.firstChild)
+
+    imageWrapper = document.createElement('div')
+    imageWrapper.className = 'imageWrapper'
+    div.appendChild(imageWrapper)
 
     showTimer = window.setInterval(loadNext, 5000)
 
