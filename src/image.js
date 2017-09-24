@@ -146,6 +146,8 @@ function imageLoader (data) {
       }
 
       handlePending()
+    } else {
+      handlePending()
     }
   }
 
