@@ -75,7 +75,7 @@ function imageLoadAll(data, featureCallback, finalCallback) {
 
   if (data.object.tags.wikidata) {
     wikidata.load(data.object.tags.wikidata, function (err, result) {
-      if (result.claims && result.claims.P18) {
+      if (result && result.claims && result.claims.P18) {
         result.claims.P18.forEach(function (d) {
           id = d.mainsnak.datavalue.value
 

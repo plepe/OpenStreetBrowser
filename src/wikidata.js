@@ -14,6 +14,10 @@ function wikidataLoad (id, callback) {
   loadClash[id] = []
 
   httpGet('https://www.wikidata.org/wiki/Special:EntityData/' + id + '.json', function (err, result) {
+    if (err) {
+      return callback(err, null)
+    }
+
     result = JSON.parse(result.body)
 
     if (!result.entities || !result.entities[id]) {
