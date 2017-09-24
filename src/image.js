@@ -41,52 +41,58 @@ function imageLoader (data) {
     data: {}
   }
 
-  if (data.object.tags.image) {
-    img = data.object.tags.image
+  if (data.id in cache) {
+    state = cache[data.id]
+  } else {
+    if (data.object.tags.image) {
+      img = data.object.tags.image
 
-    if (img.indexOf('File:') === 0) {
-      id = img.substr(5)
-      state.found.push(id)
-      state.data[id] = {
-        id: id,
-        type: 'wikimedia'
+      if (img.indexOf('File:') === 0) {
+        id = img.substr(5)
+        state.found.push(id)
+        state.data[id] = {
+          id: id,
+          type: 'wikimedia'
+        }
+      } else if (img.indexOf('http://commons.wikimedia.org/wiki/File:') === 0) {
+        id = decodeURIComponent(img.substr(39))
+        state.found.push(id)
+        state.data[id] = {
+          id: id,
+          type: 'wikimedia'
+        }
+      } else if (img.indexOf('https://commons.wikimedia.org/wiki/File:') === 0) {
+        id = decodeURIComponent(img.substr(40))
+        state.found.push(id)
+        state.data[id] = {
+          id: id,
+          type: 'wikimedia'
+        }
+      } else {
+        state.found.push(img)
+        state.data[img] = {
+          id: id,
+          type: 'url'
+        }
       }
-    } else if (img.indexOf('http://commons.wikimedia.org/wiki/File:') === 0) {
-      id = decodeURIComponent(img.substr(39))
-      state.found.push(id)
-      state.data[id] = {
-        id: id,
-        type: 'wikimedia'
-      }
-    } else if (img.indexOf('https://commons.wikimedia.org/wiki/File:') === 0) {
-      id = decodeURIComponent(img.substr(40))
-      state.found.push(id)
-      state.data[id] = {
-        id: id,
-        type: 'wikimedia'
-      }
-    } else {
-      state.found.push(img)
-      state.data[img] = {
-        id: id,
-        type: 'url'
-      }
+    }
+
+    if (data.object.tags.wikidata) {
+      state.sources.push({
+        type: 'wikidata',
+        value: data.object.tags.wikidata
+      })
+    }
+
+    if (data.object.tags.wikimedia_commons) {
+      state.sources.push({
+        type: 'wikimedia_commons',
+        value: data.object.tags.wikimedia_commons,
+      })
     }
   }
 
-  if (data.object.tags.wikidata) {
-    state.sources.push({
-      type: 'wikidata',
-      value: data.object.tags.wikidata
-    })
-  }
-
-  if (data.object.tags.wikimedia_commons) {
-    state.sources.push({
-      type: 'wikimedia_commons',
-      value: data.object.tags.wikimedia_commons,
-    })
-  }
+  cache[data.id] = state
 
   function loadWikidata (src, callback) {
     var value = src.value
