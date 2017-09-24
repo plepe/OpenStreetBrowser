@@ -165,6 +165,7 @@ window.setPath = function (path) {
 
 function show (id, options, callback) {
   if (options.showDetails) {
+    call_hooks('hide-' + document.getElementById('content').className)
     document.getElementById('content').className = 'details'
     document.getElementById('contentDetails').innerHTML = 'Loading ...'
   }
@@ -294,6 +295,7 @@ window.showDetails = function (data, category) {
 }
 
 function hide () {
+  call_hooks('hide-' + document.getElementById('content').className)
   document.getElementById('content').className = 'list'
 }
 
