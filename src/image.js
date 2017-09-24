@@ -34,176 +34,178 @@ function show(img, options, div) {
 }
 
 function imageLoader (data) {
-  var state = {
-    index: null,
-    sources: [],
-    found: [],
-    data: {}
-  }
-
-  if (data.id in cache) {
-    state = cache[data.id]
-  } else {
-    if (data.object.tags.image) {
-      img = data.object.tags.image
-
-      if (img.indexOf('File:') === 0) {
-        id = img.substr(5)
-        state.found.push(id)
-        state.data[id] = {
-          id: id,
-          type: 'wikimedia'
-        }
-      } else if (img.indexOf('http://commons.wikimedia.org/wiki/File:') === 0) {
-        id = decodeURIComponent(img.substr(39)).replace(/_/g, ' ')
-        state.found.push(id)
-        state.data[id] = {
-          id: id,
-          type: 'wikimedia'
-        }
-      } else if (img.indexOf('https://commons.wikimedia.org/wiki/File:') === 0) {
-        id = decodeURIComponent(img.substr(40)).replace(/_/g, ' ')
-        state.found.push(id)
-        state.data[id] = {
-          id: id,
-          type: 'wikimedia'
-        }
-      } else {
-        state.found.push(img)
-        state.data[img] = {
-          id: id,
-          type: 'url'
-        }
-      }
+  if (this === window) {
+    if (data.id in cache) {
+      return cache[data.id]
     }
 
-    if (data.object.tags.wikidata) {
-      state.sources.push({
-        type: 'wikidata',
-        value: data.object.tags.wikidata
-      })
-    }
-
-    if (data.object.tags.wikimedia_commons) {
-      state.sources.push({
-        type: 'wikimedia_commons',
-        value: data.object.tags.wikimedia_commons,
-      })
-    }
+    return new imageLoader(data)
   }
 
-  cache[data.id] = state
+  this.index = null
+  this.sources = []
+  this.found = []
+  this.data = {}
 
-  function loadWikidata (src, callback) {
-    var value = src.value
+  if (data.object.tags.image) {
+    img = data.object.tags.image
 
-    wikidata.load(value, function (err, result) {
-      if (result && result.claims && result.claims.P18) {
-        result.claims.P18.forEach(function (d) {
-          id = d.mainsnak.datavalue.value
-
-          if (state.found.indexOf(id) === -1) {
-            state.found.push(id)
-            state.data[id] = {
-              id: id,
-              type: 'wikimedia'
-            }
-          }
-        })
+    if (img.indexOf('File:') === 0) {
+      id = img.substr(5)
+      this.found.push(id)
+      this.data[id] = {
+        id: id,
+        type: 'wikimedia'
       }
-
-      handlePending()
-    })
-  }
-
-  function loadWikimediaCommons (src, callback) {
-    var value = src.value
-
-    if (value.substr(0, 9) === 'Category:') {
-      ajax('wikimedia', { page: value }, function (result) {
-        if (result.images) {
-          result.images.forEach(function (d) {
-            if (state.found.indexOf(d) === -1) {
-              state.found.push(d)
-	      state.data[d] = {
-		id: d,
-		type: 'wikimedia'
-	      }
-            }
-          })
-        }
-
-        handlePending()
-      })
-    } else if (value.substr(0, 5) === 'File:') {
-      var id = value.substr(5)
-      if (state.found.indexOf(id) === -1) {
-        state.found.push(id)
-        state.data[id] = {
-          id: id,
-          type: 'wikimedia'
-        }
+    } else if (img.indexOf('http://commons.wikimedia.org/wiki/File:') === 0) {
+      id = decodeURIComponent(img.substr(39)).replace(/_/g, ' ')
+      this.found.push(id)
+      this.data[id] = {
+        id: id,
+        type: 'wikimedia'
       }
-
-      handlePending()
+    } else if (img.indexOf('https://commons.wikimedia.org/wiki/File:') === 0) {
+      id = decodeURIComponent(img.substr(40)).replace(/_/g, ' ')
+      this.found.push(id)
+      this.data[id] = {
+        id: id,
+        type: 'wikimedia'
+      }
     } else {
-      handlePending()
+      this.found.push(img)
+      this.data[img] = {
+        id: img,
+
+        type: 'url'
+      }
     }
   }
 
-  function handlePending () {
-    var pending = state.pendingCallbacks
-    delete state.pendingCallbacks
-
-    pending.forEach(function (c) {
-      callbackCurrent(c)
+  if (data.object.tags.wikidata) {
+    this.sources.push({
+      type: 'wikidata',
+      value: data.object.tags.wikidata
     })
   }
 
-  function callbackCurrent (callback) {
-    if (state.index < state.found.length) {
-      return callback(null, state.data[state.found[state.index]])
-    }
-
-    if (state.pendingCallbacks) {
-      state.pendingCallbacks.push(callback)
-      return
-    }
-
-    if (state.sources.length) {
-      var src = state.sources.shift()
-      state.pendingCallbacks = [ callback ]
-
-      if (src.type === 'wikimedia_commons') {
-        loadWikimediaCommons(src, handlePending)
-      } else if (src.type === 'wikidata') {
-        loadWikidata(src, handlePending)
-      }
-
-      return
-    }
-
-    callback(null, null)
+  if (data.object.tags.wikimedia_commons) {
+    this.sources.push({
+      type: 'wikimedia_commons',
+      value: data.object.tags.wikimedia_commons,
+    })
   }
 
-  return {
-    first: function (callback) {
-      state.index = 0
+  cache[data.id] = this
+}
 
-      callbackCurrent(callback)
-    },
+imageLoader.prototype.loadWikidata = function (src, callback) {
+  var value = src.value
 
-    next: function (callback) {
-      if (state.index === null) {
-        state.index = 0
-      } else {
-        state.index ++
+  wikidata.load(value, function (err, result) {
+    if (result && result.claims && result.claims.P18) {
+      result.claims.P18.forEach(function (d) {
+        id = d.mainsnak.datavalue.value
+
+        if (this.found.indexOf(id) === -1) {
+          this.found.push(id)
+          this.data[id] = {
+            id: id,
+            type: 'wikimedia'
+          }
+        }
+      }.bind(this))
+    }
+
+    callback(err)
+  }.bind(this))
+}
+
+imageLoader.prototype.loadWikimediaCommons = function (src, callback) {
+  var value = src.value
+
+  if (value.substr(0, 9) === 'Category:') {
+    ajax('wikimedia', { page: value }, function (result) {
+      if (result.images) {
+        result.images.forEach(function (d) {
+          if (this.found.indexOf(d) === -1) {
+            this.found.push(d)
+	    this.data[d] = {
+	      id: d,
+	      type: 'wikimedia'
+	    }
+          }
+        }.bind(this))
       }
 
-      callbackCurrent(callback)
+      callback(null)
+    }.bind(this))
+  } else if (value.substr(0, 5) === 'File:') {
+    var id = value.substr(5)
+    if (this.found.indexOf(id) === -1) {
+      this.found.push(id)
+      this.data[id] = {
+        id: id,
+        type: 'wikimedia'
+      }
     }
+
+    callback(null)
+  } else {
+    callback(new Error('Can\'t parse value'))
   }
 }
+
+imageLoader.prototype.handlePending = function () {
+  var pending = this.pendingCallbacks
+  delete this.pendingCallbacks
+
+  pending.forEach(function (c) {
+    this.callbackCurrent(c)
+  }.bind(this))
+}
+
+imageLoader.prototype.callbackCurrent = function (callback) {
+  if (this.index < this.found.length) {
+    return callback(null, this.data[this.found[this.index]])
+  }
+
+  if (this.pendingCallbacks) {
+    this.pendingCallbacks.push(callback)
+    return
+  }
+
+  if (this.sources.length) {
+    var src = this.sources.shift()
+    this.pendingCallbacks = [ callback ]
+
+    if (src.type === 'wikimedia_commons') {
+      this.loadWikimediaCommons(src, this.handlePending.bind(this))
+    } else if (src.type === 'wikidata') {
+      this.loadWikidata(src, this.handlePending.bind(this))
+    }
+
+    return
+  }
+
+  callback(null, null)
+}
+
+imageLoader.prototype.first = function (callback) {
+  this.index = 0
+
+  this.callbackCurrent(callback)
+}
+
+imageLoader.prototype.next = function (callback) {
+  if (this.index === null) {
+    this.index = 0
+  } else {
+    this.index ++
+  }
+
+  this.callbackCurrent(callback)
+}
+
 window.imageLoader = imageLoader
 
 register_hook('show-details', function (data, category, dom, callback) {
