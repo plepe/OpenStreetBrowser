@@ -15,7 +15,7 @@ $include = array(
     'src/language.php',
     'src/ip-location.php',
     'src/wikipedia.php',
-    'src/wikimedia.php',
+    'src/ImageLoader.php',
   ),
   'css' => array(
     'style.css',

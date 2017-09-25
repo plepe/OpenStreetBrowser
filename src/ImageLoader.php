@@ -1,5 +1,5 @@
 <?php
-function ajax_wikimedia ($param) {
+function ajax_ImageLoaderWikimediaCategoryList ($param) {
   $ret = array();
 
   $wm_url = "https://commons.wikimedia.org/w/index.php?title=" . urlencode(strtr($param['page'], array(" " => "_")));

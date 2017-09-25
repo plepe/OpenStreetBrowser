@@ -103,7 +103,7 @@ ImageLoader.prototype.loadWikimediaCommons = function (src, callback) {
       param.continue = src.continue
     }
 
-    ajax('wikimedia', param, function (result) {
+    ajax('ImageLoaderWikimediaCategoryList', param, function (result) {
       if (result.images) {
         result.images.forEach(function (d) {
           if (this.found.indexOf(d) === -1) {
