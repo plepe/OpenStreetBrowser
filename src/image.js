@@ -3,13 +3,13 @@ var showTimer
 
 function showImage (url, dom) {
   var div = document.createElement('div')
-  div.innerHTML = '<a target="_blank" href="' + url +'"><img src="' + url + '"></a>'
+  div.innerHTML = '<a target="_blank" href="' + url + '"><img src="' + url + '"></a>'
 
   dom.appendChild(div)
 }
 
 function showWikimediaImage (value, dom) {
-  var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(value) + '&w=' + 235 //imgSize
+  var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(value) + '&w=' + 235 // imgSize
 
   var div = document.createElement('div')
   div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(value) + '"><img src="' + url + '"/></a>'
@@ -18,22 +18,21 @@ function showWikimediaImage (value, dom) {
 }
 
 // feature: { id: 'File:xxx.jpg', type: 'wikimedia|url', url: 'https://...' }
-function show(img, options, div) {
+function show (img, options, div) {
   div.innerHTML = ''
 
   switch (img.type) {
     case 'wikimedia':
       showWikimediaImage(img.id, div)
-      break;
+      break
     case 'url':
       showImage(img.id, div)
-      break;
+      break
     default:
   }
 }
 
 register_hook('show-details', function (data, category, dom, callback) {
-  var found = 0
   var div = document.createElement('div')
   div.className = 'images loading'
   var imageWrapper
@@ -58,7 +57,7 @@ register_hook('show-details', function (data, category, dom, callback) {
       return callback(err)
     }
 
-    h = document.createElement('h3')
+    var h = document.createElement('h3')
     h.appendChild(document.createTextNode(lang('images')))
     div.insertBefore(h, div.firstChild)
 
@@ -73,6 +72,10 @@ register_hook('show-details', function (data, category, dom, callback) {
 
   function loadNext () {
     currentLoader.nextWrap(function (err, img) {
+      if (err) {
+        return console.log("Can't show next image", err)
+      }
+
       show(img, {}, imageWrapper)
     })
   }
