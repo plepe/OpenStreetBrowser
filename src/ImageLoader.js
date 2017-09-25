@@ -1,19 +1,26 @@
 var wikidata = require('./wikidata')
 var cache = {}
 
-function imageLoader (data) {
+function ImageLoader (data) {
   if (this === window) {
     if (data.id in cache) {
       return cache[data.id]
     }
 
-    return new imageLoader(data)
+    return new ImageLoader(data)
   }
 
   this.index = null
   this.sources = []
   this.found = []
   this.data = {}
+
+  this.parseObject(data)
+}
+
+ImageLoader.prototype.parseObject = function (data) {
+  var img
+  var id
 
   if (data.object.tags.image) {
     img = data.object.tags.image
@@ -58,20 +65,20 @@ function imageLoader (data) {
   if (data.object.tags.wikimedia_commons) {
     this.sources.push({
       type: 'wikimedia_commons',
-      value: data.object.tags.wikimedia_commons,
+      value: data.object.tags.wikimedia_commons
     })
   }
 
   cache[data.id] = this
 }
 
-imageLoader.prototype.loadWikidata = function (src, callback) {
+ImageLoader.prototype.loadWikidata = function (src, callback) {
   var value = src.value
 
   wikidata.load(value, function (err, result) {
     if (result && result.claims && result.claims.P18) {
       result.claims.P18.forEach(function (d) {
-        id = d.mainsnak.datavalue.value
+        var id = d.mainsnak.datavalue.value
 
         if (this.found.indexOf(id) === -1) {
           this.found.push(id)
@@ -87,7 +94,7 @@ imageLoader.prototype.loadWikidata = function (src, callback) {
   }.bind(this))
 }
 
-imageLoader.prototype.loadWikimediaCommons = function (src, callback) {
+ImageLoader.prototype.loadWikimediaCommons = function (src, callback) {
   var value = src.value
 
   if (value.substr(0, 9) === 'Category:') {
@@ -96,10 +103,10 @@ imageLoader.prototype.loadWikimediaCommons = function (src, callback) {
         result.images.forEach(function (d) {
           if (this.found.indexOf(d) === -1) {
             this.found.push(d)
-	    this.data[d] = {
-	      id: d,
-	      type: 'wikimedia'
-	    }
+            this.data[d] = {
+              id: d,
+              type: 'wikimedia'
+            }
           }
         }.bind(this))
       }
@@ -122,7 +129,7 @@ imageLoader.prototype.loadWikimediaCommons = function (src, callback) {
   }
 }
 
-imageLoader.prototype.handlePending = function () {
+ImageLoader.prototype.handlePending = function () {
   var pending = this.pendingCallbacks
   delete this.pendingCallbacks
 
@@ -131,7 +138,7 @@ imageLoader.prototype.handlePending = function () {
   }.bind(this))
 }
 
-imageLoader.prototype.callbackCurrent = function (callback, wrap) {
+ImageLoader.prototype.callbackCurrent = function (callback, wrap) {
   if (this.index < this.found.length) {
     return callback(null, this.data[this.found[this.index]])
   }
@@ -162,13 +169,13 @@ imageLoader.prototype.callbackCurrent = function (callback, wrap) {
   callback(null, null)
 }
 
-imageLoader.prototype.first = function (callback) {
+ImageLoader.prototype.first = function (callback) {
   this.index = 0
 
   this.callbackCurrent(callback)
 }
 
-imageLoader.prototype.next = function (callback) {
+ImageLoader.prototype.next = function (callback) {
   if (this.index === null) {
     this.index = 0
   } else {
@@ -178,7 +185,7 @@ imageLoader.prototype.next = function (callback) {
   this.callbackCurrent(callback)
 }
 
-imageLoader.prototype.nextWrap = function (callback) {
+ImageLoader.prototype.nextWrap = function (callback) {
   if (this.index === null) {
     this.index = 0
   } else {
@@ -188,4 +195,4 @@ imageLoader.prototype.nextWrap = function (callback) {
   this.callbackCurrent(callback, true)
 }
 
-module.exports = imageLoader
+module.exports = ImageLoader

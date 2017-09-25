@@ -1,4 +1,4 @@
-var imageLoader = require('./imageLoader')
+var ImageLoader = require('./ImageLoader')
 var showTimer
 
 function showImage (url, dom) {
@@ -49,7 +49,7 @@ register_hook('show-details', function (data, category, dom, callback) {
   l.className = 'loadingIndicator'
   div.appendChild(l)
 
-  var currentLoader = imageLoader(data)
+  var currentLoader = ImageLoader(data)
 
   currentLoader.nextWrap(function (err, img) {
     div.classList.remove('loading')
