@@ -98,7 +98,12 @@ ImageLoader.prototype.loadWikimediaCommons = function (src, callback) {
   var value = src.value
 
   if (value.substr(0, 9) === 'Category:') {
-    ajax('wikimedia', { page: value }, function (result) {
+    var param = { page: value }
+    if (src.continue) {
+      param.continue = src.continue
+    }
+
+    ajax('wikimedia', param, function (result) {
       if (result.images) {
         result.images.forEach(function (d) {
           if (this.found.indexOf(d) === -1) {
@@ -109,6 +114,14 @@ ImageLoader.prototype.loadWikimediaCommons = function (src, callback) {
             }
           }
         }.bind(this))
+      }
+
+      if (result.continue) {
+        this.sources.push({
+          type: 'wikimedia_commons',
+          value: value,
+          continue: result.continue
+        })
       }
 
       callback(null)

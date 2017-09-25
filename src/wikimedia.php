@@ -2,7 +2,11 @@
 function ajax_wikimedia ($param) {
   $ret = array();
 
-  $wm_url = "https://commons.wikimedia.org/wiki/" . urlencode(strtr($param['page'], array(" " => "_")));
+  $wm_url = "https://commons.wikimedia.org/w/index.php?title=" . urlencode(strtr($param['page'], array(" " => "_")));
+
+  if (isset($param['continue'])) {
+    $wm_url .= "&filefrom=" . urlencode(strtr($param['continue'], array(" " => "_")));
+  }
 
   $content = file_get_contents($wm_url);
 
@@ -22,7 +26,18 @@ function ajax_wikimedia ($param) {
     }
   }
 
+  $continue = false;
+  $as = $dom->getElementsByTagName('a');
+  for ($i = 0; $i < $as->length; $i++) {
+    $a = $as->item($i);
+
+    if (preg_match("/^\/w\/index.php\?title=(.*)&filefrom=([^#]+)#mw-category-media$/", $a->getAttribute('href'), $m)) {
+      $continue = $m[2];
+    }
+  }
+
   return array(
     'images' => $ret,
+    'continue' => $continue,
   );
 }
