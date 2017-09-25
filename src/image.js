@@ -9,7 +9,7 @@ function showImage (url, dom) {
 }
 
 function showWikimediaImage (value, dom) {
-  var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(value) + '&w=' + 235 // imgSize
+  var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(value) + '&w=400'
 
   var div = document.createElement('div')
   div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(value) + '"><img src="' + url + '"/></a>'
