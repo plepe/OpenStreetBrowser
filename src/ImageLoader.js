@@ -151,19 +151,19 @@ ImageLoader.prototype.handlePending = function () {
   }.bind(this))
 }
 
-ImageLoader.prototype.callbackCurrent = function (index, callback, wrap) {
+ImageLoader.prototype.callbackCurrent = function (index, options, callback) {
   if (index < this.found.length) {
     return callback(null, this.data[this.found[index]])
   }
 
   if (this.pendingCallbacks) {
-    this.pendingCallbacks.push([ index, callback, wrap ])
+    this.pendingCallbacks.push([ index, options, callback ])
     return
   }
 
   if (this.sources.length) {
     var src = this.sources.shift()
-    this.pendingCallbacks = [ [ index, callback, wrap ] ]
+    this.pendingCallbacks = [ [ index, options, callback ] ]
 
     if (src.type === 'wikimedia_commons') {
       this.loadWikimediaCommons(src, this.handlePending.bind(this))
@@ -174,37 +174,27 @@ ImageLoader.prototype.callbackCurrent = function (index, callback, wrap) {
     return
   }
 
-  if (wrap && this.found.length) {
-    return this.callbackCurrent(index - this.found.length, callback)
+  if (options.wrap && this.found.length) {
+    return this.callbackCurrent(index - this.found.length, options, callback)
   }
 
   callback(null, null)
 }
 
-ImageLoader.prototype.first = function (callback) {
+ImageLoader.prototype.first = function (options, callback) {
   this.index = 0
 
-  this.callbackCurrent(this.index, callback)
+  this.callbackCurrent(this.index, options, callback)
 }
 
-ImageLoader.prototype.next = function (callback) {
+ImageLoader.prototype.next = function (options, callback) {
   if (this.index === null) {
     this.index = 0
   } else {
     this.index ++
   }
 
-  this.callbackCurrent(this.index, callback)
-}
-
-ImageLoader.prototype.nextWrap = function (callback) {
-  if (this.index === null) {
-    this.index = 0
-  } else {
-    this.index ++
-  }
-
-  this.callbackCurrent(this.index, callback, true)
+  this.callbackCurrent(this.index, options, callback)
 }
 
 module.exports = ImageLoader

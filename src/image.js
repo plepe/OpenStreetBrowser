@@ -51,7 +51,9 @@ register_hook('show-details', function (data, category, dom, callback) {
 
   var currentLoader = ImageLoader(data)
 
-  currentLoader.nextWrap(function (err, img) {
+  currentLoader.next({
+    wrap: true
+  },function (err, img) {
     div.classList.remove('loading')
 
     if (!img) {
