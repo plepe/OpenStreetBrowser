@@ -75,7 +75,9 @@ register_hook('show-details', function (data, category, dom, callback) {
   })
 
   function loadNext () {
-    currentLoader.nextWrap(function (err, img) {
+    currentLoader.next({
+      wrap: true
+    }, function (err, img) {
       if (err) {
         return console.log("Can't load next image", err)
       }
