@@ -134,23 +134,23 @@ ImageLoader.prototype.handlePending = function () {
   delete this.pendingCallbacks
 
   pending.forEach(function (c) {
-    this.callbackCurrent(c)
+    this.callbackCurrent.apply(this, c)
   }.bind(this))
 }
 
-ImageLoader.prototype.callbackCurrent = function (callback, wrap) {
-  if (this.index < this.found.length) {
-    return callback(null, this.data[this.found[this.index]])
+ImageLoader.prototype.callbackCurrent = function (index, callback, wrap) {
+  if (index < this.found.length) {
+    return callback(null, this.data[this.found[index]])
   }
 
   if (this.pendingCallbacks) {
-    this.pendingCallbacks.push(callback)
+    this.pendingCallbacks.push([ index, callback, wrap ])
     return
   }
 
   if (this.sources.length) {
     var src = this.sources.shift()
-    this.pendingCallbacks = [ callback ]
+    this.pendingCallbacks = [ [ index, callback, wrap ] ]
 
     if (src.type === 'wikimedia_commons') {
       this.loadWikimediaCommons(src, this.handlePending.bind(this))
@@ -162,8 +162,7 @@ ImageLoader.prototype.callbackCurrent = function (callback, wrap) {
   }
 
   if (wrap && this.found.length) {
-    this.index = 0
-    return this.callbackCurrent(callback)
+    return this.callbackCurrent(index - this.found.length, callback)
   }
 
   callback(null, null)
@@ -172,7 +171,7 @@ ImageLoader.prototype.callbackCurrent = function (callback, wrap) {
 ImageLoader.prototype.first = function (callback) {
   this.index = 0
 
-  this.callbackCurrent(callback)
+  this.callbackCurrent(this.index, callback)
 }
 
 ImageLoader.prototype.next = function (callback) {
@@ -182,7 +181,7 @@ ImageLoader.prototype.next = function (callback) {
     this.index ++
   }
 
-  this.callbackCurrent(callback)
+  this.callbackCurrent(this.index, callback)
 }
 
 ImageLoader.prototype.nextWrap = function (callback) {
@@ -192,7 +191,7 @@ ImageLoader.prototype.nextWrap = function (callback) {
     this.index ++
   }
 
-  this.callbackCurrent(callback, true)
+  this.callbackCurrent(this.index, callback, true)
 }
 
 module.exports = ImageLoader
