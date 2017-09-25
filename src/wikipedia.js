@@ -5,13 +5,11 @@ var loadClash = {}
 
 function stripLinks (dom) {
   var as = dom.getElementsByTagName('a')
-  var as = Array.prototype.slice.call(as)
+  as = Array.prototype.slice.call(as)
 
   as.forEach(function (current) {
-    var c
-
-    while (c = current.firstChild) {
-      current.parentNode.insertBefore(c, current)
+    while (current.firstChild) {
+      current.parentNode.insertBefore(current.firstChild, current)
     }
 
     current.parentNode.removeChild(current)
@@ -19,7 +17,6 @@ function stripLinks (dom) {
 }
 
 function prepare (text) {
-  var ret = ''
   var i
 
   var div = document.createElement('div')
@@ -62,7 +59,7 @@ function prepare (text) {
     img.removeAttribute('height')
     p.insertBefore(img, p.firstChild)
 
-    break;
+    break
   }
 
   return p.innerHTML
@@ -87,7 +84,7 @@ function get (value, callback) {
     },
     function (result) {
       if (!result.content) {
-        return callback('error', null)
+        return callback(new Error('error'), null)
       }
 
       var text = prepare(result.content)
@@ -123,7 +120,8 @@ register_hook('show-details', function (data, category, dom, callback) {
   }
 
   for (k in ob.tags) {
-    if (m = k.match(/^(.*):wikipedia$/)) {
+    m = k.match(/^(.*):wikipedia$/)
+    if (m) {
       h = document.createElement('h4')
       h.appendChild(document.createTextNode(lang('tag:' + m[1])))
       div.appendChild(h)
@@ -133,7 +131,8 @@ register_hook('show-details', function (data, category, dom, callback) {
       showWikipedia(ob.tags[k], div, done)
     }
 
-    if (m = k.match(/^((.*):)?wikipedia:(.*)$/)) {
+    m = k.match(/^((.*):)?wikipedia:(.*)$/)
+    if (m) {
       if (typeof m[1] === 'undefined' && foundPrefixes.indexOf('') !== -1) {
         continue
       }
@@ -188,8 +187,9 @@ register_hook('show-details', function (data, category, dom, callback) {
   }
 
   for (k in ob.tags) {
-    if (m = k.match(/^(.*):wikidata$/)) {
-      found ++
+    m = k.match(/^(.*):wikidata$/)
+    if (m) {
+      found++
       if (foundPrefixes.indexOf(m[1]) !== -1) {
         continue
       }
