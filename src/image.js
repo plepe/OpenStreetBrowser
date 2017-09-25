@@ -36,6 +36,7 @@ register_hook('show-details', function (data, category, dom, callback) {
   var div = document.createElement('div')
   div.className = 'images loading'
   var imageWrapper
+  var nextImageWrapper = document.createElement('div')
 
   dom.appendChild(div)
 
@@ -65,19 +66,35 @@ register_hook('show-details', function (data, category, dom, callback) {
     imageWrapper.className = 'imageWrapper'
     div.appendChild(imageWrapper)
 
-    showTimer = window.setInterval(loadNext, 5000)
+    showTimer = window.setInterval(showNext, 5000)
 
     show(img, {}, imageWrapper)
+    loadNext()
   })
 
   function loadNext () {
     currentLoader.nextWrap(function (err, img) {
       if (err) {
-        return console.log("Can't show next image", err)
+        return console.log("Can't load next image", err)
       }
 
-      show(img, {}, imageWrapper)
+      show(img, {}, nextImageWrapper)
     })
+  }
+
+  function showNext () {
+    // when nothing was loaded, skip showing
+    if (nextImageWrapper.firstChild) {
+      while (imageWrapper.firstChild) {
+        imageWrapper.removeChild(imageWrapper.firstChild)
+      }
+
+      while (nextImageWrapper.firstChild) {
+        imageWrapper.appendChild(nextImageWrapper.firstChild)
+      }
+    }
+
+    loadNext()
   }
 })
 
