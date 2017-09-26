@@ -251,8 +251,15 @@ ul.overpass-layer-list > li:after {
   clear: both;
 }
 .leaflet-popup-content {
-  max-height: 250px;
+  min-width: 300px;
+  max-height: 300px;
   overflow: auto;
+  word-wrap: break-word;
+}
+.leaflet-popup-content:after {
+  content: ' ';
+  clear: both;
+  display: table;
 }
 .leaflet-popup-content pre {
   font-size: 8px;
@@ -424,9 +431,6 @@ a.showDetails {
   }
 }
 
-.leaflet-popup-content {
-  min-width: 200px;
-}
 #content {
   font-size: 12px;
   font-family: "Helvetica Neue", "Arial", "Helvetica", sans-serif;
@@ -520,6 +524,17 @@ a.showDetails {
 .wikipedia .reference {
   display: none;
 }
+.leaflet-popup-content .images {
+  float: right;
+  margin-left: 0.5em;
+  max-width: 100px;
+  max-height: 150px;
+}
+.leaflet-popup-content .images img {
+  max-width: 100px;
+  max-height: 150px;
+}
+
 #contentDetails .images {
 }
 #contentDetails .images .imageWrapper {

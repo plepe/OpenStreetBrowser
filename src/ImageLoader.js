@@ -1,4 +1,5 @@
 var wikidata = require('./wikidata')
+var wikipedia = require('./wikipedia')
 var cache = {}
 
 function ImageLoader (data) {
@@ -10,10 +11,10 @@ function ImageLoader (data) {
     return new ImageLoader(data)
   }
 
-  this.index = null
   this.sources = []
   this.found = []
   this.data = {}
+  this.defaultCounter = {}
 
   this.parseObject(data)
 }
@@ -53,6 +54,13 @@ ImageLoader.prototype.parseObject = function (data) {
         type: 'url'
       }
     }
+  }
+
+  if (data.object.tags.wikipedia) {
+    this.sources.push({
+      type: 'wikipedia',
+      value: data.object.tags.wikipedia
+    })
   }
 
   if (data.object.tags.wikidata) {
@@ -142,6 +150,28 @@ ImageLoader.prototype.loadWikimediaCommons = function (src, callback) {
   }
 }
 
+ImageLoader.prototype.loadWikipedia = function (src, callback) {
+  var value = src.value
+
+  wikipedia.getImages(value, function (err, result) {
+    if (err) {
+      return callback(err, null)
+    }
+
+    result.forEach(function (d) {
+      if (this.found.indexOf(d) === -1) {
+        this.found.push(d)
+        this.data[d] = {
+          id: d,
+          type: 'wikimedia'
+        }
+      }
+    }.bind(this))
+
+    callback(null)
+  }.bind(this))
+}
+
 ImageLoader.prototype.handlePending = function () {
   var pending = this.pendingCallbacks
   delete this.pendingCallbacks
@@ -169,32 +199,53 @@ ImageLoader.prototype.callbackCurrent = function (index, options, callback) {
       this.loadWikimediaCommons(src, this.handlePending.bind(this))
     } else if (src.type === 'wikidata') {
       this.loadWikidata(src, this.handlePending.bind(this))
+    } else if (src.type === 'wikipedia') {
+      this.loadWikipedia(src, this.handlePending.bind(this))
     }
 
     return
   }
 
   if (options.wrap && this.found.length) {
-    return this.callbackCurrent(index - this.found.length, options, callback)
+    var counter = this.defaultCounter
+    if ('counter' in options) {
+      counter = options.counter
+    }
+    counter.index = index - this.found.length
+
+    return this.callbackCurrent(counter.index, options, callback)
   }
 
   callback(null, null)
 }
 
+/* options:
+ * - wrap: whether to wrap to the first image after last (true/false)
+ * - counter: use a different counter object (pass an empty object)
+ */
 ImageLoader.prototype.first = function (options, callback) {
-  this.index = 0
+  var counter = this.defaultCounter
+  if ('counter' in options) {
+    counter = options.counter
+  }
+  counter.index = 0
 
-  this.callbackCurrent(this.index, options, callback)
+  this.callbackCurrent(counter.index, options, callback)
 }
 
 ImageLoader.prototype.next = function (options, callback) {
-  if (this.index === null) {
-    this.index = 0
-  } else {
-    this.index ++
+  var counter = this.defaultCounter
+  if ('counter' in options) {
+    counter = options.counter
   }
 
-  this.callbackCurrent(this.index, options, callback)
+  if (!('index' in counter) || counter.index === null) {
+    counter.index = 0
+  } else {
+    counter.index ++
+  }
+
+  this.callbackCurrent(counter.index, options, callback)
 }
 
 module.exports = ImageLoader

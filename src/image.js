@@ -51,7 +51,10 @@ register_hook('show-details', function (data, category, dom, callback) {
 
   var currentLoader = ImageLoader(data)
 
+  data.detailsImageCounter = {}
+
   currentLoader.next({
+    counter: data.detailsImageCounter,
     wrap: true
   },function (err, img) {
     div.classList.remove('loading')
@@ -76,6 +79,7 @@ register_hook('show-details', function (data, category, dom, callback) {
 
   function loadNext () {
     currentLoader.next({
+      counter: data.detailsImageCounter,
       wrap: true
     }, function (err, img) {
       if (err) {
@@ -106,4 +110,33 @@ register_hook('hide-details', function () {
   if (showTimer) {
     window.clearInterval(showTimer)
   }
+})
+
+register_hook('show-popup', function (data, category, dom, callback) {
+  var div = document.createElement('div')
+  div.className = 'images loading'
+  var imageWrapper
+
+  dom.insertBefore(div, dom.firstChild)
+
+  var currentLoader = ImageLoader(data)
+  data.popupImageCounter = {}
+
+  currentLoader.first({
+    counter: data.popupImageCounter
+  },function (err, img) {
+    div.classList.remove('loading')
+
+    if (!img) {
+      return callback(err)
+    }
+
+    imageWrapper = document.createElement('div')
+    imageWrapper.className = 'imageWrapper'
+    div.appendChild(imageWrapper)
+
+    show(img, {}, imageWrapper)
+
+    callback(null)
+  })
 })
