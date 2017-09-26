@@ -223,14 +223,6 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
 }
 
 CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
-  call_hooks_callback('show-popup', object, this, popup._contentNode,
-    function (err) {
-      if (err.length) {
-        console.log('show-popup produced errors:', err)
-      }
-    }
-  )
-
   if (object.data.popupDescription || object.data.description) {
     var div = document.createElement('div')
     div.className = 'description'
@@ -252,6 +244,14 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
   var footerContent = '<a class="showDetails" href="#' + this.id + '/' + object.id + '/details">' + lang('show details') + '</a>'
   footer.innerHTML = footerContent
   popup._contentNode.appendChild(footer)
+
+  call_hooks_callback('show-popup', object, this, popup._contentNode,
+    function (err) {
+      if (err.length) {
+        console.log('show-popup produced errors:', err)
+      }
+    }
+  )
 }
 
 CategoryOverpass.prototype.renderTemplate = function (object, templateId, callback) {
