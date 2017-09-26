@@ -16,11 +16,8 @@ function stripLinks (dom) {
   })
 }
 
-function prepare (text) {
+function prepare (div) {
   var i
-
-  var div = document.createElement('div')
-  div.innerHTML = text
 
   var contents = div.getElementsByTagName('div')
   for (i = 0; i < contents.length; i++) {
@@ -87,17 +84,28 @@ function get (value, callback) {
         return callback(new Error('error'), null)
       }
 
-      var text = prepare(result.content)
-      text += ' <a target="_blank" href="' + result.languages[result.language] + '">' + lang('more') + '</a>'
+      result.div = document.createElement('div')
+      result.div.innerHTML = result.content
 
-      cache[cacheId] = text
+      cache[cacheId] = result
 
-      callback(null, text)
+      callback(null, result)
 
       loadClash[cacheId].forEach(function (d) {
-        d(null, text)
+        d(null, result)
       })
       delete loadClash[cacheId]
+    }
+  )
+}
+
+function getAbstract (value, callback) {
+  get(value,
+    function (err, result) {
+      var text = prepare(result.div)
+      text += ' <a target="_blank" href="' + result.languages[result.language] + '">' + lang('more') + '</a>'
+
+      callback(null, text)
     }
   )
 }
@@ -261,7 +269,7 @@ function showWikipedia (tagValue, dom, callback) {
   l.className = 'loadingIndicator'
   block.appendChild(l)
 
-  get(tagValue, function (err, text) {
+  getAbstract(tagValue, function (err, text) {
     if (!text) {
       block.appendChild(document.createTextNode(lang('wikipedia:no-url-parse')))
     }
