@@ -10,10 +10,10 @@ function ImageLoader (data) {
     return new ImageLoader(data)
   }
 
-  this.index = null
   this.sources = []
   this.found = []
   this.data = {}
+  this.defaultCounter = {}
 
   this.parseObject(data)
 }
@@ -175,26 +175,45 @@ ImageLoader.prototype.callbackCurrent = function (index, options, callback) {
   }
 
   if (options.wrap && this.found.length) {
-    return this.callbackCurrent(index - this.found.length, options, callback)
+    var counter = this.defaultCounter
+    if ('counter' in options) {
+      counter = options.counter
+    }
+    counter.index = index - this.found.length
+
+    return this.callbackCurrent(counter.index, options, callback)
   }
 
   callback(null, null)
 }
 
+/* options:
+ * - wrap: whether to wrap to the first image after last (true/false)
+ * - counter: use a different counter object (pass an empty object)
+ */
 ImageLoader.prototype.first = function (options, callback) {
-  this.index = 0
+  var counter = this.defaultCounter
+  if ('counter' in options) {
+    counter = options.counter
+  }
+  counter.index = 0
 
-  this.callbackCurrent(this.index, options, callback)
+  this.callbackCurrent(counter.index, options, callback)
 }
 
 ImageLoader.prototype.next = function (options, callback) {
-  if (this.index === null) {
-    this.index = 0
-  } else {
-    this.index ++
+  var counter = this.defaultCounter
+  if ('counter' in options) {
+    counter = options.counter
   }
 
-  this.callbackCurrent(this.index, options, callback)
+  if (!('index' in counter) || counter.index === null) {
+    counter.index = 0
+  } else {
+    counter.index ++
+  }
+
+  this.callbackCurrent(counter.index, options, callback)
 }
 
 module.exports = ImageLoader
