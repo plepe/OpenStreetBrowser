@@ -1,4 +1,5 @@
 var wikidata = require('./wikidata')
+var wikipedia = require('./wikipedia')
 var cache = {}
 
 function ImageLoader (data) {
@@ -53,6 +54,13 @@ ImageLoader.prototype.parseObject = function (data) {
         type: 'url'
       }
     }
+  }
+
+  if (data.object.tags.wikipedia) {
+    this.sources.push({
+      type: 'wikipedia',
+      value: data.object.tags.wikipedia
+    })
   }
 
   if (data.object.tags.wikidata) {
@@ -142,6 +150,28 @@ ImageLoader.prototype.loadWikimediaCommons = function (src, callback) {
   }
 }
 
+ImageLoader.prototype.loadWikipedia = function (src, callback) {
+  var value = src.value
+
+  wikipedia.getImages(value, function (err, result) {
+    if (err) {
+      return callback(err, null)
+    }
+
+    result.forEach(function (d) {
+      if (this.found.indexOf(d) === -1) {
+        this.found.push(d)
+        this.data[d] = {
+          id: d,
+          type: 'wikimedia'
+        }
+      }
+    }.bind(this))
+
+    callback(null)
+  }.bind(this))
+}
+
 ImageLoader.prototype.handlePending = function () {
   var pending = this.pendingCallbacks
   delete this.pendingCallbacks
@@ -169,6 +199,8 @@ ImageLoader.prototype.callbackCurrent = function (index, options, callback) {
       this.loadWikimediaCommons(src, this.handlePending.bind(this))
     } else if (src.type === 'wikidata') {
       this.loadWikidata(src, this.handlePending.bind(this))
+    } else if (src.type === 'wikipedia') {
+      this.loadWikipedia(src, this.handlePending.bind(this))
     }
 
     return

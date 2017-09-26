@@ -283,3 +283,38 @@ function showWikipedia (tagValue, dom, callback) {
     callback(err)
   })
 }
+
+function getImages (tagValue, callback) {
+  get(tagValue, function (err, result) {
+    if (err) {
+      return callback(err, null)
+    }
+
+    var imgs = result.div.getElementsByTagName('img')
+    var result = []
+
+    for (i = 0; i < imgs.length; i++) {
+      var img = imgs[i]
+
+      // ignore icons
+      if (img.width <= 64 && img.height <= 64) {
+        continue
+      }
+
+      img.removeAttribute('width')
+      img.removeAttribute('height')
+
+      var m = img.src.match(/^https?:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/\w+\/\w+\/([^\/]+)/)
+      if (m) {
+        var file = decodeURIComponent(m[1]).replace(/_/g, ' ')
+        result.push(file)
+      }
+    }
+
+    callback(null, result)
+  })
+}
+
+module.exports = {
+  getImages: getImages
+}
