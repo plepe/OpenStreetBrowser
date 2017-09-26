@@ -107,3 +107,30 @@ register_hook('hide-details', function () {
     window.clearInterval(showTimer)
   }
 })
+
+register_hook('show-popup', function (data, category, dom, callback) {
+  var div = document.createElement('div')
+  div.className = 'images loading'
+  var imageWrapper
+
+  dom.insertBefore(div, dom.firstChild)
+
+  var currentLoader = ImageLoader(data)
+
+  currentLoader.first({
+  },function (err, img) {
+    div.classList.remove('loading')
+
+    if (!img) {
+      return callback(err)
+    }
+
+    imageWrapper = document.createElement('div')
+    imageWrapper.className = 'imageWrapper'
+    div.appendChild(imageWrapper)
+
+    show(img, {}, imageWrapper)
+
+    callback(null)
+  })
+})
