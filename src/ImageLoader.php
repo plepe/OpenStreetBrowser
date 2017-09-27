@@ -1,6 +1,7 @@
 <?php
 function ajax_ImageLoaderWikimediaCategoryList ($param) {
   $ret = array();
+  $retData = array();
 
   $wm_url = "https://commons.wikimedia.org/w/index.php?title=" . urlencode(strtr($param['page'], array(" " => "_")));
 
@@ -22,6 +23,11 @@ function ajax_ImageLoaderWikimediaCategoryList ($param) {
 
       for ($j = 0; $j < $imgs->length; $j++) {
         $ret[] = $imgs->item($j)->getAttribute('alt');
+        $retData[] = array(
+          'id' => $imgs->item($j)->getAttribute('alt'),
+          'width' => $imgs->item($j)->getAttribute('data-file-width'),
+          'height' => $imgs->item($j)->getAttribute('data-file-height'),
+        );
       }
     }
   }
@@ -37,7 +43,8 @@ function ajax_ImageLoaderWikimediaCategoryList ($param) {
   }
 
   return array(
-    'images' => $ret,
+    'images' => $ret, // deprecated as of 2017-09-27
+    'imageData' => $retData,
     'continue' => $continue,
   );
 }

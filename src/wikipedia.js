@@ -84,9 +84,6 @@ function get (value, callback) {
         return callback(new Error('error'), null)
       }
 
-      result.div = document.createElement('div')
-      result.div.innerHTML = result.content
-
       cache[cacheId] = result
 
       callback(null, result)
@@ -102,7 +99,10 @@ function get (value, callback) {
 function getAbstract (value, callback) {
   get(value,
     function (err, result) {
-      var text = prepare(result.div)
+      var div = document.createElement('div')
+      div.innerHTML = result.content
+
+      var text = prepare(div)
       text += ' <a target="_blank" href="' + result.languages[result.language] + '">' + lang('more') + '</a>'
 
       callback(null, text)
@@ -290,8 +290,11 @@ function getImages (tagValue, callback) {
       return callback(err, null)
     }
 
-    var imgs = result.div.getElementsByTagName('img')
-    var result = []
+    var div = document.createElement('div')
+    div.innerHTML = result.content
+
+    var imgs = div.getElementsByTagName('img')
+    var ret = []
 
     for (i = 0; i < imgs.length; i++) {
       var img = imgs[i]
@@ -307,11 +310,15 @@ function getImages (tagValue, callback) {
       var m = img.src.match(/^https?:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/\w+\/\w+\/([^\/]+)/)
       if (m) {
         var file = decodeURIComponent(m[1]).replace(/_/g, ' ')
-        result.push(file)
+        ret.push({
+          id: file,
+          width: img.getAttribute('data-file-width'),
+          height: img.getAttribute('data-file-height')
+        })
       }
     }
 
-    callback(null, result)
+    callback(null, ret)
   })
 }
 
