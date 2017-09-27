@@ -310,7 +310,11 @@ function getImages (tagValue, callback) {
       var m = img.src.match(/^https?:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/\w+\/\w+\/([^\/]+)/)
       if (m) {
         var file = decodeURIComponent(m[1]).replace(/_/g, ' ')
-        ret.push(file)
+        ret.push({
+          id: file,
+          width: img.getAttribute('data-file-width'),
+          height: img.getAttribute('data-file-height')
+        })
       }
     }
 
