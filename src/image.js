@@ -1,18 +1,23 @@
 var ImageLoader = require('./ImageLoader')
 var showTimer
 
-function showImage (url, dom) {
+function showImage (image, dom) {
   var div = document.createElement('div')
-  div.innerHTML = '<a target="_blank" href="' + url + '"><img src="' + url + '"></a>'
+  div.innerHTML = '<a target="_blank" href="' + image.url + '"><img src="' + image.url + '"></a>'
 
   dom.appendChild(div)
 }
 
-function showWikimediaImage (value, dom) {
-  var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(value) + '&w=400'
+function showWikimediaImage (image, dom) {
+  var size = 400
+  if ('width' in image && image.width < size) {
+    size = image.width
+  }
+
+  var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(image.id) + '&w=' + size
 
   var div = document.createElement('div')
-  div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(value) + '"><img src="' + url + '"/></a>'
+  div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id) + '"><img src="' + url + '"/></a>'
 
   dom.appendChild(div)
 }
@@ -23,10 +28,10 @@ function show (img, options, div) {
 
   switch (img.type) {
     case 'wikimedia':
-      showWikimediaImage(img.id, div)
+      showWikimediaImage(img, div)
       break
     case 'url':
-      showImage(img.id, div)
+      showImage(img, div)
       break
     default:
   }
