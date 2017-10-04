@@ -35,6 +35,24 @@
     "watchify": "^3.9.0"
   },
   "standard": {
-    "global": [ "lang", "ui_lang", "config", "options", "alert", "L", "register_hook", "call_hooks", "call_hooks_callback", "XMLHttpRequest", "map", "overpassFrontend", "location", "baseCategory", "currentPath", "overpassUrl", "ajax"  ]
+    "global": [
+      "lang",
+      "ui_lang",
+      "config",
+      "options",
+      "alert",
+      "L",
+      "register_hook",
+      "call_hooks",
+      "call_hooks_callback",
+      "XMLHttpRequest",
+      "map",
+      "overpassFrontend",
+      "location",
+      "baseCategory",
+      "currentPath",
+      "overpassUrl",
+      "ajax"
+    ]
   }
 }
