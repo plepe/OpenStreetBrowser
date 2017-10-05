@@ -17,6 +17,11 @@ elseif (isset($config['categoriesDir'])) {
   }
 }
 
+if (sizeof($_GET)) {
+  Header('Location: .#' . http_build_query($_GET));
+  exit(0);
+}
+
 html_export_var(array(
   'config' => $config,
 ));
