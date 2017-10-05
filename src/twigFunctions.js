@@ -1,5 +1,6 @@
 var OverpassLayer = require('overpass-layer')
 var OpeningHours = require('opening_hours')
+var colorInterpolate = require('color-interpolate')
 
 OverpassLayer.twig.extendFunction('tagsPrefix', function (tags, prefix) {
   var ret = {}
@@ -38,4 +39,8 @@ OverpassLayer.twig.extendFilter('websiteUrl', function (value) {
 })
 OverpassLayer.twig.extendFilter('matches', function (value, match) {
   return value.match(match)
+})
+OverpassLayer.twig.extendFunction('colorInterpolate', function (map, value) {
+  var colormap = colorInterpolate(map)
+  return colormap(value)
 })

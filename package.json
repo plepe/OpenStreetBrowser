@@ -8,6 +8,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "async": "^2.5.0",
+    "color-interpolate": "^1.0.2",
     "font-awesome": "^4.7.0",
     "i18next-client": "^1.11.4",
     "ip-location": "^1.0.1",
