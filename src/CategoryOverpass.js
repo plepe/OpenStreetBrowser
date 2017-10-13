@@ -113,7 +113,6 @@ function CategoryOverpass (id, data) {
 
   this.domStatus = document.createElement('div')
   this.domStatus.className = 'status'
-
   this.dom.appendChild(this.domStatus)
 
   register_hook('state-get', function (state) {
@@ -192,6 +191,11 @@ CategoryOverpass.prototype.open = function () {
   this.isOpen = true
 
   state.update()
+
+  if ('info' in this.data) {
+    var template = OverpassLayer.twig.twig({ data: this.data.info, autoescape: true })
+    this.domInfo.innerHTML = template.render(this.data)
+  }
 }
 
 CategoryOverpass.prototype.recalc = function () {
