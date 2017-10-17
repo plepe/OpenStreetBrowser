@@ -13,7 +13,9 @@ var defaultValues = {
       opacity: 1,
       radius: 12,
       fill: false
-    }
+    },
+    markerSymbol: "{{ markerPointer({})|raw }}",
+    listMarkerSymbol: "{{ markerCircle({})|raw }}",
   },
   queryOptions: {
     split: 64
