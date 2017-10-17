@@ -222,6 +222,11 @@ ul.overpass-layer-list > li > .markerParent {
 }
 ul.overpass-layer-list > li > .markerParent > .marker {
 }
+.info > table > tr > td:first-of-type,
+.info > table > tbody > tr > td:first-of-type {
+  position: relative;
+}
+.info .sign,
 ul.overpass-layer-list > li > .markerParent > .icon {
   text-align: center;
   position: absolute;
