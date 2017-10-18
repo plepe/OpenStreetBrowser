@@ -192,6 +192,17 @@ body {
 #content .category.open > .status {
   display: block;
 }
+.info {
+  position: relative;
+  border: 1px solid black;
+}
+.info > .closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-decoration: none;
+  font-size: 12px;
+}
 #content .category > .status,
 #content .category > .content > ul.overpass-layer-list {
   padding-top: 3px;
