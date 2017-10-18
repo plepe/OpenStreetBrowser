@@ -57,9 +57,9 @@ function CategoryBase (id, data) {
     }
   }
 
-  this.domInfo = document.createElement('div')
-  this.domInfo .className = 'info'
-  this.dom.appendChild(this.domInfo)
+  this.domTools = document.createElement('div')
+  this.domTools.className = 'tools'
+  this.dom.appendChild(this.domTools)
 
   this.domContent = document.createElement('div')
   this.domContent.className = 'content'

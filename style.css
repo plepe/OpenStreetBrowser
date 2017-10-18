@@ -183,12 +183,12 @@ body {
   float: right;
 }
 #content .category > .content,
-#content .category > .info,
+#content .category > .tools,
 #content .category > .status {
   display: none;
 }
 #content .category.open > .content,
-#content .category.open > .info,
+#content .category.open > .tools,
 #content .category.open > .status {
   display: block;
 }

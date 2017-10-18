@@ -194,6 +194,10 @@ CategoryOverpass.prototype.open = function () {
   state.update()
 
   if ('info' in this.data) {
+    this.domInfo = document.createElement('div')
+    this.domInfo.className = 'info'
+    this.domTools.appendChild(this.domInfo)
+
     var template = OverpassLayer.twig.twig({ data: this.data.info, autoescape: true })
     this.domInfo.innerHTML = template.render(this.data)
   }
