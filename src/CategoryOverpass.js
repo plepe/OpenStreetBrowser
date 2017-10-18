@@ -3,6 +3,7 @@ var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var CategoryBase = require('./CategoryBase')
 var state = require('./state')
+var tabs = require('./tabs')
 var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
@@ -195,23 +196,18 @@ CategoryOverpass.prototype.open = function () {
   state.update()
 
   if ('info' in this.data) {
-    this.domInfo = document.createElement('div')
-    this.domInfo.className = 'info'
-    this.domTools.appendChild(this.domInfo)
+    this.tabInfo = new tabs.Tab({
+      id: 'info'
+    })
+    this.tools.add(this.tabInfo)
+
+    this.tabInfo.header.innerHTML = '<i class="fa fa-info-circle" aria-hidden="true"></i>'
+    this.tabInfo.header.title = lang('category-info-tooltip')
+    this.domInfo = this.tabInfo.content
+    this.domInfo.classList.add('info')
 
     var template = OverpassLayer.twig.twig({ data: this.data.info, autoescape: true })
     this.domInfo.innerHTML = template.render(this.data)
-
-    var closeButton = document.createElement('a')
-
-    closeButton.href = '#'
-    closeButton.innerHTML = '×'
-    closeButton.className = 'closeButton'
-    this.domInfo.appendChild(closeButton)
-
-    closeButton.onclick = function () {
-      this.domInfo.parentNode.removeChild(this.domInfo)
-    }.bind(this)
   }
 }
 
