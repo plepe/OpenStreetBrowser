@@ -200,6 +200,17 @@ CategoryOverpass.prototype.open = function () {
 
     var template = OverpassLayer.twig.twig({ data: this.data.info, autoescape: true })
     this.domInfo.innerHTML = template.render(this.data)
+
+    var closeButton = document.createElement('a')
+
+    closeButton.href = '#'
+    closeButton.innerHTML = '×'
+    closeButton.className = 'closeButton'
+    this.domInfo.appendChild(closeButton)
+
+    closeButton.onclick = function () {
+      this.domInfo.parentNode.removeChild(this.domInfo)
+    }.bind(this)
   }
 }
 
