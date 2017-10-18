@@ -569,3 +569,34 @@ a.showDetails {
   top: 0; bottom: 0; left: 0; right: 0;
   margin: auto;
 }
+
+/**** TABS ****/
+.tabs .tabs-section {
+  display: none;
+  border: 1px solid #999;
+  border-top: none;
+}
+.tabs .tabs-section.selected {
+  display: block;
+}
+.tabs .tabs-list {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid transparent;
+}
+.tabs.has-selected .tabs-list {
+  border-bottom: 1px solid #999;
+}
+.tabs .tabs-list > li {
+  list-style: none;
+  display: inline-block;
+  border: 1px solid transparent;
+  padding: 1px 3px;
+  cursor: pointer;
+  margin-bottom: -1px;
+}
+.tabs .tabs-list > li.selected {
+  border: 1px solid #999;
+  border-bottom: 1px solid #fff;
+  z-index: 1;
+}
