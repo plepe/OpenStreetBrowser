@@ -1,10 +1,49 @@
 var OverpassLayer = require('overpass-layer')
 
-function markerLine (style) {
-  var color = 'color' in style ? style.color : '#000000'
-  var weight = 'weight' in style ? style.weight : 1
+function cssStyle (style) {
+  var ret = ''
+  if ('color' in style) {
+    ret += 'stroke: ' + style.color + ';'
+  }
+  if ('weight' in style) {
+    ret += 'stroke-width: ' + style.weight + ';'
+  }
+  if ('dashArray' in style) {
+    ret += 'stroke-dasharray: ' + style.dashArray + ';'
+  }
+  if ('dashArray' in style) {
+    ret += 'stroke-dasharray: ' + style.dashArray + ';'
+  }
+  if ('dashOffset' in style) {
+    ret += 'stroke-dashoffset: ' + style.dashOffset + ';'
+  }
+  if ('fillColor' in style) {
+    ret += 'fill: ' + style.fillColor + ';'
+  }
 
-  return '<svg anchorX="13" anchorY="8" width="25" height="15"><line x1="0" y1="8" x2="25" y2="8" style="stroke: ' + color + '; stroke-width: ' + weight + '"/></svg>'
+  return ret
+}
+
+function markerLine (data) {
+  var ret = '<svg anchorX="13" anchorY="8" width="25" height="15">'
+
+  if (!('styles' in data)) {
+    data = {
+      style: data,
+      styles: [ 'default' ]
+    }
+  }
+
+  for (var i = 0; i < data.styles.length; i++) {
+    var k = data.styles[i]
+    var style = k === 'default' ? data.style : data['style:' + k]
+
+    ret += '<line x1="0" y1="8" x2="25" y2="8" style="' + cssStyle(style) + '"/>'
+  }
+
+  ret += '</svg>'
+
+  return ret
 }
 
 function markerCircle (style) {
