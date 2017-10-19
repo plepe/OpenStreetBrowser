@@ -159,8 +159,13 @@ CategoryOverpass.prototype.load = function (callback) {
 CategoryOverpass.prototype.setMap = function (map) {
   CategoryBase.prototype.setMap.call(this, map)
 
-  this.map.on('zoomend', this.updateStatus.bind(this))
+  this.map.on('zoomend', function () {
+    this.updateStatus()
+    this.updateInfo()
+  }.bind(this))
+
   this.updateStatus()
+  this.updateInfo()
 }
 
 CategoryOverpass.prototype.updateStatus = function () {
@@ -196,21 +201,34 @@ CategoryOverpass.prototype.open = function () {
   state.update()
 
   if ('info' in this.data) {
-    this.tabInfo = new tabs.Tab({
-      id: 'info'
-    })
-    this.tools.add(this.tabInfo)
+    if (!this.tabInfo) {
+      this.tabInfo = new tabs.Tab({
+        id: 'info'
+      })
+      this.tools.add(this.tabInfo)
 
-    this.tabInfo.header.innerHTML = '<i class="fa fa-info-circle" aria-hidden="true"></i>'
-    this.tabInfo.header.title = lang('category-info-tooltip')
-    this.domInfo = this.tabInfo.content
-    this.domInfo.classList.add('info')
+      this.tabInfo.header.innerHTML = '<i class="fa fa-info-circle" aria-hidden="true"></i>'
+      this.tabInfo.header.title = lang('category-info-tooltip')
+      this.domInfo = this.tabInfo.content
+      this.domInfo.classList.add('info')
 
-    var template = OverpassLayer.twig.twig({ data: this.data.info, autoescape: true })
-    global.currentCategory = this
-    this.domInfo.innerHTML = template.render(this.data)
-    global.currentCategory = null
+      this.templateInfo = OverpassLayer.twig.twig({ data: this.data.info, autoescape: true })
+    }
+
+    this.updateInfo()
   }
+}
+
+CategoryOverpass.prototype.updateInfo = function () {
+  if (!this.tabInfo) {
+    return
+  }
+
+  global.currentCategory = this
+  var data = JSON.parse(JSON.stringify(this.data))
+  data.map = { zoom: map.getZoom() }
+  this.domInfo.innerHTML = this.templateInfo.render(data)
+  global.currentCategory = null
 }
 
 CategoryOverpass.prototype.recalc = function () {
