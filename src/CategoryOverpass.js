@@ -207,7 +207,9 @@ CategoryOverpass.prototype.open = function () {
     this.domInfo.classList.add('info')
 
     var template = OverpassLayer.twig.twig({ data: this.data.info, autoescape: true })
+    global.currentCategory = this
     this.domInfo.innerHTML = template.render(this.data)
+    global.currentCategory = null
   }
 }
 

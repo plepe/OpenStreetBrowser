@@ -44,3 +44,19 @@ OverpassLayer.twig.extendFunction('colorInterpolate', function (map, value) {
   var colormap = colorInterpolate(map)
   return colormap(value)
 })
+OverpassLayer.twig.extendFunction('evaluate', function (tags) {
+  var ob = {
+    id: 'x0',
+    isShown: true,
+    layer_id: global.currentCategory.id,
+    object: {
+      id: 'x0',
+      meta: {},
+      tags: tags,
+      type: 'special'
+    }
+  }
+
+  var d = global.currentCategory.layer.evaluate(ob)
+  return d
+})
