@@ -4,6 +4,7 @@ var OverpassLayerList = require('overpass-layer').List
 var CategoryBase = require('./CategoryBase')
 var state = require('./state')
 var tabs = require('./tabs')
+var markers = require('./markers')
 var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
@@ -183,6 +184,24 @@ CategoryOverpass.prototype.updateStatus = function () {
   }
 }
 
+CategoryOverpass.prototype._getMarker = function (ob) {
+  if (ob.data.listMarkerSymbol.trim() == 'line') {
+    var div = document.createElement('div')
+    div.className = 'marker'
+    div.innerHTML = markers.line(ob.data)
+
+    return div
+  } else if (ob.data.listMarkerSymbol.trim() == 'area') {
+    var div = document.createElement('div')
+    div.className = 'marker'
+    div.innerHTML = markers.circle(ob.data)
+
+    return div
+  }
+
+  return this.origGetMarker(ob)
+}
+
 CategoryOverpass.prototype.open = function () {
   if (this.isOpen) {
     return
@@ -194,6 +213,8 @@ CategoryOverpass.prototype.open = function () {
 
   if (!this.list) {
     this.list = new OverpassLayerList(this.domContent, this.layer)
+    this.origGetMarker = this.list._getMarker
+    this.list._getMarker = this._getMarker.bind(this)
   }
 
   this.isOpen = true
