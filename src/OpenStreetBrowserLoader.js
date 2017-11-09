@@ -1,4 +1,5 @@
 var OverpassLayer = require('overpass-layer')
+var jsonMultilineStrings = require('json-multiline-strings')
 
 function OpenStreetBrowserLoader () {
   this.types = {}
@@ -31,6 +32,7 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
     }
 
     var data = JSON.parse(req.responseText)
+    data = jsonMultilineStrings.join(data, { exclude: [ [ 'const' ] ] })
 
     this.getCategoryFromData(id, data, function (err, category) {
       if (category) {

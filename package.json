@@ -12,6 +12,7 @@
     "font-awesome": "^4.7.0",
     "i18next-client": "^1.11.4",
     "ip-location": "^1.0.1",
+    "json-multiline-strings": "^0.1.0",
     "leaflet": "^1.0.3",
     "leaflet-geosearch": "^2.4.0",
     "leaflet.locatecontrol": "^0.61.0",
