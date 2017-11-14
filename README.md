@@ -13,6 +13,8 @@ modulekit/build_cache
 bin/download_dependencies
 ```
 
+=> [more detailed Installation instructions](doc/INSTALL.md)
+
 ### Upgrade
 ```sh
 cd openstreetbrowser
