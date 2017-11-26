@@ -191,10 +191,10 @@ CategoryOverpass.prototype._getMarker = function (ob) {
     div.innerHTML = markers.line(ob.data)
 
     return div
-  } else if (ob.data.listMarkerSymbol.trim() == 'area') {
+  } else if (ob.data.listMarkerSymbol.trim() == 'polygon') {
     var div = document.createElement('div')
     div.className = 'marker'
-    div.innerHTML = markers.circle(ob.data)
+    div.innerHTML = markers.polygon(ob.data)
 
     return div
   }
