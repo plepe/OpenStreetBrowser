@@ -19,6 +19,15 @@ function cssStyle (style) {
   }
   if ('fillColor' in style) {
     ret += 'fill: ' + style.fillColor + ';'
+  } else if ('color' in style) {
+    ret += 'fill: ' + style.color + ';'
+  } else {
+    ret += 'fill: #3388ff;'
+  }
+  if ('fillOpacity' in style) {
+    ret += 'fill-opacity: ' + style.fillOpacity + ';'
+  } else {
+    ret += 'fill-opacity: 0.2;'
   }
 
   return ret
@@ -46,6 +55,28 @@ function markerLine (data) {
   return ret
 }
 
+function markerPolygon (data) {
+  var ret = '<svg anchorX="13" anchorY="8" width="25" height="25">'
+
+  if (!('styles' in data)) {
+    data = {
+      style: data,
+      styles: [ 'default' ]
+    }
+  }
+
+  for (var i = 0; i < data.styles.length; i++) {
+    var k = data.styles[i]
+    var style = k === 'default' ? data.style : data['style:' + k]
+
+    ret += '<rect x="3" y="3" width="18" height="18" style="' + cssStyle(style) + '"/>'
+  }
+
+  ret += '</svg>'
+
+  return ret
+}
+
 function markerCircle (style) {
   var fillColor = 'fillColor' in style ? style.fillColor : '#f2756a'
   var color = 'color' in style ? style.color : '#000000'
@@ -65,9 +96,11 @@ function markerPointer (style) {
 OverpassLayer.twig.extendFunction('markerLine', markerLine)
 OverpassLayer.twig.extendFunction('markerCircle', markerCircle)
 OverpassLayer.twig.extendFunction('markerPointer', markerPointer)
+OverpassLayer.twig.extendFunction('markerPolygon', markerPolygon)
 
 module.exports = {
   line: markerLine,
   circle: markerCircle,
-  pointer: markerPointer
+  pointer: markerPointer,
+  polygon: markerPolygon
 }
