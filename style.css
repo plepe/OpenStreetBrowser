@@ -183,12 +183,25 @@ body {
   float: right;
 }
 #content .category > .content,
+#content .category > .tools,
 #content .category > .status {
   display: none;
 }
 #content .category.open > .content,
+#content .category.open > .tools,
 #content .category.open > .status {
   display: block;
+}
+.info {
+  position: relative;
+  border: 1px solid black;
+}
+.info > .closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-decoration: none;
+  font-size: 12px;
 }
 #content .category > .status,
 #content .category > .content > ul.overpass-layer-list {
@@ -220,6 +233,11 @@ ul.overpass-layer-list > li > .markerParent {
 }
 ul.overpass-layer-list > li > .markerParent > .marker {
 }
+.info > table > tr > td:first-of-type,
+.info > table > tbody > tr > td:first-of-type {
+  position: relative;
+}
+.info .sign,
 ul.overpass-layer-list > li > .markerParent > .icon {
   text-align: center;
   position: absolute;
@@ -550,4 +568,35 @@ a.showDetails {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   margin: auto;
+}
+
+/**** TABS ****/
+.tabs .tabs-section {
+  display: none;
+  border: 1px solid #999;
+  border-top: none;
+}
+.tabs .tabs-section.selected {
+  display: block;
+}
+.tabs .tabs-list {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid transparent;
+}
+.tabs.has-selected .tabs-list {
+  border-bottom: 1px solid #999;
+}
+.tabs .tabs-list > li {
+  list-style: none;
+  display: inline-block;
+  border: 1px solid transparent;
+  padding: 1px 3px;
+  cursor: pointer;
+  margin-bottom: -1px;
+}
+.tabs .tabs-list > li.selected {
+  border: 1px solid #999;
+  border-bottom: 1px solid #fff;
+  z-index: 1;
 }

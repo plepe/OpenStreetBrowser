@@ -3,6 +3,8 @@ var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var CategoryBase = require('./CategoryBase')
 var state = require('./state')
+var tabs = require('./tabs')
+var markers = require('./markers')
 var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
@@ -13,7 +15,9 @@ var defaultValues = {
       opacity: 1,
       radius: 12,
       fill: false
-    }
+    },
+    markerSymbol: "{{ markerPointer({})|raw }}",
+    listMarkerSymbol: "{{ markerCircle({})|raw }}",
   },
   queryOptions: {
     split: 64
@@ -113,7 +117,6 @@ function CategoryOverpass (id, data) {
 
   this.domStatus = document.createElement('div')
   this.domStatus.className = 'status'
-
   this.dom.appendChild(this.domStatus)
 
   register_hook('state-get', function (state) {
@@ -157,8 +160,13 @@ CategoryOverpass.prototype.load = function (callback) {
 CategoryOverpass.prototype.setMap = function (map) {
   CategoryBase.prototype.setMap.call(this, map)
 
-  this.map.on('zoomend', this.updateStatus.bind(this))
+  this.map.on('zoomend', function () {
+    this.updateStatus()
+    this.updateInfo()
+  }.bind(this))
+
   this.updateStatus()
+  this.updateInfo()
 }
 
 CategoryOverpass.prototype.updateStatus = function () {
@@ -176,6 +184,24 @@ CategoryOverpass.prototype.updateStatus = function () {
   }
 }
 
+CategoryOverpass.prototype._getMarker = function (ob) {
+  if (ob.data.listMarkerSymbol.trim() == 'line') {
+    var div = document.createElement('div')
+    div.className = 'marker'
+    div.innerHTML = markers.line(ob.data)
+
+    return div
+  } else if (ob.data.listMarkerSymbol.trim() == 'area') {
+    var div = document.createElement('div')
+    div.className = 'marker'
+    div.innerHTML = markers.circle(ob.data)
+
+    return div
+  }
+
+  return this.origGetMarker(ob)
+}
+
 CategoryOverpass.prototype.open = function () {
   if (this.isOpen) {
     return
@@ -187,11 +213,43 @@ CategoryOverpass.prototype.open = function () {
 
   if (!this.list) {
     this.list = new OverpassLayerList(this.domContent, this.layer)
+    this.origGetMarker = this.list._getMarker
+    this.list._getMarker = this._getMarker.bind(this)
   }
 
   this.isOpen = true
 
   state.update()
+
+  if ('info' in this.data) {
+    if (!this.tabInfo) {
+      this.tabInfo = new tabs.Tab({
+        id: 'info'
+      })
+      this.tools.add(this.tabInfo)
+
+      this.tabInfo.header.innerHTML = '<i class="fa fa-info-circle" aria-hidden="true"></i>'
+      this.tabInfo.header.title = lang('category-info-tooltip')
+      this.domInfo = this.tabInfo.content
+      this.domInfo.classList.add('info')
+
+      this.templateInfo = OverpassLayer.twig.twig({ data: this.data.info, autoescape: true })
+    }
+
+    this.updateInfo()
+  }
+}
+
+CategoryOverpass.prototype.updateInfo = function () {
+  if (!this.tabInfo) {
+    return
+  }
+
+  global.currentCategory = this
+  var data = JSON.parse(JSON.stringify(this.data))
+  data.map = { zoom: map.getZoom() }
+  this.domInfo.innerHTML = this.templateInfo.render(data)
+  global.currentCategory = null
 }
 
 CategoryOverpass.prototype.recalc = function () {
