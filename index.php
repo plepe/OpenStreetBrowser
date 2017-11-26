@@ -38,6 +38,7 @@ html_export_var(array(
   <link rel="stylesheet" href="node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
   <script src="node_modules/leaflet/dist/leaflet.js"></script>
   <script src="node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
+  <script src="node_modules/leaflet-textpath/leaflet.textpath.js"></script>
   <?php print modulekit_to_javascript(); /* pass modulekit configuration to JavaScript */ ?>
   <?php print modulekit_include_js(); /* prints all js-includes */ ?>
   <?php print modulekit_include_css(); /* prints all css-includes */ ?>
