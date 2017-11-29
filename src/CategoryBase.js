@@ -1,6 +1,6 @@
 /* global lang, ui_lang, options, alert */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
-var tabs = require('./tabs')
+var tabs = require('modulekit-tabs')
 
 function CategoryBase (id, data) {
   this.id = id
@@ -58,9 +58,7 @@ function CategoryBase (id, data) {
     }
   }
 
-  this.tools = new tabs.Tabs()
-  this.dom.appendChild(this.tools.node)
-  this.tools.node.classList.add('tools')
+  this.tools = new tabs.Tabs(this.dom)
 
   this.domContent = document.createElement('div')
   this.domContent.className = 'content'

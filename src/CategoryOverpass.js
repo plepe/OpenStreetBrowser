@@ -3,7 +3,7 @@ var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var CategoryBase = require('./CategoryBase')
 var state = require('./state')
-var tabs = require('./tabs')
+var tabs = require('modulekit-tabs')
 var markers = require('./markers')
 var defaultValues = {
   feature: {
