@@ -27,13 +27,14 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify src/index.js -o dist/openstreetbrowser.js",
-    "watch": "watchify --debug src/index.js -o dist/openstreetbrowser.js -v",
+    "build": "browserify -g browserify-css src/index.js -o dist/openstreetbrowser.js",
+    "watch": "watchify --debug -g browserify-css src/index.js -o dist/openstreetbrowser.js -v",
     "prepublish": "npm run build",
     "lint": "standard src/*.js"
   },
   "devDependencies": {
     "browserify": "^14.4.0",
+    "browserify-css": "^0.14.0",
     "standard": "^10.0.2",
     "watchify": "^3.9.0"
   },

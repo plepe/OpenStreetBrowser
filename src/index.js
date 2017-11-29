@@ -1,5 +1,7 @@
 /* globals map:true, overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true */
 
+require('./category.css')
+
 var LeafletGeoSearch = require('leaflet-geosearch')
 
 var OverpassFrontend = require('overpass-frontend')
