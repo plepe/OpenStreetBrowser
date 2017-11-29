@@ -56,7 +56,7 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
 
 OpenStreetBrowserLoader.prototype.getTemplate = function (id, callback) {
   if (id in this.templates) {
-    callback(null, this.templates[id])
+    callback.apply(this, this.templates[id])
     return
   }
 
@@ -70,15 +70,15 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, callback) {
   function reqListener (req) {
     if (req.status !== 200) {
       console.log(req)
-      return callback(req.statusText, null)
+      this.templates[id] = [ req.statusText, null ]
+    } else {
+      this.templates[id] = [ null, OverpassLayer.twig.twig({ data: req.responseText, autoescape: true }) ]
     }
 
-    this.templates[id] = OverpassLayer.twig.twig({ data: req.responseText, autoescape: true })
-
-    callback(null, this.templates[id])
+    callback.apply(this, this.templates[id])
 
     this._loadClash[id].forEach(function (c) {
-      c(null, this.templates[id])
+      c.apply(this, this.templates[id])
     }.bind(this))
   }
 
