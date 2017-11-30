@@ -59,6 +59,7 @@ function CategoryBase (id, data) {
   }
 
   this.tools = new tabs.Tabs(this.dom)
+  this.tools.node.classList.add('tools')
 
   this.domContent = document.createElement('div')
   this.domContent.className = 'content'
