@@ -44,6 +44,7 @@ html_export_var(array(
   <?php print modulekit_include_css(); /* prints all css-includes */ ?>
   <?php print_add_html_headers(); /* print additional html headers */ ?>
   <script src="dist/openstreetbrowser.js?<?=$modulekit['version']?>"></script>
+<?php @include "local-head.php" ?>
 </head>
 <body>
   <div id='map'></div>
@@ -66,5 +67,6 @@ html_export_var(array(
   </div>
   <div id='loadingIndicator'>
   </div>
+<?php @include "local-body.php" ?>
 </body>
 </html>
