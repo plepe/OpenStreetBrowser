@@ -16,6 +16,33 @@ if (!preg_match("/^[0-9a-zA-Z_-]+$/", $id)) {
   exit(0);
 }
 
+function newestTimestamp ($path) {
+  $ts = 0;
+  $d = opendir($path);
+  while ($f = readdir($d)) {
+    $t = filemtime("{$path}/{$f}");
+    if ($t > $ts) {
+      $ts = $t;
+    }
+  }
+  closedir($d);
+
+  return $ts;
+}
+
+$cacheDir = null;
+$ts = newestTimestamp($path);
+if (isset($config['cache'])) {
+  $cacheDir = "{$config['cache']}/categories";
+  @mkdir($cacheDir);
+  $cacheTs = filemtime("{$config['cache']}/categories/{$id}.json");
+  if ($cacheTs === $ts) {
+    Header("Content-Type: application/json; charset=utf-8");
+    readfile("{$config['cache']}/categories/{$id}.json");
+    exit(0);
+  }
+}
+
 $data = json_decode(file_get_contents("{$path}/{$id}.json"), true);
 $data = jsonMultilineStringsJoin($data, array('exclude' => array(array('const'))));
 
@@ -38,5 +65,10 @@ function complete (&$data) {
 }
 complete($data);
 
+$ret = json_encode($data, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+
 Header("Content-Type: application/json; charset=utf-8");
-print json_encode($data, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+print $ret;
+
+file_put_contents("{$cacheDir}/{$id}.json", $ret);
+touch("{$cacheDir}/{$id}.json", $ts);
