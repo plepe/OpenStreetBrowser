@@ -32,7 +32,6 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
     }
 
     var data = JSON.parse(req.responseText)
-    data = jsonMultilineStrings.join(data, { exclude: [ [ 'const' ] ] })
 
     this.getCategoryFromData(id, data, function (err, category) {
       if (category) {
@@ -50,7 +49,7 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
 
   var req = new XMLHttpRequest()
   req.addEventListener('load', reqListener.bind(this, req))
-  req.open('GET', config.categoriesDir + '/' + id + '.json?' + config.categoriesRev)
+  req.open('GET', 'categories.php?id=' + id + '&' + config.categoriesRev)
   req.send()
 }
 
