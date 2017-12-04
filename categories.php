@@ -43,8 +43,25 @@ if (isset($config['cache'])) {
   }
 }
 
-$data = json_decode(file_get_contents("{$path}/{$id}.json"), true);
-$data = jsonMultilineStringsJoin($data, array('exclude' => array(array('const'))));
+if (file_exists("{$path}/{$id}.json")) {
+  $data = json_decode(file_get_contents("{$path}/{$id}.json"), true);
+  $data = jsonMultilineStringsJoin($data, array('exclude' => array(array('const'))));
+}
+else {
+  $data = array(
+    'id' => 'index',
+    'type' => 'index',
+    'subCategories' => array(),
+  );
+
+  $d = opendir($path);
+  while ($f = readdir($d)) {
+    if (preg_match("/^([0-9a-zA-Z_\-]+)\.json$/", $f, $m) && $f !== 'package.json') {
+      $data['subCategories'][] = array('id' => $m[1]);
+    }
+  }
+  closedir($d);
+}
 
 function complete (&$data) {
   global $path;
