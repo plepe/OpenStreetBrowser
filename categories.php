@@ -35,10 +35,10 @@ $ts = newestTimestamp($path);
 if (isset($config['cache'])) {
   $cacheDir = "{$config['cache']}/categories";
   @mkdir($cacheDir);
-  $cacheTs = filemtime("{$config['cache']}/categories/{$id}.json");
+  $cacheTs = filemtime("{$cacheDir}/{$id}.json");
   if ($cacheTs === $ts) {
     Header("Content-Type: application/json; charset=utf-8");
-    readfile("{$config['cache']}/categories/{$id}.json");
+    readfile("{$cacheDir}/{$id}.json");
     exit(0);
   }
 }
