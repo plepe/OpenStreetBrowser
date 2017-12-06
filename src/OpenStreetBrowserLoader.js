@@ -89,6 +89,11 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, callback) {
 }
 
 OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, data, callback) {
+  if (id in this.categories) {
+    callback(null, this.categories[id])
+    return
+  }
+
   if (!data.type) {
     return callback(new Error('no type defined'), null)
   }
