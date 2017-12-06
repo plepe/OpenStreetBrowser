@@ -4,6 +4,7 @@ var jsonMultilineStrings = require('json-multiline-strings')
 function OpenStreetBrowserLoader () {
   this.types = {}
   this.categories = {}
+  this.repoCache = {}
   this.templates = {}
   this._loadClash = {} // if a category is being loaded multiple times, collect callbacks
 }
@@ -18,12 +19,25 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
     return
   }
 
-  if (id in this._loadClash) {
-    this._loadClash[id].push(callback)
+  var repo = 'default'
+
+  if (repo in this.repoCache) {
+    this.getCategoryFromData(id, this.repoCache[repo][id], function (err, category) {
+      if (category) {
+        category.setMap(this.map)
+      }
+
+      callback(err, category)
+    })
     return
   }
 
-  this._loadClash[id] = []
+  if (repo in this._loadClash) {
+    this._loadClash[repo].push([ id, callback ])
+    return
+  }
+
+  this._loadClash[repo] = [ [ id, callback ] ]
 
   function reqListener (req) {
     if (req.status !== 200) {
@@ -31,25 +45,32 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
       return callback(req.statusText, null)
     }
 
-    var data = JSON.parse(req.responseText)
+    this.repoCache[repo] = JSON.parse(req.responseText)
 
-    this.getCategoryFromData(id, data, function (err, category) {
-      if (category) {
-        category.setMap(this.map)
+    var todo = this._loadClash[repo]
+    delete this._loadClash[repo]
+
+    todo.forEach(function (c) {
+      var id = c[0]
+      var callback = c[1]
+
+      if (id in this.categories) {
+        callback(null, this.categories[id])
+      } else {
+        this.getCategoryFromData(id, this.repoCache[repo][id], function (err, category) {
+          if (category) {
+            category.setMap(this.map)
+          }
+
+          callback(err, category)
+        })
       }
-
-      callback(err, category)
-
-      this._loadClash[id].forEach(function (c) {
-        c(err, category)
-      })
-      delete this._loadClash[id]
     }.bind(this))
   }
 
   var req = new XMLHttpRequest()
   req.addEventListener('load', reqListener.bind(this, req))
-  req.open('GET', 'categories.php?id=' + id + '&' + config.categoriesRev)
+  req.open('GET', 'repo.php?repo=' + repo + '&' + config.categoriesRev)
   req.send()
 }
 
