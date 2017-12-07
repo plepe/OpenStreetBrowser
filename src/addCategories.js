@@ -14,6 +14,36 @@ function addCategoriesShow (repo) {
   document.getElementById('content').className = 'addCategories'
 
   OpenStreetBrowserLoader.getRepo(repo, {}, function (err, repoData) {
+    while(content.firstChild)
+      content.removeChild(content.firstChild)
+
+    var backLink = document.createElement('a')
+    backLink.className = 'back'
+    backLink.href = '#'
+    backLink.appendChild(document.createTextNode(lang('back')))
+
+    if (repo) {
+      backLink.onclick = function () {
+        addCategoriesShow()
+        return false
+      }
+      content.appendChild(backLink)
+
+      var h = document.createElement('h2')
+      h.appendChild(document.createTextNode(repo))
+      content.appendChild(h)
+    } else {
+      backLink.onclick = function () {
+        addCategoriesHide()
+        return false
+      }
+      content.appendChild(backLink)
+
+      var h = document.createElement('h2')
+      h.innerHTML = lang('more_categories')
+      content.appendChild(h)
+    }
+
     var ul = document.createElement('ul')
 
     for (var id in repoData) {
@@ -41,9 +71,6 @@ function addCategoriesShow (repo) {
 
       ul.appendChild(li)
     }
-
-    while(content.firstChild)
-      content.removeChild(content.firstChild)
 
     content.appendChild(ul)
   })
