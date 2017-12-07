@@ -25,29 +25,49 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
   }
 
   if (id in this.categories) {
-    callback(null, this.categories[id])
-    return
+    return callback(null, this.categories[id])
   }
 
-  var repo = 'default'
+  this.getRepo(repo, options, function (err, repoData) {
+    // maybe loaded in the meantime?
+    if (id in this.categories) {
+      return callback(null, this.categories[id])
+    }
 
-  if (repo in this.repoCache) {
-    this.getCategoryFromData(id, this.repoCache[repo][id], function (err, category) {
+    if (err) {
+      return callback(err, null)
+    }
+
+    if (!(id in repoData)) {
+      return callback(new Error('category not defined'), null)
+    }
+
+    this.getCategoryFromData(id, repoData[id], function (err, category) {
       if (category) {
         category.setMap(this.map)
       }
 
       callback(err, category)
-    })
-    return
+    }.bind(this))
+  }.bind(this))
+}
+
+/**
+ * @param string repo ID of the repository
+ * @parapm [object] options Options.
+ * @param function callback Callback which will be called with (err, repoData)
+ */
+OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
+  if (repo in this.repoCache) {
+    return callback(null, this.repoCache[repo])
   }
 
   if (repo in this._loadClash) {
-    this._loadClash[repo].push([ id, callback ])
+    this._loadClash[repo].push(callback)
     return
   }
 
-  this._loadClash[repo] = [ [ id, callback ] ]
+  this._loadClash[repo] = [ callback ]
 
   function reqListener (req) {
     if (req.status !== 200) {
@@ -60,21 +80,8 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
     var todo = this._loadClash[repo]
     delete this._loadClash[repo]
 
-    todo.forEach(function (c) {
-      var id = c[0]
-      var callback = c[1]
-
-      if (id in this.categories) {
-        callback(null, this.categories[id])
-      } else {
-        this.getCategoryFromData(id, this.repoCache[repo][id], function (err, category) {
-          if (category) {
-            category.setMap(this.map)
-          }
-
-          callback(err, category)
-        })
-      }
+    todo.forEach(function (callback) {
+      callback(null, this.repoCache[repo])
     }.bind(this))
   }
 
