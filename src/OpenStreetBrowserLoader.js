@@ -96,9 +96,16 @@ OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
     }.bind(this))
   }
 
+  var param = []
+  if (repo) {
+    param.push('repo=' + encodeURIComponent(repo))
+  }
+  param.push(config.categoriesRev)
+  param = param.length ? '?' + param.join('&') : ''
+
   var req = new XMLHttpRequest()
   req.addEventListener('load', reqListener.bind(this, req))
-  req.open('GET', 'repo.php?repo=' + repo + '&' + config.categoriesRev)
+  req.open('GET', 'repo.php' + param)
   req.send()
 }
 
