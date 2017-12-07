@@ -24,6 +24,17 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
     options = {}
   }
 
+  var repo
+  var categoryId
+  var m
+  if (m = id.match(/^(.*)\.([^\.]*)/)) {
+    repo = m[1]
+    categoryId = m[2]
+  } else {
+    repo = 'default'
+    categoryId = id
+  }
+
   if (id in this.categories) {
     return callback(null, this.categories[id])
   }
@@ -38,11 +49,11 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
       return callback(err, null)
     }
 
-    if (!(id in repoData)) {
+    if (!(categoryId in repoData)) {
       return callback(new Error('category not defined'), null)
     }
 
-    this.getCategoryFromData(id, repoData[id], function (err, category) {
+    this.getCategoryFromData(id, repoData[categoryId], function (err, category) {
       if (category) {
         category.setMap(this.map)
       }

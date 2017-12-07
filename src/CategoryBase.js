@@ -13,6 +13,12 @@ function CategoryBase (id, data) {
   var name
   var a
 
+  this.repoId = null
+  var m
+  if (m = this.id.match(/^(.+)\.([^\.]+)$/)) {
+    this.repoId = m[1]
+  }
+
   if (this.id !== 'index') {
     var domHeader = document.createElement('header')
     this.dom.appendChild(domHeader)
