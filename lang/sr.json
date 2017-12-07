@@ -1,6 +1,7 @@
 {
     "main:options": "Опције",
     "more": "још",
+    "more_categories": "Више категорија",
     "options:data_lang": "Језик подетака",
     "options:data_lang:local": "Локални језик",
     "options:ui_lang": "Језик интерфејса",
