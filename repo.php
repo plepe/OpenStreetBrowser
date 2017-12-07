@@ -13,9 +13,29 @@ if (!isset($repositories)) {
   );
 }
 
-if (isset($_REQUEST['repo'])) {
-  $repo = $_REQUEST['repo'];
+if (!isset($_REQUEST['repo'])) {
+  Header("Content-Type: application/json; charset=utf-8");
+  print '{';
+
+  $c = 0;
+  foreach ($repositories as $repoId => $repoData) {
+    print $c++ ? ',' : '';
+    $d = array();
+    foreach (array('name') as $k) {
+      if (array_key_exists($k, $repoData)) {
+        $d[$k] = $repoData[$k];
+      }
+    }
+
+    print json_encode($repoId) . ':';
+    print json_encode($d, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_FORCE_OBJECT);
+  }
+
+  print '}';
+  exit(0);
 }
+
+$repo = $_REQUEST['repo'];
 
 if (!array_key_exists($repo, $repositories)) {
   Header("HTTP/1.1 404 Repository not found");
