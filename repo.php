@@ -5,8 +5,24 @@
 <?php include "node_modules/json-multiline-strings/src/json-multiline-strings.php"; ?>
 <?php call_hooks("init"); /* initialize submodules */ ?>
 <?php
-$path = $config['categoriesDir'];
-$repo = 'default';
+if (!isset($repositories)) {
+  $repositories = array(
+    'default' => array(
+      'path' => $config['categoriesDir'],
+    ),
+  );
+}
+
+if (isset($_REQUEST['repo'])) {
+  $repo = $_REQUEST['repo'];
+}
+
+if (!array_key_exists($repo, $repositories)) {
+  Header("HTTP/1.1 404 Repository not found");
+  exit(0);
+}
+
+$path = $repositories[$repo]['path'];
 
 function newestTimestamp ($path) {
   $ts = 0;
