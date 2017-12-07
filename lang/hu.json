@@ -1,6 +1,7 @@
 {
     "main:options": "Beállítások",
     "more": "több",
+    "more_categories": "Több kategória",
     "options:data_lang": "Adatnyelv",
     "options:data_lang:local": "Helyi nyelv",
     "options:ui_lang": "Menünyelv",

@@ -30,6 +30,7 @@ require('./markers')
 require('./categories')
 require('./wikipedia')
 require('./image')
+require('./addCategories')
 
 window.onload = function () {
   initState = config.defaultView

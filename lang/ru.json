@@ -1,6 +1,7 @@
 {
     "main:options": "Настройки",
     "more": "Ещё",
+    "more_categories": "Больше категорий",
     "options:data_lang": "Язык информации на карте",
     "options:data_lang:local": "Определить язык автоматически",
     "options:ui_lang": "Язык интерфейса",

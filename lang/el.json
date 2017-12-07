@@ -1,6 +1,7 @@
 {
     "main:options": "Επιλογές",
     "more": "περισσότερα",
+    "more_categories": "Περισσότερες κατηγορίες",
     "options:data_lang": "Γλωσσα δεδομένων",
     "options:data_lang:local": "Τοπική γλώσσα",
     "options:ui_lang": "Γλώσσα διεπαφής",
