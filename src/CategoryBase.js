@@ -41,6 +41,13 @@ function CategoryBase (id, data) {
     a.onclick = this.toggle.bind(this)
     domHeader.appendChild(a)
 
+    if (this.repoId) {
+      a = document.createElement('span')
+      a.className = 'repoId'
+      a.appendChild(document.createTextNode(this.repoId))
+      domHeader.appendChild(a)
+    }
+
     if (options.debug) {
       a = document.createElement('a')
       a.appendChild(document.createTextNode('⟳'))

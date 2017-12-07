@@ -69,6 +69,12 @@
   user-select: none;
   font-size: 15px;
 }
+.category header > span.repoId {
+  margin-left: 0.2em;
+  font-size: 10px;
+  line-height: 10px;
+  color: #7f7f7f;
+}
 .category header > a {
   text-decoration: none;
   color: black;
