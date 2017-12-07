@@ -13,7 +13,17 @@ OpenStreetBrowserLoader.prototype.setMap = function (map) {
   this.map = map
 }
 
-OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
+/**
+ * @param string id ID of the category
+ * @parapm [object] options Options.
+ * @param function callback Callback which will be called with (err, category)
+ */
+OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback) {
+  if (typeof options === 'function') {
+    callback = options
+    options = {}
+  }
+
   if (id in this.categories) {
     callback(null, this.categories[id])
     return
@@ -74,7 +84,17 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, callback) {
   req.send()
 }
 
-OpenStreetBrowserLoader.prototype.getTemplate = function (id, callback) {
+/**
+ * @param string id ID of the template
+ * @parapm [object] options Options.
+ * @param function callback Callback which will be called with (err, template)
+ */
+OpenStreetBrowserLoader.prototype.getTemplate = function (id, options, callback) {
+  if (typeof options === 'function') {
+    callback = options
+    options = {}
+  }
+
   if (id in this.templates) {
     callback.apply(this, this.templates[id])
     return
