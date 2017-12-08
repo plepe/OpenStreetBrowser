@@ -5,6 +5,9 @@ $config['categoriesDir'] = 'node_modules/openstreetbrowser-categories-main';
 // Set to true to reload categories on every page visit.
 $config['categoriesAlwaysReload'] = true;
 
+// (optional) URL, which points to the OpenStreetBrowser Editor
+#$config['urlCategoriesEditor'] = 'editor/';
+
 // URL of the Overpass API
 $config['overpassUrl'] = array(
   '//overpass-api.de/api/interpreter',
