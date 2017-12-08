@@ -67,7 +67,18 @@ function addCategoriesShow (repo) {
 
       li.appendChild(a)
       a.appendChild(document.createTextNode('name' in data ? lang(data.name) : id))
-      li.appendChild(a)
+
+      if (config.urlCategoriesEditor) {
+        a = document.createElement('a')
+        if (repo) {
+          a.href = config.urlCategoriesEditor + '?id=' + repo + '.' + id
+        } else {
+          a.href = config.urlCategoriesEditor + '?repo=' + id
+        }
+        a.target = '_blank'
+        a.innerHTML = '<img src="img/edit.png"/>'
+        li.appendChild(a)
+      }
 
       ul.appendChild(li)
     }
