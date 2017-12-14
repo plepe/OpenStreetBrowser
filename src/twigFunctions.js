@@ -38,7 +38,7 @@ OverpassLayer.twig.extendFilter('websiteUrl', function (value) {
   return 'http://' + value
 })
 OverpassLayer.twig.extendFilter('matches', function (value, match) {
-  return value.match(match)
+  return value.toString().match(match)
 })
 OverpassLayer.twig.extendFunction('colorInterpolate', function (map, value) {
   var colormap = colorInterpolate(map)
