@@ -1,6 +1,7 @@
 var OverpassLayer = require('overpass-layer')
 var OpeningHours = require('opening_hours')
 var colorInterpolate = require('color-interpolate')
+var osmParseDate = require('openstreetmap-date-parser')
 
 OverpassLayer.twig.extendFunction('tagsPrefix', function (tags, prefix) {
   var ret = {}
@@ -43,6 +44,9 @@ OverpassLayer.twig.extendFilter('matches', function (value, match) {
 OverpassLayer.twig.extendFunction('colorInterpolate', function (map, value) {
   var colormap = colorInterpolate(map)
   return colormap(value)
+})
+OverpassLayer.twig.extendFilter('osmParseDate', function (value) {
+  return osmParseDate(value)
 })
 OverpassLayer.twig.extendFunction('evaluate', function (tags) {
   var ob = {
