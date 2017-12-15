@@ -86,10 +86,19 @@ function CategoryOverpass (id, data) {
     // HOVER
     if (ob.listItem) {
       ob.listItem.onmouseover = function (id) {
+        if (this.currentHover) {
+          this.layer.hide(this.currentHover)
+        }
+
         this.layer.show(id, { styles: [ 'hover' ] }, function () {})
+        this.currentHover = id
       }.bind(this, ob.id)
       ob.listItem.onmouseout = function (id) {
-        this.layer.hide(id)
+        if (this.currentHover) {
+          this.currentHover = null
+          this.layer.hide(id)
+        }
+
       }.bind(this, ob.id)
     }
   }.bind(this)
