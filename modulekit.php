@@ -16,6 +16,7 @@ $include = array(
     'src/ip-location.php',
     'src/wikipedia.php',
     'src/ImageLoader.php',
+    'src/RepositoryDir.php',
   ),
   'css' => array(
     'style.css',
