@@ -17,6 +17,7 @@ $include = array(
     'src/wikipedia.php',
     'src/ImageLoader.php',
     'src/RepositoryDir.php',
+    'src/RepositoryGit.php',
   ),
   'css' => array(
     'style.css',
