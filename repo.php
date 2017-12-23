@@ -13,13 +13,22 @@ if (!isset($repositories)) {
   );
 }
 
+function getRepo ($repoId, $repoData) {
+  switch (array_key_exists('type', $repoData) ? $repoData['type'] : 'dir') {
+    default:
+      $repo = new RepositoryDir($repoId, $repoData);
+  }
+
+  return $repo;
+}
+
 if (!isset($_REQUEST['repo'])) {
   Header("Content-Type: application/json; charset=utf-8");
   print '{';
 
   $c = 0;
   foreach ($repositories as $repoId => $repoData) {
-    $repo = new RepositoryDir($repoId, $repoData);
+    $repo = getRepo($repoId, $repoData);
 
     print $c++ ? ',' : '';
     print json_encode($repoId) . ':';
@@ -36,7 +45,7 @@ if (!array_key_exists($repoId, $repositories)) {
   exit(0);
 }
 
-$repo = new RepositoryDir($repoId, $repositories[$repoId]);
+$repo = getRepo($repoId, $repositories[$repoId]);
 
 $cacheDir = null;
 $ts = $repo->newestTimestamp($path);
