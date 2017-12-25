@@ -53,7 +53,7 @@ function addCategoriesShow (repo) {
 
       var a = document.createElement('a')
       if (repo) {
-        a.href = '#categories=' + repo + '.' + id
+        a.href = '#categories=' + repo + '/' + id
         a.onclick = function () {
           addCategoriesHide()
         }
@@ -71,7 +71,7 @@ function addCategoriesShow (repo) {
       if (config.urlCategoriesEditor) {
         a = document.createElement('a')
         if (repo) {
-          a.href = config.urlCategoriesEditor + '?id=' + repo + '.' + id
+          a.href = config.urlCategoriesEditor + '?id=' + repo + '/' + id
         } else {
           a.href = config.urlCategoriesEditor + '?repo=' + id
         }

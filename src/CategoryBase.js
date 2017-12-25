@@ -15,7 +15,7 @@ function CategoryBase (id, data) {
 
   this.repoId = null
   var m
-  if (m = this.id.match(/^(.+)\.([^\.]+)$/)) {
+  if (m = this.id.match(/^(.+)\/([^\/]+)$/)) {
     this.repoId = m[1]
   }
 

@@ -23,8 +23,8 @@ function getRepositories () {
           if (substr($f2, 0, 1) !== '.') {
             $f2id = substr($f2, 0, -4);
 
-            $repositories["{$f1}.{$f2id}"] = array(
-              'path' => "{$p}/{$f1}/{$f2}",
+            $repositories["{$f1}/{$f2id}"] = array(
+              'path' => "{$config['repositories_gitea']}/{$f1}/{$f2}",
               'type' => 'git',
             );
           }
