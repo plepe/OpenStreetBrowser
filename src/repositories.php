@@ -14,6 +14,27 @@ function getRepositories () {
     );
   }
 
+  if (isset($config['repositories_gitea'])) {
+    $d1 = opendir($config['repositories_gitea']);
+    while ($f1 = readdir($d1)) {
+      if (substr($f1, 0, 1) !== '.') {
+        $d2 = opendir("{$config['repositories_gitea']}/{$f1}");
+        while ($f2 = readdir($d2)) {
+          if (substr($f2, 0, 1) !== '.') {
+            $f2id = substr($f2, 0, -4);
+
+            $repositories["{$f1}.{$f2id}"] = array(
+              'path' => "{$p}/{$f1}/{$f2}",
+              'type' => 'git',
+            );
+          }
+        }
+        closedir($d2);
+      }
+    }
+    closedir($d1);
+  }
+
   return $repositories;
 }
 

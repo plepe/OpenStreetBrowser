@@ -7,6 +7,9 @@ $config['repositories'] = array(
   ),
 );
 
+// Repositories which should be included from gitea
+$config['repositories_gitea'] = "/home/gitea/gitea-repositories";
+
 // Set to true to reload categories on every page visit.
 $config['categoriesAlwaysReload'] = true;
 
