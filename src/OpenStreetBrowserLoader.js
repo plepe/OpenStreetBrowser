@@ -27,7 +27,7 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
   var repo
   var categoryId
   var m
-  if (m = id.match(/^(.*)\.([^\.]*)/)) {
+  if (m = id.match(/^(.*)\/([^\/]*)/)) {
     repo = m[1]
     categoryId = m[2]
   } else {

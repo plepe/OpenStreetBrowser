@@ -16,7 +16,7 @@ if (!isset($_REQUEST['repo'])) {
     $repo = getRepo($repoId, $repoData);
 
     print $c++ ? ',' : '';
-    print json_encode($repoId) . ':';
+    print json_encode($repoId, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) . ':';
     print json_encode($repo->info(), JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_FORCE_OBJECT);
   }
 

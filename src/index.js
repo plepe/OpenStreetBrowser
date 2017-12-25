@@ -173,15 +173,17 @@ function show (id, options, callback) {
     document.getElementById('contentDetails').innerHTML = 'Loading ...'
   }
 
-  id = id.split('/')
-
-  if (id.length < 2) {
+  var m = id.match(/^(.*)\/([nwr]\d+)(\/details)?$/)
+  if (!m) {
     return callback(new Error('unknown request'))
   }
 
-  OpenStreetBrowserLoader.getCategory(id[0], function (err, category) {
+  var categoryId = m[1]
+  var featureId = m[2]
+
+  OpenStreetBrowserLoader.getCategory(categoryId, function (err, category) {
     if (err) {
-      return callback(new Error('error loading category "' + id[0] + '": ' + err))
+      return callback(new Error('error loading category "' + categoryId + '": ' + err))
     }
 
     if (!category.parentDom) {
@@ -189,12 +191,12 @@ function show (id, options, callback) {
     }
 
     category.show(
-      id[1],
+      featureId,
       {
       },
       function (err, data) {
         if (err) {
-          return callback(new Error('error loading object "' + id[0] + '/' + id[1] + '": ' + err))
+          return callback(new Error('error loading object "' + categoryId + '/' + featureId + '": ' + err))
         }
 
         if (!map._popup || map._popup !== data.popup) {
