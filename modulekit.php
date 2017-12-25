@@ -18,6 +18,7 @@ $include = array(
     'src/ImageLoader.php',
     'src/RepositoryDir.php',
     'src/RepositoryGit.php',
+    'src/repositories.php',
   ),
   'css' => array(
     'style.css',

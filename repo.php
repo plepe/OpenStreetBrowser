@@ -5,32 +5,14 @@
 <?php include "node_modules/json-multiline-strings/src/json-multiline-strings.php"; ?>
 <?php call_hooks("init"); /* initialize submodules */ ?>
 <?php
-if (!isset($repositories)) {
-  $repositories = array(
-    'default' => array(
-      'path' => $config['categoriesDir'],
-    ),
-  );
-}
-
-function getRepo ($repoId, $repoData) {
-  switch (array_key_exists('type', $repoData) ? $repoData['type'] : 'dir') {
-    case 'git':
-      $repo = new RepositoryGit($repoId, $repoData);
-      break;
-    default:
-      $repo = new RepositoryDir($repoId, $repoData);
-  }
-
-  return $repo;
-}
+$allRepositories = getRepositories();
 
 if (!isset($_REQUEST['repo'])) {
   Header("Content-Type: application/json; charset=utf-8");
   print '{';
 
   $c = 0;
-  foreach ($repositories as $repoId => $repoData) {
+  foreach (getRepositories() as $repoId => $repoData) {
     $repo = getRepo($repoId, $repoData);
 
     print $c++ ? ',' : '';
@@ -43,12 +25,12 @@ if (!isset($_REQUEST['repo'])) {
 }
 
 $repoId = $_REQUEST['repo'];
-if (!array_key_exists($repoId, $repositories)) {
+if (!array_key_exists($repoId, $allRepositories)) {
   Header("HTTP/1.1 404 Repository not found");
   exit(0);
 }
 
-$repo = getRepo($repoId, $repositories[$repoId]);
+$repo = getRepo($repoId, $allRepositories[$repoId]);
 
 $cacheDir = null;
 $ts = $repo->newestTimestamp($path);
