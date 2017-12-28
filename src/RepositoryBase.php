@@ -29,4 +29,12 @@ class RepositoryBase {
       'timestamp' => Date(DATE_ISO8601, $this->timestamp()),
     );
   }
+
+  function isCategory ($data) {
+    if (!array_key_exists('type', $data)) {
+      return false;
+    }
+
+    return in_array($data['type'], array('index', 'overpass'));
+  }
 }

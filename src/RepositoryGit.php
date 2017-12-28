@@ -20,6 +20,11 @@ class RepositoryGit extends RepositoryBase {
         }
 
         $d1 = json_decode(shell_exec("cd " . escapeShellArg($this->path) . "; git show HEAD:" . escapeShellArg($f)), true);
+
+	if (!$this->isCategory($d1)) {
+	  continue;
+	}
+
         $data['categories'][$id] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'))));
       }
     }
