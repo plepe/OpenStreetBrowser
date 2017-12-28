@@ -20,12 +20,6 @@ function CategoryBase (options, data) {
   var name
   var a
 
-  this.repoId = null
-  var m
-  if (m = this.id.match(/^(.+)\/([^\/]+)$/)) {
-    this.repoId = m[1]
-  }
-
   if (this.id !== 'index') {
     var domHeader = document.createElement('header')
     this.dom.appendChild(domHeader)
@@ -48,10 +42,10 @@ function CategoryBase (options, data) {
     a.onclick = this.toggle.bind(this)
     domHeader.appendChild(a)
 
-    if (this.repoId) {
+    if (this.options.repositoryId !== 'default') {
       a = document.createElement('span')
       a.className = 'repoId'
-      a.appendChild(document.createTextNode(this.repoId))
+      a.appendChild(document.createTextNode(this.options.repositoryId))
       domHeader.appendChild(a)
     }
 
