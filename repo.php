@@ -33,7 +33,7 @@ if (!array_key_exists($repoId, $allRepositories)) {
 $repo = getRepo($repoId, $allRepositories[$repoId]);
 
 $cacheDir = null;
-$ts = $repo->newestTimestamp($path);
+$ts = $repo->timestamp($path);
 if (isset($config['cache'])) {
   $cacheDir = "{$config['cache']}/repo";
   @mkdir($cacheDir);

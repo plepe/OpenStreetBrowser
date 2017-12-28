@@ -14,10 +14,12 @@ class RepositoryDir {
       }
     }
 
+    $ret['timestamp'] = Date(DATE_ISO8601, $this->timestamp());
+
     return $ret;
   }
 
-  function newestTimestamp () {
+  function timestamp () {
     $ts = 0;
     $d = opendir($this->path);
     while ($f = readdir($d)) {

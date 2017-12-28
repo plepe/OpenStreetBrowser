@@ -14,10 +14,12 @@ class RepositoryGit {
       }
     }
 
+    $ret['timestamp'] = Date(DATE_ISO8601, $this->timestamp());
+
     return $ret;
   }
 
-  function newestTimestamp () {
+  function timestamp () {
     $ts = (int)shell_exec("cd " . escapeShellArg($this->path) . "; git log -1 --pretty=format:%ct");
 
     return $ts;
