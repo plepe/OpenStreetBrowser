@@ -1,24 +1,5 @@
 <?php
-class RepositoryGit {
-  function __construct ($id, $def) {
-    $this->def = $def;
-    $this->path = $def['path'];
-  }
-
-  function info () {
-    $ret = array();
-
-    foreach (array('name') as $k) {
-      if (array_key_exists($k, $this->def)) {
-        $ret[$k] = $this->def[$k];
-      }
-    }
-
-    $ret['timestamp'] = Date(DATE_ISO8601, $this->timestamp());
-
-    return $ret;
-  }
-
+class RepositoryGit extends RepositoryBase {
   function timestamp () {
     $ts = (int)shell_exec("cd " . escapeShellArg($this->path) . "; git log -1 --pretty=format:%ct");
 
@@ -26,10 +7,7 @@ class RepositoryGit {
   }
 
   function data () {
-    $data = array(
-      'categories' => array(),
-      'timestamp' => Date(DATE_ISO8601, $this->timestamp()),
-    );
+    $data = parent::data();
 
     $d = popen("cd " . escapeShellArg($this->path) . "; git ls-tree HEAD", "r");
     while ($r = fgets($d)) {

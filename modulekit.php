@@ -16,6 +16,7 @@ $include = array(
     'src/ip-location.php',
     'src/wikipedia.php',
     'src/ImageLoader.php',
+    'src/RepositoryBase.php',
     'src/RepositoryDir.php',
     'src/RepositoryGit.php',
     'src/repositories.php',

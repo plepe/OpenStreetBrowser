@@ -1,24 +1,5 @@
 <?php
-class RepositoryDir {
-  function __construct ($id, $def) {
-    $this->def = $def;
-    $this->path = $def['path'];
-  }
-
-  function info () {
-    $ret = array();
-
-    foreach (array('name') as $k) {
-      if (array_key_exists($k, $this->def)) {
-        $ret[$k] = $this->def[$k];
-      }
-    }
-
-    $ret['timestamp'] = Date(DATE_ISO8601, $this->timestamp());
-
-    return $ret;
-  }
-
+class RepositoryDir extends RepositoryBase {
   function timestamp () {
     $ts = 0;
     $d = opendir($this->path);
@@ -34,10 +15,7 @@ class RepositoryDir {
   }
 
   function data () {
-    $data = array(
-      'categories' => array(),
-      'timestamp' => Date(DATE_ISO8601, $this->timestamp()),
-    );
+    $data = parent::data();
 
     $d = opendir($this->path);
     while ($f = readdir($d)) {
