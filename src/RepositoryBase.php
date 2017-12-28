@@ -28,6 +28,8 @@ class RepositoryBase {
       'categories' => array(),
       'timestamp' => Date(DATE_ISO8601, $this->timestamp()),
     );
+
+    return $data;
   }
 
   function isCategory ($data) {
