@@ -26,6 +26,7 @@ class RepositoryBase {
   function data () {
     $data = array(
       'categories' => array(),
+      'templates' => array(),
       'timestamp' => Date(DATE_ISO8601, $this->timestamp()),
     );
 

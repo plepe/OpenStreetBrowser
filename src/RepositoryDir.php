@@ -28,6 +28,10 @@ class RepositoryDir extends RepositoryBase {
 
         $data['categories'][$m[1]] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'))));
       }
+
+      if (preg_match("/^(detailsBody|popupBody).html$/", $f, $m)) {
+	$data['templates'][$m[1]] = file_get_contents("{$this->path}/{$f}");
+      }
     }
     closedir($d);
 
