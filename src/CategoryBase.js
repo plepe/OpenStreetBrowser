@@ -2,8 +2,15 @@
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var tabs = require('modulekit-tabs')
 
-function CategoryBase (id, data) {
-  this.id = id
+function CategoryBase (options, data) {
+  if (typeof options === 'string') {
+    this.id = options
+    this.options = {}
+  }
+  else {
+    this.id = options.id
+    this.options = options
+  }
   this.parentCategory = null
   this.childrenLoadingCount = 0
   this.data = data

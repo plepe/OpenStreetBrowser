@@ -31,18 +31,23 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
     repo = m[1]
     categoryId = m[2]
   } else {
-    repo = 'default'
+    repo = options.repositoryId || 'default'
     categoryId = id
   }
+  var fullId = repo + '/' + categoryId
 
-  if (id in this.categories) {
-    return callback(null, this.categories[id])
+  if (fullId in this.categories) {
+    return callback(null, this.categories[fullId])
   }
 
-  this.getRepo(repo, options, function (err, repoData) {
+  var opt = JSON.parse(JSON.stringify(options))
+  opt.categoryId = categoryId
+  opt.repositoryId = repo
+
+  this.getRepo(repo, opt, function (err, repoData) {
     // maybe loaded in the meantime?
-    if (id in this.categories) {
-      return callback(null, this.categories[id])
+    if (fullId in this.categories) {
+      return callback(null, this.categories[fullId])
     }
 
     if (err) {
@@ -53,7 +58,7 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
       return callback(new Error('category not defined'), null)
     }
 
-    this.getCategoryFromData(id, repoData.categories[categoryId], function (err, category) {
+    this.getCategoryFromData(id, opt, repoData.categories[categoryId], function (err, category) {
       if (category) {
         category.setMap(this.map)
       }
@@ -127,19 +132,23 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, options, callback)
     repo = m[1]
     templateId = m[2]
   } else {
-    repo = 'default'
+    repo = options.repositoryId || 'default'
     templateId = id
   }
+  var fullId = repo + '/' + templateId
 
-  if (id in this.templates) {
-    callback.apply(this, this.templates[id])
-    return
+  if (fullId in this.templates) {
+    return callback(null, this.templates[fullId])
   }
 
-  this.getRepo(repo, options, function (err, repoData) {
+  var opt = JSON.parse(JSON.stringify(options))
+  opt.templateId = templateId
+  opt.repositoryId = repo
+
+  this.getRepo(repo, opt, function (err, repoData) {
     // maybe loaded in the meantime?
-    if (id in this.templates) {
-      return callback(null, this.templates[id])
+    if (fullId in this.templates) {
+      return callback(null, this.templates[fullId])
     }
 
     if (err) {
@@ -156,7 +165,7 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, options, callback)
   }.bind(this))
 }
 
-OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, data, callback) {
+OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, options, data, callback) {
   if (id in this.categories) {
     callback(null, this.categories[id])
     return
@@ -170,7 +179,9 @@ OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, data, call
     return callback(new Error('unknown type'), null)
   }
 
-  var layer = new this.types[data.type](id, data)
+  var opt = JSON.parse(JSON.stringify(options))
+  opt.id = id
+  var layer = new this.types[data.type](opt, data)
 
   layer.setMap(this.map)
 
