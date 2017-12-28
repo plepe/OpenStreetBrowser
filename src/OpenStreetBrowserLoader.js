@@ -30,8 +30,12 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
   if (m = id.match(/^(.*)\/([^\/]*)/)) {
     repo = m[1]
     categoryId = m[2]
+  } else if (options.repositoryId && options.repositoryId !== 'default') {
+    repo = options.repositoryId
+    categoryId = id
+    id = repo + '/' + id
   } else {
-    repo = options.repositoryId || 'default'
+    repo = 'default'
     categoryId = id
   }
   var fullId = repo + '/' + categoryId
@@ -131,6 +135,10 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, options, callback)
   if (m = id.match(/^(.*)\/([^\/]*)/)) {
     repo = m[1]
     templateId = m[2]
+  } else if (options.repositoryId && options.repositoryId !== 'default') {
+    repo = options.repositoryId
+    templateId = id
+    id = repo + '/' + id
   } else {
     repo = options.repositoryId || 'default'
     templateId = id
@@ -166,9 +174,24 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, options, callback)
 }
 
 OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, options, data, callback) {
-  if (id in this.categories) {
-    callback(null, this.categories[id])
-    return
+  var repo
+  var categoryId
+  var m
+  if (m = id.match(/^(.*)\/([^\/]*)/)) {
+    repo = m[1]
+    categoryId = m[2]
+  } else if (options.repositoryId && options.repositoryId !== 'default') {
+    repo = options.repositoryId
+    categoryId = id
+    id = repo + '/' + id
+  } else {
+    repo = 'default'
+    categoryId = id
+  }
+  var fullId = repo + '/' + categoryId
+
+  if (fullId in this.categories) {
+    return callback(null, this.categories[fullId])
   }
 
   if (!data.type) {
