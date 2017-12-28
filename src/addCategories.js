@@ -22,6 +22,11 @@ function addCategoriesShow (repo) {
     backLink.href = '#'
     backLink.appendChild(document.createTextNode(lang('back')))
 
+    var categoryUrl = null
+    if (repoData.categoryUrl) {
+      categoryUrl = OverpassLayer.twig.twig({ data: repoData.categoryUrl, autoescape: true })
+    }
+
     var list = {}
 
     if (repo) {
@@ -55,6 +60,11 @@ function addCategoriesShow (repo) {
     for (var id in list) {
       var data = list[id]
 
+      var repositoryUrl = null
+      if (data.repositoryUrl) {
+	repositoryUrl = OverpassLayer.twig.twig({ data: data.repositoryUrl, autoescape: true })
+      }
+
       var li = document.createElement('li')
 
       var a = document.createElement('a')
@@ -74,17 +84,20 @@ function addCategoriesShow (repo) {
       li.appendChild(a)
       a.appendChild(document.createTextNode('name' in data ? lang(data.name) : id))
 
-      if (config.urlCategoriesEditor) {
-        a = document.createElement('a')
-        if (repo) {
-          a.href = config.urlCategoriesEditor + '?id=' + repo + '/' + id
-        } else {
-          a.href = config.urlCategoriesEditor + '?repo=' + id
-        }
-        a.target = '_blank'
-        a.innerHTML = '<img src="img/edit.png"/>'
-        li.appendChild(a)
-      }
+    var editLink = null
+    if (repo && categoryUrl) {
+      editLink = document.createElement('a')
+      editLink.href = categoryUrl.render({ repositoryId: repo, categoryId: id })
+    }
+    if (!repo && repositoryUrl) {
+      editLink = document.createElement('a')
+      editLink.href = repositoryUrl.render({ repositoryId: id })
+    }
+    if (editLink) {
+      editLink.target = '_blank'
+      editLink.innerHTML = '<img src="img/edit.png"/>'
+      li.appendChild(editLink)
+    }
 
       ul.appendChild(li)
     }

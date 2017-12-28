@@ -26,6 +26,8 @@ function getRepositories () {
             $repositories["{$f1}/{$f2id}"] = array(
               'path' => "{$config['repositories_gitea']}/{$f1}/{$f2}",
               'type' => 'git',
+	      'repositoryUrl' => 'https://www.openstreetbrowser.org/dev/{{ repositoryId }}',
+	      'categoryUrl' => 'https://www.openstreetbrowser.org/dev/{{ repositoryId }}/src/{{ categoryId }}.json',
             );
           }
         }

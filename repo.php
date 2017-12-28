@@ -17,7 +17,16 @@ if (!isset($_REQUEST['repo'])) {
 
     print $c++ ? ',' : '';
     print json_encode($repoId, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) . ':';
-    print json_encode($repo->info(), JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_FORCE_OBJECT);
+    $info = $repo->info();
+
+    if (isset($repoData['repositoryUrl'])) {
+      $info['repositoryUrl'] = $repoData['repositoryUrl'];
+    }
+    if (isset($repoData['categoryUrl'])) {
+      $info['categoryUrl'] = $repoData['categoryUrl'];
+    }
+
+    print json_encode($info, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_FORCE_OBJECT);
   }
 
   print '}';
@@ -30,7 +39,8 @@ if (!array_key_exists($repoId, $allRepositories)) {
   exit(0);
 }
 
-$repo = getRepo($repoId, $allRepositories[$repoId]);
+$repoData = $allRepositories[$repoId];
+$repo = getRepo($repoId, $repoData);
 
 $cacheDir = null;
 $ts = $repo->timestamp($path);
@@ -46,6 +56,13 @@ if (isset($config['cache'])) {
 }
 
 $data = $repo->data();
+
+if (isset($repoData['repositoryUrl'])) {
+  $data['repositoryUrl'] = $repoData['repositoryUrl'];
+}
+if (isset($repoData['categoryUrl'])) {
+  $data['categoryUrl'] = $repoData['categoryUrl'];
+}
 
 $ret = json_encode($data, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
 
