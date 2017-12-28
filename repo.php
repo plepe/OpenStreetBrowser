@@ -12,7 +12,7 @@ if (!isset($_REQUEST['repo'])) {
   print '{';
 
   $c = 0;
-  foreach (getRepositories() as $repoId => $repoData) {
+  foreach ($allRepositories as $repoId => $repoData) {
     $repo = getRepo($repoId, $repoData);
 
     print $c++ ? ',' : '';
