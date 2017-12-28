@@ -120,37 +120,40 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, options, callback)
     options = {}
   }
 
+  var repo
+  var templateId
+  var m
+  if (m = id.match(/^(.*)\/([^\/]*)/)) {
+    repo = m[1]
+    templateId = m[2]
+  } else {
+    repo = 'default'
+    templateId = id
+  }
+
   if (id in this.templates) {
     callback.apply(this, this.templates[id])
     return
   }
 
-  if (id in this._loadClash) {
-    this._loadClash[id].push(callback)
-    return
-  }
-
-  this._loadClash[id] = []
-
-  function reqListener (req) {
-    if (req.status !== 200) {
-      console.log(req)
-      this.templates[id] = [ req.statusText, null ]
-    } else {
-      this.templates[id] = [ null, OverpassLayer.twig.twig({ data: req.responseText, autoescape: true }) ]
+  this.getRepo(repo, options, function (err, repoData) {
+    // maybe loaded in the meantime?
+    if (id in this.templates) {
+      return callback(null, this.templates[id])
     }
 
-    callback.apply(this, this.templates[id])
+    if (err) {
+      return callback(err, null)
+    }
 
-    this._loadClash[id].forEach(function (c) {
-      c.apply(this, this.templates[id])
-    }.bind(this))
-  }
+    if (!repoData.templates || !(templateId in repoData.templates)) {
+      return callback(new Error('template not defined'), null)
+    }
 
-  var req = new XMLHttpRequest()
-  req.addEventListener('load', reqListener.bind(this, req))
-  req.open('GET', config.categoriesDir + '/' + id + '.html?' + config.categoriesRev)
-  req.send()
+    this.templates[id] = OverpassLayer.twig.twig({ data: repoData.templates[templateId], autoescape: true })
+
+    callback(null, this.templates[id])
+  }.bind(this))
 }
 
 OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, data, callback) {
