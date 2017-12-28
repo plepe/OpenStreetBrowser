@@ -49,11 +49,11 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
       return callback(err, null)
     }
 
-    if (!(categoryId in repoData)) {
+    if (!(categoryId in repoData.categories)) {
       return callback(new Error('category not defined'), null)
     }
 
-    this.getCategoryFromData(id, repoData[categoryId], function (err, category) {
+    this.getCategoryFromData(id, repoData.categories[categoryId], function (err, category) {
       if (category) {
         category.setMap(this.map)
       }

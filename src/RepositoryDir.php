@@ -34,13 +34,16 @@ class RepositoryDir {
   }
 
   function data () {
-    $data = array();
+    $data = array(
+      'categories' => array(),
+      'timestamp' => Date(DATE_ISO8601, $this->timestamp()),
+    );
 
     $d = opendir($this->path);
     while ($f = readdir($d)) {
       if (preg_match("/^([0-9a-zA-Z_\-]+)\.json$/", $f, $m) && $f !== 'package.json') {
         $d1 = json_decode(file_get_contents("{$this->path}/{$f}"), true);
-        $data[$m[1]] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'))));
+        $data['categories'][$m[1]] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'))));
       }
     }
     closedir($d);

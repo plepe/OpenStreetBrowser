@@ -26,7 +26,10 @@ class RepositoryGit {
   }
 
   function data () {
-    $data = array();
+    $data = array(
+      'categories' => array(),
+      'timestamp' => Date(DATE_ISO8601, $this->timestamp()),
+    );
 
     $d = popen("cd " . escapeShellArg($this->path) . "; git ls-tree HEAD", "r");
     while ($r = fgets($d)) {
@@ -39,7 +42,7 @@ class RepositoryGit {
         }
 
         $d1 = json_decode(shell_exec("cd " . escapeShellArg($this->path) . "; git show HEAD:" . escapeShellArg($f)), true);
-        $data[$id] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'))));
+        $data['categories'][$id] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'))));
       }
     }
     pclose($d);

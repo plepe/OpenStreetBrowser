@@ -22,6 +22,8 @@ function addCategoriesShow (repo) {
     backLink.href = '#'
     backLink.appendChild(document.createTextNode(lang('back')))
 
+    var list = {}
+
     if (repo) {
       backLink.onclick = function () {
         addCategoriesShow()
@@ -32,6 +34,8 @@ function addCategoriesShow (repo) {
       var h = document.createElement('h2')
       h.appendChild(document.createTextNode(repo))
       content.appendChild(h)
+
+      list = repoData.categories
     } else {
       backLink.onclick = function () {
         addCategoriesHide()
@@ -42,12 +46,14 @@ function addCategoriesShow (repo) {
       var h = document.createElement('h2')
       h.innerHTML = lang('more_categories')
       content.appendChild(h)
+
+      list = repoData
     }
 
     var ul = document.createElement('ul')
 
-    for (var id in repoData) {
-      var data = repoData[id]
+    for (var id in list) {
+      var data = list[id]
 
       var li = document.createElement('li')
 
