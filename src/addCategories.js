@@ -20,6 +20,7 @@ function addCategoriesShow (repo) {
     var backLink = document.createElement('a')
     backLink.className = 'back'
     backLink.href = '#'
+    backLink.innerHTML = '<i class="fa fa-chevron-circle-left" aria-hidden="true"></i> '
     backLink.appendChild(document.createTextNode(lang('back')))
 
     var categoryUrl = null
@@ -94,8 +95,11 @@ function addCategoriesShow (repo) {
       editLink.href = repositoryUrl.render({ repositoryId: id })
     }
     if (editLink) {
+      editLink.className = 'source-code'
+      editLink.title = 'Show source code'
       editLink.target = '_blank'
-      editLink.innerHTML = '<img src="img/edit.png"/>'
+      editLink.innerHTML = '<i class="fa fa-file-code-o" aria-hidden="true"></i>'
+      li.appendChild(document.createTextNode(' '))
       li.appendChild(editLink)
     }
 
@@ -118,7 +122,7 @@ register_hook('init', function (callback) {
     addCategoriesShow()
     return false
   }
-  link.innerHTML = lang('more_categories')
+  link.innerHTML = '<i class="fa fa-chevron-circle-down" aria-hidden="true"></i> ' + lang('more_categories')
 
   document.getElementById('contentList').appendChild(link)
 })
