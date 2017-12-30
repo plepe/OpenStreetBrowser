@@ -24,45 +24,31 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
     options = {}
   }
 
-  var repo
-  var categoryId
-  var m
-  if (m = id.match(/^(.*)\/([^\/]*)/)) {
-    repo = m[1]
-    categoryId = m[2]
-  } else if (options.repositoryId && options.repositoryId !== 'default') {
-    repo = options.repositoryId
-    categoryId = id
-    id = repo + '/' + id
-  } else {
-    repo = 'default'
-    categoryId = id
-  }
-  var fullId = repo + '/' + categoryId
+  var ids = this.getFullId(id, options)
 
-  if (fullId in this.categories) {
-    return callback(null, this.categories[fullId])
+  if (ids.fullId in this.categories) {
+    return callback(null, this.categories[ids.fullId])
   }
 
   var opt = JSON.parse(JSON.stringify(options))
-  opt.categoryId = categoryId
-  opt.repositoryId = repo
+  opt.categoryId = ids.entityId
+  opt.repositoryId = ids.repositoryId
 
-  this.getRepo(repo, opt, function (err, repoData) {
+  this.getRepo(ids.repositoryId, opt, function (err, repoData) {
     // maybe loaded in the meantime?
-    if (fullId in this.categories) {
-      return callback(null, this.categories[fullId])
+    if (ids.fullId in this.categories) {
+      return callback(null, this.categories[ids.fullId])
     }
 
     if (err) {
       return callback(err, null)
     }
 
-    if (!(categoryId in repoData.categories)) {
+    if (!(ids.entityId in repoData.categories)) {
       return callback(new Error('category not defined'), null)
     }
 
-    this.getCategoryFromData(id, opt, repoData.categories[categoryId], function (err, category) {
+    this.getCategoryFromData(ids.id, opt, repoData.categories[ids.entityId], function (err, category) {
       if (category) {
         category.setMap(this.map)
       }
@@ -129,69 +115,41 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, options, callback)
     options = {}
   }
 
-  var repo
-  var templateId
-  var m
-  if (m = id.match(/^(.*)\/([^\/]*)/)) {
-    repo = m[1]
-    templateId = m[2]
-  } else if (options.repositoryId && options.repositoryId !== 'default') {
-    repo = options.repositoryId
-    templateId = id
-    id = repo + '/' + id
-  } else {
-    repo = options.repositoryId || 'default'
-    templateId = id
-  }
-  var fullId = repo + '/' + templateId
+  var ids = this.getFullId(id, options)
 
-  if (fullId in this.templates) {
-    return callback(null, this.templates[fullId])
+  if (ids.fullId in this.templates) {
+    return callback(null, this.templates[ids.fullId])
   }
 
   var opt = JSON.parse(JSON.stringify(options))
-  opt.templateId = templateId
-  opt.repositoryId = repo
+  opt.templateId = ids.entityId
+  opt.repositoryId = ids.repositoryId
 
-  this.getRepo(repo, opt, function (err, repoData) {
+  this.getRepo(ids.repositoryId, opt, function (err, repoData) {
     // maybe loaded in the meantime?
-    if (fullId in this.templates) {
-      return callback(null, this.templates[fullId])
+    if (ids.fullId in this.templates) {
+      return callback(null, this.templates[ids.fullId])
     }
 
     if (err) {
       return callback(err, null)
     }
 
-    if (!repoData.templates || !(templateId in repoData.templates)) {
+    if (!repoData.templates || !(ids.entityId in repoData.templates)) {
       return callback(new Error('template not defined'), null)
     }
 
-    this.templates[fullId] = OverpassLayer.twig.twig({ data: repoData.templates[templateId], autoescape: true })
+    this.templates[ids.fullId] = OverpassLayer.twig.twig({ data: repoData.templates[ids.entityId], autoescape: true })
 
-    callback(null, this.templates[fullId])
+    callback(null, this.templates[ids.fullId])
   }.bind(this))
 }
 
 OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, options, data, callback) {
-  var repo
-  var categoryId
-  var m
-  if (m = id.match(/^(.*)\/([^\/]*)/)) {
-    repo = m[1]
-    categoryId = m[2]
-  } else if (options.repositoryId && options.repositoryId !== 'default') {
-    repo = options.repositoryId
-    categoryId = id
-    id = repo + '/' + id
-  } else {
-    repo = 'default'
-    categoryId = id
-  }
-  var fullId = repo + '/' + categoryId
+  var ids = this.getFullId(id, options)
 
-  if (fullId in this.categories) {
-    return callback(null, this.categories[fullId])
+  if (ids.fullId in this.categories) {
+    return callback(null, this.categories[ids.fullId])
   }
 
   if (!data.type) {
@@ -203,12 +161,12 @@ OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, options, d
   }
 
   var opt = JSON.parse(JSON.stringify(options))
-  opt.id = id
+  opt.id = ids.id
   var layer = new this.types[data.type](opt, data)
 
   layer.setMap(this.map)
 
-  this.categories[fullId] = layer
+  this.categories[ids.fullId] = layer
 
   if ('load' in layer) {
     layer.load(function (err) {
@@ -217,6 +175,29 @@ OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, options, d
   } else {
     callback(null, layer)
   }
+}
+
+OpenStreetBrowserLoader.prototype.getFullId = function (id, options) {
+  var result = {}
+
+  var m
+  if (m = id.match(/^(.*)\/([^\/]*)/)) {
+    result.id = id
+    result.repositoryId = m[1]
+    result.entityId = m[2]
+  } else if (options.repositoryId && options.repositoryId !== 'default') {
+    result.repositoryId = options.repositoryId
+    result.entityId = id
+    result.id = result.repositoryId + '/' + id
+  } else {
+    result.id = id
+    result.repositoryId = 'default'
+    result.entityId = id
+  }
+
+  result.fullId = result.repositoryId + '/' + result.entityId
+
+  return result
 }
 
 OpenStreetBrowserLoader.prototype.forget = function (id) {
