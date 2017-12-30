@@ -75,14 +75,6 @@
   line-height: 10px;
   color: #7f7f7f;
 }
-.category header > a {
-  text-decoration: none;
-  color: black;
-}
-.category header > a:active,
-.category header > a:hover {
-  text-decoration: underline;
-}
 .category header > a.reload {
   float: right;
 }

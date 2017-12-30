@@ -8,6 +8,14 @@ body {
   font-size: 11px;
   color:#333;
 }
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover,
+a:active {
+  text-decoration: underline;
+}
 
 #sidebar {
   top: 0px;
@@ -115,13 +123,6 @@ a.showDetails {
 }
 #menu li {
   display: inline-block;
-}
-#menu a {
-  text-decoration: none;
-  color: black;
-}
-#menu a:hover {
-  text-decoration: underline;
 }
 #menu li::after {
   content: ' |';
