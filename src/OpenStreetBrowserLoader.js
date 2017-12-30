@@ -167,9 +167,9 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, options, callback)
       return callback(new Error('template not defined'), null)
     }
 
-    this.templates[id] = OverpassLayer.twig.twig({ data: repoData.templates[templateId], autoescape: true })
+    this.templates[fullId] = OverpassLayer.twig.twig({ data: repoData.templates[templateId], autoescape: true })
 
-    callback(null, this.templates[id])
+    callback(null, this.templates[fullId])
   }.bind(this))
 }
 
@@ -208,7 +208,7 @@ OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, options, d
 
   layer.setMap(this.map)
 
-  this.categories[id] = layer
+  this.categories[fullId] = layer
 
   if ('load' in layer) {
     layer.load(function (err) {
