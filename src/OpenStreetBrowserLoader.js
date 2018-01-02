@@ -77,11 +77,16 @@ OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
 
   function reqListener (req) {
     if (req.status !== 200) {
-      console.log(req)
+      console.log('http error when loading repository', req)
       return callback(req.statusText, null)
     }
 
-    this.repoCache[repo] = JSON.parse(req.responseText)
+    try {
+      this.repoCache[repo] = JSON.parse(req.responseText)
+    } catch (err) {
+      console.log('couldn\'t parse repository', req.responseText)
+      return callback('couldn\t parse repository', null)
+    }
 
     var todo = this._loadClash[repo]
     delete this._loadClash[repo]
