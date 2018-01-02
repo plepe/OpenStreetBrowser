@@ -65,7 +65,7 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
  */
 OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
   if (repo in this.repoCache) {
-    return callback(null, this.repoCache[repo])
+    return callback.apply(this, this.repoCache[repo])
   }
 
   if (repo in this._loadClash) {
@@ -78,21 +78,21 @@ OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
   function reqListener (req) {
     if (req.status !== 200) {
       console.log('http error when loading repository', req)
-      return callback(req.statusText, null)
-    }
-
-    try {
-      this.repoCache[repo] = JSON.parse(req.responseText)
-    } catch (err) {
-      console.log('couldn\'t parse repository', req.responseText)
-      return callback('couldn\t parse repository', null)
+      this.repoCache[repo] = [ req.statusText, null ]
+    } else {
+      try {
+	this.repoCache[repo] = [ null, JSON.parse(req.responseText) ]
+      } catch (err) {
+	console.log('couldn\'t parse repository', req.responseText)
+	this.repoCache[repo] = [ 'couldn\t parse repository', null ]
+      }
     }
 
     var todo = this._loadClash[repo]
     delete this._loadClash[repo]
 
     todo.forEach(function (callback) {
-      callback(null, this.repoCache[repo])
+      callback.apply(this, this.repoCache[repo])
     }.bind(this))
   }
 
