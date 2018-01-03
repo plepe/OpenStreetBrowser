@@ -42,7 +42,7 @@ function CategoryBase (options, data) {
     a.onclick = this.toggle.bind(this)
     domHeader.appendChild(a)
 
-    if (this.options.repositoryId !== 'default') {
+    if (this.options.repositoryId && this.options.repositoryId !== 'default') {
       a = document.createElement('span')
       a.className = 'repoId'
       a.appendChild(document.createTextNode(this.options.repositoryId))
