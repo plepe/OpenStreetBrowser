@@ -15,7 +15,8 @@ OpenStreetBrowserLoader.prototype.setMap = function (map) {
 
 /**
  * @param string id ID of the category
- * @parapm [object] options Options.
+ * @param [object] options Options.
+ * @waram {boolean} [options.force=false] Whether repository should be reload or not.
  * @param function callback Callback which will be called with (err, category)
  */
 OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback) {
@@ -27,6 +28,10 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
   var ids = this.getFullId(id, options)
   if (ids === null) {
     return callback('invalid id', null)
+  }
+
+  if (options.force) {
+    delete this.categories[ids.fullId]
   }
 
   if (ids.fullId in this.categories) {
@@ -64,9 +69,14 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
 /**
  * @param string repo ID of the repository
  * @parapm [object] options Options.
+ * @waram {boolean} [options.force=false] Whether repository should be reload or not.
  * @param function callback Callback which will be called with (err, repoData)
  */
 OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
+  if (options.force) {
+    delete this.repoCache[repo]
+  }
+
   if (repo in this.repoCache) {
     return callback.apply(this, this.repoCache[repo])
   }
@@ -115,6 +125,7 @@ OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
 /**
  * @param string id ID of the template
  * @parapm [object] options Options.
+ * @waram {boolean} [options.force=false] Whether repository should be reload or not.
  * @param function callback Callback which will be called with (err, template)
  */
 OpenStreetBrowserLoader.prototype.getTemplate = function (id, options, callback) {
@@ -124,6 +135,10 @@ OpenStreetBrowserLoader.prototype.getTemplate = function (id, options, callback)
   }
 
   var ids = this.getFullId(id, options)
+
+  if (options.force) {
+    delete this.templates[ids.fullId]
+  }
 
   if (ids.fullId in this.templates) {
     return callback(null, this.templates[ids.fullId])

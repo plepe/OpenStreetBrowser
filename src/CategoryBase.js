@@ -159,7 +159,7 @@ CategoryBase.prototype.reload = function (callback) {
 
   OpenStreetBrowserLoader.forget(this.id)
 
-  OpenStreetBrowserLoader.getCategory(this.id, function (err, category) {
+  OpenStreetBrowserLoader.getCategory(this.id, { force: true }, function (err, category) {
     if (err) {
       return callback(err)
     }
