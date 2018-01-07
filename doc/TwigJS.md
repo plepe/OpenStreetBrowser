@@ -1,17 +1,55 @@
+#### Examples
+Twig resp. TwigJS is a template language. Example:
+```twig
+Value of property "test": {{ test }}.
+```
+
+If-condition:
+```twig
+{% if test == "foo" %}
+It's foo!
+{% elseif test == "bar" %}
+It's bar!
+{% else %}
+Other value: {{ test }}
+{% endif %}
+```
+
+For-loop:
+```twig
+{% for k, v in tags %}
+Tag {{ k }} has value {{ v }}
+{% endfor %}
+```
+
+Assign value to variable:
+```twig
+{% set k = "foo" %}
+```
+
+For more information, please visit:
+* [https://twig.symfony.com/](Page of the original Twig template language)
+* [https://github.com/twigjs/twig.js/wiki](Wiki of the TwigJS template language which is almost identical to Twig)
+
 #### TwigJS templates
-The following properties are available:
-* id (the id of the object is always available, prefixed 'n' for nodes, 'w' for ways and 'r' for relations; e.g. 'n1234')
-* osm_id (the numerical id of the object)
-* layer_id (the id of the category)
-* type ('node', 'way' or 'relation')
-* tags.* (all tags are available with the prefix tags., e.g. tags.amenity)
-* meta.timestamp (timestamp of last modification)
-* meta.version (version of the object)
-* meta.changeset (ID of the changeset, the object was last modified in)
-* meta.user (Username of the user, who changed the object last)
-* meta.uid (UID of the user, who changed the object last)
-* map.zoom (Current zoom level)
-* const.* (Values from the 'const' option)
+When rendering map features, the following properties are available:
+* `id` (the id of the object is always available, prefixed 'n' for nodes, 'w' for ways and 'r' for relations; e.g. 'n1234')
+* `osm_id` (the numerical id of the object)
+* `layer_id` (the id of the category)
+* `type` ('node', 'way' or 'relation')
+* `tags.*` (all tags are available with the prefix tags., e.g. tags.amenity)
+* `meta.timestamp` (timestamp of last modification)
+* `meta.version` (version of the object)
+* `meta.changeset` (ID of the changeset, the object was last modified in)
+* `meta.user` (Username of the user, who changed the object last)
+* `meta.uid` (UID of the user, who changed the object last)
+* `map.zoom` (Current zoom level)
+* `const.*` (Values from the 'const' option)
+
+For the info-section of a category the following properties are available:
+* `layer_id` (the id of the category)
+* `map.zoom` (Current zoom level)
+* `const.*` (Values from the 'const' option)
 
 There are several extra functions defined for the TwigJS language:
 * function `keyTrans`: return the translation of the given key. Parameters: key (required, e.g. 'amenity').
