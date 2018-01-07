@@ -80,6 +80,10 @@ function CategoryBase (options, data) {
   this.dom.appendChild(this.domContent)
 }
 
+CategoryBase.prototype.load = function (callback) {
+  callback()
+}
+
 CategoryBase.prototype.setMap = function (map) {
   this.map = map
 }
