@@ -213,8 +213,10 @@ OpenStreetBrowserLoader.prototype.getFullId = function (id, options) {
 }
 
 OpenStreetBrowserLoader.prototype.forget = function (id) {
-  this.categories[id].remove()
-  delete this.categories[id]
+  var ids = this.getFullId(id, options)
+
+  this.categories[ids.fullId].remove()
+  delete this.categories[ids.fullId]
 }
 
 OpenStreetBrowserLoader.prototype.registerType = function (type, classObject) {
