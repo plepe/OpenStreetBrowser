@@ -255,8 +255,13 @@ CategoryOverpass.prototype.updateInfo = function () {
   }
 
   global.currentCategory = this
-  var data = JSON.parse(JSON.stringify(this.data))
-  data.map = { zoom: map.getZoom() }
+  var data = {
+    layer_id: this.id,
+    'const': this.data.const,
+  }
+  if (this.map) {
+    data.map = { zoom: map.getZoom() }
+  }
   this.domInfo.innerHTML = this.templateInfo.render(data)
   global.currentCategory = null
 }
