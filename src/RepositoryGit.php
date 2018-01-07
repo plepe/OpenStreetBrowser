@@ -36,4 +36,23 @@ class RepositoryGit extends RepositoryBase {
 
     return $data;
   }
+
+  function scandir($path="") {
+    if ($path !== '' && substr($path, -1) !== '/') {
+      $path .= '/';
+    }
+
+    $d = popen("cd " . escapeShellArg($this->path) . "; git ls-tree HEAD " . escapeShellArg($path), "r");
+    $ret = array();
+    while ($r = fgets($d)) {
+      $ret[] = substr($r, 53);
+    }
+    pclose($d);
+
+    return $ret;
+  }
+
+  function file_get_contents ($file) {
+    return shell_exec("cd " . escapeShellArg($this->path) . "; git show HEAD:" . escapeShellArg($file));
+  }
 }

@@ -37,4 +37,16 @@ class RepositoryDir extends RepositoryBase {
 
     return $data;
   }
+
+  function scandir($path="") {
+    return scandir("{$this->path}/{$path}");
+  }
+
+  function file_get_contents ($file) {
+    return file_get_contents("{$this->path}/{$file}");
+  }
+
+  function file_put_contents ($file, $content) {
+    return file_put_contents("{$this->path}/{$file}", $content);
+  }
 }
