@@ -25,6 +25,9 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
   }
 
   var ids = this.getFullId(id, options)
+  if (ids === null) {
+    return callback('invalid id', null)
+  }
 
   if (ids.fullId in this.categories) {
     return callback(null, this.categories[ids.fullId])
@@ -184,6 +187,10 @@ OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, options, d
 
 OpenStreetBrowserLoader.prototype.getFullId = function (id, options) {
   var result = {}
+
+  if (!id) {
+    return null
+  }
 
   var m
   if (m = id.match(/^(.*)\/([^\/]*)/)) {
