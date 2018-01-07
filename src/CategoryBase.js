@@ -49,7 +49,7 @@ function CategoryBase (options, data) {
       domHeader.appendChild(a)
     }
 
-    if (options.debug) {
+    if (this.shallShowReload()) {
       a = document.createElement('a')
       a.appendChild(document.createTextNode('⟳'))
       a.title = lang('reload')
@@ -82,6 +82,10 @@ function CategoryBase (options, data) {
 
 CategoryBase.prototype.load = function (callback) {
   callback()
+}
+
+CategoryBase.prototype.shallShowReload = function () {
+  return options.debug
 }
 
 CategoryBase.prototype.setMap = function (map) {
