@@ -63,6 +63,7 @@ function CategoryOverpass (options, data) {
 
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
   data.styleNoBindPopup = [ 'hover' ]
+  data.stylesNoAutoShow = [ 'hover' ]
 
   this.layer = new OverpassLayer(data)
 
