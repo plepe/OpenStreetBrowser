@@ -1,5 +1,6 @@
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 require('./addCategories.css')
+var weightSort = require('weight-sort')
 
 var content
 
@@ -53,7 +54,10 @@ function addCategoriesShow (repo) {
       h.innerHTML = lang('more_categories')
       content.appendChild(h)
 
-      list = repoData
+      list = weightSort(repoData, {
+        key: 'timestamp',
+        reverse: true
+      })
     }
 
     var ul = document.createElement('ul')
