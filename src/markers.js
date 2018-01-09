@@ -5,9 +5,7 @@ function cssStyle (style) {
   if ('color' in style) {
     ret += 'stroke: ' + style.color + ';'
   }
-  if ('weight' in style) {
-    ret += 'stroke-width: ' + style.weight + ';'
-  }
+  ret += 'stroke-width: ' + ('width' in style ? style.width : '3') + ';'
   if ('dashArray' in style) {
     ret += 'stroke-dasharray: ' + style.dashArray + ';'
   }
@@ -80,17 +78,17 @@ function markerPolygon (data) {
 function markerCircle (style) {
   var fillColor = 'fillColor' in style ? style.fillColor : '#f2756a'
   var color = 'color' in style ? style.color : '#000000'
-  var weight = 'weight' in style ? style.weight : 1
+  var width = 'width' in style ? style.width : 1
 
-  return '<svg anchorX="13" anchorY="13" width="25" height="25"><circle cx="12.5" cy="12.5" r="12" style="stroke: ' + color + '; stroke-width: ' + weight + '; fill: ' + fillColor + ';"/></svg>'
+  return '<svg anchorX="13" anchorY="13" width="25" height="25"><circle cx="12.5" cy="12.5" r="12" style="stroke: ' + color + '; stroke-width: ' + width + '; fill: ' + fillColor + ';"/></svg>'
 }
 
 function markerPointer (style) {
   var fillColor = 'fillColor' in style ? style.fillColor : '#f2756a'
   var color = 'color' in style ? style.color : '#000000'
-  var weight = 'weight' in style ? style.weight : 1
+  var width = 'width' in style ? style.width : 1
 
-  return '<svg anchorX="13" anchorY="45" width="25" height="45"><path d="M0.5,12.5 A 12,12 0 0 1 24.5,12.5 C 24.5,23 13,30 12.5,44.5 C 12,30 0.5,23 0.5,12.5" style="stroke: ' + color + '; stroke-width: ' + weight + '; fill: ' + fillColor + ';"/></svg>'
+  return '<svg anchorX="13" anchorY="45" width="25" height="45"><path d="M0.5,12.5 A 12,12 0 0 1 24.5,12.5 C 24.5,23 13,30 12.5,44.5 C 12,30 0.5,23 0.5,12.5" style="stroke: ' + color + '; stroke-width: ' + width + '; fill: ' + fillColor + ';"/></svg>'
 }
 
 OverpassLayer.twig.extendFunction('markerLine', markerLine)

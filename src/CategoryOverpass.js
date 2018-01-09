@@ -11,7 +11,7 @@ var defaultValues = {
     markerSign: '',
     'style:hover': {
       color: 'black',
-      weight: 3,
+      width: 3,
       opacity: 1,
       radius: 12,
       fill: false
