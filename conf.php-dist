@@ -15,7 +15,10 @@ $repositories = array(
 );
 
 // Repositories which should be included from gitea
-$repositoriesGitea = "/home/gitea/gitea-repositories";
+$repositoriesGitea = array(
+  'path' => "/home/gitea/gitea-repositories",
+  'url' => "https://www.openstreetbrowser.org/dev",
+);
 
 // Set to true to reload categories on every page visit.
 $config['categoriesAlwaysReload'] = true;

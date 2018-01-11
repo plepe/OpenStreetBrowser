@@ -16,20 +16,25 @@ function getRepositories () {
   }
 
   if (isset($repositoriesGitea)) {
-    $d1 = opendir($repositoriesGitea);
+    $d1 = opendir($repositoriesGitea['path']);
     while ($f1 = readdir($d1)) {
       if (substr($f1, 0, 1) !== '.') {
-        $d2 = opendir("{$repositoriesGitea}/{$f1}");
+        $d2 = opendir("{$repositoriesGitea['path']}/{$f1}");
         while ($f2 = readdir($d2)) {
           if (substr($f2, 0, 1) !== '.') {
             $f2id = substr($f2, 0, -4);
 
-            $result["{$f1}/{$f2id}"] = array(
-              'path' => "{$repositoriesGitea}/{$f1}/{$f2}",
+            $r = array(
+              'path' => "{$repositoriesGitea['path']}/{$f1}/{$f2}",
               'type' => 'git',
-	      'repositoryUrl' => 'https://www.openstreetbrowser.org/dev/{{ repositoryId }}',
-	      'categoryUrl' => 'https://www.openstreetbrowser.org/dev/{{ repositoryId }}/src/{{ categoryId }}.json',
             );
+
+            if (array_key_exists('url', $repositoriesGitea)) {
+	      $r['repositoryUrl'] = "{$repositoriesGitea['url']}/{{ repositoryId }}";
+	      $r['categoryUrl'] = "{$repositoriesGitea['url']}/{{ repositoryId }}/src/{{ categoryId }}.json";
+            }
+
+            $result["{$f1}/{$f2id}"] = $r;
           }
         }
         closedir($d2);
