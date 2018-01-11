@@ -1,6 +1,7 @@
 {
     "main:options": "Indstillinger",
     "more": "mere",
+    "more_categories": "Flere kategorier",
     "options:data_lang": "Data sprog",
     "options:data_lang:local": "Lokalt sprog",
     "options:ui_lang": "Brugerfladesprog",

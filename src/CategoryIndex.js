@@ -5,8 +5,8 @@ var CategoryBase = require('./CategoryBase')
 
 CategoryIndex.prototype = Object.create(CategoryBase.prototype)
 CategoryIndex.prototype.constructor = CategoryIndex
-function CategoryIndex (id, data) {
-  CategoryBase.call(this, id, data)
+function CategoryIndex (options, data) {
+  CategoryBase.call(this, options, data)
 
   this.childrenDoms = {}
   this.childrenCategories = null
@@ -51,9 +51,9 @@ CategoryIndex.prototype._loadChildrenCategories = function (callback) {
       this.childrenCategories[data.id] = null
 
       if ('type' in data) {
-        OpenStreetBrowserLoader.getCategoryFromData(data.id, data, this._loadChildCategory.bind(this, callback))
+        OpenStreetBrowserLoader.getCategoryFromData(data.id, this.options, data, this._loadChildCategory.bind(this, data.id, callback))
       } else {
-        OpenStreetBrowserLoader.getCategory(data.id, this._loadChildCategory.bind(this, callback))
+        OpenStreetBrowserLoader.getCategory(data.id, this.options, this._loadChildCategory.bind(this, data.id, callback))
       }
     }.bind(this),
     function (err) {
@@ -64,15 +64,15 @@ CategoryIndex.prototype._loadChildrenCategories = function (callback) {
   )
 }
 
-CategoryIndex.prototype._loadChildCategory = function (callback, err, category) {
+CategoryIndex.prototype._loadChildCategory = function (id, callback, err, category) {
   if (err) {
     return callback(err)
   }
 
-  this.childrenCategories[category.id] = category
+  this.childrenCategories[id] = category
 
   category.setParent(this)
-  category.setParentDom(this.childrenDoms[category.id])
+  category.setParentDom(this.childrenDoms[id])
 
   callback(err, category)
 }

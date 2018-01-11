@@ -1,6 +1,7 @@
 {
     "main:options": "オプション設定",
     "more": "もっと",
+    "more_categories": "カテゴリを一覧から追加",
     "options:data_lang": "データ表示",
     "options:data_lang:local": "ブラウザの設定言語",
     "options:ui_lang": "インタフェース表示",

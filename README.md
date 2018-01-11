@@ -90,7 +90,7 @@ The following values are possible for categories (the only mandatory value is qu
 * feature: an object describing how the feature will be formated resp. styled.
   * style: a Leaflet style.
     * stroke: Whether to draw stroke along the path. Set it to false or empty string to disable borders on polygons or circles. (boolean, true)
-    * weight: Stroke width in pixels (number, 3)
+    * width: Stroke width in pixels (number, 3)
     * color: Stroke color (string, '#3388ff')
     * opacity: Stroke opacity (number, 1.0)
     * lineCap: shape at end of the stroke (string, 'round')

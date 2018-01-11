@@ -2,8 +2,15 @@
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var tabs = require('modulekit-tabs')
 
-function CategoryBase (id, data) {
-  this.id = id
+function CategoryBase (options, data) {
+  if (typeof options === 'string') {
+    this.id = options
+    this.options = {}
+  }
+  else {
+    this.id = options.id
+    this.options = options
+  }
   this.parentCategory = null
   this.childrenLoadingCount = 0
   this.data = data
@@ -35,7 +42,14 @@ function CategoryBase (id, data) {
     a.onclick = this.toggle.bind(this)
     domHeader.appendChild(a)
 
-    if (options.debug) {
+    if (this.options.repositoryId && this.options.repositoryId !== 'default') {
+      a = document.createElement('span')
+      a.className = 'repoId'
+      a.appendChild(document.createTextNode(this.options.repositoryId))
+      domHeader.appendChild(a)
+    }
+
+    if (this.shallShowReload()) {
       a = document.createElement('a')
       a.appendChild(document.createTextNode('⟳'))
       a.title = lang('reload')
@@ -64,6 +78,14 @@ function CategoryBase (id, data) {
   this.domContent = document.createElement('div')
   this.domContent.className = 'content'
   this.dom.appendChild(this.domContent)
+}
+
+CategoryBase.prototype.load = function (callback) {
+  callback()
+}
+
+CategoryBase.prototype.shallShowReload = function () {
+  return options.debug
 }
 
 CategoryBase.prototype.setMap = function (map) {
@@ -137,7 +159,7 @@ CategoryBase.prototype.reload = function (callback) {
 
   OpenStreetBrowserLoader.forget(this.id)
 
-  OpenStreetBrowserLoader.getCategory(this.id, function (err, category) {
+  OpenStreetBrowserLoader.getCategory(this.id, { force: true }, function (err, category) {
     if (err) {
       return callback(err)
     }

@@ -1,9 +1,30 @@
 <?php
-// Directory from which to read the categories.
-$config['categoriesDir'] = 'node_modules/openstreetbrowser-categories-main';
+// Repositories from which to read the categories.
+// repositoryUrl and categoryUrl are twig templates, which take the following input values:
+// {{ repositoryId }}    id of the repository
+// {{ categoryId }}      id of the category (not for repositoryUrl)
+$repositories = array(
+  'default' => array(
+    'path' => 'node_modules/openstreetbrowser-categories-main',
+    'type' => 'dir',
+    // public URL of repository
+    'repositoryUrl' => 'https://github.com/example/categories',
+    // public URL of source of a category in repository
+    'categoryUrl' => 'https://github.com/example/categories/tree/master/{{ categoryId }}.json',
+  ),
+);
+
+// Repositories which should be included from gitea
+$repositoriesGitea = array(
+  'path' => "/home/gitea/gitea-repositories",
+  'url' => "https://www.openstreetbrowser.org/dev",
+);
 
 // Set to true to reload categories on every page visit.
 $config['categoriesAlwaysReload'] = true;
+
+// (optional) URL, which points to the OpenStreetBrowser Editor
+#$config['urlCategoriesEditor'] = 'editor/';
 
 // URL of the Overpass API
 $config['overpassUrl'] = array(

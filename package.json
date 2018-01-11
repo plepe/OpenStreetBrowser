@@ -26,7 +26,8 @@
     "openstreetmap-tag-translations": "https://github.com/plepe/openstreetmap-tag-translations",
     "overpass-layer": "https://github.com/plepe/overpass-layer",
     "query-string": "^5.0.0",
-    "sheet-router": "^4.2.3"
+    "sheet-router": "^4.2.3",
+    "weight-sort": "^1.3.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -11,7 +11,7 @@ var defaultValues = {
     markerSign: '',
     'style:hover': {
       color: 'black',
-      weight: 3,
+      width: 3,
       opacity: 1,
       radius: 12,
       fill: false
@@ -26,10 +26,10 @@ var defaultValues = {
 
 CategoryOverpass.prototype = Object.create(CategoryBase.prototype)
 CategoryOverpass.prototype.constructor = CategoryOverpass
-function CategoryOverpass (id, data) {
+function CategoryOverpass (options, data) {
   var p
 
-  CategoryBase.call(this, id, data)
+  CategoryBase.call(this, options, data)
 
   data.id = this.id
 
@@ -63,6 +63,7 @@ function CategoryOverpass (id, data) {
 
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
   data.styleNoBindPopup = [ 'hover' ]
+  data.stylesNoAutoShow = [ 'hover' ]
 
   this.layer = new OverpassLayer(data)
 
@@ -155,7 +156,7 @@ function CategoryOverpass (id, data) {
 }
 
 CategoryOverpass.prototype.load = function (callback) {
-  OpenStreetBrowserLoader.getTemplate('popupBody', function (err, template) {
+  OpenStreetBrowserLoader.getTemplate('popupBody', this.options, function (err, template) {
     if (err) {
       console.log("can't load popupBody.html")
     } else {
@@ -255,8 +256,13 @@ CategoryOverpass.prototype.updateInfo = function () {
   }
 
   global.currentCategory = this
-  var data = JSON.parse(JSON.stringify(this.data))
-  data.map = { zoom: map.getZoom() }
+  var data = {
+    layer_id: this.id,
+    'const': this.data.const,
+  }
+  if (this.map) {
+    data.map = { zoom: map.getZoom() }
+  }
   this.domInfo.innerHTML = this.templateInfo.render(data)
   global.currentCategory = null
 }
@@ -323,7 +329,7 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
 }
 
 CategoryOverpass.prototype.renderTemplate = function (object, templateId, callback) {
-  OpenStreetBrowserLoader.getTemplate(templateId, function (err, template) {
+  OpenStreetBrowserLoader.getTemplate(templateId, this.options, function (err, template) {
     if (err) {
       err = "can't load " + templateId + ': ' + err
       return callback(err, null)
