@@ -1,30 +1,31 @@
 <?php
 function getRepositories () {
-  global $config;
-  $repositories = array();
+  global $repositories;
+  global $repositoriesGitea;
+  $result = array();
 
-  if (isset($config['repositories'])) {
-    $repositories = $config['repositories'];
+  if (isset($repositories)) {
+    $result = $repositories;
   }
   else {
-    $repositories = array(
+    $result = array(
       'default' => array(
         'path' => $config['categoriesDir'],
       ),
     );
   }
 
-  if (isset($config['repositories_gitea'])) {
-    $d1 = opendir($config['repositories_gitea']);
+  if (isset($repositoriesGitea)) {
+    $d1 = opendir($repositoriesGitea);
     while ($f1 = readdir($d1)) {
       if (substr($f1, 0, 1) !== '.') {
-        $d2 = opendir("{$config['repositories_gitea']}/{$f1}");
+        $d2 = opendir("{$repositoriesGitea}/{$f1}");
         while ($f2 = readdir($d2)) {
           if (substr($f2, 0, 1) !== '.') {
             $f2id = substr($f2, 0, -4);
 
-            $repositories["{$f1}/{$f2id}"] = array(
-              'path' => "{$config['repositories_gitea']}/{$f1}/{$f2}",
+            $result["{$f1}/{$f2id}"] = array(
+              'path' => "{$repositoriesGitea}/{$f1}/{$f2}",
               'type' => 'git',
 	      'repositoryUrl' => 'https://www.openstreetbrowser.org/dev/{{ repositoryId }}',
 	      'categoryUrl' => 'https://www.openstreetbrowser.org/dev/{{ repositoryId }}/src/{{ categoryId }}.json',
@@ -37,7 +38,7 @@ function getRepositories () {
     closedir($d1);
   }
 
-  return $repositories;
+  return $result;
 }
 
 function getRepo ($repoId, $repoData) {

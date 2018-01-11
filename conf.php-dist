@@ -3,7 +3,7 @@
 // repositoryUrl and categoryUrl are twig templates, which take the following input values:
 // {{ repositoryId }}    id of the repository
 // {{ categoryId }}      id of the category (not for repositoryUrl)
-$config['repositories'] = array(
+$repositories = array(
   'default' => array(
     'path' => 'node_modules/openstreetbrowser-categories-main',
     'type' => 'dir',
@@ -15,7 +15,7 @@ $config['repositories'] = array(
 );
 
 // Repositories which should be included from gitea
-$config['repositories_gitea'] = "/home/gitea/gitea-repositories";
+$repositoriesGitea = "/home/gitea/gitea-repositories";
 
 // Set to true to reload categories on every page visit.
 $config['categoriesAlwaysReload'] = true;
