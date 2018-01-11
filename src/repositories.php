@@ -57,3 +57,14 @@ function getRepo ($repoId, $repoData) {
 
   return $repo;
 }
+
+register_hook('init', function () {
+  global $repositoriesGitea;
+
+  if (isset($repositoriesGitea) && array_key_exists('url', $repositoriesGitea)) {
+    $d = array('repositoriesGitea' => array(
+      'url' => $repositoriesGitea['url'],
+    ));
+    html_export_var($d);
+  }
+});

@@ -54,6 +54,14 @@ function addCategoriesShow (repo) {
       h.innerHTML = lang('more_categories')
       content.appendChild(h)
 
+      if (typeof repositoriesGitea === 'object' && repositoriesGitea.url) {
+        var a = document.createElement('a')
+        a.href = repositoriesGitea.url
+        a.target = '_blank'
+        a.innerHTML = lang('more_categories_gitea')
+        content.appendChild(a)
+      }
+
       list = weightSort(repoData, {
         key: 'timestamp',
         reverse: true
