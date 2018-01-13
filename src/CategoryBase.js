@@ -131,6 +131,8 @@ CategoryBase.prototype.open = function () {
   this.dom.classList.add('open')
 
   this.isOpen = true
+
+  call_hooks('categoryOpen', this)
 }
 
 CategoryBase.prototype.close = function () {
@@ -141,6 +143,8 @@ CategoryBase.prototype.close = function () {
   this.dom.classList.remove('open')
 
   this.isOpen = false
+
+  call_hooks('categoryClose', this)
 }
 
 CategoryBase.prototype.toggle = function () {
