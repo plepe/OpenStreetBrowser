@@ -13,15 +13,13 @@ var defaultValues = {
       color: 'black',
       width: 3,
       opacity: 1,
-      radius: 12,
-      fill: false
+      radius: 12
     },
     'style:selected': {
       color: '#3f3f3f',
       width: 3,
       opacity: 1,
-      radius: 12,
-      fill: true
+      radius: 12
     },
     markerSymbol: "{{ markerPointer({})|raw }}",
     listMarkerSymbol: "{{ markerCircle({})|raw }}",
