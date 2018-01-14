@@ -158,7 +158,7 @@ function onload2 (initState) {
   state.update()
 }
 
-window.setPath = function (path) {
+window.setPath = function (path, state) {
   currentPath = path
 
   if (!path) {

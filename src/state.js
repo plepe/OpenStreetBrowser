@@ -29,7 +29,7 @@ function get () {
 
 function apply (state) {
   // path
-  setPath(state.path)
+  setPath(state.path, state)
 
   // location
   if (state.lat && state.lon && state.zoom) {
