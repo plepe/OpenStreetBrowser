@@ -295,6 +295,9 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
   this.updatePopupContent(object, popup)
 }
 
+CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
+}
+
 CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
   if (object.data.popupDescription || object.data.description) {
     var div = document.createElement('div')

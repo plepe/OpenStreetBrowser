@@ -128,6 +128,17 @@ function onload2 (initState) {
     }
   })
   map.on('popupclose', function (e) {
+    if (e.popup.object) {
+      OpenStreetBrowserLoader.getCategory(e.popup.object.layer_id, function (err, category) {
+        if (err) {
+          alert(err)
+          return
+        }
+
+        category.notifyPopupClose(e.popup.object, e.popup)
+      })
+    }
+
     lastPopupClose = Date.now()
     currentPath = null
     state.update(null, true)
