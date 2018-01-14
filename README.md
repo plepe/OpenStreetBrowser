@@ -111,6 +111,7 @@ The following values are possible for categories (the only mandatory value is qu
   * popupDescription: like description, but an alternative if the description in popups should be different from the list.
   * markerSign: a HTML string which will be shown within the marker and in the list. (default: '')
   * priority: a numeric value by which the elements in the list will be sorted (lower values first)
+  * preferredZoom: At which max. zoom level will the map zoom when showing details
 * const: an object variable which is available as prefix in twig functions.
 
 All values in the "feature" section may use the [TwigJS language](doc/TwigJS.md) for evaluation.

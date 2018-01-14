@@ -25,6 +25,7 @@ var defaultValues = {
     },
     markerSymbol: "{{ markerPointer({})|raw }}",
     listMarkerSymbol: "{{ markerCircle({})|raw }}",
+    preferredZoom: 16
   },
   queryOptions: {
     split: 64
@@ -298,8 +299,9 @@ CategoryOverpass.prototype.show = function (id, options, callback) {
   this.layer.show(id, options, function (err, data) {
     if (!err) {
       if (options.showDetails && !options.hasLocation) {
+        var preferredZoom = data.data.preferredZoom || 16
         var maxZoom = this.map.getZoom()
-        maxZoom = maxZoom > 16 ? maxZoom : 16
+        maxZoom = maxZoom > preferredZoom ? maxZoom : preferredZoom
         this.map.flyToBounds(data.object.bounds.toLeaflet(), {
           maxZoom: maxZoom
         })
