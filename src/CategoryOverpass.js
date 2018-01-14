@@ -297,7 +297,7 @@ CategoryOverpass.prototype.get = function (id, callback) {
 CategoryOverpass.prototype.show = function (id, options, callback) {
   this.layer.show(id, options, function (err, data) {
     if (!err) {
-      if (options.showDetails) {
+      if (options.showDetails && !options.hasLocation) {
         var maxZoom = this.map.getZoom()
         maxZoom = maxZoom > 16 ? maxZoom : 16
         this.map.flyToBounds(data.object.bounds.toLeaflet(), {
