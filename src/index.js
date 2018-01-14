@@ -208,8 +208,7 @@ function show (id, options, callback) {
 
     category.show(
       featureId,
-      {
-      },
+      options,
       function (err, data) {
         if (err) {
           return callback(new Error('error loading object "' + categoryId + '/' + featureId + '": ' + err))
