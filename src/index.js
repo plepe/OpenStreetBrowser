@@ -95,9 +95,7 @@ function onload2 (initState) {
 
   // make sure the map has an initial location
   if (!('zoom' in newState) && !('lat' in newState) && !('lon' in newState)) {
-    newState.zoom = initState.zoom
-    newState.lat = initState.lat
-    newState.lon = initState.lon
+    state.apply(initState)
   }
 
   state.apply(newState)
