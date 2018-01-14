@@ -295,7 +295,15 @@ CategoryOverpass.prototype.get = function (id, callback) {
 }
 
 CategoryOverpass.prototype.show = function (id, options, callback) {
-  this.layer.show(id, options, callback)
+  this.layer.show(id, options, function (err, data) {
+    if (!err) {
+      if (options.showDetails) {
+        this.map.flyToBounds(data.object.bounds.toLeaflet(), { maxZoom: 16 })
+      }
+    }
+
+    callback(err, data)
+  })
 }
 
 CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
