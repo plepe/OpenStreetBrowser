@@ -16,6 +16,13 @@ var defaultValues = {
       radius: 12,
       fill: false
     },
+    'style:selected': {
+      color: '#3f3f3f',
+      width: 3,
+      opacity: 1,
+      radius: 12,
+      fill: true
+    },
     markerSymbol: "{{ markerPointer({})|raw }}",
     listMarkerSymbol: "{{ markerCircle({})|raw }}",
   },
@@ -62,8 +69,8 @@ function CategoryOverpass (options, data) {
   }
 
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
-  data.styleNoBindPopup = [ 'hover' ]
-  data.stylesNoAutoShow = [ 'hover' ]
+  data.styleNoBindPopup = [ 'hover', 'selected' ]
+  data.stylesNoAutoShow = [ 'hover', 'selected' ]
 
   this.layer = new OverpassLayer(data)
 
@@ -292,10 +299,19 @@ CategoryOverpass.prototype.show = function (id, options, callback) {
 }
 
 CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
+  if (this.currentSelected) {
+    this.currentSelected.hide()
+  }
+
   this.updatePopupContent(object, popup)
+  this.currentSelected = this.layer.show(object.id, { styles: [ 'selected' ] }, function () {})
 }
 
 CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
+  if (this.currentSelected) {
+    this.currentSelected.hide()
+    this.currentSelected = null
+  }
 }
 
 CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
