@@ -131,6 +131,11 @@ function onload2 (initState) {
     }
   })
   map.on('popupclose', function (e) {
+    if (window.x) {
+      delete window.x
+      return
+    }
+
     if (e.popup.object) {
       OpenStreetBrowserLoader.getCategory(e.popup.object.layer_id, function (err, category) {
         if (err) {
@@ -169,6 +174,11 @@ window.setPath = function (path, state) {
   var param = {
     showDetails: !!path.match(/\/details$/),
     hasLocation: state.lat && state.lon && state.zoom
+  }
+
+  if (param.showDetails) {
+    window.x = true
+    map.closePopup()
   }
 
   show(path, param, function (err) {
@@ -213,13 +223,14 @@ function show (id, options, callback) {
           return callback(new Error('error loading object "' + categoryId + '/' + featureId + '": ' + err))
         }
 
-        if (!map._popup || map._popup !== data.popup) {
-          data.feature.openPopup()
-        }
-
         if (options.showDetails) {
           showDetails(data, category)
+        } else {
+          if (!map._popup || map._popup !== data.popup) {
+            data.feature.openPopup()
+          }
         }
+
 
         callback(err)
       }
