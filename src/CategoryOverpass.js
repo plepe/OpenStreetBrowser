@@ -296,20 +296,29 @@ CategoryOverpass.prototype.get = function (id, callback) {
 }
 
 CategoryOverpass.prototype.show = function (id, options, callback) {
-  this.layer.show(id, options, function (err, data) {
-    if (!err) {
-      if (options.showDetails && !options.hasLocation) {
-        var preferredZoom = data.data.preferredZoom || 16
-        var maxZoom = this.map.getZoom()
-        maxZoom = maxZoom > preferredZoom ? maxZoom : preferredZoom
-        this.map.flyToBounds(data.object.bounds.toLeaflet(), {
-          maxZoom: maxZoom
-        })
-      }
-    }
+  if (this.currentDetails) {
+    this.currentDetails.hide()
+  }
 
-    callback(err, data)
-  })
+  this.currentDetails = this.layer.show(id,
+    {
+      styles: [ 'selected' ]
+    },
+    function (err, data) {
+      if (!err) {
+        if (options.showDetails && !options.hasLocation) {
+          var preferredZoom = data.data.preferredZoom || 16
+          var maxZoom = this.map.getZoom()
+          maxZoom = maxZoom > preferredZoom ? maxZoom : preferredZoom
+          this.map.flyToBounds(data.object.bounds.toLeaflet(), {
+            maxZoom: maxZoom
+          })
+        }
+      }
+
+      callback(err, data)
+    }
+  )
 }
 
 CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
@@ -325,6 +334,11 @@ CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
   if (this.currentSelected) {
     this.currentSelected.hide()
     this.currentSelected = null
+  }
+
+  if (this.currentDetails) {
+    this.currentDetails.hide()
+    this.currentDetails = null
   }
 }
 
