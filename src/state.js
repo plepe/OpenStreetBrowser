@@ -146,8 +146,10 @@ function update (state, push) {
 
   if (push) {
     history.pushState(null, null, newHash)
+    call_hooks('statePush', state, newHash)
   } else if (location.hash !== newHash && (location.hash !== '' || newHash !== '#')) {
     history.replaceState(null, null, newHash)
+    call_hooks('stateReplace', state, newHash)
   }
 }
 
