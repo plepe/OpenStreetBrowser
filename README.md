@@ -125,3 +125,4 @@ With the function `register_hook` you can hook into several functions. The follo
 * `hide-details`: called when the details page is left. No parameters.
 * `show-popup`: called when a popup is being displayed. Parameters: data (see properties in doc/TwigJS.md), category, dom, callback.
 * `options_save`: called when options are saved. Parameters: options (the new object), old_options (before save)
+* `initFinish`: called when the app initialization finishes

@@ -156,6 +156,7 @@ function onload2 (initState) {
   })
 
   state.update()
+  call_hooks('initFinish')
 }
 
 window.setPath = function (path, state) {
