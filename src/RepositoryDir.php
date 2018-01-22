@@ -38,15 +38,31 @@ class RepositoryDir extends RepositoryBase {
     return $data;
   }
 
+  function access ($file) {
+    return (substr($file, 0, 1) !== '.' && !preg_match('/\/\./', $file));
+  }
+
   function scandir($path="") {
+    if (!$this->access($path)) {
+      return false;
+    }
+
     return scandir("{$this->path}/{$path}");
   }
 
   function file_get_contents ($file) {
+    if (!$this->access($file)) {
+      return false;
+    }
+
     return file_get_contents("{$this->path}/{$file}");
   }
 
   function file_put_contents ($file, $content) {
+    if (!$this->access($file)) {
+      return false;
+    }
+
     return file_put_contents("{$this->path}/{$file}", $content);
   }
 }
