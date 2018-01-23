@@ -72,7 +72,9 @@ function CategoryOverpass (options, data) {
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
   data.styleNoBindPopup = [ 'hover', 'selected' ]
   data.stylesNoAutoShow = [ 'hover', 'selected' ]
-  data.assetPrefix = 'asset.php?repo=' + this.options.repositoryId + '&file='
+  data.assetPrefix =
+    (typeof openstreetbrowserPrefix === 'undefined' ? '' : openstreetbrowserPrefix) +
+    'asset.php?repo=' + this.options.repositoryId + '&file='
 
   this.layer = new OverpassLayer(data)
 
