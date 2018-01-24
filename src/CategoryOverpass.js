@@ -72,9 +72,18 @@ function CategoryOverpass (options, data) {
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
   data.styleNoBindPopup = [ 'hover', 'selected' ]
   data.stylesNoAutoShow = [ 'hover', 'selected' ]
-  data.assetPrefix =
-    (typeof openstreetbrowserPrefix === 'undefined' ? '' : openstreetbrowserPrefix) +
-    'asset.php?repo=' + this.options.repositoryId + '&file='
+  data.updateAssets = div => {
+    var imgs = div.getElementsByTagName('img')
+    for (var i = 0; i < imgs.length; i++) {
+      let img = imgs[i]
+
+      var src = img.getAttribute('src')
+      if (!src.match(/^(https?:|\.|\/)/)) {
+        img.setAttribute('src', (typeof openstreetbrowserPrefix === 'undefined' ? './' : openstreetbrowserPrefix) +
+        'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('src')))
+      }
+    }
+  }
 
   this.layer = new OverpassLayer(data)
 
