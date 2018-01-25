@@ -6,6 +6,7 @@ var state = require('./state')
 var tabs = require('modulekit-tabs')
 var markers = require('./markers')
 var maki = require('./maki')
+var qs = require('sheet-router/qs')
 
 var defaultValues = {
   feature: {
@@ -82,8 +83,9 @@ function CategoryOverpass (options, data) {
       var src = img.getAttribute('src')
       if (src === null) {
       } else if (src.match(/^maki:.*/)) {
+        let m = src.match(/^maki:([a-z0-9\-]*\-(?:11|15))(?:\?(.*))?$/)
         img.removeAttribute('src')
-        maki(src.substr(5), {}, function (img, err, result) {
+        maki(m[1], m[2] ? qs(m[2]) : {}, function (img, err, result) {
           img.setAttribute('src', result)
         }.bind(this, img))
       } else if (!src.match(/^(https?:|\.|\/)/)) {
