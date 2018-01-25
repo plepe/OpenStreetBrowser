@@ -5,6 +5,8 @@ var CategoryBase = require('./CategoryBase')
 var state = require('./state')
 var tabs = require('modulekit-tabs')
 var markers = require('./markers')
+var maki = require('./maki')
+
 var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
@@ -78,7 +80,13 @@ function CategoryOverpass (options, data) {
       let img = imgs[i]
 
       var src = img.getAttribute('src')
-      if (!src.match(/^(https?:|\.|\/)/)) {
+      if (src === null) {
+      } else if (src.match(/^maki:.*/)) {
+        img.removeAttribute('src')
+        maki(src.substr(5), {}, function (img, err, result) {
+          img.setAttribute('src', result)
+        }.bind(this, img))
+      } else if (!src.match(/^(https?:|\.|\/)/)) {
         img.setAttribute('src', (typeof openstreetbrowserPrefix === 'undefined' ? './' : openstreetbrowserPrefix) +
         'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('src')))
       }
