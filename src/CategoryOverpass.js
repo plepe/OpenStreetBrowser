@@ -83,7 +83,7 @@ function CategoryOverpass (options, data) {
       var src = img.getAttribute('src')
       if (src === null) {
       } else if (src.match(/^maki:.*/)) {
-        let m = src.match(/^maki:([a-z0-9\-]*\-(?:11|15))(?:\?(.*))?$/)
+        let m = src.match(/^maki:([a-z0-9\-]*)(?:\?(.*))?$/)
         img.removeAttribute('src')
         maki(m[1], m[2] ? qs(m[2]) : {}, function (img, err, result) {
           img.setAttribute('src', result)

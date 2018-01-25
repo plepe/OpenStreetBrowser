@@ -5,13 +5,23 @@ function applyOptions (code, options) {
   var style = ''
 
   for (var k in options) {
-    style += k + ':' + options[k] + ';'
+    if (k !== 'size') {
+      style += k + ':' + options[k] + ';'
+    }
   }
 
   return code.replace('path d=', 'path style="' + style + '" d=')
 }
 
 function maki (file, options, callback) {
+  var id
+  var size = options.size || 15
+
+  var m = file.match(/^(.*)\-(11|15)/)
+  if (!m) {
+    file += '-' + size
+  }
+
   var url = (typeof openstreetbrowserPrefix === 'undefined' ? './' : openstreetbrowserPrefix) +
     'node_modules/@mapbox/maki/icons/' + file + '.svg'
 
