@@ -75,25 +75,7 @@ function CategoryOverpass (options, data) {
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
   data.styleNoBindPopup = [ 'hover', 'selected' ]
   data.stylesNoAutoShow = [ 'hover', 'selected' ]
-  data.updateAssets = div => {
-    var imgs = div.getElementsByTagName('img')
-    for (var i = 0; i < imgs.length; i++) {
-      let img = imgs[i]
-
-      var src = img.getAttribute('src')
-      if (src === null) {
-      } else if (src.match(/^maki:.*/)) {
-        let m = src.match(/^maki:([a-z0-9\-]*)(?:\?(.*))?$/)
-        img.removeAttribute('src')
-        maki(m[1], m[2] ? qs(m[2]) : {}, function (img, err, result) {
-          img.setAttribute('src', result)
-        }.bind(this, img))
-      } else if (!src.match(/^(https?:|data:|\.|\/)/)) {
-        img.setAttribute('src', (typeof openstreetbrowserPrefix === 'undefined' ? './' : openstreetbrowserPrefix) +
-        'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('src')))
-      }
-    }
-  }
+  data.updateAssets = this.updateAssets.bind(this)
 
   this.layer = new OverpassLayer(data)
 
@@ -182,6 +164,26 @@ function CategoryOverpass (options, data) {
 
     // opening categories is handled by src/categories.js
   }.bind(this))
+}
+
+CategoryOverpass.prototype.updateAssets = function (div) {
+  var imgs = div.getElementsByTagName('img')
+  for (var i = 0; i < imgs.length; i++) {
+    let img = imgs[i]
+
+    var src = img.getAttribute('src')
+    if (src === null) {
+    } else if (src.match(/^maki:.*/)) {
+      let m = src.match(/^maki:([a-z0-9\-]*)(?:\?(.*))?$/)
+      img.removeAttribute('src')
+      maki(m[1], m[2] ? qs(m[2]) : {}, function (img, err, result) {
+        img.setAttribute('src', result)
+      }.bind(this, img))
+    } else if (!src.match(/^(https?:|data:|\.|\/)/)) {
+      img.setAttribute('src', (typeof openstreetbrowserPrefix === 'undefined' ? './' : openstreetbrowserPrefix) +
+      'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('src')))
+    }
+  }
 }
 
 CategoryOverpass.prototype.load = function (callback) {
@@ -293,6 +295,7 @@ CategoryOverpass.prototype.updateInfo = function () {
     data.map = { zoom: map.getZoom() }
   }
   this.domInfo.innerHTML = this.templateInfo.render(data)
+  this.updateAssets(this.domInfo)
   global.currentCategory = null
 }
 
