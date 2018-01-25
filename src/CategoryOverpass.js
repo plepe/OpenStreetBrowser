@@ -88,7 +88,7 @@ function CategoryOverpass (options, data) {
         maki(m[1], m[2] ? qs(m[2]) : {}, function (img, err, result) {
           img.setAttribute('src', result)
         }.bind(this, img))
-      } else if (!src.match(/^(https?:|\.|\/)/)) {
+      } else if (!src.match(/^(https?:|data:|\.|\/)/)) {
         img.setAttribute('src', (typeof openstreetbrowserPrefix === 'undefined' ? './' : openstreetbrowserPrefix) +
         'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('src')))
       }
