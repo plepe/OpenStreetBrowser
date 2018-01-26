@@ -26,7 +26,7 @@ function maki (file, options, callback) {
     'node_modules/@mapbox/maki/icons/' + file + '.svg'
 
   if (file in cache) {
-    return callback(null, 'data:image/svg+xml;utf8,' + applyOptions(cache[file], options))
+    return callback(null, applyOptions(cache[file], options))
   }
 
   if (file in loadClash) {
@@ -46,7 +46,7 @@ function maki (file, options, callback) {
 
     cache[file] = req.responseText
 
-    loadClash[file].forEach(p => p[1](null, 'data:image/svg+xml;utf8,' + applyOptions(cache[file], p[0])))
+    loadClash[file].forEach(p => p[1](null, applyOptions(cache[file], p[0])))
     delete loadClash[file]
     return
   })

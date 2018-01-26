@@ -175,10 +175,17 @@ CategoryOverpass.prototype.updateAssets = function (div) {
     if (src === null) {
     } else if (src.match(/^maki:.*/)) {
       let m = src.match(/^maki:([a-z0-9\-]*)(?:\?(.*))?$/)
-      img.removeAttribute('src')
-      maki(m[1], m[2] ? qs(m[2]) : {}, function (img, err, result) {
-        img.setAttribute('src', result)
-      }.bind(this, img))
+      if (m) {
+        let span = document.createElement('span')
+        img.parentNode.insertBefore(span, img)
+        img.parentNode.removeChild(img)
+        i--
+        maki(m[1], m[2] ? qs(m[2]) : {}, function (err, result) {
+          if (err === null) {
+            span.innerHTML = result
+          }
+        })
+      }
     } else if (!src.match(/^(https?:|data:|\.|\/)/)) {
       img.setAttribute('src', (typeof openstreetbrowserPrefix === 'undefined' ? './' : openstreetbrowserPrefix) +
       'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('src')))
