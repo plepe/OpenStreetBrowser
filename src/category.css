@@ -133,10 +133,6 @@
   clear: both;
   display: table;
 }
-.overpass-layer-icon div {
-  position: relative;
-  top: -46px;
+.overpass-layer-icon div.sign {
   font-size: 15px;
-  width: 25px;
-  text-align: center;
 }
