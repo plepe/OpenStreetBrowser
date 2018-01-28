@@ -10,7 +10,7 @@ function applyOptions (code, options) {
     }
   }
 
-  return code.replace('path d=', 'path style="' + style + '" d=')
+  return code.replace(/<path/i, '<path style="' + style + '"')
 }
 
 function maki (file, options, callback) {
