@@ -90,7 +90,6 @@
 }
 .category .info {
   position: relative;
-  border: 1px solid black;
 }
 .category .info > .closeButton {
   position: absolute;
