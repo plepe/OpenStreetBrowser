@@ -33,7 +33,7 @@ require('./image')
 require('./addCategories')
 
 window.onload = function () {
-  initState = config.defaultView
+  var initState = config.defaultView
 
   map = L.map('map')
 
