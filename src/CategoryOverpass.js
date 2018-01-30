@@ -317,7 +317,7 @@ CategoryOverpass.prototype.show = function (id, options, callback) {
       }
 
       callback(err, data)
-    }
+    }.bind(this)
   )
 }
 
