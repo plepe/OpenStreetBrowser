@@ -3,14 +3,6 @@ var wikipedia = require('./wikipedia')
 var cache = {}
 
 function ImageLoader (data) {
-  if (this === window) {
-    if (data.id in cache) {
-      return cache[data.id]
-    }
-
-    return new ImageLoader(data)
-  }
-
   this.sources = []
   this.found = []
   this.data = {}

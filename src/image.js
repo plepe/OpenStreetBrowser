@@ -54,7 +54,7 @@ register_hook('show-details', function (data, category, dom, callback) {
   l.className = 'loadingIndicator'
   div.appendChild(l)
 
-  var currentLoader = ImageLoader(data)
+  var currentLoader = new ImageLoader(data)
 
   data.detailsImageCounter = {}
 
@@ -124,7 +124,7 @@ register_hook('show-popup', function (data, category, dom, callback) {
 
   dom.insertBefore(div, dom.firstChild)
 
-  var currentLoader = ImageLoader(data)
+  var currentLoader = new ImageLoader(data)
   data.popupImageCounter = {}
 
   currentLoader.first({
