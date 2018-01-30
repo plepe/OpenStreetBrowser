@@ -99,13 +99,17 @@ function get (value, callback) {
 function getAbstract (value, callback) {
   get(value,
     function (err, result) {
-      var div = document.createElement('div')
-      div.innerHTML = result.content
+      var text = null
 
-      var text = prepare(div)
-      text += ' <a target="_blank" href="' + result.languages[result.language] + '">' + lang('more') + '</a>'
+      if (result) {
+        var div = document.createElement('div')
+        div.innerHTML = result.content
 
-      callback(null, text)
+        text = prepare(div)
+        text += ' <a target="_blank" href="' + result.languages[result.language] + '">' + lang('more') + '</a>'
+      }
+
+      callback(err, text)
     }
   )
 }
@@ -285,6 +289,8 @@ function showWikipedia (tagValue, dom, callback) {
 }
 
 function getImages (tagValue, callback) {
+  var i
+
   get(tagValue, function (err, result) {
     if (err) {
       return callback(err, null)
@@ -307,7 +313,7 @@ function getImages (tagValue, callback) {
       img.removeAttribute('width')
       img.removeAttribute('height')
 
-      var m = img.src.match(/^https?:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/\w+\/\w+\/([^\/]+)/)
+      var m = img.src.match(/^https?:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/\w+\/\w+\/([^/]+)/)
       if (m) {
         var file = decodeURIComponent(m[1]).replace(/_/g, ' ')
         ret.push({
