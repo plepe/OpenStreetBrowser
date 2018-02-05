@@ -45,7 +45,7 @@ class RepositoryGit extends RepositoryBase {
     $d = popen("cd " . escapeShellArg($this->path) . "; git ls-tree HEAD " . escapeShellArg($path), "r");
     $ret = array();
     while ($r = fgets($d)) {
-      $ret[] = substr($r, 53);
+      $ret[] = chop(substr($r, 53));
     }
     pclose($d);
 
