@@ -15,8 +15,12 @@ if (!array_key_exists($repoId, $allRepositories)) {
 $repoData = $allRepositories[$repoId];
 $repo = getRepo($repoId, $repoData);
 
+if (!array_key_exists('dir', $_REQUEST)) {
+  $_REQUEST['dir'] = '.';
+}
+
 $tmpfile = tempnam('/tmp', 'osb-asset-');
-$contents = $repo->file_get_contents($_REQUEST['file']);
+$contents = $repo->file_get_contents("{$_REQUEST['dir']}/{$_REQUEST['file']}");
 
 if ($contents === false) {
   Header("HTTP/1.1 401 Permission denied");
