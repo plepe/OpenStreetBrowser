@@ -43,6 +43,10 @@ class RepositoryDir extends RepositoryBase {
   }
 
   function scandir($path="") {
+    if (substr($path, 0, 1) === '.' || preg_match("/\/\./", $path)) {
+      return false;
+    }
+
     if (!$this->access($path)) {
       return false;
     }
@@ -51,6 +55,10 @@ class RepositoryDir extends RepositoryBase {
   }
 
   function file_get_contents ($file) {
+    if (substr($file, 0, 1) === '.' || preg_match("/\/\./", $file)) {
+      return null;
+    }
+
     if (!$this->access($file)) {
       return false;
     }
@@ -59,6 +67,10 @@ class RepositoryDir extends RepositoryBase {
   }
 
   function file_put_contents ($file, $content) {
+    if (substr($file, 0, 1) === '.' || preg_match("/\/\./", $file)) {
+      return false;
+    }
+
     if (!$this->access($file)) {
       return false;
     }
