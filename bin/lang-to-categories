@@ -1,0 +1,97 @@
+#!/usr/bin/env node
+const fs = require('fs')
+const forEach = require('async-foreach').forEach
+
+var all = {}
+var allIds = []
+
+/* read existing translation files in lang/ */
+fs.readdir('lang', function (err, files) {
+  forEach(files, function (f) {
+    let m = f.match(/^(.*)\.json$/)
+    if (!m) {
+      return
+    }
+
+    let done = this.async()
+    let lang = m[1]
+
+    fs.readFile('lang/' + f, function (err, contents) {
+      let data = JSON.parse(contents)
+
+      for (let k in data) {
+        let m = k.match(/^category:(.*)$/)
+        if (m) {
+          let id = m[1]
+
+          if (!(id in all)) {
+            all[id] = {}
+          }
+
+          all[id][lang] = data[k]
+        }
+      }
+
+      done()
+    })
+  },
+  writeCategories)
+})
+
+function writeCategories () {
+  fs.readdir(
+    '.',
+    function (err, files) {
+      forEach(
+        files,
+        function (f) {
+          if (f === 'package.json') {
+            return
+          }
+
+          let m = f.match(/^(.*)\.json$/)
+          if (!m) {
+            return
+          }
+
+          let id = m[1]
+          if (!(id in all)) {
+            return
+          }
+
+          let done = this.async()
+
+          fs.readFile(f, function (err, contents) {
+            let data = JSON.parse(contents)
+
+            if (!('name' in data)) {
+              data.name = {}
+            }
+
+            for (var lang in all[id]) {
+              if (all[id][lang]) {
+                data.name[lang] = all[id][lang]
+              }
+            }
+
+            let result = {}
+            let keys = Object.keys(data.name)
+            keys.sort()
+            for (let i = 0; i < keys.length; i++) {
+              result[keys[i]] = data.name[keys[i]]
+            }
+            data.name = result
+
+            fs.writeFile(
+              f,
+              JSON.stringify(data, null, '    ') + '\n',
+              function (err, result) {
+                done()
+              }
+            )
+          })
+        }
+      )
+    }
+  )
+}

@@ -1,0 +1,101 @@
+#!/usr/bin/env node
+const fs = require('fs')
+const forEach = require('async-foreach').forEach
+
+var all = {}
+var allIds = []
+
+/* read existing translation files in lang/ */
+fs.readdir('lang', function (err, files) {
+  forEach(files, function (f) {
+    let m = f.match(/^(.*)\.json$/)
+    if (!m) {
+      return
+    }
+
+    let done = this.async()
+    let lang = m[1]
+
+    fs.readFile('lang/' + f, function (err, contents) {
+      let data = JSON.parse(contents)
+      
+      if (!(lang in all)) {
+        all[lang] = {}
+
+      }
+
+      for (var id in data) {
+        if (!(id in all[lang])) {
+          all[lang][id] = data[id]
+        }
+      }
+
+      done()
+    })
+  })
+})
+
+fs.readdir(
+  '.',
+  function (err, files) {
+    forEach(
+      files,
+      function (f) {
+        if (f === 'package.json') {
+          return
+        }
+
+        let m = f.match(/^(.*)\.json$/)
+        if (!m) {
+          return
+        }
+
+        let done = this.async()
+        let id = m[1]
+        allIds.push('category:' + id)
+
+        fs.readFile(f, function (err, contents) {
+          let data = JSON.parse(contents)
+
+          if ('name' in data) {
+            for (var lang in data.name) {
+              if (!(lang in all)) {
+                all[lang] = {}
+              }
+
+              all[lang]['category:' + id] = data.name[lang]
+            }
+          }
+
+          done()
+        })
+      },
+      writeTranslationFiles
+    )
+  }
+)
+
+function writeTranslationFiles () {
+  forEach(Object.keys(all), function (lang) {
+    let done = this.async()
+
+    let data = {}
+    allIds.forEach(function (id) {
+      data[id] = null
+    })
+
+    let keys = Object.keys(all[lang])
+    keys.sort()
+    for (let i = 0; i < keys.length; i++) {
+      data[keys[i]] = all[lang][keys[i]]
+    }
+
+    fs.writeFile(
+      'lang/' + lang + '.json',
+      JSON.stringify(data, null, '    ') + '\n',
+      function (err, result) {
+        done()
+      }
+    )
+  })
+}
