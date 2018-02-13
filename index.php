@@ -32,6 +32,7 @@ html_export_var(array(
   <meta charset="utf-8">
   <title>OpenStreetBrowser</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
   <link rel="stylesheet" href="node_modules/leaflet-geosearch/assets/css/leaflet.css" />

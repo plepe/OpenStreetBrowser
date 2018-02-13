@@ -1,0 +1,14 @@
+{
+    "short_name": "OpenStreetBrowser",
+    "name": "OpenStreetBrowser",
+    "start_url": ".",
+    "background_color": "#ffffff",
+    "display": "browser",
+    "icons": [
+        {
+            "src": "img/osb-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        }
+    ]
+}
