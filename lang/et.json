@@ -1,10 +1,27 @@
 {
+    "back": "",
+    "category-info-tooltip": "",
+    "closed": "",
+    "default": "",
+    "error": "",
+    "facilities": "",
+    "images": "",
     "main:options": "Valikud",
     "more": "lisaks",
     "more_categories": "Rohkem kategooriaid",
+    "more_categories_gitea": "",
+    "open": "",
     "options:data_lang": "Andmete keel",
+    "options:data_lang:desc": "",
     "options:data_lang:local": "Kohalik keel",
+    "options:overpassUrl": "",
+    "options:preferredBaseMap": "",
     "options:ui_lang": "Kasutajaliidese keel",
+    "other": "",
     "save": "Salvesta",
-    "unnamed": "nimeta"
+    "show details": "",
+    "toggle_fullscreen": "",
+    "unknown": "",
+    "unnamed": "nimeta",
+    "wikipedia:no-url-parse": ""
 }

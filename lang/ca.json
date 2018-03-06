@@ -1,6 +1,27 @@
 {
+    "back": "",
+    "category-info-tooltip": "",
+    "closed": "",
+    "default": "",
+    "error": "",
+    "facilities": "",
+    "images": "",
     "main:options": "Opcions",
     "more": "més",
     "more_categories": "Més categories",
-    "save": "Guardar"
+    "more_categories_gitea": "",
+    "open": "",
+    "options:data_lang": "",
+    "options:data_lang:desc": "",
+    "options:data_lang:local": "",
+    "options:overpassUrl": "",
+    "options:preferredBaseMap": "",
+    "options:ui_lang": "",
+    "other": "",
+    "save": "Guardar",
+    "show details": "",
+    "toggle_fullscreen": "",
+    "unknown": "",
+    "unnamed": "",
+    "wikipedia:no-url-parse": ""
 }

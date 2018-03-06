@@ -1,10 +1,27 @@
 {
+    "back": "",
+    "category-info-tooltip": "",
+    "closed": "",
+    "default": "",
+    "error": "",
+    "facilities": "",
+    "images": "",
     "main:options": "Налаштування",
     "more": "Ще",
     "more_categories": "Більше категорій",
+    "more_categories_gitea": "",
+    "open": "",
     "options:data_lang": "Мова мапи",
+    "options:data_lang:desc": "",
     "options:data_lang:local": "Місцева мова",
+    "options:overpassUrl": "",
+    "options:preferredBaseMap": "",
     "options:ui_lang": "Мова інтерфейсу",
+    "other": "",
     "save": "Зберегти",
-    "unnamed": "безіменний"
+    "show details": "",
+    "toggle_fullscreen": "",
+    "unknown": "",
+    "unnamed": "безіменний",
+    "wikipedia:no-url-parse": ""
 }

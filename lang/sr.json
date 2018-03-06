@@ -1,10 +1,27 @@
 {
+    "back": "",
+    "category-info-tooltip": "",
+    "closed": "",
+    "default": "",
+    "error": "",
+    "facilities": "",
+    "images": "",
     "main:options": "Опције",
     "more": "још",
     "more_categories": "Више категорија",
+    "more_categories_gitea": "",
+    "open": "",
     "options:data_lang": "Језик подетака",
+    "options:data_lang:desc": "",
     "options:data_lang:local": "Локални језик",
+    "options:overpassUrl": "",
+    "options:preferredBaseMap": "",
     "options:ui_lang": "Језик интерфејса",
+    "other": "",
     "save": "Запамти",
-    "unnamed": "без имена"
+    "show details": "",
+    "toggle_fullscreen": "",
+    "unknown": "",
+    "unnamed": "без имена",
+    "wikipedia:no-url-parse": ""
 }

@@ -1,10 +1,27 @@
 {
+    "back": "",
+    "category-info-tooltip": "",
+    "closed": "",
+    "default": "",
+    "error": "",
+    "facilities": "",
+    "images": "",
     "main:options": "オプション設定",
     "more": "もっと",
     "more_categories": "カテゴリを一覧から追加",
+    "more_categories_gitea": "",
+    "open": "",
     "options:data_lang": "データ表示",
+    "options:data_lang:desc": "",
     "options:data_lang:local": "ブラウザの設定言語",
+    "options:overpassUrl": "",
+    "options:preferredBaseMap": "",
     "options:ui_lang": "インタフェース表示",
+    "other": "",
     "save": "保存",
-    "unnamed": "nameなし"
+    "show details": "",
+    "toggle_fullscreen": "",
+    "unknown": "",
+    "unnamed": "nameなし",
+    "wikipedia:no-url-parse": ""
 }
