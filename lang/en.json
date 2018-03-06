@@ -20,6 +20,7 @@
     "options:overpassUrl": "OverpassAPI URL",
     "options:preferredBaseMap": "Preferred base map",
     "options:ui_lang": "Interface language",
+    "other": "Other",
     "save": "Save",
     "show details": "show details",
     "toggle_fullscreen": "Toggle full screen mode",
