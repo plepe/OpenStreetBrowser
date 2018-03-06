@@ -38,6 +38,29 @@ fs.readdir('lang', function (err, files) {
   writeCategories)
 })
 
+function writeSubCategories(categories, all) {
+  categories.forEach(data => {
+    if (!('type' in data)) {
+      return
+    }
+
+    if (!('name' in data)) {
+      data.name = {}
+    }
+
+    for (var lang in all[data.id]) {
+      if (all[data.id][lang]) {
+        data.name[lang] = all[data.id][lang]
+      }
+    }
+
+    if (data.type && data.type === 'index') {
+      writeSubCategories(data.subCategories, all)
+    }
+  })
+}
+
+
 function writeCategories () {
   fs.readdir(
     '.',
@@ -72,6 +95,10 @@ function writeCategories () {
               if (all[id][lang]) {
                 data.name[lang] = all[id][lang]
               }
+            }
+
+            if (data.type && data.type === 'index') {
+              writeSubCategories(data.subCategories, all)
             }
 
             let result = {}

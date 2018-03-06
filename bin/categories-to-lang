@@ -65,6 +65,10 @@ fs.readdir(
 
               all[lang]['category:' + id] = data.name[lang]
             }
+
+            if (data.type && data.type === 'index') {
+              parseSubCategories(data.subCategories, all)
+            }
           }
 
           done()
@@ -74,6 +78,24 @@ fs.readdir(
     )
   }
 )
+
+function parseSubCategories(categories, all) {
+  categories.forEach(data => {
+    if ('name' in data) {
+      for (var lang in data.name) {
+        if (!(lang in all)) {
+          all[lang] = {}
+        }
+
+        all[lang]['category:' + data.id] = data.name[lang]
+      }
+
+      if (data.type && data.type === 'index') {
+        parseSubCategories(data.subCategories, all)
+      }
+    }
+  })
+}
 
 function writeTranslationFiles () {
   forEach(Object.keys(all), function (lang) {
