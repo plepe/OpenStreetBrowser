@@ -46,6 +46,14 @@ moduleOptions.open = function () {
   input.innerHTML = lang('save')
   f.appendChild(input)
 
+  var input = document.createElement('button')
+  input.innerHTML = lang('cancel')
+  f.appendChild(input)
+  input.onclick = function () {
+    document.getElementById('content').className = prevPage
+    return false
+  }
+
   return false
 }
 
