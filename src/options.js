@@ -60,7 +60,7 @@ moduleOptions.submit = function (optionsForm) {
   }
 
   ajax('options_save', null, data, function (ret) {
-    old_options = options
+    let old_options = options
     options = data
 
     document.getElementById('content').className = prevPage
