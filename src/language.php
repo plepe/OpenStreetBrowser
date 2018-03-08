@@ -26,7 +26,9 @@ EOT;
   }
 
   foreach ($strings as $k => $count) {
-    $query = 'insert or replace into lang_non_translated values (' . $db->quote($k) . ', ' . $db->quote($ui_lang) . ', coalesce((select count + ' . $db->quote($count) . ' from lang_non_translated where str=' . $db->quote($k) . ' and lang=' . $db->quote($ui_lang) . '), ' . $db->quote($count) . '))';
-    $db->query($query);
+    if ($count > 0) {
+      $query = 'insert or replace into lang_non_translated values (' . $db->quote($k) . ', ' . $db->quote($ui_lang) . ', coalesce((select count + ' . $db->quote($count) . ' from lang_non_translated where str=' . $db->quote($k) . ' and lang=' . $db->quote($ui_lang) . '), ' . $db->quote($count) . '))';
+      $db->query($query);
+    }
   }
 });
