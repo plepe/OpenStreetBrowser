@@ -5,7 +5,10 @@
     "default": "",
     "error": "",
     "facilities": "",
+    "header:attributes": "",
+    "header:osm_meta": "",
     "images": "",
+    "loading": "",
     "main:options": "Valikud",
     "more": "lisaks",
     "more_categories": "Rohkem kategooriaid",
@@ -23,5 +26,7 @@
     "toggle_fullscreen": "",
     "unknown": "",
     "unnamed": "nimeta",
-    "wikipedia:no-url-parse": ""
+    "wikipedia:no-url-parse": "",
+    "zoom_in_appear": "",
+    "zoom_in_more": ""
 }

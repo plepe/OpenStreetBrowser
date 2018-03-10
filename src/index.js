@@ -186,7 +186,7 @@ function show (id, options, callback) {
   if (options.showDetails) {
     call_hooks('hide-' + document.getElementById('content').className)
     document.getElementById('content').className = 'details'
-    document.getElementById('contentDetails').innerHTML = 'Loading ...'
+    document.getElementById('contentDetails').innerHTML = lang('loading')
   }
 
   var m = id.match(/^(.*)\/([nwr]\d+)(\/details)?$/)
@@ -269,7 +269,7 @@ window.showDetails = function (data, category) {
   )
 
   h = document.createElement('h3')
-  h.innerHTML = 'Attributes'
+  h.innerHTML = lang('header:attributes')
   dom.appendChild(h)
 
   div = document.createElement('dl')
@@ -286,7 +286,7 @@ window.showDetails = function (data, category) {
   dom.appendChild(div)
 
   h = document.createElement('h3')
-  h.innerHTML = 'OSM Meta'
+  h.innerHTML = lang('header:osm_meta')
   dom.appendChild(h)
 
   div = document.createElement('dl')

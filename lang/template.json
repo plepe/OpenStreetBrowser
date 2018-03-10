@@ -5,7 +5,10 @@
     "default": "",
     "error": "",
     "facilities": "",
+    "header:attributes": "",
+    "header:osm_meta": "",
     "images": "",
+    "loading": "",
     "main:options": "",
     "more": "",
     "more_categories": "",
@@ -23,5 +26,7 @@
     "toggle_fullscreen": "",
     "unknown": "",
     "unnamed": "",
-    "wikipedia:no-url-parse": ""
+    "wikipedia:no-url-parse": "",
+    "zoom_in_appear": "",
+    "zoom_in_more": ""
 }

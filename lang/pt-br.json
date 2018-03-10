@@ -9,6 +9,9 @@
     },
     "facilities": "Instalações",
     "images": "Imagens",
+    "header:attributes": "",
+    "header:osm_meta": "",
+    "loading": "",
     "main:options": "Opções",
     "more": "mais",
     "more_categories": "Mais categorias",
@@ -26,5 +29,7 @@
     "toggle_fullscreen": "Alternar modo tela cheira",
     "unknown": "desconhecido",
     "unnamed": "sem nome",
-    "wikipedia:no-url-parse": "Não se pôde analisar URL da Wikipédia"
+    "wikipedia:no-url-parse": "Não se pôde analisar URL da Wikipédia",
+    "zoom_in_appear": "",
+    "zoom_in_more": ""
 }
