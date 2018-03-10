@@ -5,7 +5,10 @@
     "default": "",
     "error": "",
     "facilities": "",
+    "header:attributes": "",
+    "header:osm_meta": "",
     "images": "",
+    "loading": "",
     "main:options": "オプション設定",
     "more": "もっと",
     "more_categories": "カテゴリを一覧から追加",
@@ -23,5 +26,7 @@
     "toggle_fullscreen": "",
     "unknown": "",
     "unnamed": "nameなし",
-    "wikipedia:no-url-parse": ""
+    "wikipedia:no-url-parse": "",
+    "zoom_in_appear": "",
+    "zoom_in_more": ""
 }
