@@ -97,6 +97,7 @@ $languages = array(
   "ja", // Japanese
   "nl", // Dutch
   "pl", // Polish
+  "pt", // Portugese
   "pt-br", // Portugese (Brazil)
   "ro", // Romanian
   "ru", // Russian
