@@ -109,11 +109,13 @@ a:active {
   margin-left: 0;
 }
 
-#content a.showDetails {
-  display: none;
+.leaflet-popup-content ul.popup-footer {
+  padding: 0;
 }
-a.showDetails {
-  display: block;
+.leaflet-popup-content ul.popup-footer li {
+  display: inline-block;
+  list-style: none;
+  padding-right: 1em;
 }
 
 /* Footer */
