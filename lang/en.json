@@ -3,6 +3,7 @@
     "category-info-tooltip": "Info & Map key",
     "closed": "closed",
     "default": "default",
+    "edit": "edit",
     "error": {
         "message": "Error",
         "!=1": "Errors"

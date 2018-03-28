@@ -3,6 +3,7 @@
     "category-info-tooltip": "Info & Legende",
     "closed": "geschlossen",
     "default": "Standard",
+    "edit": "bearbeiten",
     "error": {
         "message": "Fehler",
         "!=1": "Fehler"
