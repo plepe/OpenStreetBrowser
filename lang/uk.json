@@ -5,7 +5,10 @@
     "default": "",
     "error": "",
     "facilities": "",
+    "header:attributes": "",
+    "header:osm_meta": "",
     "images": "",
+    "loading": "",
     "main:options": "Налаштування",
     "more": "Ще",
     "more_categories": "Більше категорій",
@@ -23,5 +26,7 @@
     "toggle_fullscreen": "",
     "unknown": "",
     "unnamed": "безіменний",
-    "wikipedia:no-url-parse": ""
+    "wikipedia:no-url-parse": "",
+    "zoom_in_appear": "",
+    "zoom_in_more": ""
 }

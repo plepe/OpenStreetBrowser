@@ -128,7 +128,7 @@ function CategoryOverpass (options, data) {
 
   p = document.createElement('div')
   p.className = 'loadingIndicator'
-  p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
+  p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">' + lang('loading') + '</span>'
   this.dom.appendChild(p)
 
   p = document.createElement('div')
@@ -223,12 +223,12 @@ CategoryOverpass.prototype.updateStatus = function () {
   if (typeof this.data.query === 'object') {
     var highestZoom = Object.keys(this.data.query).reverse()[0]
     if (this.map.getZoom() < highestZoom) {
-      this.domStatus.innerHTML = 'zoom in for more map features'
+      this.domStatus.innerHTML = lang('zoom_in_more')
     }
   }
 
   if ('minZoom' in this.data && this.map.getZoom() < this.data.minZoom) {
-    this.domStatus.innerHTML = 'zoom in for map features to appear'
+    this.domStatus.innerHTML = lang('zoom_in_appear')
   }
 }
 
@@ -391,9 +391,10 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
     popupBody.innerHTML = this.popupBodyTemplate.render(data)
   }
 
-  var footer = document.createElement('div')
-  footer.className = 'footer'
-  var footerContent = '<a class="showDetails" href="#' + this.id + '/' + object.id + '/details">' + lang('show details') + '</a>'
+  var footer = document.createElement('ul')
+  footer.className = 'popup-footer'
+  var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + object.id + '/details">' + lang('show details') + '</a></li>'
+  footerContent += '<li><a target="_blank" class="editLink" href="https://www.openstreetmap.org/edit?editor=id&' + object.object.type + '=' + object.object.osm_id + '">' + lang('edit') + '</a></li>'
   footer.innerHTML = footerContent
   popup._contentNode.appendChild(footer)
 

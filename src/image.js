@@ -1,3 +1,4 @@
+var httpGet = require('./httpGet')
 var ImageLoader = require('./ImageLoader')
 var showTimer
 
@@ -9,17 +10,25 @@ function showImage (image, dom) {
 }
 
 function showWikimediaImage (image, dom) {
-  var size = 400
-  if ('width' in image && image.width < size) {
-    size = image.width
-  }
+  httpGet(
+    'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id),
+    {
+      forceServerLoad: true
+    },
+    function (err, result) {
+      if (!result) {
+        return
+      }
 
-  var url = 'https://commons.wikimedia.org/w/thumb.php?f=' + encodeURIComponent(image.id) + '&w=' + size
+      let m = result.body.match('img .* src="([^"]+)" .* data-file-width="([0-9]+)" data-file-height="([0-9]+)"')
+      let src = m[1]
 
-  var div = document.createElement('div')
-  div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id) + '"><img src="' + url + '"/></a>'
+      var div = document.createElement('div')
+      div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id) + '"><img src="' + src + '"/></a>'
 
-  dom.appendChild(div)
+      dom.appendChild(div)
+    }
+  )
 }
 
 // feature: { id: 'File:xxx.jpg', type: 'wikimedia|url', url: 'https://...' }

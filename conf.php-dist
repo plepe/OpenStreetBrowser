@@ -82,13 +82,13 @@ $config['baseMaps'] = array(
 
 // List of available user interface languages
 $languages = array(
+  "en", // English
   "ast", // Asturian
   "ca", // Catalan
   "cs", // Czech
   "da", // Danish
   "de", // German
   "el", // Greek
-  "en", // English
   "es", // Spanish
   "et", // Estonian
   "fr", // French
@@ -97,6 +97,7 @@ $languages = array(
   "ja", // Japanese
   "nl", // Dutch
   "pl", // Polish
+  "pt", // Portugese
   "pt-br", // Portugese (Brazil)
   "ro", // Romanian
   "ru", // Russian

@@ -3,12 +3,16 @@
     "category-info-tooltip": "Info & Map key",
     "closed": "closed",
     "default": "default",
+    "edit": "edit",
     "error": {
         "message": "Error",
         "!=1": "Errors"
     },
     "facilities": "Facilities",
+    "header:attributes": "Attributes",
+    "header:osm_meta": "OSM Meta",
     "images": "Images",
+    "loading": "Loading ...",
     "main:options": "Options",
     "more": "more",
     "more_categories": "More categories",
@@ -26,5 +30,7 @@
     "toggle_fullscreen": "Toggle full screen mode",
     "unknown": "unknown",
     "unnamed": "unnamed",
-    "wikipedia:no-url-parse": "Could not parse Wikipedia URL"
+    "wikipedia:no-url-parse": "Could not parse Wikipedia URL",
+    "zoom_in_appear": "zoom in for map features to appear",
+    "zoom_in_more": "zoom in for more map features"
 }

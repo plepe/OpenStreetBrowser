@@ -3,12 +3,16 @@
     "category-info-tooltip": "Info & Legende",
     "closed": "geschlossen",
     "default": "Standard",
+    "edit": "bearbeiten",
     "error": {
         "message": "Fehler",
         "!=1": "Fehler"
     },
     "facilities": "Einrichtungen",
+    "header:attributes": "Attribute",
+    "header:osm_meta": "OSM Meta",
     "images": "Bilder",
+    "loading": "Laden ...",
     "main:options": "Optionen",
     "more": "mehr",
     "more_categories": "Mehr Kategorien",
@@ -26,5 +30,7 @@
     "toggle_fullscreen": "(De-)aktiviere Vollbildmodus",
     "unknown": "unbekannt",
     "unnamed": "Namenlos",
-    "wikipedia:no-url-parse": "Konnte Wikipedia Adresse nicht erkennen"
+    "wikipedia:no-url-parse": "Konnte Wikipedia Adresse nicht erkennen",
+    "zoom_in_appear": "Zoome hinein um Kartenobjekte zu sehen",
+    "zoom_in_more": "Zoome hinein für weitere Kartenobjekte"
 }

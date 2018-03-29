@@ -103,7 +103,7 @@ function writeTranslationFiles () {
 
     let data = {}
     allIds.forEach(function (id) {
-      data[id] = null
+      data[id] = ''
     })
 
     let keys = Object.keys(all[lang])
