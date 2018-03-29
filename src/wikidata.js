@@ -13,7 +13,7 @@ function wikidataLoad (id, callback) {
   }
   loadClash[id] = []
 
-  httpGet('https://www.wikidata.org/wiki/Special:EntityData/' + id + '.json', function (err, result) {
+  httpGet('https://www.wikidata.org/wiki/Special:EntityData/' + id + '.json', {}, function (err, result) {
     if (err) {
       return callback(err, null)
     }

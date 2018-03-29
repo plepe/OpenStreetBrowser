@@ -1,4 +1,4 @@
-function httpGet (url, callback) {
+function httpGet (url, options, callback) {
   var xhr = new XMLHttpRequest()
   xhr.open('get', url, true)
   xhr.responseType = 'text'
