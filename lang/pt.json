@@ -3,14 +3,15 @@
     "category-info-tooltip": "Info & Legenda",
     "closed": "fechado",
     "default": "padrão",
+    "edit": "editar",
     "error": {
         "message": "Erro",
         "!=1": "Erros"
     },
     "facilities": "Instalações",
-    "images": "Imagens",
     "header:attributes": "Atributos",
-    "header:osm_meta": "",
+    "header:osm_meta": "OSM Meta",
+    "images": "Imagens",
     "loading": "A carregar...",
     "main:options": "Opções",
     "more": "mais",
