@@ -76,6 +76,23 @@ function CategoryOverpass (options, data) {
   data.styleNoBindPopup = [ 'hover', 'selected' ]
   data.stylesNoAutoShow = [ 'hover', 'selected' ]
   data.updateAssets = this.updateAssets.bind(this)
+  data.includeFeature = ob => {
+    for (var i in this.additionalFilter) {
+      let filter = this.additionalFilter[i]
+
+      if (filter.op === '=') {
+        if (ob.tags[filter.key] !== filter.value) {
+          return false
+        }
+      } else if (filter.op === 'has') {
+        if (!(filter.key in ob.tags)
+            || (ob.tags[filter.key].split(/;/g).indexOf(filter.value) === -1)) {
+          return false
+        }
+      }
+    }
+    return true
+  }
 
   this.layer = new OverpassLayer(data)
 
@@ -113,6 +130,9 @@ function CategoryOverpass (options, data) {
         this.currentHover = null
       }.bind(this, ob.id)
     }
+
+    // Filters
+    this.formFilter.refresh()
   }.bind(this)
   this.layer.onUpdate = function (ob) {
     if (!ob.popup || !ob.popup._contentNode || map._popup !== ob.popup) {
@@ -141,8 +161,8 @@ function CategoryOverpass (options, data) {
           var ret = {}
           var counts = {}
 
-          for (var k in this.layer.visibleFeatures) {
-            var ob = this.layer.visibleFeatures[k].object
+          for (var k in this.layer.bboxFeatures) {
+            var ob = this.layer.bboxFeatures[k]
             var v = 'tags' in ob ? ob.tags[f.key] : null
 
             if (v) {
@@ -198,7 +218,6 @@ function CategoryOverpass (options, data) {
         this.additionalFilter.push(v)
       }
 
-      this.layer.options.queryOptions.filter = this.additionalFilter
       this.layer.check_update_map()
     }.bind(this)
     this.dom.insertBefore(this.domFilter, this.domContent)
