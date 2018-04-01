@@ -7,6 +7,7 @@ var tabs = require('modulekit-tabs')
 var markers = require('./markers')
 var maki = require('./maki')
 var qs = require('sheet-router/qs')
+var Filter = require('./Filter')
 
 var defaultValues = {
   feature: {
@@ -76,23 +77,7 @@ function CategoryOverpass (options, data) {
   data.styleNoBindPopup = [ 'hover', 'selected' ]
   data.stylesNoAutoShow = [ 'hover', 'selected' ]
   data.updateAssets = this.updateAssets.bind(this)
-  data.includeFeature = ob => {
-    for (var i in this.additionalFilter) {
-      let filter = this.additionalFilter[i]
-
-      if (filter.op === '=') {
-        if (ob.tags[filter.key] !== filter.value) {
-          return false
-        }
-      } else if (filter.op === 'has') {
-        if (!(filter.key in ob.tags)
-            || (ob.tags[filter.key].split(/;/g).indexOf(filter.value) === -1)) {
-          return false
-        }
-      }
-    }
-    return true
-  }
+  data.includeFeature = ob => this.filter.check(ob)
 
   this.layer = new OverpassLayer(data)
 
@@ -132,7 +117,7 @@ function CategoryOverpass (options, data) {
     }
 
     // Filters
-    this.formFilter.refresh()
+    this.filter.refresh()
   }.bind(this)
   this.layer.onUpdate = function (ob) {
     if (!ob.popup || !ob.popup._contentNode || map._popup !== ob.popup) {
@@ -147,79 +132,11 @@ function CategoryOverpass (options, data) {
   }.bind(this)
 
   if (this.data.filter) {
-    for (var k in this.data.filter) {
-      var f = this.data.filter[k]
-      f.name = lang(f.name)
+    this.filter = new Filter(this.data.filter, this.layer)
 
-      if (!('key' in f)) {
-        f.key = k
-      }
+    this.domFilter = document.createElement('div')
+    this.filter.form(this.domFilter)
 
-      if (f.values === 'auto') {
-        delete f.values
-        f.values_func = { js: function (f) {
-          var ret = {}
-          var counts = {}
-
-          for (var k in this.layer.bboxFeatures) {
-            var ob = this.layer.bboxFeatures[k]
-            var v = 'tags' in ob ? ob.tags[f.key] : null
-
-            if (v) {
-              if (v in ret) {
-                counts[v]++
-              } else {
-                ret[v] = lang('tag:' + f.key + '=' + v)
-                counts[v] = 1
-              }
-            }
-          }
-
-          for (var k in ret) {
-            ret[k] = ret[k] + ' (' + counts[k] + ')'
-          }
-
-          return ret
-        }.bind(this, f) }
-      }
-    }
-
-    this.domFilter = document.createElement('form')
-
-    this.formFilter = new form(this.id, this.data.filter,
-      {
-        'type': 'form_chooser',
-        'button:add_element': '-- ' + lang('filter_results') + ' --',
-        'order': false
-      }
-    )
-    this.formFilter.show(this.domFilter)
-    this.formFilter.onchange = function () {
-      var data = this.formFilter.get_data()
-
-      this.additionalFilter = []
-      for (var k in data) {
-        if (data[k] === null) {
-          continue
-        }
-
-        var d = this.data.filter[k]
-
-        var v  = {
-          key: k,
-          value: data[k],
-          op: '='
-        }
-
-        if ('op' in d) {
-          v.op = d.op
-        }
-
-        this.additionalFilter.push(v)
-      }
-
-      this.layer.check_update_map()
-    }.bind(this)
     this.dom.insertBefore(this.domFilter, this.domContent)
   }
 
