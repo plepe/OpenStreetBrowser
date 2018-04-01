@@ -18,21 +18,39 @@ class Filter {
 
           for (var k in this.layer.bboxFeatures) {
             var ob = this.layer.bboxFeatures[k]
-            var v = 'tags' in ob ? ob.tags[f.key] : null
+            var values = 'tags' in ob ? ob.tags[f.key] : null
 
-            if (v) {
-              if (v in ret) {
-                counts[v]++
+            if (values) {
+              if (f.op === 'has') {
+                values = values.split(/;/g)
               } else {
-                ret[v] = lang('tag:' + f.key + '=' + v)
-                counts[v] = 1
+                values = [ values ]
+              }
+
+              for (var i in values) {
+                var v = values[i]
+
+                if (v in ret) {
+                  counts[v]++
+                } else {
+                  ret[v] = lang('tag:' + f.key + '=' + v)
+                  counts[v] = 1
+                }
               }
             }
           }
 
           for (var k in ret) {
-            ret[k] = ret[k] + ' (' + counts[k] + ')'
+            ret[k] = {
+              count: counts[k],
+              name: ret[k] + ' (' + counts[k] + ')'
+            }
           }
+
+          ret = weightSort(ret, {
+            key: 'count',
+            reverse: true
+          })
 
           return ret
         }.bind(this, f) }
