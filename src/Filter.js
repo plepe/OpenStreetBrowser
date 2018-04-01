@@ -88,6 +88,7 @@ class Filter {
 
         var v  = {
           key: k,
+          toCheck: d.toCheck || [ k ],
           value: data[k],
           op: '='
         }
@@ -112,31 +113,46 @@ class Filter {
     parentNode.appendChild(this.dom)
   }
 
-  check (ob) {
-    for (var i in this.additionalFilter) {
-      let filter = this.additionalFilter[i]
-
-      if (filter.op === '=') {
-        if (ob.tags[filter.key] !== filter.value) {
+  _checkValue (value, filter) {
+    switch (filter.op) {
+      case '=':
+        if (value !== filter.value) {
           return false
         }
-      } else if (filter.op === 'has') {
-        if (!(filter.key in ob.tags)
-            || (ob.tags[filter.key].split(/;/g).indexOf(filter.value) === -1)) {
+        break;
+      case 'has':
+        if (!(value)
+            || (value.split(/;/g).indexOf(filter.value) === -1)) {
           return false
         }
-      } else if (filter.op === 'strsearch') {
-        if (!(filter.key in ob.tags)) {
+        break;
+      case 'strsearch':
+        if (!value) {
           return false
         }
 
         for (var k in filter.value) {
-          if (!ob.tags[filter.key].match(filter.value[k])) {
+          if (!value.match(filter.value[k])) {
             return false
           }
         }
+        break;
+    }
+
+    return true
+  }
+
+  check (ob) {
+    for (let i in this.additionalFilter) {
+      let filter = this.additionalFilter[i]
+
+      if (filter.toCheck
+          .map(k => this._checkValue(ob.tags[k], filter))
+          .indexOf(true) === -1) {
+        return false
       }
     }
+
     return true
   }
 
