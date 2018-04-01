@@ -1,3 +1,5 @@
+const weightSort = require('weight-sort')
+
 class Filter {
   constructor (def, layer) {
     this.layer = layer
@@ -9,6 +11,8 @@ class Filter {
       if (!('key' in f)) {
         f.key = k
       }
+
+      f.change_on = 'keyup'
 
       if (f.values === 'auto') {
         delete f.values
@@ -92,6 +96,13 @@ class Filter {
           v.op = d.op
         }
 
+        if (v.op === 'strsearch') {
+          v.value = v.value
+            .split(/ /g).
+            filter(s => s !== '').
+            map(s => new RegExp(s, 'i'))
+        }
+
         this.additionalFilter.push(v)
       }
 
@@ -113,6 +124,16 @@ class Filter {
         if (!(filter.key in ob.tags)
             || (ob.tags[filter.key].split(/;/g).indexOf(filter.value) === -1)) {
           return false
+        }
+      } else if (filter.op === 'strsearch') {
+        if (!(filter.key in ob.tags)) {
+          return false
+        }
+
+        for (var k in filter.value) {
+          if (!ob.tags[filter.key].match(filter.value[k])) {
+            return false
+          }
         }
       }
     }
