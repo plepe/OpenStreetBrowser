@@ -28,6 +28,7 @@ var defaultValues = {
       pane: 'selected'
     },
     markerSymbol: "{{ markerPointer({})|raw }}",
+    filteredMarkerSymbol: "{{ markerPointer({\"fillColor\":\"white\"})|raw }}",
     listMarkerSymbol: "{{ markerCircle({})|raw }}",
     preferredZoom: 16
   },
@@ -77,7 +78,7 @@ function CategoryOverpass (options, data) {
   data.styleNoBindPopup = [ 'hover', 'selected' ]
   data.stylesNoAutoShow = [ 'hover', 'selected' ]
   data.updateAssets = this.updateAssets.bind(this)
-  data.includeFeature = ob => this.filter.check(ob)
+  data.filterFun = ob => this.filter.check(ob)
 
   this.layer = new OverpassLayer(data)
 
