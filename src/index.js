@@ -52,6 +52,12 @@ window.onload = function () {
 }
 
 function onload2 (initState) {
+  // Measurement plugin
+  if (L.control.polylineMeasure) {
+    L.control.polylineMeasure({
+    }).addTo(map);
+  }
+
   // Add Geo Search
   var provider = new LeafletGeoSearch.OpenStreetMapProvider()
   var searchControl = new LeafletGeoSearch.GeoSearchControl({

@@ -42,10 +42,12 @@ html_export_var(array(
   <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
   <link rel="stylesheet" href="node_modules/leaflet-geosearch/assets/css/leaflet.css" />
   <link rel="stylesheet" href="node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+  <link rel="stylesheet" href="node_modules/leaflet.polylinemeasure/Leaflet.PolylineMeasure.css" />
   <script src="node_modules/leaflet/dist/leaflet.js"></script>
   <script src="node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
   <script src="node_modules/leaflet-textpath/leaflet.textpath.js"></script>
   <script src="node_modules/leaflet-polylineoffset/leaflet.polylineoffset.js"></script>
+  <script src="node_modules/leaflet.polylinemeasure/Leaflet.PolylineMeasure.js"></script>
   <?php print modulekit_to_javascript(); /* pass modulekit configuration to JavaScript */ ?>
   <?php print modulekit_include_js(); /* prints all js-includes */ ?>
   <?php print modulekit_include_css(); /* prints all css-includes */ ?>
