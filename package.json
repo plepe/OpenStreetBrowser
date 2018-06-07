@@ -27,7 +27,7 @@
     "openstreetbrowser-categories-main": "https://github.com/plepe/openstreetbrowser-categories-main",
     "openstreetmap-date-parser": "^0.1.0",
     "openstreetmap-tag-translations": "https://github.com/plepe/openstreetmap-tag-translations",
-    "overpass-layer": "https://github.com/plepe/overpass-layer",
+    "overpass-layer": "^1.0.1",
     "query-string": "^5.0.0",
     "sheet-router": "^4.2.3",
     "weight-sort": "^1.3.0"
