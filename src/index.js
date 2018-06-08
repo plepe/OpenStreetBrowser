@@ -237,7 +237,7 @@ function show (id, options, callback) {
 }
 
 window.showDetails = function (data, category) {
-  var div, h, dt, dd
+  var div, h, dt, dd, li, a
   var k
   var dom = document.getElementById('contentDetails')
 
@@ -273,6 +273,22 @@ window.showDetails = function (data, category) {
       }
     }
   )
+
+  h = document.createElement('h3')
+  h.innerHTML = lang('header:export')
+  dom.appendChild(h)
+
+  div = document.createElement('ul')
+  dom.appendChild(div)
+
+  li = document.createElement('li')
+  div.appendChild(li)
+
+  a = document.createElement('a')
+  a.download = data.id + '.json'
+  a.href = 'data:application/json;charset=UTF-8,' + encodeURIComponent(JSON.stringify(data.object.GeoJSON(), null, '    '))
+  a.innerHTML = lang('download:geojson')
+  li.appendChild(a)
 
   h = document.createElement('h3')
   h.innerHTML = lang('header:attributes')

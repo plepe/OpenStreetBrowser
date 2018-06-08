@@ -3,6 +3,7 @@
     "category-info-tooltip": "Info & Legende",
     "closed": "geschlossen",
     "default": "Standard",
+    "download:geojson": "Als GeoJSON runterladen",
     "edit": "bearbeiten",
     "error": {
         "message": "Fehler",
@@ -10,6 +11,7 @@
     },
     "facilities": "Einrichtungen",
     "header:attributes": "Attribute",
+    "header:export": "Export",
     "header:osm_meta": "OSM Meta",
     "images": "Bilder",
     "loading": "Laden ...",

@@ -3,6 +3,7 @@
     "category-info-tooltip": "Info & Legenda",
     "closed": "fechado",
     "default": "padrão",
+    "download:geojson": "",
     "edit": "editar",
     "error": {
         "message": "Erro",
@@ -10,6 +11,7 @@
     },
     "facilities": "Instalações",
     "header:attributes": "Atributos",
+    "header:export": "",
     "header:osm_meta": "OSM Meta",
     "images": "Imagens",
     "loading": "A carregar...",
