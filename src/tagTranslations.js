@@ -20,6 +20,13 @@ OverpassLayer.twig.extendFunction('localizedTag', function (tags, id) {
 OverpassLayer.twig.extendFunction('trans', function () {
   return lang.apply(this, arguments)
 })
+OverpassLayer.twig.extendFunction('isTranslated', function (str) {
+  return tagTranslationsIsTranslated(str)
+})
+
+function tagTranslationsIsTranslated (str) {
+  return !(str in lang_non_translated) && (str in lang_str)
+}
 
 function tagTranslationsTrans () {
   var tag = arguments[0]
@@ -59,6 +66,7 @@ function tagTranslationsTransList (key, values) {
 
 module.exports = {
   trans: tagTranslationsTrans,
+  isTranslated: tagTranslationsIsTranslated,
   setTagLanguage: function (lang) {
     tagLang = lang
   }
