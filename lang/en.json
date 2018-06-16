@@ -3,6 +3,7 @@
     "category-info-tooltip": "Info & Map key",
     "closed": "closed",
     "default": "default",
+    "download:geojson": "Download as GeoJSON",
     "edit": "edit",
     "error": {
         "message": "Error",
@@ -10,6 +11,7 @@
     },
     "facilities": "Facilities",
     "header:attributes": "Attributes",
+    "header:export": "Export",
     "header:osm_meta": "OSM Meta",
     "images": "Images",
     "loading": "Loading ...",

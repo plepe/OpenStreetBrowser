@@ -3,15 +3,18 @@
     "category-info-tooltip": "Info & Legenda",
     "closed": "fechado",
     "default": "padrão",
+    "download:geojson": "",
+    "edit": "editar",
     "error": {
         "message": "Erro",
         "!=1": "Erros"
     },
     "facilities": "Instalações",
+    "header:attributes": "Atributos",
+    "header:export": "",
+    "header:osm_meta": "OSM Meta",
     "images": "Imagens",
-    "header:attributes": "",
-    "header:osm_meta": "",
-    "loading": "",
+    "loading": "Carregando...",
     "main:options": "Opções",
     "more": "mais",
     "more_categories": "Mais categorias",
@@ -30,6 +33,6 @@
     "unknown": "desconhecido",
     "unnamed": "sem nome",
     "wikipedia:no-url-parse": "Não se pôde analisar URL da Wikipédia",
-    "zoom_in_appear": "",
-    "zoom_in_more": ""
+    "zoom_in_appear": "aproxime para elementos do mapa aparecer",
+    "zoom_in_more": "aproxime para mais elementos do mapa"
 }

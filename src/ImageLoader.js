@@ -109,7 +109,7 @@ ImageLoader.prototype.loadWikimediaCommons = function (src, callback) {
           if (this.found.indexOf(d.id) === -1) {
             this.found.push(d.id)
             d.type = 'wikimedia'
-            this.data[id] = d
+            this.data[d.id] = d
           }
         }.bind(this))
       }

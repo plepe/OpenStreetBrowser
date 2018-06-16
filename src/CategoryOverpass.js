@@ -260,7 +260,8 @@ CategoryOverpass.prototype.open = function () {
   this.layer.addTo(this.map)
 
   if (!this.list) {
-    this.list = new OverpassLayerList(this.domContent, this.layer)
+    this.list = new OverpassLayerList(this.layer)
+    this.list.addTo(this.domContent)
     this.origGetMarker = this.list._getMarker
     this.list._getMarker = this._getMarker.bind(this)
   }

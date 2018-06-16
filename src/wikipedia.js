@@ -168,7 +168,7 @@ register_hook('show-details', function (data, category, dom, callback) {
     found++
     foundPrefixes.push('')
 
-    wikidata.load(ob.tags[k], function (err, result) {
+    wikidata.load(ob.tags.wikidata, function (err, result) {
       var x
 
       if (err) {
