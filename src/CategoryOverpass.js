@@ -388,8 +388,7 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
     popupBody.className = 'popupBody'
     popup._contentNode.appendChild(popupBody)
 
-    var data = this.layer.twigData(object.object)
-    popupBody.innerHTML = this.popupBodyTemplate.render(data)
+    popupBody.innerHTML = this.popupBodyTemplate.render(object.twigData)
   }
 
   var footer = document.createElement('ul')
