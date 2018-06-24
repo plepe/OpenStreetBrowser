@@ -222,7 +222,14 @@ OpenStreetBrowserLoader.prototype.getFullId = function (id, options) {
     result.entityId = id
   }
 
-  result.fullId = result.repositoryId + '/' + result.entityId
+  result.sublayerId = null
+  m = result.entityId.split(/:/)
+  if (m.length > 1) {
+    result.entityId = m[0]
+    result.sublayerId = m[1]
+  }
+
+  result.fullId = result.repositoryId + '/' + result.entityId + (result.sublayerId ? ':' + result.sublayerId : '')
 
   return result
 }
