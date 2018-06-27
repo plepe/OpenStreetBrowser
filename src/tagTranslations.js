@@ -57,11 +57,7 @@ function tagTranslationsTransList (key, values) {
     return tagTranslationsTrans(key, value.trim())
   }.bind(this, key))
 
-  if (values.length > 1) {
-    return values.slice(0, -1).join(', ') + ' and ' + values.slice(-1)[0]
-  }
-
-  return values[0]
+  return lang_enumerate(values)
 }
 
 module.exports = {
