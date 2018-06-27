@@ -1,12 +1,14 @@
 [submodule "modulekit"]
 	path = modulekit
 	url = https://github.com/plepe/modulekit.git
+        branch = nodejs
 [submodule "lib/modulekit/base"]
 	path = lib/modulekit/base
 	url = https://github.com/plepe/modulekit-base.git
 [submodule "lib/modulekit/lang"]
 	path = lib/modulekit/lang
 	url = https://github.com/plepe/modulekit-lang.git
+        branch = master
 [submodule "lib/modulekit/form"]
 	path = lib/modulekit/form
 	url = https://github.com/plepe/modulekit-form.git
