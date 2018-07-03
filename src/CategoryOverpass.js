@@ -12,13 +12,6 @@ var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
     markerSign: '',
-    'style:hover': {
-      color: 'black',
-      width: 3,
-      opacity: 1,
-      radius: 12,
-      pane: 'hover'
-    },
     'style:selected': {
       color: '#3f3f3f',
       width: 3,
@@ -73,8 +66,8 @@ function CategoryOverpass (options, data) {
   }
 
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
-  data.styleNoBindPopup = [ 'hover', 'selected' ]
-  data.stylesNoAutoShow = [ 'hover', 'selected' ]
+  data.styleNoBindPopup = [ 'selected' ]
+  data.stylesNoAutoShow = [ 'selected' ]
   data.updateAssets = this.updateAssets.bind(this)
 
   this.layer = new OverpassLayer(data)
@@ -93,25 +86,6 @@ function CategoryOverpass (options, data) {
 
     if (ev.error && ev.error !== 'abort') {
       alert('Error loading data from Overpass API: ' + ev.error)
-    }
-  }.bind(this)
-  this.layer.onAppear = function (ob) {
-    // HOVER
-    if (ob.listItem) {
-      ob.listItem.onmouseover = function (id) {
-        if (this.currentHover) {
-          this.currentHover.hide()
-        }
-
-        this.currentHover = this.layer.show(id, { styles: [ 'hover' ] }, function () {})
-      }.bind(this, ob.id)
-      ob.listItem.onmouseout = function (id) {
-        if (this.currentHover) {
-          this.currentHover.hide()
-        }
-
-        this.currentHover = null
-      }.bind(this, ob.id)
     }
   }.bind(this)
   this.layer.onUpdate = function (ob) {

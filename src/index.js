@@ -47,8 +47,6 @@ window.onload = function () {
 
   map.createPane('selected')
   map.getPane('selected').style.zIndex = 498
-  map.createPane('hover')
-  map.getPane('hover').style.zIndex = 499
 }
 
 function onload2 (initState) {
