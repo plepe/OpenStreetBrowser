@@ -3,7 +3,7 @@
     "category-info-tooltip": "Info & Legenda",
     "closed": "fechado",
     "default": "padrão",
-    "download:geojson": "",
+    "download:geojson": "Descarregar como GeoJSON",
     "edit": "editar",
     "error": {
         "message": "Erro",
@@ -11,7 +11,7 @@
     },
     "facilities": "Instalações",
     "header:attributes": "Atributos",
-    "header:export": "",
+    "header:export": "Exportar",
     "header:osm_meta": "OSM Meta",
     "images": "Imagens",
     "loading": "A carregar...",
