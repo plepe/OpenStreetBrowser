@@ -88,7 +88,7 @@ function CategoryOverpass (options, data) {
       alert('Error loading data from Overpass API: ' + ev.error)
     }
   }.bind(this)
-  this.layer.onUpdate = function (ob) {
+  this.layer.on('update', function (object, ob) {
     if (!ob.popup || !ob.popup._contentNode || map._popup !== ob.popup) {
       return
     }
@@ -98,7 +98,7 @@ function CategoryOverpass (options, data) {
     if (document.getElementById('content').className === 'details') {
       showDetails(ob, this)
     }
-  }.bind(this)
+  }.bind(this))
 
   p = document.createElement('div')
   p.className = 'loadingIndicator'
@@ -234,7 +234,7 @@ CategoryOverpass.prototype.open = function () {
   this.layer.addTo(this.map)
 
   if (!this.list) {
-    this.list = new OverpassLayerList(this.layer)
+    this.list = new OverpassLayerList(this.layer, {})
     this.list.addTo(this.domContent)
     this.origGetMarker = this.list._getMarker
     this.list._getMarker = this._getMarker.bind(this)
