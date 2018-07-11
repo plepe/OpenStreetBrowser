@@ -253,7 +253,7 @@ window.showDetails = function (data, category) {
 
   div = document.createElement('div')
   div.className = 'body'
-  div.innerHTML = data.data.body
+  div.innerHTML = data.data.detailBody || data.data.body
   dom.appendChild(div)
 
   div = document.createElement('div')
