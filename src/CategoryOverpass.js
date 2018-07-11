@@ -206,7 +206,7 @@ CategoryOverpass.prototype.updateStatus = function () {
   }
 }
 
-CategoryOverpass.prototype._getMarker = function (ob) {
+CategoryOverpass.prototype._getMarker = function (origList, ob) {
   if (ob.data.listMarkerSymbol.trim() == 'line') {
     var div = document.createElement('div')
     div.className = 'marker'
@@ -221,7 +221,7 @@ CategoryOverpass.prototype._getMarker = function (ob) {
     return div
   }
 
-  return this.origGetMarker(ob)
+  return this.origGetMarker.call(origList, ob)
 }
 
 CategoryOverpass.prototype.open = function () {
@@ -237,7 +237,7 @@ CategoryOverpass.prototype.open = function () {
     this.list = new OverpassLayerList(this.layer, {})
     this.list.addTo(this.domContent)
     this.origGetMarker = this.list._getMarker
-    this.list._getMarker = this._getMarker.bind(this)
+    this.list._getMarker = this._getMarker.bind(this, this.list)
   }
 
   this.isOpen = true
