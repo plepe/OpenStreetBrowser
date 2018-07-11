@@ -61,6 +61,6 @@ OverpassLayer.twig.extendFunction('evaluate', function (tags) {
     }
   }
 
-  var d = global.currentCategory.layer.evaluate(ob)
+  var d = global.currentCategory.layer.mainlayer.evaluate(ob)
   return d
 })
