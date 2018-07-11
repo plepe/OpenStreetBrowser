@@ -388,8 +388,7 @@ CategoryOverpass.prototype.renderTemplate = function (object, templateId, callba
       return callback(err, null)
     }
 
-    var data = this.layer.twigData(object.object)
-    var result = template.render(data)
+    var result = template.render(object.twigData)
 
     callback(null, result)
   }.bind(this))
