@@ -206,14 +206,14 @@ CategoryOverpass.prototype.updateStatus = function () {
   }
 }
 
-CategoryOverpass.prototype._getMarker = function (origList, ob) {
-  if (ob.data.listMarkerSymbol.trim() == 'line') {
+CategoryOverpass.prototype._getMarker = function (origGetMarker, origList, ob) {
+  if (ob.data[origList.options.prefix + 'MarkerSymbol'].trim() == 'line') {
     var div = document.createElement('div')
     div.className = 'marker'
     div.innerHTML = markers.line(ob.data)
 
     return div
-  } else if (ob.data.listMarkerSymbol.trim() == 'polygon') {
+  } else if (ob.data[origList.options.prefix + 'MarkerSymbol'].trim() == 'polygon') {
     var div = document.createElement('div')
     div.className = 'marker'
     div.innerHTML = markers.polygon(ob.data)
@@ -221,7 +221,7 @@ CategoryOverpass.prototype._getMarker = function (origList, ob) {
     return div
   }
 
-  return this.origGetMarker.call(origList, ob)
+  return origGetMarker.call(origList, ob)
 }
 
 CategoryOverpass.prototype.open = function () {
@@ -233,11 +233,58 @@ CategoryOverpass.prototype.open = function () {
 
   this.layer.addTo(this.map)
 
-  if (!this.list) {
-    this.list = new OverpassLayerList(this.layer, {})
-    this.list.addTo(this.domContent)
-    this.origGetMarker = this.list._getMarker
-    this.list._getMarker = this._getMarker.bind(this, this.list)
+  if (!this.lists) {
+    this.lists = []
+
+    if (this.data.lists) {
+      this.listsDom = []
+
+      let wrapper = document.createElement('div')
+      wrapper.className = 'categoryWrapper'
+      this.domContent.appendChild(wrapper)
+
+      for (let k in this.data.lists) {
+        let listData = this.data.lists[k]
+        let list = new OverpassLayerList(this.layer, listData)
+        this.lists.push(list)
+
+        let dom = document.createElement('div')
+        dom.className = 'category category-list open'
+        this.listsDom.push(dom)
+        wrapper.appendChild(dom)
+
+        let domHeader = document.createElement('header')
+        dom.appendChild(domHeader)
+
+        if (typeof listData.name === 'undefined') {
+          name = k
+        } else if (typeof listData.name === 'object') {
+          name = lang(listData.name)
+        } else {
+          name = listData.name
+        }
+
+        let a = document.createElement('a')
+        a.appendChild(document.createTextNode(name))
+        a.href = '#'
+        domHeader.appendChild(a)
+
+        let domContent = document.createElement('div')
+        domContent.className = 'content'
+        dom.appendChild(domContent)
+
+        list.addTo(domContent)
+      }
+    } else {
+      let list = new OverpassLayerList(this.layer, {})
+      this.lists.push(list)
+      list.addTo(this.domContent)
+    }
+
+    this.lists.forEach(list => {
+      let origGetMarker = list._getMarker
+      list._getMarker = this._getMarker.bind(this, origGetMarker, list)
+    })
   }
 
   this.isOpen = true
@@ -293,7 +340,7 @@ CategoryOverpass.prototype.close = function () {
   CategoryBase.prototype.close.call(this)
 
   this.layer.remove()
-  this.list.remove()
+  this.lists.forEach(list => list.remove())
 
   state.update()
 }
