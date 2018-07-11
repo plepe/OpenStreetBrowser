@@ -311,7 +311,7 @@ CategoryOverpass.prototype.show = function (id, options, callback) {
     {
       styles: [ 'selected' ]
     },
-    function (err, data) {
+    function (err, ob, data) {
       if (!err) {
         if (options.showDetails && !options.hasLocation) {
           var preferredZoom = data.data.preferredZoom || 16
