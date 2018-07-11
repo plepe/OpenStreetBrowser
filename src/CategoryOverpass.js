@@ -40,15 +40,15 @@ function CategoryOverpass (options, data) {
   // set undefined data properties from defaultValues
   for (var k1 in defaultValues) {
     if (!(k1 in data)) {
-      data[k1] = defaultValues[k1]
+      data[k1] = JSON.parse(JSON.stringify(defaultValues[k1]))
     } else if (typeof defaultValues[k1] === 'object') {
       for (var k2 in defaultValues[k1]) {
         if (!(k2 in data[k1])) {
-          data[k1][k2] = defaultValues[k1][k2]
+          data[k1][k2] = JSON.parse(JSON.stringify(defaultValues[k1][k2]))
         } else if (typeof defaultValues[k1][k2] === 'object') {
           for (var k3 in defaultValues[k1][k2]) {
             if (!(k3 in data[k1][k2])) {
-              data[k1][k2][k3] = defaultValues[k1][k2][k3]
+              data[k1][k2][k3] = JSON.parse(JSON.stringify(defaultValues[k1][k2][k3]))
             }
           }
         }
