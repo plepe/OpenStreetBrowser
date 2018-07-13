@@ -117,7 +117,7 @@ function onload2 (initState) {
 
   map.on('popupopen', function (e) {
     if (e.popup.object) {
-      var url = e.popup.object.layer_id + '/' + e.popup.object.id
+      var url = e.popup.object.layer_id + '/' + (e.popup.object.sublayer_id === 'main' ? '': e.popup.object.sublayer_id + ':') + e.popup.object.id
       if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/') {
         currentPath = url
         // only push state, when last popup close happened >1sec earlier
@@ -193,7 +193,7 @@ function show (id, options, callback) {
     document.getElementById('contentDetails').innerHTML = lang('loading')
   }
 
-  var m = id.match(/^(.*)\/([nwr]\d+)(\/details)?$/)
+  var m = id.match(/^(.*)\/((?:[\w\d-]+:)?[nwr]\d+)(\/details)?$/)
   if (!m) {
     return callback(new Error('unknown request'))
   }

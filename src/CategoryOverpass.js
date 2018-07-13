@@ -354,10 +354,23 @@ CategoryOverpass.prototype.show = function (id, options, callback) {
     this.currentDetails.hide()
   }
 
-  this.currentDetails = this.layer.show(id,
-    {
-      styles: [ 'selected' ]
-    },
+  let layerOptions = {
+    styles: [ 'selected' ]
+  }
+
+  let idParts = id.split(/:/)
+  switch (idParts.length) {
+    case 2:
+      id = idParts[1]
+      layerOptions.sublayer_id = idParts[0]
+      break
+    case 1:
+      break
+    default:
+      return callback(new Error('too many id parts! ' + id))
+  }
+
+  this.currentDetails = this.layer.show(id, layerOptions,
     function (err, ob, data) {
       if (!err) {
         if (options.showDetails && !options.hasLocation) {
@@ -380,8 +393,13 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
     this.currentSelected.hide()
   }
 
+  let layerOptions = {
+    styles: [ 'selected' ],
+    sublayer_id: object.sublayer_id
+  }
+
   this.updatePopupContent(object, popup)
-  this.currentSelected = this.layer.show(object.id, { styles: [ 'selected' ] }, function () {})
+  this.currentSelected = this.layer.show(object.id, layerOptions, function () {})
 }
 
 CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
@@ -412,9 +430,11 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
     popupBody.innerHTML = this.popupBodyTemplate.render(object.twigData)
   }
 
+  let id_with_sublayer = (object.sublayer_id === 'main' ? '' : object.sublayer_id + ':') + object.id
+
   var footer = document.createElement('ul')
   footer.className = 'popup-footer'
-  var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + object.id + '/details">' + lang('show details') + '</a></li>'
+  var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
   footerContent += '<li><a target="_blank" class="editLink" href="https://www.openstreetmap.org/edit?editor=id&' + object.object.type + '=' + object.object.osm_id + '">' + lang('edit') + '</a></li>'
   footer.innerHTML = footerContent
   popup._contentNode.appendChild(footer)
