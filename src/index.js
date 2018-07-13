@@ -245,22 +245,26 @@ window.showDetails = function (data, category) {
   div.className = 'title'
   div.innerHTML = data.data.title
   dom.appendChild(div)
+  data.sublayer.updateAssets(div, data)
 
   div = document.createElement('div')
   div.className = 'description'
   div.innerHTML = data.data.description
   dom.appendChild(div)
+  data.sublayer.updateAssets(div, data)
 
   div = document.createElement('div')
   div.className = 'body'
   div.innerHTML = data.data.detailBody || data.data.body
   dom.appendChild(div)
+  data.sublayer.updateAssets(div, data)
 
   div = document.createElement('div')
   div.className = 'body'
   dom.appendChild(div)
   category.renderTemplate(data, 'detailsBody', function (div, err, result) {
     div.innerHTML = result
+    data.sublayer.updateAssets(div, data)
   }.bind(this, div))
 
 
