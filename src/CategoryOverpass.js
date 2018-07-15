@@ -415,29 +415,34 @@ CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
 }
 
 CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
-  if (object.data.popupDescription || object.data.description) {
-    var div = document.createElement('div')
-    div.className = 'description'
-    div.innerHTML = object.data.popupDescription || object.data.description
-    popup._contentNode.insertBefore(div, popup._contentNode.firstChild.nextSibling)
-  }
-
   if (this.popupBodyTemplate) {
-    var popupBody = document.createElement('div')
-    popupBody.className = 'popupBody'
-    popup._contentNode.appendChild(popupBody)
+    var popupBody = popup._contentNode.getElementsByClassName('popupBody')
+    if (!popupBody.length) {
+      popupBody = document.createElement('div')
+      popupBody.className = 'popupBody'
+      popup._contentNode.appendChild(popupBody)
+    }
 
-    popupBody.innerHTML = this.popupBodyTemplate.render(object.twigData)
+    let html = this.popupBodyTemplate.render(object.twigData)
+    if (popupBody.currentHTML !== html) {
+      popupBody.innerHTML = html
+    }
+
+    popupBody.currentHTML = html
   }
 
   let id_with_sublayer = (object.sublayer_id === 'main' ? '' : object.sublayer_id + ':') + object.id
 
-  var footer = document.createElement('ul')
-  footer.className = 'popup-footer'
+  var footer = popup._contentNode.getElementsByClassName('popup-footer')
+  if (!footer.length) {
+    footer = document.createElement('ul')
+    popup._contentNode.appendChild(footer)
+    footer.className = 'popup-footer'
+  }
+
   var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
   footerContent += '<li><a target="_blank" class="editLink" href="https://www.openstreetmap.org/edit?editor=id&' + object.object.type + '=' + object.object.osm_id + '">' + lang('edit') + '</a></li>'
   footer.innerHTML = footerContent
-  popup._contentNode.appendChild(footer)
 
   call_hooks_callback('show-popup', object, this, popup._contentNode,
     function (err) {
