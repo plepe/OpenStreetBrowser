@@ -23,6 +23,7 @@
     "leaflet.polylinemeasure": "https://github.com/ppete2/Leaflet.PolylineMeasure.git",
     "modulekit-tabs": "^0.1.0",
     "moment": "^2.18.1",
+    "natsort": "^1.0.6",
     "opening_hours": "^3.5.0",
     "openstreetbrowser-categories-main": "https://github.com/plepe/openstreetbrowser-categories-main",
     "openstreetmap-date-parser": "^0.1.0",

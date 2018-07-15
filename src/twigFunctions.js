@@ -2,6 +2,7 @@ var OverpassLayer = require('overpass-layer')
 var OpeningHours = require('opening_hours')
 var colorInterpolate = require('color-interpolate')
 var osmParseDate = require('openstreetmap-date-parser')
+const natsort = require('natsort')
 
 OverpassLayer.twig.extendFunction('tagsPrefix', function (tags, prefix) {
   var ret = {}
@@ -40,6 +41,16 @@ OverpassLayer.twig.extendFilter('websiteUrl', function (value) {
 })
 OverpassLayer.twig.extendFilter('matches', function (value, match) {
   return value.toString().match(match)
+})
+OverpassLayer.twig.extendFilter('natsort', function (values, options) {
+  return values.sort(natsort(options))
+})
+OverpassLayer.twig.extendFilter('unique', function (values, options) {
+  // source: https://stackoverflow.com/a/14438954
+  function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index
+  }
+  return values.filter(onlyUnique)
 })
 OverpassLayer.twig.extendFunction('colorInterpolate', function (map, value) {
   var colormap = colorInterpolate(map)
