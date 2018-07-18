@@ -234,6 +234,10 @@ function show (id, options, callback) {
   })
 }
 
+function updateShowDetails (ob, data) {
+  console.log('update', ob, data)
+}
+
 window.showDetails = function (data, category) {
   var div, h, dt, dd, li, a
   var k
