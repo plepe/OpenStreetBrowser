@@ -85,7 +85,7 @@ function onload2 (initState) {
 
   overpassFrontend = new OverpassFrontend(overpassUrl, {
     timeGap: 10,
-    effortPerRequest: 100
+    effortPerRequest: 512
   })
 
   OpenStreetBrowserLoader.setMap(map)

@@ -24,7 +24,6 @@ var defaultValues = {
     preferredZoom: 16
   },
   queryOptions: {
-    split: 64
   }
 }
 
