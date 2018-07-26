@@ -104,14 +104,19 @@ function CategoryOverpass (options, data) {
   p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">' + lang('loading') + '</span>'
   this.dom.appendChild(p)
 
-  p = document.createElement('div')
-  p.className = 'loadingIndicator2'
-  p.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>'
-  this.dom.appendChild(p)
-
   this.domStatus = document.createElement('div')
   this.domStatus.className = 'status'
-  this.dom.appendChild(this.domStatus)
+
+  if (this.data.lists) {
+    this.dom.insertBefore(this.domStatus, this.domHeader.nextSibling)
+  } else {
+    p = document.createElement('div')
+    p.className = 'loadingIndicator2'
+    p.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>'
+    this.dom.appendChild(p)
+
+    this.dom.appendChild(this.domStatus)
+  }
 
   register_hook('state-get', function (state) {
     if (this.isOpen) {
@@ -255,6 +260,11 @@ CategoryOverpass.prototype.open = function () {
         let domHeader = document.createElement('header')
         dom.appendChild(domHeader)
 
+        let p = document.createElement('div')
+        p.className = 'loadingIndicator'
+        p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">' + lang('loading') + '</span>'
+        dom.appendChild(p)
+
         if (typeof listData.name === 'undefined') {
           name = k
         } else if (typeof listData.name === 'object') {
@@ -273,6 +283,11 @@ CategoryOverpass.prototype.open = function () {
         dom.appendChild(domContent)
 
         list.addTo(domContent)
+
+        p = document.createElement('div')
+        p.className = 'loadingIndicator2'
+        p.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>'
+        dom.appendChild(p)
       }
     } else {
       let list = new OverpassLayerList(this.layer, {})

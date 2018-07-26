@@ -21,8 +21,8 @@ function CategoryBase (options, data) {
   var a
 
   if (this.id !== 'index') {
-    var domHeader = document.createElement('header')
-    this.dom.appendChild(domHeader)
+    this.domHeader = document.createElement('header')
+    this.dom.appendChild(this.domHeader)
 
     if ('name' in this.data) {
       if (typeof this.data.name === 'object') {
@@ -40,13 +40,13 @@ function CategoryBase (options, data) {
     a.appendChild(document.createTextNode(name))
     a.href = '#'
     a.onclick = this.toggle.bind(this)
-    domHeader.appendChild(a)
+    this.domHeader.appendChild(a)
 
     if (this.options.repositoryId && this.options.repositoryId !== 'default') {
       a = document.createElement('span')
       a.className = 'repoId'
       a.appendChild(document.createTextNode(this.options.repositoryId))
-      domHeader.appendChild(a)
+      this.domHeader.appendChild(a)
     }
 
     if (this.shallShowReload()) {
@@ -68,7 +68,7 @@ function CategoryBase (options, data) {
           }
         })
       }.bind(this)
-      domHeader.appendChild(a)
+      this.domHeader.appendChild(a)
     }
   }
 
