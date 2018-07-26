@@ -8,8 +8,7 @@
   font-size: 15px;
   display: none;
 }
-.category.loading > .loadingIndicator,
-.category.loading > .content > .categoryWrapper > .category-list > .loadingIndicator {
+.category.loading > .loadingIndicator {
   padding-top: 2px;
   display: block;
 }

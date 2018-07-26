@@ -253,7 +253,7 @@ CategoryOverpass.prototype.open = function () {
         this.lists.push(list)
 
         let dom = document.createElement('div')
-        dom.className = 'category category-list open'
+        dom.className = 'category category-list'
         this.listsDom.push(dom)
         wrapper.appendChild(dom)
 
@@ -277,6 +277,11 @@ CategoryOverpass.prototype.open = function () {
         a.appendChild(document.createTextNode(name))
         a.href = '#'
         domHeader.appendChild(a)
+
+        a.onclick = () => {
+          dom.classList.toggle('open')
+          return false
+        }
 
         let domContent = document.createElement('div')
         domContent.className = 'content'
