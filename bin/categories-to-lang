@@ -16,18 +16,9 @@ fs.readdir('lang', function (err, files) {
     let done = this.async()
     let lang = m[1]
 
-    fs.readFile('lang/' + f, function (err, contents) {
-      let data = JSON.parse(contents)
-      
+    fs.readFile('lang/' + f, function (err) {
       if (!(lang in all)) {
         all[lang] = {}
-
-      }
-
-      for (var id in data) {
-        if (!(id in all[lang])) {
-          all[lang][id] = data[id]
-        }
       }
 
       done()
