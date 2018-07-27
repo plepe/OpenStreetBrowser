@@ -60,6 +60,19 @@ fs.readdir(
             if (data.type && data.type === 'index') {
               parseSubCategories(data.subCategories, all)
             }
+            if (data.type && data.type === 'overpass') {
+              if (data.lists) {
+                for (let listId in data.lists) {
+                  let list = data.lists[listId]
+                  let langStrId = 'category:' + id + ':' + listId
+
+                  allIds.push(langStrId)
+                  for (let lang in list.name) {
+                    all[lang][langStrId] = list.name[lang]
+                  }
+                }
+              }
+            }
           }
 
           done()

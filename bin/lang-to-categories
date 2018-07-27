@@ -110,6 +110,21 @@ function writeCategories () {
             if (data.type && data.type === 'index') {
               writeSubCategories(data.subCategories, all)
             }
+            if (data.type && data.type === 'overpass') {
+              if (data.lists) {
+                for (let listId in data.lists) {
+                  let list = data.lists[listId]
+                  let langStrId = id + ':' + listId
+
+                  for (var lang in all[langStrId]) {
+                    if (all[langStrId][lang]) {
+                      list.name[lang] = all[langStrId][lang]
+                    }
+                  }
+                  list.name = sortKeys(list.name)
+                }
+              }
+            }
 
             let result = {}
             data.name = sortKeys(data.name)
