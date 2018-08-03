@@ -67,6 +67,7 @@ Extra filters:
 * filter `osmDateParse`: returns an array with the lower and upper boundary of the year of a `start_date` tag. See [https://github.com/plepe/openstreetmap-date-parser](openstreetmap-date-parser) for details.
 * filter `natsort`: Sort an array naturally, see [https://www.npmjs.com/package/natsort](natsort) for details.
 * filter `unique`: Remove duplicate elements from an array.
+* filter `md5`: calculate md5 hash of a string.
 
 Notes:
 * Variables will automatically be HTML escaped, if not the filter raw is used, e.g.: {{ tags.name|raw }}
