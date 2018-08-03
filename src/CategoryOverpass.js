@@ -457,19 +457,19 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
     footer = document.createElement('ul')
     popup._contentNode.appendChild(footer)
     footer.className = 'popup-footer'
+
+    call_hooks_callback('show-popup', object, this, popup._contentNode,
+      function (err) {
+        if (err.length) {
+          console.log('show-popup produced errors:', err)
+        }
+      }
+    )
   }
 
   var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
   footerContent += '<li><a target="_blank" class="editLink" href="https://www.openstreetmap.org/edit?editor=id&' + object.object.type + '=' + object.object.osm_id + '">' + lang('edit') + '</a></li>'
   footer.innerHTML = footerContent
-
-  call_hooks_callback('show-popup', object, this, popup._contentNode,
-    function (err) {
-      if (err.length) {
-        console.log('show-popup produced errors:', err)
-      }
-    }
-  )
 }
 
 CategoryOverpass.prototype.renderTemplate = function (object, templateId, callback) {
