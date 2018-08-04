@@ -105,6 +105,12 @@
   padding-top: 3px;
   background: #efefef;
 }
+.body h4 {
+  margin-bottom: 0;
+}
+.body ul.overpass-layer-list {
+  padding-left: 40px;
+}
 
 .category > div > div> .category {
   margin-left: 1em;
