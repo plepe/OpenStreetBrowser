@@ -83,7 +83,7 @@ function CategoryOverpass (options, data) {
       this.parentCategory.notifyChildLoadEnd(this)
     }
 
-    if (ev.error && ev.error !== 'abort') {
+    if (ev.error) {
       alert('Error loading data from Overpass API: ' + ev.error)
     }
   }.bind(this)
