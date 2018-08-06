@@ -1,3 +1,5 @@
+/* global lang_str lang_non_translated */
+/* eslint camelcase:0 */
 var OverpassLayer = require('overpass-layer')
 var tagLang = null
 

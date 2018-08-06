@@ -1,4 +1,5 @@
 /* global lang, ui_lang, options, alert */
+/* eslint camelcase: 0 */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var tabs = require('modulekit-tabs')
 
@@ -6,8 +7,7 @@ function CategoryBase (options, data) {
   if (typeof options === 'string') {
     this.id = options
     this.options = {}
-  }
-  else {
+  } else {
     this.id = options.id
     this.options = options
   }

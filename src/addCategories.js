@@ -1,6 +1,9 @@
-var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
+/* global OverpassLayer, repositoriesGitea */
 require('./addCategories.css')
-var weightSort = require('weight-sort')
+
+const weightSort = require('weight-sort')
+
+const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
 var content
 
@@ -15,8 +18,11 @@ function addCategoriesShow (repo) {
   document.getElementById('content').className = 'addCategories'
 
   OpenStreetBrowserLoader.getRepo(repo, {}, function (err, repoData) {
-    while(content.firstChild)
-      content.removeChild(content.firstChild)
+    if (err) {
+      alert(err)
+    }
+
+    while (content.firstChild) { content.removeChild(content.firstChild) }
 
     var backLink = document.createElement('a')
     backLink.className = 'back'
@@ -38,7 +44,7 @@ function addCategoriesShow (repo) {
       }
       content.appendChild(backLink)
 
-      var h = document.createElement('h2')
+      let h = document.createElement('h2')
       h.appendChild(document.createTextNode(repo))
       content.appendChild(h)
 
@@ -50,12 +56,12 @@ function addCategoriesShow (repo) {
       }
       content.appendChild(backLink)
 
-      var h = document.createElement('h2')
+      let h = document.createElement('h2')
       h.innerHTML = lang('more_categories')
       content.appendChild(h)
 
       if (typeof repositoriesGitea === 'object' && repositoriesGitea.url) {
-        var a = document.createElement('a')
+        let a = document.createElement('a')
         a.href = repositoriesGitea.url
         a.target = '_blank'
         a.innerHTML = lang('more_categories_gitea')
@@ -75,12 +81,12 @@ function addCategoriesShow (repo) {
 
       var repositoryUrl = null
       if (data.repositoryUrl) {
-	repositoryUrl = OverpassLayer.twig.twig({ data: data.repositoryUrl, autoescape: true })
+        repositoryUrl = OverpassLayer.twig.twig({ data: data.repositoryUrl, autoescape: true })
       }
 
       var li = document.createElement('li')
 
-      var a = document.createElement('a')
+      let a = document.createElement('a')
       if (repo) {
         a.href = '#categories=' + repo + '/' + id
         a.onclick = function () {
@@ -97,23 +103,23 @@ function addCategoriesShow (repo) {
       li.appendChild(a)
       a.appendChild(document.createTextNode('name' in data ? lang(data.name) : id))
 
-    var editLink = null
-    if (repo && categoryUrl) {
-      editLink = document.createElement('a')
-      editLink.href = categoryUrl.render({ repositoryId: repo, categoryId: id })
-    }
-    if (!repo && repositoryUrl) {
-      editLink = document.createElement('a')
-      editLink.href = repositoryUrl.render({ repositoryId: id })
-    }
-    if (editLink) {
-      editLink.className = 'source-code'
-      editLink.title = 'Show source code'
-      editLink.target = '_blank'
-      editLink.innerHTML = '<i class="fa fa-file-code-o" aria-hidden="true"></i>'
-      li.appendChild(document.createTextNode(' '))
-      li.appendChild(editLink)
-    }
+      var editLink = null
+      if (repo && categoryUrl) {
+        editLink = document.createElement('a')
+        editLink.href = categoryUrl.render({ repositoryId: repo, categoryId: id })
+      }
+      if (!repo && repositoryUrl) {
+        editLink = document.createElement('a')
+        editLink.href = repositoryUrl.render({ repositoryId: id })
+      }
+      if (editLink) {
+        editLink.className = 'source-code'
+        editLink.title = 'Show source code'
+        editLink.target = '_blank'
+        editLink.innerHTML = '<i class="fa fa-file-code-o" aria-hidden="true"></i>'
+        li.appendChild(document.createTextNode(' '))
+        li.appendChild(editLink)
+      }
 
       ul.appendChild(li)
     }

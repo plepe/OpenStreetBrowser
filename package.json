@@ -46,7 +46,7 @@
                 "targets": {
                   "browsers": [
                     "last 2 versions",
-		    "> 0.5%",
+                    "> 0.5%",
                     "safari >= 7",
                     "ie >= 11"
                   ]
@@ -94,6 +94,9 @@
       "currentPath",
       "overpassUrl",
       "ajax"
-    ]
+    ],
+    "rules": {
+      "camelcase": 0
+    }
   }
 }

@@ -1,3 +1,5 @@
+/* global showDetails, openstreetbrowserPrefix */
+/* eslint camelcase: 0 */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
@@ -19,8 +21,8 @@ var defaultValues = {
       radius: 12,
       pane: 'selected'
     },
-    markerSymbol: "{{ markerPointer({})|raw }}",
-    listMarkerSymbol: "{{ markerCircle({})|raw }}",
+    markerSymbol: '{{ markerPointer({})|raw }}',
+    listMarkerSymbol: '{{ markerCircle({})|raw }}',
     preferredZoom: 16
   },
   queryOptions: {
@@ -152,7 +154,7 @@ CategoryOverpass.prototype.updateAssets = function (div) {
     var src = img.getAttribute('src')
     if (src === null) {
     } else if (src.match(/^maki:.*/)) {
-      let m = src.match(/^maki:([a-z0-9\-]*)(?:\?(.*))?$/)
+      let m = src.match(/^maki:([a-z0-9-]*)(?:\?(.*))?$/)
       if (m) {
         let span = document.createElement('span')
         img.parentNode.insertBefore(span, img)
@@ -211,14 +213,14 @@ CategoryOverpass.prototype.updateStatus = function () {
 }
 
 CategoryOverpass.prototype._getMarker = function (origGetMarker, origList, ob) {
-  if (ob.data[origList.options.prefix + 'MarkerSymbol'].trim() == 'line') {
-    var div = document.createElement('div')
+  if (ob.data[origList.options.prefix + 'MarkerSymbol'].trim() === 'line') {
+    let div = document.createElement('div')
     div.className = 'marker'
     div.innerHTML = markers.line(ob.data)
 
     return div
-  } else if (ob.data[origList.options.prefix + 'MarkerSymbol'].trim() == 'polygon') {
-    var div = document.createElement('div')
+  } else if (ob.data[origList.options.prefix + 'MarkerSymbol'].trim() === 'polygon') {
+    let div = document.createElement('div')
     div.className = 'marker'
     div.innerHTML = markers.polygon(ob.data)
 
@@ -265,6 +267,7 @@ CategoryOverpass.prototype.open = function () {
         p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">' + lang('loading') + '</span>'
         dom.appendChild(p)
 
+        let name
         if (typeof listData.name === 'undefined') {
           name = k
         } else if (typeof listData.name === 'object') {
@@ -337,7 +340,7 @@ CategoryOverpass.prototype.updateInfo = function () {
   global.currentCategory = this
   var data = {
     layer_id: this.id,
-    'const': this.data.const,
+    'const': this.data.const
   }
   if (this.map) {
     data.map = { zoom: map.getZoom() }
@@ -482,7 +485,7 @@ CategoryOverpass.prototype.renderTemplate = function (object, templateId, callba
     var result = template.render(object.twigData)
 
     callback(null, result)
-  }.bind(this))
+  })
 }
 
 OpenStreetBrowserLoader.registerType('overpass', CategoryOverpass)

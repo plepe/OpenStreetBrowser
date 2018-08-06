@@ -54,7 +54,7 @@ OverpassLayer.twig.extendFilter('natsort', function (values, options) {
 })
 OverpassLayer.twig.extendFilter('unique', function (values, options) {
   // source: https://stackoverflow.com/a/14438954
-  function onlyUnique(value, index, self) {
+  function onlyUnique (value, index, self) {
     return self.indexOf(value) === index
   }
   return values.filter(onlyUnique)
@@ -67,11 +67,11 @@ OverpassLayer.twig.extendFilter('osmParseDate', function (value) {
   return osmParseDate(value)
 })
 OverpassLayer.twig.extendFilter('md5', function (value) {
-  if (value in md5cache) {
-    return md5cache[value]
+  if (!(value in md5cache)) {
+    md5cache[value] = md5(value)
   }
 
-  return md5cache[value] = md5(value)
+  return md5cache[value]
 })
 OverpassLayer.twig.extendFunction('evaluate', function (tags) {
   var ob = {

@@ -1,4 +1,4 @@
-/* globals map:true, overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true */
+/* globals map:true, overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true showDetails */
 
 var LeafletGeoSearch = require('leaflet-geosearch')
 
@@ -53,7 +53,7 @@ function onload2 (initState) {
   // Measurement plugin
   if (L.control.polylineMeasure) {
     L.control.polylineMeasure({
-    }).addTo(map);
+    }).addTo(map)
   }
 
   // Add Geo Search
@@ -117,7 +117,7 @@ function onload2 (initState) {
 
   map.on('popupopen', function (e) {
     if (e.popup.object) {
-      var url = e.popup.object.layer_id + '/' + (e.popup.object.sublayer_id === 'main' ? '': e.popup.object.sublayer_id + ':') + e.popup.object.id
+      var url = e.popup.object.layer_id + '/' + (e.popup.object.sublayer_id === 'main' ? '' : e.popup.object.sublayer_id + ':') + e.popup.object.id
       if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/') {
         currentPath = url
         // only push state, when last popup close happened >1sec earlier
@@ -234,10 +234,6 @@ function show (id, options, callback) {
   })
 }
 
-function updateShowDetails (ob, data) {
-  console.log('update', ob, data)
-}
-
 window.showDetails = function (data, category) {
   var div, h, dt, dd, li, a
   var k
@@ -257,7 +253,7 @@ window.showDetails = function (data, category) {
   dom.appendChild(div)
   data.sublayer.updateAssets(div, data)
 
-  let div = document.createElement('div')
+  div = document.createElement('div')
   div.className = 'body'
   dom.appendChild(div)
 
@@ -276,7 +272,6 @@ window.showDetails = function (data, category) {
     div.innerHTML = result
     data.sublayer.updateAssets(div, data)
   }.bind(this, div))
-
 
   call_hooks_callback('show-details', data, category, dom,
     function (err) {
@@ -329,7 +324,7 @@ window.showDetails = function (data, category) {
   dt.appendChild(document.createTextNode('id'))
   div.appendChild(dt)
   dd = document.createElement('dd')
-  var a = document.createElement('a')
+  a = document.createElement('a')
   a.appendChild(document.createTextNode(data.object.type + '/' + data.object.osm_id))
   a.href = 'https://openstreetmap.org/' + data.object.type + '/' + data.object.osm_id
   a.target = '_blank'
