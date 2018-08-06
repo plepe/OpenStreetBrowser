@@ -257,11 +257,17 @@ window.showDetails = function (data, category) {
   dom.appendChild(div)
   data.sublayer.updateAssets(div, data)
 
-  div = document.createElement('div')
+  let div = document.createElement('div')
   div.className = 'body'
-  div.innerHTML = data.data.detailBody || data.data.body
   dom.appendChild(div)
-  data.sublayer.updateAssets(div, data)
+
+  function updateBody (div) {
+    div.innerHTML = data.data.detailBody || data.data.body
+    data.sublayer.updateAssets(div, data)
+  }
+
+  data.object.on('update', updateBody.bind(this, div))
+  updateBody(div)
 
   div = document.createElement('div')
   div.className = 'body'
