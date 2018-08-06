@@ -43,6 +43,10 @@ OverpassLayer.twig.extendFilter('websiteUrl', function (value) {
   return 'http://' + value
 })
 OverpassLayer.twig.extendFilter('matches', function (value, match) {
+  if (value === null) {
+    return false
+  }
+
   return value.toString().match(match)
 })
 OverpassLayer.twig.extendFilter('natsort', function (values, options) {
