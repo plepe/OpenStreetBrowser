@@ -16,7 +16,7 @@ function showWikimediaImage (image, dom) {
       forceServerLoad: true
     },
     function (err, result) {
-      if (!result) {
+      if (err || !result) {
         return
       }
 
@@ -70,7 +70,7 @@ register_hook('show-details', function (data, category, dom, callback) {
   currentLoader.next({
     counter: data.detailsImageCounter,
     wrap: true
-  },function (err, img) {
+  }, function (err, img) {
     div.classList.remove('loading')
 
     if (!img) {
@@ -138,7 +138,7 @@ register_hook('show-popup', function (data, category, dom, callback) {
 
   currentLoader.first({
     counter: data.popupImageCounter
-  },function (err, img) {
+  }, function (err, img) {
     div.classList.remove('loading')
 
     if (!img) {

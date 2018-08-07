@@ -1,3 +1,4 @@
+/* global openstreetbrowserPrefix */
 var loadClash = {}
 var cache = {}
 
@@ -14,10 +15,9 @@ function applyOptions (code, options) {
 }
 
 function maki (file, options, callback) {
-  var id
   var size = options.size || 15
 
-  var m = file.match(/^(.*)\-(11|15)/)
+  var m = file.match(/^(.*)-(11|15)/)
   if (!m) {
     file += '-' + size
   }
@@ -48,7 +48,6 @@ function maki (file, options, callback) {
 
     loadClash[file].forEach(p => p[1](null, applyOptions(cache[file], p[0])))
     delete loadClash[file]
-    return
   })
   req.open('GET', url)
   req.send()

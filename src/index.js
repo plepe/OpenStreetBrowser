@@ -1,4 +1,4 @@
-/* globals map:true, overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true */
+/* globals map:true, overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true showDetails */
 
 var LeafletGeoSearch = require('leaflet-geosearch')
 
@@ -47,15 +47,13 @@ window.onload = function () {
 
   map.createPane('selected')
   map.getPane('selected').style.zIndex = 498
-  map.createPane('hover')
-  map.getPane('hover').style.zIndex = 499
 }
 
 function onload2 (initState) {
   // Measurement plugin
   if (L.control.polylineMeasure) {
     L.control.polylineMeasure({
-    }).addTo(map);
+    }).addTo(map)
   }
 
   // Add Geo Search
@@ -87,7 +85,7 @@ function onload2 (initState) {
 
   overpassFrontend = new OverpassFrontend(overpassUrl, {
     timeGap: 10,
-    effortPerRequest: 100
+    effortPerRequest: 512
   })
 
   OpenStreetBrowserLoader.setMap(map)
@@ -119,7 +117,7 @@ function onload2 (initState) {
 
   map.on('popupopen', function (e) {
     if (e.popup.object) {
-      var url = e.popup.object.layer_id + '/' + e.popup.object.id
+      var url = e.popup.object.layer_id + '/' + (e.popup.object.sublayer_id === 'main' ? '' : e.popup.object.sublayer_id + ':') + e.popup.object.id
       if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/') {
         currentPath = url
         // only push state, when last popup close happened >1sec earlier
@@ -195,7 +193,7 @@ function show (id, options, callback) {
     document.getElementById('contentDetails').innerHTML = lang('loading')
   }
 
-  var m = id.match(/^(.*)\/([nwr]\d+)(\/details)?$/)
+  var m = id.match(/^(.*)\/((?:[\w\d-]+:)?[nwr]\d+)(\/details)?$/)
   if (!m) {
     return callback(new Error('unknown request'))
   }
@@ -247,24 +245,33 @@ window.showDetails = function (data, category) {
   div.className = 'title'
   div.innerHTML = data.data.title
   dom.appendChild(div)
+  data.sublayer.updateAssets(div, data)
 
   div = document.createElement('div')
   div.className = 'description'
   div.innerHTML = data.data.description
   dom.appendChild(div)
+  data.sublayer.updateAssets(div, data)
 
   div = document.createElement('div')
   div.className = 'body'
-  div.innerHTML = data.data.body
   dom.appendChild(div)
+
+  function updateBody (div) {
+    div.innerHTML = data.data.detailBody || data.data.body
+    data.sublayer.updateAssets(div, data)
+  }
+
+  data.object.on('update', updateBody.bind(this, div))
+  updateBody(div)
 
   div = document.createElement('div')
   div.className = 'body'
   dom.appendChild(div)
   category.renderTemplate(data, 'detailsBody', function (div, err, result) {
     div.innerHTML = result
+    data.sublayer.updateAssets(div, data)
   }.bind(this, div))
-
 
   call_hooks_callback('show-details', data, category, dom,
     function (err) {
@@ -317,7 +324,7 @@ window.showDetails = function (data, category) {
   dt.appendChild(document.createTextNode('id'))
   div.appendChild(dt)
   dd = document.createElement('dd')
-  var a = document.createElement('a')
+  a = document.createElement('a')
   a.appendChild(document.createTextNode(data.object.type + '/' + data.object.osm_id))
   a.href = 'https://openstreetmap.org/' + data.object.type + '/' + data.object.osm_id
   a.target = '_blank'

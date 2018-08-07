@@ -1,4 +1,4 @@
-/* globals form, ajax, options:true, showRootContent */
+/* globals form, ajax, options:true */
 var moduleOptions = {}
 var prevPage
 
@@ -46,7 +46,7 @@ moduleOptions.open = function () {
   input.innerHTML = lang('save')
   f.appendChild(input)
 
-  var input = document.createElement('button')
+  input = document.createElement('button')
   input.innerHTML = lang('cancel')
   f.appendChild(input)
   input.onclick = function () {
@@ -68,12 +68,12 @@ moduleOptions.submit = function (optionsForm) {
   }
 
   ajax('options_save', null, data, function (ret) {
-    let old_options = options
+    let oldOptions = options
     options = data
 
     document.getElementById('content').className = prevPage
 
-    call_hooks('options_save', data, old_options)
+    call_hooks('options_save', data, oldOptions)
 
     if (reload) {
       location.reload()

@@ -21,8 +21,10 @@
     "leaflet-textpath": "https://github.com/makinacorpus/Leaflet.TextPath#leaflet0.8-dev",
     "leaflet.locatecontrol": "^0.61.0",
     "leaflet.polylinemeasure": "https://github.com/ppete2/Leaflet.PolylineMeasure.git",
+    "md5": "^2.2.1",
     "modulekit-tabs": "^0.1.0",
     "moment": "^2.18.1",
+    "natsort": "^1.0.6",
     "opening_hours": "^3.5.0",
     "openstreetbrowser-categories-main": "https://github.com/plepe/openstreetbrowser-categories-main",
     "openstreetmap-date-parser": "^0.1.0",
@@ -44,7 +46,7 @@
                 "targets": {
                   "browsers": [
                     "last 2 versions",
-		    "> 0.5%",
+                    "> 0.5%",
                     "safari >= 7",
                     "ie >= 11"
                   ]
@@ -92,6 +94,9 @@
       "currentPath",
       "overpassUrl",
       "ajax"
-    ]
+    ],
+    "rules": {
+      "camelcase": 0
+    }
   }
 }

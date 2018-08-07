@@ -5,6 +5,16 @@ const forEach = require('async-foreach').forEach
 var all = {}
 var allIds = []
 
+function sortKeys (ob) {
+  let result = {}
+  let keys = Object.keys(ob)
+  keys.sort()
+  for (let i = 0; i < keys.length; i++) {
+    result[keys[i]] = ob[keys[i]]
+  }
+  return result
+}
+
 /* read existing translation files in lang/ */
 fs.readdir('lang', function (err, files) {
   forEach(files, function (f) {
@@ -100,14 +110,24 @@ function writeCategories () {
             if (data.type && data.type === 'index') {
               writeSubCategories(data.subCategories, all)
             }
+            if (data.type && data.type === 'overpass') {
+              if (data.lists) {
+                for (let listId in data.lists) {
+                  let list = data.lists[listId]
+                  let langStrId = id + ':' + listId
+
+                  for (var lang in all[langStrId]) {
+                    if (all[langStrId][lang]) {
+                      list.name[lang] = all[langStrId][lang]
+                    }
+                  }
+                  list.name = sortKeys(list.name)
+                }
+              }
+            }
 
             let result = {}
-            let keys = Object.keys(data.name)
-            keys.sort()
-            for (let i = 0; i < keys.length; i++) {
-              result[keys[i]] = data.name[keys[i]]
-            }
-            data.name = result
+            data.name = sortKeys(data.name)
 
             fs.writeFile(
               f,

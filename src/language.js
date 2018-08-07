@@ -1,4 +1,5 @@
 /* global languages:false, lang_str:false */
+/* eslint camelcase:0 */
 var tagTranslations = require('./tagTranslations')
 
 function getPreferredDataLanguage () {
