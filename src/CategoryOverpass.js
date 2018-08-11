@@ -111,6 +111,33 @@ function CategoryOverpass (options, data) {
   if (this.data.filter) {
     this.domFilter = document.createElement('form')
 
+    for (var k in this.data.filter) {
+      let f = this.data.filter[k]
+      if ('name' in f && typeof f.name === 'string') {
+        let t = OverpassLayer.twig.twig({ data: f.name, autoescape: true })
+        f.name = t.render({}).toString()
+      } else if (!('name' in f)) {
+        f.name = lang('tag:' + k)
+      }
+
+      if ('values' in f) {
+        if (Array.isArray(f.values)) {
+          let newValues = {}
+          f.values.forEach(v => {
+            newValues[v] = lang('tag:' + k + '=' + v)
+          })
+          f.values = newValues
+        } else if (typeof f.values === 'object') {
+          for (var k1 in f.values) {
+            if (typeof f.values[k1] === 'string') {
+              let t = OverpassLayer.twig.twig({ data: f.values[k1], autoescape: true })
+              f.values[k1] = t.render({}).toString()
+            }
+          }
+        }
+      }
+    }
+
     this.formFilter = new form(this.id, this.data.filter,
       {
         'type': 'form_chooser',
