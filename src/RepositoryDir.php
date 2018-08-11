@@ -26,7 +26,7 @@ class RepositoryDir extends RepositoryBase {
 	  continue;
 	}
 
-        $data['categories'][$m[1]] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'))));
+        $data['categories'][$m[1]] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'), array('filter'))));
       }
 
       if (preg_match("/^(detailsBody|popupBody).html$/", $f, $m)) {
