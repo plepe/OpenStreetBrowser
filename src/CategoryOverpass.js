@@ -164,7 +164,14 @@ function CategoryOverpass (options, data) {
         }
 
         if ('op' in d) {
-          v.op = d.op
+          if (d.op === 'has_key_value') {
+            v = {
+              key: data[k],
+              op: 'has_key'
+            }
+          } else {
+            v.op = d.op
+          }
         }
 
         this.additionalFilter.push(v)
