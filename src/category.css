@@ -18,14 +18,16 @@
 }
 
 /* Source: http://tobiasahlin.com/spinkit/ */
-.category.open.loading > .loadingIndicator2 {
+.category.open.loading > .loadingIndicator2,
+.category.open.loading > .content > .categoryWrapper > .category-list.open > .loadingIndicator2 {
   text-align: left;
   display: block;
   background: #efefef;
   padding-left: 40px;
 }
 
-.category.loading > .loadingIndicator2 > div {
+.category.loading > .loadingIndicator2 > div,
+.category.loading > .content > .categoryWrapper > .category-list.open > .loadingIndicator2 > div {
   width: 9px;
   height: 9px;
   margin-right: 9px;
@@ -102,6 +104,12 @@
 .category > .content > ul.overpass-layer-list {
   padding-top: 3px;
   background: #efefef;
+}
+.body h4 {
+  margin-bottom: 0;
+}
+.body ul.overpass-layer-list {
+  padding-left: 40px;
 }
 
 .category > div > div> .category {

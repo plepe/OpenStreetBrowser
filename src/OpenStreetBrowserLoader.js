@@ -1,5 +1,4 @@
 var OverpassLayer = require('overpass-layer')
-var jsonMultilineStrings = require('json-multiline-strings')
 
 function OpenStreetBrowserLoader () {
   this.types = {}
@@ -27,7 +26,7 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
 
   var ids = this.getFullId(id, options)
   if (ids === null) {
-    return callback('invalid id', null)
+    return callback(new Error('invalid id'), null)
   }
 
   if (options.force) {
@@ -94,10 +93,10 @@ OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
       this.repoCache[repo] = [ req.statusText, null ]
     } else {
       try {
-	this.repoCache[repo] = [ null, JSON.parse(req.responseText) ]
+        this.repoCache[repo] = [ null, JSON.parse(req.responseText) ]
       } catch (err) {
-	console.log('couldn\'t parse repository', req.responseText)
-	this.repoCache[repo] = [ 'couldn\t parse repository', null ]
+        console.log('couldn\'t parse repository', req.responseText)
+        this.repoCache[repo] = [ 'couldn\t parse repository', null ]
       }
     }
 
@@ -207,8 +206,8 @@ OpenStreetBrowserLoader.prototype.getFullId = function (id, options) {
     return null
   }
 
-  var m
-  if (m = id.match(/^(.*)\/([^\/]*)/)) {
+  let m = id.match(/^(.*)\/([^/]*)/)
+  if (m) {
     result.id = id
     result.repositoryId = m[1]
     result.entityId = m[2]
@@ -222,7 +221,14 @@ OpenStreetBrowserLoader.prototype.getFullId = function (id, options) {
     result.entityId = id
   }
 
-  result.fullId = result.repositoryId + '/' + result.entityId
+  result.sublayerId = null
+  m = result.entityId.split(/:/)
+  if (m.length > 1) {
+    result.sublayerId = m[0]
+    result.entityId = m[1]
+  }
+
+  result.fullId = result.repositoryId + '/' + (result.sublayerId ? result.sublayerId + ':' : '') + result.entityId
 
   return result
 }

@@ -1,3 +1,5 @@
+/* global lang_str lang_non_translated */
+/* eslint camelcase:0 */
 var OverpassLayer = require('overpass-layer')
 var tagLang = null
 
@@ -57,11 +59,7 @@ function tagTranslationsTransList (key, values) {
     return tagTranslationsTrans(key, value.trim())
   }.bind(this, key))
 
-  if (values.length > 1) {
-    return values.slice(0, -1).join(', ') + ' and ' + values.slice(-1)[0]
-  }
-
-  return values[0]
+  return lang_enumerate(values)
 }
 
 module.exports = {

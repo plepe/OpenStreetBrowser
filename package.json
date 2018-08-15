@@ -1,6 +1,6 @@
 {
   "name": "openstreetbrowser",
-  "version": "0.0.0",
+  "version": "4.0.0",
   "description": "A re-make of the famous OpenStreetBrowser (pure JS, using Overpass API)",
   "main": "src/export.js",
   "repository": "https://github.com/plepe/openstreetbrowser",
@@ -10,6 +10,10 @@
     "@mapbox/maki": "^4.0.0",
     "async": "^2.5.0",
     "async-foreach": "^0.1.3",
+    "babelify": "^8.0.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "color-interpolate": "^1.0.2",
     "font-awesome": "^4.7.0",
     "i18next-client": "^1.11.4",
@@ -21,13 +25,15 @@
     "leaflet-textpath": "https://github.com/makinacorpus/Leaflet.TextPath#leaflet0.8-dev",
     "leaflet.locatecontrol": "^0.61.0",
     "leaflet.polylinemeasure": "https://github.com/ppete2/Leaflet.PolylineMeasure.git",
+    "md5": "^2.2.1",
     "modulekit-tabs": "^0.1.0",
     "moment": "^2.18.1",
+    "natsort": "^1.0.6",
     "opening_hours": "^3.5.0",
     "openstreetbrowser-categories-main": "https://github.com/plepe/openstreetbrowser-categories-main",
     "openstreetmap-date-parser": "^0.1.0",
     "openstreetmap-tag-translations": "https://github.com/plepe/openstreetmap-tag-translations",
-    "overpass-layer": "^1.0.1",
+    "overpass-layer": "^2.0.0",
     "query-string": "^5.0.0",
     "sheet-router": "^4.2.3",
     "weight-sort": "^1.3.0"
@@ -44,7 +50,7 @@
                 "targets": {
                   "browsers": [
                     "last 2 versions",
-		    "> 0.5%",
+                    "> 0.5%",
                     "safari >= 7",
                     "ie >= 11"
                   ]
@@ -64,10 +70,6 @@
     "lint": "standard src/*.js"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babelify": "^8.0.0",
     "browserify": "^14.4.0",
     "browserify-css": "^0.14.0",
     "standard": "^10.0.2",
@@ -92,6 +94,9 @@
       "currentPath",
       "overpassUrl",
       "ajax"
-    ]
+    ],
+    "rules": {
+      "camelcase": 0
+    }
   }
 }

@@ -79,8 +79,9 @@ function markerCircle (style) {
   var fillColor = 'fillColor' in style ? style.fillColor : '#f2756a'
   var color = 'color' in style ? style.color : '#000000'
   var width = 'width' in style ? style.width : 1
+  var radius = 'radius' in style ? style.radius : 12
 
-  return '<svg anchorX="13" anchorY="13" width="25" height="25"><circle cx="12.5" cy="12.5" r="12" style="stroke: ' + color + '; stroke-width: ' + width + '; fill: ' + fillColor + ';"/></svg>'
+  return '<svg anchorX="13" anchorY="13" width="25" height="25"><circle cx="12.5" cy="12.5" r=' + radius + ' style="stroke: ' + color + '; stroke-width: ' + width + '; fill: ' + fillColor + ';"/></svg>'
 }
 
 function markerPointer (style) {

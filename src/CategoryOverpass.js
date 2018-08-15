@@ -1,3 +1,5 @@
+/* global showDetails, openstreetbrowserPrefix */
+/* eslint camelcase: 0 */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
@@ -12,13 +14,6 @@ var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
     markerSign: '',
-    'style:hover': {
-      color: 'black',
-      width: 3,
-      opacity: 1,
-      radius: 12,
-      pane: 'hover'
-    },
     'style:selected': {
       color: '#3f3f3f',
       width: 3,
@@ -26,12 +21,11 @@ var defaultValues = {
       radius: 12,
       pane: 'selected'
     },
-    markerSymbol: "{{ markerPointer({})|raw }}",
-    listMarkerSymbol: "{{ markerCircle({})|raw }}",
+    markerSymbol: '{{ markerPointer({})|raw }}',
+    listMarkerSymbol: '{{ markerCircle({})|raw }}',
     preferredZoom: 16
   },
   queryOptions: {
-    split: 64
   }
 }
 
@@ -47,15 +41,15 @@ function CategoryOverpass (options, data) {
   // set undefined data properties from defaultValues
   for (var k1 in defaultValues) {
     if (!(k1 in data)) {
-      data[k1] = defaultValues[k1]
+      data[k1] = JSON.parse(JSON.stringify(defaultValues[k1]))
     } else if (typeof defaultValues[k1] === 'object') {
       for (var k2 in defaultValues[k1]) {
         if (!(k2 in data[k1])) {
-          data[k1][k2] = defaultValues[k1][k2]
+          data[k1][k2] = JSON.parse(JSON.stringify(defaultValues[k1][k2]))
         } else if (typeof defaultValues[k1][k2] === 'object') {
           for (var k3 in defaultValues[k1][k2]) {
             if (!(k3 in data[k1][k2])) {
-              data[k1][k2][k3] = defaultValues[k1][k2][k3]
+              data[k1][k2][k3] = JSON.parse(JSON.stringify(defaultValues[k1][k2][k3]))
             }
           }
         }
@@ -73,8 +67,8 @@ function CategoryOverpass (options, data) {
   }
 
   data.feature.appUrl = '#' + this.id + '/{{ id }}'
-  data.styleNoBindPopup = [ 'hover', 'selected' ]
-  data.stylesNoAutoShow = [ 'hover', 'selected' ]
+  data.styleNoBindPopup = [ 'selected' ]
+  data.stylesNoAutoShow = [ 'selected' ]
   data.updateAssets = this.updateAssets.bind(this)
 
   this.layer = new OverpassLayer(data)
@@ -91,54 +85,40 @@ function CategoryOverpass (options, data) {
       this.parentCategory.notifyChildLoadEnd(this)
     }
 
-    if (ev.error && ev.error !== 'abort') {
+    if (ev.error) {
       alert('Error loading data from Overpass API: ' + ev.error)
     }
   }.bind(this)
-  this.layer.onAppear = function (ob) {
-    // HOVER
-    if (ob.listItem) {
-      ob.listItem.onmouseover = function (id) {
-        if (this.currentHover) {
-          this.currentHover.hide()
-        }
-
-        this.currentHover = this.layer.show(id, { styles: [ 'hover' ] }, function () {})
-      }.bind(this, ob.id)
-      ob.listItem.onmouseout = function (id) {
-        if (this.currentHover) {
-          this.currentHover.hide()
-        }
-
-        this.currentHover = null
-      }.bind(this, ob.id)
-    }
-  }.bind(this)
-  this.layer.onUpdate = function (ob) {
+  this.layer.on('update', function (object, ob) {
     if (!ob.popup || !ob.popup._contentNode || map._popup !== ob.popup) {
       return
     }
 
     this.updatePopupContent(ob, ob.popup)
 
-    if (document.getElementById('content').className === 'details') {
+    if (document.getElementById('content').className === 'details open') {
       showDetails(ob, this)
     }
-  }.bind(this)
+  }.bind(this))
 
   p = document.createElement('div')
   p.className = 'loadingIndicator'
   p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">' + lang('loading') + '</span>'
   this.dom.appendChild(p)
 
-  p = document.createElement('div')
-  p.className = 'loadingIndicator2'
-  p.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>'
-  this.dom.appendChild(p)
-
   this.domStatus = document.createElement('div')
   this.domStatus.className = 'status'
-  this.dom.appendChild(this.domStatus)
+
+  if (this.data.lists) {
+    this.dom.insertBefore(this.domStatus, this.domHeader.nextSibling)
+  } else {
+    p = document.createElement('div')
+    p.className = 'loadingIndicator2'
+    p.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>'
+    this.dom.appendChild(p)
+
+    this.dom.appendChild(this.domStatus)
+  }
 
   register_hook('state-get', function (state) {
     if (this.isOpen) {
@@ -174,7 +154,7 @@ CategoryOverpass.prototype.updateAssets = function (div) {
     var src = img.getAttribute('src')
     if (src === null) {
     } else if (src.match(/^maki:.*/)) {
-      let m = src.match(/^maki:([a-z0-9\-]*)(?:\?(.*))?$/)
+      let m = src.match(/^maki:([a-z0-9-]*)(?:\?(.*))?$/)
       if (m) {
         let span = document.createElement('span')
         img.parentNode.insertBefore(span, img)
@@ -232,22 +212,22 @@ CategoryOverpass.prototype.updateStatus = function () {
   }
 }
 
-CategoryOverpass.prototype._getMarker = function (ob) {
-  if (ob.data.listMarkerSymbol.trim() == 'line') {
-    var div = document.createElement('div')
+CategoryOverpass.prototype._getMarker = function (origGetMarker, origList, ob) {
+  if (ob.data[origList.options.prefix + 'MarkerSymbol'].trim() === 'line') {
+    let div = document.createElement('div')
     div.className = 'marker'
     div.innerHTML = markers.line(ob.data)
 
     return div
-  } else if (ob.data.listMarkerSymbol.trim() == 'polygon') {
-    var div = document.createElement('div')
+  } else if (ob.data[origList.options.prefix + 'MarkerSymbol'].trim() === 'polygon') {
+    let div = document.createElement('div')
     div.className = 'marker'
     div.innerHTML = markers.polygon(ob.data)
 
     return div
   }
 
-  return this.origGetMarker(ob)
+  return origGetMarker.call(origList, ob)
 }
 
 CategoryOverpass.prototype.open = function () {
@@ -259,11 +239,74 @@ CategoryOverpass.prototype.open = function () {
 
   this.layer.addTo(this.map)
 
-  if (!this.list) {
-    this.list = new OverpassLayerList(this.layer)
-    this.list.addTo(this.domContent)
-    this.origGetMarker = this.list._getMarker
-    this.list._getMarker = this._getMarker.bind(this)
+  if (!this.lists) {
+    this.lists = []
+
+    if (this.data.lists) {
+      this.listsDom = []
+
+      let wrapper = document.createElement('div')
+      wrapper.className = 'categoryWrapper'
+      this.domContent.appendChild(wrapper)
+
+      for (let k in this.data.lists) {
+        let listData = this.data.lists[k]
+        let list = new OverpassLayerList(this.layer, listData)
+        this.lists.push(list)
+
+        let dom = document.createElement('div')
+        dom.className = 'category category-list'
+        this.listsDom.push(dom)
+        wrapper.appendChild(dom)
+
+        let domHeader = document.createElement('header')
+        dom.appendChild(domHeader)
+
+        let p = document.createElement('div')
+        p.className = 'loadingIndicator'
+        p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">' + lang('loading') + '</span>'
+        dom.appendChild(p)
+
+        let name
+        if (typeof listData.name === 'undefined') {
+          name = k
+        } else if (typeof listData.name === 'object') {
+          name = lang(listData.name)
+        } else {
+          name = listData.name
+        }
+
+        let a = document.createElement('a')
+        a.appendChild(document.createTextNode(name))
+        a.href = '#'
+        domHeader.appendChild(a)
+
+        a.onclick = () => {
+          dom.classList.toggle('open')
+          return false
+        }
+
+        let domContent = document.createElement('div')
+        domContent.className = 'content'
+        dom.appendChild(domContent)
+
+        list.addTo(domContent)
+
+        p = document.createElement('div')
+        p.className = 'loadingIndicator2'
+        p.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>'
+        dom.appendChild(p)
+      }
+    } else {
+      let list = new OverpassLayerList(this.layer, {})
+      this.lists.push(list)
+      list.addTo(this.domContent)
+    }
+
+    this.lists.forEach(list => {
+      let origGetMarker = list._getMarker
+      list._getMarker = this._getMarker.bind(this, origGetMarker, list)
+    })
   }
 
   this.isOpen = true
@@ -297,7 +340,7 @@ CategoryOverpass.prototype.updateInfo = function () {
   global.currentCategory = this
   var data = {
     layer_id: this.id,
-    'const': this.data.const,
+    'const': this.data.const
   }
   if (this.map) {
     data.map = { zoom: map.getZoom() }
@@ -319,7 +362,7 @@ CategoryOverpass.prototype.close = function () {
   CategoryBase.prototype.close.call(this)
 
   this.layer.remove()
-  this.list.remove()
+  this.lists.forEach(list => list.remove())
 
   state.update()
 }
@@ -333,11 +376,24 @@ CategoryOverpass.prototype.show = function (id, options, callback) {
     this.currentDetails.hide()
   }
 
-  this.currentDetails = this.layer.show(id,
-    {
-      styles: [ 'selected' ]
-    },
-    function (err, data) {
+  let layerOptions = {
+    styles: [ 'selected' ]
+  }
+
+  let idParts = id.split(/:/)
+  switch (idParts.length) {
+    case 2:
+      id = idParts[1]
+      layerOptions.sublayer_id = idParts[0]
+      break
+    case 1:
+      break
+    default:
+      return callback(new Error('too many id parts! ' + id))
+  }
+
+  this.currentDetails = this.layer.show(id, layerOptions,
+    function (err, ob, data) {
       if (!err) {
         if (options.showDetails && !options.hasLocation) {
           var preferredZoom = data.data.preferredZoom || 16
@@ -359,8 +415,13 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
     this.currentSelected.hide()
   }
 
+  let layerOptions = {
+    styles: [ 'selected' ],
+    sublayer_id: object.sublayer_id
+  }
+
   this.updatePopupContent(object, popup)
-  this.currentSelected = this.layer.show(object.id, { styles: [ 'selected' ] }, function () {})
+  this.currentSelected = this.layer.show(object.id, layerOptions, function () {})
 }
 
 CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
@@ -376,36 +437,42 @@ CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
 }
 
 CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
-  if (object.data.popupDescription || object.data.description) {
-    var div = document.createElement('div')
-    div.className = 'description'
-    div.innerHTML = object.data.popupDescription || object.data.description
-    popup._contentNode.insertBefore(div, popup._contentNode.firstChild.nextSibling)
-  }
-
   if (this.popupBodyTemplate) {
-    var popupBody = document.createElement('div')
-    popupBody.className = 'popupBody'
-    popup._contentNode.appendChild(popupBody)
+    var popupBody = popup._contentNode.getElementsByClassName('popupBody')
+    if (!popupBody.length) {
+      popupBody = document.createElement('div')
+      popupBody.className = 'popupBody'
+      popup._contentNode.appendChild(popupBody)
+    }
 
-    var data = this.layer.twigData(object.object)
-    popupBody.innerHTML = this.popupBodyTemplate.render(data)
+    let html = this.popupBodyTemplate.render(object.twigData)
+    if (popupBody.currentHTML !== html) {
+      popupBody.innerHTML = html
+    }
+
+    popupBody.currentHTML = html
   }
 
-  var footer = document.createElement('ul')
-  footer.className = 'popup-footer'
-  var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + object.id + '/details">' + lang('show details') + '</a></li>'
+  let id_with_sublayer = (object.sublayer_id === 'main' ? '' : object.sublayer_id + ':') + object.id
+
+  var footer = popup._contentNode.getElementsByClassName('popup-footer')
+  if (!footer.length) {
+    footer = document.createElement('ul')
+    popup._contentNode.appendChild(footer)
+    footer.className = 'popup-footer'
+
+    call_hooks_callback('show-popup', object, this, popup._contentNode,
+      function (err) {
+        if (err.length) {
+          console.log('show-popup produced errors:', err)
+        }
+      }
+    )
+  }
+
+  var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
   footerContent += '<li><a target="_blank" class="editLink" href="https://www.openstreetmap.org/edit?editor=id&' + object.object.type + '=' + object.object.osm_id + '">' + lang('edit') + '</a></li>'
   footer.innerHTML = footerContent
-  popup._contentNode.appendChild(footer)
-
-  call_hooks_callback('show-popup', object, this, popup._contentNode,
-    function (err) {
-      if (err.length) {
-        console.log('show-popup produced errors:', err)
-      }
-    }
-  )
 }
 
 CategoryOverpass.prototype.renderTemplate = function (object, templateId, callback) {
@@ -415,11 +482,10 @@ CategoryOverpass.prototype.renderTemplate = function (object, templateId, callba
       return callback(err, null)
     }
 
-    var data = this.layer.twigData(object.object)
-    var result = template.render(data)
+    var result = template.render(object.twigData)
 
     callback(null, result)
-  }.bind(this))
+  })
 }
 
 OpenStreetBrowserLoader.registerType('overpass', CategoryOverpass)
