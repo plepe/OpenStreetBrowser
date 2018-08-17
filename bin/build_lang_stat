@@ -27,17 +27,16 @@ $dirs = array(
 );
 
 foreach ($dirs as $dirId => $dir) {
-  print "!scope=\"col\"| {$dirId}\n";
-
   $stat[$dirId] = build_statistic($dir);
 }
-
-print "!scope=\"col\"| Total\n";
 
 $total = 0;
 foreach ($dirs as $dirId => $dir) {
   $total += $stat[$dirId][''];
+  print "!scope=\"col\"| {$dirId} ({$stat[$dirId]['']})\n";
 }
+print "!scope=\"col\"| Total ({$total})\n";
+
 
 foreach ($languages as $code => $native_name) {
   $sum = 0;
@@ -48,7 +47,7 @@ foreach ($languages as $code => $native_name) {
   if ($sum > 0) {
     print "|-\n";
     print "| {$code}\n";
-    print "| [[/{{Languagename|{$code}|en}}|{{Languagename|{$code}|en}}]] || {{Languagename|{$code}}}\n";
+    print "| {{Languagename|{$code}|en}} || {{Languagename|{$code}}}\n";
     foreach ($dirs as $dirId => $dir) {
       print "| {{Progress Bar|max={$stat[$dirId]['']}|current=" . ($stat[$dirId][$code] ?? 0) . "}}\n";
     }
