@@ -40,15 +40,20 @@ foreach ($dirs as $dirId => $dir) {
 }
 
 foreach ($languages as $code => $native_name) {
-  print "|-\n";
-  print "| {$code}\n";
-  print "| [[/{{Languagename|{$code}|en}}|{{Languagename|{$code}|en}}]] || {{Languagename|{$code}}}\n";
   $sum = 0;
   foreach ($dirs as $dirId => $dir) {
-    print "| {{Progress Bar|max={$stat[$dirId]['']}|current=" . ($stat[$dirId][$code] ?? 0) . "}}\n";
-    $sum += $stat[$dirId][$code];
+    $sum += $stat[$dirId][$code] ?? 0;
   }
-  print "| {{Progress Bar|max={$total}|current={$sum}}}\n";
+
+  if ($sum > 0) {
+    print "|-\n";
+    print "| {$code}\n";
+    print "| [[/{{Languagename|{$code}|en}}|{{Languagename|{$code}|en}}]] || {{Languagename|{$code}}}\n";
+    foreach ($dirs as $dirId => $dir) {
+      print "| {{Progress Bar|max={$stat[$dirId]['']}|current=" . ($stat[$dirId][$code] ?? 0) . "}}\n";
+    }
+    print "| {{Progress Bar|max={$total}|current={$sum}}}\n";
+  }
 }
 
 ?>
