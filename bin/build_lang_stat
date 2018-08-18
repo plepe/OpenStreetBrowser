@@ -1,5 +1,6 @@
 #!/usr/bin/php
 <?php
+require "conf.php";
 require "lib/modulekit/lang/inc/build_statistic.php";
 ?>
 <!--
@@ -21,9 +22,9 @@ $languages = json_decode(file_get_contents("lib/modulekit/lang/lang/list.json", 
 $languages_en = json_decode(file_get_contents("lib/modulekit/lang/lang/en.json", true));
 
 $dirs = array(
-  "OSB Core UI" => "lang/",
-  "Tag Translations" => "node_modules/openstreetmap-tag-translations/tags/",
-  "Category Titles" => "node_modules/openstreetbrowser-categories-main/lang/",
+  "OpenStreetBrowser UI" => "lang/",
+  "Translations of OSM Tags" => "node_modules/openstreetmap-tag-translations/tags/",
+  "Category Titles" => $repositories['default']['path'] . 'lang/',
 );
 
 foreach ($dirs as $dirId => $dir) {
