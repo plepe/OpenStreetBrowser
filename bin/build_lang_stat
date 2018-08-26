@@ -1,0 +1,60 @@
+#!/usr/bin/php
+<?php
+require "conf.php";
+require "lib/modulekit/lang/inc/build_statistic.php";
+?>
+<!--
+Status:
+0-15   #FF0033
+16-50  #FF7700
+51-70  #FFCC00
+71-85  #77CC00
+86-100 #33CC00
+-->
+
+{|class="wikitable sortable"
+|-
+!scope="col"| Code
+!scope="col"| Language
+!scope="col"| Native name
+<?php
+$languages = json_decode(file_get_contents("lib/modulekit/lang/lang/list.json", true));
+$languages_en = json_decode(file_get_contents("lib/modulekit/lang/lang/en.json", true));
+
+$dirs = array(
+  "OpenStreetBrowser UI" => "lang/",
+  "Translations of OSM Tags" => "node_modules/openstreetmap-tag-translations/tags/",
+  "Category Titles" => $repositories['default']['path'] . 'lang/',
+);
+
+foreach ($dirs as $dirId => $dir) {
+  $stat[$dirId] = build_statistic($dir);
+}
+
+$total = 0;
+foreach ($dirs as $dirId => $dir) {
+  $total += $stat[$dirId][''];
+  print "!scope=\"col\"| {$dirId} ({$stat[$dirId]['']})\n";
+}
+print "!scope=\"col\"| Total ({$total})\n";
+
+
+foreach ($languages as $code => $native_name) {
+  $sum = 0;
+  foreach ($dirs as $dirId => $dir) {
+    $sum += $stat[$dirId][$code] ?? 0;
+  }
+
+  if ($sum > 0) {
+    print "|-\n";
+    print "| {$code}\n";
+    print "| {{Languagename|{$code}|en}} || {{Languagename|{$code}}}\n";
+    foreach ($dirs as $dirId => $dir) {
+      print "| {{Progress Bar|max={$stat[$dirId]['']}|current=" . ($stat[$dirId][$code] ?? 0) . "}}\n";
+    }
+    print "| {{Progress Bar|max={$total}|current={$sum}}}\n";
+  }
+}
+
+?>
+|}
