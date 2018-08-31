@@ -470,8 +470,26 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
     )
   }
 
+  let editUrl = object.object.type + '=' + object.object.osm_id
+
+  if (object.data.popupReplace) {
+    let popupReplaceLayer
+    let popupReplaceId
+
+    let m = object.data.popupReplace.split(/:/)
+    if (m.length === 2) {
+      popupReplaceLayer = m[0]
+      popupReplaceId = m[1]
+    } else {
+      popupReplaceLayer = 'main'
+      popupReplaceId = object.data.popupReplace.toString()
+    }
+
+    id_with_sublayer = (popupReplaceLayer === 'main' ? '' : popupReplaceLayer + ':') + popupReplaceId
+  }
+
   var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
-  footerContent += '<li><a target="_blank" class="editLink" href="https://www.openstreetmap.org/edit?editor=id&' + object.object.type + '=' + object.object.osm_id + '">' + lang('edit') + '</a></li>'
+  footerContent += '<li><a target="_blank" class="editLink" href="https://www.openstreetmap.org/edit?editor=id&' + editUrl + '">' + lang('edit') + '</a></li>'
   footer.innerHTML = footerContent
 }
 
