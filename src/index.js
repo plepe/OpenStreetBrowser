@@ -118,6 +118,10 @@ function onload2 (initState) {
   map.on('popupopen', function (e) {
     if (e.popup.object) {
       var url = e.popup.object.layer_id + '/' + (e.popup.object.sublayer_id === 'main' ? '' : e.popup.object.sublayer_id + ':') + e.popup.object.id
+      if (e.popup.object.data.popupReplace) {
+        var url = e.popup.object.layer_id + '/' + (e.popup.object.data.popupReplace)
+      }
+
       if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/') {
         currentPath = url
         // only push state, when last popup close happened >1sec earlier
