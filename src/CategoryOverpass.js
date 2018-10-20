@@ -109,7 +109,16 @@ function CategoryOverpass (options, data) {
   this.layer.on('zoomChange', (ob, data) => this.emit('remove', ob, data))
 
   if (this.data.filter) {
+    this.tabFilter = new tabs.Tab({
+      id: 'filter'
+    })
+    this.tools.add(this.tabFilter)
+
+    this.tabFilter.header.innerHTML = '<i class="fa fa-filter" aria-hidden="true"></i>'
+    this.tabFilter.header.title = lang('filter')
+
     this.domFilter = document.createElement('form')
+    this.tabFilter.content.appendChild(this.domFilter)
 
     for (var k in this.data.filter) {
       let f = this.data.filter[k]
@@ -180,7 +189,6 @@ function CategoryOverpass (options, data) {
       this.layer.options.queryOptions.filter = this.additionalFilter
       this.layer.check_update_map()
     }.bind(this)
-    this.dom.insertBefore(this.domFilter, this.domContent)
   }
 
   var p = document.createElement('div')

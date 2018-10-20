@@ -427,3 +427,7 @@ a:active {
 .overpass-layer-icon .sign {
   white-space: nowrap;
 }
+
+.tabs-section > form > span.form_element_form_chooser {
+  border: none;
+}
