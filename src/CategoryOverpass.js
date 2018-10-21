@@ -3,6 +3,8 @@
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
+var queryString = require('query-string')
+
 var CategoryBase = require('./CategoryBase')
 var state = require('./state')
 var tabs = require('modulekit-tabs')
@@ -120,6 +122,8 @@ function CategoryOverpass (options, data) {
     this.domFilter = document.createElement('form')
     this.tabFilter.content.appendChild(this.domFilter)
 
+    this.tabFilter.on('select', () => this.formFilter.resize())
+
     for (var k in this.data.filter) {
       let f = this.data.filter[k]
       if ('name' in f && typeof f.name === 'string') {
@@ -156,38 +160,12 @@ function CategoryOverpass (options, data) {
     )
     this.formFilter.show(this.domFilter)
     this.formFilter.onchange = function () {
-      var data = this.formFilter.get_data()
+      let param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
 
-      this.additionalFilter = []
-      for (var k in data) {
-        if (data[k] === null) {
-          continue
-        }
+      this._applyParam(param)
 
-        var d = this.data.filter[k]
-
-        var v  = {
-          key: k,
-          value: data[k],
-          op: '='
-        }
-
-        if ('op' in d) {
-          if (d.op === 'has_key_value') {
-            v = {
-              key: data[k],
-              op: 'has_key'
-            }
-          } else {
-            v.op = d.op
-          }
-        }
-
-        this.additionalFilter.push(v)
-      }
-
-      this.layer.options.queryOptions.filter = this.additionalFilter
       this.layer.check_update_map()
+      state.update()
     }.bind(this)
   }
 
@@ -218,7 +196,23 @@ function CategoryOverpass (options, data) {
         state.categories = ''
       }
 
-      state.categories += this.id
+      let id = this.id
+
+      if (this.formFilter) {
+        let param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
+
+        for (var k in param) {
+          if (!param[k]) {
+            delete param[k]
+          }
+        }
+
+        if (param && Object.keys(param).length) {
+          id += '[' + queryString.stringify(param) + ']'
+        }
+      }
+
+      state.categories += id
     }
   }.bind(this))
 
@@ -227,13 +221,61 @@ function CategoryOverpass (options, data) {
       return
     }
 
-    var list = state.categories.split(',')
-    if (list.indexOf(this.id) === -1) {
+    let list = state.categories.split(',')
+    let found = list.filter(id => {
+      let m = id.match(/^([0-9A-Z_-]+)(\[(.*)\])/i)
+      if (m) {
+        id = m[1]
+      }
+
+      return id === this.id
+    }).length
+
+    if (!found) {
       this.close()
     }
 
     // opening categories is handled by src/categories.js
   }.bind(this))
+}
+
+CategoryOverpass.prototype.setParam = function (param) {
+  this.formFilter.set_data(param)
+  this._applyParam(param)
+}
+
+CategoryOverpass.prototype._applyParam = function (param) {
+  this.additionalFilter = []
+  for (var k in param) {
+    if (param[k] === null) {
+      continue
+    }
+
+    var d = this.data.filter[k]
+
+    var v  = {
+      key: k,
+      value: param[k],
+      op: '='
+    }
+
+    if ('op' in d) {
+      if (d.op === 'has_key_value') {
+        v = {
+          key: param[k],
+          op: 'has_key'
+        }
+      } else {
+        v.op = d.op
+      }
+    }
+
+    this.additionalFilter.push(v)
+  }
+
+  this.layer.options.queryOptions.filter = this.additionalFilter
+
+  this.tabFilter.select()
 }
 
 CategoryOverpass.prototype.updateAssets = function (div) {
@@ -278,10 +320,6 @@ CategoryOverpass.prototype.load = function (callback) {
 
 CategoryOverpass.prototype.setParentDom = function (parentDom) {
   CategoryBase.prototype.setParentDom.call(this, parentDom)
-
-  if (this.formFilter) {
-    this.formFilter.resize()
-  }
 }
 
 CategoryOverpass.prototype.setMap = function (map) {
@@ -434,6 +472,10 @@ CategoryOverpass.prototype.open = function () {
     }
 
     this.updateInfo()
+  }
+
+  if (this.formFilter) {
+    this.formFilter.resize()
   }
 }
 
