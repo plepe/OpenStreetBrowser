@@ -134,10 +134,11 @@ function CategoryOverpass (options, data) {
       }
 
       if ('values' in f) {
-        if (Array.isArray(f.values)) {
+        if (Array.isArray(f.values) && f.valueName) {
+          let template = OverpassLayer.twig.twig({ data: f.valueName, autoescape: true })
           let newValues = {}
-          f.values.forEach(v => {
-            newValues[v] = lang('tag:' + k + '=' + v)
+          f.values.forEach(value => {
+            newValues[value] = template.render({ value }).toString()
           })
           f.values = newValues
         } else if (typeof f.values === 'object') {
