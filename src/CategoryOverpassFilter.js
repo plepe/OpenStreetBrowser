@@ -82,7 +82,7 @@ class CategoryOverpassFilter {
       var d = this.data[k]
 
       var v  = {
-        key: k,
+        key: 'key' in d ? d.key : k,
         value: param[k],
         op: '='
       }
