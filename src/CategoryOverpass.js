@@ -110,65 +110,8 @@ function CategoryOverpass (options, data) {
   this.layer.on('remove', (ob, data) => this.emit('remove', ob, data))
   this.layer.on('zoomChange', (ob, data) => this.emit('remove', ob, data))
 
-  if (this.data.filter) {
-    this.tabFilter = new tabs.Tab({
-      id: 'filter'
-    })
-    this.tools.add(this.tabFilter)
 
-    this.tabFilter.header.innerHTML = '<i class="fa fa-filter" aria-hidden="true"></i>'
-    this.tabFilter.header.title = lang('filter')
-
-    this.domFilter = document.createElement('form')
-    this.tabFilter.content.appendChild(this.domFilter)
-
-    this.tabFilter.on('select', () => this.formFilter.resize())
-
-    for (var k in this.data.filter) {
-      let f = this.data.filter[k]
-      if ('name' in f && typeof f.name === 'string') {
-        let t = OverpassLayer.twig.twig({ data: f.name, autoescape: true })
-        f.name = t.render({}).toString()
-      } else if (!('name' in f)) {
-        f.name = lang('tag:' + k)
-      }
-
-      if ('values' in f) {
-        if (Array.isArray(f.values) && f.valueName) {
-          let template = OverpassLayer.twig.twig({ data: f.valueName, autoescape: true })
-          let newValues = {}
-          f.values.forEach(value => {
-            newValues[value] = template.render({ value }).toString()
-          })
-          f.values = newValues
-        } else if (typeof f.values === 'object') {
-          for (var k1 in f.values) {
-            if (typeof f.values[k1] === 'string') {
-              let t = OverpassLayer.twig.twig({ data: f.values[k1], autoescape: true })
-              f.values[k1] = t.render({}).toString()
-            }
-          }
-        }
-      }
-    }
-
-    this.formFilter = new form(this.id, this.data.filter,
-      {
-        'type': 'form_chooser',
-        'button:add_element': '-- ' + lang('filter_results') + ' --',
-        'order': false
-      }
-    )
-    this.formFilter.show(this.domFilter)
-    this.formFilter.onchange = function () {
-      let param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
-
-      this._applyParam(param)
-
-      this.layer.check_update_map()
-      state.update()
-    }.bind(this)
-  }
+  call_hooks('category-overpass-init', this)
 
   var p = document.createElement('div')
   p.className = 'loadingIndicator'
@@ -199,18 +142,17 @@ function CategoryOverpass (options, data) {
 
       let id = this.id
 
-      if (this.formFilter) {
-        let param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
+      let param = {}
+      this.emit('stateGet', param)
 
-        for (var k in param) {
-          if (!param[k]) {
-            delete param[k]
-          }
+      for (var k in param) {
+        if (!param[k]) {
+          delete param[k]
         }
+      }
 
-        if (param && Object.keys(param).length) {
-          id += '[' + queryString.stringify(param) + ']'
-        }
+      if (param && Object.keys(param).length) {
+        id += '[' + queryString.stringify(param) + ']'
       }
 
       state.categories += id
@@ -241,42 +183,12 @@ function CategoryOverpass (options, data) {
 }
 
 CategoryOverpass.prototype.setParam = function (param) {
-  this.formFilter.set_data(param)
+  this.emit('setParam', param)
   this._applyParam(param)
 }
 
 CategoryOverpass.prototype._applyParam = function (param) {
-  this.additionalFilter = []
-  for (var k in param) {
-    if (param[k] === null) {
-      continue
-    }
-
-    var d = this.data.filter[k]
-
-    var v  = {
-      key: k,
-      value: param[k],
-      op: '='
-    }
-
-    if ('op' in d) {
-      if (d.op === 'has_key_value') {
-        v = {
-          key: param[k],
-          op: 'has_key'
-        }
-      } else {
-        v.op = d.op
-      }
-    }
-
-    this.additionalFilter.push(v)
-  }
-
-  this.layer.options.queryOptions.filter = this.additionalFilter
-
-  this.tabFilter.select()
+  this.emit('applyParam', param)
 }
 
 CategoryOverpass.prototype.updateAssets = function (div) {
@@ -475,9 +387,7 @@ CategoryOverpass.prototype.open = function () {
     this.updateInfo()
   }
 
-  if (this.formFilter) {
-    this.formFilter.resize()
-  }
+  this.emit('open')
 }
 
 CategoryOverpass.prototype.updateInfo = function () {
