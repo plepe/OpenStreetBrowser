@@ -66,10 +66,14 @@ class CategoryOverpassFilter {
       state.update()
     }.bind(this)
 
-    this.master.on('setParam', param => this.formFilter.set_data(param))
-    this.master.on('applyParam', param => this.applyParam(param))
-    this.master.on('open', () => this.openCategory())
-    this.master.on('stateGet', param => this.stateGet(param))
+    this.master.on('setParam', this.setParam.bind(this))
+    this.master.on('applyParam', this.applyParam.bind(this))
+    this.master.on('open', this.openCategory.bind(this))
+    this.master.on('stateGet', this.stateGet.bind(this))
+  }
+
+  setParam (param) {
+    this.formFilter.set_data(param)
   }
 
   applyParam (param) {
