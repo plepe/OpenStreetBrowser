@@ -2,6 +2,7 @@ const OverpassLayer = require('overpass-layer')
 const tabs = require('modulekit-tabs')
 
 const state = require('./state')
+const Filter = require('overpass-frontend').Filter
 
 class CategoryOverpassFilter {
   constructor (master) {
@@ -43,6 +44,11 @@ class CategoryOverpassFilter {
             if (typeof f.values[k1] === 'string') {
               let t = OverpassLayer.twig.twig({ data: f.values[k1], autoescape: true })
               f.values[k1] = t.render({}).toString()
+            } else if (typeof f.values[k1] === 'object') {
+              if (f.values[k1].name) {
+                let t = OverpassLayer.twig.twig({ data: f.values[k1].name, autoescape: true })
+                f.values[k1].name = t.render({}).toString()
+              }
             }
           }
         }
@@ -78,12 +84,20 @@ class CategoryOverpassFilter {
 
   applyParam (param) {
     this.additionalFilter = []
+    let kvFilter = []
+
     for (var k in param) {
       if (param[k] === null) {
         continue
       }
 
       var d = this.data[k]
+
+      if ('values' in d && param[k] in d.values && typeof d.values[param[k]] === 'object' && 'query' in d.values[param[k]]) {
+        let f = new Filter(d.values[param[k]].query)
+        this.additionalFilter.push(f.def)
+        continue
+      }
 
       var v  = {
         key: 'key' in d ? d.key : k,
@@ -102,7 +116,19 @@ class CategoryOverpassFilter {
         }
       }
 
-      this.additionalFilter.push(v)
+      kvFilter.push(v)
+    }
+
+    if (kvFilter.length) {
+      this.additionalFilter.push(kvFilter)
+    }
+
+    if (this.additionalFilter.length === 0) {
+      this.additionalFilter = []
+    } else if (this.additionalFilter.length === 1) {
+      this.additionalFilter = this.additionalFilter[0]
+    } else {
+      this.additionalFilter = { and: this.additionalFilter }
     }
 
     this.master.layer.options.queryOptions.filter = this.additionalFilter
