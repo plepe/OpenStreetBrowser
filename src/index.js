@@ -243,13 +243,13 @@ window.showDetails = function (data, category) {
 
   div = document.createElement('h1')
   div.className = 'title'
-  div.innerHTML = data.data.title
+  div.innerHTML = data.data.title || ''
   dom.appendChild(div)
   data.sublayer.updateAssets(div, data)
 
   div = document.createElement('div')
   div.className = 'description'
-  div.innerHTML = data.data.description
+  div.innerHTML = data.data.description || ''
   dom.appendChild(div)
   data.sublayer.updateAssets(div, data)
 
@@ -258,7 +258,7 @@ window.showDetails = function (data, category) {
   dom.appendChild(div)
 
   function updateBody (div) {
-    div.innerHTML = data.data.detailBody || data.data.body
+    div.innerHTML = data.data.detailBody || data.data.body || ''
     data.sublayer.updateAssets(div, data)
   }
 

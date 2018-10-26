@@ -91,6 +91,7 @@ function parseSubCategories(categories, all) {
           all[lang] = {}
         }
 
+        allIds.push('category:' + data.id)
         all[lang]['category:' + data.id] = data.name[lang]
       }
 
@@ -105,6 +106,7 @@ function writeTranslationFiles () {
   forEach(Object.keys(all), function (lang) {
     let done = this.async()
 
+    allIds = allIds.sort()
     let data = {}
     allIds.forEach(function (id) {
       data[id] = ''
