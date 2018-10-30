@@ -377,7 +377,8 @@ CategoryOverpass.prototype.show = function (id, options, callback) {
   }
 
   let layerOptions = {
-    styles: [ 'selected' ]
+    styles: [ 'selected' ],
+    flags: [ 'selected' ]
   }
 
   let idParts = id.split(/:/)
@@ -417,6 +418,7 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
 
   let layerOptions = {
     styles: [ 'selected' ],
+    flags: [ 'selected' ],
     sublayer_id: object.sublayer_id
   }
 
