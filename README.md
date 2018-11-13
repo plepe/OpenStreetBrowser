@@ -105,6 +105,16 @@ The following values are possible for categories (the only mandatory value is qu
     * noClip: (unclosed ways only) Disable polyline clipping. (boolean, false)
     * nodeFeature: (nodes only) Which type of feature to show on nodes. Valid values: 'Marker', 'Circle', 'CircleMarker'. (string, 'CircleMarker')
     * radius: (nodes with nodeFeature 'Circle' or 'CircleMarker' only) Radius of the circle (for 'Circle': in meters, for 'CircleMarker': in pixels, default: 10). (number)
+    * pattern: false/empty: no pattern, 'arrowHead', 'dash', 'marker'
+    * pattern-offset: Offset of the first pattern symbol, from the start point of the line. Default: 0.
+    * pattern-endOffset: Minimum offset of the last pattern symbol, from the end point of the line. Default: 0.
+    * pattern-repeat: Repetition interval of the pattern symbols. Defines the distance between each consecutive symbol's anchor point.
+    * pattern-polygon: true/false (arrowHead only)
+    * pattern-pixelSize: size of pattern (arrowHead and dash only)
+    * pattern-headAngle: Angle of the digits (arrowHead only)
+    * pattern-angleCorrection: degrees (arrowHead and marker only)
+    * pattern-rotate: false (marker only)
+    * pattern-path-*: Options for the path, e.g. pattern-path-width, pattern-path-color.
   * title: the title of the feature popup, the object in the list and the details page. (default: localized tags for 'name', 'operator' or 'ref', default: 'unknown')
   * body: the body for the feature popup and the details page.
   * description: a short description shown in the list next to the title.

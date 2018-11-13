@@ -72,6 +72,7 @@
   "devDependencies": {
     "browserify": "^14.4.0",
     "browserify-css": "^0.14.0",
+    "leaflet-polylinedecorator": "https://github.com/plepe/Leaflet.PolylineDecorator.git",
     "standard": "^10.0.2",
     "watchify": "^3.9.0"
   },
