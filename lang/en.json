@@ -4,6 +4,7 @@
     "closed": "closed",
     "default": "default",
     "download:geojson": "Download as GeoJSON",
+    "download:osmxml": "Download as OSMXML",
     "edit": "edit",
     "error": {
         "message": "Error",

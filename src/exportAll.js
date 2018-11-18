@@ -14,6 +14,15 @@ function prepareDownload (callback) {
 
   global.baseCategory.allMapFeatures((err, data) => {
     let chunks = chunkSplit(data, 1000)
+    let parentNode
+
+    switch (conf.type) {
+      case 'geojson':
+        break
+      case 'osmxml':
+        parentNode = document.createElement('osm')
+        break
+    }
 
     async.mapLimit(
       chunks,
@@ -24,6 +33,9 @@ function prepareDownload (callback) {
             switch (conf.type) {
               case 'geojson':
                 done(null, ob.object.GeoJSON(conf))
+                break
+              case 'osmxml':
+                ob.object.exportOSMXML(conf, parentNode, done)
                 break
               default:
                 done('wrong type')
@@ -48,6 +60,11 @@ function prepareDownload (callback) {
             result = JSON.stringify(result, null, '    ')
             fileType = 'application/json'
             extension = 'geojson'
+            break
+          case 'osmxml':
+            result = '<?xml version="1.0" encoding="UTF-8"?><osm version="0.6" generator="OpenStreetBrowser">' + parentNode.innerHTML + '</osm>'
+            fileType = 'application/xml'
+            extension = 'osm.xml'
             break
         }
 
@@ -74,7 +91,8 @@ register_hook('init', function () {
       name: 'Type',
       type: 'radio',
       values: {
-        geojson: lang('download:geojson')
+        geojson: lang('download:geojson'),
+        osmxml: lang('download:osmxml')
       },
       default: 'geojson'
     }
