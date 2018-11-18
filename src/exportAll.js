@@ -94,13 +94,18 @@ register_hook('init', function () {
   submit.type = 'submit'
   submit.value = lang('export-prepare')
   submit.onclick = () => {
-    submit.setAttribute('disabled', 'disabled')
+    let progressIndicator = document.createElement('div')
+    progressIndicator.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">' + lang('loading') + '</span>'
+    tab.content.appendChild(progressIndicator)
+    submit.style.display = 'none'
+
     prepareDownload((err) => {
       if (err) {
         alert(err)
       }
 
-      submit.removeAttribute('disabled')
+      submit.style.display = 'block'
+      tab.content.removeChild(progressIndicator)
       tab.unselect()
     })
   }
@@ -122,14 +127,19 @@ module.exports = (data, div) => {
   submit.type = 'submit'
   submit.value = lang('export-prepare')
   submit.onclick = () => {
-    submit.setAttribute('disabled', 'disabled')
+    let progressIndicator = document.createElement('div')
+    progressIndicator.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">' + lang('loading') + '</span>'
+    div.appendChild(progressIndicator)
+    submit.style.display = 'none'
+
     let conf = formExport.get_data()
     createDownload(conf, [ data ], (err) => {
       if (err) {
         alert(err)
       }
 
-      submit.removeAttribute('disabled')
+      submit.style.display = 'block'
+      div.removeChild(progressIndicator)
     })
   }
   div.appendChild(submit)
