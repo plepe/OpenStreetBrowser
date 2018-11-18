@@ -33,6 +33,7 @@ require('./categories')
 require('./wikipedia')
 require('./image')
 require('./addCategories')
+require('./exportAll')
 
 window.onload = function () {
   var initState = config.defaultView

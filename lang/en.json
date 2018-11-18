@@ -9,6 +9,8 @@
         "message": "Error",
         "!=1": "Errors"
     },
+    "export-all": "Export all visible map features",
+    "export-prepare": "Prepare download",
     "facilities": "Facilities",
     "header:attributes": "Attributes",
     "header:export": "Export",
