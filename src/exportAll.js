@@ -4,6 +4,11 @@ const FileSaver = require('file-saver')
 
 const chunkSplit = require('./chunkSplit')
 
+const types = {
+  GeoJSON: require('./ExportGeoJSON'),
+  OSMXML: require('./ExportOSMXML')
+}
+
 let tab
 let formExport
 
@@ -11,65 +16,35 @@ function prepareDownload (callback) {
   let conf = formExport.get_data()
   let fileType
   let extension
+  let type = types[conf.type]
+  let exportFun = new type(conf)
 
   global.baseCategory.allMapFeatures((err, data) => {
     let chunks = chunkSplit(data, 1000)
     let parentNode
-
-    switch (conf.type) {
-      case 'geojson':
-        break
-      case 'osmxml':
-        parentNode = document.createElement('osm')
-        break
-    }
 
     async.mapLimit(
       chunks,
       1,
       (chunk, done) => {
         async.map(chunk,
-          (ob, done) => {
-            switch (conf.type) {
-              case 'geojson':
-                done(null, ob.object.GeoJSON(conf))
-                break
-              case 'osmxml':
-                ob.object.exportOSMXML(conf, parentNode, done)
-                break
-              default:
-                done('wrong type')
-            }
-          },
+          (ob, done) => exportFun.each(ob, done),
           (err, result) => {
             global.setTimeout(() => done(err, result), 0)
           }
         )
       },
-      (err, result) => {
+      (err, data) => {
         if (err) {
           return callback(err)
         }
 
-        switch (conf.type) {
-          case 'geojson':
-            result = {
-              type: 'FeatureCollection',
-              features: result
-            }
-            result = JSON.stringify(result, null, '    ')
-            fileType = 'application/json'
-            extension = 'geojson'
-            break
-          case 'osmxml':
-            result = '<?xml version="1.0" encoding="UTF-8"?><osm version="0.6" generator="OpenStreetBrowser">' + parentNode.innerHTML + '</osm>'
-            fileType = 'application/xml'
-            extension = 'osm.xml'
-            break
-        }
+        data = data.reduce((all, chunk) => all.concat(chunk))
 
-        var blob = new Blob([ result ], { type: fileType + ';charset=utf-8' })
-        FileSaver.saveAs(blob, 'openstreetbrowser.' + extension)
+        let result = exportFun.finish(data)
+
+        var blob = new Blob([ result.content ], { type: result.fileType + ';charset=utf-8' })
+        FileSaver.saveAs(blob, 'openstreetbrowser.' + result.extension)
 
         callback()
       }
@@ -86,15 +61,17 @@ register_hook('init', function () {
   tab.header.innerHTML = '<i class="fa fa-download" aria-hidden="true"></i>'
   tab.content.innerHTML = lang('export-all')
 
+  let values = {}
+  Object.keys(types).forEach(type =>
+    values[type] = lang('export:' + type)
+  )
+
   formExport = new form('export', {
     type: {
       name: 'Type',
       type: 'radio',
-      values: {
-        geojson: lang('download:geojson'),
-        osmxml: lang('download:osmxml')
-      },
-      default: 'geojson'
+      values,
+      default: Object.keys(types)[0]
     }
   })
 

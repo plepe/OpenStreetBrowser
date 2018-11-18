@@ -3,8 +3,6 @@
     "category-info-tooltip": "Info & Map key",
     "closed": "closed",
     "default": "default",
-    "download:geojson": "Download as GeoJSON",
-    "download:osmxml": "Download as OSMXML",
     "edit": "edit",
     "error": {
         "message": "Error",
@@ -12,6 +10,8 @@
     },
     "export-all": "Export all visible map features",
     "export-prepare": "Prepare download",
+    "export:GeoJSON": "Download as GeoJSON",
+    "export:OSMXML": "Download as OSMXML",
     "facilities": "Facilities",
     "header:attributes": "Attributes",
     "header:export": "Export",
