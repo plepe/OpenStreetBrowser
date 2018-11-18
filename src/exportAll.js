@@ -9,27 +9,32 @@ let formExport
 
 function prepareDownload (callback) {
   let conf = formExport.get_data()
-  let result = []
   let fileType
   let extension
 
   global.baseCategory.allMapFeatures((err, data) => {
     let chunks = chunkSplit(data, 1000)
 
-    async.eachLimit(
+    async.mapLimit(
       chunks,
       1,
       (chunk, done) => {
-        result = result.concat(chunk.map(ob => {
-          switch (conf.type) {
-            case 'geojson':
-              return ob.object.GeoJSON(conf)
+        async.map(chunk,
+          (ob, done) => {
+            switch (conf.type) {
+              case 'geojson':
+                done(null, ob.object.GeoJSON(conf))
+                break
+              default:
+                done('wrong type')
+            }
+          },
+          (err, result) => {
+            global.setTimeout(() => done(err, result), 0)
           }
-        }))
-
-        global.setTimeout(done, 0)
+        )
       },
-      (err) => {
+      (err, result) => {
         if (err) {
           return callback(err)
         }
