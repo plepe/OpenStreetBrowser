@@ -204,4 +204,8 @@ CategoryBase.prototype.notifyChildLoadEnd = function (category) {
   }
 }
 
+CategoryBase.prototype.allMapFeatures = function (callback) {
+  callback(null, [])
+}
+
 module.exports = CategoryBase

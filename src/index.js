@@ -168,6 +168,10 @@ function onload2 (initState) {
   call_hooks('initFinish')
 }
 
+global.allMapFeatures = function (callback) {
+  global.baseCategory.allMapFeatures(callback)
+}
+
 window.setPath = function (path, state) {
   currentPath = path
 
