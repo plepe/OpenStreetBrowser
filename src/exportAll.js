@@ -90,6 +90,7 @@ register_hook('init', function () {
       }
 
       submit.removeAttribute('disabled')
+      tab.unselect()
     })
   }
   tab.content.appendChild(submit)
