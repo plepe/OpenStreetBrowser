@@ -15,6 +15,7 @@
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "color-interpolate": "^1.0.2",
+    "file-saver": "^2.0.0",
     "font-awesome": "^4.7.0",
     "i18next-client": "^1.11.4",
     "ip-location": "^1.0.1",

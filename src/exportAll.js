@@ -1,5 +1,7 @@
 const tabs = require('modulekit-tabs')
 const async = require('async')
+const FileSaver = require('file-saver')
+
 const chunkSplit = require('./chunkSplit')
 
 let tab
@@ -8,10 +10,10 @@ let formExport
 function prepareDownload (callback) {
   let conf = formExport.get_data()
   let result = []
+  let fileType
+  let extension
 
   global.baseCategory.allMapFeatures((err, data) => {
-    console.log(data)
-
     let chunks = chunkSplit(data, 1000)
 
     async.eachLimit(
@@ -39,9 +41,13 @@ function prepareDownload (callback) {
               features: result
             }
             result = JSON.stringify(result, null, '    ')
+            fileType = 'application/json'
+            extension = 'geojson'
+            break
         }
 
-        console.log(result)
+        var blob = new Blob([ result ], { type: fileType + ';charset=utf-8' })
+        FileSaver.saveAs(blob, 'openstreetbrowser.' + extension)
 
         callback()
       }
