@@ -1,6 +1,7 @@
 /* globals map:true, overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true showDetails */
 
 var LeafletGeoSearch = require('leaflet-geosearch')
+const tabs = require('modulekit-tabs')
 
 var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
@@ -17,6 +18,7 @@ global.baseCategory = null
 global.overpassUrl = null
 global.overpassFrontend = null
 global.currentPath = null
+global.tabs = null
 var lastPopupClose = 0
 
 // Optional modules
@@ -41,6 +43,8 @@ window.onload = function () {
   if (Array.isArray(options)) {
     options = {}
   }
+
+  global.tabs = new tabs.Tabs(document.getElementById('globalTabs'))
 
   call_hooks('init')
   call_hooks_callback('init_callback', initState, onload2.bind(this, initState))
