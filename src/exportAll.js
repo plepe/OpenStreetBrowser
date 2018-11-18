@@ -14,12 +14,20 @@ let formExport
 
 function prepareDownload (callback) {
   let conf = formExport.get_data()
-  let fileType
-  let extension
-  let type = types[conf.type]
-  let exportFun = new type(conf)
 
   global.baseCategory.allMapFeatures((err, data) => {
+    if (err) {
+      return callback(err)
+    }
+
+    createDownload(conf, data, callback)
+  })
+}
+
+function createDownload (conf, data, callback) {
+    let type = types[conf.type]
+    let exportFun = new type(conf)
+
     let chunks = chunkSplit(data, 1000)
     let parentNode
 
@@ -49,7 +57,22 @@ function prepareDownload (callback) {
         callback()
       }
     )
-  })
+}
+
+function formDef () {
+  let values = {}
+  Object.keys(types).forEach(type =>
+    values[type] = lang('export:' + type)
+  )
+
+  return {
+    type: {
+      name: 'Type',
+      type: 'radio',
+      values,
+      default: Object.keys(types)[0]
+    }
+  }
 }
 
 register_hook('init', function () {
@@ -61,19 +84,7 @@ register_hook('init', function () {
   tab.header.innerHTML = '<i class="fa fa-download" aria-hidden="true"></i>'
   tab.content.innerHTML = lang('export-all')
 
-  let values = {}
-  Object.keys(types).forEach(type =>
-    values[type] = lang('export:' + type)
-  )
-
-  formExport = new form('export', {
-    type: {
-      name: 'Type',
-      type: 'radio',
-      values,
-      default: Object.keys(types)[0]
-    }
-  })
+  formExport = new form('export', formDef())
 
   let domForm = document.createElement('form')
   tab.content.appendChild(domForm)
@@ -99,3 +110,27 @@ register_hook('init', function () {
     formExport.resize()
   })
 })
+
+module.exports = (data, div) => {
+  let formExport = new form('exportOne', formDef())
+
+  let domForm = document.createElement('form')
+  div.appendChild(domForm)
+  formExport.show(domForm)
+
+  let submit = document.createElement('input')
+  submit.type = 'submit'
+  submit.value = lang('export-prepare')
+  submit.onclick = () => {
+    submit.setAttribute('disabled', 'disabled')
+    let conf = formExport.get_data()
+    createDownload(conf, [ data ], (err) => {
+      if (err) {
+        alert(err)
+      }
+
+      submit.removeAttribute('disabled')
+    })
+  }
+  div.appendChild(submit)
+}

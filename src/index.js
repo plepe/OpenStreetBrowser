@@ -33,7 +33,7 @@ require('./categories')
 require('./wikipedia')
 require('./image')
 require('./addCategories')
-require('./exportAll')
+let exportAll = require('./exportAll')
 
 window.onload = function () {
   var initState = config.defaultView
@@ -294,17 +294,9 @@ window.showDetails = function (data, category) {
   h.innerHTML = lang('header:export')
   dom.appendChild(h)
 
-  div = document.createElement('ul')
+  div = document.createElement('div')
   dom.appendChild(div)
-
-  li = document.createElement('li')
-  div.appendChild(li)
-
-  a = document.createElement('a')
-  a.download = data.id + '.json'
-  a.href = 'data:application/json;charset=UTF-8,' + encodeURIComponent(JSON.stringify(data.object.GeoJSON(), null, '    '))
-  a.innerHTML = lang('download:geojson')
-  li.appendChild(a)
+  exportAll(data, div)
 
   h = document.createElement('h3')
   h.innerHTML = lang('header:attributes')
