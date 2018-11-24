@@ -40,3 +40,10 @@ You can pass URL options to the icon to modify its look. Note that every icon is
 ```html
 <img data-src="maki:park?size=11&amp;fill=red&amp;stroke=black&amp;stroke-width=0.5">
 ```
+
+#### Temaki Icons
+[Temaki icons](http://www.7thposition.com/temaki/docs/) are additions to the Mapbox Maki Icons with the difference that they only exist in to size of 15px.
+```html
+<img data-src="temaki:shinto">
+<img data-src="temaki:shinto?fill=red">
+```

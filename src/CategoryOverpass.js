@@ -154,14 +154,14 @@ CategoryOverpass.prototype.updateAssets = function (div) {
     // TODO: 'src' is deprecated, use only data-src
     var src = img.getAttribute('src') || img.getAttribute('data-src')
     if (src === null) {
-    } else if (src.match(/^maki:.*/)) {
-      let m = src.match(/^maki:([a-z0-9-]*)(?:\?(.*))?$/)
+    } else if (src.match(/^(maki|temaki):.*/)) {
+      let m = src.match(/^(maki|temaki):([a-z0-9-]*)(?:\?(.*))?$/)
       if (m) {
         let span = document.createElement('span')
         img.parentNode.insertBefore(span, img)
         img.parentNode.removeChild(img)
         i--
-        maki(m[1], m[2] ? qs(m[2]) : {}, function (err, result) {
+        maki(m[1], m[2], m[3] ? qs(m[3]) : {}, function (err, result) {
           if (err === null) {
             span.innerHTML = result
           }
