@@ -151,7 +151,8 @@ CategoryOverpass.prototype.updateAssets = function (div) {
   for (var i = 0; i < imgs.length; i++) {
     let img = imgs[i]
 
-    var src = img.getAttribute('src')
+    // TODO: 'src' is deprecated, use only data-src
+    var src = img.getAttribute('src') || img.getAttribute('data-src')
     if (src === null) {
     } else if (src.match(/^maki:.*/)) {
       let m = src.match(/^maki:([a-z0-9-]*)(?:\?(.*))?$/)
