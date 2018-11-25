@@ -27,7 +27,7 @@ You can use normal CSS to modify its look, e.g.
 ```
 
 #### Mapbox Maki Icons
-Mapbox Maki Icons 4 are also included in OpenStreetBrowser. They can be accessed as images with protocol 'maki', e.g.:
+[Mapbox Maki Icons 5](https://www.mapbox.com/maki-icons/) are also included in OpenStreetBrowser. They can be accessed as images with protocol 'maki', e.g.:
 ```html
 <img data-src="maki:park">
 ```
