@@ -4,7 +4,7 @@ class ExportGeoJSON {
   }
 
   each (ob, callback) {
-    callback(null, ob.object.GeoJSON(this.conf))
+    ob.object.exportGeoJSON(this.conf, callback)
   }
 
   finishOne (object) {
