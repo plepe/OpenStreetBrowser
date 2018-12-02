@@ -96,7 +96,7 @@ register_hook('init', function () {
   submit.value = lang('export-prepare')
   submit.onclick = () => {
     let progressIndicator = document.createElement('div')
-    progressIndicator.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">' + lang('loading') + '</span>'
+    progressIndicator.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
     tab.content.appendChild(progressIndicator)
     submit.style.display = 'none'
 
@@ -129,7 +129,7 @@ module.exports = (data, div) => {
   submit.value = lang('export-prepare')
   submit.onclick = () => {
     let progressIndicator = document.createElement('div')
-    progressIndicator.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">' + lang('loading') + '</span>'
+    progressIndicator.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
     div.appendChild(progressIndicator)
     submit.style.display = 'none'
 
