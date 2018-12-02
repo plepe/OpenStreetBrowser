@@ -6,7 +6,8 @@ const chunkSplit = require('./chunkSplit')
 
 const types = {
   GeoJSON: require('./ExportGeoJSON'),
-  OSMXML: require('./ExportOSMXML')
+  OSMXML: require('./ExportOSMXML'),
+  OSMJSON: require('./ExportOSMJSON')
 }
 
 let tab
