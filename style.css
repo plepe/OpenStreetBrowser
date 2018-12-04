@@ -81,6 +81,15 @@ a:active {
   padding-left: 10px;
   padding-right: 10px;
 }
+#sidebar > #globalTabs ul.tabs-list {
+  font-size: 15pt;
+}
+.tabs-section {
+  padding: 0.1em;
+}
+.tabs-section > h3:first-of-type {
+  margin-top: 0;
+}
 
 #sidebar > #content {
   flex: 1;
