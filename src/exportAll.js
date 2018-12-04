@@ -83,7 +83,8 @@ register_hook('init', function () {
   global.tabs.add(tab)
 
   tab.header.innerHTML = '<i class="fa fa-download" aria-hidden="true"></i>'
-  tab.content.innerHTML = lang('export-all')
+  tab.header.title = lang('export-all')
+  tab.content.innerHTML = '<h3>' + lang('export-all') + '</h3>'
 
   formExport = new form('export', formDef())
 
