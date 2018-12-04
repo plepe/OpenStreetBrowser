@@ -12,7 +12,7 @@ function addCategoriesShow (repo) {
   let branchId
 
   if (repo) {
-    [ repoId, branchId ] = repo.split(/\//)
+    [ repoId, branchId ] = repo.split(/~/)
   }
 
   if (!content) {
@@ -91,7 +91,7 @@ function addCategoriesShow (repo) {
       branchSelector.onchange = () => {
         let branch = branchSelector.value
 
-        addCategoriesShow(repoId + '/' + branch)
+        addCategoriesShow(repoId + '~' + branch)
       }
 
       Object.keys(repoData.branches).forEach(

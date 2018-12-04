@@ -34,7 +34,7 @@ if (!isset($_REQUEST['repo'])) {
 }
 
 $repoId = $_REQUEST['repo'];
-list($repoId, $branchId) = explode('/', $repoId);
+list($repoId, $branchId) = explode('~', $repoId);
 
 if (!array_key_exists($repoId, $allRepositories)) {
   Header("HTTP/1.1 404 Repository not found");
