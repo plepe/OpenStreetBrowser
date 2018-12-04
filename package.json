@@ -1,6 +1,6 @@
 {
   "name": "openstreetbrowser",
-  "version": "4.1.2",
+  "version": "4.2.0",
   "description": "A re-make of the famous OpenStreetBrowser (pure JS, using Overpass API)",
   "main": "src/export.js",
   "repository": "https://github.com/plepe/openstreetbrowser",
