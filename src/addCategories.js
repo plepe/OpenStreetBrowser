@@ -10,6 +10,13 @@ let tab
 
 function addCategoriesShow (repo) {
   let content = tab.content
+  let repoId
+  let branchId
+
+  if (repo) {
+    [ repoId, branchId ] = repo.split(/~/)
+  }
+
 
   content.innerHTML = '<h3>' + lang('more_categories') + '</h3>' + '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
 
@@ -41,7 +48,7 @@ function addCategoriesShow (repo) {
       content.appendChild(backLink)
 
       let h = document.createElement('h2')
-      h.appendChild(document.createTextNode(repo))
+      h.appendChild(document.createTextNode(repoId))
       content.appendChild(h)
 
       list = repoData.categories
@@ -58,6 +65,35 @@ function addCategoriesShow (repo) {
         key: 'timestamp',
         reverse: true
       })
+    }
+
+    if ('branches' in repoData) {
+      let text = document.createElement('span')
+      text.innerHTML = lang('available_branches') + ': '
+      content.appendChild(text)
+
+      let branchSelector = document.createElement('select')
+
+      branchSelector.onchange = () => {
+        let branch = branchSelector.value
+
+        addCategoriesShow(repoId + '~' + branch)
+      }
+
+      Object.keys(repoData.branches).forEach(
+        branch => {
+          let option = document.createElement('option')
+          option.value = branch
+          option.appendChild(document.createTextNode(branch))
+
+          if (repoData.branch === branch) {
+            option.selected = true
+          }
+
+          branchSelector.appendChild(option)
+        }
+      )
+      content.appendChild(branchSelector)
     }
 
     var ul = document.createElement('ul')
