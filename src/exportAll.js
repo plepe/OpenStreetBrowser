@@ -137,6 +137,9 @@ module.exports = (data, div) => {
     submit.style.display = 'none'
 
     let conf = formExport.get_data()
+
+    conf.singleFeature = true
+
     createDownload(conf, [ data ], (err) => {
       if (err) {
         alert(err)

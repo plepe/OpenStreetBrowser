@@ -16,9 +16,11 @@ class ExportGeoJSON {
   }
 
   finish (list) {
-    list = {
-      type: 'FeatureCollection',
-      features: list
+    if (!this.conf.singleFeature) {
+      list = {
+        type: 'FeatureCollection',
+        features: list
+      }
     }
 
     return {
