@@ -1,34 +1,24 @@
 /* global OverpassLayer, repositoriesGitea */
 require('./addCategories.css')
 
+const tabs = require('modulekit-tabs')
 const weightSort = require('weight-sort')
 
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
-var content
+let tab
 
 function addCategoriesShow (repo) {
-  if (!content) {
-    content = document.createElement('div')
-    content.id = 'contentAddCategories'
-    document.getElementById('content').appendChild(content)
-  }
+  let content = tab.content
 
-  content.innerHTML = 'Loading ...'
-  document.getElementById('content').className = 'addCategories'
+  content.innerHTML = '<h3>' + lang('more_categories') + '</h3>' + '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
 
   OpenStreetBrowserLoader.getRepo(repo, {}, function (err, repoData) {
     if (err) {
       alert(err)
     }
 
-    while (content.firstChild) { content.removeChild(content.firstChild) }
-
-    var backLink = document.createElement('a')
-    backLink.className = 'back'
-    backLink.href = '#'
-    backLink.innerHTML = '<i class="fa fa-chevron-circle-left" aria-hidden="true"></i> '
-    backLink.appendChild(document.createTextNode(lang('back')))
+    content.innerHTML = '<h3>' + lang('more_categories') + '</h3>'
 
     var categoryUrl = null
     if (repoData.categoryUrl) {
@@ -38,6 +28,12 @@ function addCategoriesShow (repo) {
     var list = {}
 
     if (repo) {
+      var backLink = document.createElement('a')
+      backLink.className = 'back'
+      backLink.href = '#'
+      backLink.innerHTML = '<i class="fa fa-chevron-circle-left" aria-hidden="true"></i> '
+      backLink.appendChild(document.createTextNode(lang('back')))
+
       backLink.onclick = function () {
         addCategoriesShow()
         return false
@@ -50,16 +46,6 @@ function addCategoriesShow (repo) {
 
       list = repoData.categories
     } else {
-      backLink.onclick = function () {
-        addCategoriesHide()
-        return false
-      }
-      content.appendChild(backLink)
-
-      let h = document.createElement('h2')
-      h.innerHTML = lang('more_categories')
-      content.appendChild(h)
-
       if (typeof repositoriesGitea === 'object' && repositoriesGitea.url) {
         let a = document.createElement('a')
         a.href = repositoriesGitea.url
@@ -133,14 +119,20 @@ function addCategoriesHide () {
 }
 
 register_hook('init', function (callback) {
-  var link = document.createElement('a')
-  link.className = 'addCategories'
-  link.href = '#'
-  link.onclick = function () {
-    addCategoriesShow()
-    return false
-  }
-  link.innerHTML = '<i class="fa fa-chevron-circle-down" aria-hidden="true"></i> ' + lang('more_categories')
+  tab = new tabs.Tab({
+    id: 'addCategories'
+  })
+  global.tabs.add(tab)
 
-  document.getElementById('contentList').appendChild(link)
+  tab.header.innerHTML = '<i class="fa fa-plus" aria-hidden="true"></i>'
+  tab.header.title = lang('more_categories')
+
+  let initialized = false
+
+  tab.on('select', () => {
+    if (!initialized) {
+      addCategoriesShow()
+      initialized = true
+    }
+  })
 })
