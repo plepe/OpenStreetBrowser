@@ -491,5 +491,13 @@ CategoryOverpass.prototype.renderTemplate = function (object, templateId, callba
   })
 }
 
+CategoryOverpass.prototype.allMapFeatures = function (callback) {
+  if (!this.isOpen) {
+    return callback(null, [])
+  }
+
+  callback(null, Object.values(this.layer.mainlayer.visibleFeatures))
+}
+
 OpenStreetBrowserLoader.registerType('overpass', CategoryOverpass)
 module.exports = CategoryOverpass

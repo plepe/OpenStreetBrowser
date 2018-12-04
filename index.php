@@ -65,6 +65,7 @@ html_export_var(array(
       <img src='img/osb_logo.png'>
       <div id='title'>OpenStreet <span class='large'>Browser</span><div class='version' title='<?=$modulekit['version']?>'><?php print substr($modulekit['version'], 0, strpos($modulekit['version'], '+')); ?></div></div>
     </div>
+    <div id='globalTabs'></div>
     <div id='content' class='list'>
       <div id='contentList'></div>
       <div id='contentDetails'></div>

@@ -3,12 +3,13 @@
     "category-info-tooltip": "Info & Legenda",
     "closed": "fechado",
     "default": "padrão",
-    "download:geojson": "Descarregar como GeoJSON",
     "edit": "editar",
     "error": {
         "message": "Erro",
         "!=1": "Erros"
     },
+    "export:GeoJSON": "Descarregar como GeoJSON",
+    "export:OSMXML": null,
     "facilities": "Instalações",
     "header:attributes": "Atributos",
     "header:export": "Exportar",

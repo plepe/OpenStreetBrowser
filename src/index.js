@@ -1,6 +1,7 @@
 /* globals map:true, overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true showDetails */
 
 var LeafletGeoSearch = require('leaflet-geosearch')
+const tabs = require('modulekit-tabs')
 
 var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
@@ -17,6 +18,7 @@ global.baseCategory = null
 global.overpassUrl = null
 global.overpassFrontend = null
 global.currentPath = null
+global.tabs = null
 var lastPopupClose = 0
 
 // Optional modules
@@ -31,6 +33,7 @@ require('./categories')
 require('./wikipedia')
 require('./image')
 require('./addCategories')
+let exportAll = require('./exportAll')
 
 window.onload = function () {
   var initState = config.defaultView
@@ -41,6 +44,8 @@ window.onload = function () {
   if (Array.isArray(options)) {
     options = {}
   }
+
+  global.tabs = new tabs.Tabs(document.getElementById('globalTabs'))
 
   call_hooks('init')
   call_hooks_callback('init_callback', initState, onload2.bind(this, initState))
@@ -161,6 +166,10 @@ function onload2 (initState) {
 
   state.update()
   call_hooks('initFinish')
+}
+
+global.allMapFeatures = function (callback) {
+  global.baseCategory.allMapFeatures(callback)
 }
 
 window.setPath = function (path, state) {
@@ -285,17 +294,9 @@ window.showDetails = function (data, category) {
   h.innerHTML = lang('header:export')
   dom.appendChild(h)
 
-  div = document.createElement('ul')
+  div = document.createElement('div')
   dom.appendChild(div)
-
-  li = document.createElement('li')
-  div.appendChild(li)
-
-  a = document.createElement('a')
-  a.download = data.id + '.json'
-  a.href = 'data:application/json;charset=UTF-8,' + encodeURIComponent(JSON.stringify(data.object.GeoJSON(), null, '    '))
-  a.innerHTML = lang('download:geojson')
-  li.appendChild(a)
+  exportAll(data, div)
 
   h = document.createElement('h3')
   h.innerHTML = lang('header:attributes')

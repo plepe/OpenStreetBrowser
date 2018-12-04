@@ -3,12 +3,13 @@
     "category-info-tooltip": "Info & Legende",
     "closed": "geschlossen",
     "default": "Standard",
-    "download:geojson": "Als GeoJSON runterladen",
     "edit": "bearbeiten",
     "error": {
         "message": "Fehler",
         "!=1": "Fehler"
     },
+    "export:GeoJSON": "Als GeoJSON runterladen",
+    "export:OSMXML": null,
     "facilities": "Einrichtungen",
     "header:attributes": "Attribute",
     "header:export": "Export",

@@ -106,5 +106,24 @@ CategoryIndex.prototype.toggleCategory = function (id) {
   }.bind(this))
 }
 
+CategoryIndex.prototype.allMapFeatures = function (callback) {
+  let result = []
+
+  async.each(this.childrenCategories,
+    (category, done) => category.allMapFeatures(
+      (err, data) => {
+        if (err) {
+          return done(err)
+        }
+
+        result = result.concat(data)
+
+        global.setTimeout(done, 0)
+      }
+    ),
+    (err) => callback(err, result)
+  )
+}
+
 OpenStreetBrowserLoader.registerType('index', CategoryIndex)
 module.exports = CategoryIndex
