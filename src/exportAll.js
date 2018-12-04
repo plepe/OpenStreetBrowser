@@ -48,7 +48,9 @@ function createDownload (conf, data, callback) {
           return callback(err)
         }
 
-        data = data.reduce((all, chunk) => all.concat(chunk))
+        if (data.length !== 0) {
+          data = data.reduce((all, chunk) => all.concat(chunk))
+        }
 
         let result = exportFun.finish(data)
 
