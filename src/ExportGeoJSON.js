@@ -16,11 +16,9 @@ class ExportGeoJSON {
   }
 
   finish (list) {
-    if (list.length) {
-      list = {
-        type: 'FeatureCollection',
-        features: list
-      }
+    list = {
+      type: 'FeatureCollection',
+      features: list
     }
 
     return {
