@@ -2,8 +2,25 @@
 class RepositoryGit extends RepositoryBase {
   function __construct ($id, $def) {
     parent::__construct($id, $def);
-    $this->branch = $def['branch'] ?? 'HEAD';
+    if (array_key_exists('branch', $def)) {
+      $this->branch = $def['branch'];
+    }
+    else {
+      $this->branch = chop(shell_exec("cd " . escapeShellArg($this->path) . "; git rev-parse --abbrev-ref HEAD"));
+    }
+
     $this->branchEsc = escapeShellArg($this->branch);
+  }
+
+  function setBranch ($branch) {
+    $this->branch = $branch;
+    $this->branchEsc = escapeShellArg($this->branch);
+
+    exec("cd " . escapeShellArg($this->path) . "; git ls-tree {$this->branchEsc}", $output, $return);
+
+    if ($return !== 0) {
+      throw new Exception('no such branch');
+    }
   }
 
   function timestamp () {
@@ -39,6 +56,20 @@ class RepositoryGit extends RepositoryBase {
       }
     }
     pclose($d);
+
+    if (!array_key_exists('branch', $this->def)) {
+      $d = popen("cd " . escapeShellArg($this->path) . "; git for-each-ref --sort=-committerdate refs/heads/", "r");
+      $data['branch'] = $this->branch;
+      $data['branches'] = array();
+      while ($r = fgets($d)) {
+        if (preg_match("/^([0-9a-f]{40}) commit\trefs\/heads\/(.*)$/", $r, $m)) {
+          $data['branches'][$m[2]] = array(
+            'commit' => $m[1],
+          );
+        }
+      }
+      pclose($d);
+    }
 
     return $data;
   }

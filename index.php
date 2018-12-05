@@ -39,7 +39,8 @@ html_export_var(array(
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/png" href="img/osb-192.png" />
   <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+  <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/v4-shims.min.css" />
   <link rel="stylesheet" href="node_modules/leaflet-geosearch/assets/css/leaflet.css" />
   <link rel="stylesheet" href="node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
   <link rel="stylesheet" href="node_modules/leaflet.polylinemeasure/Leaflet.PolylineMeasure.css" />
@@ -48,6 +49,7 @@ html_export_var(array(
   <script src="node_modules/leaflet-textpath/leaflet.textpath.js"></script>
   <script src="node_modules/leaflet-polylineoffset/leaflet.polylineoffset.js"></script>
   <script src="node_modules/leaflet.polylinemeasure/Leaflet.PolylineMeasure.js"></script>
+  <script src="node_modules/leaflet-polylinedecorator/dist/leaflet.polylineDecorator.js"></script>
   <?php print modulekit_to_javascript(); /* pass modulekit configuration to JavaScript */ ?>
   <?php print modulekit_include_js(); /* prints all js-includes */ ?>
   <?php print modulekit_include_css(); /* prints all css-includes */ ?>
@@ -63,6 +65,7 @@ html_export_var(array(
       <img src='img/osb_logo.png'>
       <div id='title'>OpenStreet <span class='large'>Browser</span><div class='version' title='<?=$modulekit['version']?>'><?php print substr($modulekit['version'], 0, strpos($modulekit['version'], '+')); ?></div></div>
     </div>
+    <div id='globalTabs'></div>
     <div id='content' class='list'>
       <div id='contentList'></div>
       <div id='contentDetails'></div>

@@ -1,14 +1,19 @@
 {
+    "available_branches": "",
     "back": "voltar",
     "category-info-tooltip": "Info & Legenda",
     "closed": "fechado",
     "default": "padrão",
-    "download:geojson": "Descarregar como GeoJSON",
     "edit": "editar",
     "error": {
         "message": "Erro",
         "!=1": "Erros"
     },
+    "export-all": "",
+    "export-prepare": "",
+    "export:GeoJSON": "Descarregar como GeoJSON",
+    "export:OSMJSON": "",
+    "export:OSMXML": null,
     "facilities": "Instalações",
     "header:attributes": "Atributos",
     "header:export": "Exportar",

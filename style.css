@@ -77,6 +77,20 @@ a:active {
   font-size: 16px;
 }
 
+#sidebar > #globalTabs {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+#sidebar > #globalTabs ul.tabs-list {
+  font-size: 15pt;
+}
+.tabs-section {
+  padding: 0.1em;
+}
+.tabs-section > h3:first-of-type {
+  margin-top: 0;
+}
+
 #sidebar > #content {
   flex: 1;
   flex-shrink: 0;
@@ -383,4 +397,9 @@ a:active {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   margin: auto;
+}
+
+.info .sign,
+.overpass-layer-icon .sign {
+  white-space: nowrap;
 }

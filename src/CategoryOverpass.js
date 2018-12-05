@@ -151,16 +151,17 @@ CategoryOverpass.prototype.updateAssets = function (div) {
   for (var i = 0; i < imgs.length; i++) {
     let img = imgs[i]
 
-    var src = img.getAttribute('src')
+    // TODO: 'src' is deprecated, use only data-src
+    var src = img.getAttribute('src') || img.getAttribute('data-src')
     if (src === null) {
-    } else if (src.match(/^maki:.*/)) {
-      let m = src.match(/^maki:([a-z0-9-]*)(?:\?(.*))?$/)
+    } else if (src.match(/^(maki|temaki):.*/)) {
+      let m = src.match(/^(maki|temaki):([a-z0-9-]*)(?:\?(.*))?$/)
       if (m) {
         let span = document.createElement('span')
         img.parentNode.insertBefore(span, img)
         img.parentNode.removeChild(img)
         i--
-        maki(m[1], m[2] ? qs(m[2]) : {}, function (err, result) {
+        maki(m[1], m[2], m[3] ? qs(m[3]) : {}, function (err, result) {
           if (err === null) {
             span.innerHTML = result
           }
@@ -377,7 +378,8 @@ CategoryOverpass.prototype.show = function (id, options, callback) {
   }
 
   let layerOptions = {
-    styles: [ 'selected' ]
+    styles: [ 'selected' ],
+    flags: [ 'selected' ]
   }
 
   let idParts = id.split(/:/)
@@ -417,6 +419,7 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
 
   let layerOptions = {
     styles: [ 'selected' ],
+    flags: [ 'selected' ],
     sublayer_id: object.sublayer_id
   }
 
@@ -486,6 +489,14 @@ CategoryOverpass.prototype.renderTemplate = function (object, templateId, callba
 
     callback(null, result)
   })
+}
+
+CategoryOverpass.prototype.allMapFeatures = function (callback) {
+  if (!this.isOpen) {
+    return callback(null, [])
+  }
+
+  callback(null, Object.values(this.layer.mainlayer.visibleFeatures))
 }
 
 OpenStreetBrowserLoader.registerType('overpass', CategoryOverpass)

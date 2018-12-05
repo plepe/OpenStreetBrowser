@@ -34,6 +34,8 @@ if (!isset($_REQUEST['repo'])) {
 }
 
 $repoId = $_REQUEST['repo'];
+list($repoId, $branchId) = explode('~', $repoId);
+
 if (!array_key_exists($repoId, $allRepositories)) {
   Header("HTTP/1.1 404 Repository not found");
   exit(0);
@@ -41,6 +43,16 @@ if (!array_key_exists($repoId, $allRepositories)) {
 
 $repoData = $allRepositories[$repoId];
 $repo = getRepo($repoId, $repoData);
+
+if ($branchId) {
+  try {
+    $repo->setBranch($branchId);
+  }
+  catch (Exception $e) {
+    Header("HTTP/1.1 404 No such branch");
+    exit(0);
+  }
+}
 
 $cacheDir = null;
 $ts = $repo->timestamp($path);
