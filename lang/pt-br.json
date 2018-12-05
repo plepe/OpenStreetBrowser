@@ -1,4 +1,5 @@
 {
+    "available_branches": "",
     "back": "voltar",
     "category-info-tooltip": "Info & Legenda",
     "closed": "fechado",
@@ -8,7 +9,10 @@
         "message": "Erro",
         "!=1": "Erros"
     },
+    "export-all": "",
+    "export-prepare": "",
     "export:GeoJSON": "Baixar como GeoJSON",
+    "export:OSMJSON": "",
     "export:OSMXML": null,
     "facilities": "Instalações",
     "header:attributes": "Atributos",
