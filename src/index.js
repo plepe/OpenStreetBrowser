@@ -18,6 +18,7 @@ global.baseCategory = null
 global.overpassUrl = null
 global.overpassFrontend = null
 global.currentPath = null
+global.mainRepo = ''
 global.tabs = null
 var lastPopupClose = 0
 
@@ -109,7 +110,13 @@ function onload2 (initState) {
 
   state.apply(newState)
 
-  OpenStreetBrowserLoader.getCategory('index', function (err, category) {
+  let repo = ''
+  if ('repo' in newState) {
+    mainRepo = newState.repo
+    repo = mainRepo + '/'
+  }
+
+  OpenStreetBrowserLoader.getCategory(repo + 'index', function (err, category) {
     if (err) {
       alert(err)
       return
