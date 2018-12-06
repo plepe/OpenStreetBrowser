@@ -110,22 +110,11 @@ function onload2 (initState) {
 
   state.apply(newState)
 
-  let repo = ''
   if ('repo' in newState) {
     mainRepo = newState.repo
-    repo = mainRepo + '/'
   }
 
-  OpenStreetBrowserLoader.getCategory(repo + 'index', function (err, category) {
-    if (err) {
-      alert(err)
-      return
-    }
-
-    baseCategory = category
-    category.setParentDom(document.getElementById('contentList'))
-    category.open()
-  })
+  loadBaseCategory()
 
   map.on('popupopen', function (e) {
     if (e.popup.object) {
@@ -175,12 +164,32 @@ function onload2 (initState) {
   call_hooks('initFinish')
 }
 
+function loadBaseCategory () {
+  let repo = mainRepo + (mainRepo === '' ? '' : '/')
+  OpenStreetBrowserLoader.getCategory(repo + 'index', function (err, category) {
+    if (err) {
+      alert(err)
+      return
+    }
+
+    baseCategory = category
+    category.setParentDom(document.getElementById('contentList'))
+    category.open()
+  })
+}
+
 global.allMapFeatures = function (callback) {
   global.baseCategory.allMapFeatures(callback)
 }
 
 window.setPath = function (path, state) {
   currentPath = path
+
+  if (state.repo !== mainRepo && baseCategory) {
+    baseCategory.remove()
+    mainRepo = state.repo
+    loadBaseCategory()
+  }
 
   if (!path) {
     map.closePopup()
