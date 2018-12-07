@@ -67,6 +67,21 @@ function addCategoriesShow (repo) {
       })
     }
 
+    let menu = document.createElement('ul')
+    menu.className = 'menu'
+    content.appendChild(menu)
+
+    if (repo) {
+      let li = document.createElement('li')
+      menu.appendChild(li)
+
+      let text = document.createElement('a')
+      text.innerHTML = lang('repo-use-as-base')
+      text.href = '#repo=' + repo
+      text.onclick = addCategoriesHide
+      li.appendChild(text)
+    }
+
     if ('branches' in repoData) {
       let text = document.createElement('span')
       text.innerHTML = lang('available_branches') + ': '

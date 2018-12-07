@@ -32,6 +32,7 @@
     "options:preferredBaseMap": "Preferred base map",
     "options:ui_lang": "Interface language",
     "other": "Other",
+    "repo-use-as-base": "Use this repository as base repository",
     "save": "Save",
     "show details": "show details",
     "toggle_fullscreen": "Toggle full screen mode",

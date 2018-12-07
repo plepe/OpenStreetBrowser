@@ -32,6 +32,7 @@
     "options:preferredBaseMap": "Mapa-base preferido",
     "options:ui_lang": "Língua da interface",
     "other": "Outro",
+    "repo-use-as-base": "",
     "save": "Guardar",
     "show details": "mostrar detalhes",
     "toggle_fullscreen": "Alternar modo ecrã inteiro",

@@ -29,6 +29,7 @@
     "options:preferredBaseMap": "Carte de base préférée",
     "options:ui_lang": "Langue de l'interface",
     "other": "Autres",
+    "repo-use-as-base": "",
     "save": "Sauvegarder",
     "show details": "montrer les détails",
     "toggle_fullscreen": "Basculer en plein écran",
