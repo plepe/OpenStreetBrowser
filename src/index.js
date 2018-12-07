@@ -185,7 +185,7 @@ global.allMapFeatures = function (callback) {
 window.setPath = function (path, state) {
   currentPath = path
 
-  if (state.repo !== mainRepo && baseCategory) {
+  if ('repo' in state && state.repo !== mainRepo && baseCategory) {
     baseCategory.remove()
     mainRepo = state.repo
     loadBaseCategory()
