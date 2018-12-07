@@ -115,8 +115,13 @@
 .category {
   margin-left: 1em;
 }
-.category.baseCategory,
-.category.addCategory {
+#contentListBaseCategory {
+  margin-left: -2em;
+}
+#contentListBaseCategory > .category > header {
+  display: none;
+}
+#contentListAddCategories {
   margin-left: -1em;
 }
 .info > table > tr > td:first-of-type,
