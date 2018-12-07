@@ -151,7 +151,7 @@ function addCategoriesShow (repo) {
 }
 
 function addCategoriesHide () {
-  document.getElementById('content').className = 'list'
+  tab.unselect()
 }
 
 register_hook('init', function (callback) {
