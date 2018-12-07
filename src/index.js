@@ -173,7 +173,7 @@ function loadBaseCategory () {
     }
 
     baseCategory = category
-    category.setParentDom(document.getElementById('contentList'))
+    category.setParentDom(document.getElementById('contentListBaseCategory'))
     category.open()
 
     category.dom.classList.add('baseCategory')
@@ -234,7 +234,7 @@ function show (id, options, callback) {
     }
 
     if (!category.parentDom) {
-      category.setParentDom(document.getElementById('contentList'))
+      category.setParentDom(document.getElementById('contentListAddCategories'))
     }
 
     category.show(

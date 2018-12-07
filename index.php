@@ -67,7 +67,10 @@ html_export_var(array(
     </div>
     <div id='globalTabs'></div>
     <div id='content' class='list'>
-      <div id='contentList'></div>
+      <div id='contentList'>
+        <div id='contentListBaseCategory'></div>
+        <div id='contentListAddCategories'></div>
+      </div>
       <div id='contentDetails'></div>
       <div id='contentOptions'></div>
     </div>
