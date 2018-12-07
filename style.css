@@ -117,12 +117,7 @@ a:active {
 }
 
 
-/***** CATEGORY *****/
-/* root category */
-#content > #contentList > .category > .content > .categoryWrapper > .category {
-  margin-left: 0;
-}
-
+/* Popups */
 .leaflet-popup-content ul.popup-footer {
   padding: 0;
 }

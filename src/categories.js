@@ -19,6 +19,8 @@ register_hook('state-apply', function (state) {
         if (!category.parentDom) {
           category.setParentDom(document.getElementById('contentList'))
         }
+
+        category.dom.classList.add('addCategories')
       }
     })
   })

@@ -112,8 +112,12 @@
   padding-left: 40px;
 }
 
-.category > div > div> .category {
+.category {
   margin-left: 1em;
+}
+.category.baseCategory,
+.category.addCategory {
+  margin-left: -1em;
 }
 .info > table > tr > td:first-of-type,
 .info > table > tbody > tr > td:first-of-type {

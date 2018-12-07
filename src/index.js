@@ -175,6 +175,8 @@ function loadBaseCategory () {
     baseCategory = category
     category.setParentDom(document.getElementById('contentList'))
     category.open()
+
+    category.dom.classList.add('baseCategory')
   })
 }
 
