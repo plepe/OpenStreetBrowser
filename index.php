@@ -73,8 +73,7 @@ html_export_var(array(
     </div>
     <div id='footer'>
       <ul id='menu'>
-        <li><a target='_blank' href='https://github.com/plepe/openstreetbrowser'>Code</a></li>
-      </ul>
+        <li><a target='_blank' href='https://github.com/plepe/openstreetbrowser'>Code</a></li></ul>
     </div>
   </div>
   <div id='loadingIndicator'>
