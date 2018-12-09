@@ -1,6 +1,7 @@
 {
     "available_branches": "",
     "back": "",
+    "categories": "",
     "category-info-tooltip": "",
     "closed": "",
     "default": "",
@@ -30,6 +31,7 @@
     "options:ui_lang": "Језик интерфејса",
     "other": "",
     "repo-use-as-base": "",
+    "repositories": "",
     "save": "Запамти",
     "show details": "",
     "toggle_fullscreen": "",

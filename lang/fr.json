@@ -1,6 +1,7 @@
 {
     "available_branches": "Branches disponibles",
     "back": "Retour",
+    "categories": "",
     "category-info-tooltip": "Info & Légende",
     "closed": "Fermé",
     "default": "Par défaut",
@@ -30,6 +31,7 @@
     "options:ui_lang": "Langue de l'interface",
     "other": "Autres",
     "repo-use-as-base": "",
+    "repositories": "",
     "save": "Sauvegarder",
     "show details": "montrer les détails",
     "toggle_fullscreen": "Basculer en plein écran",

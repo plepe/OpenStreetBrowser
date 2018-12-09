@@ -1,6 +1,7 @@
 {
     "available_branches": "",
     "back": "Vissza",
+    "categories": "",
     "category-info-tooltip": "Információk és jelmagyarázat",
     "closed": "Lezárva",
     "default": "Alapértelmezett",
@@ -30,6 +31,7 @@
     "options:ui_lang": "Menü nyelve",
     "other": "Egyéb",
     "repo-use-as-base": "",
+    "repositories": "",
     "save": "Mentés",
     "show details": "Részletek megjelenítése",
     "toggle_fullscreen": "Teljes képernyős nézet",

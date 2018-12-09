@@ -96,9 +96,12 @@ function addCategoriesShow (repo, options={}) {
     }
 
     if ('branches' in repoData) {
+      let li = document.createElement('li')
+      menu.appendChild(li)
+
       let text = document.createElement('span')
       text.innerHTML = lang('available_branches') + ': '
-      content.appendChild(text)
+      li.appendChild(text)
 
       let branchSelector = document.createElement('select')
 
@@ -121,8 +124,12 @@ function addCategoriesShow (repo, options={}) {
           branchSelector.appendChild(option)
         }
       )
-      content.appendChild(branchSelector)
+      li.appendChild(branchSelector)
     }
+
+    let header = document.createElement('h3')
+    header.innerHTML = lang(repo ? 'repositories' : 'categories') + ':'
+    content.appendChild(header)
 
     var ul = document.createElement('ul')
 

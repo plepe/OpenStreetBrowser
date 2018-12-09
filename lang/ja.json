@@ -1,6 +1,7 @@
 {
     "available_branches": "",
     "back": "",
+    "categories": "",
     "category-info-tooltip": "",
     "closed": "",
     "default": "",
@@ -30,6 +31,7 @@
     "options:ui_lang": "インタフェース表示",
     "other": "",
     "repo-use-as-base": "",
+    "repositories": "",
     "save": "保存",
     "show details": "",
     "toggle_fullscreen": "",
