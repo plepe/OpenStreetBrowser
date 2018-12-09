@@ -8,7 +8,7 @@ const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
 let tab
 
-function addCategoriesShow (repo) {
+function addCategoriesShow (repo, options={}) {
   let content = tab.content
   let repoId
   let branchId
@@ -20,7 +20,7 @@ function addCategoriesShow (repo) {
 
   content.innerHTML = '<h3>' + lang('more_categories') + '</h3>' + '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
 
-  OpenStreetBrowserLoader.getRepo(repo, {}, function (err, repoData) {
+  OpenStreetBrowserLoader.getRepo(repo, options, function (err, repoData) {
     if (err) {
       alert(err)
     }
@@ -79,6 +79,19 @@ function addCategoriesShow (repo) {
       text.innerHTML = lang('repo-use-as-base')
       text.href = '#repo=' + repo
       text.onclick = addCategoriesHide
+      li.appendChild(text)
+    }
+
+    if (repo) {
+      let li = document.createElement('li')
+      menu.appendChild(li)
+
+      let text = document.createElement('a')
+      text.innerHTML = lang('reload')
+      text.href = '#'
+      text.onclick = () => {
+        addCategoriesShow(repo, { force: true })
+      }
       li.appendChild(text)
     }
 
