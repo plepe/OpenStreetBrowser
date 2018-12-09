@@ -138,7 +138,7 @@ function addCategoriesShow (repo, options={}) {
 
       let a = document.createElement('a')
       if (repo) {
-        a.href = '#categories=' + repo + '/' + id
+        a.href = '#categories=' + (repo === 'default' ? '' : repo + '/') + id
         a.onclick = function () {
           addCategoriesHide()
         }
