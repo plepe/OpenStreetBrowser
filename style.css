@@ -86,6 +86,8 @@ a:active {
 }
 .tabs-section {
   padding: 0.1em;
+  max-height: 250px;
+  overflow-y: auto;
 }
 .tabs-section > h3:first-of-type {
   margin-top: 0;
@@ -142,12 +144,26 @@ a:active {
   content: '';
 }
 
+@media all and (max-height: 600px) {
+.tabs-section {
+  max-height: 200px;
+}
+}
+@media all and (max-height: 500px) {
+.tabs-section {
+  max-height: 150px;
+}
+}
 @media all and (max-height: 400px) {
 #sidebar {
   overflow: auto;
 }
 #sidebar > #content {
   overflow: visible;
+}
+.tabs-section {
+  max-height: none;
+  overflow-y: visible;
 }
 }
 
@@ -181,6 +197,10 @@ a:active {
 }
 #sidebar > #content {
   overflow: visible;
+}
+.tabs-section {
+  max-height: none;
+  overflow-y: visible;
 }
 }
 
