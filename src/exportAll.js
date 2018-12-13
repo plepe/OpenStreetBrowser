@@ -16,6 +16,8 @@ let formExport
 function prepareDownload (callback) {
   let conf = formExport.get_data()
 
+  call_hooks('prepareDownload', conf)
+
   global.baseCategory.allMapFeatures((err, data) => {
     if (err) {
       return callback(err)
@@ -56,6 +58,8 @@ function createDownload (conf, data, callback) {
 
         var blob = new Blob([ result.content ], { type: result.fileType + ';charset=utf-8' })
         FileSaver.saveAs(blob, 'openstreetbrowser.' + result.extension)
+
+        call_hooks('finishDownload', conf)
 
         callback()
       }
