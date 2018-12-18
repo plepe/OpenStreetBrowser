@@ -99,7 +99,12 @@ function CategoryOverpass (options, data) {
     if (document.getElementById('content').className === 'details open') {
       showDetails(ob, this)
     }
+
+    this.emit('update', object, ob)
   }.bind(this))
+  this.layer.on('add', (ob, data) => this.emit('add', ob, data))
+  this.layer.on('remove', (ob, data) => this.emit('remove', ob, data))
+  this.layer.on('zoomChange', (ob, data) => this.emit('remove', ob, data))
 
   p = document.createElement('div')
   p.className = 'loadingIndicator'

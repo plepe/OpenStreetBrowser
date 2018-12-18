@@ -2,6 +2,7 @@
 /* eslint camelcase: 0 */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var tabs = require('modulekit-tabs')
+const ee = require('event-emitter')
 
 function CategoryBase (options, data) {
   if (typeof options === 'string') {
@@ -133,6 +134,7 @@ CategoryBase.prototype.open = function () {
   this.isOpen = true
 
   call_hooks('categoryOpen', this)
+  this.emit('open')
 }
 
 CategoryBase.prototype.close = function () {
@@ -145,6 +147,7 @@ CategoryBase.prototype.close = function () {
   this.isOpen = false
 
   call_hooks('categoryClose', this)
+  this.emit('close')
 }
 
 CategoryBase.prototype.toggle = function () {
@@ -207,5 +210,7 @@ CategoryBase.prototype.notifyChildLoadEnd = function (category) {
 CategoryBase.prototype.allMapFeatures = function (callback) {
   callback(null, [])
 }
+
+ee(CategoryBase.prototype)
 
 module.exports = CategoryBase
