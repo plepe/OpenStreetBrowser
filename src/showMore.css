@@ -1,0 +1,11 @@
+.collapsed {
+  max-height: 15em;
+  overflow-y: hidden;
+}
+.category > .showMore {
+  display: none;
+}
+.category.open > .showMore.active {
+  display: block;
+  background: #efefef;
+}

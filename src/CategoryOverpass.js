@@ -10,6 +10,8 @@ var markers = require('./markers')
 var maki = require('./maki')
 var qs = require('sheet-router/qs')
 
+const showMore = require('./showMore')
+
 var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
@@ -298,6 +300,8 @@ CategoryOverpass.prototype.open = function () {
 
         list.addTo(domContent)
 
+        showMore(this, domContent)
+
         p = document.createElement('div')
         p.className = 'loadingIndicator2'
         p.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>'
@@ -307,6 +311,8 @@ CategoryOverpass.prototype.open = function () {
       let list = new OverpassLayerList(this.layer, {})
       this.lists.push(list)
       list.addTo(this.domContent)
+
+      showMore(this, this.domContent)
     }
 
     this.lists.forEach(list => {
