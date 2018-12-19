@@ -22,6 +22,11 @@ function showMore (category, dom) {
       p.classList.add('active')
     }
   })
+  category.on('remove', () => {
+    if (dom.scrollHeight <= dom.offsetHeight && dom.classList.contains('collapsed')) {
+      p.classList.remove('active')
+    }
+  })
   category.on('open', () => {
     p.classList.remove('active')
     dom.classList.add('collapsed')
