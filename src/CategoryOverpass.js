@@ -321,6 +321,8 @@ CategoryOverpass.prototype.open = function () {
     })
   }
 
+  this.listsDom.forEach(dom => dom.classList.add('open'))
+
   this.isOpen = true
 
   state.update()
