@@ -249,10 +249,9 @@ CategoryOverpass.prototype.open = function () {
 
   if (!this.lists) {
     this.lists = []
+    this.listsDom = []
 
     if (this.data.lists) {
-      this.listsDom = []
-
       let wrapper = document.createElement('div')
       wrapper.className = 'categoryWrapper'
       this.domContent.appendChild(wrapper)
@@ -311,6 +310,7 @@ CategoryOverpass.prototype.open = function () {
       let list = new OverpassLayerList(this.layer, {})
       this.lists.push(list)
       list.addTo(this.domContent)
+      this.listsDom.push(this.domContent)
 
       showMore(this, this.domContent)
     }
