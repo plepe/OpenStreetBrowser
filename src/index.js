@@ -18,6 +18,7 @@ global.baseCategory = null
 global.overpassUrl = null
 global.overpassFrontend = null
 global.currentPath = null
+global.mainRepo = ''
 global.tabs = null
 var lastPopupClose = 0
 
@@ -109,16 +110,11 @@ function onload2 (initState) {
 
   state.apply(newState)
 
-  OpenStreetBrowserLoader.getCategory('index', function (err, category) {
-    if (err) {
-      alert(err)
-      return
-    }
+  if ('repo' in newState) {
+    mainRepo = newState.repo
+  }
 
-    baseCategory = category
-    category.setParentDom(document.getElementById('contentList'))
-    category.open()
-  })
+  loadBaseCategory()
 
   map.on('popupopen', function (e) {
     if (e.popup.object) {
@@ -168,12 +164,34 @@ function onload2 (initState) {
   call_hooks('initFinish')
 }
 
+function loadBaseCategory () {
+  let repo = mainRepo + (mainRepo === '' ? '' : '/')
+  OpenStreetBrowserLoader.getCategory(repo + 'index', function (err, category) {
+    if (err) {
+      alert(err)
+      return
+    }
+
+    baseCategory = category
+    category.setParentDom(document.getElementById('contentListBaseCategory'))
+    category.open()
+
+    category.dom.classList.add('baseCategory')
+  })
+}
+
 global.allMapFeatures = function (callback) {
   global.baseCategory.allMapFeatures(callback)
 }
 
 window.setPath = function (path, state) {
   currentPath = path
+
+  if ('repo' in state && state.repo !== mainRepo && baseCategory) {
+    baseCategory.remove()
+    mainRepo = state.repo
+    loadBaseCategory()
+  }
 
   if (!path) {
     map.closePopup()
@@ -216,7 +234,7 @@ function show (id, options, callback) {
     }
 
     if (!category.parentDom) {
-      category.setParentDom(document.getElementById('contentList'))
+      category.setParentDom(document.getElementById('contentListAddCategories'))
     }
 
     category.show(

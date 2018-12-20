@@ -1,6 +1,7 @@
 {
     "available_branches": "",
     "back": "voltar",
+    "categories": "",
     "category-info-tooltip": "Info & Legenda",
     "closed": "fechado",
     "default": "padrão",
@@ -33,6 +34,8 @@
     "options:preferredBaseMap": "Mapa-base preferido",
     "options:ui_lang": "Língua da interface",
     "other": "Outro",
+    "repo-use-as-base": "",
+    "repositories": "",
     "save": "Salvar",
     "show details": "mostrar detalhes",
     "toggle_fullscreen": "Alternar modo tela cheia",

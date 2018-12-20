@@ -1,6 +1,7 @@
 {
     "available_branches": "Available branches",
     "back": "back",
+    "categories": "Categories",
     "category-info-tooltip": "Info & Map key",
     "closed": "closed",
     "default": "default",
@@ -33,6 +34,8 @@
     "options:preferredBaseMap": "Preferred base map",
     "options:ui_lang": "Interface language",
     "other": "Other",
+    "repo-use-as-base": "Use this repository as base repository",
+    "repositories": "Repositories",
     "save": "Save",
     "show details": "show details",
     "toggle_fullscreen": "Toggle full screen mode",

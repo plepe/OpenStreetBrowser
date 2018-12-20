@@ -5,6 +5,11 @@ var queryString = require('query-string')
 function get () {
   var state = {}
 
+  // repo
+  if (mainRepo !== '') {
+    state.repo = mainRepo
+  }
+
   // path
   if (currentPath) {
     state.path = currentPath

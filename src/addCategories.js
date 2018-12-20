@@ -8,7 +8,7 @@ const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
 let tab
 
-function addCategoriesShow (repo) {
+function addCategoriesShow (repo, options={}) {
   let content = tab.content
   let repoId
   let branchId
@@ -20,7 +20,7 @@ function addCategoriesShow (repo) {
 
   content.innerHTML = '<h3>' + lang('more_categories') + '</h3>' + '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
 
-  OpenStreetBrowserLoader.getRepo(repo, {}, function (err, repoData) {
+  OpenStreetBrowserLoader.getRepo(repo, options, function (err, repoData) {
     if (err) {
       alert(err)
     }
@@ -67,10 +67,41 @@ function addCategoriesShow (repo) {
       })
     }
 
+    let menu = document.createElement('ul')
+    menu.className = 'menu'
+    content.appendChild(menu)
+
+    if (repo) {
+      let li = document.createElement('li')
+      menu.appendChild(li)
+
+      let text = document.createElement('a')
+      text.innerHTML = lang('repo-use-as-base')
+      text.href = '#repo=' + repo
+      text.onclick = addCategoriesHide
+      li.appendChild(text)
+    }
+
+    if (repo) {
+      let li = document.createElement('li')
+      menu.appendChild(li)
+
+      let text = document.createElement('a')
+      text.innerHTML = lang('reload')
+      text.href = '#'
+      text.onclick = () => {
+        addCategoriesShow(repo, { force: true })
+      }
+      li.appendChild(text)
+    }
+
     if ('branches' in repoData) {
+      let li = document.createElement('li')
+      menu.appendChild(li)
+
       let text = document.createElement('span')
       text.innerHTML = lang('available_branches') + ': '
-      content.appendChild(text)
+      li.appendChild(text)
 
       let branchSelector = document.createElement('select')
 
@@ -93,8 +124,12 @@ function addCategoriesShow (repo) {
           branchSelector.appendChild(option)
         }
       )
-      content.appendChild(branchSelector)
+      li.appendChild(branchSelector)
     }
+
+    let header = document.createElement('h3')
+    header.innerHTML = lang(repo ? 'repositories' : 'categories') + ':'
+    content.appendChild(header)
 
     var ul = document.createElement('ul')
 
@@ -110,7 +145,7 @@ function addCategoriesShow (repo) {
 
       let a = document.createElement('a')
       if (repo) {
-        a.href = '#categories=' + repo + '/' + id
+        a.href = '#categories=' + (repo === 'default' ? '' : repo + '/') + id
         a.onclick = function () {
           addCategoriesHide()
         }

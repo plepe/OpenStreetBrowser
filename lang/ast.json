@@ -1,6 +1,7 @@
 {
     "available_branches": "",
     "back": "",
+    "categories": "",
     "category-info-tooltip": "",
     "closed": "",
     "default": "",
@@ -30,6 +31,8 @@
     "options:preferredBaseMap": "",
     "options:ui_lang": "Llingua de la interfaz",
     "other": "",
+    "repo-use-as-base": "",
+    "repositories": "",
     "save": "Guardar",
     "show details": "",
     "toggle_fullscreen": "",

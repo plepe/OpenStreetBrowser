@@ -1,6 +1,7 @@
 {
     "available_branches": "",
     "back": "zurück",
+    "categories": "",
     "category-info-tooltip": "Info & Legende",
     "closed": "geschlossen",
     "default": "Standard",
@@ -33,6 +34,8 @@
     "options:preferredBaseMap": "Bevorzugte Hintergrundkarte",
     "options:ui_lang": "Anwendungssprache",
     "other": "Andere",
+    "repo-use-as-base": "",
+    "repositories": "",
     "save": "Speichern",
     "show details": "zeige Details",
     "toggle_fullscreen": "(De-)aktiviere Vollbildmodus",

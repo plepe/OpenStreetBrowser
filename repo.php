@@ -69,6 +69,16 @@ if (isset($config['cache'])) {
 
 $data = $repo->data();
 
+if (!array_key_exists('index', $data['categories'])) {
+  $data['categories']['index'] = array(
+    'type' => 'index',
+    'subCategories' => array_map(
+      function ($k) {
+        return array('id' => $k);
+      }, array_keys($data['categories']))
+  );
+}
+
 if (isset($repoData['repositoryUrl'])) {
   $data['repositoryUrl'] = $repoData['repositoryUrl'];
 }
