@@ -92,6 +92,7 @@ Header("Content-Type: application/json; charset=utf-8");
 print $ret;
 
 if ($cacheDir) {
+  @mkdir(dirname("{$cacheDir}/{$fullRepoId}"));
   file_put_contents("{$cacheDir}/{$fullRepoId}.json", $ret);
   touch("{$cacheDir}/{$fullRepoId}.json", $ts);
 }
