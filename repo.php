@@ -91,5 +91,7 @@ $ret = json_encode($data, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
 Header("Content-Type: application/json; charset=utf-8");
 print $ret;
 
-file_put_contents("{$cacheDir}/{$repoId}.json", $ret);
-touch("{$cacheDir}/{$repoId}.json", $ts);
+if ($cacheDir) {
+  file_put_contents("{$cacheDir}/{$repoId}.json", $ret);
+  touch("{$cacheDir}/{$repoId}.json", $ts);
+}
