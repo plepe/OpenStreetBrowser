@@ -24,6 +24,7 @@
     "more": "mais",
     "more_categories": "Mais categorias",
     "more_categories_gitea": "Criar &amp; melhorar categorias você mesmo!",
+    "more_results": "",
     "open": "abrir",
     "options:data_lang": "Língua dos dados",
     "options:data_lang:desc": "Muitos elementos do mapa possuem seus nomes (e outras etiquetas) traduzidas para línguas diferentes (p.ex. com 'name:en', 'name:de'). Especificar qual língua deve ser usada para exibição, ou 'Língua local' de forma que sempre os valores não tranduzidos (p.ex. 'name') sejam usados.",

@@ -21,6 +21,7 @@
     "more": "plus",
     "more_categories": "Plus de catégories",
     "more_categories_gitea": "Créez et améliorez vous-mêmes les catégories !",
+    "more_results": "",
     "open": "ouvrir",
     "options:data_lang": "Langue des données",
     "options:data_lang:desc": "Beaucoup d'éléments de la carte ont leur nom (et d'autres tags) traduits en différentes langues (exemple avec 'name:en', 'name:de'). Spécifiez quelle langue devrait être utilisée pour l'affichage, ou 'Langue locale' pour que la valeur non traduite (ex 'name') soit toujours utilisée.",

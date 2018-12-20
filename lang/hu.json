@@ -21,6 +21,7 @@
     "more": "Több",
     "more_categories": "További kategóriák",
     "more_categories_gitea": "Hozzon létre új kategóriákat, vagy javítson a meglévőkön!",
+    "more_results": "",
     "open": "Megnyitva",
     "options:data_lang": "Adatok nyelve",
     "options:data_lang:desc": "Számos térképobjektum neve (és olykor néhány más tulajdonsága is) le van fordítva különböző nyelvekre (pl. „name:en”, „name:hu” kezdetű címkékkel). Itt megadhatja, hogy ezek a feliratok egy adott nyelven jelenjenek meg, vagy a térségben használatos, alapértelmezett helyi nyelven („name” kezdetű címkék).",
