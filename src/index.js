@@ -34,6 +34,7 @@ require('./categories')
 require('./wikipedia')
 require('./image')
 require('./addCategories')
+require('./permalink')
 let exportAll = require('./exportAll')
 
 window.onload = function () {

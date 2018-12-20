@@ -149,6 +149,8 @@ function update (state, push) {
 
   var newHash = '#' + stringify(state)
 
+  call_hooks('state-update', state, newHash)
+
   if (push) {
     history.pushState(null, null, newHash)
     call_hooks('statePush', state, newHash)

@@ -136,12 +136,17 @@ a:active {
 }
 #menu li {
   display: inline-block;
+  margin: 1px 0;
 }
 #menu li::after {
-  content: ' |';
+  content: '|';
+  margin: 1px 0.25em;
 }
 #menu li:last-of-type::after {
   content: '';
+}
+#menu li:first-of-type {
+  margin-left: 0.25em;
 }
 
 @media all and (max-height: 600px) {
