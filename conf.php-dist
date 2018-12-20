@@ -41,6 +41,9 @@ $config['checkIpLocation'] = true;
 // maxZoom (tiles will be scaled if higher than native zoom level). Default: 19.
 $config['maxZoom'] = 19;
 
+// cache directory. Must be writeable by the webserver!
+#$config['cache'] = 'cache';
+
 // Available base maps; first is default
 $config['baseMaps'] = array(
   array(
