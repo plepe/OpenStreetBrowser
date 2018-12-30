@@ -24,7 +24,7 @@
     "leaflet": "^1.0.3",
     "leaflet-geosearch": "^2.4.0",
     "leaflet-polylineoffset": "^1.1.0",
-    "leaflet-textpath": "https://github.com/makinacorpus/Leaflet.TextPath#leaflet0.8-dev",
+    "leaflet-textpath": "https://github.com/plepe/Leaflet.TextPath",
     "leaflet.locatecontrol": "^0.61.0",
     "leaflet.polylinemeasure": "https://github.com/ppete2/Leaflet.PolylineMeasure.git",
     "md5": "^2.2.1",
