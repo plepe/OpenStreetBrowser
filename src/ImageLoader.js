@@ -1,3 +1,4 @@
+const async = require('async')
 var wikidata = require('./wikidata')
 var wikipedia = require('./wikipedia')
 var cache = {}
@@ -75,23 +76,29 @@ ImageLoader.prototype.parseObject = function (data) {
 ImageLoader.prototype.loadWikidata = function (src, callback) {
   var value = src.value
 
-  wikidata.load(value, function (err, result) {
-    if (result && result.claims && result.claims.P18) {
-      result.claims.P18.forEach(function (d) {
-        var id = d.mainsnak.datavalue.value
+  wikidata.load(value, (err, result) => {
+    async.series([
+      (done) => {
+        if (result && result.claims && result.claims.P18) {
+          result.claims.P18.forEach((d) => {
+            let id = d.mainsnak.datavalue.value
 
-        if (this.found.indexOf(id) === -1) {
-          this.found.push(id)
-          this.data[id] = {
-            id: id,
-            type: 'wikimedia'
-          }
+            if (this.found.indexOf(id) === -1) {
+              this.found.push(id)
+              this.data[id] = {
+                id: id,
+                type: 'wikimedia'
+              }
+            }
+          })
         }
-      }.bind(this))
-    }
 
-    callback(err)
-  }.bind(this))
+        done(null)
+      }
+    ], (err) => {
+      callback(err)
+    })
+  })
 }
 
 ImageLoader.prototype.loadWikimediaCommons = function (src, callback) {
