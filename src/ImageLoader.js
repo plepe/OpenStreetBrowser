@@ -94,6 +94,21 @@ ImageLoader.prototype.loadWikidata = function (src, callback) {
         }
 
         done(null)
+      },
+      (done) => {
+        // wikimedia commons
+        if (result && result.claims && result.claims.P373) {
+          result.claims.P373.forEach((d) => {
+            let value = 'Category:' + d.mainsnak.datavalue.value
+
+            this.sources.push({
+              type: 'wikimedia_commons',
+              value
+            })
+          })
+        }
+
+        done(null)
       }
     ], (err) => {
       callback(err)
