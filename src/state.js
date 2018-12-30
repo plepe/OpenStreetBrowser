@@ -6,8 +6,8 @@ function get () {
   var state = {}
 
   // repo
-  if (mainRepo !== '') {
-    state.repo = mainRepo
+  if (global.mainRepo !== '') {
+    state.repo = global.mainRepo
   }
 
   // path

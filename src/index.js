@@ -112,7 +112,7 @@ function onload2 (initState) {
   state.apply(newState)
 
   if ('repo' in newState) {
-    mainRepo = newState.repo
+    global.mainRepo = newState.repo
   }
 
   loadBaseCategory()
@@ -166,7 +166,7 @@ function onload2 (initState) {
 }
 
 function loadBaseCategory () {
-  let repo = mainRepo + (mainRepo === '' ? '' : '/')
+  let repo = global.mainRepo + (global.mainRepo === '' ? '' : '/')
   OpenStreetBrowserLoader.getCategory(repo + 'index', function (err, category) {
     if (err) {
       alert(err)
@@ -188,9 +188,9 @@ global.allMapFeatures = function (callback) {
 window.setPath = function (path, state) {
   currentPath = path
 
-  if ('repo' in state && state.repo !== mainRepo && baseCategory) {
+  if ('repo' in state && state.repo !== global.mainRepo && baseCategory) {
     baseCategory.remove()
-    mainRepo = state.repo
+    global.mainRepo = state.repo
     loadBaseCategory()
   }
 
