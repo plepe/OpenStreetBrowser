@@ -389,6 +389,8 @@ a:active {
 }
 #contentDetails h4 {
   clear: both;
+  text-decoration: underline;
+  font-weight: bold;
 }
 .wikipedia .reference {
   display: none;
