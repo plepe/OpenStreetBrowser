@@ -115,6 +115,14 @@ The following values are possible for categories (the only mandatory value is qu
     * pattern-angleCorrection: degrees (arrowHead and marker only)
     * pattern-rotate: false (marker only)
     * pattern-path-*: Options for the path, e.g. pattern-path-width, pattern-path-color.
+    * text: Text on polylines / polygon outlines. You can use <tspan> tags to modify style of text parts, e.g. `Foo <tspan fill="red">Bar</tspan>`.
+    * textTurned: when textOrientation='auto', alternative text when text is turned downside up.
+    * textOrientation: value (angle), 'flip', 'perpendicular', 'auto'
+    * textOffset: offset from the center of the line (default: value of `width`)
+    * textAllowCrop: If the line is too short to display the whole text, crop the text. If false, don't show the text at all. (Default: true).
+    * textCenter: Centers the text according to the polyline's bounding box  (Default: `false`)
+    * textRepeat: Specifies if the text should be repeated along the polyline (Default: `false`). Specify `repeat` as float to set the distance between each repetition in pixels (will be approximated by spaces).
+    * textBelow: Show text below the path (default: false)
   * title: the title of the feature popup, the object in the list and the details page. (default: localized tags for 'name', 'operator' or 'ref', default: 'unknown')
   * body: the body for the feature popup and the details page.
   * description: a short description shown in the list next to the title.
