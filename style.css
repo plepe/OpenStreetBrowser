@@ -355,7 +355,7 @@ a:active {
 .body ul > li.hasSymbol > span > svg,
 .leaflet-popup-content ul > li.hasSymbol > span > svg {
   position: absolute;
-  margin-left: -15px;
+  margin-left: -20px;
   padding-top: 2px;
 }
 .body ul > li > .key,
