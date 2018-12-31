@@ -464,6 +464,7 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
     let html = this.popupBodyTemplate.render(object.twigData)
     if (popupBody.currentHTML !== html) {
       popupBody.innerHTML = html
+      this.updateAssets(popup._contentNode)
     }
 
     popupBody.currentHTML = html

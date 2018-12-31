@@ -351,7 +351,9 @@ a:active {
 .body ul > li.hasSymbol > .symbol,
 .leaflet-popup-content ul > li.hasSymbol > .symbol,
 .body ul > li.hasSymbol > img,
-.leaflet-popup-content ul > li.hasSymbol > img {
+.leaflet-popup-content ul > li.hasSymbol > img,
+.body ul > li.hasSymbol > span > svg,
+.leaflet-popup-content ul > li.hasSymbol > span > svg {
   position: absolute;
   margin-left: -15px;
   padding-top: 2px;
