@@ -32,7 +32,7 @@ function prepare (div) {
   }
 
   var p = content.firstChild.firstChild
-  while (p && p.tagName !== 'P') {
+  while (p && (p.tagName !== 'P' || p.className !== '' || p.textContent.match(/^\s*$/))) {
     p = p.nextSibling
   }
 
