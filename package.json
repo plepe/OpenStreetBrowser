@@ -38,6 +38,7 @@
     "overpass-layer": "^2.0.0",
     "query-string": "^5.0.0",
     "sheet-router": "^4.2.3",
+    "simple-window-manager": "^1.3.0",
     "temaki": "^1.0.0",
     "weight-sort": "^1.3.0"
   },
