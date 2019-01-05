@@ -1,3 +1,5 @@
+let win
+
 const formDefUser = {
   fullname: {
     type: 'text',
@@ -14,12 +16,22 @@ const formDefUser = {
 }
 
 function translateGui (formDef) {
+  const wm = require('./windowManager')
+
   let currentForm = new form(formDef)
-  let win = wm.createWindow({ width: 500, height: 500, title: 'Test Window' })
+  win = wm.createWindow({ width: 500, height: 500, title: 'Test Window' })
 
   currentForm.show(win.content)
+
+  win.open()
+wm.overlay.style.zIndex = 1000
 }
 
-register_hook('init', function () {
-  translateGui(formDefUser)
+register_hook('init', () => {
+  window.setTimeout(
+    () => {
+      translateGui(formDefUser)
+    },
+    2000
+  )
 })
