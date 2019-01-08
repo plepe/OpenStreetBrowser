@@ -58,7 +58,7 @@ class CategoryOverpassFilter {
     this.formFilter = new form('filter-' + this.master.id, this.data,
       {
         'type': 'form_chooser',
-        'button:add_element': '-- ' + lang('filter_results') + ' --',
+        'button:add_element': '-- ' + lang('choose_filter') + ' --',
         'order': false
       }
     )
