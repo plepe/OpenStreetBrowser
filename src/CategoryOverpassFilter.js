@@ -55,13 +55,16 @@ class CategoryOverpassFilter {
       }
     }
 
-    this.formFilter = new form('filter-' + this.master.id, this.data,
-      {
+    let masterOptions = {}
+    if (Object.keys(this.data).length > 1) {
+      masterOptions = {
         'type': 'form_chooser',
         'button:add_element': '-- ' + lang('choose_filter') + ' --',
         'order': false
       }
-    )
+    }
+
+    this.formFilter = new form('filter-' + this.master.id, this.data, masterOptions)
     this.formFilter.show(this.domFilter)
     this.formFilter.onchange = function () {
       let param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
