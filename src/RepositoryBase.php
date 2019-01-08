@@ -28,6 +28,7 @@ class RepositoryBase {
       'categories' => array(),
       'templates' => array(),
       'timestamp' => Date(DATE_ISO8601, $this->timestamp()),
+      'lang' => array(),
     );
 
     return $data;

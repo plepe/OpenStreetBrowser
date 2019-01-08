@@ -57,6 +57,16 @@ class RepositoryGit extends RepositoryBase {
     }
     pclose($d);
 
+    if (array_key_exists('lang', $options)) {
+      $data['lang'] = json_decode(shell_exec("cd " . escapeShellArg($this->path) . "; git show {$this->branchEsc}:lang/en.json 2>/dev/null"), true);
+      $lang = json_decode(shell_exec("cd " . escapeShellArg($this->path) . "; git show {$this->branchEsc}:lang/" . escapeShellArg("{$options['lang']}.json") . " 2>/dev/null"), true);
+      foreach ($lang as $k => $v) {
+        if ($v !== null && $v !== '') {
+          $data['lang'][$k] = $v;
+        }
+      }
+    }
+
     if (!array_key_exists('branch', $this->def)) {
       $d = popen("cd " . escapeShellArg($this->path) . "; git for-each-ref --sort=-committerdate refs/heads/", "r");
       $data['branch'] = $this->branch;

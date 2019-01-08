@@ -112,6 +112,7 @@ OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
   if (repo) {
     param.push('repo=' + encodeURIComponent(repo))
   }
+  param.push('lang=' + encodeURIComponent(ui_lang))
   param.push(config.categoriesRev)
   param = param.length ? '?' + param.join('&') : ''
 
