@@ -67,7 +67,7 @@ if (isset($config['cache'])) {
   }
 }
 
-$data = $repo->data();
+$data = $repo->data($_REQUEST);
 
 if (!array_key_exists('index', $data['categories'])) {
   $data['categories']['index'] = array(

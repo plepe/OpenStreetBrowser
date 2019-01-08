@@ -23,7 +23,7 @@ class RepositoryBase {
     return $ret;
   }
 
-  function data () {
+  function data ($options) {
     $data = array(
       'categories' => array(),
       'templates' => array(),

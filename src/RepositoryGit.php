@@ -29,8 +29,8 @@ class RepositoryGit extends RepositoryBase {
     return $ts;
   }
 
-  function data () {
-    $data = parent::data();
+  function data ($options) {
+    $data = parent::data($options);
 
     $d = popen("cd " . escapeShellArg($this->path) . "; git ls-tree {$this->branchEsc}", "r");
     while ($r = fgets($d)) {

@@ -14,8 +14,8 @@ class RepositoryDir extends RepositoryBase {
     return $ts;
   }
 
-  function data () {
-    $data = parent::data();
+  function data ($options) {
+    $data = parent::data($options);
 
     $d = opendir($this->path);
     while ($f = readdir($d)) {
