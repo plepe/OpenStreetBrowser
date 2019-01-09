@@ -17,7 +17,9 @@ class RepositoryDir extends RepositoryBase {
   function data ($options) {
     $data = parent::data($options);
 
-    if (array_key_exists('lang', $options) && file_exists("{$this->path}/lang/{$options['lang']}.json")) {
+    $lang = array_key_exists('lang', $options) ? $options['lang'] : 'en';
+
+    if (file_exists("{$this->path}/lang/{$lang}.json")) {
       $data['lang'] = json_decode(file_get_contents("{$this->path}/lang/en.json"), true);
       $lang = json_decode(file_get_contents("{$this->path}/lang/{$options['lang']}.json"), true);
       foreach ($lang as $k => $v) {
