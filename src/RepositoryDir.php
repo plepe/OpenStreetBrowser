@@ -17,6 +17,16 @@ class RepositoryDir extends RepositoryBase {
   function data ($options) {
     $data = parent::data($options);
 
+    if (array_key_exists('lang', $options) && file_exists("{$this->path}/lang/{$options['lang']}.json")) {
+      $data['lang'] = json_decode(file_get_contents("{$this->path}/lang/en.json"), true);
+      $lang = json_decode(file_get_contents("{$this->path}/lang/{$options['lang']}.json"), true);
+      foreach ($lang as $k => $v) {
+        if ($v !== null && $v !== '') {
+          $data['lang'][$k] = $v;
+        }
+      }
+    }
+
     $d = opendir($this->path);
     while ($f = readdir($d)) {
       if (preg_match("/^([0-9a-zA-Z_\-]+)\.json$/", $f, $m) && $f !== 'package.json') {
@@ -34,16 +44,6 @@ class RepositoryDir extends RepositoryBase {
       }
     }
     closedir($d);
-
-    if (array_key_exists('lang', $options) && file_exists("{$this->path}/lang/{$options['lang']}.json")) {
-      $data['lang'] = json_decode(file_get_contents("{$this->path}/lang/en.json"), true);
-      $lang = json_decode(file_get_contents("{$this->path}/lang/{$options['lang']}.json"), true);
-      foreach ($lang as $k => $v) {
-        if ($v !== null && $v !== '') {
-          $data['lang'][$k] = $v;
-        }
-      }
-    }
 
     return $data;
   }
