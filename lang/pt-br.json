@@ -1,7 +1,7 @@
 {
-    "available_branches": "",
+    "available_branches": "Redes disponíveis",
     "back": "voltar",
-    "categories": "",
+    "categories": "Categorias",
     "category-info-tooltip": "Info & Legenda",
     "closed": "fechado",
     "default": "padrão",
@@ -22,11 +22,11 @@
     "images": "Imagens",
     "loading": "Carregando...",
     "main:options": "Opções",
-    "main:permalink": "",
+    "main:permalink": "Link permanente",
     "more": "mais",
     "more_categories": "Mais categorias",
     "more_categories_gitea": "Criar &amp; melhorar categorias você mesmo!",
-    "more_results": "",
+    "more_results": "Exibir mais resultados",
     "open": "abrir",
     "options:data_lang": "Língua dos dados",
     "options:data_lang:desc": "Muitos elementos do mapa possuem seus nomes (e outras etiquetas) traduzidas para línguas diferentes (p.ex. com 'name:en', 'name:de'). Especificar qual língua deve ser usada para exibição, ou 'Língua local' de forma que sempre os valores não tranduzidos (p.ex. 'name') sejam usados.",
@@ -35,8 +35,8 @@
     "options:preferredBaseMap": "Mapa-base preferido",
     "options:ui_lang": "Língua da interface",
     "other": "Outro",
-    "repo-use-as-base": "",
-    "repositories": "",
+    "repo-use-as-base": "Usar este repositório como repositório base",
+    "repositories": "Repositórios",
     "save": "Salvar",
     "show details": "mostrar detalhes",
     "toggle_fullscreen": "Alternar modo tela cheia",
@@ -44,5 +44,5 @@
     "unnamed": "sem nome",
     "wikipedia:no-url-parse": "Não se pôde analisar URL da Wikipédia",
     "zoom_in_appear": "aproxime para elementos do mapa aparecer",
-    "zoom_in_more": "aproxime para mais elementos do mapa"
+    "zoom_in_more": "aproxime para mais elementos no mapa"
 }
