@@ -15,6 +15,9 @@ function cssStyle (style) {
   if ('dashOffset' in style) {
     ret += 'stroke-dashoffset: ' + style.dashOffset + ';'
   }
+  if ('offset' in style) {
+    ret += 'stroke-offset: ' + style.dashOffset + ';'
+  }
   if ('fillColor' in style) {
     ret += 'fill: ' + style.fillColor + ';'
   } else if ('color' in style) {
@@ -44,8 +47,9 @@ function markerLine (data) {
   for (var i = 0; i < data.styles.length; i++) {
     var k = data.styles[i]
     var style = k === 'default' ? data.style : data['style:' + k]
+    var y = 8.0 + parseFloat('offset' in style ? style.offset : 0)
 
-    ret += '<line x1="0" y1="8" x2="25" y2="8" style="' + cssStyle(style) + '"/>'
+    ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
   }
 
   ret += '</svg>'

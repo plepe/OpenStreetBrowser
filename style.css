@@ -86,6 +86,8 @@ a:active {
 }
 .tabs-section {
   padding: 0.1em;
+  max-height: 250px;
+  overflow-y: auto;
 }
 .tabs-section > h3:first-of-type {
   margin-top: 0;
@@ -117,12 +119,7 @@ a:active {
 }
 
 
-/***** CATEGORY *****/
-/* root category */
-#content > #contentList > .category > .content > .categoryWrapper > .category {
-  margin-left: 0;
-}
-
+/* Popups */
 .leaflet-popup-content ul.popup-footer {
   padding: 0;
 }
@@ -139,20 +136,39 @@ a:active {
 }
 #menu li {
   display: inline-block;
+  margin: 1px 0;
 }
 #menu li::after {
-  content: ' |';
+  content: '|';
+  margin: 1px 0.25em;
 }
 #menu li:last-of-type::after {
   content: '';
 }
+#menu li:first-of-type {
+  margin-left: 0.25em;
+}
 
+@media all and (max-height: 600px) {
+.tabs-section {
+  max-height: 200px;
+}
+}
+@media all and (max-height: 500px) {
+.tabs-section {
+  max-height: 150px;
+}
+}
 @media all and (max-height: 400px) {
 #sidebar {
   overflow: auto;
 }
 #sidebar > #content {
   overflow: visible;
+}
+.tabs-section {
+  max-height: none;
+  overflow-y: visible;
 }
 }
 
@@ -186,6 +202,10 @@ a:active {
 }
 #sidebar > #content {
   overflow: visible;
+}
+.tabs-section {
+  max-height: none;
+  overflow-y: visible;
 }
 }
 
@@ -331,9 +351,11 @@ a:active {
 .body ul > li.hasSymbol > .symbol,
 .leaflet-popup-content ul > li.hasSymbol > .symbol,
 .body ul > li.hasSymbol > img,
-.leaflet-popup-content ul > li.hasSymbol > img {
+.leaflet-popup-content ul > li.hasSymbol > img,
+.body ul > li.hasSymbol > span > svg,
+.leaflet-popup-content ul > li.hasSymbol > span > svg {
   position: absolute;
-  margin-left: -15px;
+  margin-left: -20px;
   padding-top: 2px;
 }
 .body ul > li > .key,
@@ -367,6 +389,8 @@ a:active {
 }
 #contentDetails h4 {
   clear: both;
+  text-decoration: underline;
+  font-weight: bold;
 }
 .wikipedia .reference {
   display: none;

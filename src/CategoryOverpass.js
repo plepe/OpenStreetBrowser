@@ -10,6 +10,8 @@ var markers = require('./markers')
 var maki = require('./maki')
 var qs = require('sheet-router/qs')
 
+const showMore = require('./showMore')
+
 var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
@@ -99,7 +101,12 @@ function CategoryOverpass (options, data) {
     if (document.getElementById('content').className === 'details open') {
       showDetails(ob, this)
     }
+
+    this.emit('update', object, ob)
   }.bind(this))
+  this.layer.on('add', (ob, data) => this.emit('add', ob, data))
+  this.layer.on('remove', (ob, data) => this.emit('remove', ob, data))
+  this.layer.on('zoomChange', (ob, data) => this.emit('remove', ob, data))
 
   p = document.createElement('div')
   p.className = 'loadingIndicator'
@@ -242,10 +249,9 @@ CategoryOverpass.prototype.open = function () {
 
   if (!this.lists) {
     this.lists = []
+    this.listsDom = []
 
     if (this.data.lists) {
-      this.listsDom = []
-
       let wrapper = document.createElement('div')
       wrapper.className = 'categoryWrapper'
       this.domContent.appendChild(wrapper)
@@ -293,6 +299,8 @@ CategoryOverpass.prototype.open = function () {
 
         list.addTo(domContent)
 
+        showMore(this, domContent)
+
         p = document.createElement('div')
         p.className = 'loadingIndicator2'
         p.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>'
@@ -302,6 +310,9 @@ CategoryOverpass.prototype.open = function () {
       let list = new OverpassLayerList(this.layer, {})
       this.lists.push(list)
       list.addTo(this.domContent)
+      this.listsDom.push(this.domContent)
+
+      showMore(this, this.domContent)
     }
 
     this.lists.forEach(list => {
@@ -309,6 +320,8 @@ CategoryOverpass.prototype.open = function () {
       list._getMarker = this._getMarker.bind(this, origGetMarker, list)
     })
   }
+
+  this.listsDom.forEach(dom => dom.classList.add('open'))
 
   this.isOpen = true
 
@@ -451,6 +464,7 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
     let html = this.popupBodyTemplate.render(object.twigData)
     if (popupBody.currentHTML !== html) {
       popupBody.innerHTML = html
+      this.updateAssets(popup._contentNode)
     }
 
     popupBody.currentHTML = html

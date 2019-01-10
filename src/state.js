@@ -5,6 +5,11 @@ var queryString = require('query-string')
 function get () {
   var state = {}
 
+  // repo
+  if (global.mainRepo !== '') {
+    state.repo = global.mainRepo
+  }
+
   // path
   if (currentPath) {
     state.path = currentPath
@@ -143,6 +148,8 @@ function update (state, push) {
   }
 
   var newHash = '#' + stringify(state)
+
+  call_hooks('state-update', state, newHash)
 
   if (push) {
     history.pushState(null, null, newHash)

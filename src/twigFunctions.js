@@ -89,3 +89,10 @@ OverpassLayer.twig.extendFunction('evaluate', function (tags) {
   var d = global.currentCategory.layer.mainlayer.evaluate(ob)
   return d
 })
+OverpassLayer.twig.extendFunction('enumerate', function (value) {
+  let list = value.split(/,/)
+  if (list.length > 1) {
+    return list.slice(0, -1).join(lang_str.enumerate_join) +  lang_str.enumerate_last + list.slice(-1)[0]
+  }
+  return value
+})

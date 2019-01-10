@@ -33,8 +33,8 @@ if (!isset($_REQUEST['repo'])) {
   exit(0);
 }
 
-$repoId = $_REQUEST['repo'];
-list($repoId, $branchId) = explode('~', $repoId);
+$fullRepoId = $_REQUEST['repo'];
+list($repoId, $branchId) = explode('~', $fullRepoId);
 
 if (!array_key_exists($repoId, $allRepositories)) {
   Header("HTTP/1.1 404 Repository not found");
@@ -59,15 +59,25 @@ $ts = $repo->timestamp($path);
 if (isset($config['cache'])) {
   $cacheDir = "{$config['cache']}/repo";
   @mkdir($cacheDir);
-  $cacheTs = filemtime("{$cacheDir}/{$repoId}.json");
+  $cacheTs = filemtime("{$cacheDir}/{$fullRepoId}.json");
   if ($cacheTs === $ts) {
     Header("Content-Type: application/json; charset=utf-8");
-    readfile("{$cacheDir}/{$repoId}.json");
+    readfile("{$cacheDir}/{$fullRepoId}.json");
     exit(0);
   }
 }
 
 $data = $repo->data();
+
+if (!array_key_exists('index', $data['categories'])) {
+  $data['categories']['index'] = array(
+    'type' => 'index',
+    'subCategories' => array_map(
+      function ($k) {
+        return array('id' => $k);
+      }, array_keys($data['categories']))
+  );
+}
 
 if (isset($repoData['repositoryUrl'])) {
   $data['repositoryUrl'] = $repoData['repositoryUrl'];
@@ -81,5 +91,8 @@ $ret = json_encode($data, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
 Header("Content-Type: application/json; charset=utf-8");
 print $ret;
 
-file_put_contents("{$cacheDir}/{$repoId}.json", $ret);
-touch("{$cacheDir}/{$repoId}.json", $ts);
+if ($cacheDir) {
+  @mkdir(dirname("{$cacheDir}/{$fullRepoId}"));
+  file_put_contents("{$cacheDir}/{$fullRepoId}.json", $ret);
+  touch("{$cacheDir}/{$fullRepoId}.json", $ts);
+}

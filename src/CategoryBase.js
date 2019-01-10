@@ -2,6 +2,7 @@
 /* eslint camelcase: 0 */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var tabs = require('modulekit-tabs')
+const ee = require('event-emitter')
 
 function CategoryBase (options, data) {
   if (typeof options === 'string') {
@@ -20,56 +21,54 @@ function CategoryBase (options, data) {
   var name
   var a
 
-  if (this.id !== 'index') {
-    this.domHeader = document.createElement('header')
-    this.dom.appendChild(this.domHeader)
+  this.domHeader = document.createElement('header')
+  this.dom.appendChild(this.domHeader)
 
-    if ('name' in this.data) {
-      if (typeof this.data.name === 'object') {
-        name = lang(this.data.name)
-      } else {
-        name = this.data.name
-      }
-    } else if (('name:' + ui_lang) in this.data) {
-      name = this.data['name:' + ui_lang]
+  if ('name' in this.data) {
+    if (typeof this.data.name === 'object') {
+      name = lang(this.data.name)
     } else {
-      name = lang('category:' + this.id)
+      name = this.data.name
     }
+  } else if (('name:' + ui_lang) in this.data) {
+    name = this.data['name:' + ui_lang]
+  } else {
+    name = lang('category:' + this.id)
+  }
 
-    a = document.createElement('a')
-    a.appendChild(document.createTextNode(name))
-    a.href = '#'
-    a.onclick = this.toggle.bind(this)
+  a = document.createElement('a')
+  a.appendChild(document.createTextNode(name))
+  a.href = '#'
+  a.onclick = this.toggle.bind(this)
+  this.domHeader.appendChild(a)
+
+  if (this.options.repositoryId && this.options.repositoryId !== 'default') {
+    a = document.createElement('span')
+    a.className = 'repoId'
+    a.appendChild(document.createTextNode(this.options.repositoryId))
     this.domHeader.appendChild(a)
+  }
 
-    if (this.options.repositoryId && this.options.repositoryId !== 'default') {
-      a = document.createElement('span')
-      a.className = 'repoId'
-      a.appendChild(document.createTextNode(this.options.repositoryId))
-      this.domHeader.appendChild(a)
-    }
+  if (this.shallShowReload()) {
+    a = document.createElement('a')
+    a.appendChild(document.createTextNode('⟳'))
+    a.title = lang('reload')
+    a.className = 'reload'
+    a.onclick = function () {
+      var id = this.id
+      var isOpen = this.isOpen
 
-    if (this.shallShowReload()) {
-      a = document.createElement('a')
-      a.appendChild(document.createTextNode('⟳'))
-      a.title = lang('reload')
-      a.className = 'reload'
-      a.onclick = function () {
-        var id = this.id
-        var isOpen = this.isOpen
+      this.reload(function (err, category) {
+        if (err) {
+          alert('Error reloading category ' + id + ': ' + err)
+        }
 
-        this.reload(function (err, category) {
-          if (err) {
-            alert('Error reloading category ' + id + ': ' + err)
-          }
-
-          if (isOpen) {
-            category.open()
-          }
-        })
-      }.bind(this)
-      this.domHeader.appendChild(a)
-    }
+        if (isOpen) {
+          category.open()
+        }
+      })
+    }.bind(this)
+    this.domHeader.appendChild(a)
   }
 
   this.tools = new tabs.Tabs(this.dom)
@@ -133,6 +132,7 @@ CategoryBase.prototype.open = function () {
   this.isOpen = true
 
   call_hooks('categoryOpen', this)
+  this.emit('open')
 }
 
 CategoryBase.prototype.close = function () {
@@ -145,6 +145,7 @@ CategoryBase.prototype.close = function () {
   this.isOpen = false
 
   call_hooks('categoryClose', this)
+  this.emit('close')
 }
 
 CategoryBase.prototype.toggle = function () {
@@ -207,5 +208,7 @@ CategoryBase.prototype.notifyChildLoadEnd = function (category) {
 CategoryBase.prototype.allMapFeatures = function (callback) {
   callback(null, [])
 }
+
+ee(CategoryBase.prototype)
 
 module.exports = CategoryBase
