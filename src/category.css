@@ -152,3 +152,12 @@
 .overpass-layer-icon div.sign {
   font-size: 15px;
 }
+.info .details {
+  display: none;
+}
+.info .infoShowDetails .details {
+  display: initial;
+}
+.info .infoShowDetails .summary {
+  display: none;
+}
