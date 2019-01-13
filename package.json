@@ -33,6 +33,7 @@
     "natsort": "^1.0.6",
     "opening_hours": "^3.5.0",
     "openstreetbrowser-categories-main": "https://github.com/plepe/openstreetbrowser-categories-main",
+    "openstreetmap-date-format": "^0.1.0",
     "openstreetmap-date-parser": "^0.1.0",
     "openstreetmap-tag-translations": "https://github.com/plepe/openstreetmap-tag-translations",
     "overpass-layer": "^2.0.0",
@@ -68,7 +69,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify -g browserify-css src/index.js -o dist/tmp1.js && babel --presets env dist/tmp1.js > dist/tmp2.js && mv dist/tmp2.js dist/openstreetbrowser.js && rm dist/tmp1.js",
-    "watch": "watchify --debug -g browserify-css src/index.js -o dist/openstreetbrowser.js -v",
+    "build-locales": "for i in `ls locales/` ; do browserify locales/$i -o dist/locale-$i ; done",
+    "watch": "npm run build-locales && watchify --debug -g browserify-css src/index.js -o dist/openstreetbrowser.js -v",
     "prepublish": "npm run build",
     "lint": "standard src/*.js"
   },
