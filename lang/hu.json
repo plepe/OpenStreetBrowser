@@ -11,7 +11,7 @@
     "export-prepare": "",
     "export:GeoJSON": "Letöltés GeoJSON formátumban",
     "export:OSMJSON": "",
-    "export:OSMXML": null,
+    "export:OSMXML": "",
     "facilities": "Létesítmények",
     "header:attributes": "Tulajdonságok",
     "header:export": "Exportálás",

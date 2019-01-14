@@ -11,7 +11,7 @@
     "export-prepare": "",
     "export:GeoJSON": "",
     "export:OSMJSON": "",
-    "export:OSMXML": null,
+    "export:OSMXML": "",
     "facilities": "",
     "header:attributes": "",
     "header:export": "",
