@@ -67,8 +67,8 @@ OverpassLayer.twig.extendFunction('colorInterpolate', function (map, value) {
 OverpassLayer.twig.extendFilter('osmParseDate', function (value) {
   return osmParseDate(value)
 })
-OverpassLayer.twig.extendFilter('osmFormatDate', function (value) {
-  return osmFormatDate(value)
+OverpassLayer.twig.extendFilter('osmFormatDate', function (value, param) {
+  return osmFormatDate(value, param.length ? param[0] : {})
 })
 OverpassLayer.twig.extendFilter('md5', function (value) {
   if (!(value in md5cache)) {
