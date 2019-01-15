@@ -110,6 +110,7 @@ function CategoryOverpass (options, data) {
   this.layer.on('twigData',
     (ob, data, result) => {
       result.user = global.options
+      global.currentCategory = this
     }
   )
 
