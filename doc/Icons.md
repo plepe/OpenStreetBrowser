@@ -15,7 +15,7 @@ You may upload images to your repository and use them via a relative image link:
 This will include the image from your repository (when uploaded to your 'img' directory).
 
 #### Font Awesome Icons
-[Font Awesome 5](https://fontawesome.com/) is included in OpenStreetBrowser, therefore you can use, e.g.:
+[Font Awesome 5 Free](https://fontawesome.com/) is included in OpenStreetBrowser, therefore you can use, e.g.:
 ```html
 <i class="fas fa-compass" aria-hidden="true"></i> <!-- solid -->
 <i class="far fa-compass" aria-hidden="true"></i> <!-- regular -->
