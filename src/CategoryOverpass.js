@@ -107,6 +107,12 @@ function CategoryOverpass (options, data) {
   this.layer.on('add', (ob, data) => this.emit('add', ob, data))
   this.layer.on('remove', (ob, data) => this.emit('remove', ob, data))
   this.layer.on('zoomChange', (ob, data) => this.emit('remove', ob, data))
+  this.layer.on('twigData',
+    (ob, data, result) => {
+      result.user = global.options
+      global.currentCategory = this
+    }
+  )
 
   p = document.createElement('div')
   p.className = 'loadingIndicator'

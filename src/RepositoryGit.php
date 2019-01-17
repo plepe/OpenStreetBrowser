@@ -29,8 +29,20 @@ class RepositoryGit extends RepositoryBase {
     return $ts;
   }
 
-  function data () {
-    $data = parent::data();
+  function data ($options) {
+    $data = parent::data($options);
+
+    $lang = array_key_exists('lang', $options) ? $options['lang'] : 'en';
+
+    if (true) {
+      $data['lang'] = json_decode(shell_exec("cd " . escapeShellArg($this->path) . "; git show {$this->branchEsc}:lang/en.json 2>/dev/null"), true);
+      $lang = json_decode(shell_exec("cd " . escapeShellArg($this->path) . "; git show {$this->branchEsc}:lang/" . escapeShellArg("{$options['lang']}.json") . " 2>/dev/null"), true);
+      foreach ($lang as $k => $v) {
+        if ($v !== null && $v !== '') {
+          $data['lang'][$k] = $v;
+        }
+      }
+    }
 
     $d = popen("cd " . escapeShellArg($this->path) . "; git ls-tree {$this->branchEsc}", "r");
     while ($r = fgets($d)) {

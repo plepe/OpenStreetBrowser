@@ -58,6 +58,7 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
     this.getCategoryFromData(ids.id, opt, repoData.categories[ids.entityId], function (err, category) {
       if (category) {
         category.setMap(this.map)
+        category.lang = repoData.lang
       }
 
       callback(err, category)
@@ -112,6 +113,7 @@ OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
   if (repo) {
     param.push('repo=' + encodeURIComponent(repo))
   }
+  param.push('lang=' + encodeURIComponent(ui_lang))
   param.push(config.categoriesRev)
   param = param.length ? '?' + param.join('&') : ''
 
