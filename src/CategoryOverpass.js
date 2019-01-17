@@ -168,7 +168,7 @@ CategoryOverpass.prototype.updateAssets = function (div) {
     var src = img.getAttribute('src') || img.getAttribute('data-src')
     if (src === null) {
     } else if (src.match(/^(maki|temaki):.*/)) {
-      let m = src.match(/^(maki|temaki):([a-z0-9-]*)(?:\?(.*))?$/)
+      let m = src.match(/^(maki|temaki):([a-z0-9-_]*)(?:\?(.*))?$/)
       if (m) {
         let span = document.createElement('span')
         img.parentNode.insertBefore(span, img)
