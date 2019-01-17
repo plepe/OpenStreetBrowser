@@ -17,8 +17,8 @@ This will include the image from your repository (when uploaded to your 'img' di
 #### Font Awesome Icons
 [Font Awesome 5 Free](https://fontawesome.com/) is included in OpenStreetBrowser, therefore you can use, e.g.:
 ```html
-<i class="fas fa-compass" aria-hidden="true"></i> <!-- solid -->
-<i class="far fa-compass" aria-hidden="true"></i> <!-- regular -->
+<i class="fas fa-compass"></i> <!-- solid -->
+<i class="far fa-compass"></i> <!-- regular -->
 ```
 
 You can use normal CSS to modify its look, e.g.
