@@ -45,6 +45,7 @@ When rendering map features, the following properties are available:
 * `meta.uid` (UID of the user, who changed the object last)
 * `map.zoom` (Current zoom level)
 * `const.*` (Values from the 'const' option)
+* `user.*` (Values from the user's options, e.g. `user.ui_lang`, `user.data_lang`, ...)
 
 For the info-section of a category the following properties are available:
 * `layer_id` (the id of the category)
@@ -57,6 +58,7 @@ There are several extra functions defined for the TwigJS language:
 * function `tagTransList`: return the translations of the given tag for tags with multiple values separated by ';' (e.g. 'cuisine'). Parameters: key (required, e.g. 'cuisine'), value (required, e.g. 'kebab' or 'kebab;pizza;noodles;burger').
 * function `localizedTag`: return a localized tag if available (e.g. 'name:de' for the german translation of the tag). Parameters: tags (the tags property), key prefix (e.g. 'name'). Which language will be returned depends on the "data language" which can be set via Options. If no localized tag is available, the tag value itself will be returned (e.g. value of 'name').
 * function `trans`: return the translation of the given string (e.g. 'save', 'unknown', 'unnamed', ...). Parameters: string (the string to translate).
+* function `repoTrans`: translate strings from this repositories' language file (located in `lang/xy.json`, where `xy` stands for the current locale).
 * function `tagsPrefix(tags, prefix)`: return all tags with the specified prefix. The result will be an array with `{ "en": "name:en", "de": "name:de" }` (for the input `{ "name": "foo", "name:en": "english foo", "name:de": "german foo" }` and the prefix "name:").
 * function openingHoursState(opening_hours_definition): returns state of object as string: 'closed', 'open' or 'unknown'.
 * function colorInterpolate(map, value): interpolates between two or more colors. E.g. `colorInterpolate([ 'red', 'yellow', 'green' ], 0.75)`.
@@ -65,6 +67,7 @@ Extra filters:
 * filter websiteUrl: return a valid http link. Example: `{{ "www.google.com"|websiteUrl }}` -> "http://www.google.com"; `{{ "https://google.com"|websiteUrl }}` -> "https://google.com"
 * filter `matches`: regular expression match. e.g. `{{ "test"|matches("e(st)$") }}` returns `[ "est", "st" ]`. Returns null if it does not match.
 * filter `osmDateParse`: returns an array with the lower and upper boundary of the year of a `start_date` tag. See [https://github.com/plepe/openstreetmap-date-parser](openstreetmap-date-parser) for details.
+* filter `osmDateFormat`: returns the date as localized strings. Accept an object for options, e.g. `{{ tags.start_date|osmDateFormat({ format: 'short' }) }}`. See [https://github.com/plepe/openstreetmap-date-format](openstreetmap-date-format) for details.
 * filter `natsort`: Sort an array naturally, see [https://www.npmjs.com/package/natsort](natsort) for details.
 * filter `unique`: Remove duplicate elements from an array.
 * filter `md5`: calculate md5 hash of a string.

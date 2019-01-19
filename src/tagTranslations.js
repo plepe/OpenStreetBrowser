@@ -25,6 +25,10 @@ OverpassLayer.twig.extendFunction('trans', function () {
 OverpassLayer.twig.extendFunction('isTranslated', function (str) {
   return tagTranslationsIsTranslated(str)
 })
+OverpassLayer.twig.extendFunction('repoTrans', function (str) {
+  let lang = global.currentCategory.lang
+  return str in lang ? lang[str] : str
+})
 
 function tagTranslationsIsTranslated (str) {
   return !(str in lang_non_translated) && (str in lang_str)

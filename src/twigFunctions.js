@@ -2,6 +2,7 @@ var OverpassLayer = require('overpass-layer')
 var OpeningHours = require('opening_hours')
 var colorInterpolate = require('color-interpolate')
 var osmParseDate = require('openstreetmap-date-parser')
+var osmFormatDate = require('openstreetmap-date-format')
 const natsort = require('natsort')
 const md5 = require('md5')
 
@@ -65,6 +66,9 @@ OverpassLayer.twig.extendFunction('colorInterpolate', function (map, value) {
 })
 OverpassLayer.twig.extendFilter('osmParseDate', function (value) {
   return osmParseDate(value)
+})
+OverpassLayer.twig.extendFilter('osmFormatDate', function (value, param) {
+  return osmFormatDate(value, param.length ? param[0] : {})
 })
 OverpassLayer.twig.extendFilter('md5', function (value) {
   if (!(value in md5cache)) {

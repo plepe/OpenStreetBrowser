@@ -25,4 +25,4 @@ $include = array(
     'style.css',
   ),
 );
-$version = "4.3";
+$version = "4.4";
