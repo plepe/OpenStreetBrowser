@@ -4,7 +4,7 @@ var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var tabs = require('modulekit-tabs')
 const ee = require('event-emitter')
 
-function CategoryBase (options, data) {
+function CategoryBase (options, data, repository) {
   if (typeof options === 'string') {
     this.id = options
     this.options = {}
@@ -12,6 +12,7 @@ function CategoryBase (options, data) {
     this.id = options.id
     this.options = options
   }
+  this.repository = repository
   this.parentCategory = null
   this.childrenLoadingCount = 0
   this.data = data

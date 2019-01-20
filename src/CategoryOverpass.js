@@ -35,10 +35,10 @@ var defaultValues = {
 
 CategoryOverpass.prototype = Object.create(CategoryBase.prototype)
 CategoryOverpass.prototype.constructor = CategoryOverpass
-function CategoryOverpass (options, data) {
+function CategoryOverpass (options, data, repository) {
   var p
 
-  CategoryBase.call(this, options, data)
+  CategoryBase.call(this, options, data, repository)
 
   data.id = this.id
 

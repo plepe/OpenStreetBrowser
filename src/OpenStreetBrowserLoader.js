@@ -203,9 +203,11 @@ OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, options, d
     return callback(new Error('unknown type'), null)
   }
 
+  let repository = this.repositories[ids.repositoryId]
+
   var opt = JSON.parse(JSON.stringify(options))
   opt.id = ids.id
-  var layer = new this.types[data.type](opt, data)
+  var layer = new this.types[data.type](opt, data, repository)
 
   layer.setMap(this.map)
 
