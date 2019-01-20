@@ -278,7 +278,7 @@ window.showDetails = function (data, category) {
 
   div = document.createElement('div')
   div.className = 'description'
-  div.innerHTML = data.data.description || ''
+  div.innerHTML = data.data.popupDescription || data.data.description || ''
   dom.appendChild(div)
   data.sublayer.updateAssets(div, data)
 

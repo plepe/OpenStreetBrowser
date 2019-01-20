@@ -35,6 +35,9 @@ if (!isset($_REQUEST['repo'])) {
 
 $fullRepoId = $_REQUEST['repo'];
 list($repoId, $branchId) = explode('~', $fullRepoId);
+if (array_key_exists('lang', $_REQUEST)) {
+  $fullRepoId .= '~' . $_REQUEST['lang'];
+}
 
 if (!array_key_exists($repoId, $allRepositories)) {
   Header("HTTP/1.1 404 Repository not found");
@@ -67,7 +70,9 @@ if (isset($config['cache'])) {
   }
 }
 
-$data = $repo->data();
+$data = $repo->data($_REQUEST);
+
+$repo->updateLang($data, $_REQUEST);
 
 if (!array_key_exists('index', $data['categories'])) {
   $data['categories']['index'] = array(
