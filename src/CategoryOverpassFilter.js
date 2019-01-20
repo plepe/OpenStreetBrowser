@@ -3,6 +3,7 @@ const tabs = require('modulekit-tabs')
 
 const state = require('./state')
 const Filter = require('overpass-frontend').Filter
+const getPathFromJSON = require('./getPathFromJSON')
 
 class CategoryOverpassFilter {
   constructor (master) {
@@ -34,6 +35,10 @@ class CategoryOverpassFilter {
 
       if ('values' in f) {
         let template = OverpassLayer.twig.twig({ data: f.valueName || '{{ value }}', autoescape: true })
+
+        if (typeof f.values === 'string') {
+          f.values = getPathFromJSON(f.values, this.master.data)
+        }
 
         if (Array.isArray(f.values) && f.valueName) {
           let newValues = {}
