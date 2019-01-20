@@ -1,9 +1,12 @@
 var OverpassLayer = require('overpass-layer')
 
+const Repository = require('./Repository')
+
 function OpenStreetBrowserLoader () {
   this.types = {}
   this.categories = {}
   this.repoCache = {}
+  this.repositories = {}
   this.templates = {}
   this._loadClash = {} // if a category is being loaded multiple times, collect callbacks
 }
@@ -94,7 +97,9 @@ OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
       this.repoCache[repo] = [ req.statusText, null ]
     } else {
       try {
-        this.repoCache[repo] = [ null, JSON.parse(req.responseText) ]
+        let repoData = JSON.parse(req.responseText)
+        this.repositories[repo] = new Repository(repo, repoData)
+        this.repoCache[repo] = [ null,  repoData ]
       } catch (err) {
         console.log('couldn\'t parse repository', req.responseText)
         this.repoCache[repo] = [ 'couldn\t parse repository', null ]
@@ -121,6 +126,20 @@ OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
   req.addEventListener('load', reqListener.bind(this, req))
   req.open('GET', 'repo.php' + param)
   req.send()
+}
+
+OpenStreetBrowserLoader.prototype.getRepository = function (id, options, callback) {
+  if (id in this.repositories) {
+    return callback(null, this.repositories[id])
+  }
+
+  this.getRepo(id, options, (err, repoData) => {
+    if (err) {
+      return callback(err)
+    }
+
+    callback(null, this.repositories[id])
+  })
 }
 
 /**
