@@ -33,6 +33,10 @@ class CategoryOverpassFilter {
         f.name = lang('tag:' + k)
       }
 
+      if ('query' in f) {
+        f.queryTemplate = OverpassLayer.twig.twig({ data: f.query, autoescape: false })
+      }
+
       if ('values' in f) {
         let template = OverpassLayer.twig.twig({ data: f.valueName || '{{ value }}', autoescape: true })
 
@@ -105,7 +109,11 @@ class CategoryOverpassFilter {
 
       var d = this.data[k]
 
-      if ('values' in d && param[k] in d.values && typeof d.values[param[k]] === 'object' && 'query' in d.values[param[k]]) {
+      if (d.queryTemplate) {
+        let f = new Filter(d.queryTemplate.render({ value: param[k] }).toString())
+        this.additionalFilter.push(f.def)
+        continue
+      } else if ('values' in d && param[k] in d.values && typeof d.values[param[k]] === 'object' && 'query' in d.values[param[k]]) {
         let f = new Filter(d.values[param[k]].query)
         this.additionalFilter.push(f.def)
         continue
