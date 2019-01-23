@@ -109,12 +109,12 @@ class CategoryOverpassFilter {
 
       var d = this.data[k]
 
-      if (d.queryTemplate) {
-        let f = new Filter(d.queryTemplate.render({ value: param[k] }).toString())
+      if ('values' in d && param[k] in d.values && typeof d.values[param[k]] === 'object' && 'query' in d.values[param[k]]) {
+        let f = new Filter(d.values[param[k]].query)
         this.additionalFilter.push(f.def)
         continue
-      } else if ('values' in d && param[k] in d.values && typeof d.values[param[k]] === 'object' && 'query' in d.values[param[k]]) {
-        let f = new Filter(d.values[param[k]].query)
+      } else if (d.queryTemplate) {
+        let f = new Filter(d.queryTemplate.render({ value: param[k] }).toString())
         this.additionalFilter.push(f.def)
         continue
       }
