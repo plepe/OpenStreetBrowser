@@ -38,7 +38,7 @@ class CategoryOverpassFilter {
       }
 
       if ('values' in f) {
-        let template = OverpassLayer.twig.twig({ data: f.valueName || '{{ value }}', autoescape: true })
+        let valueNameTemplate = OverpassLayer.twig.twig({ data: f.valueName || '{{ value }}', autoescape: true })
 
         if (typeof f.values === 'string') {
           f.values = getPathFromJSON(f.values, this.master.data)
@@ -47,7 +47,7 @@ class CategoryOverpassFilter {
         if (Array.isArray(f.values) && f.valueName) {
           let newValues = {}
           f.values.forEach(value => {
-            newValues[value] = template.render({ value }).toString()
+            newValues[value] = valueNameTemplate.render({ value }).toString()
           })
           f.values = newValues
         } else if (typeof f.values === 'object') {
@@ -57,7 +57,7 @@ class CategoryOverpassFilter {
               f.values[k1] = t.render({}).toString()
             } else if (typeof f.values[k1] === 'object') {
               if (!('name' in f.values[k1])) {
-                f.values[k1].name = template.render({ value: k1 }).toString()
+                f.values[k1].name = valueNameTemplate.render({ value: k1 }).toString()
               } else if (f.values[k1].name) {
                 let t = OverpassLayer.twig.twig({ data: f.values[k1].name, autoescape: true })
                 f.values[k1].name = t.render({}).toString()
