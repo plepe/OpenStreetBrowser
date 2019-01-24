@@ -492,6 +492,8 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
     sublayer_id: object.sublayer_id
   }
 
+  this.emit('popupOpen', object, popup)
+
   this.updatePopupContent(object, popup)
   this.currentSelected = this.layer.show(object.id, layerOptions, function () {})
 }
@@ -506,6 +508,8 @@ CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
     this.currentDetails.hide()
     this.currentDetails = null
   }
+
+  this.emit('popupClose')
 }
 
 CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
@@ -525,6 +529,8 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
 
     popupBody.currentHTML = html
   }
+
+  this.emit('popupUpdate', object, popup._contentNode)
 
   let id_with_sublayer = (object.sublayer_id === 'main' ? '' : object.sublayer_id + ':') + object.id
 
