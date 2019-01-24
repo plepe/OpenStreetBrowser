@@ -2,6 +2,7 @@
 /* eslint camelcase: 0 */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var tabs = require('modulekit-tabs')
+const async = require('async')
 const ee = require('event-emitter')
 
 function CategoryBase (options, data, repository) {
@@ -83,7 +84,16 @@ function CategoryBase (options, data, repository) {
 }
 
 CategoryBase.prototype.load = function (callback) {
-  callback()
+  async.each(this.extensions,
+    (ext, done) => {
+      if (ext.load) {
+        ext.load(done)
+      } else {
+        done()
+      }
+    },
+    callback
+  )
 }
 
 CategoryBase.prototype.shallShowReload = function () {
