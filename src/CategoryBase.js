@@ -5,6 +5,8 @@ var tabs = require('modulekit-tabs')
 const ee = require('event-emitter')
 
 function CategoryBase (options, data, repository) {
+  this.extensions = []
+
   if (typeof options === 'string') {
     this.id = options
     this.options = {}

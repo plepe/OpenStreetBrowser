@@ -8,6 +8,7 @@ const getPathFromJSON = require('./getPathFromJSON')
 class CategoryOverpassFilter {
   constructor (master) {
     this.master = master
+    this.master.extensions.push(this)
     this.data = this.master.data.filter
 
     this.tabFilter = new tabs.Tab({
