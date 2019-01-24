@@ -41,7 +41,27 @@ class CategoryOverpassFilter {
         let valueNameTemplate = OverpassLayer.twig.twig({ data: f.valueName || '{{ value }}', autoescape: true })
 
         if (typeof f.values === 'string') {
-          f.values = getPathFromJSON(f.values, this.master.data)
+          let valuesTemplate = OverpassLayer.twig.twig({ data: f.values, autoescape: true })
+          let div = document.createElement('div')
+          div.innerHTML = valuesTemplate.render(this.master.data)
+
+          let options = div.getElementsByTagName('option')
+          f.values = {}
+
+          for (let i = 0; i < options.length; i++) {
+            let option = options[i]
+
+            let k = option.value
+            f.values[k] = {}
+
+            if (option.textContent) {
+              f.values[k].name = option.textContent
+            }
+
+            if (option.hasAttribute('query')) {
+              f.values[k].query = option.getAttribute('query')
+            }
+          }
         }
 
         if (Array.isArray(f.values) && f.valueName) {
