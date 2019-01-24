@@ -4,6 +4,7 @@ var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var queryString = require('query-string')
+const async = require('async')
 
 var CategoryBase = require('./CategoryBase')
 var state = require('./state')
@@ -226,15 +227,20 @@ CategoryOverpass.prototype.updateAssets = function (div) {
 }
 
 CategoryOverpass.prototype.load = function (callback) {
-  OpenStreetBrowserLoader.getTemplate('popupBody', this.options, function (err, template) {
-    if (err) {
-      console.log("can't load popupBody.html")
-    } else {
-      this.popupBodyTemplate = template
-    }
+  async.parallel([
+    (done) => CategoryBase.prototype.load.call(this, done),
+    (done) => {
+      OpenStreetBrowserLoader.getTemplate('popupBody', this.options, function (err, template) {
+        if (err) {
+          console.log("can't load popupBody.html")
+        } else {
+          this.popupBodyTemplate = template
+        }
 
-    callback(null)
-  }.bind(this))
+        done(null)
+      }.bind(this))
+    }
+  ], callback)
 }
 
 CategoryOverpass.prototype.setParentDom = function (parentDom) {
