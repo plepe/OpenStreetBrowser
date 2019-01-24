@@ -36,6 +36,7 @@ require('./image')
 require('./addCategories')
 require('./permalink')
 require('./CategoryOverpassFilter')
+require('./CategoryOverpassSubCategories')
 let exportAll = require('./exportAll')
 
 window.onload = function () {
