@@ -7,6 +7,10 @@ class CategoryOverpassSubCategories {
     this.master = master
     this.master.extensions.push(this)
     this.data = this.master.data.featureSubCategories
+
+    this.master.on('popupOpen', this.popupOpen.bind(this))
+    this.master.on('popupUpdate', this.popupUpdate.bind(this))
+    this.master.on('popupClose', this.popupClose.bind(this))
   }
 
   load (callback) {
@@ -18,6 +22,22 @@ class CategoryOverpassSubCategories {
         callback(err)
       }
     )
+  }
+
+  popupOpen (object) {
+  }
+
+  popupUpdate (object, dom) {
+    this.subCategories.forEach(
+      cat => {
+        cat.setParentDom(dom)
+        cat.open()
+      }
+    )
+  }
+
+  popupClose () {
+    this.subCategories.forEach(cat => cat.close())
   }
 }
 
