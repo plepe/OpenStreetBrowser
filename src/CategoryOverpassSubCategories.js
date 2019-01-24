@@ -31,6 +31,7 @@ class CategoryOverpassSubCategories {
     this.subCategories.forEach(
       cat => {
         cat.setParentDom(dom)
+        cat.layer.setBoundary(object.object.GeoJSON())
         cat.open()
       }
     )
