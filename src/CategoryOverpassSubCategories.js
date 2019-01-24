@@ -11,7 +11,7 @@ class CategoryOverpassSubCategories {
 
   load (callback) {
     async.map(this.data,
-      (def, done) => OpenStreetBrowserLoader.getCategory(def.id, {}, done),
+      (def, done) => OpenStreetBrowserLoader.getCategory(def.id, { unique: true }, done),
       (err, result) => {
         this.subCategories = result
 

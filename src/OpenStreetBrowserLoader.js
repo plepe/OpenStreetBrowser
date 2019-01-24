@@ -18,7 +18,8 @@ OpenStreetBrowserLoader.prototype.setMap = function (map) {
 /**
  * @param string id ID of the category
  * @param [object] options Options.
- * @waram {boolean} [options.force=false] Whether repository should be reload or not.
+ * @param {boolean} [options.force=false] Whether repository should be reload or not.
+ * @param {boolean} [options.unique=false] Whether a new category object should be created, even if it already has been loaded.
  * @param function callback Callback which will be called with (err, category)
  */
 OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback) {
@@ -36,7 +37,7 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
     delete this.categories[ids.fullId]
   }
 
-  if (ids.fullId in this.categories) {
+  if (!options.unique && ids.fullId in this.categories) {
     return callback(null, this.categories[ids.fullId])
   }
 
