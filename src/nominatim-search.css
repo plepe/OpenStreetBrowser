@@ -1,0 +1,13 @@
+.nominatim-search input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+.nominatim-search ul {
+  margin: 0 0.5em;
+  padding-left: 0;
+}
+.nominatim-search ul li {
+  margin: 0.5em 0;
+  list-style: none;
+}

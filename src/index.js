@@ -34,7 +34,8 @@ require('./wikipedia')
 require('./image')
 require('./addCategories')
 require('./permalink')
-require('./leaflet-geo-search')
+//require('./leaflet-geo-search')
+require('./nominatim-search')
 let exportAll = require('./exportAll')
 
 window.onload = function () {
