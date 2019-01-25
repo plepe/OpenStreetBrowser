@@ -1,6 +1,5 @@
 /* globals map:true, overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true showDetails */
 
-var LeafletGeoSearch = require('leaflet-geosearch')
 const tabs = require('modulekit-tabs')
 
 var OverpassFrontend = require('overpass-frontend')
@@ -35,6 +34,7 @@ require('./wikipedia')
 require('./image')
 require('./addCategories')
 require('./permalink')
+require('./leaflet-geo-search')
 let exportAll = require('./exportAll')
 
 window.onload = function () {
@@ -62,15 +62,6 @@ function onload2 (initState) {
     L.control.polylineMeasure({
     }).addTo(map)
   }
-
-  // Add Geo Search
-  var provider = new LeafletGeoSearch.OpenStreetMapProvider()
-  var searchControl = new LeafletGeoSearch.GeoSearchControl({
-    provider: provider,
-    showMarker: false,
-    retainZoomLevel: true
-  })
-  map.addControl(searchControl)
 
   // Geo location
   L.control.locate({
