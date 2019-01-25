@@ -53,7 +53,8 @@ function search (str) {
 
 register_hook('init', function () {
   tab = new tabs.Tab({
-    id: 'search'
+    id: 'search',
+    weight: -1
   })
   tab.content.classList.add('nominatim-search')
   global.tabs.add(tab)
