@@ -156,6 +156,12 @@ class CategoryOverpassFilter {
         }
       }
 
+      if (Array.isArray(v.key)) {
+        v = {
+          "or": v.key.map(key => { return [ { key, value: v.value, op: v.op } ]})
+        }
+      }
+
       kvFilter.push(v)
     }
 
