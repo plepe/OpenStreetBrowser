@@ -25,7 +25,7 @@ Each filter can define the following values:
 * values: Possible values. Can either be an array, an object or a html string with several `<option>` tags (even for radio and checkbox). See below for more information.
 * valueName: if the values do not have names (resp. an `<option>` without text content), use this twig template to create a each name. Use `{{ value }}` for the current value.
 * query: A twig template which builds a query from the selected value (if the value has not a query defined), e.g. `nwr[amenity={{ value }}]`. If not defined the query will be built from `key` (or the filter ID), `op` and the selected value.
-* key: If not overridden by query, use this key for searching. If not defined, use the filter's ID.
+* key: If not overridden by query, use this key for searching. If not defined, use the filter's ID. Can also be an array with a list of keys. You can use wildcards too, e.g. "name:*" to query all localized name tags.
 * op: operator to use (if not overridden by query), e.g. '=' (default), '!=', '~', '!~', 'has' (query in semicolon-separated lists like `cuisine=kebap;noodles`).
 
 ### Values

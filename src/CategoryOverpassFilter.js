@@ -158,7 +158,19 @@ class CategoryOverpassFilter {
 
       if (Array.isArray(v.key)) {
         v = {
-          "or": v.key.map(key => { return [ { key, value: v.value, op: v.op } ]})
+          "or": v.key.map(
+            key => {
+              let v1 = { key, value: v.value, op: v.op }
+
+              let m = key.match(/^(.*)\*(.*)/)
+              if (m) {
+                v1.key = '^' + m[1] + '.*' + m[2]
+                v1.keyRegexp = true
+              }
+
+              return [ v1 ]
+            }
+          )
         }
       }
 
