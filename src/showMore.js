@@ -1,5 +1,24 @@
 require('./showMore.css')
 
+function delayedUpdate (dom, p) {
+  if (!p.timer) {
+    p.timer = global.setTimeout(
+      () => {
+        delete p.timer
+
+        if (dom.scrollHeight > dom.offsetHeight && dom.classList.contains('collapsed')) {
+          p.classList.add('active')
+        }
+
+        if (dom.scrollHeight <= dom.offsetHeight && dom.classList.contains('collapsed')) {
+          p.classList.remove('active')
+        }
+      },
+      1
+    )
+  }
+}
+
 function showMore (category, dom) {
   dom.classList.add('collapsed')
 
@@ -17,19 +36,12 @@ function showMore (category, dom) {
   }
   p.appendChild(a)
 
-  category.on('add', () => {
-    if (dom.scrollHeight > dom.offsetHeight && dom.classList.contains('collapsed')) {
-      p.classList.add('active')
-    }
-  })
-  category.on('remove', () => {
-    if (dom.scrollHeight <= dom.offsetHeight && dom.classList.contains('collapsed')) {
-      p.classList.remove('active')
-    }
-  })
+  category.on('add', delayedUpdate.bind(this, dom, p))
+  category.on('remove', delayedUpdate.bind(this, dom, p))
   category.on('open', () => {
     p.classList.remove('active')
     dom.classList.add('collapsed')
+    delayedUpdate(dom, p)
   })
 }
 
