@@ -93,7 +93,8 @@ class CategoryOverpassFilter {
       masterOptions = {
         'type': 'form_chooser',
         'button:add_element': '-- ' + lang('choose_filter') + ' --',
-        'order': false
+        'order': false,
+        'change_on_input': true
       }
     }
 
