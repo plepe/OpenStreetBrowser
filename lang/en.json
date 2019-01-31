@@ -1,9 +1,9 @@
 {
+    "add_filter": "Add filter",
     "available_branches": "Available branches",
     "back": "back",
     "categories": "Categories",
     "category-info-tooltip": "Info & Map key",
-    "choose_filter": "Choose filter",
     "closed": "closed",
     "default": "default",
     "edit": "edit",

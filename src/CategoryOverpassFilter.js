@@ -107,7 +107,7 @@ class CategoryOverpassFilter {
     if (Object.keys(this.data).length > 1) {
       masterOptions = {
         'type': 'form_chooser',
-        'button:add_element': '-- ' + lang('choose_filter') + ' --',
+        'button:add_element': '-- ' + lang('add_filter') + ' --',
         'order': false,
         'change_on_input': true
       }
