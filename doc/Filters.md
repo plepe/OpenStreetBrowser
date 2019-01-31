@@ -26,7 +26,15 @@ Each filter can define the following values:
 * valueName: if the values do not have names (resp. an `<option>` without text content), use this twig template to create a each name. Use `{{ value }}` for the current value.
 * query: A twig template which builds a query from the selected value (if the value has not a query defined), e.g. `nwr[amenity={{ value }}]`. If not defined the query will be built from `key` (or the filter ID), `op` and the selected value.
 * key: If not overridden by query, use this key for searching. If not defined, use the filter's ID. Can also be an array with a list of keys. You can use wildcards too, e.g. "name:*" to query all localized name tags.
-* op: operator to use (if not overridden by query), e.g. '=' (default), '!=', '~', '!~', 'has' (query in semicolon-separated lists like `cuisine=kebap;noodles`).
+* op: operator to use (if not overridden by query):
+  * '=' exact match (default)
+  * '!=' any value nut this
+  * '~' regular expression, case sensitive
+  * '~i' regular expression, case insensitive
+  * '!~', '!~i' regular expression, negated
+  * 'has' query in semicolon-separated lists like `cuisine=kebap;noodles`
+  * 'strsearch' query string parts (e.g. "kai keb" would match "Kaiser Kebap") and query character variants (e.g. "cafe" would match "café").
+* show_default: if true, this filter will be shown by default, others need to be added via the select box.
 
 ### Values
 #### Array
