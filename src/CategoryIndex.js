@@ -5,8 +5,8 @@ var CategoryBase = require('./CategoryBase')
 
 CategoryIndex.prototype = Object.create(CategoryBase.prototype)
 CategoryIndex.prototype.constructor = CategoryIndex
-function CategoryIndex (options, data) {
-  CategoryBase.call(this, options, data)
+function CategoryIndex (options, data, repository) {
+  CategoryBase.call(this, options, data, repository)
 
   this.childrenDoms = {}
   this.childrenCategories = null

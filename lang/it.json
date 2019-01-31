@@ -1,4 +1,5 @@
 {
+    "add_filter": "",
     "available_branches": "",
     "back": "",
     "categories": "",
@@ -13,6 +14,8 @@
     "export:OSMJSON": "",
     "export:OSMXML": "",
     "facilities": "",
+    "filter:title": "",
+    "filter:type": "",
     "header:attributes": "",
     "header:export": "",
     "header:osm_meta": "",

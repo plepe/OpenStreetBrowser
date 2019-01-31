@@ -1,4 +1,5 @@
 {
+    "add_filter": "",
     "available_branches": "",
     "back": "Vissza",
     "categories": "",
@@ -13,6 +14,8 @@
     "export:OSMJSON": "",
     "export:OSMXML": "",
     "facilities": "Létesítmények",
+    "filter:title": "",
+    "filter:type": "",
     "header:attributes": "Tulajdonságok",
     "header:export": "Exportálás",
     "header:osm_meta": "OSM metaadatok",

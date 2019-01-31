@@ -1,4 +1,5 @@
 {
+    "add_filter": "Filter hinzufügen",
     "available_branches": "",
     "back": "zurück",
     "categories": "",
@@ -16,6 +17,8 @@
     "export:OSMJSON": "",
     "export:OSMXML": "",
     "facilities": "Einrichtungen",
+    "filter:title": "Titel",
+    "filter:type": "Typ",
     "header:attributes": "Attribute",
     "header:export": "Export",
     "header:osm_meta": "OSM Meta",

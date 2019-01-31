@@ -1,4 +1,5 @@
 {
+    "add_filter": "",
     "available_branches": "Redes disponíveis",
     "back": "voltar",
     "categories": "Categorias",
@@ -16,6 +17,8 @@
     "export:OSMJSON": "Baixar como OSMJSON",
     "export:OSMXML": "Baixar como OSMXML",
     "facilities": "Instalações",
+    "filter:title": "",
+    "filter:type": "",
     "header:attributes": "Atributos",
     "header:export": "Exportar",
     "header:osm_meta": "OSM Meta",
