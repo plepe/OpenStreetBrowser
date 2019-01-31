@@ -21,7 +21,10 @@ class CategoryOverpassFilter {
     this.domFilter = document.createElement('form')
     this.tabFilter.content.appendChild(this.domFilter)
 
-    this.tabFilter.on('select', () => this.formFilter.resize())
+    this.tabFilter.on('select', () => {
+      this.formFilter.resize()
+      this.formFilter.focus()
+    })
 
     for (var k in this.data) {
       let f = this.data[k]
