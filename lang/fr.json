@@ -14,6 +14,8 @@
     "export:OSMJSON": "Format OSM JSON",
     "export:OSMXML": "Format OSM XML",
     "facilities": "Aménagements",
+    "filter:title": "",
+    "filter:type": "",
     "header:attributes": "Attributs",
     "header:export": "Export",
     "header:osm_meta": "Métadonnées OSM",

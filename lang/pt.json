@@ -17,6 +17,8 @@
     "export:OSMJSON": "",
     "export:OSMXML": "",
     "facilities": "Instalações",
+    "filter:title": "",
+    "filter:type": "",
     "header:attributes": "Atributos",
     "header:export": "Exportar",
     "header:osm_meta": "OSM Meta",

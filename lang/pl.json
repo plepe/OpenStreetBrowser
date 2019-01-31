@@ -14,6 +14,8 @@
     "export:OSMJSON": "",
     "export:OSMXML": "",
     "facilities": "",
+    "filter:title": "",
+    "filter:type": "",
     "header:attributes": "",
     "header:export": "Eksport",
     "header:osm_meta": "",

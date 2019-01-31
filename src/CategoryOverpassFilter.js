@@ -4,6 +4,18 @@ const tabs = require('modulekit-tabs')
 const state = require('./state')
 const Filter = require('overpass-frontend').Filter
 const getPathFromJSON = require('./getPathFromJSON')
+const CategoryOverpass = require('./CategoryOverpass')
+
+CategoryOverpass.defaultValues.filter = {
+  title: {
+    type: 'text',
+    key: [ 'name', 'name:*', 'operator', 'operator:*', 'ref', 'ref:*' ],
+    name: '{{ trans("filter:title") }}',
+    op: 'strsearch',
+    weight: -1,
+    show_default: true
+  }
+}
 
 class CategoryOverpassFilter {
   constructor (master) {

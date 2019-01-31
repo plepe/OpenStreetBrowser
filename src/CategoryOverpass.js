@@ -563,5 +563,7 @@ CategoryOverpass.prototype.allMapFeatures = function (callback) {
   callback(null, Object.values(this.layer.mainlayer.visibleFeatures))
 }
 
+CategoryOverpass.defaultValues = defaultValues
+
 OpenStreetBrowserLoader.registerType('overpass', CategoryOverpass)
 module.exports = CategoryOverpass

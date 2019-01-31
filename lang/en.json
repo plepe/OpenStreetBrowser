@@ -17,6 +17,8 @@
     "export:OSMJSON": "Download as OSM JSON",
     "export:OSMXML": "Download as OSM XML",
     "facilities": "Facilities",
+    "filter:title": "Title",
+    "filter:type": "Type",
     "header:attributes": "Attributes",
     "header:export": "Export",
     "header:osm_meta": "OSM Meta",
