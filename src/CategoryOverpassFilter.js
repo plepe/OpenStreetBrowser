@@ -207,7 +207,9 @@ class CategoryOverpassFilter {
 
     this.master.layer.options.queryOptions.filter = this.additionalFilter
 
-    this.tabFilter.select()
+    if (!this.tabFilter.isSelected()) {
+      this.tabFilter.select()
+    }
   }
 
   openCategory () {
