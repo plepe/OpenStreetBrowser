@@ -431,3 +431,6 @@ a:active {
 .tabs-section > form > span.form_element_form_chooser {
   border: none;
 }
+.value .part:not(:first-of-type)::before {
+  content: ' | ';
+}
