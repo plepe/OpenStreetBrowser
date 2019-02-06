@@ -9,7 +9,7 @@ register_hook('init', function () {
 
   permalink = document.createElement('a')
   li.appendChild(permalink)
-  permalink.innerHTML = 'Permalink'
+  permalink.innerHTML = lang('main:permalink')
 
   let menu = document.getElementById('menu')
   menu.appendChild(li)
