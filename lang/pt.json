@@ -7,10 +7,7 @@
     "closed": "fechado",
     "default": "padrão",
     "edit": "editar",
-    "error": {
-        "message": "Erro",
-        "!=1": "Erros"
-    },
+    "error": "Erro",
     "export-all": "",
     "export-prepare": "",
     "export:GeoJSON": "Descarregar como GeoJSON",

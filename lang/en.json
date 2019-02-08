@@ -7,10 +7,7 @@
     "closed": "closed",
     "default": "default",
     "edit": "edit",
-    "error": {
-        "message": "Error",
-        "!=1": "Errors"
-    },
+    "error": "Error",
     "export-all": "Export all visible map features",
     "export-prepare": "Prepare download",
     "export:GeoJSON": "Download as GeoJSON",

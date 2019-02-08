@@ -44,7 +44,5 @@
     "unnamed": "Névtelen",
     "wikipedia:no-url-parse": "Nem sikerült felismerni a Wikipédia-webcímet",
     "zoom_in_appear": "Nagyítson az objektumok megjelenítéséhez",
-    "zoom_in_more": "Nagyítson további objektumok megjelenítéséhez",
-    "error.message": "Hiba",
-    "error.!=1": "Hibák"
+    "zoom_in_more": "Nagyítson további objektumok megjelenítéséhez"
 }
