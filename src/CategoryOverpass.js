@@ -542,6 +542,8 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
   var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
   footerContent += '<li><a target="_blank" class="editLink" href="https://www.openstreetmap.org/edit?editor=id&' + object.object.type + '=' + object.object.osm_id + '">' + lang('edit') + '</a></li>'
   footer.innerHTML = footerContent
+
+  this.emit('popup-footer', footer, object)
 }
 
 CategoryOverpass.prototype.renderTemplate = function (object, templateId, callback) {
