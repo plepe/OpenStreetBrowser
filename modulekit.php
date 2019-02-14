@@ -20,6 +20,7 @@ $include = array(
     'src/RepositoryDir.php',
     'src/RepositoryGit.php',
     'src/repositories.php',
+    'src/CategoryOverpassTagEditor.php',
   ),
   'css' => array(
     'style.css',

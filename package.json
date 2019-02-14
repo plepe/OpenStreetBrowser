@@ -34,6 +34,7 @@
     "natsort": "^1.0.6",
     "opening_hours": "^3.5.0",
     "openstreetbrowser-categories-main": "https://github.com/plepe/openstreetbrowser-categories-main",
+    "openstreetbrowser-tag-editor-data": "https://github.com/plepe/openstreetbrowser-tag-editor-data",
     "openstreetmap-date-format": "^0.2.0",
     "openstreetmap-date-parser": "^0.1.0",
     "openstreetmap-tag-translations": "https://github.com/plepe/openstreetmap-tag-translations",

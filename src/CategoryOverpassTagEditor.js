@@ -1,6 +1,17 @@
 const OverpassLayer = require('overpass-layer')
 require('./CategoryOverpassTagEditor.css')
 
+let tagEditorData = null
+
+register_hook('init_callback', function (initState, callback) {
+  ajax('CategoryOverpassTagEditorData', {},
+    (result) => {
+      tagEditorData = result
+      callback()
+    }
+  )
+})
+
 class CategoryOverpassTagEditor {
   constructor (master) {
     this.master = master
@@ -24,7 +35,8 @@ class CategoryOverpassTagEditor {
     let def = {}
 
     tags.forEach(tag => {
-      def[tag] = { name: tag, type: 'text' }
+      def[tag] = tagEditorData[tag] || { type: 'text' }
+      def[tag].name = tag
     })
 
     callback(null, def)
