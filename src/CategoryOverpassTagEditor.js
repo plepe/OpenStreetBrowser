@@ -43,10 +43,45 @@ class CategoryOverpassTagEditor {
   }
 
   postLoadTags (tags, def) {
-    return tags
+    let data = {}
+
+    for (let k in def) {
+      let d = def[k]
+
+      switch (d.tag_type) {
+        case 'prefix_yes':
+          data[k] = []
+          for (let t in tags) {
+            if (t.substr(0, k.length) == k && tags[t] === 'yes') {
+              data[k].push(t.substr(k.length))
+            }
+          }
+          break
+        default:
+          data[k] = tags[k] || null
+      }
+    }
+
+    return data
   }
 
-  preSaveTags (tags, def) {
+  preSaveTags (data, def) {
+    let tags = {}
+
+    for (let k in def) {
+      let d = def[k]
+
+      switch (d.tag_type) {
+        case 'prefix_yes':
+          for (let i = 0; i < d.values.length; i++) {
+            tags[k + d.values[i]] = data[k].includes(d.values[i]) ? 'yes': null
+          }
+          break
+        default:
+          tags[k] = data[k] || null
+      }
+    }
+
     return tags
   }
 
