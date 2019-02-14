@@ -116,8 +116,19 @@ class CategoryOverpassTagEditor {
         (event) => {
           let data = tagEditorForm.get_data()
           data = this.preSaveTags(data, def)
-          console.log(data)
+
+          for (let k in data) {
+            if (data[k] === null) {
+              delete object.tags[k]
+            } else {
+              object.tags[k] = data[k]
+            }
+          }
+
+          feature.sublayer.scheduleReprocess(object.id)
+
           // now save to OSM
+          console.log(data)
 
           document.body.removeChild(tagEditorDom)
           event.preventDefault()
