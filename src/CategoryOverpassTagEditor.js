@@ -1,4 +1,5 @@
 const OverpassLayer = require('overpass-layer')
+require('./CategoryOverpassTagEditor.css')
 
 class CategoryOverpassTagEditor {
   constructor (master) {
@@ -19,9 +20,63 @@ class CategoryOverpassTagEditor {
     })
   }
 
+  createForm (tags, callback) {
+    let def = {}
+
+    tags.forEach(tag => {
+      def[tag] = { name: tag, type: 'text' }
+    })
+
+    callback(null, def)
+  }
+
+  postLoadTags (tags, def) {
+    return tags
+  }
+
+  preSaveTags (tags, def) {
+    return tags
+  }
+
   openEditor (feature) {
     let object = feature.object
-    console.log(object.id, object.tags)
+
+    let editTags = []
+    if (feature.data.obligatoryTags) {
+      editTags = editTags.concat(feature.data.obligatoryTags.split('\n'))
+    }
+    if (feature.data.recommendedTags) {
+      editTags = editTags.concat(feature.data.recommendedTags.split('\n'))
+    }
+    editTags = editTags.filter(t => t !== '')
+
+    this.createForm(editTags, (err, def) => {
+      let tagEditorForm = new form('tag-editor', def)
+      tagEditorForm.set_data(this.postLoadTags(object.tags, def))
+
+      let tagEditorDom = document.createElement('form')
+      tagEditorDom.className = 'tagEditor'
+      document.body.appendChild(tagEditorDom)
+
+      tagEditorForm.show(tagEditorDom)
+
+      let submit = document.createElement('input')
+      submit.type = 'submit'
+      submit.value = lang('save')
+      tagEditorDom.appendChild(submit)
+
+      tagEditorDom.addEventListener('submit',
+        (event) => {
+          let data = tagEditorForm.get_data()
+          data = this.preSaveTags(data, def)
+          console.log(data)
+          // now save to OSM
+
+          document.body.removeChild(tagEditorDom)
+          event.preventDefault()
+        }
+      )
+    })
   }
 }
 
