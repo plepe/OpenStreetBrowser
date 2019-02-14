@@ -535,6 +535,8 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
         }
       }
     )
+  } else {
+    footer = footer[0]
   }
 
   var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
