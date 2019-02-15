@@ -1,5 +1,14 @@
 const OverpassLayer = require('overpass-layer')
+const OsmRequest = require('osm-request')
 require('./CategoryOverpassTagEditor.css')
+
+const oauth = require('./oauth')
+
+const osm = new OsmRequest({
+  endpoint: 'https://api06.dev.openstreetmap.org',
+  oauthConsumerKey: '',
+  oauthSecret: ''
+})
 
 let tagEditorData = null
 
