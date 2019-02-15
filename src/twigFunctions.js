@@ -100,3 +100,6 @@ OverpassLayer.twig.extendFunction('enumerate', function (value) {
   }
   return value
 })
+OverpassLayer.twig.extendFunction('log', function (value) {
+  console.log(value)
+})
