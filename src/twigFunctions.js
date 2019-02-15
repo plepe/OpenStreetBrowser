@@ -118,3 +118,9 @@ function enumerate (list) {
 }
 OverpassLayer.twig.extendFunction('enumerate', (list) => enumerate(list))
 OverpassLayer.twig.extendFilter('enumerate', (list) => enumerate(list))
+OverpassLayer.twig.extendFunction('debug', function () {
+  console.log.apply(null, arguments)
+})
+OverpassLayer.twig.extendFilter('debug', function (value, param) {
+  console.log.apply(null, [ value, ...param ])
+})

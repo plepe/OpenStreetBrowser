@@ -63,6 +63,7 @@ There are several extra functions defined for the TwigJS language:
 * function openingHoursState(opening_hours_definition): returns state of object as string: 'closed', 'open' or 'unknown'.
 * function colorInterpolate(map, value): interpolates between two or more colors. E.g. `colorInterpolate([ 'red', 'yellow', 'green' ], 0.75)`.
 * function enumerate(list): enumerate the given list, e.g. "foo, bar, and bla". Input either an array (`enumerate([ "foo", "bar", "bla" ])`) or a string with `;` as separator (`enumerate("foo;bar;bla")`).
+* function debug(): print all arguments to the javascript console (via `console.log()`)
 
 Extra filters:
 * filter websiteUrl: return a valid http link. Example: `{{ "www.google.com"|websiteUrl }}` -> "http://www.google.com"; `{{ "https://google.com"|websiteUrl }}` -> "https://google.com"
@@ -73,6 +74,7 @@ Extra filters:
 * filter `unique`: Remove duplicate elements from an array.
 * filter `md5`: calculate md5 hash of a string.
 * filter `enumerate`: enumerate the given list, e.g. "foo, bar, and bla". Input either an array (`[ "foo", "bar", "bla" ]|enumerate`) or a string with `;` as separator (`"foo;bar;bla"|enumerate`).
+* filter `debug`: print the value (and further arguments) to the javascript console (via `console.log()`)
 
 Notes:
 * Variables will automatically be HTML escaped, if not the filter raw is used, e.g.: {{ tags.name|raw }}
