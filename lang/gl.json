@@ -29,7 +29,7 @@
     "more_results": "Amosar máis resultados",
     "open": "abrir",
     "options:data_lang": "Lingua dos datos",
-    "options:data_lang:desc": "Moitos elementos do mapa posúen os seus nomes (e outras etiquetas) traducidos en linguas diferentes (p.ex. co 'name:en', 'name:de'). Especificar que lingua ten que ser empregada para amosar, ou 'Lingua local' de xeito que sempre os valores non tranducidos (p.ex. 'name') sexan empregados",
+    "options:data_lang:desc": "Moitos elementos do mapa posúen os seus nomes (e outras etiquetas) traducidos en linguas diferentes (p.ex. co 'name:en', 'name:de'). Especificar que lingua ten que ser empregada para amosar, ou 'Lingua local' de xeito que sempre os valores non tranducidos (p.ex. 'name') sexan empregados.",
     "options:data_lang:local": "Lingua local",
     "options:overpassUrl": "URL do OverpassAPI",
     "options:preferredBaseMap": "Mapa de base preferido",
