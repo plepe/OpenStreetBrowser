@@ -21,11 +21,18 @@ register_hook('init', function () {
   let domMouse = document.createElement('div')
   tab.content.appendChild(domMouse)
 
+  let domLocation = document.createElement('div')
+  tab.content.appendChild(domLocation)
+
   global.map.on('moveend', () => {
     domCenter.innerHTML = '<i class="fas fa-crosshairs"></i> ' + formatCoord(map.getCenter())
   })
 
   global.map.on('mousemove', (e) => {
     domMouse.innerHTML = '<i class="fas fa-mouse-pointer"></i> ' + formatCoord(e.latlng)
+  })
+
+  global.map.on('locationfound', (e) => {
+    domLocation.innerHTML = '<i class="fas fa-map-marker-alt"></i> ' + formatCoord(e.latlng)
   })
 })
