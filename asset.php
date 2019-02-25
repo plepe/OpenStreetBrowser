@@ -40,4 +40,5 @@ else {
 }
 
 Header("Content-Type: {$mime_type}; charset=utf-8");
+Header("Cache-Control: max-age=86400");
 print $contents;
