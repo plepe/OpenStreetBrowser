@@ -220,7 +220,7 @@ CategoryOverpass.prototype.updateAssets = function (div) {
       }
     } else if (!src.match(/^(https?:|data:|\.|\/)/)) {
       img.setAttribute('src', (typeof openstreetbrowserPrefix === 'undefined' ? './' : openstreetbrowserPrefix) +
-      'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('src')))
+      'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('data-src') || img.getAttribute('src')))
     }
   }
 }
