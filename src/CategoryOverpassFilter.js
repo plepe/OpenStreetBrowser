@@ -43,7 +43,7 @@ class CategoryOverpassFilter {
       if ('name' in f && typeof f.name === 'string') {
         global.currentCategory = this.master
         let t = OverpassLayer.twig.twig({ data: f.name, autoescape: true })
-        f.name = t.render({}).toString()
+        f.name = decodeHTML(t.render({}).toString())
       } else if (!('name' in f)) {
         f.name = lang('tag:' + k)
       }
@@ -82,20 +82,20 @@ class CategoryOverpassFilter {
         if (Array.isArray(f.values) && f.valueName) {
           let newValues = {}
           f.values.forEach(value => {
-            newValues[value] = valueNameTemplate.render({ value }).toString()
+            newValues[value] = decodeHTML(valueNameTemplate.render({ value }).toString())
           })
           f.values = newValues
         } else if (typeof f.values === 'object') {
           for (var k1 in f.values) {
             if (typeof f.values[k1] === 'string') {
               let t = OverpassLayer.twig.twig({ data: f.values[k1], autoescape: true })
-              f.values[k1] = t.render({}).toString()
+              f.values[k1] = decodeHTML(t.render({}).toString())
             } else if (typeof f.values[k1] === 'object') {
               if (!('name' in f.values[k1])) {
-                f.values[k1].name = valueNameTemplate.render({ value: k1 }).toString()
+                f.values[k1].name = decodeHTML(valueNameTemplate.render({ value: k1 }).toString())
               } else if (f.values[k1].name) {
                 let t = OverpassLayer.twig.twig({ data: f.values[k1].name, autoescape: true })
-                f.values[k1].name = t.render({}).toString()
+                f.values[k1].name = decodeHTML(t.render({}))
               }
             }
           }
@@ -150,7 +150,7 @@ class CategoryOverpassFilter {
         this.additionalFilter.push(f.def)
         continue
       } else if (d.queryTemplate) {
-        let f = new Filter(d.queryTemplate.render({ value: param[k] }).toString())
+        let f = new Filter(decodeHTML(d.queryTemplate.render({ value: param[k] }).toString()))
         this.additionalFilter.push(f.def)
         continue
       }
@@ -232,3 +232,11 @@ register_hook('category-overpass-init', (category) => {
     new CategoryOverpassFilter(category)
   }
 })
+
+function decodeHTML (str) {
+  return str
+    .replace(/&#039;/g, '\'')
+    .replace(/&quot;/g, '"')
+    .replace(/&gt;/g, '>')
+    .replace(/&lt;/g, '<')
+}
