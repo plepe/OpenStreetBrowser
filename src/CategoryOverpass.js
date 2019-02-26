@@ -18,6 +18,10 @@ var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
     markerSign: '',
+    style: {
+      radius: 1.5,
+      color: '#7f7f7f'
+    },
     'style:selected': {
       color: '#3f3f3f',
       width: 3,
