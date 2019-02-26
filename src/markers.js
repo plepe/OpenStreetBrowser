@@ -1,4 +1,5 @@
 var OverpassLayer = require('overpass-layer')
+const interpolate = require('color-interpolate')
 
 function cssStyle (style) {
   var ret = ''
@@ -81,7 +82,7 @@ function markerPolygon (data) {
 
 function markerCircle (style) {
   var fillColor = 'fillColor' in style ? style.fillColor : '#f2756a'
-  var color = 'color' in style ? style.color : '#000000'
+  var color = 'color' in style ? style.color : interpolate(['black', style.fillColor])(0.5)
   var width = 'width' in style ? style.width : 1
   var radius = 'radius' in style ? style.radius : 12
 
@@ -90,7 +91,7 @@ function markerCircle (style) {
 
 function markerPointer (style) {
   var fillColor = 'fillColor' in style ? style.fillColor : '#f2756a'
-  var color = 'color' in style ? style.color : '#000000'
+  var color = 'color' in style ? style.color : interpolate(['black', style.fillColor])(0.5)
   var width = 'width' in style ? style.width : 1
 
   return '<svg anchorX="13" anchorY="45" width="25" height="45" signAnchorX="0" signAnchorY="-31"><path d="M0.5,12.5 A 12,12 0 0 1 24.5,12.5 C 24.5,23 13,30 12.5,44.5 C 12,30 0.5,23 0.5,12.5" style="stroke: ' + color + '; stroke-width: ' + width + '; fill: ' + fillColor + ';"/></svg>'
