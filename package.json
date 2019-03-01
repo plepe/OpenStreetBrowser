@@ -37,7 +37,7 @@
     "openstreetmap-date-format": "^0.2.0",
     "openstreetmap-date-parser": "^0.1.0",
     "openstreetmap-tag-translations": "https://github.com/plepe/openstreetmap-tag-translations",
-    "overpass-layer": "^2.3.0",
+    "overpass-layer": "^2.4.0",
     "query-string": "^5.0.0",
     "sheet-router": "^4.2.3",
     "temaki": "^1.0.0",
