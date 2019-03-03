@@ -464,7 +464,7 @@ CategoryOverpass.prototype.show = function (id, options, callback) {
           var preferredZoom = data.data.preferredZoom || 16
           var maxZoom = this.map.getZoom()
           maxZoom = maxZoom > preferredZoom ? maxZoom : preferredZoom
-          this.map.flyToBounds(data.object.bounds.toLeaflet(), {
+          this.map.flyToBounds(data.object.bounds.toLeaflet({ shiftWorld: this.layer.getShiftWorld() }), {
             maxZoom: maxZoom
           })
         }
