@@ -17,7 +17,7 @@ function get () {
 
   // location
   if (typeof map.getZoom() !== 'undefined') {
-    var center = map.getCenter()
+    var center = map.getCenter().wrap()
     var zoom = map.getZoom()
 
     state.lat = center.lat
