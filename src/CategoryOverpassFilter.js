@@ -120,7 +120,6 @@ class CategoryOverpassFilter {
 
       this.applyParam(param)
 
-      this.master.layer.check_update_map()
       state.update()
     }.bind(this)
 
@@ -205,7 +204,7 @@ class CategoryOverpassFilter {
       this.additionalFilter = { and: this.additionalFilter }
     }
 
-    this.master.layer.options.queryOptions.filter = this.additionalFilter
+    this.master.layer.setFilter(this.additionalFilter)
 
     if (!this.tabFilter.isSelected()) {
       this.tabFilter.select()
