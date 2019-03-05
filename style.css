@@ -207,39 +207,15 @@ a:active {
 }
 }
 
-@media all and (max-width: 500px) and (max-height: 500px) {
+@media all and (max-width: 500px) and (max-height: 675px) {
 #sidebar {
-  height: 220px;
+  height: 40%;
 }
 #map {
-  top: 220px;
+  top: 40%;
 }
 #mapShadow {
-  top: 221px;
-}
-}
-
-@media all and (max-width: 500px) and (max-height: 460px) {
-#sidebar {
-  height: 200px;
-}
-#map {
-  top: 200px;
-}
-#mapShadow {
-  top: 201px;
-}
-}
-
-@media all and (max-width: 500px) and (max-height: 420px) {
-#sidebar {
-  height: 180px;
-}
-#map {
-  top: 180px;
-}
-#mapShadow {
-  top: 181px;
+  top: calc(40% + 1px);
 }
 }
 
