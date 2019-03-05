@@ -39,8 +39,7 @@ a:active {
   bottom: 0;
   width: 5px;
   z-index: 10000;
-  background-image: url(img/shadow_left.png);
-  background-repeat: repeat-y;
+  background: linear-gradient(to right, #5656566f, #56565600);
 }
 
 #sidebar {
@@ -197,8 +196,7 @@ a:active {
   bottom: auto;
   height: 5px;
   width: auto;
-  background-image: url(img/shadow_top.png);
-  background-repeat: repeat-x;
+  background: linear-gradient(to bottom, #5656566f, #56565600);
 }
 #sidebar > #content {
   overflow: visible;
