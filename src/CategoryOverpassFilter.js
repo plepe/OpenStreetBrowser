@@ -69,12 +69,12 @@ class CategoryOverpassFilter {
             let k = option.value
             f.values[k] = {}
 
+            Array.from(option.attributes).forEach(attr => {
+              f.values[k][attr.name] = attr.value
+            })
+
             if (option.textContent) {
               f.values[k].name = option.textContent
-            }
-
-            if (option.hasAttribute('query')) {
-              f.values[k].query = option.getAttribute('query')
             }
           }
         }
