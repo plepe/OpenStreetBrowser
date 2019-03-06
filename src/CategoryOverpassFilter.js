@@ -1,5 +1,6 @@
 const OverpassLayer = require('overpass-layer')
 const tabs = require('modulekit-tabs')
+const natsort = require('natsort')
 
 const state = require('./state')
 const Filter = require('overpass-frontend').Filter
@@ -99,6 +100,25 @@ class CategoryOverpassFilter {
               }
             }
           }
+        }
+
+        if (!('sort' in f) || (f.sort === 'natsort')) {
+          let v = {}
+          let sorter = natsort()
+          let keys = Object.keys(f.values)
+
+          keys
+            .sort((a, b) => {
+              let weight = (f.values[a].weight || 0) - (f.values[b].weight || 0)
+              if (weight !== 0) {
+                return weight
+              }
+
+              return sorter(f.values[a].name, f.values[b].name)
+            })
+            .forEach(k => { v[k] = f.values[k] })
+
+          f.values = v
         }
       }
     }
