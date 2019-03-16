@@ -62,6 +62,7 @@ There are several extra functions defined for the TwigJS language:
 * function `tagsPrefix(tags, prefix)`: return all tags with the specified prefix. The result will be an array with `{ "en": "name:en", "de": "name:de" }` (for the input `{ "name": "foo", "name:en": "english foo", "name:de": "german foo" }` and the prefix "name:").
 * function openingHoursState(opening_hours_definition): returns state of object as string: 'closed', 'open' or 'unknown'.
 * function colorInterpolate(map, value): interpolates between two or more colors. E.g. `colorInterpolate([ 'red', 'yellow', 'green' ], 0.75)`.
+* function enumerate(list): enumerate the given list, e.g. "foo, bar, and bla". Input either an array (`[ "foo", "bar", "bla" ]`) or a string with `;` as separator (`"foo;bar;bla"`).
 
 Extra filters:
 * filter websiteUrl: return a valid http link. Example: `{{ "www.google.com"|websiteUrl }}` -> "http://www.google.com"; `{{ "https://google.com"|websiteUrl }}` -> "https://google.com"

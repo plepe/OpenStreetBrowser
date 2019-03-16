@@ -93,10 +93,26 @@ OverpassLayer.twig.extendFunction('evaluate', function (tags) {
   var d = global.currentCategory.layer.mainlayer.evaluate(ob)
   return d
 })
-OverpassLayer.twig.extendFunction('enumerate', function (value) {
-  let list = value.split(/,/)
-  if (list.length > 1) {
-    return list.slice(0, -1).join(lang_str.enumerate_join) +  lang_str.enumerate_last + list.slice(-1)[0]
+OverpassLayer.twig.extendFunction('enumerate', function (list) {
+  if (typeof list === 'string') {
+    list = list.split(/;/g)
   }
-  return value
+
+  if (list.length > 2) {
+    let result = lang_str.enumerate_start.replace('{0}', list[0]).replace('{1}', list[1])
+
+    for (let i = 2; i < list.length - 1; i++) {
+      result = lang_str.enumerate_middle.replace('{0}', result).replace('{1}', list[i])
+    }
+
+    return lang_str.enumerate_end.replace('{0}', result).replace('{1}', list[list.length - 1])
+  }
+  else if (list.length == 2) {
+    return lang_str.enumerate_2.replace('{0}', list[0]).replace('{1}', list[1])
+  }
+  else if (list.length > 0) {
+    return list[0]
+  }
+
+  return ''
 })
