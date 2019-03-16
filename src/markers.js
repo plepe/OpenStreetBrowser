@@ -46,7 +46,7 @@ function markerLine (data) {
 
   for (var i = 0; i < data.styles.length; i++) {
     var k = data.styles[i]
-    var style = k === 'default' ? data.style : data['style:' + k]
+    var style = (k === 'default' ? data.style : data['style:' + k]) || {}
     var y = 8.0 + parseFloat('offset' in style ? style.offset : 0)
 
     ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
@@ -69,7 +69,7 @@ function markerPolygon (data) {
 
   for (var i = 0; i < data.styles.length; i++) {
     var k = data.styles[i]
-    var style = k === 'default' ? data.style : data['style:' + k]
+    var style = (k === 'default' ? data.style : data['style:' + k]) || {}
 
     ret += '<rect x="3" y="3" width="18" height="18" style="' + cssStyle(style) + '"/>'
   }
