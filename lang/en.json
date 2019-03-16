@@ -21,6 +21,7 @@
     "header:export": "Export",
     "header:osm_meta": "OSM Meta",
     "images": "Images",
+    "invalid value": "invalid value",
     "loading": "Loading ...",
     "main:options": "Options",
     "main:permalink": "Permalink",

@@ -21,6 +21,7 @@
     "header:export": "Exporteer",
     "header:osm_meta": "OSM Meta",
     "images": "Afbeeldingen",
+    "invalid value": "",
     "loading": "Laden...",
     "main:options": "Opties",
     "main:permalink": "Permalink",

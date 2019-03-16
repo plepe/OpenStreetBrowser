@@ -21,6 +21,7 @@
     "header:export": "Exportálás",
     "header:osm_meta": "OSM metaadatok",
     "images": "Képek",
+    "invalid value": "",
     "loading": "Betöltés…",
     "main:options": "Beállítások",
     "main:permalink": "Állandó link (permalink)",
