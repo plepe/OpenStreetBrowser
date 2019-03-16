@@ -62,7 +62,7 @@ There are several extra functions defined for the TwigJS language:
 * function `tagsPrefix(tags, prefix)`: return all tags with the specified prefix. The result will be an array with `{ "en": "name:en", "de": "name:de" }` (for the input `{ "name": "foo", "name:en": "english foo", "name:de": "german foo" }` and the prefix "name:").
 * function openingHoursState(opening_hours_definition): returns state of object as string: 'closed', 'open' or 'unknown'.
 * function colorInterpolate(map, value): interpolates between two or more colors. E.g. `colorInterpolate([ 'red', 'yellow', 'green' ], 0.75)`.
-* function enumerate(list): enumerate the given list, e.g. "foo, bar, and bla". Input either an array (`[ "foo", "bar", "bla" ]`) or a string with `;` as separator (`"foo;bar;bla"`).
+* function enumerate(list): enumerate the given list, e.g. "foo, bar, and bla". Input either an array (`enumerate([ "foo", "bar", "bla" ])`) or a string with `;` as separator (`enumerate("foo;bar;bla")`).
 
 Extra filters:
 * filter websiteUrl: return a valid http link. Example: `{{ "www.google.com"|websiteUrl }}` -> "http://www.google.com"; `{{ "https://google.com"|websiteUrl }}` -> "https://google.com"
@@ -72,6 +72,7 @@ Extra filters:
 * filter `natsort`: Sort an array naturally, see [https://www.npmjs.com/package/natsort](natsort) for details.
 * filter `unique`: Remove duplicate elements from an array.
 * filter `md5`: calculate md5 hash of a string.
+* filter `enumerate`: enumerate the given list, e.g. "foo, bar, and bla". Input either an array (`[ "foo", "bar", "bla" ]|enumerate`) or a string with `;` as separator (`"foo;bar;bla"|enumerate`).
 
 Notes:
 * Variables will automatically be HTML escaped, if not the filter raw is used, e.g.: {{ tags.name|raw }}
