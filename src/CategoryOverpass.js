@@ -112,7 +112,11 @@ function CategoryOverpass (options, data, repository) {
   this.layer.on('twigData',
     (ob, data, result) => {
       result.user = global.options
-      global.currentCategory = this
+      global.twigContext = {
+        category: this,
+        object: ob,
+        data
+      }
     }
   )
 
@@ -401,7 +405,9 @@ CategoryOverpass.prototype.updateInfo = function () {
     return
   }
 
-  global.currentCategory = this
+  global.twigContext = {
+    category: this
+  }
   var data = {
     layer_id: this.id,
     'const': this.data.const
@@ -411,7 +417,7 @@ CategoryOverpass.prototype.updateInfo = function () {
   }
   this.domInfo.innerHTML = this.templateInfo.render(data)
   this.updateAssets(this.domInfo)
-  global.currentCategory = null
+  global.twigContext = null
 }
 
 CategoryOverpass.prototype.recalc = function () {

@@ -41,7 +41,9 @@ class CategoryOverpassFilter {
     for (var k in this.data) {
       let f = this.data[k]
       if ('name' in f && typeof f.name === 'string') {
-        global.currentCategory = this.master
+        global.twigContext = {
+          category: this.master
+        }
         let t = OverpassLayer.twig.twig({ data: f.name, autoescape: true })
         f.name = decodeHTML(t.render({}).toString())
       } else if (!('name' in f)) {

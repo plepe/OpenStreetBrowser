@@ -81,7 +81,7 @@ OverpassLayer.twig.extendFunction('evaluate', function (tags) {
   var ob = {
     id: 'x0',
     isShown: true,
-    layer_id: global.currentCategory.id,
+    layer_id: global.twigContext.category.id,
     object: {
       id: 'x0',
       meta: {},
@@ -90,7 +90,7 @@ OverpassLayer.twig.extendFunction('evaluate', function (tags) {
     }
   }
 
-  var d = global.currentCategory.layer.mainlayer.evaluate(ob)
+  var d = global.twigContext.category.layer.mainlayer.evaluate(ob)
   return d
 })
 OverpassLayer.twig.extendFunction('enumerate', function (value) {
