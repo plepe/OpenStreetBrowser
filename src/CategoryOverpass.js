@@ -13,6 +13,7 @@ var maki = require('./maki')
 var qs = require('sheet-router/qs')
 
 const showMore = require('./showMore')
+const qa = require('./qa')
 
 var defaultValues = {
   feature: {
@@ -106,7 +107,9 @@ function CategoryOverpass (options, data, repository) {
 
     this.emit('update', object, ob)
   }.bind(this))
-  this.layer.on('add', (ob, data) => this.emit('add', ob, data))
+  this.layer.on('add', (ob, data) => {
+    this.emit('add', ob, data)
+  })
   this.layer.on('remove', (ob, data) => this.emit('remove', ob, data))
   this.layer.on('zoomChange', (ob, data) => this.emit('remove', ob, data))
   this.layer.on('twigData',
@@ -313,6 +316,9 @@ CategoryOverpass.prototype.open = function () {
         let list = new OverpassLayerList(this.layer, listData)
         this.lists.push(list)
 
+        list.on('add', (ob, data) => qa.updateObject(list, data))
+        list.on('update', (ob, data) => qa.updateObject(list, data))
+
         let dom = document.createElement('div')
         dom.className = 'category category-list'
         this.listsDom.push(dom)
@@ -363,6 +369,9 @@ CategoryOverpass.prototype.open = function () {
       this.lists.push(list)
       list.addTo(this.domContent)
       this.listsDom.push(this.domContent)
+
+      list.on('add', param => qa.updateObject(param))
+      list.on('update', param => qa.updateObject(param))
 
       showMore(this, this.domContent)
     }
