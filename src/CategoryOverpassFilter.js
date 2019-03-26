@@ -103,14 +103,13 @@ class CategoryOverpassFilter {
       }
     }
 
-    let masterOptions = {}
+    let masterOptions = {
+      'change_on_input': true
+    }
     if (Object.keys(this.data).length > 1) {
-      masterOptions = {
-        'type': 'form_chooser',
-        'button:add_element': '-- ' + lang('add_filter') + ' --',
-        'order': false,
-        'change_on_input': true
-      }
+      masterOptions['type'] = 'form_chooser'
+      masterOptions['button:add_element'] = '-- ' + lang('add_filter') + ' --'
+      masterOptions['order'] = false
     }
 
     this.formFilter = new form('filter-' + this.master.id, this.data, masterOptions)
