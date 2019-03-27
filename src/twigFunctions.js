@@ -123,4 +123,5 @@ OverpassLayer.twig.extendFunction('debug', function () {
 })
 OverpassLayer.twig.extendFilter('debug', function (value, param) {
   console.log.apply(null, [ value, ...param ])
+  return value
 })
