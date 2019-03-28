@@ -104,7 +104,7 @@ class CategoryOverpassFilter {
 
         if (!('sort' in f) || (f.sort === 'natsort')) {
           let v = {}
-          let sorter = natsort()
+          let sorter = natsort({ insensitive: true })
           let keys = Object.keys(f.values)
 
           keys
