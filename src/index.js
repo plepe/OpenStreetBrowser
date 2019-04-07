@@ -37,6 +37,7 @@ require('./permalink')
 //require('./leaflet-geo-search')
 require('./nominatim-search')
 require('./CategoryOverpassFilter')
+require('./customBounds')
 let exportAll = require('./exportAll')
 
 window.onload = function () {
