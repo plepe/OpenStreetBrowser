@@ -24,7 +24,7 @@ register_hook('init', function () {
   let domLocation = document.createElement('div')
   tab.content.appendChild(domLocation)
 
-  global.map.on('moveend', () => {
+  global.map.on('move', () => {
     domCenter.innerHTML = '<i class="fas fa-crosshairs"></i> ' + formatCoord(map.getCenter())
   })
 
