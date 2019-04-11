@@ -12,7 +12,7 @@ register_hook('init', function () {
   tab.content.classList.add('geo-info')
   global.tabs.add(tab)
 
-  tab.header.innerHTML = '<i class="fas fa-globe-europe"></i>'
+  updateTabHeader(tab.header)
   tab.header.title = lang('geo-info')
 
   let domCenter = document.createElement('div')
@@ -26,6 +26,7 @@ register_hook('init', function () {
 
   global.map.on('move', () => {
     domCenter.innerHTML = '<i class="fas fa-crosshairs"></i> ' + formatCoord(map.getCenter())
+    updateTabHeader(tab.header)
   })
 
   global.map.on('mousemove', (e) => {
@@ -36,3 +37,20 @@ register_hook('init', function () {
     domLocation.innerHTML = '<i class="fas fa-map-marker-alt"></i> ' + formatCoord(e.latlng)
   })
 })
+
+function updateTabHeader (header) {
+  if (!global.map._loaded) {
+    return
+  }
+
+  let center = global.map.getCenter().wrap()
+  if (center.lng < -35) {
+    header.innerHTML = '<i class="fas fa-globe-americas"></i>'
+  } else if (center.lng > 80) {
+    header.innerHTML = '<i class="fas fa-globe-asia"></i>'
+  } else if (center.lat < 30) {
+    header.innerHTML = '<i class="fas fa-globe-africa"></i>'
+  } else {
+    header.innerHTML = '<i class="fas fa-globe-europe"></i>'
+  }
+}
