@@ -25,16 +25,16 @@ register_hook('init', function () {
   tab.content.appendChild(domLocation)
 
   global.map.on('move', () => {
-    domCenter.innerHTML = '<i class="fas fa-crosshairs"></i> ' + formatCoord(map.getCenter())
+    domCenter.innerHTML = '<i class="fas fa-crosshairs"></i> ' + formatCoord(map.getCenter().wrap())
     updateTabHeader(tab.header)
   })
 
   global.map.on('mousemove', (e) => {
-    domMouse.innerHTML = '<i class="fas fa-mouse-pointer"></i> ' + formatCoord(e.latlng)
+    domMouse.innerHTML = '<i class="fas fa-mouse-pointer"></i> ' + formatCoord(e.latlng.wrap())
   })
 
   global.map.on('locationfound', (e) => {
-    domLocation.innerHTML = '<i class="fas fa-map-marker-alt"></i> ' + formatCoord(e.latlng)
+    domLocation.innerHTML = '<i class="fas fa-map-marker-alt"></i> ' + formatCoord(e.latlng.wrap())
   })
 })
 
