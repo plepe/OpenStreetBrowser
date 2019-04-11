@@ -7,6 +7,12 @@ let customBoundsForm
 
 function applyCustomForm () {
   let data = customBoundsForm.get_data()
+
+  switch (data.object) {
+    case 'mouse':
+      break
+    default: // map view
+  }
 }
 
 register_hook('init', function () {
