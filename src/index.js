@@ -7,6 +7,7 @@ var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var state = require('./state')
 var hash = require('sheet-router/hash')
 global.OpenStreetBrowserLoader = OpenStreetBrowserLoader
+const GlobalBoundingObject = require('./GlobalBoundingObject')
 
 require('./CategoryIndex')
 require('./CategoryOverpass')
@@ -19,6 +20,7 @@ global.overpassFrontend = null
 global.currentPath = null
 global.mainRepo = ''
 global.tabs = null
+global.boundingObject = null
 var lastPopupClose = 0
 
 // Optional modules
@@ -45,6 +47,7 @@ window.onload = function () {
 
   map = L.map('map')
 
+  global.boundingObject = new GlobalBoundingObject(map)
   // due to php export, options may be an array -> fix
   if (Array.isArray(options)) {
     options = {}
