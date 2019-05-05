@@ -25,12 +25,31 @@ register_hook('init', function () {
   tab.content.appendChild(domForm)
   customBoundsForm = new form('custom-bounds', {
     object: {
-      name: 'Object',
-      type: 'select',
-      placeholder: lang('viewport'),
+      name: lang('bounds:object'),
+      type: 'radio',
       values: {
+        viewport: lang('map section'),
         mouse: lang('mousepointer')
-      }
+      },
+      default: 'viewport'
+    },
+    buffer: {
+      name: lang('bounds:buffer'),
+      desc: 'meters',
+      type: 'float',
+      show_depend: [ 'not', [ 'check', 'object', [ 'is', 'viewport' ] ] ],
+      default: '100'
+    },
+    options: {
+      name: lang('main:options'),
+      type: 'checkbox',
+      show_depend: [ 'not', [ 'check', 'object', [ 'is', 'viewport' ] ] ],
+      values: {
+        cropView: {
+          name: lang('bounds:crop at map section')
+        }
+      },
+      default: [ 'cropView' ]
     }
   })
 

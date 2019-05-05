@@ -1,7 +1,8 @@
 const ee = require('event-emitter')
 const OverpassLayer = require('overpass-layer')
 const turf = {
-  buffer: require('@turf/buffer')
+  buffer: require('@turf/buffer'),
+  intersect: require('@turf/intersect').default
 }
 
 class GlobalBoundingObject {
@@ -9,7 +10,7 @@ class GlobalBoundingObject {
   // babel issue
   constructor (map) {
     this.map = map
-    this.config = { object: null }
+    this.config = { object: null, buffer: 100 }
 
     this.mapView = new OverpassLayer.MapView(map)
 
@@ -23,23 +24,48 @@ class GlobalBoundingObject {
   }
 
   get () {
+    if (this.config.object === null || this.config.object === 'viewport') {
+      return this.mapView.get()
+    }
+
+    let geometry
     if (this.config.object === 'mouse') {
       if (!this.mousePos) {
         return null
       }
 
-      let b = turf.buffer({
+      geometry = {
         type: 'Feature',
         geometry: {
           type: 'Point',
           coordinates: [ this.mousePos.lng, this.mousePos.lat ]
         }
-      }, 0.1)
-      b = new BoundingBox(b) // TODO: remove, when GeoJSON support available
-      return b
-    } else {
-      return this.mapView.get()
+      }
     }
+
+    geometry = turf.buffer(geometry, this.config.buffer / 1000)
+
+    if (this.config.options.includes('cropView')) {
+      let mapView = this.mapView.get()
+      geometry = turf.intersect(geometry, {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [[
+            [ mapView.minlon, mapView.minlat ],
+            [ mapView.maxlon, mapView.minlat ],
+            [ mapView.maxlon, mapView.maxlat ],
+            [ mapView.minlon, mapView.maxlat ],
+            [ mapView.minlon, mapView.minlat ]
+          ]]
+        }
+      })
+    }
+
+    // TODO: remove, when GeoJSON support available
+    geometry = new BoundingBox(geometry)
+
+    return geometry
   }
 
   updateMap (e) {
