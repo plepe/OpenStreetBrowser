@@ -69,7 +69,7 @@ class GlobalBoundingObject {
   }
 
   updateMap (e) {
-    if (this.config.object === null) {
+    if (this.config.object === null || this.config.object === 'viewport' || this.config.options.includes('cropView')) {
       this.emit('update', e)
     }
   }
