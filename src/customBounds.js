@@ -5,11 +5,50 @@ require('./nominatim-search.css')
 
 let tab
 let customBoundsForm
+let customBoundsObjectNames = {}
+let customBoundsObjects = {}
 
 function applyCustomForm () {
   let data = customBoundsForm.get_data()
   global.boundingObject.setConfig(data)
   state.update()
+  global.boundingObject.emit('update')
+}
+
+function addBoundsObject (id) {
+  global.overpassFrontend.get(id,
+    {
+      properties: OverpassFrontend.TAGS
+    },
+    (err, object) => {
+      let name = object.tags.name || object.tags.operator
+      customBoundsObjectNames[id] = name
+      customBoundsObjects[id] = object
+
+      customBoundsForm.refresh()
+
+      customBoundsForm.set_data({ object: id })
+      applyCustomForm()
+    },
+    (err) => {
+      if (err) {
+        alert(err)
+      }
+    }
+  )
+}
+
+function objectValues () {
+  let result = {
+    viewport: lang('map section'),
+    mouse: lang('mousepointer')
+  }
+
+  for (let id in customBoundsObjectNames) {
+    result[id] = customBoundsObjectNames[id]
+  }
+
+  return result
 }
 
 register_hook('init', function () {
@@ -29,10 +68,7 @@ register_hook('init', function () {
     object: {
       name: lang('bounds:object'),
       type: 'radio',
-      values: {
-        viewport: lang('map section'),
-        mouse: lang('mousepointer')
-      },
+      values_func: { js: objectValues },
       default: 'viewport'
     },
     buffer: {
@@ -62,6 +98,8 @@ register_hook('init', function () {
   tab.on('select', () => {
     customBoundsForm.resize()
   })
+
+  global.boundingObject.setCustomObjects(customBoundsObjects)
 })
 
 register_hook('state-get', state => {
@@ -86,7 +124,30 @@ register_hook('state-apply', state => {
       options: config[2].split(',')
     }
 
+    if (!(config.object in objectValues())) {
+      addBoundsObject(config.object)
+    }
+
     customBoundsForm.set_data(config)
     global.boundingObject.setConfig(config)
   }
+})
+
+register_hook('show-popup', (object, category, content, callback) => {
+  let footer = content.querySelector('.popup-footer')
+  if (footer) {
+    let li = document.createElement('li')
+    let a = document.createElement('a')
+    li.appendChild(a)
+    a.innerHTML = lang('bounds:use as boundary')
+    a.href = '#'
+    a.onclick = () => {
+      addBoundsObject(object.id)
+      return false
+    }
+    footer.appendChild(li)
+    footer.appendChild
+  }
+
+  callback()
 })

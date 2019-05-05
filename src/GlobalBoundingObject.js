@@ -11,11 +11,16 @@ class GlobalBoundingObject {
   constructor (map) {
     this.map = map
     this.config = { object: null, buffer: 100 }
+    this.objects = {}
 
     this.mapView = new OverpassLayer.MapView(map)
 
     this.mapView.on('update', this.updateMap.bind(this))
     this.map.on('mousemove', this.updateMouse.bind(this))
+  }
+
+  setCustomObjects (objects) {
+    this.objects = objects
   }
 
   setConfig (config) {
@@ -41,6 +46,13 @@ class GlobalBoundingObject {
           coordinates: [ this.mousePos.lng, this.mousePos.lat ]
         }
       }
+    } else {
+      let object = this.objects[this.config.object]
+      if (!object) {
+        return null
+      }
+
+      geometry = object.GeoJSON()
     }
 
     geometry = turf.buffer(geometry, this.config.buffer / 1000)
