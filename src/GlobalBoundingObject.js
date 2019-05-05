@@ -80,6 +80,9 @@ class GlobalBoundingObject {
       this.emit('update', e)
     }
   }
+
+  remove () {
+  }
 }
 
 ee(GlobalBoundingObject.prototype)
