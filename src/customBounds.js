@@ -1,5 +1,6 @@
 const tabs = require('modulekit-tabs')
 const httpGet = require('./httpGet')
+const state = require('./state')
 require('./nominatim-search.css')
 
 let tab
@@ -8,6 +9,7 @@ let customBoundsForm
 function applyCustomForm () {
   let data = customBoundsForm.get_data()
   global.boundingObject.setConfig(data)
+  state.update()
 }
 
 register_hook('init', function () {
@@ -60,4 +62,31 @@ register_hook('init', function () {
   tab.on('select', () => {
     customBoundsForm.resize()
   })
+})
+
+register_hook('state-get', state => {
+  let config = customBoundsForm.get_data()
+
+  if (config.object === null || config.object === 'viewport') {
+    return
+  }
+
+  state.bounds =
+    config.object + '/' +
+    config.buffer + '/' +
+    config.options.join(',')
+})
+
+register_hook('state-apply', state => {
+  if (state.bounds) {
+    let config = state.bounds.split('/')
+    config = {
+      object: config[0],
+      buffer: config[1],
+      options: config[2].split(',')
+    }
+
+    customBoundsForm.set_data(config)
+    global.boundingObject.setConfig(config)
+  }
 })
