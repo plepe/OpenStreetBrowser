@@ -293,8 +293,8 @@ CategoryOverpass.prototype.open = function () {
 
   CategoryBase.prototype.open.call(this)
 
-  this.layer.addTo(this.map)
   this.layer.setBoundingObject(global.boundingObject)
+  this.layer.addTo(this.map)
 
   if (!this.lists) {
     this.lists = []
