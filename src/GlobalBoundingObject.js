@@ -74,9 +74,6 @@ class GlobalBoundingObject {
       })
     }
 
-    // TODO: remove, when GeoJSON support available
-    geometry = new BoundingBox(geometry)
-
     return geometry
   }
 
