@@ -92,6 +92,28 @@ class GlobalBoundingObject {
 
   _update (e) {
     this.emit('update', e)
+    this.updateMask()
+  }
+
+  updateMask () {
+    if (this.mask) {
+      map.removeLayer(this.mask)
+      delete this.mask
+    }
+
+    let geometry = this.get()
+    if (!geometry || geometry.type !== 'Feature') {
+      return
+    }
+
+    this.mask = L.geoJson(geometry, {
+      invert: true,
+      style: {
+        color: '#000000',
+        opacity: 0.4,
+        weight: 0
+      }
+    }).addTo(map)
   }
 
   remove () {

@@ -50,6 +50,7 @@ html_export_var(array(
   <script src="node_modules/leaflet-polylineoffset/leaflet.polylineoffset.js"></script>
   <script src="node_modules/leaflet.polylinemeasure/Leaflet.PolylineMeasure.js"></script>
   <script src="node_modules/leaflet-polylinedecorator/dist/leaflet.polylineDecorator.js"></script>
+  <script src="node_modules/leaflet.snogylop/src/leaflet.snogylop.js"></script>
   <?php print modulekit_to_javascript(); /* pass modulekit configuration to JavaScript */ ?>
   <?php print modulekit_include_js(); /* prints all js-includes */ ?>
   <?php print modulekit_include_css(); /* prints all css-includes */ ?>
