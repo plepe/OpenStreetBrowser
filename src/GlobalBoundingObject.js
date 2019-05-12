@@ -119,7 +119,8 @@ class GlobalBoundingObject {
       style: {
         color: '#000000',
         opacity: 0.4,
-        weight: 0
+        weight: 0,
+        interactive: false
       }
     }).addTo(map)
   }
