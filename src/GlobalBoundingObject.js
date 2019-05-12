@@ -25,7 +25,7 @@ class GlobalBoundingObject {
 
   setConfig (config) {
     this.config = config
-    this.emit('update')
+    this._update()
   }
 
   get () {
@@ -79,15 +79,19 @@ class GlobalBoundingObject {
 
   updateMap (e) {
     if (this.config.object === null || this.config.object === 'viewport' || this.config.options.includes('cropView')) {
-      this.emit('update', e)
+      this._update(e)
     }
   }
 
   updateMouse (e) {
     this.mousePos = e.latlng
     if (this.config.object === 'mouse') {
-      this.emit('update', e)
+      this._update(e)
     }
+  }
+
+  _update (e) {
+    this.emit('update', e)
   }
 
   remove () {
