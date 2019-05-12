@@ -21,6 +21,42 @@ function applyCustomForm () {
   }
 }
 
+function refresh () {
+  customBoundsForm.refresh()
+
+  let dom = document.getElementById('custom-bounds_object')
+  let labels = dom.getElementsByTagName('label')
+
+  for (let i = 0; i < labels.length; i++) {
+    let label = labels[i]
+    let value = label.getAttribute('for').substr(21)
+
+    if (value === 'viewport' || value === 'mouse') {
+      continue
+    }
+
+    label.appendChild(document.createTextNode(' '))
+
+    let x = document.createElement('button')
+    x.appendChild(document.createTextNode('×'))
+    label.appendChild(x)
+
+    x.onclick = () => {
+      let data = customBoundsForm.get_data()
+
+      delete customBoundsObjectNames[value]
+      delete customBoundsObjects[value]
+
+      refresh()
+
+      if (data.object === value) {
+        customBoundsForm.set_data({ object: 'viewport' })
+      }
+      applyCustomForm()
+    }
+  }
+}
+
 function addBoundsObject (id) {
   tab.select()
 
@@ -33,7 +69,7 @@ function addBoundsObject (id) {
       customBoundsObjectNames[id] = name
       customBoundsObjects[id] = object
 
-      customBoundsForm.refresh()
+      refresh()
 
       customBoundsForm.set_data({ object: id })
       applyCustomForm()
@@ -71,6 +107,7 @@ register_hook('init', function () {
   tab.header.title = lang('custom-bounds')
 
   let domForm = document.createElement('form')
+  domForm.onsubmit = () => false
   tab.content.appendChild(domForm)
   customBoundsForm = new form('custom-bounds', {
     object: {
