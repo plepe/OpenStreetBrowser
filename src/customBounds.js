@@ -22,6 +22,8 @@ function applyCustomForm () {
 }
 
 function addBoundsObject (id) {
+  tab.select()
+
   global.overpassFrontend.get(id,
     {
       properties: OverpassFrontend.ALL
