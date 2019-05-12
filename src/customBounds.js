@@ -18,7 +18,7 @@ function applyCustomForm () {
 function addBoundsObject (id) {
   global.overpassFrontend.get(id,
     {
-      properties: OverpassFrontend.TAGS
+      properties: OverpassFrontend.ALL
     },
     (err, object) => {
       let name = object.tags.name || object.tags.operator
