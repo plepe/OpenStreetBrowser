@@ -190,6 +190,7 @@ register_hook('show-popup', (object, category, content, callback) => {
     a.href = '#'
     a.onclick = () => {
       addBoundsObject(object.id)
+      map.closePopup()
       return false
     }
     footer.appendChild(li)
