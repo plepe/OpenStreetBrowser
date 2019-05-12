@@ -55,7 +55,15 @@ class GlobalBoundingObject {
       geometry = object.GeoJSON()
     }
 
+    if (!geometry) {
+      return null
+    }
+
     geometry = turf.buffer(geometry, this.config.buffer / 1000)
+
+    if (!geometry) {
+      return null
+    }
 
     if (this.config.options.includes('cropView')) {
       let mapView = this.mapView.get()
