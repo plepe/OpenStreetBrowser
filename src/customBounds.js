@@ -89,6 +89,8 @@ register_hook('init', function () {
       },
       default: [ 'cropView' ]
     }
+  }, {
+    change_on_input: true
   })
 
   customBoundsForm.show(domForm)
