@@ -13,6 +13,12 @@ function applyCustomForm () {
   global.boundingObject.setConfig(data)
   state.update()
   global.boundingObject.emit('update')
+
+  if (data.object === 'viewport') {
+    tab.header.classList.remove('active')
+  } else {
+    tab.header.classList.add('active')
+  }
 }
 
 function addBoundsObject (id) {

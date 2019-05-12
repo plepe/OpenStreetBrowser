@@ -84,6 +84,9 @@ a:active {
 #sidebar > #globalTabs ul.tabs-list {
   font-size: 15pt;
 }
+ul.tabs-list > li.active {
+  color: red;
+}
 .tabs-section {
   padding: 0.1em;
   max-height: 250px;
