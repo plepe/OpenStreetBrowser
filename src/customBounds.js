@@ -65,7 +65,7 @@ function addBoundsObject (id) {
       properties: OverpassFrontend.ALL
     },
     (err, object) => {
-      let name = object.tags.name || object.tags.operator
+      let name = object.tags ? object.tags.name || object.tags.operator || object.tags.ref || object.id : object.id
       customBoundsObjectNames[id] = name
       customBoundsObjects[id] = object
 
