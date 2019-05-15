@@ -57,29 +57,49 @@ function refresh () {
   }
 }
 
-function addBoundsObject (id) {
+function addBoundsObject (id, callback) {
   tab.select()
+
+  if (!id) {
+    return callback()
+  }
 
   global.overpassFrontend.get(id,
     {
       properties: OverpassFrontend.ALL
     },
     (err, object) => {
+      if (err) {
+        return callback(err)
+      }
+
       let name = object.tags ? object.tags.name || object.tags.operator || object.tags.ref || object.id : object.id
       customBoundsObjectNames[id] = name
       customBoundsObjects[id] = object
 
       refresh()
 
-      customBoundsForm.set_data({ object: id })
-      applyCustomForm()
+      callback()
     },
     (err) => {
       if (err) {
-        alert(err)
+        return callback(err)
       }
     }
   )
+}
+
+function addActivateBoundsObject (id) {
+  addBoundsObject(id, (err) => {
+    if (err) {
+      return alert(err)
+    }
+
+    customBoundsForm.set_data({ object: id })
+    applyCustomForm()
+
+    ajax('custom_bounds_add', { id }, () => { console.log('x') })
+  })
 }
 
 function objectValues () {
@@ -149,6 +169,12 @@ register_hook('init', function () {
   global.boundingObject.setCustomObjects(customBoundsObjects)
 })
 
+register_hook('initFinish', function () {
+  if (global.customBounds) {
+    global.customBounds.forEach(id => addBoundsObject(id, () => {}))
+  }
+})
+
 register_hook('state-get', state => {
   let config = customBoundsForm.get_data()
 
@@ -172,7 +198,7 @@ register_hook('state-apply', state => {
     }
 
     if (!(config.object in objectValues())) {
-      addBoundsObject(config.object)
+      addActivateBoundsObject(config.object)
     }
 
     customBoundsForm.set_data(config)
@@ -189,7 +215,7 @@ register_hook('show-popup', (object, category, content, callback) => {
     a.innerHTML = lang('bounds:use as boundary')
     a.href = '#'
     a.onclick = () => {
-      addBoundsObject(object.id)
+      addActivateBoundsObject(object.id)
       map.closePopup()
       return false
     }
