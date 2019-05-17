@@ -107,3 +107,9 @@ $languages = array(
   "sr", // Serbian
   "uk", // Ukrainian
 );
+
+// Uncomment the following lines to use a MYSQL database for session handling.
+// Create database table 'sessions' as described in
+// https://github.com/plepe/PHP-MySQL-Sessions/blob/master/README.md
+#include "lib/modulekit/mysql-sessions/mysql.sessions.php";
+#new Session(new PDO('mysql:dbname=DB', 'USER', 'PASSWORD'));
