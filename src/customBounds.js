@@ -123,7 +123,7 @@ register_hook('init', function () {
   tab.content.classList.add('custom-bounds')
   global.tabs.add(tab)
 
-  tab.header.innerHTML = '<i class="far fa-square"></i>'
+  tab.header.innerHTML = '<i style="position: relative; line-height: 100%;" class="fas fa-square-full"><span style="position: absolute; left: 0; right: 0; height: 100%; margin: auto; color: white; font-size: 60%; text-align: center;"><i class="fas fa-circle"></i></span></i>'
   tab.header.title = lang('custom-bounds')
 
   let domForm = document.createElement('form')
