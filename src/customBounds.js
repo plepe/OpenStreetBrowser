@@ -124,7 +124,15 @@ register_hook('init', function () {
   global.tabs.add(tab)
 
   tab.header.innerHTML = '<i style="position: relative; line-height: 100%;" class="fas fa-square-full"><span style="position: absolute; left: 0; right: 0; height: 100%; margin: auto; color: white; font-size: 60%; text-align: center;"><i class="fas fa-circle"></i></span></i>'
-  tab.header.title = lang('custom-bounds')
+  tab.header.title = lang('bounds:title')
+
+  let h3 = document.createElement('h3')
+  h3.appendChild(document.createTextNode(lang('bounds:title')))
+  tab.content.appendChild(h3)
+
+  let p = document.createElement('p')
+  p.appendChild(document.createTextNode(lang('bounds:info')))
+  tab.content.appendChild(p)
 
   let domForm = document.createElement('form')
   domForm.onsubmit = () => false
