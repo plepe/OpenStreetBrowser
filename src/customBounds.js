@@ -98,6 +98,7 @@ function addActivateBoundsObject (id) {
     }
 
     customBoundsForm.set_data({ object: id })
+    global.customBounds[id] = {}
     applyCustomForm()
 
     ajax('custom_bounds_add', { id }, () => { console.log('x') })
@@ -189,7 +190,13 @@ register_hook('init', function () {
 
 register_hook('initFinish', function () {
   if (global.customBounds) {
-    global.customBounds.forEach(id => addBoundsObject(id, () => {}))
+    for (var id in global.customBounds) {
+      if (Array.isArray(global.customBounds[id])) {
+        global.customBounds[id] = {}
+      }
+
+      addBoundsObject(id, () => {})
+    }
   }
 })
 
