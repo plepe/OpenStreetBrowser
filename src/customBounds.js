@@ -9,9 +9,22 @@ let customBoundsForm
 let customBoundsObjectNames = {}
 let customBoundsObjects = {}
 let boundingObject = null
+let updateTimeout
 
 function applyCustomForm () {
   let data = customBoundsForm.get_data()
+  let origData = customBoundsForm.get_orig_data()
+
+  if (origData.object !== data.object) {
+    let id = data.object
+    if (id in global.customBounds && 'buffer' in global.customBounds[id]) {
+      data.buffer = global.customBounds[id].buffer
+    }
+  }
+
+  customBoundsForm.set_data(data)
+  customBoundsForm.set_orig_data(data)
+
   boundingObject.setConfig(data)
   state.update()
   boundingObject.emit('update')
@@ -21,6 +34,15 @@ function applyCustomForm () {
   } else {
     tab.header.classList.add('active')
   }
+
+  global.customBounds[data.object].buffer = data.buffer
+  if (updateTimeout) {
+    global.clearTimeout(updateTimeout)
+  }
+  updateTimeout = global.setTimeout(
+    () => ajax('custom_bounds_update', { id: data.object, buffer: data.buffer }, () => {}),
+    1000
+  )
 }
 
 function refresh () {
