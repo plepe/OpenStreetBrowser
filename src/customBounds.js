@@ -1,18 +1,20 @@
 const tabs = require('modulekit-tabs')
-const httpGet = require('./httpGet')
+const OverpassLayer = require('overpass-layer')
+
+const CustomBoundingObject = require('./CustomBoundingObject')
 const state = require('./state')
-require('./nominatim-search.css')
 
 let tab
 let customBoundsForm
 let customBoundsObjectNames = {}
 let customBoundsObjects = {}
+let boundingObject = null
 
 function applyCustomForm () {
   let data = customBoundsForm.get_data()
-  global.boundingObject.setConfig(data)
+  boundingObject.setConfig(data)
   state.update()
-  global.boundingObject.emit('update')
+  boundingObject.emit('update')
 
   if (data.object === 'viewport') {
     tab.header.classList.remove('active')
@@ -115,7 +117,15 @@ function objectValues () {
   return result
 }
 
+register_hook('categoryOpen', function (category) {
+  if (category.layer && category.layer instanceof OverpassLayer) {
+    category.layer.setBoundingObject(boundingObject)
+  }
+})
+
 register_hook('init', function () {
+  boundingObject = new CustomBoundingObject(global.map)
+
   tab = new tabs.Tab({
     id: 'customBounds',
     weight: -1
@@ -174,7 +184,7 @@ register_hook('init', function () {
     customBoundsForm.resize()
   })
 
-  global.boundingObject.setCustomObjects(customBoundsObjects)
+  boundingObject.setCustomObjects(customBoundsObjects)
 })
 
 register_hook('initFinish', function () {
@@ -210,7 +220,7 @@ register_hook('state-apply', state => {
     }
 
     customBoundsForm.set_data(config)
-    global.boundingObject.setConfig(config)
+    boundingObject.setConfig(config)
   }
 })
 

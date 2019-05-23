@@ -5,7 +5,7 @@ const turf = {
   intersect: require('@turf/intersect').default
 }
 
-class GlobalBoundingObject {
+class CustomBoundingObject {
   // should extend OverpassLayer.BoundingObject -- does not work because of
   // babel issue
   constructor (map) {
@@ -129,5 +129,5 @@ class GlobalBoundingObject {
   }
 }
 
-ee(GlobalBoundingObject.prototype)
-module.exports = GlobalBoundingObject
+ee(CustomBoundingObject.prototype)
+module.exports = CustomBoundingObject
