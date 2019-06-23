@@ -99,6 +99,7 @@ $languages = array(
   "it", // Italian
   "ja", // Japanese
   "nl", // Dutch
+  "oc", // Occitan
   "pl", // Polish
   "pt", // Portugese
   "pt-br", // Portugese (Brazil)
