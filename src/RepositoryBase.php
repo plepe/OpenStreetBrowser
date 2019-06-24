@@ -46,12 +46,14 @@ class RepositoryBase {
         foreach ($category['subCategories'] as $subIndex => $_subCategory) {
           $subCategory = &$category['subCategories'][$subIndex];
 
-          $data['categories'][$subCategory['id']] = $subCategory;
-          $this->unfoldCategories($data, $subCategory);
+          if (array_key_exists('type', $subCategory)) {
+            $data['categories'][$subCategory['id']] = $subCategory;
+            $this->unfoldCategories($data, $subCategory);
 
-          $category['subCategories'][$subIndex] = array(
-            'id' => $subCategory['id']
-          );
+            $category['subCategories'][$subIndex] = array(
+              'id' => $subCategory['id']
+            );
+          }
         }
       }
     }
