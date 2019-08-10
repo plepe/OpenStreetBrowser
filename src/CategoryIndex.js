@@ -11,9 +11,9 @@ function CategoryIndex (options, data, repository) {
   this.childrenDoms = {}
   this.childrenCategories = null
 
-  this._loadChildrenCategories(function (err) {
+  this._loadChildrenCategories((err) => {
     if (err) {
-      console.log('error loading child categories:', err)
+      console.log('Category "' + this.id + '": error loading child categories:', err)
     }
   })
 }

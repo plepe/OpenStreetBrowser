@@ -55,7 +55,7 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
     }
 
     if (!(ids.entityId in repoData.categories)) {
-      return callback(new Error('category not defined'), null)
+      return callback(new Error('category "' + ids.entityId + '" not defined'), null)
     }
 
     this.getCategoryFromData(ids.id, opt, repoData.categories[ids.entityId], function (err, category) {
