@@ -37,12 +37,7 @@ function cssStyle (style) {
 function markerLine (data) {
   var ret = '<svg anchorX="13" anchorY="8" width="25" height="15">'
 
-  if (!('styles' in data)) {
-    data = {
-      style: data,
-      styles: [ 'default' ]
-    }
-  }
+  data = parseOptions(data)
 
   for (var i = 0; i < data.styles.length; i++) {
     var k = data.styles[i]
@@ -60,12 +55,7 @@ function markerLine (data) {
 function markerPolygon (data) {
   var ret = '<svg anchorX="13" anchorY="8" width="25" height="25">'
 
-  if (!('styles' in data)) {
-    data = {
-      style: data,
-      styles: [ 'default' ]
-    }
-  }
+  data = parseOptions(data)
 
   for (var i = 0; i < data.styles.length; i++) {
     var k = data.styles[i]
@@ -79,21 +69,72 @@ function markerPolygon (data) {
   return ret
 }
 
-function markerCircle (style) {
-  var fillColor = 'fillColor' in style ? style.fillColor : '#f2756a'
-  var color = 'color' in style ? style.color : '#000000'
-  var width = 'width' in style ? style.width : 1
-  var radius = 'radius' in style ? style.radius : 12
+function markerCircle (data) {
+  var ret = '<svg anchorX="13" anchorY="13" width="25" height="25">'
 
-  return '<svg anchorX="13" anchorY="13" width="25" height="25"><circle cx="12.5" cy="12.5" r=' + radius + ' style="stroke: ' + color + '; stroke-width: ' + width + '; fill: ' + fillColor + ';"/></svg>'
+  data = parseOptions(data)
+
+  for (var i = 0; i < data.styles.length; i++) {
+    var k = data.styles[i]
+    var style = (k === 'default' ? data.style : data['style:' + k]) || {}
+
+    ret += '<circle cx="12.5" cy="12.5" r="' + (style.radius || 12) + '" style="' + cssStyle(style) + '"/>'
+  }
+
+  ret += '</svg>'
+  console.log(ret)
+
+  return ret
 }
 
-function markerPointer (style) {
-  var fillColor = 'fillColor' in style ? style.fillColor : '#f2756a'
-  var color = 'color' in style ? style.color : '#000000'
-  var width = 'width' in style ? style.width : 1
+function markerPointer (data) {
+  var ret = '<svg anchorX="13" anchorY="45" width="25" height="45" signAnchorX="0" signAnchorY="-31">'
 
-  return '<svg anchorX="13" anchorY="45" width="25" height="45" signAnchorX="0" signAnchorY="-31"><path d="M0.5,12.5 A 12,12 0 0 1 24.5,12.5 C 24.5,23 13,30 12.5,44.5 C 12,30 0.5,23 0.5,12.5" style="stroke: ' + color + '; stroke-width: ' + width + '; fill: ' + fillColor + ';"/></svg>'
+  data = parseOptions(data)
+
+  for (var i = 0; i < data.styles.length; i++) {
+    var k = data.styles[i]
+    var style = (k === 'default' ? data.style : data['style:' + k]) || {}
+
+    ret += '<path d="M0.5,12.5 A 12,12 0 0 1 24.5,12.5 C 24.5,23 13,30 12.5,44.5 C 12,30 0.5,23 0.5,12.5" style="' + cssStyle(style) + '"/>'
+  }
+
+  ret += '</svg>'
+
+  return ret
+}
+
+function parseOptions (data) {
+  if (!data || !('style' in data) && !('styles' in data)) {
+    let ret = {
+      style: { fillColor: '#f2756a', color: '#000000', width: 1, radius: 12, fillOpacity: 1 },
+      styles: [ 'default' ]
+    }
+
+    if (data && data.color) {
+      ret.style.fillColor = data.color
+      ret.style.fillOpacity = 0.2
+    }
+
+    if (data) for (let k in data) {
+      ret.style[k] = data[k]
+    }
+
+    return ret
+  }
+
+  if (!('styles' in data)) {
+    data = {
+      style: data,
+      styles: [ 'default' ]
+    }
+  }
+
+  if (typeof data.styles === 'string') {
+    data.styles = data.styles.split(/,/g)
+  }
+
+  return data
 }
 
 OverpassLayer.twig.extendFunction('markerLine', markerLine)
