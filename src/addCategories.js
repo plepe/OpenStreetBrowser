@@ -17,6 +17,9 @@ function addCategoriesShow (repo, options={}) {
     [ repoId, branchId ] = repo.split(/~/)
   }
 
+  if (!branchId) {
+    branchId = 'master'
+  }
 
   content.innerHTML = '<h3>' + lang('more_categories') + '</h3>' + '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
 
@@ -163,7 +166,7 @@ function addCategoriesShow (repo, options={}) {
       var editLink = null
       if (repo && categoryUrl) {
         editLink = document.createElement('a')
-        editLink.href = categoryUrl.render({ repositoryId: repo, categoryId: id })
+        editLink.href = categoryUrl.render({ repositoryId: repoId, categoryId: id, branchId: branchId })
       }
       if (!repo && repositoryUrl) {
         editLink = document.createElement('a')
