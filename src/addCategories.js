@@ -128,7 +128,7 @@ function addCategoriesShow (repo, options={}) {
     }
 
     let header = document.createElement('h3')
-    header.innerHTML = lang(repo ? 'repositories' : 'categories') + ':'
+    header.innerHTML = lang(repo ? 'categories' : 'repositories') + ':'
     content.appendChild(header)
 
     var ul = document.createElement('ul')
