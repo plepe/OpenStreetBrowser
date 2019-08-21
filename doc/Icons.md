@@ -52,6 +52,7 @@ You can pass URL options to the icon to modify its look. Note that every icon is
 #### Markers
 Simple syntax (example: a black line):
 ```html
+<img data-src="marker:line?width=3&amp;color=black">
 {{ markerLine({ width: 3, color: 'black' })|raw }}
 ```
 
@@ -66,8 +67,9 @@ The following style parameters are possible:
 * `dashArray`: outline dashes, e.g. `5,5'. Default: `none`.
 * `dashOffset`: offset of outline dashes. Default: `0`.
 
-Syntax with multiple symbols (example: a white line with a black casing). Only styles which are listed in the `styles` parameter will be used:
+Syntax with multiple symbols (example: a white line with a black casing). Only styles which are listed in the `styles` parameter will be used. Instead of `style:default:width` use `style:width`:
 ```html
+<img data-src="marker:line?styles=casing,default&amp;style:width=2&amp;style:color=white&amp;style:casing:width=4&amp;style:casing:color=black">
 {{ markerLine({ styles: 'casing,default', 'style:casing': { color: 'black', width: 4 }, default: { color: 'black', width: 2 }})|raw }}
 ```
 
