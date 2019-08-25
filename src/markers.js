@@ -35,9 +35,9 @@ function cssStyle (style) {
 }
 
 function markerLine (data) {
-  let ret = '<svg anchorX="13" anchorY="8" width="25" height="15">'
-
   let styles = parseOptions(data)
+
+  let ret = '<svg anchorX="13" anchorY="8" width="25" height="15">'
 
   styles.forEach(style => {
     let y = 8.0 + parseFloat('offset' in style ? style.offset : 0)
@@ -65,12 +65,16 @@ function markerPolygon (data) {
 }
 
 function markerCircle (data) {
-  let ret = '<svg anchorX="13" anchorY="13" width="25" height="25">'
-
   let styles = parseOptions(data)
 
+  let c = styles
+    .map(style => (style.size || style.radius || 12) + (style.width / 2))
+    .sort()[0]
+
+  let ret = '<svg anchorX="' + (c + 0.5) + ' anchorY="' + (c + 0.5) + '" width="' + (c * 2) + '" height="' + (c * 2) + '">'
+
   styles.forEach(style => {
-    ret += '<circle cx="12.5" cy="12.5" r="' + (style.radius || 12) + '" style="' + cssStyle(style) + '"/>'
+    ret += '<circle cx="' + c + '" cy="' + c + '" r="' + (style.radius || 12) + '" style="' + cssStyle(style) + '"/>'
   })
 
   ret += '</svg>'
