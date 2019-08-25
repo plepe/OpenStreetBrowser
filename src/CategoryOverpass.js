@@ -218,6 +218,32 @@ CategoryOverpass.prototype.updateAssets = function (div) {
           }
         })
       }
+    } else if (src.match(/^(marker):.*/)) {
+      let m = src.match(/^(marker):([a-z0-9-_]*)(?:\?(.*))?$/)
+      if (m) {
+        let span = document.createElement('span')
+        img.parentNode.insertBefore(span, img)
+        img.parentNode.removeChild(img)
+        i--
+        let param = m[3] ? qs(m[3]) : {}
+
+        if (param.styles) {
+          let newParam = { styles: param.styles }
+          for (let k in param) {
+            let m = k.match(/^(style|style:.*)?:([^:]*)$/)
+            if (m) {
+              if (!(m[1] in newParam)) {
+                newParam[m[1]] = {}
+              }
+              newParam[m[1]][m[2]] = param[k]
+            }
+          }
+          param = newParam
+        }
+        console.log(param)
+
+        span.innerHTML = markers[m[2]](param)
+      }
     } else if (!src.match(/^(https?:|data:|\.|\/)/)) {
       img.setAttribute('src', (typeof openstreetbrowserPrefix === 'undefined' ? './' : openstreetbrowserPrefix) +
       'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('data-src') || img.getAttribute('src')))
