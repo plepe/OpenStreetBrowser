@@ -20,7 +20,7 @@ moduleOptions.open = function () {
   var def = {
     'debug': {
       'type': 'boolean',
-      'name': 'Debug mode',
+      'name': lang('options:debug_mode'),
       'weight': 10,
       'reloadOnChange': true
     }
