@@ -26,7 +26,7 @@
     "invalid value": "ungültiger Wert",
     "loading": "Laden ...",
     "main:options": "Optionen",
-    "main:permalink": "",
+    "main:permalink": "Permalink",
     "more": "mehr",
     "more_categories": "Mehr Kategorien",
     "more_categories_gitea": "Erstelle und verbessere Kategorien hier!",
@@ -48,5 +48,8 @@
     "unnamed": "Namenlos",
     "wikipedia:no-url-parse": "Konnte Wikipedia Adresse nicht erkennen",
     "zoom_in_appear": "Zoome hinein um Kartenobjekte zu sehen",
-    "zoom_in_more": "Zoome hinein für weitere Kartenobjekte"
+    "zoom_in_more": "Zoome hinein für weitere Kartenobjekte",
+    "main:about": "Über",
+    "main:code": "Code",
+    "options:debug_mode": "Debug-Modus"
 }
