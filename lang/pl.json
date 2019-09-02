@@ -46,5 +46,10 @@
     "unnamed": "Nienazwane",
     "wikipedia:no-url-parse": "Nie można przetworzyć adresu URL Wikipedii",
     "zoom_in_appear": "Powiększ widoczność",
-    "zoom_in_more": "Powiększ bardziej"
+    "zoom_in_more": "Powiększ bardziej",
+    "cancel": "Anuluj",
+    "form_element:please_select": "– proszę wybrać –",
+    "main:about": "Informacje",
+    "main:code": "Kod",
+    "options:debug_mode": "Tryb debugowania"
 }
