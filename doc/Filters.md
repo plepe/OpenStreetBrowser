@@ -28,11 +28,12 @@ Each filter can define the following values:
 * key: If not overridden by query, use this key for searching. If not defined, use the filter's ID. Can also be an array with a list of keys. You can use wildcards too, e.g. "name:*" to query all localized name tags.
 * op: operator to use (if not overridden by query):
   * '=' exact match (default)
-  * '!=' any value nut this
+  * '!=' any value but this
   * '~' regular expression, case sensitive
   * '~i' regular expression, case insensitive
   * '!~', '!~i' regular expression, negated
   * 'has' query in semicolon-separated lists like `cuisine=kebap;noodles`
+  * 'has_key_value' query object with a tag with this key
   * 'strsearch' query string parts (e.g. "kai keb" would match "Kaiser Kebap") and query character variants (e.g. "cafe" would match "café").
 * show_default: if true, this filter will be shown by default, others need to be added via the select box.
 
