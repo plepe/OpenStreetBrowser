@@ -153,36 +153,33 @@ class CategoryOverpassFilter {
   }
 
   applyParam (param) {
-    this.additionalFilter = []
-    let kvFilter = []
+    this.additionalFilter = Object.keys(param).map(k => {
+      let value = param[k]
 
-    for (var k in param) {
-      if (param[k] === null) {
-        continue
+      if (value === null) {
+        return null
       }
 
       var d = this.data[k]
 
-      if ('values' in d && param[k] in d.values && typeof d.values[param[k]] === 'object' && 'query' in d.values[param[k]]) {
-        let f = new Filter(d.values[param[k]].query)
-        this.additionalFilter.push(f.def)
-        continue
+      if ('values' in d && value in d.values && typeof d.values[value] === 'object' && 'query' in d.values[value]) {
+        let f = new Filter(d.values[value].query)
+        return f.def
       } else if (d.queryTemplate) {
-        let f = new Filter(decodeHTML(d.queryTemplate.render({ value: param[k] }).toString()))
-        this.additionalFilter.push(f.def)
-        continue
+        let f = new Filter(decodeHTML(d.queryTemplate.render({ value: value }).toString()))
+        return f.def
       }
 
       var v  = {
         key: 'key' in d ? d.key : k,
-        value: param[k],
+        value: value,
         op: '='
       }
 
       if ('op' in d) {
         if (d.op === 'has_key_value') {
           v = {
-            key: param[k],
+            key: value,
             op: 'has_key'
           }
         } else {
@@ -208,12 +205,8 @@ class CategoryOverpassFilter {
         }
       }
 
-      kvFilter.push(v)
-    }
-
-    if (kvFilter.length) {
-      this.additionalFilter.push(kvFilter)
-    }
+      return [ v ]
+    }).filter(f => f) // remove null values
 
     if (this.additionalFilter.length === 0) {
       this.additionalFilter = []
