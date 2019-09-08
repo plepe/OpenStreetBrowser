@@ -252,6 +252,10 @@ register_hook('category-overpass-init', (category) => {
 })
 
 function decodeHTML (str) {
+  if (typeof str === 'undefined') {
+    return '-- undefined --'
+  }
+
   return str
     .replace(/&#039;/g, '\'')
     .replace(/&quot;/g, '"')
