@@ -154,58 +154,72 @@ class CategoryOverpassFilter {
 
   applyParam (param) {
     this.additionalFilter = Object.keys(param).map(k => {
-      let value = param[k]
+      let values = param[k]
+      let d = this.data[k]
 
-      if (value === null) {
+      if (values === null) {
         return null
       }
 
-      var d = this.data[k]
-
-      if ('values' in d && value in d.values && typeof d.values[value] === 'object' && 'query' in d.values[value]) {
-        let f = new Filter(d.values[value].query)
-        return f.def
-      } else if (d.queryTemplate) {
-        let f = new Filter(decodeHTML(d.queryTemplate.render({ value: value }).toString()))
-        return f.def
+      if (!Array.isArray(values)) {
+        values = [ values ]
       }
 
-      var v  = {
-        key: 'key' in d ? d.key : k,
-        value: value,
-        op: '='
-      }
-
-      if ('op' in d) {
-        if (d.op === 'has_key_value') {
-          v = {
-            key: value,
-            op: 'has_key'
-          }
-        } else {
-          v.op = d.op
+      let ret = values.map(value => {
+        if ('values' in d && value in d.values && typeof d.values[value] === 'object' && 'query' in d.values[value]) {
+          let f = new Filter(d.values[value].query)
+          return f.def
+        } else if (d.queryTemplate) {
+          let f = new Filter(decodeHTML(d.queryTemplate.render({ value: value }).toString()))
+          return f.def
         }
-      }
 
-      if (Array.isArray(v.key)) {
-        v = {
-          "or": v.key.map(
-            key => {
-              let v1 = { key, value: v.value, op: v.op }
+        var v  = {
+          key: 'key' in d ? d.key : k,
+          value: value,
+          op: '='
+        }
 
-              let m = key.match(/^(.*)\*(.*)/)
-              if (m) {
-                v1.key = '^' + m[1] + '.*' + m[2]
-                v1.keyRegexp = true
-              }
-
-              return [ v1 ]
+        if ('op' in d) {
+          if (d.op === 'has_key_value') {
+            v = {
+              key: value,
+              op: 'has_key'
             }
-          )
+          } else {
+            v.op = d.op
+          }
         }
-      }
 
-      return [ v ]
+        if (Array.isArray(v.key)) {
+          v = {
+            "or": v.key.map(
+              key => {
+                let v1 = { key, value: v.value, op: v.op }
+
+                let m = key.match(/^(.*)\*(.*)/)
+                if (m) {
+                  v1.key = '^' + m[1] + '.*' + m[2]
+                  v1.keyRegexp = true
+                }
+
+                return [ v1 ]
+              }
+            )
+          }
+        }
+
+        return [ v ]
+      }).filter(f => f) // remove null values
+
+      switch (ret.length) {
+        case 0:
+          return null
+        case 1:
+          return ret[0]
+        default:
+          return { or: ret }
+      }
     }).filter(f => f) // remove null values
 
     if (this.additionalFilter.length === 0) {
