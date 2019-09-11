@@ -1,9 +1,12 @@
 var OverpassLayer = require('overpass-layer')
 
+const Repository = require('./Repository')
+
 function OpenStreetBrowserLoader () {
   this.types = {}
   this.categories = {}
   this.repoCache = {}
+  this.repositories = {}
   this.templates = {}
   this._loadClash = {} // if a category is being loaded multiple times, collect callbacks
 }
@@ -52,13 +55,12 @@ OpenStreetBrowserLoader.prototype.getCategory = function (id, options, callback)
     }
 
     if (!(ids.entityId in repoData.categories)) {
-      return callback(new Error('category not defined'), null)
+      return callback(new Error('category "' + ids.entityId + '" not defined'), null)
     }
 
     this.getCategoryFromData(ids.id, opt, repoData.categories[ids.entityId], function (err, category) {
       if (category) {
         category.setMap(this.map)
-        category.lang = repoData.lang
       }
 
       callback(err, category)
@@ -94,7 +96,9 @@ OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
       this.repoCache[repo] = [ req.statusText, null ]
     } else {
       try {
-        this.repoCache[repo] = [ null, JSON.parse(req.responseText) ]
+        let repoData = JSON.parse(req.responseText)
+        this.repositories[repo] = new Repository(repo, repoData)
+        this.repoCache[repo] = [ null,  repoData ]
       } catch (err) {
         console.log('couldn\'t parse repository', req.responseText)
         this.repoCache[repo] = [ 'couldn\t parse repository', null ]
@@ -121,6 +125,20 @@ OpenStreetBrowserLoader.prototype.getRepo = function (repo, options, callback) {
   req.addEventListener('load', reqListener.bind(this, req))
   req.open('GET', 'repo.php' + param)
   req.send()
+}
+
+OpenStreetBrowserLoader.prototype.getRepository = function (id, options, callback) {
+  if (id in this.repositories) {
+    return callback(null, this.repositories[id])
+  }
+
+  this.getRepo(id, options, (err, repoData) => {
+    if (err) {
+      return callback(err)
+    }
+
+    callback(null, this.repositories[id])
+  })
 }
 
 /**
@@ -184,9 +202,11 @@ OpenStreetBrowserLoader.prototype.getCategoryFromData = function (id, options, d
     return callback(new Error('unknown type'), null)
   }
 
+  let repository = this.repositories[ids.repositoryId]
+
   var opt = JSON.parse(JSON.stringify(options))
   opt.id = ids.id
-  var layer = new this.types[data.type](opt, data)
+  var layer = new this.types[data.type](opt, data, repository)
 
   layer.setMap(this.map)
 

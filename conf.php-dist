@@ -3,6 +3,7 @@
 // repositoryUrl and categoryUrl are twig templates, which take the following input values:
 // {{ repositoryId }}    id of the repository
 // {{ categoryId }}      id of the category (not for repositoryUrl)
+// {{ branchId }}        id of the branch (not for repositoryUrl)
 $repositories = array(
   'default' => array(
     'path' => 'node_modules/openstreetbrowser-categories-main',
@@ -10,7 +11,7 @@ $repositories = array(
     // public URL of repository
     'repositoryUrl' => 'https://github.com/example/categories',
     // public URL of source of a category in repository
-    'categoryUrl' => 'https://github.com/example/categories/tree/master/{{ categoryId }}.json',
+    'categoryUrl' => 'https://github.com/example/categories/tree/{{ branchId }}/{{ categoryId }}.json',
   ),
 );
 
@@ -99,6 +100,7 @@ $languages = array(
   "it", // Italian
   "ja", // Japanese
   "nl", // Dutch
+  "oc", // Occitan
   "pl", // Polish
   "pt", // Portugese
   "pt-br", // Portugese (Brazil)
@@ -107,3 +109,9 @@ $languages = array(
   "sr", // Serbian
   "uk", // Ukrainian
 );
+
+// Uncomment the following lines to use a MYSQL database for session handling.
+// Create database table 'sessions' as described in
+// https://github.com/plepe/PHP-MySQL-Sessions/blob/master/README.md
+#include "lib/modulekit/mysql-sessions/mysql.sessions.php";
+#new Session(new PDO('mysql:dbname=DB', 'USER', 'PASSWORD'));

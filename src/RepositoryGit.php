@@ -24,7 +24,7 @@ class RepositoryGit extends RepositoryBase {
   }
 
   function timestamp () {
-    $ts = (int)shell_exec("cd " . escapeShellArg($this->path) . "; git log -1 {$this->branchEsc} --pretty=format:%ct");
+    $ts = (int)shell_exec("cd " . escapeShellArg($this->path) . "; git log -1 --all --pretty=format:%ct");
 
     return $ts;
   }
@@ -60,7 +60,7 @@ class RepositoryGit extends RepositoryBase {
 	  continue;
 	}
 
-        $data['categories'][$id] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'))));
+        $data['categories'][$id] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'), array('filter'))));
       }
 
       if (preg_match("/^[0-9]{6} blob [0-9a-f]{40}\t((detailsBody|popupBody)\.html)$/", $r, $m)) {

@@ -34,8 +34,35 @@ class RepositoryBase {
     return $data;
   }
 
+  function unfoldCategories (&$data, &$categories=null) {
+    if ($categories === null) {
+      $categories = &$data['categories'];
+    }
+
+    foreach ($categories as $id => $_category) {
+      $category = &$categories[$id];
+
+      if (is_array($category) && $category['type'] === 'index') {
+        foreach ($category['subCategories'] as $subIndex => $_subCategory) {
+          $subCategory = &$category['subCategories'][$subIndex];
+
+          if (array_key_exists('type', $subCategory)) {
+            $data['categories'][$subCategory['id']] = $subCategory;
+            $this->unfoldCategories($data, $subCategory);
+
+            $category['subCategories'][$subIndex] = array(
+              'id' => $subCategory['id']
+            );
+          }
+        }
+      }
+    }
+  }
+
   function updateLang (&$data, $options) {
     $lang = array_key_exists('lang', $options) ? $options['lang'] : 'en';
+
+    $this->unfoldCategories($data);
 
     if (!is_array($data['lang'])) {
       $data['lang'] = array();
@@ -52,7 +79,7 @@ class RepositoryBase {
           );
         }
       }
-      elseif (array_key_exists('name', $category)) {
+      elseif (is_array($category) && array_key_exists('name', $category)) {
         if (array_key_exists($lang, $category['name'])) {
           $name = $category['name'][$lang];
         }
@@ -67,6 +94,7 @@ class RepositoryBase {
 
         $data['categories'][$id]['name'] = array($lang => $name);
       }
+
     }
   }
 

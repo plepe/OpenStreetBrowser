@@ -84,7 +84,8 @@ function formDef () {
 
 register_hook('init', function () {
   tab = new tabs.Tab({
-    id: 'export'
+    id: 'export',
+    weight: 10
   })
   global.tabs.add(tab)
 

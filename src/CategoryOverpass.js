@@ -3,6 +3,8 @@
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
+var queryString = require('query-string')
+
 var CategoryBase = require('./CategoryBase')
 var state = require('./state')
 var tabs = require('modulekit-tabs')
@@ -33,10 +35,10 @@ var defaultValues = {
 
 CategoryOverpass.prototype = Object.create(CategoryBase.prototype)
 CategoryOverpass.prototype.constructor = CategoryOverpass
-function CategoryOverpass (options, data) {
+function CategoryOverpass (options, data, repository) {
   var p
 
-  CategoryBase.call(this, options, data)
+  CategoryBase.call(this, options, data, repository)
 
   data.id = this.id
 
@@ -114,7 +116,10 @@ function CategoryOverpass (options, data) {
     }
   )
 
-  p = document.createElement('div')
+
+  call_hooks('category-overpass-init', this)
+
+  var p = document.createElement('div')
   p.className = 'loadingIndicator'
   p.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">' + lang('loading') + '</span>'
   this.dom.appendChild(p)
@@ -141,7 +146,22 @@ function CategoryOverpass (options, data) {
         state.categories = ''
       }
 
-      state.categories += this.id
+      let id = this.id
+
+      let param = {}
+      this.emit('stateGet', param)
+
+      for (var k in param) {
+        if (!param[k]) {
+          delete param[k]
+        }
+      }
+
+      if (param && Object.keys(param).length) {
+        id += '[' + queryString.stringify(param) + ']'
+      }
+
+      state.categories += id
     }
   }.bind(this))
 
@@ -150,13 +170,31 @@ function CategoryOverpass (options, data) {
       return
     }
 
-    var list = state.categories.split(',')
-    if (list.indexOf(this.id) === -1) {
+    let list = state.categories.split(',')
+    let found = list.filter(id => {
+      let m = id.match(/^([0-9A-Z_-]+)(\[(.*)\])/i)
+      if (m) {
+        id = m[1]
+      }
+
+      return id === this.id
+    }).length
+
+    if (!found) {
       this.close()
     }
 
     // opening categories is handled by src/categories.js
   }.bind(this))
+}
+
+CategoryOverpass.prototype.setParam = function (param) {
+  this.emit('setParam', param)
+  this._applyParam(param)
+}
+
+CategoryOverpass.prototype._applyParam = function (param) {
+  this.emit('applyParam', param)
 }
 
 CategoryOverpass.prototype.updateAssets = function (div) {
@@ -180,9 +218,35 @@ CategoryOverpass.prototype.updateAssets = function (div) {
           }
         })
       }
+    } else if (src.match(/^(marker):.*/)) {
+      let m = src.match(/^(marker):([a-z0-9-_]*)(?:\?(.*))?$/)
+      if (m) {
+        let span = document.createElement('span')
+        img.parentNode.insertBefore(span, img)
+        img.parentNode.removeChild(img)
+        i--
+        let param = m[3] ? qs(m[3]) : {}
+
+        if (param.styles) {
+          let newParam = { styles: param.styles }
+          for (let k in param) {
+            let m = k.match(/^(style|style:.*)?:([^:]*)$/)
+            if (m) {
+              if (!(m[1] in newParam)) {
+                newParam[m[1]] = {}
+              }
+              newParam[m[1]][m[2]] = param[k]
+            }
+          }
+          param = newParam
+        }
+        console.log(param)
+
+        span.innerHTML = markers[m[2]](param)
+      }
     } else if (!src.match(/^(https?:|data:|\.|\/)/)) {
       img.setAttribute('src', (typeof openstreetbrowserPrefix === 'undefined' ? './' : openstreetbrowserPrefix) +
-      'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('src')))
+      'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('data-src') || img.getAttribute('src')))
     }
   }
 }
@@ -197,6 +261,10 @@ CategoryOverpass.prototype.load = function (callback) {
 
     callback(null)
   }.bind(this))
+}
+
+CategoryOverpass.prototype.setParentDom = function (parentDom) {
+  CategoryBase.prototype.setParentDom.call(this, parentDom)
 }
 
 CategoryOverpass.prototype.setMap = function (map) {
@@ -350,6 +418,8 @@ CategoryOverpass.prototype.open = function () {
 
     this.updateInfo()
   }
+
+  this.emit('open')
 }
 
 CategoryOverpass.prototype.updateInfo = function () {
@@ -420,7 +490,7 @@ CategoryOverpass.prototype.show = function (id, options, callback) {
           var preferredZoom = data.data.preferredZoom || 16
           var maxZoom = this.map.getZoom()
           maxZoom = maxZoom > preferredZoom ? maxZoom : preferredZoom
-          this.map.flyToBounds(data.object.bounds.toLeaflet(), {
+          this.map.flyToBounds(data.object.bounds.toLeaflet({ shiftWorld: this.layer.getShiftWorld() }), {
             maxZoom: maxZoom
           })
         }
@@ -518,6 +588,8 @@ CategoryOverpass.prototype.allMapFeatures = function (callback) {
 
   callback(null, Object.values(this.layer.mainlayer.visibleFeatures))
 }
+
+CategoryOverpass.defaultValues = defaultValues
 
 OpenStreetBrowserLoader.registerType('overpass', CategoryOverpass)
 module.exports = CategoryOverpass
