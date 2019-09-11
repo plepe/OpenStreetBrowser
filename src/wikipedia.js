@@ -300,7 +300,8 @@ function showWikipedia (tagValue, dom, callback) {
     div.innerHTML = text
     block.appendChild(div)
 
-    block.className = ''
+    block.removeChild(l)
+    block.className = 'clearfix'
 
     callback(err)
   })
