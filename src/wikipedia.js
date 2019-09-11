@@ -136,11 +136,13 @@ register_hook('show-details', function (data, category, dom, callback) {
   for (k in ob.tags) {
     m = k.match(/^(.*):wikipedia$/)
     if (m) {
+      let prefix = m[1]
+
       h = document.createElement('h4')
-      h.appendChild(document.createTextNode(lang('tag:' + m[1])))
+      h.appendChild(document.createTextNode(lang('tag:' + prefix)))
       div.appendChild(h)
 
-      foundPrefixes.push(m[1])
+      foundPrefixes.push(prefix)
 
       ob.tags[k].split(/;/g).forEach(value => {
         found++
@@ -150,20 +152,22 @@ register_hook('show-details', function (data, category, dom, callback) {
 
     m = k.match(/^((.*):)?wikipedia:(.*)$/)
     if (m) {
-      if (typeof m[1] === 'undefined' && foundPrefixes.indexOf('') !== -1) {
+      let prefix = m[1]
+
+      if (typeof prefix === 'undefined' && foundPrefixes.indexOf('') !== -1) {
         continue
       }
-      if (foundPrefixes.indexOf(m[1]) !== -1) {
+      if (foundPrefixes.indexOf(prefix) !== -1) {
         continue
       }
 
-      if (m[1]) {
+      if (prefix) {
         h = document.createElement('h4')
-        h.appendChild(document.createTextNode(lang('tag:' + m[1])))
+        h.appendChild(document.createTextNode(lang('tag:' + prefix)))
         div.appendChild(h)
       }
 
-      foundPrefixes.push(m[1])
+      foundPrefixes.push(prefix)
 
       (m[3] + ':' + ob.tags[k]).split(/;/g).forEach(value => {
         found++
@@ -212,14 +216,19 @@ register_hook('show-details', function (data, category, dom, callback) {
   for (k in ob.tags) {
     m = k.match(/^(.*):wikidata$/)
     if (m) {
+      let prefix = m[1]
       found++
-      if (foundPrefixes.indexOf(m[1]) !== -1) {
+      if (foundPrefixes.indexOf(prefix) !== -1) {
         continue
       }
-      foundPrefixes.push(m[1])
+      foundPrefixes.push(prefix)
+
+      h = document.createElement('h4')
+      h.appendChild(document.createTextNode(lang('tag:' + prefix)))
+      div.appendChild(h)
 
       ob.tags[k].split(/;/g).forEach(value => {
-        wikidata.load(value, function (prefix, err, result) {
+        wikidata.load(value, (err, result) => {
           var x
 
           if (err) {
@@ -229,10 +238,6 @@ register_hook('show-details', function (data, category, dom, callback) {
           if (!result.sitelinks) {
             return done()
           }
-
-          h = document.createElement('h4')
-          h.appendChild(document.createTextNode(lang('tag:' + prefix)))
-          div.appendChild(h)
 
           if (options.data_lang + 'wiki' in result.sitelinks) {
             x = result.sitelinks[options.data_lang + 'wiki']
@@ -250,7 +255,7 @@ register_hook('show-details', function (data, category, dom, callback) {
           }
 
           done()
-        }.bind(this, m[1]))
+        })
       })
     }
   }
