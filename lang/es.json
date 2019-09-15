@@ -46,5 +46,10 @@
     "unnamed": "sin nombre",
     "wikipedia:no-url-parse": "No se pudo analizar la URL de Wikipedia",
     "zoom_in_appear": "acercar para que aparezcan las características del mapa",
-    "zoom_in_more": "acercar para más características del mapa"
+    "zoom_in_more": "acercar para más características del mapa",
+    "cancel": "Cancelar",
+    "form_element:please_select": "-- Por favor seleccione --",
+    "main:about": "Acerca de",
+    "main:code": "Código",
+    "options:debug_mode": "Menú de depuración"
 }
