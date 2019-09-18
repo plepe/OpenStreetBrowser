@@ -27,9 +27,12 @@ function showWikimediaImage (image, options, dom) {
       let m = result.body.match(/<a href="([^"]+\/)([0-9]+)(px-[^"\/]+)" class="mw-thumbnail-link"/)
       if (m) {
         let src = m[1] + options.size + m[3]
+        let srcset = m[1] + options.size + m[3] + ' 1x, ' +
+          m[1] + Math.ceil(options.size * 1.5) + m[3] + ' 1.5x, ' +
+          m[1] + Math.ceil(options.size * 2) + m[3] + ' 2x'
 
         var div = document.createElement('div')
-        div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id) + '"><img src="' + src + '"/></a>'
+        div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id) + '"><img src="' + src + '" srcset="' + srcset + '"/></a>'
 
         dom.appendChild(div)
       }
