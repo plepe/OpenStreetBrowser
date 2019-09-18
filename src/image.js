@@ -20,13 +20,15 @@ function showWikimediaImage (image, dom) {
         return
       }
 
-      let m = result.body.match('img .* src="([^"]+)" .* data-file-width="([0-9]+)" data-file-height="([0-9]+)"')
-      let src = m[1]
+      let m = result.body.match(/<a href="([^"]+\/)([0-9]+)(px-[^"\/]+)" class="mw-thumbnail-link"/)
+      if (m) {
+        let src = m[1] + '800' + m[3]
 
-      var div = document.createElement('div')
-      div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id) + '"><img src="' + src + '"/></a>'
+        var div = document.createElement('div')
+        div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id) + '"><img src="' + src + '"/></a>'
 
-      dom.appendChild(div)
+        dom.appendChild(div)
+      }
     }
   )
 }
