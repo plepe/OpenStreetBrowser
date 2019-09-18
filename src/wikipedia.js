@@ -43,7 +43,7 @@ function prepare (div) {
   stripLinks(p)
 
   // first image
-  var imgs = div.getElementsByTagName('img')
+  var imgs = content.getElementsByTagName('img')
   for (i = 0; i < imgs.length; i++) {
     var img = imgs[i]
 
