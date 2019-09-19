@@ -353,8 +353,13 @@ a:active {
   margin-left: 0.5em;
   margin-bottom: 0.5em;
 }
-.wikipedia div {
+.wikipedia > h4 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.wikipedia > div {
   text-align: justify;
+  margin-bottom: 0.5em;
 }
 #contentDetails h3 {
   border-bottom: 1px solid black;
@@ -404,4 +409,10 @@ a:active {
 
 .tabs-section > form > span.form_element_form_chooser {
   border: none;
+}
+
+.clearfix::after {
+  content: '';
+  clear: both;
+  display: table;
 }
