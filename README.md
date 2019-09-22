@@ -65,7 +65,7 @@ File: foo.json
         "12": "(node[highway~'^(motorway_junction)$'];way[highway~'^(motorway|trunk)$'];)",
         "14": "(node[highway~'^(motorway_junction|mini_roundabout|crossing)$'];way[highway~'^(motorway|trunk|primary)$'];)",
         "16": "(node[highway];way[highway];)"
-    }
+    },
     "feature": {
         "style": {
             "color": "{% if tags.highway == 'motorway' %}#ff0000{% elseif tags.highway == 'trunk' %}#ff7f00{% elseif tags.highway == 'primary' %}#ffff00{% else %}#0000ff{% endif %}"
@@ -87,7 +87,7 @@ The following values are possible for categories (the only mandatory value is qu
 * query: either a string or an object of strings with the minimal zoom level as index. Give the Overpass API queries without the header (e.g. `[out:json]` or bounding box) and footer (e.g. `out meta geom` or so).
 * minZoom: Show layer only from the given zoom level (default: 14). If `query` is an object and `minZoom` is not set, the lowest zoom level of a query will be used.
 * maxZoom: Show layer only up to the given zoom level (default: no limit).
-* feature: an object describing how the feature will be formated resp. styled.
+* feature: an object describing how the feature will be formatted resp. styled.
   * style: a Leaflet style.
     * stroke: Whether to draw stroke along the path. Set it to false or empty string to disable borders on polygons or circles. (boolean, true)
     * width: Stroke width in pixels (number, 3)
