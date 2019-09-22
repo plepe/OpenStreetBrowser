@@ -102,8 +102,8 @@ $languages = array(
   "nl", // Dutch
   "oc", // Occitan
   "pl", // Polish
-  "pt", // Portugese
-  "pt-br", // Portugese (Brazil)
+  "pt", // Portuguese
+  "pt-br", // Portuguese (Brazil)
   "ro", // Romanian
   "ru", // Russian
   "sr", // Serbian
