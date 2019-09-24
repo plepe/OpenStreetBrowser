@@ -27,6 +27,9 @@ $config['categoriesAlwaysReload'] = true;
 // (optional) URL, which points to the OpenStreetBrowser Editor
 #$config['urlCategoriesEditor'] = 'editor/';
 
+// URL of OpenStreetMap website - change this for other services
+$config['urlOpenStreetMap'] = 'https://www.openstreetmap.org';
+
 // URL of the Overpass API
 $config['overpassUrl'] = array(
   '//overpass-api.de/api/interpreter',

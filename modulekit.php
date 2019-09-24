@@ -11,6 +11,7 @@ $depend = array(
 );
 $include = array(
   'php' => array(
+    'src/defaults.php',
     'src/options.php',
     'src/language.php',
     'src/ip-location.php',

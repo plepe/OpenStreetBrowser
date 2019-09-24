@@ -339,7 +339,7 @@ window.showDetails = function (data, category) {
   dd = document.createElement('dd')
   a = document.createElement('a')
   a.appendChild(document.createTextNode(data.object.type + '/' + data.object.osm_id))
-  a.href = 'https://openstreetmap.org/' + data.object.type + '/' + data.object.osm_id
+  a.href = config.urlOpenStreetMap + '/' + data.object.type + '/' + data.object.osm_id
   a.target = '_blank'
 
   dd.appendChild(a)
