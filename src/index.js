@@ -38,6 +38,7 @@ require('./permalink')
 require('./nominatim-search')
 require('./CategoryOverpassFilter')
 let exportAll = require('./exportAll')
+const tagsDisplay = require('./tagsDisplay')
 
 window.onload = function () {
   var initState = config.defaultView
@@ -314,18 +315,7 @@ window.showDetails = function (data, category) {
   h.innerHTML = lang('header:attributes')
   dom.appendChild(h)
 
-  div = document.createElement('dl')
-  div.className = 'tags'
-  for (k in data.object.tags) {
-    dt = document.createElement('dt')
-    dt.appendChild(document.createTextNode(k))
-    div.appendChild(dt)
-
-    dd = document.createElement('dd')
-    dd.appendChild(document.createTextNode(data.object.tags[k]))
-    div.appendChild(dd)
-  }
-  dom.appendChild(div)
+  dom.appendChild(tagsDisplay(data.object.tags))
 
   h = document.createElement('h3')
   h.innerHTML = lang('header:osm_meta')
