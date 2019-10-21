@@ -21,7 +21,7 @@
     "header:export": "Export",
     "header:osm_meta": "Métadonnées OSM",
     "images": "Images",
-    "invalid value": "",
+    "invalid value": "valeur invalide",
     "loading": "Chargement...",
     "main:options": "Options",
     "main:permalink": "Permalien",
@@ -46,5 +46,10 @@
     "unnamed": "sans nom",
     "wikipedia:no-url-parse": "Impossible de parser l'URL de Wikipédia",
     "zoom_in_appear": "zoomez pour que les éléments de la carte apparaissent",
-    "zoom_in_more": "zoomez pour afficher plus d'éléments de la carte"
+    "zoom_in_more": "zoomez pour afficher plus d'éléments de la carte",
+    "cancel": "Annuler",
+    "form_element:please_select": "--veuillez sélectionner --",
+    "main:about": "À propos de",
+    "main:code": "Code",
+    "options:debug_mode": "Débogage"
 }
