@@ -44,6 +44,8 @@ window.onload = function () {
 
   map = L.map('map')
 
+  map.attributionControl.setPrefix('<a target="_blank" href="https://wiki.openstreetmap.org/wiki/OpenStreetBrowser">OpenStreetBrowser</a>')
+
   // due to php export, options may be an array -> fix
   if (Array.isArray(options)) {
     options = {}
