@@ -116,7 +116,7 @@ The following values are possible for categories (the only mandatory value is qu
     * pattern-angleCorrection: degrees (arrowHead and marker only)
     * pattern-rotate: false (marker only)
     * pattern-path-*: Options for the path, e.g. pattern-path-width, pattern-path-color.
-    * pane: show vector on the specified pane (usually defined: 'overlayPane' (default), 'hover', 'selected')
+    * pane: show vector on the specified pane (usually defined: 'overlayPane' (default), 'hover', 'selected', 'casing')
   * title: the title of the feature popup, the object in the list and the details page. (default: localized tags for 'name', 'operator' or 'ref', default: 'unknown')
   * body: the body for the feature popup and the details page.
   * description: a short description shown in the list next to the title.

@@ -58,6 +58,8 @@ window.onload = function () {
 
   map.createPane('selected')
   map.getPane('selected').style.zIndex = 498
+  map.createPane('casing')
+  map.getPane('casing').style.zIndex = 399
 }
 
 function onload2 (initState) {
