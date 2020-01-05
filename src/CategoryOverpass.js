@@ -433,7 +433,10 @@ CategoryOverpass.prototype.updateInfo = function () {
     'const': this.data.const
   }
   if (this.map) {
-    data.map = { zoom: map.getZoom() }
+    data.map = {
+      zoom: this.map.getZoom(),
+      metersPerPixel: 40075016.686 * Math.abs(Math.cos(this.map.getCenter().lat / 180 * Math.PI)) / Math.pow(2, this.map.getZoom() + 8)
+    }
   }
   this.domInfo.innerHTML = this.templateInfo.render(data)
   this.updateAssets(this.domInfo)
