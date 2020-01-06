@@ -11,6 +11,7 @@ global.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 require('./CategoryIndex')
 require('./CategoryOverpass')
 require('./category.css')
+const mapMetersPerPixel = require('./map-getMetersPerPixel')
 
 global.map = null
 global.baseCategory = null
@@ -43,6 +44,7 @@ window.onload = function () {
   var initState = config.defaultView
 
   map = L.map('map')
+  map.getMetersPerPixel = mapMetersPerPixel.bind(map)
 
   map.attributionControl.setPrefix('<a target="_blank" href="https://wiki.openstreetmap.org/wiki/OpenStreetBrowser">OpenStreetBrowser</a>')
 
