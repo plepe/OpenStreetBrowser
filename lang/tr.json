@@ -20,8 +20,20 @@
     "main:about": "Hakkında",
     "main:code": "Kod",
     "main:options": "Seçenekler",
-    "open": "Aç",
+    "open": "aç",
     "options:data_lang": "Veri dili",
     "options:data_lang:local": "Yerel dil",
-    "other": "Diğer"
+    "other": "Diğer",
+    "export-all": "Görüntülenen harita detaylarını dışa aktar",
+    "export-prepare": "İndirmeyi hazırla",
+    "facilities": "Tesisler",
+    "images": "Görüntüler",
+    "invalid value": "geçersiz değer",
+    "loading": "Yükleniyor ...",
+    "main:permalink": "Kalıcı Bağlantı",
+    "more_categories": "Daha fazla kategori",
+    "options:ui_lang": "Arayüz dili",
+    "save": "Sakla",
+    "show details": "detayları göster",
+    "toggle_fullscreen": "Tam ekran modu"
 }
