@@ -1,1 +1,27 @@
-{}
+{
+    "add_filter": "Filtre ekle",
+    "any value": "herhangi bir değer",
+    "back": "geri",
+    "cancel": "İptal",
+    "categories": "Kategories",
+    "category-info-tooltip": "Bilgi & Harita anahtarı",
+    "closed": "kapalı",
+    "default": "varsayılan",
+    "edit": "düzenle",
+    "error": "Hata",
+    "export:GeoJSON": "GeoJSON İndir",
+    "export:OSMJSON": "OSM JSON İndir",
+    "filter:title": "Başlık",
+    "filter:type": "Tip",
+    "form_element:please_select": "-- lütfen seçiniz --",
+    "header:attributes": "Öznitelikler",
+    "header:export": "Dışa aktar",
+    "header:osm_meta": "OSM Meta",
+    "main:about": "Hakkında",
+    "main:code": "Kod",
+    "main:options": "Seçenekler",
+    "open": "Aç",
+    "options:data_lang": "Veri dili",
+    "options:data_lang:local": "Yerel dil",
+    "other": "Diğer"
+}
