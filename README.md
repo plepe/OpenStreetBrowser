@@ -90,9 +90,10 @@ The following values are possible for categories (the only mandatory value is qu
 * feature: an object describing how the feature will be formatted resp. styled.
   * style: a Leaflet style.
     * stroke: Whether to draw stroke along the path. Set it to false or empty string to disable borders on polygons or circles. (boolean, true)
-    * width: Stroke width in pixels (number, 3)
+    * width: Stroke width, optionally with unit ('px' for width in screen pixels (default) or 'm' for width in world meters). Default: '3px'.
     * color: Stroke color (string, '#3388ff')
     * opacity: Stroke opacity (number, 1.0)
+    * offset: Offset stroke to left or right ('px' for width in screen pixels (default) or 'm' for width in world meters). Default: '0px'.
     * lineCap: shape at end of the stroke (string, 'round')
     * lineJoin: shape at corners of the stroke (string, 'round')
     * dashArray: stroke dash pattern (string, null)
@@ -115,6 +116,7 @@ The following values are possible for categories (the only mandatory value is qu
     * pattern-angleCorrection: degrees (arrowHead and marker only)
     * pattern-rotate: false (marker only)
     * pattern-path-*: Options for the path, e.g. pattern-path-width, pattern-path-color.
+    * pane: show vector on the specified pane (usually defined: 'overlayPane' (default), 'hover', 'selected', 'casing')
   * title: the title of the feature popup, the object in the list and the details page. (default: localized tags for 'name', 'operator' or 'ref', default: 'unknown')
   * body: the body for the feature popup and the details page.
   * description: a short description shown in the list next to the title.
