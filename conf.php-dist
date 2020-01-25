@@ -111,6 +111,8 @@ $languages = array(
   "ru", // Russian
   "sr", // Serbian
   "uk", // Ukrainian
+  "nb", // Bokmål (Norwegian)
+  "tr", // Turkish
 );
 
 // Uncomment the following lines to use a MYSQL database for session handling.

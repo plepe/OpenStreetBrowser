@@ -11,6 +11,7 @@ global.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 require('./CategoryIndex')
 require('./CategoryOverpass')
 require('./category.css')
+const mapMetersPerPixel = require('./map-getMetersPerPixel')
 
 global.map = null
 global.baseCategory = null
@@ -44,6 +45,9 @@ window.onload = function () {
   var initState = config.defaultView
 
   map = L.map('map')
+  map.getMetersPerPixel = mapMetersPerPixel.bind(map)
+
+  map.attributionControl.setPrefix('<a target="_blank" href="https://wiki.openstreetmap.org/wiki/OpenStreetBrowser">OpenStreetBrowser</a>')
 
   // due to php export, options may be an array -> fix
   if (Array.isArray(options)) {
@@ -57,6 +61,8 @@ window.onload = function () {
 
   map.createPane('selected')
   map.getPane('selected').style.zIndex = 498
+  map.createPane('casing')
+  map.getPane('casing').style.zIndex = 399
 }
 
 function onload2 (initState) {

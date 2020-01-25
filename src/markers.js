@@ -1,11 +1,12 @@
 var OverpassLayer = require('overpass-layer')
+var parseLength = require('overpass-layer/src/parseLength')
 
 function cssStyle (style) {
   let ret = ''
   if ('color' in style) {
     ret += 'stroke: ' + style.color + ';'
   }
-  ret += 'stroke-width: ' + ('width' in style ? style.width : '3') + ';'
+  ret += 'stroke-width: ' + parseLength('width' in style ? style.width : '3', global.map.getMetersPerPixel()) + ';'
   if ('dashArray' in style) {
     ret += 'stroke-dasharray: ' + style.dashArray + ';'
   }
@@ -14,9 +15,6 @@ function cssStyle (style) {
   }
   if ('dashOffset' in style) {
     ret += 'stroke-dashoffset: ' + style.dashOffset + ';'
-  }
-  if ('offset' in style) {
-    ret += 'stroke-offset: ' + style.dashOffset + ';'
   }
   if ('fillColor' in style) {
     ret += 'fill: ' + style.fillColor + ';'
@@ -40,7 +38,7 @@ function markerLine (data) {
   let ret = '<svg anchorX="13" anchorY="8" width="25" height="15">'
 
   styles.forEach(style => {
-    let y = 8.0 + parseFloat('offset' in style ? style.offset : 0)
+    let y = 8.0 + parseLength('offset' in style ? style.offset : 0, global.map.getMetersPerPixel())
 
     ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
   })
