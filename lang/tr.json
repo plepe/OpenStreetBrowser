@@ -35,5 +35,21 @@
     "options:ui_lang": "Arayüz dili",
     "save": "Sakla",
     "show details": "detayları göster",
-    "toggle_fullscreen": "Tam ekran modu"
+    "toggle_fullscreen": "Tam ekran modu",
+    "available_branches": "Mevcut dallar",
+    "export:OSMXML": "OSM XML İndir",
+    "more": "devam",
+    "more_categories_gitea": "&amp;1 oluşturun, kategorileri kendiniz geliştirin!",
+    "more_results": "Daha fazla sonuç göster",
+    "options:data_lang:desc": "Birçok harita özelliğinin adları (ve diğer etiketler) farklı dillere çevrilir (örneğin, 'name: en', 'name: de' ile). Görüntülenmek için hangi dilin kullanılması gerektiğini veya her zaman çevrilmemiş değerin (örneğin, 'ad') kullanılması için 'Yerel dil'i belirtin.",
+    "options:debug_mode": "Hata ayıklama modu",
+    "options:overpassUrl": "OverpassAPI URL'i",
+    "options:preferredBaseMap": "Tercih edilen altlık harita",
+    "repo-use-as-base": "Bu depoyu temel depo olarak kullan",
+    "repositories": "Depolar",
+    "unknown": "bilinmiyor",
+    "unnamed": "ad verilmedi",
+    "wikipedia:no-url-parse": "Wikipedia URL'si ayrıştırılamadı",
+    "zoom_in_appear": "detayların görüntülenmesi için haritayı büyütün",
+    "zoom_in_more": "daha fazla detay için haritayı büyütün"
 }
