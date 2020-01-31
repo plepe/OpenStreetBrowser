@@ -9,7 +9,11 @@ function showImage (image, dom) {
   dom.appendChild(div)
 }
 
-function showWikimediaImage (image, dom) {
+function showWikimediaImage (image, options, dom) {
+  if (!options.size) {
+    options.size = 800
+  }
+
   httpGet(
     'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id),
     {
@@ -20,13 +24,18 @@ function showWikimediaImage (image, dom) {
         return
       }
 
-      let m = result.body.match('img .* src="([^"]+)" .* data-file-width="([0-9]+)" data-file-height="([0-9]+)"')
-      let src = m[1]
+      let m = result.body.match(/<a href="([^"]+\/)([0-9]+)(px-[^"\/]+)" class="mw-thumbnail-link"/)
+      if (m) {
+        let src = m[1] + options.size + m[3]
+        let srcset = m[1] + options.size + m[3] + ' 1x, ' +
+          m[1] + Math.ceil(options.size * 1.5) + m[3] + ' 1.5x, ' +
+          m[1] + Math.ceil(options.size * 2) + m[3] + ' 2x'
 
-      var div = document.createElement('div')
-      div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id) + '"><img src="' + src + '"/></a>'
+        var div = document.createElement('div')
+        div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id) + '"><img src="' + src + '" srcset="' + srcset + '"/></a>'
 
-      dom.appendChild(div)
+        dom.appendChild(div)
+      }
     }
   )
 }
@@ -37,7 +46,7 @@ function show (img, options, div) {
 
   switch (img.type) {
     case 'wikimedia':
-      showWikimediaImage(img, div)
+      showWikimediaImage(img, options, div)
       break
     case 'url':
       showImage(img, div)
@@ -51,6 +60,7 @@ register_hook('show-details', function (data, category, dom, callback) {
   div.className = 'images loading'
   var imageWrapper
   var nextImageWrapper = document.createElement('div')
+  let options
 
   dom.appendChild(div)
 
@@ -85,9 +95,13 @@ register_hook('show-details', function (data, category, dom, callback) {
     imageWrapper.className = 'imageWrapper'
     div.appendChild(imageWrapper)
 
+    options = {
+      size: Math.max(imageWrapper.offsetWidth, imageWrapper.offsetHeight)
+    }
+
     showTimer = window.setInterval(showNext, 5000)
 
-    show(img, {}, imageWrapper)
+    show(img, options, imageWrapper)
     loadNext()
   })
 
@@ -100,7 +114,7 @@ register_hook('show-details', function (data, category, dom, callback) {
         return console.log("Can't load next image", err)
       }
 
-      show(img, {}, nextImageWrapper)
+      show(img, options, nextImageWrapper)
     })
   }
 
@@ -149,7 +163,12 @@ register_hook('show-popup', function (data, category, dom, callback) {
     imageWrapper.className = 'imageWrapper'
     div.appendChild(imageWrapper)
 
-    show(img, {}, imageWrapper)
+    let options = {
+      size: 150
+    }
+
+    console.log(options)
+    show(img, options, imageWrapper)
 
     callback(null)
   })

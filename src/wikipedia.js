@@ -43,7 +43,7 @@ function prepare (div) {
   stripLinks(p)
 
   // first image
-  var imgs = div.getElementsByTagName('img')
+  var imgs = content.getElementsByTagName('img')
   for (i = 0; i < imgs.length; i++) {
     var img = imgs[i]
 
@@ -125,89 +125,64 @@ register_hook('show-details', function (data, category, dom, callback) {
   div.className = 'wikipedia'
 
   if ('wikipedia' in ob.tags) {
-    found++
     foundPrefixes.push('')
 
-    showWikipedia(ob.tags.wikipedia, div, done)
+    ob.tags.wikipedia.split(/;/g).forEach(value => {
+      found++
+      showWikipedia(value, div, done)
+    })
   }
 
   for (k in ob.tags) {
     m = k.match(/^(.*):wikipedia$/)
     if (m) {
+      let prefix = m[1]
+
       h = document.createElement('h4')
-      h.appendChild(document.createTextNode(lang('tag:' + m[1])))
+      h.appendChild(document.createTextNode(lang('tag:' + prefix)))
       div.appendChild(h)
 
-      found++
-      foundPrefixes.push(m[1])
-      showWikipedia(ob.tags[k], div, done)
+      foundPrefixes.push(prefix)
+
+      ob.tags[k].split(/;/g).forEach(value => {
+        found++
+        showWikipedia(value, div, done)
+      })
     }
 
     m = k.match(/^((.*):)?wikipedia:(.*)$/)
     if (m) {
-      if (typeof m[1] === 'undefined' && foundPrefixes.indexOf('') !== -1) {
+      let prefix = m[1]
+
+      if (typeof prefix === 'undefined' && foundPrefixes.indexOf('') !== -1) {
         continue
       }
-      if (foundPrefixes.indexOf(m[1]) !== -1) {
+      if (foundPrefixes.indexOf(prefix) !== -1) {
         continue
       }
 
-      if (m[1]) {
+      if (prefix) {
         h = document.createElement('h4')
-        h.appendChild(document.createTextNode(lang('tag:' + m[1])))
+        h.appendChild(document.createTextNode(lang('tag:' + prefix)))
         div.appendChild(h)
       }
 
-      found++
-      foundPrefixes.push(m[1])
-      showWikipedia(m[3] + ':' + ob.tags[k], div, done)
+      foundPrefixes.push(prefix)
+
+      (m[3] + ':' + ob.tags[k]).split(/;/g).forEach(value => {
+        found++
+        showWikipedia(value, div, done)
+      })
     }
   }
 
   if (ob.tags.wikidata && foundPrefixes.indexOf('') === -1) {
-    found++
     foundPrefixes.push('')
 
-    wikidata.load(ob.tags.wikidata, function (err, result) {
-      var x
-
-      if (err) {
-        return done(err)
-      }
-
-      if (!result.sitelinks) {
-        return done(new Error('No Wikipedia links defined for Wikidata'))
-      }
-
-      if (options.data_lang + 'wiki' in result.sitelinks) {
-        x = result.sitelinks[options.data_lang + 'wiki']
-        return showWikipedia(options.data_lang + ':' + x.title, div, done)
-      }
-
-      for (k in result.sitelinks) {
-        if (k === 'commonswiki') {
-          continue
-        }
-
-        x = result.sitelinks[k]
-        m = k.match(/^(.*)wiki$/)
-        return showWikipedia(m[1] + ':' + x.title, div, done)
-      }
-
-      done()
-    })
-  }
-
-  for (k in ob.tags) {
-    m = k.match(/^(.*):wikidata$/)
-    if (m) {
+    ob.tags.wikidata.split(/;/g).forEach(value => {
       found++
-      if (foundPrefixes.indexOf(m[1]) !== -1) {
-        continue
-      }
-      foundPrefixes.push(m[1])
 
-      wikidata.load(ob.tags[k], function (prefix, err, result) {
+      wikidata.load(value, function (err, result) {
         var x
 
         if (err) {
@@ -215,12 +190,8 @@ register_hook('show-details', function (data, category, dom, callback) {
         }
 
         if (!result.sitelinks) {
-          return done()
+          return done(new Error('No Wikipedia links defined for Wikidata'))
         }
-
-        h = document.createElement('h4')
-        h.appendChild(document.createTextNode(lang('tag:' + prefix)))
-        div.appendChild(h)
 
         if (options.data_lang + 'wiki' in result.sitelinks) {
           x = result.sitelinks[options.data_lang + 'wiki']
@@ -238,7 +209,54 @@ register_hook('show-details', function (data, category, dom, callback) {
         }
 
         done()
-      }.bind(this, m[1]))
+      })
+    })
+  }
+
+  for (k in ob.tags) {
+    m = k.match(/^(.*):wikidata$/)
+    if (m) {
+      let prefix = m[1]
+      found++
+      if (foundPrefixes.indexOf(prefix) !== -1) {
+        continue
+      }
+      foundPrefixes.push(prefix)
+
+      h = document.createElement('h4')
+      h.appendChild(document.createTextNode(lang('tag:' + prefix)))
+      div.appendChild(h)
+
+      ob.tags[k].split(/;/g).forEach(value => {
+        wikidata.load(value, (err, result) => {
+          var x
+
+          if (err) {
+            return done(err)
+          }
+
+          if (!result.sitelinks) {
+            return done()
+          }
+
+          if (options.data_lang + 'wiki' in result.sitelinks) {
+            x = result.sitelinks[options.data_lang + 'wiki']
+            return showWikipedia(options.data_lang + ':' + x.title, div, done)
+          }
+
+          for (k in result.sitelinks) {
+            if (k === 'commonswiki') {
+              continue
+            }
+
+            x = result.sitelinks[k]
+            m = k.match(/^(.*)wiki$/)
+            return showWikipedia(m[1] + ':' + x.title, div, done)
+          }
+
+          done()
+        })
+      })
     }
   }
 
@@ -282,7 +300,8 @@ function showWikipedia (tagValue, dom, callback) {
     div.innerHTML = text
     block.appendChild(div)
 
-    block.className = ''
+    block.removeChild(l)
+    block.className = 'clearfix'
 
     callback(err)
   })

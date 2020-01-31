@@ -24,7 +24,7 @@ class RepositoryGit extends RepositoryBase {
   }
 
   function timestamp () {
-    $ts = (int)shell_exec("cd " . escapeShellArg($this->path) . "; git log -1 {$this->branchEsc} --pretty=format:%ct");
+    $ts = (int)shell_exec("cd " . escapeShellArg($this->path) . "; git log -1 --all --pretty=format:%ct");
 
     return $ts;
   }

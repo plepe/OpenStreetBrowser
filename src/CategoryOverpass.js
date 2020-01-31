@@ -218,9 +218,35 @@ CategoryOverpass.prototype.updateAssets = function (div) {
           }
         })
       }
+    } else if (src.match(/^(marker):.*/)) {
+      let m = src.match(/^(marker):([a-z0-9-_]*)(?:\?(.*))?$/)
+      if (m) {
+        let span = document.createElement('span')
+        img.parentNode.insertBefore(span, img)
+        img.parentNode.removeChild(img)
+        i--
+        let param = m[3] ? qs(m[3]) : {}
+
+        if (param.styles) {
+          let newParam = { styles: param.styles }
+          for (let k in param) {
+            let m = k.match(/^(style|style:.*)?:([^:]*)$/)
+            if (m) {
+              if (!(m[1] in newParam)) {
+                newParam[m[1]] = {}
+              }
+              newParam[m[1]][m[2]] = param[k]
+            }
+          }
+          param = newParam
+        }
+        console.log(param)
+
+        span.innerHTML = markers[m[2]](param)
+      }
     } else if (!src.match(/^(https?:|data:|\.|\/)/)) {
       img.setAttribute('src', (typeof openstreetbrowserPrefix === 'undefined' ? './' : openstreetbrowserPrefix) +
-      'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('src')))
+      'asset.php?repo=' + this.options.repositoryId + '&file=' + encodeURIComponent(img.getAttribute('data-src') || img.getAttribute('src')))
     }
   }
 }
@@ -407,7 +433,10 @@ CategoryOverpass.prototype.updateInfo = function () {
     'const': this.data.const
   }
   if (this.map) {
-    data.map = { zoom: map.getZoom() }
+    data.map = {
+      zoom: this.map.getZoom(),
+      metersPerPixel: this.map.getMetersPerPixel()
+    }
   }
   this.domInfo.innerHTML = this.templateInfo.render(data)
   this.updateAssets(this.domInfo)
@@ -464,7 +493,7 @@ CategoryOverpass.prototype.show = function (id, options, callback) {
           var preferredZoom = data.data.preferredZoom || 16
           var maxZoom = this.map.getZoom()
           maxZoom = maxZoom > preferredZoom ? maxZoom : preferredZoom
-          this.map.flyToBounds(data.object.bounds.toLeaflet(), {
+          this.map.flyToBounds(data.object.bounds.toLeaflet({ shiftWorld: this.layer.getShiftWorld() }), {
             maxZoom: maxZoom
           })
         }
@@ -538,7 +567,7 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
   }
 
   var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
-  footerContent += '<li><a target="_blank" class="editLink" href="https://www.openstreetmap.org/edit?editor=id&' + object.object.type + '=' + object.object.osm_id + '">' + lang('edit') + '</a></li>'
+  footerContent += '<li><a target="_blank" class="editLink" href="' + config.urlOpenStreetMap + '/edit?editor=id&' + object.object.type + '=' + object.object.osm_id + '">' + lang('edit') + '</a></li>'
   footer.innerHTML = footerContent
 }
 

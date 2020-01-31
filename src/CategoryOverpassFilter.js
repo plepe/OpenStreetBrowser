@@ -1,5 +1,6 @@
 const OverpassLayer = require('overpass-layer')
 const tabs = require('modulekit-tabs')
+const natsort = require('natsort')
 
 const state = require('./state')
 const Filter = require('overpass-frontend').Filter
@@ -43,7 +44,7 @@ class CategoryOverpassFilter {
       if ('name' in f && typeof f.name === 'string') {
         global.currentCategory = this.master
         let t = OverpassLayer.twig.twig({ data: f.name, autoescape: true })
-        f.name = t.render({}).toString()
+        f.name = decodeHTML(t.render({}).toString())
       } else if (!('name' in f)) {
         f.name = lang('tag:' + k)
       }
@@ -69,12 +70,12 @@ class CategoryOverpassFilter {
             let k = option.value
             f.values[k] = {}
 
+            Array.from(option.attributes).forEach(attr => {
+              f.values[k][attr.name] = attr.value
+            })
+
             if (option.textContent) {
               f.values[k].name = option.textContent
-            }
-
-            if (option.hasAttribute('query')) {
-              f.values[k].query = option.getAttribute('query')
             }
           }
         }
@@ -82,35 +83,53 @@ class CategoryOverpassFilter {
         if (Array.isArray(f.values) && f.valueName) {
           let newValues = {}
           f.values.forEach(value => {
-            newValues[value] = valueNameTemplate.render({ value }).toString()
+            newValues[value] = decodeHTML(valueNameTemplate.render({ value }).toString())
           })
           f.values = newValues
         } else if (typeof f.values === 'object') {
           for (var k1 in f.values) {
             if (typeof f.values[k1] === 'string') {
               let t = OverpassLayer.twig.twig({ data: f.values[k1], autoescape: true })
-              f.values[k1] = t.render({}).toString()
+              f.values[k1] = decodeHTML(t.render({}).toString())
             } else if (typeof f.values[k1] === 'object') {
               if (!('name' in f.values[k1])) {
-                f.values[k1].name = valueNameTemplate.render({ value: k1 }).toString()
+                f.values[k1].name = decodeHTML(valueNameTemplate.render({ value: k1 }).toString())
               } else if (f.values[k1].name) {
                 let t = OverpassLayer.twig.twig({ data: f.values[k1].name, autoescape: true })
-                f.values[k1].name = t.render({}).toString()
+                f.values[k1].name = decodeHTML(t.render({}))
               }
             }
           }
         }
+
+        if (!('sort' in f) || (f.sort === 'natsort')) {
+          let v = {}
+          let sorter = natsort({ insensitive: true })
+          let keys = Object.keys(f.values)
+
+          keys
+            .sort((a, b) => {
+              let weight = (f.values[a].weight || 0) - (f.values[b].weight || 0)
+              if (weight !== 0) {
+                return weight
+              }
+
+              return sorter(f.values[a].name, f.values[b].name)
+            })
+            .forEach(k => { v[k] = f.values[k] })
+
+          f.values = v
+        }
       }
     }
 
-    let masterOptions = {}
+    let masterOptions = {
+      'change_on_input': true
+    }
     if (Object.keys(this.data).length > 1) {
-      masterOptions = {
-        'type': 'form_chooser',
-        'button:add_element': '-- ' + lang('add_filter') + ' --',
-        'order': false,
-        'change_on_input': true
-      }
+      masterOptions['type'] = 'form_chooser'
+      masterOptions['button:add_element'] = '-- ' + lang('add_filter') + ' --'
+      masterOptions['order'] = false
     }
 
     this.formFilter = new form('filter-' + this.master.id, this.data, masterOptions)
@@ -120,7 +139,6 @@ class CategoryOverpassFilter {
 
       this.applyParam(param)
 
-      this.master.layer.check_update_map()
       state.update()
     }.bind(this)
 
@@ -135,67 +153,74 @@ class CategoryOverpassFilter {
   }
 
   applyParam (param) {
-    this.additionalFilter = []
-    let kvFilter = []
+    this.additionalFilter = Object.keys(param).map(k => {
+      let values = param[k]
+      let d = this.data[k]
 
-    for (var k in param) {
-      if (param[k] === null) {
-        continue
+      if (values === null) {
+        return null
       }
 
-      var d = this.data[k]
-
-      if ('values' in d && param[k] in d.values && typeof d.values[param[k]] === 'object' && 'query' in d.values[param[k]]) {
-        let f = new Filter(d.values[param[k]].query)
-        this.additionalFilter.push(f.def)
-        continue
-      } else if (d.queryTemplate) {
-        let f = new Filter(d.queryTemplate.render({ value: param[k] }).toString())
-        this.additionalFilter.push(f.def)
-        continue
+      if (!Array.isArray(values)) {
+        values = [ values ]
       }
 
-      var v  = {
-        key: 'key' in d ? d.key : k,
-        value: param[k],
-        op: '='
-      }
-
-      if ('op' in d) {
-        if (d.op === 'has_key_value') {
-          v = {
-            key: param[k],
-            op: 'has_key'
-          }
-        } else {
-          v.op = d.op
+      let ret = values.map(value => {
+        if ('values' in d && value in d.values && typeof d.values[value] === 'object' && 'query' in d.values[value]) {
+          let f = new Filter(d.values[value].query)
+          return f.def
+        } else if (d.queryTemplate) {
+          let f = new Filter(decodeHTML(d.queryTemplate.render({ value: value }).toString()))
+          return f.def
         }
-      }
 
-      if (Array.isArray(v.key)) {
-        v = {
-          "or": v.key.map(
-            key => {
-              let v1 = { key, value: v.value, op: v.op }
+        var v  = {
+          key: 'key' in d ? d.key : k,
+          value: value,
+          op: '='
+        }
 
-              let m = key.match(/^(.*)\*(.*)/)
-              if (m) {
-                v1.key = '^' + m[1] + '.*' + m[2]
-                v1.keyRegexp = true
-              }
-
-              return [ v1 ]
+        if ('op' in d) {
+          if (d.op === 'has_key_value') {
+            v = {
+              key: value,
+              op: 'has_key'
             }
-          )
+          } else {
+            v.op = d.op
+          }
         }
+
+        if (Array.isArray(v.key)) {
+          v = {
+            "or": v.key.map(
+              key => {
+                let v1 = { key, value: v.value, op: v.op }
+
+                let m = key.match(/^(.*)\*(.*)/)
+                if (m) {
+                  v1.key = '^' + m[1] + '.*' + m[2]
+                  v1.keyRegexp = true
+                }
+
+                return [ v1 ]
+              }
+            )
+          }
+        }
+
+        return [ v ]
+      }).filter(f => f) // remove null values
+
+      switch (ret.length) {
+        case 0:
+          return null
+        case 1:
+          return ret[0]
+        default:
+          return { or: ret }
       }
-
-      kvFilter.push(v)
-    }
-
-    if (kvFilter.length) {
-      this.additionalFilter.push(kvFilter)
-    }
+    }).filter(f => f) // remove null values
 
     if (this.additionalFilter.length === 0) {
       this.additionalFilter = []
@@ -205,7 +230,7 @@ class CategoryOverpassFilter {
       this.additionalFilter = { and: this.additionalFilter }
     }
 
-    this.master.layer.options.queryOptions.filter = this.additionalFilter
+    this.master.layer.setFilter(this.additionalFilter)
 
     if (!this.tabFilter.isSelected()) {
       this.tabFilter.select()
@@ -232,3 +257,15 @@ register_hook('category-overpass-init', (category) => {
     new CategoryOverpassFilter(category)
   }
 })
+
+function decodeHTML (str) {
+  if (typeof str === 'undefined') {
+    return '-- undefined --'
+  }
+
+  return str
+    .replace(/&#039;/g, '\'')
+    .replace(/&quot;/g, '"')
+    .replace(/&gt;/g, '>')
+    .replace(/&lt;/g, '<')
+}

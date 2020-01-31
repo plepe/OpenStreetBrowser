@@ -39,8 +39,7 @@ a:active {
   bottom: 0;
   width: 5px;
   z-index: 10000;
-  background-image: url(img/shadow_left.png);
-  background-repeat: repeat-y;
+  background: linear-gradient(to right, #5656566f, #56565600);
 }
 
 #sidebar {
@@ -197,8 +196,7 @@ a:active {
   bottom: auto;
   height: 5px;
   width: auto;
-  background-image: url(img/shadow_top.png);
-  background-repeat: repeat-x;
+  background: linear-gradient(to bottom, #5656566f, #56565600);
 }
 #sidebar > #content {
   overflow: visible;
@@ -209,39 +207,15 @@ a:active {
 }
 }
 
-@media all and (max-width: 500px) and (max-height: 500px) {
+@media all and (max-width: 500px) and (max-height: 675px) {
 #sidebar {
-  height: 220px;
+  height: 40%;
 }
 #map {
-  top: 220px;
+  top: 40%;
 }
 #mapShadow {
-  top: 221px;
-}
-}
-
-@media all and (max-width: 500px) and (max-height: 460px) {
-#sidebar {
-  height: 200px;
-}
-#map {
-  top: 200px;
-}
-#mapShadow {
-  top: 201px;
-}
-}
-
-@media all and (max-width: 500px) and (max-height: 420px) {
-#sidebar {
-  height: 180px;
-}
-#map {
-  top: 180px;
-}
-#mapShadow {
-  top: 181px;
+  top: calc(40% + 1px);
 }
 }
 
@@ -379,8 +353,13 @@ a:active {
   margin-left: 0.5em;
   margin-bottom: 0.5em;
 }
-.wikipedia div {
+.wikipedia > h4 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.wikipedia > div {
   text-align: justify;
+  margin-bottom: 0.5em;
 }
 #contentDetails h3 {
   border-bottom: 1px solid black;
@@ -430,4 +409,10 @@ a:active {
 
 .tabs-section > form > span.form_element_form_chooser {
   border: none;
+}
+
+.clearfix::after {
+  content: '';
+  clear: both;
+  display: table;
 }

@@ -15,3 +15,6 @@
 [submodule "lib/modulekit/ajax"]
 	path = lib/modulekit/ajax
 	url = https://github.com/plepe/modulekit-ajax.git
+[submodule "lib/modulekit/mysql-sessions"]
+	path = lib/modulekit/mysql-sessions
+	url = https://github.com/plepe/PHP-MySQL-Sessions.git

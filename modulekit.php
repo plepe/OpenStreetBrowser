@@ -11,6 +11,7 @@ $depend = array(
 );
 $include = array(
   'php' => array(
+    'src/defaults.php',
     'src/options.php',
     'src/language.php',
     'src/ip-location.php',
@@ -25,4 +26,4 @@ $include = array(
     'style.css',
   ),
 );
-$version = "4.5";
+$version = "4.7";

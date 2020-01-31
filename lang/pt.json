@@ -1,5 +1,6 @@
 {
     "add_filter": "",
+    "any value": "",
     "available_branches": "",
     "back": "voltar",
     "categories": "",
@@ -20,6 +21,7 @@
     "header:export": "Exportar",
     "header:osm_meta": "OSM Meta",
     "images": "Imagens",
+    "invalid value": "",
     "loading": "A carregar...",
     "main:options": "Opções",
     "main:permalink": "",

@@ -1,9 +1,10 @@
 {
     "add_filter": "Añadir filtro",
+    "any value": "cualquiera",
     "available_branches": "Ramas disponibles",
     "back": "atrás",
     "categories": "Categorías",
-    "category-info-tooltip": "",
+    "category-info-tooltip": "Información y clave del mapa",
     "closed": "cerrado",
     "default": "predeterminado",
     "edit": "editar",
@@ -18,8 +19,9 @@
     "filter:type": "Tipo",
     "header:attributes": "Atributos",
     "header:export": "Exportar",
-    "header:osm_meta": "",
+    "header:osm_meta": "Metadatos de OSM",
     "images": "Imágenes",
+    "invalid value": "valor incorrecto",
     "loading": "Cargando ...",
     "main:options": "Opciones",
     "main:permalink": "Enlace permanente",
@@ -29,7 +31,7 @@
     "more_results": "Mostrar más resultados",
     "open": "abrir",
     "options:data_lang": "Idioma de datos",
-    "options:data_lang:desc": "",
+    "options:data_lang:desc": "Muchas funciones del mapa tienen su nombre (y otras etiquetas) traducidos a diferentes idiomas (por ejemplo, con 'name:en', 'name:de'). Especifique qué idioma se debe usar para mostrar, o 'Idioma local' para que siempre se use el valor no traducido (por ejemplo, 'name').",
     "options:data_lang:local": "Idioma local",
     "options:overpassUrl": "URL de OverpassAPI",
     "options:preferredBaseMap": "Mapa base preferido",
@@ -44,5 +46,10 @@
     "unnamed": "sin nombre",
     "wikipedia:no-url-parse": "No se pudo analizar la URL de Wikipedia",
     "zoom_in_appear": "acercar para que aparezcan las características del mapa",
-    "zoom_in_more": "acercar para más características del mapa"
+    "zoom_in_more": "acercar para más características del mapa",
+    "cancel": "Cancelar",
+    "form_element:please_select": "-- Por favor seleccione --",
+    "main:about": "Acerca de",
+    "main:code": "Código",
+    "options:debug_mode": "Menú de depuración"
 }
