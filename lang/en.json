@@ -10,6 +10,7 @@
     "default": "default",
     "edit": "edit",
     "editor:id": "iD (in-browser editor)",
+    "editor:remote": "Remote Control (JOSM or Merkaator)",
     "error": "Error",
     "export-all": "Export all visible map features",
     "export-prepare": "Prepare download",
