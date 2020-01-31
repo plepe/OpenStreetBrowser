@@ -11,6 +11,7 @@ var tabs = require('modulekit-tabs')
 var markers = require('./markers')
 var maki = require('./maki')
 var qs = require('sheet-router/qs')
+var editLink = require('./editLink')
 
 const showMore = require('./showMore')
 
@@ -567,7 +568,7 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
   }
 
   var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
-  footerContent += '<li><a target="_blank" class="editLink" href="' + config.urlOpenStreetMap + '/edit?editor=id&' + object.object.type + '=' + object.object.osm_id + '">' + lang('edit') + '</a></li>'
+  footerContent += '<li>' + editLink(object) + '</li>'
   footer.innerHTML = footerContent
 }
 
