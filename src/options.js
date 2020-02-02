@@ -1,6 +1,7 @@
 /* globals form, ajax, options:true */
 var moduleOptions = {}
 var prevPage
+var optionsFormEl
 
 register_hook('init', function () {
   var menu = document.getElementById('menu')
@@ -36,21 +37,22 @@ moduleOptions.open = function () {
 
   optionsForm.set_data(options)
 
-  var f = document.createElement('form')
-  f.onsubmit = moduleOptions.submit.bind(this, optionsForm)
-  dom.appendChild(f)
+  optionsFormEl = document.createElement('form')
+  optionsFormEl.onsubmit = moduleOptions.submit.bind(this, optionsForm)
+  dom.appendChild(optionsFormEl)
 
-  optionsForm.show(f)
+  optionsForm.show(optionsFormEl)
 
   var input = document.createElement('button')
   input.innerHTML = lang('save')
-  f.appendChild(input)
+  optionsFormEl.appendChild(input)
 
   input = document.createElement('button')
   input.innerHTML = lang('cancel')
-  f.appendChild(input)
+  optionsFormEl.appendChild(input)
   input.onclick = function () {
     document.getElementById('content').className = prevPage
+    dom.removeChild(optionsFormEl)
     return false
   }
 
@@ -70,6 +72,8 @@ moduleOptions.submit = function (optionsForm) {
   ajax('options_save', null, data, function (ret) {
     let oldOptions = options
     options = data
+
+    optionsFormEl.parentNode.removeChild(optionsFormEl)
 
     document.getElementById('content').className = prevPage
 
