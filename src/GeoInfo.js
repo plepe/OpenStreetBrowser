@@ -7,10 +7,6 @@ const tabs = require('modulekit-tabs')
 const formatUnits = require('./formatUnits')
 require('./GeoInfo.css')
 
-function formatCoord (coord) {
-  return coord.lat.toFixed(5) + ' ' + coord.lng.toFixed(5)
-}
-
 register_hook('init', function () {
   let tab = new tabs.Tab({
     id: 'search',
@@ -49,14 +45,14 @@ register_hook('init', function () {
     domZoom.innerHTML = '<span title="' + lang('geoinfo:zoom') + '"><i class="fas fa-search-location icon"></i>z' + Math.round(global.map.getZoom()) + ', ' + scale + 'm/px</span>'
 
     let bounds = map.getBounds()
-    domBBoxNW.innerHTML = '<span title="' + lang('geoinfo:nw-corner') + '"><span class="icon">▛</span>' + formatCoord(bounds.getNorthWest().wrap()) + '</span>'
-    domCenter.innerHTML = '<span title="' + lang('geoinfo:center') + '"><i class="fas fa-crosshairs icon"></i>' + formatCoord(bounds.getCenter().wrap()) + '</span>'
-    domBBoxSE.innerHTML = '<span title="' + lang('geoinfo:se-corner') + '"><span class="icon">▟</span>' + formatCoord(bounds.getSouthEast().wrap()) + '</span>'
+    domBBoxNW.innerHTML = '<span title="' + lang('geoinfo:nw-corner') + '"><span class="icon">▛</span>' + formatUnits.coord(bounds.getNorthWest().wrap()) + '</span>'
+    domCenter.innerHTML = '<span title="' + lang('geoinfo:center') + '"><i class="fas fa-crosshairs icon"></i>' + formatUnits.coord(bounds.getCenter().wrap()) + '</span>'
+    domBBoxSE.innerHTML = '<span title="' + lang('geoinfo:se-corner') + '"><span class="icon">▟</span>' + formatUnits.coord(bounds.getSouthEast().wrap()) + '</span>'
     updateTabHeader(tab.header)
   })
 
   global.map.on('mousemove', (e) => {
-    domMouse.innerHTML = '<span title="' + lang('geoinfo:mouse') + '"><i class="fas fa-mouse-pointer icon"></i>' + formatCoord(e.latlng.wrap()) + '</span>'
+    domMouse.innerHTML = '<span title="' + lang('geoinfo:mouse') + '"><i class="fas fa-mouse-pointer icon"></i>' + formatUnits.coord(e.latlng.wrap()) + '</span>'
   })
 
   global.map.on('mouseout', (e) => {
@@ -64,7 +60,7 @@ register_hook('init', function () {
   })
 
   global.map.on('locationfound', (e) => {
-    domLocation.innerHTML = '<span title="' + lang('geoinfo:location') + '"><i class="fas fa-map-marker-alt"></i> ' + formatCoord(e.latlng.wrap()) + '</span>'
+    domLocation.innerHTML = '<span title="' + lang('geoinfo:location') + '"><i class="fas fa-map-marker-alt"></i> ' + formatUnits.coord(e.latlng.wrap()) + '</span>'
   })
 })
 
@@ -87,13 +83,13 @@ register_hook('show-details', (data, category, dom, callback) => {
   }
 
   if (ob.bounds.minlat !== ob.bounds.maxlat || ob.bounds.minlon !== ob.bounds.maxlon) {
-    result += '<div title="' + lang('geoinfo:nw-corner') + '"><span class="icon">▛</span>' + formatCoord({ lat: ob.bounds.minlat, lng: ob.bounds.maxlon }) + '</div>'
+    result += '<div title="' + lang('geoinfo:nw-corner') + '"><span class="icon">▛</span>' + formatUnits.coord({ lat: ob.bounds.minlat, lng: ob.bounds.maxlon }) + '</div>'
   }
 
-  result += '<div title="' + lang('geoinfo:center') + '"><i class="fas fa-crosshairs icon"></i>' + formatCoord({ lat: ob.center.lat, lng: ob.center.lon }) + '</div>'
+  result += '<div title="' + lang('geoinfo:center') + '"><i class="fas fa-crosshairs icon"></i>' + formatUnits.coord({ lat: ob.center.lat, lng: ob.center.lon }) + '</div>'
 
   if (ob.bounds.minlat !== ob.bounds.maxlat || ob.bounds.minlon !== ob.bounds.maxlon) {
-    result += '<div title="' + lang('geoinfo:se-corner') + '"><span class="icon">▟</span>' + formatCoord({ lat: ob.bounds.maxlat, lng: ob.bounds.minlon }) + '</div>'
+    result += '<div title="' + lang('geoinfo:se-corner') + '"><span class="icon">▟</span>' + formatUnits.coord({ lat: ob.bounds.maxlat, lng: ob.bounds.minlon }) + '</div>'
   }
 
   result += '</div>'
