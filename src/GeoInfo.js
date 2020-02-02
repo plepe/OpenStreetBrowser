@@ -48,28 +48,64 @@ register_hook('init', function () {
     updateTabHeader(tab.header)
   }
 
+  let lastMouseEvent
   function updateMouse (e) {
-    domMouse.innerHTML = '<span title="' + lang('geoinfo:mouse') + '"><i class="fas fa-mouse-pointer icon"></i>' + formatUnits.coord(e.latlng.wrap()) + '</span>'
+    if (!e) {
+      e = lastMouseEvent
+    }
+
+    if (e) {
+      domMouse.innerHTML = '<span title="' + lang('geoinfo:mouse') + '"><i class="fas fa-mouse-pointer icon"></i>' + formatUnits.coord(e.latlng.wrap()) + '</span>'
+    } else {
+      removeMouse()
+    }
+
+    lastMouseEvent = e
   }
 
   function removeMouse () {
+    lastMouseEvent = null
     domMouse.innerHTML = ''
   }
 
+  let lastLocation
   function updateLocation (e) {
-    domLocation.innerHTML = '<span title="' + lang('geoinfo:location') + '"><i class="fas fa-map-marker-alt"></i> ' + formatUnits.coord(e.latlng.wrap()) + '</span>'
+    if (!e) {
+      lastLocation = e
+    }
+
+    if (e) {
+      domLocation.innerHTML = '<span title="' + lang('geoinfo:location') + '"><i class="fas fa-map-marker-alt"></i> ' + formatUnits.coord(e.latlng.wrap()) + '</span>'
+    }
   }
 
   global.map.on('move', updateMapView)
   global.map.on('mousemove', updateMouse)
   global.map.on('mouseout', removeMouse)
   global.map.on('locationfound', updateLocation)
+  register_hook('format-units-refresh', updateMapView)
+  register_hook('format-units-refresh', updateMouse)
+  register_hook('format-units-refresh', removeMouse)
+  register_hook('format-units-refresh', updateLocation)
 })
 
+let showDetailsCurrent
 register_hook('show-details', (data, category, dom, callback) => {
   let div = document.createElement('div')
   dom.appendChild(div)
 
+  showDetailsCurrent = [ data, category, div ]
+  geoInfoShowDetails.apply(this, showDetailsCurrent)
+  callback()
+})
+register_hook('format-units-refresh', () => {
+  if (showDetailsCurrent) {
+    showDetailsCurrent[2].innerHTML = ''
+    geoInfoShowDetails.apply(this, showDetailsCurrent)
+  }
+})
+
+function geoInfoShowDetails (data, category, div) {
   let ob = data.object
   let result = '<div class="geo-info"><h3>' + lang('geoinfo:header') + '</h3>'
 
@@ -96,9 +132,7 @@ register_hook('show-details', (data, category, dom, callback) => {
 
   result += '</div>'
   div.innerHTML = result
-
-  callback()
-})
+}
 
 function updateTabHeader (header) {
   if (!global.map._loaded) {
