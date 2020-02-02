@@ -14,7 +14,7 @@ register_hook('init', function () {
   global.tabs.add(tab)
 
   updateTabHeader(tab.header)
-  tab.header.title = lang('geo-info')
+  tab.header.title = lang('geoinfo:header')
 
   let domZoom = document.createElement('div')
   tab.content.appendChild(domZoom)
@@ -60,6 +60,29 @@ register_hook('init', function () {
   global.map.on('locationfound', (e) => {
     domLocation.innerHTML = '<span title="' + lang('geoinfo:location') + '"><i class="fas fa-map-marker-alt"></i> ' + formatCoord(e.latlng.wrap()) + '</span>'
   })
+})
+
+register_hook('show-details', (data, category, dom, callback) => {
+  let div = document.createElement('div')
+  dom.appendChild(div)
+
+  let ob = data.object
+  let result = '<div class="geo-info"><h3>' + lang('geoinfo:header') + '</h3>'
+
+  if (ob.bounds.minlat !== ob.bounds.maxlat || ob.bounds.minlon !== ob.bounds.maxlon) {
+    result += '<div title="' + lang('geoinfo:nw-corner') + '"><span class="icon">▛</span>' + formatCoord({ lat: ob.bounds.minlat, lng: ob.bounds.maxlon }) + '</div>'
+  }
+
+  result += '<div title="' + lang('geoinfo:center') + '"><i class="fas fa-crosshairs icon"></i>' + formatCoord({ lat: ob.center.lat, lng: ob.center.lon }) + '</div>'
+
+  if (ob.bounds.minlat !== ob.bounds.maxlat || ob.bounds.minlon !== ob.bounds.maxlon) {
+    result += '<div title="' + lang('geoinfo:se-corner') + '"><span class="icon">▟</span>' + formatCoord({ lat: ob.bounds.maxlat, lng: ob.bounds.minlon }) + '</div>'
+  }
+
+  result += '</div>'
+  div.innerHTML = result
+
+  callback()
 })
 
 function updateTabHeader (header) {

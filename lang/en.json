@@ -25,6 +25,7 @@
     "geoinfo:mouse": "Mouse position",
     "geoinfo:location": "Current location",
     "geoinfo:zoom": "Zoom level",
+    "geoinfo:header": "Geometry",
     "header:attributes": "Attributes",
     "header:export": "Export",
     "header:osm_meta": "OSM Meta",
