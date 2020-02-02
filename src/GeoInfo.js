@@ -16,6 +16,9 @@ register_hook('init', function () {
   updateTabHeader(tab.header)
   tab.header.title = lang('geo-info')
 
+  let domZoom = document.createElement('div')
+  tab.content.appendChild(domZoom)
+
   let domBBoxNW = document.createElement('div')
   tab.content.appendChild(domBBoxNW)
 
@@ -32,6 +35,13 @@ register_hook('init', function () {
   tab.content.appendChild(domLocation)
 
   global.map.on('move', () => {
+    let scale = global.map.getMetersPerPixel().toPrecision(3)
+    if (scale.match(/E/i)) {
+      scale = parseFloat(scale)
+    }
+
+    domZoom.innerHTML = '<span title="' + lang('geoinfo:zoom') + '"><i class="fas fa-search-location icon"></i>z' + Math.round(global.map.getZoom()) + ', ' + scale + 'm/px</span>'
+
     let bounds = map.getBounds()
     domBBoxNW.innerHTML = '<span title="' + lang('geoinfo:nw-corner') + '"><span class="icon">▛</span>' + formatCoord(bounds.getNorthWest().wrap()) + '</span>'
     domCenter.innerHTML = '<span title="' + lang('geoinfo:center') + '"><i class="fas fa-crosshairs icon"></i>' + formatCoord(bounds.getCenter().wrap()) + '</span>'
