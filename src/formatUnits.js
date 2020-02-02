@@ -6,6 +6,7 @@ const defaults = {
   coordSpacer: ', ',
   system: 'si'
 }
+let settings = defaults
 
 const distanceUnits = {
   si: ['cm', 'm', 'km'],
@@ -24,7 +25,8 @@ module.exports = {
   area: value => formatUnit('area')(value)(areaUnits[global.options.formatUnitsSystem || defaults.system]),
   coord: value => formatcoords(value).format(global.options.formatUnitsCoordFormat || defaults.coordFormat, {
     latLonSeparator: global.options.formatUnitsCoordSpacer || defaults.coordSpacer
-  })
+  }),
+  settings
 }
 
 register_hook('options_form', def => {
@@ -63,6 +65,26 @@ register_hook('options_form', def => {
   }
 })
 
-register_hook('options_save', def => {
-  call_hooks('format-units-refresh')
+register_hook('options_save', data => {
+  let old = JSON.stringify(settings)
+
+  settings.coordFormat = data.formatUnitsCoordFormat
+  settings.coordSpacer = data.formatUnitsCoordSpacer
+  settings.system = data.formatUnitsSystem
+
+  if (old !== JSON.stringify(settings)) {
+    call_hooks('format-units-refresh')
+  }
+})
+
+register_hook('init', () => {
+  let old = JSON.stringify(settings)
+
+  settings.coordFormat = global.options.formatUnitsCoordFormat || defaults.coordFormat
+  settings.coordSpacer = global.options.formatUnitsCoordSpacer || defaults.coordSpacer
+  settings.system = global.options.formatUnitsSystem || defaults.system
+
+  if (old !== JSON.stringify(settings)) {
+    call_hooks('format-units-refresh')
+  }
 })
