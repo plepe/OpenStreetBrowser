@@ -36,7 +36,7 @@ register_hook('init', function () {
   let domLocation = document.createElement('div')
   tab.content.appendChild(domLocation)
 
-  global.map.on('move', () => {
+  function updateMapView () {
     let scale = formatUnits.distance(global.map.getMetersPerPixel())
 
     domZoom.innerHTML = '<span title="' + lang('geoinfo:zoom') + '"><i class="fas fa-search-location icon"></i>z' + Math.round(global.map.getZoom()) + ', ' + scale + '/px</span>'
@@ -46,19 +46,24 @@ register_hook('init', function () {
     domCenter.innerHTML = '<span title="' + lang('geoinfo:center') + '"><i class="fas fa-crosshairs icon"></i>' + formatUnits.coord(bounds.getCenter().wrap()) + '</span>'
     domBBoxSE.innerHTML = '<span title="' + lang('geoinfo:se-corner') + '"><span class="icon">▟</span>' + formatUnits.coord(bounds.getSouthEast().wrap()) + '</span>'
     updateTabHeader(tab.header)
-  })
+  }
 
-  global.map.on('mousemove', (e) => {
+  function updateMouse (e) {
     domMouse.innerHTML = '<span title="' + lang('geoinfo:mouse') + '"><i class="fas fa-mouse-pointer icon"></i>' + formatUnits.coord(e.latlng.wrap()) + '</span>'
-  })
+  }
 
-  global.map.on('mouseout', (e) => {
+  function removeMouse () {
     domMouse.innerHTML = ''
-  })
+  }
 
-  global.map.on('locationfound', (e) => {
+  function updateLocation (e) {
     domLocation.innerHTML = '<span title="' + lang('geoinfo:location') + '"><i class="fas fa-map-marker-alt"></i> ' + formatUnits.coord(e.latlng.wrap()) + '</span>'
-  })
+  }
+
+  global.map.on('move', updateMapView)
+  global.map.on('mousemove', updateMouse)
+  global.map.on('mouseout', removeMouse)
+  global.map.on('locationfound', updateLocation)
 })
 
 register_hook('show-details', (data, category, dom, callback) => {
