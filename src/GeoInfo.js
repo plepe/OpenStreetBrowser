@@ -1,4 +1,5 @@
 const tabs = require('modulekit-tabs')
+require('./GeoInfo.css')
 
 function formatCoord (coord) {
   return coord.lat.toFixed(5) + ' ' + coord.lng.toFixed(5)
@@ -32,14 +33,14 @@ register_hook('init', function () {
 
   global.map.on('move', () => {
     let bounds = map.getBounds()
-    domBBoxNW.innerHTML = '▛ ' + formatCoord(bounds.getNorthWest().wrap())
-    domCenter.innerHTML = '<i class="fas fa-crosshairs"></i> ' + formatCoord(bounds.getCenter().wrap())
-    domBBoxSE.innerHTML = '▟ ' + formatCoord(bounds.getSouthEast().wrap())
+    domBBoxNW.innerHTML = '<span title="' + lang('geoinfo:nw-corner') + '"><span class="icon">▛</span>' + formatCoord(bounds.getNorthWest().wrap()) + '</span>'
+    domCenter.innerHTML = '<span title="' + lang('geoinfo:center') + '"><i class="fas fa-crosshairs icon"></i>' + formatCoord(bounds.getCenter().wrap()) + '</span>'
+    domBBoxSE.innerHTML = '<span title="' + lang('geoinfo:se-corner') + '"><span class="icon">▟</span>' + formatCoord(bounds.getSouthEast().wrap()) + '</span>'
     updateTabHeader(tab.header)
   })
 
   global.map.on('mousemove', (e) => {
-    domMouse.innerHTML = '<i class="fas fa-mouse-pointer"></i> ' + formatCoord(e.latlng.wrap())
+    domMouse.innerHTML = '<span title="' + lang('geoinfo:mouse') + '"><i class="fas fa-mouse-pointer icon"></i>' + formatCoord(e.latlng.wrap()) + '</span>'
   })
 
   global.map.on('mouseout', (e) => {
@@ -47,7 +48,7 @@ register_hook('init', function () {
   })
 
   global.map.on('locationfound', (e) => {
-    domLocation.innerHTML = '<i class="fas fa-map-marker-alt"></i> ' + formatCoord(e.latlng.wrap())
+    domLocation.innerHTML = '<span title="' + lang('geoinfo:location') + '"><i class="fas fa-map-marker-alt"></i> ' + formatCoord(e.latlng.wrap()) + '</span>'
   })
 })
 
