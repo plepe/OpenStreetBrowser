@@ -86,7 +86,7 @@ register_hook('show-details', (data, category, dom, callback) => {
     result += '<div title="' + lang('geoinfo:nw-corner') + '"><span class="icon">▛</span>' + formatUnits.coord({ lat: ob.bounds.minlat, lng: ob.bounds.maxlon }) + '</div>'
   }
 
-  result += '<div title="' + lang('geoinfo:center') + '"><i class="fas fa-crosshairs icon"></i>' + formatUnits.coord({ lat: ob.center.lat, lng: ob.center.lon }) + '</div>'
+  result += '<div title="' + lang('geoinfo:centroid') + '"><i class="fas fa-crosshairs icon"></i>' + formatUnits.coord({ lat: ob.center.lat, lng: ob.center.lon }) + '</div>'
 
   if (ob.bounds.minlat !== ob.bounds.maxlat || ob.bounds.minlon !== ob.bounds.maxlon) {
     result += '<div title="' + lang('geoinfo:se-corner') + '"><span class="icon">▟</span>' + formatUnits.coord({ lat: ob.bounds.maxlat, lng: ob.bounds.minlon }) + '</div>'
