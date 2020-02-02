@@ -1,4 +1,4 @@
-const formatUnit = require('format-unit').default
+const { measureFrom } = require('measure-ts')
 const formatcoords = require('formatcoords')
 
 const defaults = {
@@ -11,20 +11,26 @@ let settings = defaults
 const distanceUnits = {
   si: ['cm', 'm', 'km'],
   imp: ['in', 'ft', 'yd', 'mi'],
-  nautical: 'M',
-  m: 'm'
+  nautical: ['M'],
+  m: ['m']
 }
 
 const areaUnits = {
   si: ['cm2', 'm2', 'ha', 'km2'],
-  imp: ['in2', 'ft2', 'yd2', 'ar', 'mi2'],
-  nautical: 'M2',
-  m: 'm2'
+  imp: ['in2', 'ft2', 'yd2', 'ac', 'mi2'],
+  nautical: ['M2'],
+  m: ['m2']
 }
 
 module.exports = {
-  distance: value => formatUnit('length')(value)(distanceUnits[global.options.formatUnitsSystem || defaults.system]),
-  area: value => formatUnit('area')(value)(areaUnits[global.options.formatUnitsSystem || defaults.system]),
+  distance: value => {
+    const measure = measureFrom.apply(this, distanceUnits[global.options.formatUnitsSystem || defaults.system])
+    return measure(value).toString()
+  },
+  area: value => {
+    const measure = measureFrom.apply(this, areaUnits[global.options.formatUnitsSystem || defaults.system])
+    return measure(value).toString()
+  },
   coord: value => formatcoords(value).format(global.options.formatUnitsCoordFormat || defaults.coordFormat, {
     latLonSeparator: global.options.formatUnitsCoordSpacer || defaults.coordSpacer
   }),
