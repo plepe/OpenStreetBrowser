@@ -15,8 +15,14 @@ register_hook('init', function () {
   updateTabHeader(tab.header)
   tab.header.title = lang('geo-info')
 
+  let domBBoxNW = document.createElement('div')
+  tab.content.appendChild(domBBoxNW)
+
   let domCenter = document.createElement('div')
   tab.content.appendChild(domCenter)
+
+  let domBBoxSE = document.createElement('div')
+  tab.content.appendChild(domBBoxSE)
 
   let domMouse = document.createElement('div')
   tab.content.appendChild(domMouse)
@@ -25,12 +31,19 @@ register_hook('init', function () {
   tab.content.appendChild(domLocation)
 
   global.map.on('move', () => {
-    domCenter.innerHTML = '<i class="fas fa-crosshairs"></i> ' + formatCoord(map.getCenter().wrap())
+    let bounds = map.getBounds()
+    domBBoxNW.innerHTML = '▛ ' + formatCoord(bounds.getNorthWest().wrap())
+    domCenter.innerHTML = '<i class="fas fa-crosshairs"></i> ' + formatCoord(bounds.getCenter().wrap())
+    domBBoxSE.innerHTML = '▟ ' + formatCoord(bounds.getSouthEast().wrap())
     updateTabHeader(tab.header)
   })
 
   global.map.on('mousemove', (e) => {
     domMouse.innerHTML = '<i class="fas fa-mouse-pointer"></i> ' + formatCoord(e.latlng.wrap())
+  })
+
+  global.map.on('mouseout', (e) => {
+    domMouse.innerHTML = ''
   })
 
   global.map.on('locationfound', (e) => {
