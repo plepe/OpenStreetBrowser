@@ -1,4 +1,10 @@
+const turf = {
+  area: require('@turf/area').default,
+  length: require('@turf/length').default
+}
 const tabs = require('modulekit-tabs')
+
+const formatUnits = require('./formatUnits')
 require('./GeoInfo.css')
 
 function formatCoord (coord) {
@@ -68,6 +74,17 @@ register_hook('show-details', (data, category, dom, callback) => {
 
   let ob = data.object
   let result = '<div class="geo-info"><h3>' + lang('geoinfo:header') + '</h3>'
+
+  let geojson = ob.GeoJSON()
+  let area = turf.area(geojson)
+  let length = turf.length(geojson) * 1000
+
+  if (area !== 0 || length !== 0) {
+    result += '<div><i class="fas fa-shapes icon"></i>' +
+      lang('geoinfo:length') + ': ' + formatUnits.distance(length) +
+      (area === 0 ? '' : ', ' + lang('geoinfo:area') + ': ' + formatUnits.area(area)) +
+      '</div>'
+  }
 
   if (ob.bounds.minlat !== ob.bounds.maxlat || ob.bounds.minlon !== ob.bounds.maxlon) {
     result += '<div title="' + lang('geoinfo:nw-corner') + '"><span class="icon">▛</span>' + formatCoord({ lat: ob.bounds.minlat, lng: ob.bounds.maxlon }) + '</div>'

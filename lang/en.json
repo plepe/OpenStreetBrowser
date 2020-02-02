@@ -26,6 +26,8 @@
     "geoinfo:location": "Current location",
     "geoinfo:zoom": "Zoom level",
     "geoinfo:header": "Geometry",
+    "geoinfo:length": "Length",
+    "geoinfo:area": "Area",
     "header:attributes": "Attributes",
     "header:export": "Export",
     "header:osm_meta": "OSM Meta",
