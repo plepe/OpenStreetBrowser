@@ -37,12 +37,9 @@ register_hook('init', function () {
   tab.content.appendChild(domLocation)
 
   global.map.on('move', () => {
-    let scale = global.map.getMetersPerPixel().toPrecision(3)
-    if (scale.match(/E/i)) {
-      scale = parseFloat(scale)
-    }
+    let scale = formatUnits.distance(global.map.getMetersPerPixel())
 
-    domZoom.innerHTML = '<span title="' + lang('geoinfo:zoom') + '"><i class="fas fa-search-location icon"></i>z' + Math.round(global.map.getZoom()) + ', ' + scale + 'm/px</span>'
+    domZoom.innerHTML = '<span title="' + lang('geoinfo:zoom') + '"><i class="fas fa-search-location icon"></i>z' + Math.round(global.map.getZoom()) + ', ' + scale + '/px</span>'
 
     let bounds = map.getBounds()
     domBBoxNW.innerHTML = '<span title="' + lang('geoinfo:nw-corner') + '"><span class="icon">▛</span>' + formatUnits.coord(bounds.getNorthWest().wrap()) + '</span>'
