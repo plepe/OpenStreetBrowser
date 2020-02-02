@@ -23,6 +23,7 @@
     "formatUnits:system": "Unit system",
     "formatUnits:system:si": "SI Units",
     "formatUnits:system:imp": "Imperial units",
+    "formatUnits:system:nautical": "Nautical",
     "formatUnits:system:m": "Always meter",
     "form_element:please_select": "-- please select --",
     "geoinfo:nw-corner": "Northwestern corner",

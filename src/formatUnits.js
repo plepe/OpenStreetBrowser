@@ -11,12 +11,14 @@ let settings = defaults
 const distanceUnits = {
   si: ['cm', 'm', 'km'],
   imp: ['in', 'ft', 'yd', 'mi'],
+  nautical: 'M',
   m: 'm'
 }
 
 const areaUnits = {
   si: ['cm2', 'm2', 'ha', 'km2'],
   imp: ['in2', 'ft2', 'yd2', 'ar', 'mi2'],
+  nautical: 'M2',
   m: 'm2'
 }
 
@@ -36,6 +38,7 @@ register_hook('options_form', def => {
     'values': {
       'si': lang('formatUnits:system:si'),
       'imp': lang('formatUnits:system:imp'),
+      'nautical': lang('formatUnits:system:nautical'),
       'm': lang('formatUnits:system:m'),
     },
     'default': defaults.system
