@@ -1,12 +1,11 @@
 const { measureFrom } = require('measure-ts')
 const formatcoords = require('formatcoords')
 
-const defaults = {
+const settings = {
   coordFormat: 'FFf',
   coordSpacer: ', ',
   system: 'si'
 }
-let settings = defaults
 
 const distanceUnits = {
   si: ['cm', 'm', 'km'],
@@ -24,15 +23,15 @@ const areaUnits = {
 
 module.exports = {
   distance: value => {
-    const measure = measureFrom.apply(this, distanceUnits[global.options.formatUnitsSystem || defaults.system])
+    const measure = measureFrom.apply(this, distanceUnits[settings.system])
     return measure(value).toString()
   },
   area: value => {
-    const measure = measureFrom.apply(this, areaUnits[global.options.formatUnitsSystem || defaults.system])
+    const measure = measureFrom.apply(this, areaUnits[settings.system])
     return measure(value).toString()
   },
-  coord: value => formatcoords(value).format(global.options.formatUnitsCoordFormat || defaults.coordFormat, {
-    latLonSeparator: global.options.formatUnitsCoordSpacer || defaults.coordSpacer
+  coord: value => formatcoords(value).format(settings.coordFormat, {
+    latLonSeparator: settings.coordSpacer
   }),
   settings
 }
@@ -47,7 +46,7 @@ register_hook('options_form', def => {
       'nautical': lang('formatUnits:system:nautical'),
       'm': lang('formatUnits:system:m'),
     },
-    'default': defaults.system
+    'default': settings.system
   }
 
   def.formatUnitsCoordFormat = {
@@ -60,7 +59,7 @@ register_hook('options_form', def => {
       'f': 'DD.DDD° X',
       'd': '±DD.DDD'
     },
-    'default': defaults.coordFormat
+    'default': settings.coordFormat
   }
 
   def.formatUnitsCoordSpacer = {
@@ -70,7 +69,7 @@ register_hook('options_form', def => {
       ' ': 'Space',
       ', ': 'Colon'
     },
-    'default': defaults.coordSpacer
+    'default': settings.coordSpacer
   }
 })
 
@@ -89,9 +88,9 @@ register_hook('options_save', data => {
 register_hook('init', () => {
   let old = JSON.stringify(settings)
 
-  settings.coordFormat = global.options.formatUnitsCoordFormat || defaults.coordFormat
-  settings.coordSpacer = global.options.formatUnitsCoordSpacer || defaults.coordSpacer
-  settings.system = global.options.formatUnitsSystem || defaults.system
+  settings.coordFormat = global.options.formatUnitsCoordFormat || settings.coordFormat
+  settings.coordSpacer = global.options.formatUnitsCoordSpacer || settings.coordSpacer
+  settings.system = global.options.formatUnitsSystem || settings.system
 
   if (old !== JSON.stringify(settings)) {
     call_hooks('format-units-refresh')
