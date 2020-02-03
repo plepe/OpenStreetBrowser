@@ -1,6 +1,22 @@
-.geo-info .icon {
-  text-align: center;
-  width: 1em;
+.geo-info > div {
+  display: flex;
+  align-items: end;
+  margin-top: 0.5em;
+}
+.geo-info > div:first-of-type,
+.geo-info > div.empty {
+  margin-top: 0;
+}
+.geo-info > div > .icon {
+  width: 15px;
+  height: 15px;
   margin-right: 0.5em;
-  display: inline-block;
+}
+.geo-info > div > i.icon {
+  display: flex;
+}
+.geo-info > div > i.icon::before {
+  margin: auto;
+}
+.geo-info > div > .value {
 }
