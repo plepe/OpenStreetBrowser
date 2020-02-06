@@ -44,15 +44,26 @@ register_hook('init', function () {
   domLocation.className = 'empty'
   tab.content.appendChild(domLocation)
 
+  function getPrecision () {
+    let zoom = global.map.getZoom()
+    return zoom > 16 ? 5
+      : zoom > 8 ? 4
+      : zoom > 4 ? 3
+      : zoom > 2 ? 2
+      : zoom > 1 ? 1
+      : 0
+  }
+
   function updateMapView () {
     let scale = formatUnits.distance(global.map.getMetersPerPixel())
+    let precision = getPrecision()
 
     domZoom.innerHTML = '<i class="fas fa-search-location icon"></i><span class="value">z' + Math.round(global.map.getZoom()) + ', ' + scale + '/px</span>'
 
     let bounds = map.getBounds()
-    domBBoxNW.innerHTML = '<img class="icon" src="img/geo-info-bbox-nw.svg"/><span class="value">' + formatUnits.coord(bounds.getNorthWest().wrap()) + '</span>'
-    domCenter.innerHTML = '<img class="icon" src="img/geo-info-bbox-center.svg"/><span class="value">' + formatUnits.coord(bounds.getCenter().wrap()) + '</span>'
-    domBBoxSE.innerHTML = '<img class="icon" src="img/geo-info-bbox-se.svg"/>' + formatUnits.coord(bounds.getSouthEast().wrap()) + '</span>'
+    domBBoxNW.innerHTML = '<img class="icon" src="img/geo-info-bbox-nw.svg"/><span class="value">' + formatUnits.coord(bounds.getNorthWest().wrap(), { precision }) + '</span>'
+    domCenter.innerHTML = '<img class="icon" src="img/geo-info-bbox-center.svg"/><span class="value">' + formatUnits.coord(bounds.getCenter().wrap(), { precision }) + '</span>'
+    domBBoxSE.innerHTML = '<img class="icon" src="img/geo-info-bbox-se.svg"/>' + formatUnits.coord(bounds.getSouthEast().wrap(), { precision }) + '</span>'
     updateTabHeader(tab.header)
   }
 
@@ -63,7 +74,8 @@ register_hook('init', function () {
     }
 
     if (e) {
-      domMouse.innerHTML = '<i class="fas fa-mouse-pointer icon"></i><span class="value">' + formatUnits.coord(e.latlng.wrap()) + '</span>'
+      let precision = getPrecision()
+      domMouse.innerHTML = '<i class="fas fa-mouse-pointer icon"></i><span class="value">' + formatUnits.coord(e.latlng.wrap(), { precision }) + '</span>'
       domMouse.className = ''
     } else {
       removeMouse()

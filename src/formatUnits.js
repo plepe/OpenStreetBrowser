@@ -30,9 +30,40 @@ module.exports = {
     const measure = measureFrom.apply(this, areaUnits[settings.system])
     return measure(value).toString()
   },
-  coord: value => formatcoords(value).format(settings.coordFormat, {
-    latLonSeparator: settings.coordSpacer
-  }),
+  coord: (value, options = {}) => {
+    let format = settings.coordFormat
+    let decimalPlaces = 'precision' in options ? options.precision : 5
+    switch (settings.coordFormat) {
+      case 'FFf':
+        if (options.precision <= 0) {
+          format = 'DD X'
+        } else if (options.precision <= 2) {
+          format = 'DD MM X'
+        } else if (options.precision <= 3) {
+          format = 'DD MM ss X'
+          decimalPlaces = 0
+        } else {
+          format = 'DD MM ss X'
+          decimalPlaces = options.precision - 3
+        }
+        break
+      case 'Ff':
+        if (options.precision <= 0) {
+          format = 'DD X'
+        } else if (options.precision <= 2) {
+          format = 'DD MM X'
+        } else {
+          format = 'DD mm X'
+          decimalPlaces = Math.round(options.precision - 1.5)
+        }
+        break
+    }
+
+    return formatcoords(value).format(format, {
+      latLonSeparator: settings.coordSpacer,
+      decimalPlaces
+    })
+  },
   settings
 }
 
