@@ -1,3 +1,4 @@
+var OverpassLayer = require('overpass-layer')
 const { measureFrom } = require('measure-ts')
 const formatcoords = require('formatcoords')
 
@@ -126,4 +127,8 @@ register_hook('init', () => {
   if (old !== JSON.stringify(settings)) {
     call_hooks('format-units-refresh')
   }
+})
+
+OverpassLayer.twig.extendFunction('formatDistance', function () {
+  return module.exports.distance.call(this, arguments[0])
 })
