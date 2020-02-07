@@ -22,6 +22,37 @@ const areaUnits = {
   m: ['m2']
 }
 
+const coordsPrecisionFormats = {
+  'FFf': [
+    'DD X',
+    'DD MM X',
+    'DD MM X',
+    'DD MM ss0 X',
+    'DD MM ss1 X',
+    'DD MM ss2 X',
+    'DD MM ss3 X'
+  ],
+  'Ff': [
+    'DD X',
+    'DD MM X',
+    'DD MM X',
+    'DD mm1 X',
+    'DD mm2 X',
+    'DD mm3 X',
+    'DD mm4 X'
+  ],
+  'f': [
+    'DD X',
+    'dd1 X',
+    'dd2 X',
+    'dd3 X',
+    'dd4 X',
+    'dd5 X',
+    'dd6 X'
+  ]
+}
+
+
 module.exports = {
   distance: value => {
     const measure = measureFrom.apply(this, distanceUnits[settings.system])
@@ -33,31 +64,21 @@ module.exports = {
   },
   coord: (value, options = {}) => {
     let format = settings.coordFormat
-    let decimalPlaces = 'precision' in options ? options.precision : 5
-    switch (settings.coordFormat) {
-      case 'FFf':
-        if (options.precision <= 0) {
-          format = 'DD X'
-        } else if (options.precision <= 2) {
-          format = 'DD MM X'
-        } else if (options.precision <= 3) {
-          format = 'DD MM ss X'
-          decimalPlaces = 0
-        } else {
-          format = 'DD MM ss X'
-          decimalPlaces = options.precision - 3
-        }
-        break
-      case 'Ff':
-        if (options.precision <= 0) {
-          format = 'DD X'
-        } else if (options.precision <= 2) {
-          format = 'DD MM X'
-        } else {
-          format = 'DD mm X'
-          decimalPlaces = Math.round(options.precision - 1.5)
-        }
-        break
+    options.precision = 'precision' in options ? options.precision : 5
+    let decimalPlaces = 'decimalPlaces' in options ? options.decimalPlaces : options.precision
+
+    if ('precision' in options && settings.coordFormat in coordsPrecisionFormats) {
+      if (options.precision > coordsPrecisionFormats[settings.coordFormat].length) {
+        format = coordsPrecisionFormats[settings.coordFormat][coordsPrecisionFormats[settings.coordFormat].length - 1]
+      } else {
+        format = coordsPrecisionFormats[settings.coordFormat][options.precision]
+      }
+    }
+
+    let m = format.match(/^(.*)(s|m|d)([0-9]+)(.*)$/)
+    if (m) {
+      format = m[1] + m[2] + m[4]
+      decimalPlaces = parseInt(m[3])
     }
 
     return formatcoords(value).format(format, {
