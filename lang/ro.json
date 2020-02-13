@@ -1,5 +1,5 @@
 {
-    "add_filter": "",
+    "add_filter": "Adaugă filtru",
     "any value": "orice valoare",
     "available_branches": "",
     "back": "înapoi",
@@ -10,13 +10,13 @@
     "edit": "",
     "error": "Eroare",
     "export-all": "",
-    "export-prepare": "",
+    "export-prepare": "Pregătiți descărcarea",
     "export:GeoJSON": "",
     "export:OSMJSON": "",
     "export:OSMXML": "",
-    "facilities": "",
-    "filter:title": "",
-    "filter:type": "",
+    "facilities": "Facilități",
+    "filter:title": "Titlu",
+    "filter:type": "Tip",
     "header:attributes": "",
     "header:export": "",
     "header:osm_meta": "",
@@ -28,7 +28,7 @@
     "more": "Mai mult",
     "more_categories": "Mai multe categorii",
     "more_categories_gitea": "",
-    "more_results": "",
+    "more_results": "Afișați mai multe rezultate",
     "open": "deschide",
     "options:data_lang": "Limba date",
     "options:data_lang:desc": "",
@@ -48,5 +48,6 @@
     "zoom_in_appear": "",
     "zoom_in_more": "",
     "cancel": "Renunță",
-    "main:about": "Despre"
+    "main:about": "Despre",
+    "form_element:please_select": "-- te rog selectează --"
 }
