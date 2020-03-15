@@ -1,9 +1,25 @@
 register_hook('init', function () {
   // Geo location
   L.control.locate({
-    keepCurrentZoomLevel: true,
+    locateOptions: {
+      enableHighAccuracy: true,
+      maxZoom: 17
+    },
+    flyTo: true,
     drawCircle: true,
-    drawMarker: false,
+    circleStyle: {
+      weight: 0,
+      fillColor: '#ff0000'
+    },
+    markerStyle: {
+      color: '#ff0000',
+      fillColor: '#ff0000'
+    },
+    compassStyle: {
+      color: '#ff0000',
+      fillColor: '#ff0000'
+    },
+    showCompass: true,
     showPopup: false
   }).addTo(map)
 })
