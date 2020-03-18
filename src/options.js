@@ -35,6 +35,16 @@ moduleOptions.open = function () {
   var dom = document.getElementById('contentOptions')
   dom.innerHTML = ''
 
+  let orig_options = {
+    debug: false
+  }
+  call_hooks('options_orig_data', orig_options)
+  for (let k in orig_options) {
+    if (!(k in options)) {
+      options[k] = orig_options[k]
+    }
+  }
+
   optionsForm.set_data(options)
 
   optionsFormEl = document.createElement('form')

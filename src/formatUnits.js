@@ -169,6 +169,13 @@ register_hook('options_form', def => {
   }
 })
 
+register_hook('options_orig_data', data => {
+  data.formatUnitsSystem = settings.system
+  data.formatUnitsCoordFormat = settings.coordFormat
+  data.formatUnitsCoordSpacer = settings.coordSpacer
+  data.formatUnitsSpeed = settings.speed
+})
+
 register_hook('options_save', data => {
   let old = JSON.stringify(settings)
 
