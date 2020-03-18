@@ -100,8 +100,10 @@ register_hook('init', function () {
 
   let lastLocation
   function updateLocation (e) {
-    if (!e) {
+    if (e) {
       lastLocation = e
+    } else {
+      e = lastLocation
     }
 
     if (e) {
