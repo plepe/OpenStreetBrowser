@@ -7,6 +7,10 @@ const tabs = require('modulekit-tabs')
 const formatUnits = require('./formatUnits')
 require('./GeoInfo.css')
 
+function heading (value) {
+  return [ 'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'N' ][Math.round(value / 45)]
+}
+
 register_hook('init', function () {
   let tab = new tabs.Tab({
     id: 'search',
@@ -105,6 +109,7 @@ register_hook('init', function () {
         (typeof e.accuracy !== 'undefined' ? (global.options.formatUnitsCoordSpacer || ', ') + '± ' + formatUnits.distance(e.accuracy.toFixed(0)) : '') + '<br/>' +
         (typeof e.altitude !== 'undefined' ? '<i class="fas fa-mountain"></i> ' + formatUnits.height(e.altitude) + (typeof e.altitudeAccuracy !== 'undefined' ? ' ± ' + formatUnits.distance(e.altitudeAccuracy) : '') + ' ' : '') +
         (typeof e.speed !== 'undefined' ? '<i class="fas fa-tachometer-alt"></i> ' + formatUnits.speed(e.speed) + ' ' : '') +
+        (typeof e.heading !== 'undefined' ? '<i class="fas fa-compass"></i> ' + lang('heading:' + heading(e.heading)) + ' (' + e.heading.toFixed(0) + '°)' : '') +
 	'</span>'
       domLocation.classList.remove('empty')
     }
