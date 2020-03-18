@@ -77,7 +77,6 @@ register_hook('init', function () {
     domBBoxNW.innerHTML = '<span class="value">' + formatUnits.coord(bounds.getNorthWest().wrap(), { precision }) + '</span>'
     domCenter.innerHTML = '<span class="value">' + formatUnits.coord(bounds.getCenter().wrap(), { precision }) + '</span>'
     domBBoxSE.innerHTML = '<span class="value">' + formatUnits.coord(bounds.getSouthEast().wrap(), { precision }) + '</span>'
-    updateTabHeader(tab.header)
   }
 
   let lastMouseEvent
@@ -122,10 +121,34 @@ register_hook('init', function () {
     }
   }
 
-  global.map.on('move', updateMapView)
-  global.map.on('mousemove', updateMouse)
-  global.map.on('mouseout', removeMouse)
-  global.map.on('locationfound', updateLocation)
+  function saveLocation (e) {
+    lastLocation = e
+  }
+
+  global.map.on('move', () => {
+    updateTabHeader(tab.header)
+  })
+  global.map.on('locationfound', saveLocation)
+
+  tab.on('select', () => {
+    updateMapView()
+    updateLocation()
+
+    global.map.on('move', updateMapView)
+    global.map.on('mousemove', updateMouse)
+    global.map.on('mouseout', removeMouse)
+    global.map.off('locationfound', saveLocation)
+    global.map.on('locationfound', updateLocation)
+  })
+
+  tab.on('unselect', () => {
+    global.map.off('move', updateMapView)
+    global.map.off('mousemove', updateMouse)
+    global.map.off('mouseout', removeMouse)
+    global.map.off('locationfound', updateLocation)
+    global.map.on('locationfound', saveLocation)
+  })
+
   register_hook('format-units-refresh', updateMapView)
   register_hook('format-units-refresh', updateMouse)
   register_hook('format-units-refresh', removeMouse)
