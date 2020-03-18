@@ -101,7 +101,10 @@ register_hook('init', function () {
     }
 
     if (e) {
-      domLocation.innerHTML = '<span class="value">' + formatUnits.coord(e.latlng.wrap(), { precision: 5 }) + '</span>'
+      domLocation.innerHTML = '<span class="value">' + formatUnits.coord(e.latlng.wrap(), { precision: 5 }) +
+        (typeof e.accuracy !== 'undefined' ? (global.options.formatUnitsCoordSpacer || ', ') + '± ' + formatUnits.distance(e.accuracy.toFixed(0)) : '') + '<br/>' +
+        (typeof e.altitude !== 'undefined' ? '<i class="fas fa-mountain"></i> ' + formatUnits.height(e.altitude) + (typeof e.altitudeAccuracy !== 'undefined' ? ' ± ' + formatUnits.distance(e.altitudeAccuracy) : '') + ' ' : '') +
+	'</span>'
       domLocation.classList.remove('empty')
     }
   }

@@ -58,6 +58,21 @@ module.exports = {
     const measure = measureFrom.apply(this, distanceUnits[settings.system])
     return measure(value).toString()
   },
+  height: value => {
+    switch (settings.system) {
+      case 'imp':
+        return (value / 0.3048) .toFixed(0) + ' ft'
+      case 'nautical':
+        // not defined for nautical, use 'm' instead
+      case 'si':
+      case 'm':
+      default:
+        return value.toFixed(0) + ' m'
+    }
+
+    const measure = measureFrom.apply(this, distanceUnits[settings.system])
+    return measure(value).toString()
+  },
   area: value => {
     const measure = measureFrom.apply(this, areaUnits[settings.system])
     return measure(value).toString()
