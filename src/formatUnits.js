@@ -91,7 +91,7 @@ module.exports = {
 
 register_hook('options_form', def => {
   def.formatUnitsSystem = {
-    'name': lang('formatUnits:coordFormat'),
+    'name': lang('formatUnits:system'),
     'type': 'select',
     'values': {
       'si': lang('formatUnits:system:si'),
