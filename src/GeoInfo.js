@@ -64,9 +64,14 @@ register_hook('init', function () {
 
   function updateMapView () {
     let scale = formatUnits.distance(global.map.getMetersPerPixel())
+    let scale2 = formatUnits.area(Math.pow(global.map.getMetersPerPixel(), 2))
     let precision = getPrecision()
 
-    domZoom.innerHTML = '<span class="value">z' + Math.round(global.map.getZoom()) + ', ' + scale + '/px</span>'
+    domZoom.innerHTML = '<span class="value">z' +
+      Math.round(global.map.getZoom()) + ', ' +
+      scale + '/px, ' +
+      scale2 + '/px²' +
+      '</span>'
 
     let bounds = map.getBounds()
     domBBoxNW.innerHTML = '<span class="value">' + formatUnits.coord(bounds.getNorthWest().wrap(), { precision }) + '</span>'
