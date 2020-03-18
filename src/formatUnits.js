@@ -5,7 +5,8 @@ const formatcoords = require('formatcoords')
 const settings = {
   coordFormat: 'FFf',
   coordSpacer: ', ',
-  system: 'si'
+  system: 'si',
+  speed: 'km/h'
 }
 
 const distanceUnits = {
@@ -77,6 +78,20 @@ module.exports = {
     const measure = measureFrom.apply(this, areaUnits[settings.system])
     return measure(value).toString()
   },
+  speed: value => {
+    switch (settings.speed) {
+      case 'm/s':
+        return value.toFixed(0) + ' ' + lang('formatUnits:speed:m/s')
+      case 'km/h':
+        return (value * 3.6).toFixed(0) + ' ' + lang('formatUnits:speed:km/h')
+      case 'mi/h':
+        return (value * 2.236936).toFixed(0) + ' ' + lang('formatUnits:speed:mi/h')
+      case 'kn':
+        return (value * 1.943844).toFixed(0) + ' ' + lang('formatUnits:speed:kn')
+      case 'ft/s':
+        return (value * 3.280840).toFixed(0) + ' ' + lang('formatUnits:speed:ft/s')
+    }
+  },
   coord: (value, options = {}) => {
     let format = settings.coordFormat
     options.precision = 'precision' in options ? options.precision : 5
@@ -139,6 +154,19 @@ register_hook('options_form', def => {
     },
     'default': settings.coordSpacer
   }
+
+  def.formatUnitsSpeed = {
+    'name': lang('formatUnits:speed'),
+    'type': 'select',
+    'values': {
+      'km/h': lang('formatUnits:speed:km/h'),
+      'mi/h': lang('formatUnits:speed:mi/h'),
+      'm/s': lang('formatUnits:speed:m/s'),
+      'kn': lang('formatUnits:speed:kn'),
+      'ft/s': lang('formatUnits:speed:ft/s')
+    },
+    'default': settings.speed
+  }
 })
 
 register_hook('options_save', data => {
@@ -147,6 +175,7 @@ register_hook('options_save', data => {
   settings.coordFormat = data.formatUnitsCoordFormat
   settings.coordSpacer = data.formatUnitsCoordSpacer
   settings.system = data.formatUnitsSystem
+  settings.speed = data.formatUnitsSpeed
 
   if (old !== JSON.stringify(settings)) {
     call_hooks('format-units-refresh')
@@ -159,6 +188,7 @@ register_hook('init', () => {
   settings.coordFormat = global.options.formatUnitsCoordFormat || settings.coordFormat
   settings.coordSpacer = global.options.formatUnitsCoordSpacer || settings.coordSpacer
   settings.system = global.options.formatUnitsSystem || settings.system
+  settings.speed = global.options.formatUnitsSpeed || settings.speed
 
   if (old !== JSON.stringify(settings)) {
     call_hooks('format-units-refresh')
