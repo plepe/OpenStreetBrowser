@@ -24,7 +24,7 @@
     "i18next-client": "^1.11.4",
     "ip-location": "^1.0.1",
     "json-multiline-strings": "^0.1.0",
-    "leaflet": "^1.6.0",
+    "leaflet": "^1.5.1",
     "leaflet-geosearch": "^2.4.0",
     "leaflet-polylineoffset": "^1.1.0",
     "leaflet-textpath": "git+https://github.com/makinacorpus/Leaflet.TextPath.git#leaflet0.8-dev",
