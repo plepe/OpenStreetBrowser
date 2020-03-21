@@ -1,0 +1,58 @@
+.geo-info > div {
+  display: flex;
+  position: relative;
+  align-items: end;
+  margin-top: 0.5em;
+}
+.geo-info > div:first-of-type {
+  margin-top: 0;
+}
+.geo-info > div.empty {
+  margin-top: 0;
+  display: none;
+}
+.geo-info > div::before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  margin-right: 0.5em;
+}
+
+.geo-info > .bbox-nw-corner::before {
+  background: url("../img/geo-info-bbox-nw.svg");
+}
+.geo-info > .bbox-center::before {
+  background: url("../img/geo-info-bbox-center.svg");
+}
+.geo-info > .bbox-se-corner::before {
+  background: url("../img/geo-info-bbox-se.svg");
+}
+.geo-info > .object-shape::before {
+  background: url("../img/geo-info-object-shape.svg");
+}
+.geo-info > .object-nw-corner::before {
+  background: url("../img/geo-info-object-nw.svg");
+}
+.geo-info > .object-center::before {
+  background: url("../img/geo-info-object-center.svg");
+}
+.geo-info > .object-se-corner::before {
+  background: url("../img/geo-info-object-se.svg");
+}
+.geo-info > .zoom::before,
+.geo-info > .location::before,
+.geo-info > .mouse::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1.25em;
+  text-align: center;
+}
+.geo-info > .zoom::before {
+  content: "\f689";
+}
+.geo-info > .location::before {
+  content: "\f3c5";
+}
+.geo-info > .mouse::before {
+  content: "\f245";
+}

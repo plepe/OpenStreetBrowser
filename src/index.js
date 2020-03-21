@@ -38,6 +38,9 @@ require('./permalink')
 //require('./leaflet-geo-search')
 require('./nominatim-search')
 require('./CategoryOverpassFilter')
+require('./GeoInfo')
+require('./PluginMeasure')
+require('./PluginGeoLocate')
 let exportAll = require('./exportAll')
 
 window.onload = function () {
@@ -65,20 +68,6 @@ window.onload = function () {
 }
 
 function onload2 (initState) {
-  // Measurement plugin
-  if (L.control.polylineMeasure) {
-    L.control.polylineMeasure({
-    }).addTo(map)
-  }
-
-  // Geo location
-  L.control.locate({
-    keepCurrentZoomLevel: true,
-    drawCircle: false,
-    drawMarker: false,
-    showPopup: false
-  }).addTo(map)
-
   // Scale bar
   L.control.scale().addTo(map)
 
