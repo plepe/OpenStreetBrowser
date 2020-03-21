@@ -1,4 +1,4 @@
-window.editLinkRemote = function (type, osm_id) {
+function editLinkRemote (type, osm_id) {
   let id = type.substr(0, 1) + osm_id
 
   global.overpassFrontend.get(
@@ -27,18 +27,24 @@ window.editLinkRemote = function (type, osm_id) {
       }
     }
   )
+}
+
+window.editLink = function (type, osm_id) {
+  switch (global.options.editor) {
+    case 'remote':
+      editLinkRemote(type, osm_id)
+      break
+    case 'id':
+    default:
+      let url = global.config.urlOpenStreetMap + '/edit?editor=id&' + type + '=' + osm_id
+      window.open(url)
+  }
 
   return false
 }
 
-module.exports = function editLink (object) {
-  switch (global.options.editor) {
-    case 'remote':
-      return '<a class="editLink" href="#" onclick="return editLinkRemote(\'' + object.object.type + '\', ' + object.object.osm_id + ')">' + lang('edit') + '</a>'
-    case 'id':
-    default:
-      return '<a target="_blank" class="editLink" href="' + global.config.urlOpenStreetMap + '/edit?editor=id&' + object.object.type + '=' + object.object.osm_id + '">' + lang('edit') + '</a>'
-  }
+module.exports = function (object) {
+  return '<a class="editLink" href="#edit" onclick="return editLink(\'' + object.object.type + '\', ' + object.object.osm_id + ')">' + lang('edit') + '</a>'
 }
 
 register_hook('options_orig_data', function (data) {
