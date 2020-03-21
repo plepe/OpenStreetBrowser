@@ -25,13 +25,20 @@ module.exports = function editLink (object) {
   }
 }
 
+register_hook('options_orig_data', function (data) {
+  data.editor = 'id'
+})
+
 register_hook('options_form', function (def) {
   def.editor = {
     'name': lang('options:chooseEditor'),
     'type': 'select',
     'values': {
       'id': lang('editor:id'),
-      'remote': lang('editor:remote')
+      'remote': {
+        name: lang('editor:remote'),
+        desc: lang('editor:remote:help')
+      }
     },
     'default': 'id',
     'weight': 5
