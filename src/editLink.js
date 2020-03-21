@@ -1,16 +1,32 @@
 window.editLinkRemote = function (type, osm_id) {
-  let bounds = global.map.getBounds()
+  let id = type.substr(0, 1) + osm_id
 
-  xhr = new XMLHttpRequest()
-  let url = 'http://127.0.0.1:8111/load_and_zoom' +
-    '?left=' + bounds.getWest().toFixed(5) +
-    '&right=' + bounds.getEast().toFixed(5) +
-    '&top=' + bounds.getNorth().toFixed(5) +
-    '&bottom=' + bounds.getSouth().toFixed(5) +
-    '&' + type + '=' + osm_id
-  xhr.open('get', url, true)
-  xhr.responseType = 'text'
-  xhr.send()
+  global.overpassFrontend.get(
+    id,
+    {
+      properties: global.overpassFrontend.OVERPASS_BBOX
+    },
+    (err, object) => {
+      let bounds = object.bounds
+
+      xhr = new XMLHttpRequest()
+      let url = 'http://127.0.0.1:8111/load_and_zoom' +
+        '?left=' + (bounds.minlon - 0.0001).toFixed(5) +
+        '&right=' + (bounds.maxlon + 0.0001).toFixed(5) +
+        '&top=' + (bounds.maxlat + 0.0001).toFixed(5) +
+        '&bottom=' + (bounds.minlat - 0.0001).toFixed(5) +
+        '&select=' + type + osm_id
+
+      xhr.open('get', url, true)
+      xhr.responseType = 'text'
+      xhr.send()
+    },
+    (err) => {
+      if (err) {
+        alert(err)
+      }
+    }
+  )
 
   return false
 }
