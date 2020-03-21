@@ -22,6 +22,22 @@ register_hook('init', function () {
   updateTabHeader(tab.header)
   tab.header.title = lang('geoinfo:header')
 
+  let crosshairIcon = L.icon({
+    iconUrl: 'img/crosshair.png',
+    iconSize:     [21, 21],
+    iconAnchor:   [10, 10],
+  })
+
+  let crosshair = new L.marker([0,0], {
+    icon: crosshairIcon,
+    clickable:false,
+    pane: "crosshair800"
+  })
+
+  global.map.createPane('crosshair800')
+  global.map.getPane('crosshair800').style.zIndex = 800
+  global.map.getPane('crosshair800').style.pointerEvents = 'none'
+
   let domZoom = document.createElement('div')
   domZoom.className = 'zoom'
   domZoom.title = lang('geoinfo:zoom')
@@ -63,6 +79,8 @@ register_hook('init', function () {
   }
 
   function updateMapView () {
+    crosshair.setLatLng(global.map.getCenter())
+
     let scale = formatUnits.distance(global.map.getMetersPerPixel())
     let scale2 = formatUnits.area(Math.pow(global.map.getMetersPerPixel(), 2))
     let precision = getPrecision()
@@ -131,6 +149,8 @@ register_hook('init', function () {
   global.map.on('locationfound', saveLocation)
 
   tab.on('select', () => {
+    crosshair.addTo(global.map)
+
     updateMapView()
     updateLocation()
 
@@ -142,6 +162,8 @@ register_hook('init', function () {
   })
 
   tab.on('unselect', () => {
+    crosshair.removeFrom(global.map)
+
     global.map.off('move', updateMapView)
     global.map.off('mousemove', updateMouse)
     global.map.off('mouseout', removeMouse)
