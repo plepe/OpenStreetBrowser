@@ -2,10 +2,11 @@ register_hook('init', function () {
   // Geo location
   L.control.locate({
     locateOptions: {
-      enableHighAccuracy: true,
-      maxZoom: 17
+      enableHighAccuracy: true
     },
     flyTo: true,
+    keepCurrentZoomLevel: true,
+    initialZoomLevel: 17,
     drawCircle: true,
     circleStyle: {
       weight: 0,
