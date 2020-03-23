@@ -189,7 +189,7 @@ window.setPath = function (path, state) {
 
   var param = {
     showDetails: !!path.match(/\/details$/),
-    hasLocation: state.lat && state.lon && state.zoom
+    hasLocation: 'lat' in state && 'lon' in state && 'zoom' in state
   }
 
   show(path, param, function (err) {

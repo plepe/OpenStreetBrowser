@@ -490,7 +490,7 @@ CategoryOverpass.prototype.show = function (id, options, callback) {
   this.currentDetails = this.layer.show(id, layerOptions,
     function (err, ob, data) {
       if (!err) {
-        if (options.showDetails && !options.hasLocation) {
+        if (!options.hasLocation) {
           var preferredZoom = data.data.preferredZoom || 16
           var maxZoom = this.map.getZoom()
           maxZoom = maxZoom > preferredZoom ? maxZoom : preferredZoom
