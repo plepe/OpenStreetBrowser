@@ -169,7 +169,7 @@ register_hook('show-details', function (data, category, dom, callback) {
 
       foundPrefixes.push(prefix)
 
-      (m[3] + ':' + ob.tags[k]).split(/;/g).forEach(value => {
+      ;(m[3] + ':' + ob.tags[k]).split(/;/g).forEach(value => {
         found++
         showWikipedia(value, div, done)
       })
