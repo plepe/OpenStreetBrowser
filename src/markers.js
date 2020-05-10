@@ -1,5 +1,8 @@
 var OverpassLayer = require('overpass-layer')
 var parseLength = require('overpass-layer/src/parseLength')
+const DecoratorPattern = require('overpass-layer/src/DecoratorPattern')
+const decoratorPatternFactory = new DecoratorPattern({on: () => {}})
+patternParsePatterns = decoratorPatternFactory.parsePatterns.bind(decoratorPatternFactory)
 
 function cssStyle (style) {
   let ret = ''
@@ -34,6 +37,7 @@ function cssStyle (style) {
 
 function markerLine (data) {
   let styles = parseOptions(data)
+  let fakeData = {twigData: {map: {metersPerPixel: global.map.getMetersPerPixel()}}}
 
   let ret = '<svg anchorX="13" anchorY="8" width="25" height="15">'
 
@@ -41,6 +45,10 @@ function markerLine (data) {
     let y = 8.0 + parseLength('offset' in style ? style.offset : 0, global.map.getMetersPerPixel())
 
     ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
+
+    let x = patternParsePatterns(style, fakeData)
+    console.log(x)
+        //ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
   })
 
   ret += '</svg>'
