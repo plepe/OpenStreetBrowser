@@ -37,7 +37,17 @@ module.exports = function tagsDisplay (tags) {
       }
     }
 
-    dd.innerHTML = template.render({ value: tags[k] })
+    let value = tags[k].split(/;/g)
+    value = value.map(v => {
+      // trim whitespace (but add it around the formatted value later)
+      let m = v.match(/^( *)([^ ].*[^ ]|[^ ])( *)$/)
+      if (m) {
+        return m[1] + template.render({ value: m[2] }) + m[3]
+      }
+      return v
+    }).join(';')
+
+    dd.innerHTML = value
     div.appendChild(dd)
   }
 
