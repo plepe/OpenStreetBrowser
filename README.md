@@ -138,3 +138,18 @@ With the function `register_hook` you can hook into several functions. The follo
 * `show-popup`: called when a popup is being displayed. Parameters: data (see properties in doc/TwigJS.md), category, dom, callback.
 * `options_save`: called when options are saved. Parameters: options (the new object), old_options (before save)
 * `initFinish`: called when the app initialization finishes
+
+### New locale
+* Add language code to the `$languages` array in conf.php (and conf.php-dist)
+* Create file `locales/CODE.js` with:
+```js
+global.locale = {
+  id: 'CODE',
+  moment: require('moment'),
+  // replace 'en' by 'CODE', when a translation for date-format has been submitted
+  osmDateFormatTemplates: require('openstreetmap-date-format/templates/en')
+}
+
+require('moment/locale/CODE')
+```
+* Run `npm run build-locales`

@@ -26,4 +26,4 @@ $include = array(
     'style.css',
   ),
 );
-$version = "4.7";
+$version = "4.8";
