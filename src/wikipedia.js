@@ -128,6 +128,8 @@ register_hook('show-details', function (data, category, dom, callback) {
     foundPrefixes.push('')
 
     ob.tags.wikipedia.split(/;/g).forEach(value => {
+      value = value.trim()
+
       found++
       showWikipedia(value, div, done)
     })
@@ -145,6 +147,8 @@ register_hook('show-details', function (data, category, dom, callback) {
       foundPrefixes.push(prefix)
 
       ob.tags[k].split(/;/g).forEach(value => {
+        value = value.trim()
+
         found++
         showWikipedia(value, div, done)
       })
@@ -180,6 +184,8 @@ register_hook('show-details', function (data, category, dom, callback) {
     foundPrefixes.push('')
 
     ob.tags.wikidata.split(/;/g).forEach(value => {
+      value = value.trim()
+
       found++
 
       wikidata.load(value, function (err, result) {
@@ -228,6 +234,8 @@ register_hook('show-details', function (data, category, dom, callback) {
       div.appendChild(h)
 
       ob.tags[k].split(/;/g).forEach(value => {
+        value = value.trim()
+
         wikidata.load(value, (err, result) => {
           var x
 
