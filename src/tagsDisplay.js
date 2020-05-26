@@ -4,6 +4,10 @@ const formatter = [
   {
     regexp: /^(.*:)?wikidata$/,
     format: '<a target="_blank" href="https://wikidata.org/wiki/{{ value|url_encode }}">{{ value }}</a>'
+  },
+  {
+    regexp: /^(.*:)wikipedia$/,
+    format: '{% set v = value|split(":") %}<a target="_blank" href="https://{{ v[0]|url_encode }}.wikipedia.org/wiki/{{ v[1]|url_encode|replace({"%20": "_"}) }}">{{ value }}</a>'
   }
 ]
 
