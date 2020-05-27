@@ -20,6 +20,10 @@ const formatter = [
       '{% else %}' +
       '{{ value }}' +
       '{% endif %}'
+  },
+  {
+    regexp: /^(species)$/,
+    link: 'https://species.wikimedia.org/wiki/{{ value|replace({" ": "_"}) }}'
   }
 ]
 
