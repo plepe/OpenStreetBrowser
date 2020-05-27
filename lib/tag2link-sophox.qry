@@ -1,0 +1,6 @@
+SELECT ?item (CONCAT("Key:", ?permanent_key_ID) as ?OSM_key) ?formatter_URL WHERE {
+  FILTER(?permanent_key_ID NOT IN ('image', 'url', 'website', 'wikidata', 'wikimedia_commons')).
+  ?item osmdt:P2 osmd:Q7.
+  ?item osmdt:P16 ?permanent_key_ID.
+  ?item osmdt:P8 ?formatter_URL.
+}

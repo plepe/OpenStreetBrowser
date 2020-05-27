@@ -1,5 +1,8 @@
 #!/bin/sh
 
+curl -H "Accept: application/json" -H "Content-Type: application/sparql-query" -H "User-Agent: OpenStreetBrowser" -XPOST -d @'lib/tag2link-wikidata.qry' https://query.wikidata.org/sparql > data/tag2link-wikidata.json
+curl -H "Accept: application/json" -H "Content-Type: application/sparql-query" -H "User-Agent: OpenStreetBrowser" -XPOST -d @'lib/tag2link-sophox.qry' https://sophox.org/sparql > data/tag2link-sophox.json
+
 mkdir -p data/GeoIP
 cd data/GeoIP
 wget -O- http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz | tar --strip-components=1 -xvzf -
