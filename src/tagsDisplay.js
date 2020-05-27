@@ -3,11 +3,15 @@ const OverpassLayer = require('overpass-layer')
 const formatter = [
   {
     regexp: /^(.*:)?wikidata$/,
-    link: 'https://wikidata.org/wiki/{{ value|url_encode }}'
+    link: 'https://wikidata.org/wiki/{{ value }}'
   },
   {
-    regexp: /^(.*:)wikipedia$/,
-    link: '{% set v = value|split(":") %}https://{{ v[0]|url_encode }}.wikipedia.org/wiki/{{ v[1]|replace({" ": "_"}) }}'
+    regexp: /^(.*:)?wikipedia$/,
+    link: '{% set v = value|split(":") %}https://{{ v[0] }}.wikipedia.org/wiki/{{ v[1]|replace({" ": "_"}) }}'
+  },
+  {
+    regexp: /^(.*:)?wikipedia:([a-zA-Z]+)$/,
+    link: '{% set v = key|matches(":([a-zA-Z]+)") %}https://{{ v[1] }}.wikipedia.org/wiki/{{ value|replace({" ": "_"}) }}'
   },
   {
     regexp: /^(website|url|contact:website)$/,
@@ -66,7 +70,7 @@ module.exports = function tagsDisplay (tags) {
       // trim whitespace (but add it around the formatted value later)
       let m = v.match(/^( *)([^ ].*[^ ]|[^ ])( *)$/)
       if (m) {
-        return m[1] + template.render({ value: m[2] }) + m[3]
+        return m[1] + template.render({ key: k, value: m[2] }) + m[3]
       }
       return v
     }).join(';')
