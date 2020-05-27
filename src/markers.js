@@ -35,6 +35,22 @@ function cssStyle (style) {
   return ret
 }
 
+const generatePattern = {
+  arrowHead (pattern) {
+    let d2r = Math.PI / 180
+    let radianArrowAngle = (pattern.options.headAngle || 60) / 2 * d2r
+    let direction = pattern.options.angleCorrection = 15
+    let pixelSize = pattern.options.pixelSize || 15
+    let poi1 = [
+      15 + pattern.options.pixelSize * Math.cos(direction + radianArrowAngle),
+      8 + pattern.options.pixelSize * Math.sin(direction + radianArrowAngle)
+    ]
+    console.log(poi1)
+
+    return '<polyline points="15,8 ' + poi1[0] + ',' + poi1[1] + '" style="' + cssStyle(pattern.symbolOptions) + '"/>'
+  }
+}
+
 function markerLine (data) {
   let styles = parseOptions(data)
   let fakeData = {twigData: {map: {metersPerPixel: global.map.getMetersPerPixel()}}}
@@ -46,8 +62,17 @@ function markerLine (data) {
 
     ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
 
-    let x = patternParsePatterns(style, fakeData)
-    console.log(x)
+    let patterns = patternParsePatterns(style, fakeData)
+
+    for (let k in patterns) {
+      let pattern = patterns[k]
+
+      if (pattern.type in generatePattern) {
+        ret += generatePattern[pattern.type](pattern)
+      }
+
+    }
+
         //ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
   })
 
