@@ -3,22 +3,22 @@ const OverpassLayer = require('overpass-layer')
 const formatter = [
   {
     regexp: /^(.*:)?wikidata$/,
-    format: '<a target="_blank" href="https://wikidata.org/wiki/{{ value|url_encode }}">{{ value }}</a>'
+    link: 'https://wikidata.org/wiki/{{ value|url_encode }}'
   },
   {
     regexp: /^(.*:)wikipedia$/,
-    format: '{% set v = value|split(":") %}<a target="_blank" href="https://{{ v[0]|url_encode }}.wikipedia.org/wiki/{{ v[1]|replace({" ": "_"}) }}">{{ value }}</a>'
+    link: '{% set v = value|split(":") %}https://{{ v[0]|url_encode }}.wikipedia.org/wiki/{{ v[1]|replace({" ": "_"}) }}'
   },
   {
     regexp: /^(website|url|contact:website)$/,
-    format: '<a target="_blank" href="{{ value|websiteUrl }}">{{ value }}</a>'
+    link: '{{ value|websiteUrl }}'
   },
   {
     regexp: /^(image|wikimedia_commons)$/,
-    format: '{% if value matches "/^(File|Category):/" %}' +
-      '<a target="_blank" href="https://commons.wikimedia.org/wiki/{{ value|replace({" ": "_"}) }}">{{ value }}</a>' +
+    link: '{% if value matches "/^(File|Category):/" %}' +
+      'https://commons.wikimedia.org/wiki/{{ value|replace({" ": "_"}) }}' +
       '{% else %}' +
-      '<a target="_blank" href="{{ value }}">{{ value }}</a>' +
+      '{{ value }}' +
       '{% endif %}'
   }
 ]
@@ -30,7 +30,11 @@ module.exports = function tagsDisplay (tags) {
   if (!compiled) {
     defaultTemplate = OverpassLayer.twig.twig({ data: '{{ value }}', autoescape: true })
     for (let i in formatter) {
-      formatter[i].template = OverpassLayer.twig.twig({ data: formatter[i].format, autoescape: true })
+      if (formatter[i].format) {
+        formatter[i].template = OverpassLayer.twig.twig({ data: formatter[i].format, autoescape: true })
+      } else {
+        formatter[i].template = OverpassLayer.twig.twig({ data: '<a target="_blank" href="' + formatter[i].link + '">{{ value }}</a>', autoescape: true })
+      }
     }
 
     compiled = true
