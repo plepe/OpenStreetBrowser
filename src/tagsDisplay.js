@@ -7,7 +7,19 @@ const formatter = [
   },
   {
     regexp: /^(.*:)wikipedia$/,
-    format: '{% set v = value|split(":") %}<a target="_blank" href="https://{{ v[0]|url_encode }}.wikipedia.org/wiki/{{ v[1]|url_encode|replace({"%20": "_"}) }}">{{ value }}</a>'
+    format: '{% set v = value|split(":") %}<a target="_blank" href="https://{{ v[0]|url_encode }}.wikipedia.org/wiki/{{ v[1]|replace({" ": "_"}) }}">{{ value }}</a>'
+  },
+  {
+    regexp: /^(website|url|contact:website)$/,
+    format: '<a target="_blank" href="{{ value|websiteUrl }}">{{ value }}</a>'
+  },
+  {
+    regexp: /^(image|wikimedia_commons)$/,
+    format: '{% if value matches "/^(File|Category):/" %}' +
+      '<a target="_blank" href="https://commons.wikimedia.org/wiki/{{ value|replace({" ": "_"}) }}">{{ value }}</a>' +
+      '{% else %}' +
+      '<a target="_blank" href="{{ value }}">{{ value }}</a>' +
+      '{% endif %}'
   }
 ]
 
