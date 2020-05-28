@@ -16,7 +16,7 @@ const formatter = [
     link: '{% set v = key|matches(":([a-zA-Z]+)") %}https://{{ v[1] }}.wikipedia.org/wiki/{{ value|replace({" ": "_"}) }}'
   },
   {
-    regexp: /^(website|url|contact:website)$/,
+    regexp: /^((.*:)?website(:.*)?|(.*:)?url(:.*)?|contact:website)$/,
     link: '{{ value|websiteUrl }}'
   },
   {
@@ -24,12 +24,20 @@ const formatter = [
     link: '{% if value matches "/^(File|Category):/" %}' +
       'https://commons.wikimedia.org/wiki/{{ value|replace({" ": "_"}) }}' +
       '{% else %}' +
-      '{{ value }}' +
+      '{{ value|websiteUrl }}' +
       '{% endif %}'
   },
   {
     regexp: /^(species)$/,
     link: 'https://species.wikimedia.org/wiki/{{ value|replace({" ": "_"}) }}'
+  },
+  {
+    regexp: /^(phone|contact:phone|fax|contact:fax)(:.*|)$/,
+    link: 'tel:{{ value }}'
+  },
+  {
+    regexp: /^(email|contact:email)(:.*|)$/,
+    link: 'mailto:{{ value }}'
   }
 ]
 
