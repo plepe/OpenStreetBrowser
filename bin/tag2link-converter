@@ -1,0 +1,39 @@
+#!/usr/bin/php
+<?php
+$tag2link = array();
+
+$files = array('data/tag2link-wikidata.json', 'data/tag2link-sophox.json');
+foreach ($files as $file) {
+  $data = json_decode(file_get_contents($file), true);
+
+  foreach ($data['results']['bindings'] as $entry) {
+    $key = substr($entry['OSM_key']['value'], 4);
+    $link = $entry['formatter_URL']['value'];
+
+    if (array_key_exists($key, $tag2link)) {
+      // avoid duplicates
+      if (sizeof(array_filter($tag2link[$key]['formatter'], function ($e) use ($link) {
+        return $e['link'] === $link;
+      }))) {
+        continue;
+      }
+    }
+    else {
+      $tag2link[$key] = array(
+        'formatter' => array(),
+      );
+    }
+    
+    $formatter = array(
+      'link' => $link,
+    );
+
+    if (preg_match("/^https?:\/\/([^\/]*)(\/.*|)$/", $link, $m)) {
+      $formatter['operator'] = $m[1];
+    }
+
+    $tag2link[$key]['formatter'][] = $formatter;
+  }
+}
+
+file_put_contents('dist/tag2link.json', json_encode($tag2link, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));

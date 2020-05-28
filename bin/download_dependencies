@@ -2,6 +2,7 @@
 
 curl -H "Accept: application/json" -H "Content-Type: application/sparql-query" -H "User-Agent: OpenStreetBrowser" -XPOST -d @'lib/tag2link-wikidata.qry' https://query.wikidata.org/sparql > data/tag2link-wikidata.json
 curl -H "Accept: application/json" -H "Content-Type: application/sparql-query" -H "User-Agent: OpenStreetBrowser" -XPOST -d @'lib/tag2link-sophox.qry' https://sophox.org/sparql > data/tag2link-sophox.json
+bin/tag2link-converter
 
 mkdir -p data/GeoIP
 cd data/GeoIP
