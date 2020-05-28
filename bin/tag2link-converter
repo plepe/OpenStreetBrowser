@@ -12,9 +12,17 @@ foreach ($files as $file) {
 
     if (array_key_exists($key, $tag2link)) {
       // avoid duplicates
-      if (sizeof(array_filter($tag2link[$key]['formatter'], function ($e) use ($link) {
+      $duplicates = array_filter($tag2link[$key]['formatter'], function ($e) use ($link) {
         return $e['link'] === $link;
-      }))) {
+      });
+
+      if (sizeof($duplicates)) {
+        if (array_key_exists('operatorLabel', $entry)) {
+          foreach ($duplicates as $i => $d) {
+            $tag2link[$key]['formatter'][$i]['operator'] = $entry['operatorLabel']['value'];
+          }
+        }
+
         continue;
       }
     }
