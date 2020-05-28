@@ -36,6 +36,9 @@ $config['overpassUrl'] = array(
   '//api.openstreetmap.fr/oapi/interpreter',
 );
 
+// Acquire a license key from https://www.maxmind.com/ and set it here
+#$config['GeoLite2-LicenseKey'] = '';
+
 // Location of the initial view if no IP-location can be resolved. 'zoom' is optional.
 $config['defaultView'] = array('lat' => 51.505, 'lon' => -0.09, 'zoom' => 18);
 

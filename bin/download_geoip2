@@ -1,0 +1,12 @@
+#!/usr/bin/php
+<?php
+require('conf.php');
+
+if (!array_key_exists('GeoLite2-LicenseKey', $config)) {
+  print "No LicenseKey for MaxMind GeoLite2 database set. Not downloading database.";
+  exit(0);
+}
+
+@mkdir("data/GeoIP");
+chdir("data/GeoIP");
+system("wget -O- 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key={$config['GeoLite2-LicenseKey']}&suffix=tar.gz' | tar --strip-components=1 -xvzf -");
