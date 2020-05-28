@@ -1,7 +1,8 @@
-SELECT ?item ?OSM_key ?formatter_URL WHERE {
+SELECT ?item ?itemLabel ?OSM_key ?formatter_URL WHERE {
   { ?item wdt:P1282 ?OSM_key. }
   FILTER(STRSTARTS(?OSM_key, 'Key:')) .
   FILTER(?OSM_key NOT IN ('Key:image', 'Key:url', 'Key:website', 'Key:wikidata', 'Key:wikimedia_commons')) .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 
   {
     { ?item wdt:P1630 ?formatter_URL. }
