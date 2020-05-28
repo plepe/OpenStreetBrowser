@@ -1,5 +1,7 @@
 const OverpassLayer = require('overpass-layer')
 
+const httpGet = require('./httpGet')
+
 const formatter = [
   {
     regexp: /^(.*:)?wikidata$/,
@@ -81,3 +83,25 @@ module.exports = function tagsDisplay (tags) {
 
   return div
 }
+
+register_hook('init_callback', (initState, callback) => {
+  httpGet('dist/tag2link.json', {}, (err, result) => {
+    if (err) {
+      console.error('Can\'t read dist/tag2link.json - execute bin/download_dependencies')
+      return callback()
+    }
+
+    let tag2link = JSON.parse(result.body)
+
+    Object.keys(tag2link).forEach(key => {
+      let tag = tag2link[key]
+
+      formatter.push({
+        regexp: new RegExp("^" + key + "$"),
+        link: tag.formatter[0].link.replace('$1', '{{ value }}')
+      })
+    })
+
+    callback()
+  })
+})
