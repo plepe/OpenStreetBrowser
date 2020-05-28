@@ -42,7 +42,8 @@ require('./GeoInfo')
 require('./PluginMeasure')
 require('./PluginGeoLocate')
 let exportAll = require('./exportAll')
-const tagsDisplay = require('./tagsDisplay')
+const tagsDisplay = require('./tagsDisplay').display
+require('./tagsDisplay-tag2link')
 
 window.onload = function () {
   var initState = config.defaultView
