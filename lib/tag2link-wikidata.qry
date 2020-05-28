@@ -1,12 +1,15 @@
-SELECT ?item ?itemLabel ?OSM_key ?formatter_URL WHERE {
-  { ?item wdt:P1282 ?OSM_key. }
-  FILTER(STRSTARTS(?OSM_key, 'Key:')) .
-  FILTER(?OSM_key NOT IN ('Key:image', 'Key:url', 'Key:website', 'Key:wikidata', 'Key:wikimedia_commons')) .
+SELECT ?itemLabel ?OSM_key ?formatter_URL ?operatorLabel WHERE {
+  ?item wdt:P1282 ?OSM_key .
+  FILTER(?OSM_key NOT IN("Key:image", "Key:url", "Key:website", "Key:wikidata", "Key:wikimedia_commons"))
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-
   {
-    { ?item wdt:P1630 ?formatter_URL. }
-    UNION
-    { ?item wdt:P3303 ?formatter_URL. }
+    ?item p:P1630 ?statement.
+    ?statement ps:P1630 ?formatter_URL.
   }
+  UNION
+  {
+    ?item p:P3303 ?statement.
+    ?statement ps:P3303 ?formatter_URL.
+  }
+  OPTIONAL { ?statement pq:P137 ?operator. }
 }

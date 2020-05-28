@@ -29,7 +29,11 @@ foreach ($files as $file) {
       'link' => $link,
     );
 
-    if (preg_match("/^https?:\/\/([^\/]*)(\/.*|)$/", $link, $m)) {
+    if (array_key_exists('operatorLabel', $entry)) {
+      $formatter['operator'] = $entry['operatorLabel']['value'];
+      print "{$formatter['operator']}\n";
+    }
+    else if (preg_match("/^https?:\/\/([^\/]*)(\/.*|)$/", $link, $m)) {
       $formatter['operator'] = $m[1];
     }
 
