@@ -7,9 +7,13 @@ function editLinkRemote (type, osm_id) {
       properties: global.overpassFrontend.OVERPASS_BBOX
     },
     (err, object) => {
+      if (err) {
+        return console.error(err)
+      }
+
       let bounds = object.bounds
 
-      xhr = new XMLHttpRequest()
+      let xhr = new XMLHttpRequest()
       let url = 'http://127.0.0.1:8111/load_and_zoom' +
         '?left=' + (bounds.minlon - 0.0001).toFixed(5) +
         '&right=' + (bounds.maxlon + 0.0001).toFixed(5) +
