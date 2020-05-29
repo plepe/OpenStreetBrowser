@@ -58,7 +58,7 @@ html_export_var(array(
   <script src="dist/locale-<?=$ui_lang?>.js?<?=$modulekit['version']?>"></script>
 <?php @include "local-head.php" ?>
 </head>
-<body>
+<body lang="<?=$ui_lang;?>">
   <div id='map'></div>
   <div id='mapShadow'></div>
   <div id='sidebar'>
