@@ -3,7 +3,7 @@ var loadClash = {}
 var cache = {}
 var paths = {
   maki: 'node_modules/@mapbox/maki/icons/ID-SIZE.svg',
-  temaki: 'node_modules/temaki/icons/ID.svg'
+  temaki: 'node_modules/@ideditor/temaki/icons/ID.svg'
 }
 
 function applyOptions (code, options) {
