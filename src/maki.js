@@ -1,3 +1,5 @@
+const svgToDataURI = require('mini-svg-data-uri')
+
 /* global openstreetbrowserPrefix */
 var loadClash = {}
 var cache = {}
@@ -15,7 +17,9 @@ function applyOptions (code, options) {
     }
   }
 
-  return code.replace(/<path/i, '<path style="' + style + '"')
+  let result = code.replace(/<path/i, '<path style="' + style + '"')
+
+  return svgToDataURI(result)
 }
 
 function maki (set, file, options, callback) {

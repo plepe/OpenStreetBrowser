@@ -33,6 +33,7 @@
     "leaflet.polylinemeasure": "git+https://github.com/ppete2/Leaflet.PolylineMeasure.git",
     "md5": "^2.2.1",
     "measure-ts": "^3.3.2",
+    "mini-svg-data-uri": "^1.2.3",
     "modulekit-tabs": "^0.2.2",
     "moment": "^2.18.1",
     "natsort": "^1.0.6",

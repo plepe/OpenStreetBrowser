@@ -209,13 +209,9 @@ CategoryOverpass.prototype.updateAssets = function (div) {
     } else if (src.match(/^(maki|temaki):.*/)) {
       let m = src.match(/^(maki|temaki):([a-z0-9-_]*)(?:\?(.*))?$/)
       if (m) {
-        let span = document.createElement('span')
-        img.parentNode.insertBefore(span, img)
-        img.parentNode.removeChild(img)
-        i--
         maki(m[1], m[2], m[3] ? qs(m[3]) : {}, function (err, result) {
           if (err === null) {
-            span.innerHTML = result
+            img.setAttribute('src', result)
           }
         })
       }
