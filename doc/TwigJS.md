@@ -68,8 +68,8 @@ There are several extra functions defined for the TwigJS language:
 Extra filters:
 * filter websiteUrl: return a valid http link. Example: `{{ "www.google.com"|websiteUrl }}` -> "http://www.google.com"; `{{ "https://google.com"|websiteUrl }}` -> "https://google.com"
 * filter `matches`: regular expression match. e.g. `{{ "test"|matches("e(st)$") }}` returns `[ "est", "st" ]`. Returns null if it does not match.
-* filter `osmDateParse`: returns an array with the lower and upper boundary of the year of a `start_date` tag. See [https://github.com/plepe/openstreetmap-date-parser](openstreetmap-date-parser) for details.
-* filter `osmDateFormat`: returns the date as localized strings. Accept an object for options, e.g. `{{ tags.start_date|osmDateFormat({ format: 'short' }) }}`. See [https://github.com/plepe/openstreetmap-date-format](openstreetmap-date-format) for details.
+* filter `osmParseDate`: returns an array with the lower and upper boundary of the year of a `start_date` tag. See [https://github.com/plepe/openstreetmap-date-parser](openstreetmap-date-parser) for details.
+* filter `osmFormatDate`: returns the date as localized strings. Accept an object for options, e.g. `{{ tags.start_date|osmFormatDate({ format: 'short' }) }}`. See [https://github.com/plepe/openstreetmap-date-format](openstreetmap-date-format) for details.
 * filter `natsort`: Sort an array naturally, see [https://www.npmjs.com/package/natsort](natsort) for details.
 * filter `unique`: Remove duplicate elements from an array.
 * filter `md5`: calculate md5 hash of a string.
