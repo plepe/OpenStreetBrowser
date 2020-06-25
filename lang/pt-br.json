@@ -84,5 +84,7 @@
     "heading:SW": "SO",
     "heading:W": "O",
     "heading:NW": "NO",
-    "options:chooseEditor": "Escolha o editor"
+    "options:chooseEditor": "Escolha o editor",
+    "geoinfo:nw-corner": "Canto noroeste",
+    "geoinfo:se-corner": "Canto sudeste"
 }
