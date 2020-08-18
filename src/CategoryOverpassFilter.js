@@ -121,6 +121,11 @@ class CategoryOverpassFilter {
           f.values = v
         }
       }
+
+      if ('placeholder' in f && typeof f.placeholder === 'string') {
+        let t = OverpassLayer.twig.twig({ data: f.placeholder, autoescape: true })
+        f.placeholder = decodeHTML(t.render({}).toString())
+      }
     }
 
     let masterOptions = {
