@@ -94,6 +94,10 @@ OverpassLayer.twig.extendFunction('evaluate', function (tags) {
   return d
 })
 function enumerate (list) {
+  if (!list) {
+    return ''
+  }
+
   if (typeof list === 'string') {
     list = list.split(/;/g)
   }
