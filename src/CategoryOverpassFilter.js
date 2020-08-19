@@ -242,10 +242,6 @@ class CategoryOverpassFilter {
     }
 
     this.master.layer.setFilter(this.additionalFilter)
-
-    if (!this.tabFilter.isSelected()) {
-      this.tabFilter.select()
-    }
   }
 
   openCategory () {
