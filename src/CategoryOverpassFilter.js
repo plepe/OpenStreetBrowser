@@ -169,7 +169,7 @@ class CategoryOverpassFilter {
       let d = this.data[k]
 
       if (values === null) {
-        return null
+        return d.emptyQuery
       }
 
       if (!Array.isArray(values)) {
@@ -232,15 +232,6 @@ class CategoryOverpassFilter {
           return { or: ret }
       }
     }).filter(f => f) // remove null values
-
-    const defaultQueries = Object.keys(this.data)
-      .map(k => {
-        if (!param[k]) {
-          return this.data[k].defaultQuery
-        }
-      })
-      .filter(f => f)
-    this.additionalFilter = this.additionalFilter.concat(defaultQueries)
 
     if (this.additionalFilter.length === 0) {
       this.additionalFilter = []
