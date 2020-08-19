@@ -122,6 +122,17 @@ function enumerate (list) {
 }
 OverpassLayer.twig.extendFunction('enumerate', (list) => enumerate(list))
 OverpassLayer.twig.extendFilter('enumerate', (list) => enumerate(list))
+OverpassLayer.twig.extendFilter('ksort', (list) => {
+  if (Array.isArray(list)) {
+    return list
+  }
+
+  let keys = list._keys || Object.keys(list)
+  keys.sort()
+  let result = Object.assign({}, list)
+  result._keys = keys
+  return result
+})
 OverpassLayer.twig.extendFunction('debug', function () {
   console.log.apply(null, arguments)
 })

@@ -71,6 +71,7 @@ Extra filters:
 * filter `osmParseDate`: returns an array with the lower and upper boundary of the year of a `start_date` tag. See [https://github.com/plepe/openstreetmap-date-parser](openstreetmap-date-parser) for details.
 * filter `osmFormatDate`: returns the date as localized strings. Accept an object for options, e.g. `{{ tags.start_date|osmFormatDate({ format: 'short' }) }}`. See [https://github.com/plepe/openstreetmap-date-format](openstreetmap-date-format) for details.
 * filter `natsort`: Sort an array naturally, see [https://www.npmjs.com/package/natsort](natsort) for details.
+* filter `ksort`: Sort an associative array by key (alphabetic)
 * filter `unique`: Remove duplicate elements from an array.
 * filter `md5`: calculate md5 hash of a string.
 * filter `enumerate`: enumerate the given list, e.g. "foo, bar, and bla". Input either an array (`[ "foo", "bar", "bla" ]|enumerate`) or a string with `;` as separator (`"foo;bar;bla"|enumerate`).
