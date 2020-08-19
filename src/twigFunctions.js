@@ -122,13 +122,18 @@ function enumerate (list) {
 }
 OverpassLayer.twig.extendFunction('enumerate', (list) => enumerate(list))
 OverpassLayer.twig.extendFilter('enumerate', (list) => enumerate(list))
-OverpassLayer.twig.extendFilter('ksort', (list) => {
+OverpassLayer.twig.extendFilter('ksort', (list, param) => {
+  let sortFunction = sortFunctions.alpha.bind(this, {})
+  if (param.length) {
+    sortFunction = sortFunctions[param[0]].bind(this, param.length > 1 ? param[1] : {})
+  }
+
   if (Array.isArray(list)) {
     return list
   }
 
   let keys = list._keys || Object.keys(list)
-  keys.sort()
+  keys.sort(sortFunction)
   let result = Object.assign({}, list)
   result._keys = keys
   return result
@@ -140,3 +145,18 @@ OverpassLayer.twig.extendFilter('debug', function (value, param) {
   console.log.apply(null, [ value, ...param ])
   return value
 })
+
+let sortFunctions = {
+  alpha: (options, a, b) => {
+    console.log('alpha', a, b, options)
+    return a.localeCompare(b)
+  },
+  number: (options, a, b) => {
+    console.log('number', a, b, options)
+    return a - b
+  },
+  natsort: (options, a, b) => {
+    console.log('natsort', a, b, options)
+    return natsort(options)(a, b)
+  }
+}
