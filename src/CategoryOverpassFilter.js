@@ -121,6 +121,11 @@ class CategoryOverpassFilter {
           f.values = v
         }
       }
+
+      if ('placeholder' in f && typeof f.placeholder === 'string') {
+        let t = OverpassLayer.twig.twig({ data: f.placeholder, autoescape: true })
+        f.placeholder = decodeHTML(t.render({}).toString())
+      }
     }
 
     let masterOptions = {
@@ -134,16 +139,22 @@ class CategoryOverpassFilter {
 
     this.formFilter = new form('filter-' + this.master.id, this.data, masterOptions)
     this.formFilter.show(this.domFilter)
-    this.formFilter.onchange = function () {
+    this.formFilter.onchange = () => {
       let param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
 
       this.applyParam(param)
 
       state.update()
-    }.bind(this)
+    }
 
     this.master.on('setParam', this.setParam.bind(this))
-    this.master.on('applyParam', this.applyParam.bind(this))
+    this.master.on('applyParam', (param) => {
+      this.applyParam(param)
+
+      if (!this.tabFilter.isSelected()) {
+        this.tabFilter.select()
+      }
+    })
     this.master.on('open', this.openCategory.bind(this))
     this.master.on('stateGet', this.stateGet.bind(this))
   }
@@ -158,7 +169,7 @@ class CategoryOverpassFilter {
       let d = this.data[k]
 
       if (values === null) {
-        return null
+        return d.emptyQuery
       }
 
       if (!Array.isArray(values)) {
@@ -231,14 +242,13 @@ class CategoryOverpassFilter {
     }
 
     this.master.layer.setFilter(this.additionalFilter)
-
-    if (!this.tabFilter.isSelected()) {
-      this.tabFilter.select()
-    }
   }
 
   openCategory () {
     this.formFilter.resize()
+
+    let param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
+    this.applyParam(param)
   }
 
   stateGet (param) {

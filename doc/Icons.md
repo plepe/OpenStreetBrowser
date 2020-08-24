@@ -43,7 +43,7 @@ You can pass URL options to the icon to modify its look. Note that every icon is
 ```
 
 #### Temaki Icons
-[Temaki icons](http://www.7thposition.com/temaki/docs/) are additions to the Mapbox Maki Icons with the difference that they only exist in to size of 15px.
+[Temaki icons](https://ideditor.github.io/temaki/docs/) are additions to the Mapbox Maki Icons with the difference that they only exist in to size of 15px.
 ```html
 <img data-src="temaki:shinto">
 <img data-src="temaki:shinto?fill=red">
