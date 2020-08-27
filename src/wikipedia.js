@@ -1,4 +1,5 @@
 var wikidata = require('./wikidata')
+const wikipediaMonumentList = require('./wikipediaMonumentList')
 const wikipediaGetImageProperties = require('./wikipediaGetImageProperties')
 const stripLinks = require('./stripLinks')
 
@@ -122,6 +123,10 @@ register_hook('show-details', function (data, category, dom, callback) {
       found++
       showWikipedia(value, div, done)
     })
+  }
+
+  if (wikipediaMonumentList(data, div, done)) {
+    found++
   }
 
   for (k in ob.tags) {

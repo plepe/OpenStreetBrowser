@@ -1,0 +1,33 @@
+{
+    "ref:at:bda": {
+        "de": {
+            "wikipedia": "de",
+            "searchTemplate": "Denkmalliste Österreich Tabellenzeile",
+            "searchIdField": "ObjektID",
+            "searchTitle": "Liste der denkmalgeschützten Objekte in",
+            "tableColumnDescription": 4,
+            "tableColumnImage": 1,
+            "tableIdPrefix": "objektid-"
+        }
+    },
+    "ref:BLfD": {
+        "de": {
+            "wikipedia": "de",
+            "searchTemplate": "Denkmalliste Bayern Tabellenzeile",
+            "searchIdField": "Nummer",
+            "searchTitle": "Liste der Baudenkmäler in ",
+            "tableColumnDescription": 2,
+            "tableColumnImage": 4
+        }
+    },
+    "ref:whc": {
+        "de": {
+            "wikipedia": "de",
+            "searchTemplate": "Tabellenzeile Welterbe",
+            "searchIdField": "Ref",
+            "searchTitle": "Welterbe ",
+            "tableColumnDescription": 5,
+            "tableColumnImage": 0
+        }
+    }
+}

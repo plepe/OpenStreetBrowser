@@ -39,3 +39,31 @@ function ajax_wikipedia ($param) {
     'language' => $wp_lang,
   );
 }
+
+function ajax_wikipediaSearch ($param) {
+  $wp_lang = $param['wikipedia'];
+  $wp_url = "https://{$wp_lang}.wikipedia.org/w/index.php?search=" . urlencode($param['search']);
+
+  $content = file_get_contents($wp_url);
+
+  $dom = new DOMDocument();
+  $dom->loadHTML($content);
+
+  $xpath = new \DOMXpath($dom);
+  $articles = $xpath->query("//li[@class='mw-search-result']/div/a");
+
+  if (!$articles->length) {
+    return null;
+  }
+
+  $title = $articles->item(0)->getAttribute('title');
+
+  $result = ajax_wikipedia(array(
+    'page' => "{$wp_lang}:{$title}",
+    'lang' => $wp_lang,
+  ));
+
+  $result['page'] = "{$wp_lang}:{$title}";
+
+  return $result;
+}
