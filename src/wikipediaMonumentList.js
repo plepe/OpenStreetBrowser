@@ -3,6 +3,7 @@ const async = require('async')
 const listDef = require('./wikipediaMonumentListDef.json')
 const wikipediaGetImageProperties = require('./wikipediaGetImageProperties')
 const stripLinks = require('./stripLinks')
+const loadingIndicator = require('./loadingIndicator')
 
 function show (def, value, div, callback) {
   let search = 'hastemplate:"' + def.searchTemplate + '" insource:/' + def.searchTemplate + '.*' + def.searchIdField + ' *= *' + value + '[^0-9]/ intitle:"' + def.searchTitle + '"'
@@ -69,6 +70,7 @@ function show (def, value, div, callback) {
 
 module.exports = function (data, dom, callback) {
   let div = document.createElement('div')
+  let indicator = loadingIndicator(div)
 
   let functions = Object.keys(listDef).map(key => {
     if (data.object.tags[key]) {
@@ -83,7 +85,10 @@ module.exports = function (data, dom, callback) {
 
   if (functions.length) {
     dom.appendChild(div)
-    async.parallel(functions, callback)
+    async.parallel(functions, () => {
+      indicator.end()
+      callback()
+    })
 
     return true
   }
