@@ -5,7 +5,7 @@ const wikipediaGetImageProperties = require('./wikipediaGetImageProperties')
 const stripLinks = require('./stripLinks')
 const loadingIndicator = require('./loadingIndicator')
 
-function show (def, value, div, callback) {
+function load (def, value, callback) {
   let search = 'hastemplate:"' + def.searchTemplate + '" insource:/' + def.searchTemplate + '.*' + def.searchIdField + ' *= *' + value + '[^0-9]/ intitle:"' + def.searchTitle + '"'
   ajax('wikipediaSearch',
     {
@@ -33,7 +33,7 @@ function show (def, value, div, callback) {
         return callback()
       }
 
-      let text = ''
+      const ret = {}
 
       if ('tableColumnImage' in def) {
         let imgs = tr.cells[def.tableColumnImage].getElementsByTagName('img')
@@ -43,52 +43,85 @@ function show (def, value, div, callback) {
         imgs = imgs.filter(img => img.width > 64 && img.height > 64)
 
         if (imgs.length) {
-          let file = wikipediaGetImageProperties(imgs[0])
-          if (file) {
-            text += '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + file.id + '"><img class="thumbimage" src="' + imgs[0].src + '"></a>'
+          ret.image = wikipediaGetImageProperties(imgs[0])
+          if (ret.image) {
+            ret.image.src = imgs[0].src
           } else {
-            text += '<img class="thumbimage" src="' + imgs[0].src + '">'
+            ret.image = {
+              src: imgs[0].src
+            }
           }
         }
       }
 
       let td = tr.cells[def.tableColumnDescription]
       stripLinks(td)
-      text += td.innerHTML
+      ret.description = td.innerHTML
 
       let m = result.page.split(/:/)
-      text += ' <a target="_blank" href="https://' + m[0] + '.wikipedia.org/wiki/' + m[1] + '#' + (def.tableIdPrefix || '') + value + '">' + lang('more') + '</a>'
+      ret.url = 'https://' + m[0] + '.wikipedia.org/wiki/' + m[1] + '#' + (def.tableIdPrefix || '') + value
 
-      let d = document.createElement('div')
-      d.innerHTML = text
-      div.appendChild(d)
-
-      callback()
+      callback(null, ret)
     }
   )
 }
 
-module.exports = function (data, dom, callback) {
-  let div = document.createElement('div')
-  let indicator = loadingIndicator(div)
+function show (result, div) {
+  let text = ''
 
-  let functions = Object.keys(listDef).map(key => {
+  if (result.image) {
+    text += '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + result.image.id + '"><img class="thumbimage" src="' + result.image.src + '"></a>'
+  }
+
+  text += result.description
+
+  text += ' <a target="_blank" href="' + result.url + '">' + lang('more') + '</a>'
+
+  let d = document.createElement('div')
+  d.innerHTML = text
+  div.appendChild(d)
+}
+
+function findListTags (data) {
+  return Object.keys(listDef).map(key => {
     if (data.object.tags[key]) {
       let langs = Object.keys(listDef[key])
 
       // TODO: choose preferred language
       let lang = langs[0]
 
-      return show.bind(this, listDef[key][lang], data.object.tags[key], div)
+      return [listDef[key][lang], data.object.tags[key]]
     }
   }).filter(f => f)
+}
 
-  if (functions.length) {
+module.exports = function (data, dom, callback) {
+  let div = document.createElement('div')
+  let indicator = loadingIndicator(div)
+
+  let listTags = findListTags(data)
+
+  if (listTags.length) {
     dom.appendChild(div)
-    async.parallel(functions, () => {
-      indicator.end()
-      callback()
-    })
+
+    async.each(listTags,
+      (ref, done) => {
+        load(ref[0], ref[1], (err, result) => {
+          if (err) {
+            console.error(err)
+            return done()
+          }
+
+          show(result, div)
+
+          done()
+        })
+      },
+      () => {
+        indicator.end()
+        callback()
+      }
+    )
 
     return true
   }
