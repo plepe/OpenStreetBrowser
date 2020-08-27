@@ -2,6 +2,7 @@ const async = require('async')
 
 const listDef = require('./wikipediaMonumentListDef.json')
 const wikipediaGetImageProperties = require('./wikipediaGetImageProperties')
+const stripLinks = require('./stripLinks')
 
 function show (def, value, div, callback) {
   let search = 'hastemplate:"' + def.searchTemplate + '" insource:/' + def.searchTemplate + '.*' + def.searchIdField + ' *= *' + value + '[^0-9]/ intitle:"' + def.searchTitle + '"'
@@ -33,8 +34,13 @@ function show (def, value, div, callback) {
 
       let text = ''
 
-      if (def.tableColumnImage) {
+      if ('tableColumnImage' in def) {
         let imgs = tr.cells[def.tableColumnImage].getElementsByTagName('img')
+        imgs = Array.from(imgs)
+
+        // ignore icons
+        imgs = imgs.filter(img => img.width > 64 && img.height > 64)
+
         if (imgs.length) {
           let file = wikipediaGetImageProperties(imgs[0])
           if (file) {
@@ -45,7 +51,9 @@ function show (def, value, div, callback) {
         }
       }
 
-      text += stripLinks(tr.cells[def.tableColumnDescription]).innerHTML
+      let td = tr.cells[def.tableColumnDescription]
+      stripLinks(td)
+      text += td.innerHTML
 
       let m = result.page.split(/:/)
       text += ' <a target="_blank" href="https://' + m[0] + '.wikipedia.org/wiki/' + m[1] + '#' + (def.tableIdPrefix || '') + value + '">' + lang('more') + '</a>'
