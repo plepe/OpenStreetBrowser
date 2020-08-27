@@ -126,3 +126,15 @@ module.exports = function (data, dom, callback) {
     return true
   }
 }
+
+register_hook('image_sources', (sources, data) => {
+  let listTags = findListTags(data)
+
+  listTags.forEach(ref => sources.push({
+    type: 'fun',
+    fun: done => load(ref[0], ref[1], (err, result) => {
+      if (err) { return console.error(err) }
+      done(null, result.image)
+    })
+  }))
+})

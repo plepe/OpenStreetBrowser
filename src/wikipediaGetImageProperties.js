@@ -5,6 +5,7 @@ module.exports = function wikipediaGetImageProperties (img) {
 
     return {
       id: file,
+      type: 'wikimedia',
       width: img.getAttribute('data-file-width'),
       height: img.getAttribute('data-file-height')
     }
