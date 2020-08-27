@@ -1,20 +1,9 @@
 var wikidata = require('./wikidata')
+const wikipediaGetImageProperties = require('./wikipediaGetImageProperties')
+const stripLinks = require('./stripLinks')
 
 var cache = {}
 var loadClash = {}
-
-function stripLinks (dom) {
-  var as = dom.getElementsByTagName('a')
-  as = Array.prototype.slice.call(as)
-
-  as.forEach(function (current) {
-    while (current.firstChild) {
-      current.parentNode.insertBefore(current.firstChild, current)
-    }
-
-    current.parentNode.removeChild(current)
-  })
-}
 
 function prepare (div) {
   var i
@@ -340,14 +329,9 @@ function getImages (tagValue, callback) {
       img.removeAttribute('width')
       img.removeAttribute('height')
 
-      var m = img.src.match(/^https?:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/\w+\/\w+\/([^/]+)/)
-      if (m) {
-        var file = decodeURIComponent(m[1]).replace(/_/g, ' ')
-        ret.push({
-          id: file,
-          width: img.getAttribute('data-file-width'),
-          height: img.getAttribute('data-file-height')
-        })
+      let r = wikipediaGetImageProperties(img)
+      if (r) {
+        ret.push(r)
       }
     }
 
