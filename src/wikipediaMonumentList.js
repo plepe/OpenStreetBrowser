@@ -5,7 +5,33 @@ const wikipediaGetImageProperties = require('./wikipediaGetImageProperties')
 const stripLinks = require('./stripLinks')
 const loadingIndicator = require('./loadingIndicator')
 
+const cache = {}
+const callbacks = {}
+
+function callCallbacks(cbs, err, result) {
+  cbs.forEach((cb, i) => {
+    cb(err, result)
+    cbs[i] = null
+  })
+}
+
 function load (def, value, callback) {
+  if (!def._id) {
+    def._id = Math.random()
+  }
+
+  if (!(def._id in cache)) {
+    cache[def._id] = {}
+    callbacks[def._id] = {}
+  }
+
+  if (value in callbacks[def._id]) {
+    callbacks[def._id][value].push(callback)
+    return
+  }
+
+  callbacks[def._id][value] = [callback]
+
   let search = 'hastemplate:"' + def.searchTemplate + '" insource:/' + def.searchTemplate + '.*' + def.searchIdField + ' *= *' + value + '[^0-9]/ intitle:"' + def.searchTitle + '"'
   ajax('wikipediaSearch',
     {
@@ -13,7 +39,7 @@ function load (def, value, callback) {
       search
     }, (result) => {
       if (!result) {
-        return callback()
+        return callCallbacks(callbacks[def._id][value])
       }
 
       var parse = document.createElement('div')
@@ -30,7 +56,7 @@ function load (def, value, callback) {
       }
 
       if (!tr) {
-        return callback()
+        return callCallbacks(callbacks[def._id][value])
       }
 
       const ret = {}
@@ -61,7 +87,8 @@ function load (def, value, callback) {
       let m = result.page.split(/:/)
       ret.url = 'https://' + m[0] + '.wikipedia.org/wiki/' + m[1] + '#' + (def.tableIdPrefix || '') + value
 
-      callback(null, ret)
+      cache[def._id][value] = ret
+      callCallbacks(callbacks[def._id][value], null, ret)
     }
   )
 }
