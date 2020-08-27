@@ -96,6 +96,10 @@ function load (def, value, callback) {
 function show (result, div) {
   let text = ''
 
+  if (!result) {
+    return
+  }
+
   if (result.image) {
     text += '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + result.image.id + '"><img class="thumbimage" src="' + result.image.src + '"></a>'
   }
@@ -104,7 +108,7 @@ function show (result, div) {
 
   text += ' <a target="_blank" href="' + result.url + '">' + lang('more') + '</a>'
 
-  let d = document.createElement('div')
+  let d = document.createElement('p')
   d.innerHTML = text
   div.appendChild(d)
 }
