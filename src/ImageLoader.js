@@ -70,6 +70,8 @@ ImageLoader.prototype.parseObject = function (data) {
     })
   }
 
+  call_hooks('image_sources', this.sources, data)
+
   cache[data.id] = this
 }
 
@@ -182,6 +184,17 @@ ImageLoader.prototype.loadWikipedia = function (src, callback) {
   }.bind(this))
 }
 
+ImageLoader.prototype.loadFun = function (src, callback) {
+  src.fun((err, file) => {
+    if (file) {
+      this.found.push(file.id)
+      this.data[file.id] = file
+    }
+
+    callback(null)
+  })
+}
+
 ImageLoader.prototype.handlePending = function () {
   var pending = this.pendingCallbacks
   delete this.pendingCallbacks
@@ -211,6 +224,8 @@ ImageLoader.prototype.callbackCurrent = function (index, options, callback) {
       this.loadWikidata(src, this.handlePending.bind(this))
     } else if (src.type === 'wikipedia') {
       this.loadWikipedia(src, this.handlePending.bind(this))
+    } else if (src.type === 'fun') {
+      this.loadFun(src, this.handlePending.bind(this))
     }
 
     return
