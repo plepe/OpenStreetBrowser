@@ -126,6 +126,7 @@ register_hook('show-details', function (data, category, dom, callback) {
   }
 
   if (wikipediaMonumentList(data, div, done)) {
+    console.log('monument found')
     found++
   }
 

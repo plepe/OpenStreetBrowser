@@ -29,5 +29,16 @@
             "tableColumnDescription": 5,
             "tableColumnImage": 0
         }
+    },
+    "ref:wien:kultur": {
+        "de": {
+            "wikipedia": "de",
+            "searchTemplate": "WLPA-AT-Zeile",
+            "searchIdField": "ID",
+            "searchTitle": "Liste der",
+            "tableColumnDescription": 7,
+            "tableColumnImage": 0,
+            "tableIdPrefix": "id-"
+        }
     }
 }
