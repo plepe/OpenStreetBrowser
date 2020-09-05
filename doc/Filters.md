@@ -36,6 +36,8 @@ Each filter can define the following values:
   * 'has_key_value' query object with a tag with this key
   * 'strsearch' query string parts (e.g. "kai keb" would match "Kaiser Kebap") and query character variants (e.g. "cafe" would match "café").
 * show_default: if true, this filter will be shown by default, others need to be added via the select box.
+* placeholder: a text which is shown as placeholder (Twig enabled)
+* emptyQuery: A Overpass filter query which is added, when no value is selected.
 
 ### Values
 #### Array
