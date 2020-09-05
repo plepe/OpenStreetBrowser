@@ -207,6 +207,13 @@ CategoryOverpass.prototype.updateAssets = function (div) {
     var src = img.getAttribute('src') || img.getAttribute('data-src')
     if (src === null) {
     } else if (src.match(/^(maki|temaki):.*/)) {
+
+      /* HACK for temaki icons: as some icons are larger than the default 15px, force  size to 15px. */
+      if (src.match(/^temaki:/) && !img.hasAttribute('width') && !img.hasAttribute('height')) {
+        img.setAttribute('width', '15')
+        img.setAttribute('height', '15')
+      }
+
       let m = src.match(/^(maki|temaki):([a-z0-9-_]*)(?:\?(.*))?$/)
       if (m) {
         maki(m[1], m[2], m[3] ? qs(m[3]) : {}, function (err, result) {
