@@ -13,6 +13,7 @@
     "editor:remote": "Remote Control (JOSM or Merkaator)",
     "editor:remote:help": "You have to enable remote control in JOSM or Merkaator.",
     "error": "Error",
+    "empty value": "empty value",
     "export-all": "Export all visible map features",
     "export-prepare": "Prepare download",
     "export:GeoJSON": "Download as GeoJSON",
