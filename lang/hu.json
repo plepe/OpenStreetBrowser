@@ -86,5 +86,6 @@
     "heading:SW": "DNY",
     "heading:W": "NY",
     "heading:NW": "ÉNY",
-    "options:chooseEditor": "Szerkesztő kiválasztása"
+    "options:chooseEditor": "Szerkesztő kiválasztása",
+    "empty value": "üres érték"
 }
