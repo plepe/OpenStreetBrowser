@@ -30,6 +30,15 @@ var defaultValues = {
     listMarkerSymbol: '{{ markerCircle({})|raw }}',
     preferredZoom: 16
   },
+  layouts: {
+    popup:
+      '<h1>{{ object.popupTitle|default(object.title) }}</h1>' +
+      '{% if object.popupDescription or object.description %}<div class="description">{{ object.popupDescription|default(object.description) }}</div>{% endif %}' +
+      '{% if object.popupBody or object.body %}<div class="body">{{ object.popupBody|default(object.body) }}</div>{% endif %}',
+    list:
+      '<a class="title" href="{{ object.appUrl|default("#") }}">{{ object.listTitle|default(object.title) }}</a>' +
+      '{% if object.listDescription or object.description %}<div class="description">{{ object.listDescription|default(object.description) }}</div>{% endif %}'
+  },
   queryOptions: {
   }
 }
