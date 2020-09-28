@@ -17,7 +17,7 @@ const showMore = require('./showMore')
 
 var defaultValues = {
   feature: {
-    title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
+    title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) }}",
     markerSign: '',
     'style:selected': {
       color: '#3f3f3f',
@@ -36,6 +36,7 @@ var defaultValues = {
       '{% if object.popupDescription or object.description %}<div class="description">{{ object.popupDescription|default(object.description) }}</div>{% endif %}' +
       '{% if object.popupBody or object.body %}<div class="body">{{ object.popupBody|default(object.body) }}</div>{% endif %}',
     list:
+      '<a href="{{ object.appUrl|default("#") }}">' +
       '<div class="marker">' +
       '{% if object.listMarkerSymbol or object.markerSymbol %}' +
       '<div class="symbol">{{ object.listMarkerSymbol|default(object.markerSymbol) }}</div>' +
@@ -47,9 +48,10 @@ var defaultValues = {
       '{% endif %}' +
       '</div>' +
       '<div class="content">' +
-      '<a class="title" href="{{ object.appUrl|default("#") }}">{{ object.listTitle|default(object.title) }}</a>' +
       '{% if object.listDescription or object.description %}<div class="description">{{ object.listDescription|default(object.description) }}</div>{% endif %}' +
-      '</div>'
+      '{% if object.listTitle or object.title %}<div class="title">{{ object.listTitle|default(object.title) }}</div>{% endif %}' +
+      '</div>' +
+      '</a>'
   },
   queryOptions: {
   }
