@@ -38,7 +38,11 @@ var defaultValues = {
     list:
       '<a href="{{ object.appUrl|default("#") }}">' +
       '<div class="marker">' +
-      '{% if object.listMarkerSymbol or object.markerSymbol %}' +
+      '{% if object.listMarkerSymbol|default(object.markerSymbol)|trim == "line" %}' +
+      '<div class="symbol">{{ markerLine(object) }}</div>' +
+      '{% elseif object.listMarkerSymbol|default(object.markerSymbol)|trim == "polygon" %}' +
+      '<div class="symbol">{{ markerPolygon(object) }}</div>' +
+      '{% elseif object.listMarkerSymbol or object.markerSymbol %}' +
       '<div class="symbol">{{ object.listMarkerSymbol|default(object.markerSymbol) }}</div>' +
       '{% elseif object.marker and object.marker.iconUrl %}' +
       '<img class="symbol" src="{{ object.marker.iconUrl|e }}">' +
@@ -321,24 +325,6 @@ CategoryOverpass.prototype.updateStatus = function () {
   }
 }
 
-CategoryOverpass.prototype._getMarker = function (origGetMarker, origList, ob) {
-  if (ob.data[origList.options.prefix + 'MarkerSymbol'].trim() === 'line') {
-    let div = document.createElement('div')
-    div.className = 'marker'
-    div.innerHTML = markers.line(ob.data)
-
-    return div
-  } else if (ob.data[origList.options.prefix + 'MarkerSymbol'].trim() === 'polygon') {
-    let div = document.createElement('div')
-    div.className = 'marker'
-    div.innerHTML = markers.polygon(ob.data)
-
-    return div
-  }
-
-  return origGetMarker.call(origList, ob)
-}
-
 CategoryOverpass.prototype.open = function () {
   if (this.isOpen) {
     return
@@ -415,11 +401,6 @@ CategoryOverpass.prototype.open = function () {
 
       showMore(this, this.domContent)
     }
-
-    this.lists.forEach(list => {
-      let origGetMarker = list._getMarker
-      list._getMarker = this._getMarker.bind(this, origGetMarker, list)
-    })
   }
 
   this.listsDom.forEach(dom => dom.classList.add('open'))
