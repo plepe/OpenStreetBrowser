@@ -52,6 +52,7 @@ var defaultValues = {
       '{% endif %}' +
       '</div>' +
       '<div class="content">' +
+      '{% if object.listDetails or object.details %}<div class="details">{{ object.listDetails|default(object.details) }}</div>{% endif %}' +
       '{% if object.listDescription or object.description %}<div class="description">{{ object.listDescription|default(object.description) }}</div>{% endif %}' +
       '{% if object.listTitle or object.title %}<div class="title">{{ object.listTitle|default(object.title) }}</div>{% endif %}' +
       '</div>' +

@@ -434,6 +434,10 @@ ul.overpass-layer-list > li:hover,
 ul.overpass-layer-list > li.selected {
   background: #cfcfcf !important;
 }
+ul.overpass-layer-list > li > a {
+  display: block;
+  width: 100%;
+}
 ul.overpass-layer-list > li > a > .marker {
   position: absolute;
   margin-left: -35px;
@@ -470,6 +474,12 @@ ul.overpass-layer-list > li > a > .content > .description {
 ul.overpass-layer-list > li > a > .content > .title {
   display: block;
   font-style: italic;
+}
+ul.overpass-layer-list > li > a > .content > .details {
+  float: right;
+  display: block;
+  font-style: italic;
+  color: #7f7f7f;
 }
 
 .leaflet-popup-content h1 .title {
