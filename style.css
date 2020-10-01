@@ -295,16 +295,23 @@ a:active {
   color: red;
 }
 
-.description,
 .leaflet-popup-content .description {
   display: block;
-  text-align: right;
   font-style: italic;
+  color: #7f7f7f;
+  font-size: 1.5em;
+  font-weight: normal;
 }
-.description:after,
-.leaflet-popup-content .description:after {
-  content: '';
-  clear: right;
+.leaflet-popup-content .title {
+  font-size: 1.5em;
+  font-weight: normal;
+}
+.leaflet-popup-content .details {
+  float: right;
+  max-width: 50%;
+  text-align: right;
+  color: #7f7f7f;
+  word-wrap: break-word;
 }
 
 .body ul,
@@ -469,17 +476,22 @@ ul.overpass-layer-list > li > a > .content {
 ul.overpass-layer-list > li > a > .content > .description {
   display: block;
   text-align: left;
-  font-style: normal;
+  font-style: italic;
+  color: #3f3f3f;
+  font-weight: normal;
 }
 ul.overpass-layer-list > li > a > .content > .title {
   display: block;
-  font-style: italic;
+  font-style: normal;
+  font-weight: normal;
 }
 ul.overpass-layer-list > li > a > .content > .details {
   float: right;
   display: block;
   font-style: italic;
-  color: #7f7f7f;
+  color: #3f3f3f;
+  max-width: 50%;
+  text-align: right;
 }
 
 .leaflet-popup-content h1 .title {

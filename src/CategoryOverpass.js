@@ -32,9 +32,11 @@ var defaultValues = {
   },
   layouts: {
     popup:
-      '<h1>{{ object.popupTitle|default(object.title) }}</h1>' +
+      '<div class="content">' +
+      '{% if object.popupDetails or object.details %}<div class="details">{{ object.popupDetails|default(object.details) }}</div>{% endif %}' +
       '{% if object.popupDescription or object.description %}<div class="description">{{ object.popupDescription|default(object.description) }}</div>{% endif %}' +
-      '{% if object.popupBody or object.body %}<div class="body">{{ object.popupBody|default(object.body) }}</div>{% endif %}',
+      '{% if object.popupTitle or object.title %}<div class="title">{{ object.popupTitle|default(object.title) }}</div>{% endif %}' +
+      '</div>',
     list:
       '<a href="{{ object.appUrl|default("#") }}">' +
       '<div class="marker">' +
