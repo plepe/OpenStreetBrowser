@@ -442,6 +442,7 @@ a:active {
   float: right;
   margin-left: 0.5em;
   margin-bottom: 0.5em;
+  border-radius: 6px;
 }
 .wikipedia > h4 {
   margin-top: 0.5em;
@@ -467,11 +468,13 @@ a:active {
 .leaflet-popup-content .images {
   max-height: 12.5em;
   text-align: center;
+  border-radius: 6px;
   margin: 0 0.5em 0.25em 0.5em;
 }
 .leaflet-popup-content .images img {
   max-width: 100%;
   max-height: 12.5em;
+  border-radius: 6px;
 }
 
 #contentDetails .images {
