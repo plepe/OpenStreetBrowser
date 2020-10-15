@@ -582,3 +582,19 @@ ul.overpass-layer-list > li > a > .content > .details {
 .leaflet-popup-content h1 .title {
   font-style: italic;
 }
+
+.leaflet-popup-content-wrapper {
+  overflow: hidden;
+}
+
+.scroll-shadow,
+.leaflet-popup-content {
+  background:
+	linear-gradient(white 30%, hsla(0,0%,100%, 0)),
+	linear-gradient(hsla(0,0%,100%,0) 10px, white 70%) bottom,
+	radial-gradient(at top, rgba(0,0,0,0.2), transparent 70%),
+	radial-gradient(at bottom, rgba(0,0,0,0.2), transparent 70%) bottom;
+  background-repeat:no-repeat;
+  background-size: 100% 20px, 100% 20px, 100% 10px, 100% 10px;
+  background-attachment:local, local, scroll, scroll;
+}
