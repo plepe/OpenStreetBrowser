@@ -119,9 +119,6 @@ a:active {
 
 
 /* Popups */
-.leaflet-popup-content ul.popup-footer {
-  padding: 0;
-}
 .leaflet-popup-content ul.popup-footer li {
   display: inline-block;
   list-style: none;
@@ -148,26 +145,44 @@ a:active {
   margin-left: 0.25em;
 }
 
-@media all and (max-height: 600px) {
+.leaflet-popup-content {
+  min-width: 150px !important;
+  width: 300px !important;
+}
+@media all and (min-width: 501px) and (max-height: 600px) {
 .tabs-section {
-  max-height: 200px;
+  max-height: 300px;
 }
 }
-@media all and (max-height: 500px) {
-.tabs-section {
-  max-height: 150px;
+@media all and (min-width: 501px) and (max-height: 400px) {
+.leaflet-popup-content {
+  max-height: 250px !important;
 }
 }
-@media all and (max-height: 400px) {
-#sidebar {
-  overflow: auto;
+@media all and (min-width: 501px) and (max-height: 360px) {
+.leaflet-popup-content {
+  max-height: 200px !important;
 }
-#sidebar > #content {
-  overflow: visible;
 }
-.tabs-section {
-  max-height: none;
-  overflow-y: visible;
+@media all and (min-width: 501px) and (max-height: 320px) {
+.leaflet-popup-content {
+  max-height: 150px !important;
+}
+}
+
+@media all and (max-width: 700px) {
+.leaflet-popup-content {
+  width: 250px !important;
+}
+}
+@media all and (max-width: 600px) {
+.leaflet-popup-content {
+  width: 200px !important;
+}
+}
+@media all and (max-width: 550px) {
+.leaflet-popup-content {
+  width: 150px !important;
 }
 }
 
@@ -205,6 +220,19 @@ a:active {
   max-height: none;
   overflow-y: visible;
 }
+.leaflet-popup-content {
+  width: 300px !important;
+}
+}
+@media all and (max-width: 400px) {
+.leaflet-popup-content {
+  width: 250px !important;
+}
+}
+@media all and (max-width: 360px) {
+.leaflet-popup-content {
+  width: 200px !important;
+}
 }
 
 @media all and (max-width: 500px) and (max-height: 675px) {
@@ -216,6 +244,35 @@ a:active {
 }
 #mapShadow {
   top: calc(40% + 1px);
+}
+.leaflet-popup-content {
+  max-height: 250px !important;
+}
+}
+
+@media all and (max-width: 500px) and (max-height: 600px) {
+.leaflet-popup-content {
+  max-height: 240px !important;
+}
+}
+@media all and (max-width: 500px) and (max-height: 550px) {
+.leaflet-popup-content {
+  max-height: 200px !important;
+}
+}
+@media all and (max-width: 500px) and (max-height: 500px) {
+.leaflet-popup-content {
+  max-height: 180px !important;
+}
+}
+@media all and (max-width: 500px) and (max-height: 450px) {
+.leaflet-popup-content {
+  max-height: 160px !important;
+}
+}
+@media all and (max-width: 500px) and (max-height: 400px) {
+.leaflet-popup-content {
+  max-height: 140px !important;
 }
 }
 

@@ -527,6 +527,10 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
     sublayer_id: object.sublayer_id
   }
 
+  if (popup._contentNode) {
+    popup._contentNode.style = ''
+  }
+
   this.updatePopupContent(object, popup)
   this.currentSelected = this.layer.show(object.id, layerOptions, function () {})
 }
