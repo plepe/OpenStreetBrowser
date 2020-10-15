@@ -295,6 +295,32 @@ a:active {
   color: red;
 }
 
+.leaflet-popup-content-wrapper {
+  padding: 0;
+}
+.leaflet-popup-content {
+  margin: 0;
+  overflow: auto;
+}
+.leaflet-popup-content > .header {
+  background: #dfdfdf;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-bottom: 1px solid #afafaf;
+  padding: 0.5em 0.5em 0.25em 0.5em;
+  margin-bottom: 0.5em;
+}
+.leaflet-popup-content > .header::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+.leaflet-popup-content > .popupBody {
+  padding: 0 0.5em;
+}
+.leaflet-popup-content > .popup-footer {
+  padding: 0.5em 0.5em 0.25em 0.5em;
+}
 .leaflet-popup-content .description {
   display: block;
   font-style: italic;

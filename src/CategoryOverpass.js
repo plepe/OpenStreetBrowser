@@ -32,11 +32,12 @@ var defaultValues = {
   },
   layouts: {
     popup:
-      '<div class="content">' +
+      '<div class="header">' +
       '{% if object.popupDetails or object.details %}<div class="details">{{ object.popupDetails|default(object.details) }}</div>{% endif %}' +
       '{% if object.popupDescription or object.description %}<div class="description">{{ object.popupDescription|default(object.description) }}</div>{% endif %}' +
       '{% if object.popupTitle or object.title %}<div class="title">{{ object.popupTitle|default(object.title) }}</div>{% endif %}' +
-      '</div>',
+      '</div>' +
+      '<div class="popupBody">{{ object.popupBody|default(object.body) }}</div>',
     list:
       '<a href="{{ object.appUrl|default("#") }}">' +
       '<div class="marker">' +
@@ -544,10 +545,11 @@ CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
 
 CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
   if (this.popupBodyTemplate) {
-    var popupBody = popup._contentNode.getElementsByClassName('popupBody')
-    if (!popupBody.length) {
+    var popupBody = popup._contentNode.querySelector('#popupBody')
+    if (!popupBody) {
       popupBody = document.createElement('div')
       popupBody.className = 'popupBody'
+      popupBody.id = 'popupBody'
       popup._contentNode.appendChild(popupBody)
     }
 
