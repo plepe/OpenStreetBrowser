@@ -145,7 +145,12 @@ register_hook('show-popup', function (data, category, dom, callback) {
   div.className = 'images loading'
   var imageWrapper
 
-  dom.insertBefore(div, dom.firstChild)
+  let body = dom.getElementsByClassName('popupBody')
+  if (body.length) {
+    dom.insertBefore(div, body[0])
+  } else {
+    dom.appendChild(div)
+  }
 
   var currentLoader = new ImageLoader(data)
   data.popupImageCounter = {}
