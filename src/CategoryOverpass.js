@@ -15,6 +15,28 @@ var editLink = require('./editLink')
 
 const showMore = require('./showMore')
 
+const listTemplate = '<a href="{{ object.appUrl|default("#") }}">' +
+  '<div class="marker">' +
+  '{% if object.templateMarkerSymbol|default(object.markerSymbol)|trim == "line" %}' +
+  '<div class="symbol">{{ markerLine(object) }}</div>' +
+  '{% elseif object.templateMarkerSymbol|default(object.markerSymbol)|trim == "polygon" %}' +
+  '<div class="symbol">{{ markerPolygon(object) }}</div>' +
+  '{% elseif object.templateMarkerSymbol or object.markerSymbol %}' +
+  '<div class="symbol">{{ object.templateMarkerSymbol|default(object.markerSymbol) }}</div>' +
+  '{% elseif object.marker and object.marker.iconUrl %}' +
+  '<img class="symbol" src="{{ object.marker.iconUrl|e }}">' +
+  '{% endif %}' +
+  '{% if object.templateMarkerSign or object.markerSign %}' +
+  '<div class="sign">{{ object.templateMarkerSign|default(object.markerSign) }}</div>' +
+  '{% endif %}' +
+  '</div>' +
+  '<div class="content">' +
+  '{% if object.templateDetails or object.details %}<div class="details">{{ object.templateDetails|default(object.details) }}</div>{% endif %}' +
+  '{% if object.templateDescription or object.description %}<div class="description">{{ object.templateDescription|default(object.description) }}</div>{% endif %}' +
+  '{% if object.templateTitle or object.title %}<div class="title">{{ object.templateTitle|default(object.title) }}</div>{% endif %}' +
+  '</div>' +
+  '</a>'
+
 var defaultValues = {
   feature: {
     title: "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) }}",
@@ -38,28 +60,7 @@ var defaultValues = {
       '{% if object.popupTitle or object.title %}<div class="title">{{ object.popupTitle|default(object.title) }}</div>{% endif %}' +
       '</div>' +
       '<div class="popupBody">{{ object.popupBody|default(object.body) }}</div>',
-    list:
-      '<a href="{{ object.appUrl|default("#") }}">' +
-      '<div class="marker">' +
-      '{% if object.listMarkerSymbol|default(object.markerSymbol)|trim == "line" %}' +
-      '<div class="symbol">{{ markerLine(object) }}</div>' +
-      '{% elseif object.listMarkerSymbol|default(object.markerSymbol)|trim == "polygon" %}' +
-      '<div class="symbol">{{ markerPolygon(object) }}</div>' +
-      '{% elseif object.listMarkerSymbol or object.markerSymbol %}' +
-      '<div class="symbol">{{ object.listMarkerSymbol|default(object.markerSymbol) }}</div>' +
-      '{% elseif object.marker and object.marker.iconUrl %}' +
-      '<img class="symbol" src="{{ object.marker.iconUrl|e }}">' +
-      '{% endif %}' +
-      '{% if object.listMarkerSign or object.markerSign %}' +
-      '<div class="sign">{{ object.listMarkerSign|default(object.markerSign) }}</div>' +
-      '{% endif %}' +
-      '</div>' +
-      '<div class="content">' +
-      '{% if object.listDetails or object.details %}<div class="details">{{ object.listDetails|default(object.details) }}</div>{% endif %}' +
-      '{% if object.listDescription or object.description %}<div class="description">{{ object.listDescription|default(object.description) }}</div>{% endif %}' +
-      '{% if object.listTitle or object.title %}<div class="title">{{ object.listTitle|default(object.title) }}</div>{% endif %}' +
-      '</div>' +
-      '</a>'
+    list: listTemplate.replace(/template/g, 'list')
   },
   queryOptions: {
   }
@@ -349,6 +350,9 @@ CategoryOverpass.prototype.open = function () {
 
       for (let k in this.data.lists) {
         let listData = this.data.lists[k]
+
+        this.layer.setLayout(listData.prefix, listTemplate.replace(/template/g, listData.prefix))
+
         let list = new OverpassLayerList(this.layer, listData)
         this.lists.push(list)
 
