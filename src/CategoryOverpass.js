@@ -133,6 +133,9 @@ function CategoryOverpass (options, data, repository) {
 
     this.updatePopupContent(ob, ob.popup)
 
+    // Move close button into the content, to make its position depending whether a scrollbar is visible or not
+    ob.popup._contentNode.insertBefore(ob.popup._closeButton, ob.popup._contentNode.firstChild)
+
     if (document.getElementById('content').className === 'details open') {
       showDetails(ob, this)
     }

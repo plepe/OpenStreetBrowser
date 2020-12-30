@@ -597,3 +597,10 @@ ul.overpass-layer-list > li > a > .content > .details {
   background-size: 100% 20px, 100% 20px, 100% 10px, 100% 10px;
   background-attachment:local, local, scroll, scroll;
 }
+.leaflet-popup > .leaflet-popup-close-button {
+  display: none;
+}
+.leaflet-container .leaflet-popup-content > a.leaflet-popup-close-button {
+  float: right;
+  position: inherit;
+}
