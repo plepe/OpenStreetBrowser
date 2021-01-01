@@ -3,13 +3,22 @@ var ImageLoader = require('./ImageLoader')
 var showTimer
 
 function showImage (image, dom) {
-  var div = document.createElement('div')
-  div.innerHTML = '<a target="_blank" href="' + image.url + '"><img src="' + image.url + '"></a>'
+  var a = document.createElement('a')
+  a.target = '_blank'
+  a.href = image.id
 
-  dom.appendChild(div)
+  let img = document.createElement('img')
+  img.src = image.id
+  a.appendChild(img)
+
+  dom.appendChild(a)
+
+  return img
 }
 
 function showWikimediaImage (image, options, dom) {
+  let img = document.createElement('img')
+
   if (!options.size) {
     options.size = 800
   }
@@ -31,13 +40,20 @@ function showWikimediaImage (image, options, dom) {
           m[1] + Math.ceil(options.size * 1.5) + m[3] + ' 1.5x, ' +
           m[1] + Math.ceil(options.size * 2) + m[3] + ' 2x'
 
-        var div = document.createElement('div')
-        div.innerHTML = '<a target="_blank" href="https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id) + '"><img src="' + src + '" srcset="' + srcset + '"/></a>'
+        let a = document.createElement('a')
+        a.target = '_blank'
+        a.href = 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(image.id)
 
-        dom.appendChild(div)
+        img.src = src
+        img.srcset = srcset
+        a.appendChild(img)
+
+        dom.appendChild(a)
       }
     }
   )
+
+  return img
 }
 
 // feature: { id: 'File:xxx.jpg', type: 'wikimedia|url', url: 'https://...' }
@@ -46,10 +62,10 @@ function show (img, options, div) {
 
   switch (img.type) {
     case 'wikimedia':
-      showWikimediaImage(img, options, div)
+      return showWikimediaImage(img, options, div)
       break
     case 'url':
-      showImage(img, div)
+      return showImage(img, div)
       break
     default:
   }
@@ -157,10 +173,10 @@ register_hook('show-popup', function (data, category, dom, callback) {
 
   currentLoader.first({
     counter: data.popupImageCounter
-  }, function (err, img) {
+  }, function (err, data) {
     div.classList.remove('loading')
 
-    if (!img) {
+    if (!data) {
       return callback(err)
     }
 
@@ -172,8 +188,12 @@ register_hook('show-popup', function (data, category, dom, callback) {
       size: 150
     }
 
-    show(img, options, imageWrapper)
-    dom.classList.add('hasImage')
+    let img = show(data, options, imageWrapper)
+    if (img) {
+      img.onload = () => {
+        dom.classList.add('hasImage')
+      }
+    }
 
     callback(null)
   })
