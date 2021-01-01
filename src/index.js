@@ -259,16 +259,20 @@ window.showDetails = function (data, category) {
 
   dom.innerHTML = ''
 
-  div = document.createElement('h1')
-  div.className = 'title'
-  div.innerHTML = data.data.title || ''
-  dom.appendChild(div)
-  data.sublayer.updateAssets(div, data)
+  let header = document.createElement('div')
+  header.className = 'header'
+  dom.appendChild(header)
 
   div = document.createElement('div')
   div.className = 'description'
   div.innerHTML = data.data.popupDescription || data.data.description || ''
-  dom.appendChild(div)
+  header.appendChild(div)
+  data.sublayer.updateAssets(div, data)
+
+  div = document.createElement('div')
+  div.className = 'title'
+  div.innerHTML = data.data.title || ''
+  header.appendChild(div)
   data.sublayer.updateAssets(div, data)
 
   div = document.createElement('div')

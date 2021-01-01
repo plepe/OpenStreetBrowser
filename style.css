@@ -117,6 +117,23 @@ a:active {
   display: block;
 }
 
+#contentDetails > .header > .title {
+  border-bottom: 1px solid #3f3f3f;
+  margin-bottom: 1em;
+  margin-top: 0.5em;
+}
+#contentDetails > .header > .title {
+  font-size: 1.5em;
+  font-weight: normal;
+}
+#contentDetails > .header > .description {
+  display: block;
+  font-style: italic;
+  color: #7f7f7f;
+  font-size: 1.5em;
+  font-weight: normal;
+}
+
 
 /* Popups */
 .leaflet-popup-content ul.popup-footer li {
