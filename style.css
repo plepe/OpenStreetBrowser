@@ -383,18 +383,18 @@ a:active {
   border-top: 1px solid #afafaf;
   margin-top: 0.5em;
 }
-.leaflet-popup-content .description {
+.leaflet-popup-content .header .description {
   display: block;
   font-style: italic;
   color: #7f7f7f;
   font-size: 1.5em;
   font-weight: normal;
 }
-.leaflet-popup-content .title {
+.leaflet-popup-content .header .title {
   font-size: 1.5em;
   font-weight: normal;
 }
-.leaflet-popup-content .details {
+.leaflet-popup-content .header .details {
   float: right;
   max-width: 50%;
   text-align: right;
@@ -525,6 +525,7 @@ a:active {
   display: table;
 }
 
+#contentDetails ul.overpass-layer-list,
 ul.overpass-layer-list {
   padding-left: 0;
 }
@@ -541,6 +542,10 @@ ul.overpass-layer-list > li {
 ul.overpass-layer-list > li:hover,
 ul.overpass-layer-list > li.selected {
   background: #cfcfcf !important;
+}
+#contentDetails ul.overpass-layer-list > li a,
+ul.overpass-layer-list > li a {
+  color: #000000;
 }
 ul.overpass-layer-list > li > a {
   display: block;
