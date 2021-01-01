@@ -426,6 +426,8 @@ a:active {
   position: absolute;
   margin-left: -20px;
   padding-top: 2px;
+  width: 15px;
+  text-align: center;
 }
 .body ul > li > .key,
 .leaflet-popup-content ul > li > .key {
