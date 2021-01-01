@@ -362,9 +362,13 @@ a:active {
 .leaflet-popup-content > .header {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
-  border-bottom: 1px solid #afafaf;
-  padding: 0.5em 0.5em 0.25em 0.5em;
+  padding: 1em 1em 0 1em;
+}
+.leaflet-popup-content.hasImage > .header,
+.leaflet-popup-content.hasBody > .header {
+  padding-bottom: 0.5em;
   margin-bottom: 0.5em;
+  border-bottom: 1px solid #afafaf;
 }
 .leaflet-popup-content > .header::after {
   content: '';
@@ -372,10 +376,12 @@ a:active {
   display: table;
 }
 .leaflet-popup-content > .popupBody {
-  padding: 0 0.5em;
+  padding: 0 1em;
 }
 .leaflet-popup-content > .popup-footer {
-  padding: 0.5em 0.5em 0.25em 0.5em;
+  padding: 0.5em 1em 0.5em 1em;
+  border-top: 1px solid #afafaf;
+  margin-top: 0.5em;
 }
 .leaflet-popup-content .description {
   display: block;
@@ -464,16 +470,25 @@ a:active {
 .wikipedia .reference {
   display: none;
 }
-.leaflet-popup-content .images {
-  max-height: 12.5em;
-  text-align: center;
-  border-radius: 6px;
-  margin: 0 0.5em 0.25em 0.5em;
+.leaflet-popup-content.hasImage .images {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
 }
-.leaflet-popup-content .images img {
+.leaflet-popup-content.hasImage.hasBody .images {
+  border-bottom: 1px solid #afafaf;
+  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
+}
+.leaflet-popup-content.hasImage .images .imageWrapper {
+  margin: 0 1em 0 1em;
+  max-height: 12.5em;
+}
+.leaflet-popup-content.hasImage .images img {
   max-width: 100%;
   max-height: 12.5em;
   border-radius: 6px;
+  display: block;
 }
 
 #contentDetails .images {
@@ -491,6 +506,7 @@ a:active {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   margin: auto;
+  border-radius: 6px;
 }
 
 .info .sign,

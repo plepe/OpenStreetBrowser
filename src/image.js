@@ -172,8 +172,8 @@ register_hook('show-popup', function (data, category, dom, callback) {
       size: 150
     }
 
-    console.log(options)
     show(img, options, imageWrapper)
+    dom.classList.add('hasImage')
 
     callback(null)
   })

@@ -556,7 +556,7 @@ CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
 
 CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
   if (this.popupBodyTemplate) {
-    var popupBody = popup._contentNode.querySelector('#popupBody')
+    let popupBody = popup._contentNode.querySelector('#popupBody')
     if (!popupBody) {
       popupBody = document.createElement('div')
       popupBody.className = 'popupBody'
@@ -574,6 +574,18 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
   }
 
   let id_with_sublayer = (object.sublayer_id === 'main' ? '' : object.sublayer_id + ':') + object.id
+
+  let hasBody = false
+  Array.from(popup._contentNode.querySelectorAll('.popupBody')).forEach(div => {
+    if (!div.innerHTML.match(/^\s*(<ul>\s*<\/ul>|)\s*$/)) {
+      hasBody = true
+    }
+  })
+  if (hasBody) {
+    popup._contentNode.classList.add('hasBody')
+  } else {
+    popup._contentNode.classList.remove('hasBody')
+  }
 
   var footer = popup._contentNode.getElementsByClassName('popup-footer')
   if (!footer.length) {
