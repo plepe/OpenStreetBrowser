@@ -5,6 +5,7 @@ const turf = {
 const tabs = require('modulekit-tabs')
 
 const formatUnits = require('./formatUnits')
+const displayBlock = require('./displayBlock')
 require('./GeoInfo.css')
 
 function heading (value) {
@@ -180,7 +181,14 @@ register_hook('init', function () {
 let showDetailsCurrent
 register_hook('show-details', (data, category, dom, callback) => {
   let div = document.createElement('div')
-  dom.appendChild(div)
+  div.className = 'geo-info'
+
+  displayBlock({
+    dom,
+    title: lang('geoinfo:header'),
+    content: div,
+    order: 5,
+  })
 
   showDetailsCurrent = [ data, category, div ]
   geoInfoShowDetails.apply(this, showDetailsCurrent)
@@ -195,7 +203,7 @@ register_hook('format-units-refresh', () => {
 
 function geoInfoShowDetails (data, category, div) {
   let ob = data.object
-  let result = '<div class="geo-info"><h3>' + lang('geoinfo:header') + '</h3>'
+  let result = ''
 
   let geojson = ob.GeoJSON()
   let area = turf.area(geojson)
@@ -219,7 +227,6 @@ function geoInfoShowDetails (data, category, div) {
     result += '<div class="object-se-corner" title="' + lang('geoinfo:se-corner') + '"><span class="value">' + formatUnits.coord({ lat: ob.bounds.maxlat, lng: ob.bounds.minlon }) + '</span></div>'
   }
 
-  result += '</div>'
   div.innerHTML = result
 }
 

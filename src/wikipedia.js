@@ -1,4 +1,5 @@
 var wikidata = require('./wikidata')
+const displayBlock = require('./displayBlock')
 
 var cache = {}
 var loadClash = {}
@@ -269,11 +270,12 @@ register_hook('show-details', function (data, category, dom, callback) {
   }
 
   if (found) {
-    h = document.createElement('h3')
-    h.appendChild(document.createTextNode(lang('tag:wikipedia')))
-    dom.appendChild(h)
-
-    dom.appendChild(div)
+    displayBlock({
+      dom,
+      title: lang('tag:wikipedia'),
+      content: div,
+      order: 1
+    })
   }
 
   function done (err) {

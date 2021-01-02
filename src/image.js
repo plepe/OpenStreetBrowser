@@ -1,5 +1,6 @@
 var httpGet = require('./httpGet')
 var ImageLoader = require('./ImageLoader')
+const displayBlock = require('./displayBlock')
 var showTimer
 
 function showImage (image, dom) {
@@ -73,21 +74,14 @@ function show (img, options, div) {
 
 register_hook('show-details', function (data, category, dom, callback) {
   var div = document.createElement('div')
-  div.className = 'images loading'
+  div.className = 'images'
   var imageWrapper
   var nextImageWrapper = document.createElement('div')
   let options
 
-  dom.appendChild(div)
-
   if (showTimer) {
     window.clearInterval(showTimer)
   }
-
-  var l = document.createElement('div')
-  l.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
-  l.className = 'loadingIndicator'
-  div.appendChild(l)
 
   var currentLoader = new ImageLoader(data)
 
@@ -97,15 +91,16 @@ register_hook('show-details', function (data, category, dom, callback) {
     counter: data.detailsImageCounter,
     wrap: true
   }, function (err, img) {
-    div.classList.remove('loading')
-
     if (!img) {
       return callback(err)
     }
 
-    var h = document.createElement('h3')
-    h.appendChild(document.createTextNode(lang('images')))
-    div.insertBefore(h, div.firstChild)
+    displayBlock({
+      dom,
+      content: div,
+      title: lang('images'),
+      order: 2
+    })
 
     imageWrapper = document.createElement('div')
     imageWrapper.className = 'imageWrapper'
