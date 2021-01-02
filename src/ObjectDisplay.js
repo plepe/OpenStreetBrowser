@@ -61,58 +61,64 @@ module.exports = class ObjectDisplay {
       })
     })
     
-    displayBlock({
-      dom,
-      content: exportAll(feature),
-      title: lang('header:export'),
-      order: 5
-    })
-
-    displayBlock({
-      dom,
-      content: tagsDisplay(feature.object.tags),
-      title: lang('header:attributes'),
-      order: 10
-    })
-
-    div = document.createElement('dl')
-    div.className = 'meta'
-    dt = document.createElement('dt')
-    dt.appendChild(document.createTextNode('id'))
-    div.appendChild(dt)
-    dd = document.createElement('dd')
-    a = document.createElement('a')
-    a.appendChild(document.createTextNode(feature.object.type + '/' + feature.object.osm_id))
-    a.href = config.urlOpenStreetMap + '/' + feature.object.type + '/' + feature.object.osm_id
-    a.target = '_blank'
-
-    dd.appendChild(a)
-    div.appendChild(dd)
-    for (k in feature.object.meta) {
-      dt = document.createElement('dt')
-      dt.appendChild(document.createTextNode(k))
-      div.appendChild(dt)
-
-      dd = document.createElement('dd')
-      dd.appendChild(document.createTextNode(feature.object.meta[k]))
-      div.appendChild(dd)
+    if (['details'].includes(this.displayId)) {
+      displayBlock({
+        dom,
+        content: exportAll(feature),
+        title: lang('header:export'),
+        order: 5
+      })
     }
 
-    displayBlock({
-      dom,
-      content: div,
-      title: lang('header:osm_meta'),
-      order: 11
-    })
+    if (['details'].includes(this.displayId)) {
+      displayBlock({
+        dom,
+        content: tagsDisplay(feature.object.tags),
+        title: lang('header:attributes'),
+        order: 10
+      })
 
-    let id_with_sublayer = (feature.sublayer_id === 'main' ? '' : feature.sublayer_id + ':') + feature.id
-    let footerContent = '<li><a class="showDetails" href="#' + this.category.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
-    footerContent += '<li>' + editLink(feature) + '</li>'
-    displayBlock({
-      dom,
-      content: '<ul class="popup-footer">' + footerContent + '</ul>',
-      order: 1000
-    })
+      div = document.createElement('dl')
+      div.className = 'meta'
+      dt = document.createElement('dt')
+      dt.appendChild(document.createTextNode('id'))
+      div.appendChild(dt)
+      dd = document.createElement('dd')
+      a = document.createElement('a')
+      a.appendChild(document.createTextNode(feature.object.type + '/' + feature.object.osm_id))
+      a.href = config.urlOpenStreetMap + '/' + feature.object.type + '/' + feature.object.osm_id
+      a.target = '_blank'
+
+      dd.appendChild(a)
+      div.appendChild(dd)
+      for (k in feature.object.meta) {
+        dt = document.createElement('dt')
+        dt.appendChild(document.createTextNode(k))
+        div.appendChild(dt)
+
+        dd = document.createElement('dd')
+        dd.appendChild(document.createTextNode(feature.object.meta[k]))
+        div.appendChild(dd)
+      }
+
+      displayBlock({
+        dom,
+        content: div,
+        title: lang('header:osm_meta'),
+        order: 11
+      })
+    }
+
+    if (['popup'].includes(this.displayId)) {
+      let id_with_sublayer = (feature.sublayer_id === 'main' ? '' : feature.sublayer_id + ':') + feature.id
+      let footerContent = '<li><a class="showDetails" href="#' + this.category.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
+      footerContent += '<li>' + editLink(feature) + '</li>'
+      displayBlock({
+        dom,
+        content: '<ul class="popup-footer">' + footerContent + '</ul>',
+        order: 1000
+      })
+    }
 
     call_hooks_callback('show-' + this.displayId, feature, category, dom, err => {
       if (err.length) {
