@@ -1,4 +1,4 @@
-/* global showDetails, openstreetbrowserPrefix */
+/* global openstreetbrowserPrefix */
 /* eslint camelcase: 0 */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var OverpassLayer = require('overpass-layer')
@@ -135,10 +135,6 @@ function CategoryOverpass (options, data, repository) {
 
     // Move close button into the content, to make its position depending whether a scrollbar is visible or not
     ob.popup._contentNode.insertBefore(ob.popup._closeButton, ob.popup._contentNode.firstChild)
-
-    if (document.getElementById('content').className === 'details open') {
-      showDetails(ob, this)
-    }
 
     this.emit('update', object, ob)
   }.bind(this))
