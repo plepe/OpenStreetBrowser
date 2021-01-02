@@ -1,10 +1,9 @@
 const exportAll = require('./exportAll')
 const tagsDisplay = require('./tagsDisplay').display
 
-module.exports = function objectDisplay (data, category) {
+module.exports = function objectDisplay ({feature, category, dom}) {
   var div, h, dt, dd, li, a
   var k
-  var dom = document.getElementById('contentDetails')
 
   dom.innerHTML = ''
 
@@ -14,37 +13,37 @@ module.exports = function objectDisplay (data, category) {
 
   div = document.createElement('div')
   div.className = 'description'
-  div.innerHTML = data.data.popupDescription || data.data.description || ''
+  div.innerHTML = feature.data.popupDescription || feature.data.description || ''
   header.appendChild(div)
-  data.sublayer.updateAssets(div, data)
+  feature.sublayer.updateAssets(div, feature)
 
   div = document.createElement('div')
   div.className = 'title'
-  div.innerHTML = data.data.title || ''
+  div.innerHTML = feature.data.title || ''
   header.appendChild(div)
-  data.sublayer.updateAssets(div, data)
+  feature.sublayer.updateAssets(div, feature)
 
   div = document.createElement('div')
   div.className = 'body'
   dom.appendChild(div)
 
   function updateBody (div) {
-    div.innerHTML = data.data.detailBody || data.data.body || ''
-    data.sublayer.updateAssets(div, data)
+    div.innerHTML = feature.data.detailBody || feature.data.body || ''
+    feature.sublayer.updateAssets(div, feature)
   }
 
-  data.object.on('update', updateBody.bind(this, div))
+  feature.object.on('update', updateBody.bind(this, div))
   updateBody(div)
 
   div = document.createElement('div')
   div.className = 'body'
   dom.appendChild(div)
-  category.renderTemplate(data, 'detailsBody', function (div, err, result) {
+  category.renderTemplate(feature, 'detailsBody', function (div, err, result) {
     div.innerHTML = result
-    data.sublayer.updateAssets(div, data)
+    feature.sublayer.updateAssets(div, feature)
   }.bind(this, div))
 
-  call_hooks_callback('show-details', data, category, dom,
+  call_hooks_callback('show-details', feature, category, dom,
     function (err) {
       if (err.length) {
         console.log('show-details produced errors:', err)
@@ -58,13 +57,13 @@ module.exports = function objectDisplay (data, category) {
 
   div = document.createElement('div')
   dom.appendChild(div)
-  exportAll(data, div)
+  exportAll(feature, div)
 
   h = document.createElement('h3')
   h.innerHTML = lang('header:attributes')
   dom.appendChild(h)
 
-  dom.appendChild(tagsDisplay(data.object.tags))
+  dom.appendChild(tagsDisplay(feature.object.tags))
 
   h = document.createElement('h3')
   h.innerHTML = lang('header:osm_meta')
@@ -77,19 +76,19 @@ module.exports = function objectDisplay (data, category) {
   div.appendChild(dt)
   dd = document.createElement('dd')
   a = document.createElement('a')
-  a.appendChild(document.createTextNode(data.object.type + '/' + data.object.osm_id))
-  a.href = config.urlOpenStreetMap + '/' + data.object.type + '/' + data.object.osm_id
+  a.appendChild(document.createTextNode(feature.object.type + '/' + feature.object.osm_id))
+  a.href = config.urlOpenStreetMap + '/' + feature.object.type + '/' + feature.object.osm_id
   a.target = '_blank'
 
   dd.appendChild(a)
   div.appendChild(dd)
-  for (k in data.object.meta) {
+  for (k in feature.object.meta) {
     dt = document.createElement('dt')
     dt.appendChild(document.createTextNode(k))
     div.appendChild(dt)
 
     dd = document.createElement('dd')
-    dd.appendChild(document.createTextNode(data.object.meta[k]))
+    dd.appendChild(document.createTextNode(feature.object.meta[k]))
     div.appendChild(dd)
   }
   dom.appendChild(div)

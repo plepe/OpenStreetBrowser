@@ -240,7 +240,11 @@ function show (id, options, callback) {
         }
 
         if (options.showDetails) {
-          objectDisplay(data, category)
+          objectDisplay({
+            feature: data,
+            dom: document.getElementById('contentDetails'),
+            category
+          })
         }
 
         callback(err)
