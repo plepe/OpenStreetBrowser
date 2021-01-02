@@ -17,7 +17,7 @@ function getProperty(data, id, displayId, fallbackIds) {
   return ''
 }
 
-module.exports = function objectDisplay ({feature, category, dom, displayId, fallbackIds}) {
+module.exports = function objectDisplay ({feature, category, dom, displayId, fallbackIds}, callback) {
   if (!fallbackIds) {
     fallbackIds = []
   }
@@ -64,14 +64,6 @@ module.exports = function objectDisplay ({feature, category, dom, displayId, fal
     feature.sublayer.updateAssets(div, feature)
   }.bind(this, div))
 
-  call_hooks_callback('show-details', feature, category, dom,
-    function (err) {
-      if (err.length) {
-        console.log('show-details produced errors:', err)
-      }
-    }
-  )
-
   h = document.createElement('h3')
   h.innerHTML = lang('header:export')
   dom.appendChild(h)
@@ -113,6 +105,12 @@ module.exports = function objectDisplay ({feature, category, dom, displayId, fal
     div.appendChild(dd)
   }
   dom.appendChild(div)
+
+  call_hooks_callback('show-' + displayId, feature, category, dom, err => {
+    if (err.length) {
+      return callback(err.join(', '))
+    }
+
+    callback()
+  })
 }
-
-

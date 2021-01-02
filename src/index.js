@@ -246,10 +246,10 @@ function show (id, options, callback) {
             category,
             displayId: 'details',
             fallbackIds: ['popup']
-          })
+          }, err => callback(err))
+        } else {
+          callback(err)
         }
-
-        callback(err)
       }
     )
 
