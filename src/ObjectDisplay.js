@@ -1,6 +1,7 @@
 const exportAll = require('./exportAll')
 const tagsDisplay = require('./tagsDisplay').display
 const displayBlock = require('./displayBlock')
+const editLink = require('./editLink')
 
 module.exports = class ObjectDisplay {
   constructor ({feature, category, dom, displayId, fallbackIds}, callback) {
@@ -54,7 +55,6 @@ module.exports = class ObjectDisplay {
     })
 
     category.on('update', this.updateListener = () => {
-      console.log('update')
       category.renderTemplate(feature, this.displayId + 'Body', (err, result) => {
         body.innerHTML = result
         feature.sublayer.updateAssets(body, feature)
@@ -103,6 +103,15 @@ module.exports = class ObjectDisplay {
       content: div,
       title: lang('header:osm_meta'),
       order: 11
+    })
+
+    let id_with_sublayer = (feature.sublayer_id === 'main' ? '' : feature.sublayer_id + ':') + feature.id
+    let footerContent = '<li><a class="showDetails" href="#' + this.category.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
+    footerContent += '<li>' + editLink(feature) + '</li>'
+    displayBlock({
+      dom,
+      content: '<ul class="popup-footer">' + footerContent + '</ul>',
+      order: 1000
     })
 
     call_hooks_callback('show-' + this.displayId, feature, category, dom, err => {

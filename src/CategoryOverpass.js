@@ -11,8 +11,7 @@ var tabs = require('modulekit-tabs')
 var markers = require('./markers')
 var maki = require('./maki')
 var qs = require('sheet-router/qs')
-var editLink = require('./editLink')
-const objectDisplay = require('./objectDisplay')
+const ObjectDisplay = require('./ObjectDisplay')
 
 const showMore = require('./showMore')
 
@@ -54,13 +53,6 @@ var defaultValues = {
     preferredZoom: 16
   },
   layouts: {
-    popup:
-      '<div class="header">' +
-      '{% if object.popupDetails or object.details %}<div class="details">{{ object.popupDetails|default(object.details) }}</div>{% endif %}' +
-      '{% if object.popupDescription or object.description %}<div class="description">{{ object.popupDescription|default(object.description) }}</div>{% endif %}' +
-      '{% if object.popupTitle or object.title %}<div class="title">{{ object.popupTitle|default(object.title) }}</div>{% endif %}' +
-      '</div>' +
-      '<div class="popupBody">{{ object.popupBody|default(object.body) }}</div>',
     list: listTemplate.replace(/template/g, 'list')
   },
   queryOptions: {
@@ -108,6 +100,7 @@ function CategoryOverpass (options, data, repository) {
   data.styleNoBindPopup = [ 'selected' ]
   data.stylesNoAutoShow = [ 'selected' ]
   data.updateAssets = this.updateAssets.bind(this)
+  data.layouts.popup = () => null
 
   this.layer = new OverpassLayer(data)
 
@@ -131,11 +124,6 @@ function CategoryOverpass (options, data, repository) {
     if (!ob.popup || !ob.popup._contentNode || map._popup !== ob.popup) {
       return
     }
-
-    this.updatePopupContent(ob, ob.popup)
-
-    // Move close button into the content, to make its position depending whether a scrollbar is visible or not
-    ob.popup._contentNode.insertBefore(ob.popup._closeButton, ob.popup._contentNode.firstChild)
 
     this.emit('update', object, ob)
   }.bind(this))
@@ -535,8 +523,19 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
     popup._contentNode.style = ''
   }
 
-  this.updatePopupContent(object, popup)
   this.currentSelected = this.layer.show(object.id, layerOptions, function () {})
+
+  this.currentPopupDisplay = new ObjectDisplay({
+    feature: object,
+    category: this,
+    dom: popup._contentNode,
+    displayId: 'popup'
+  }, () => {
+    console.log('popup done')
+  })
+
+  // Move close button into the content, to make its position depending whether a scrollbar is visible or not
+  popup._contentNode.insertBefore(popup._closeButton, popup._contentNode.firstChild)
 }
 
 CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
@@ -549,63 +548,11 @@ CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
     this.currentDetails.hide()
     this.currentDetails = null
   }
-}
 
-CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
-  let id_with_sublayer = (object.sublayer_id === 'main' ? '' : object.sublayer_id + ':') + object.id
-
-  objectDisplay({
-    feature: object,
-    category: this,
-    dom: popup._contentNode,
-    displayId: 'popup'
-  }, () => {
-    console.log('popup done')
-  })
-
-  /*
-  if (this.popupBodyTemplate) {
-    let popupBody = popup._contentNode.querySelector('#popupBody')
-    if (!popupBody) {
-      popupBody = document.createElement('div')
-      popupBody.className = 'popupBody'
-      popupBody.id = 'popupBody'
-      popup._contentNode.appendChild(popupBody)
-    }
-
-    let html = this.popupBodyTemplate.render(object.twigData)
-    if (popupBody.currentHTML !== html) {
-      popupBody.innerHTML = html
-      this.updateAssets(popup._contentNode)
-    }
-
-    popupBody.currentHTML = html
+  if (this.currentPopupDisplay) {
+    this.currentPopupDisplay.close()
+    delete this.currentPopupDisplay
   }
-
-  let hasBody = false
-  Array.from(popup._contentNode.querySelectorAll('.popupBody')).forEach(div => {
-    if (!div.innerHTML.match(/^\s*(<ul>\s*<\/ul>|)\s*$/)) {
-      hasBody = true
-    }
-  })
-  if (hasBody) {
-    popup._contentNode.classList.add('hasBody')
-  } else {
-    popup._contentNode.classList.remove('hasBody')
-  }
-  */
-
-  var footer = popup._contentNode.getElementsByClassName('popup-footer')
-  if (!footer.length) {
-    footer = document.createElement('ul')
-    popup._contentNode.appendChild(footer)
-    footer.className = 'popup-footer'
-    footer.setAttribute('data-order', 1000)
-  }
-
-  var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'
-  footerContent += '<li>' + editLink(object) + '</li>'
-  footer.innerHTML = footerContent
 }
 
 CategoryOverpass.prototype.renderTemplate = function (object, templateId, callback) {
