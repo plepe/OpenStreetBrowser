@@ -73,6 +73,14 @@ function show (img, options, div) {
 }
 
 register_hook('show-details', function (data, category, dom, callback) {
+  displayImages(data, category, dom, callback, null)
+})
+
+register_hook('show-popup', function (data, category, dom, callback) {
+  displayImages(data, category, dom, callback, 1)
+})
+
+function displayImages(data, category, dom, callback, count) {
   var div = document.createElement('div')
   div.className = 'images'
   var imageWrapper
@@ -113,7 +121,9 @@ register_hook('show-details', function (data, category, dom, callback) {
     showTimer = window.setInterval(showNext, 5000)
 
     show(img, options, imageWrapper)
-    loadNext()
+    if (count !== 1) {
+      loadNext()
+    }
   })
 
   function loadNext () {
@@ -143,53 +153,10 @@ register_hook('show-details', function (data, category, dom, callback) {
 
     loadNext()
   }
-})
+}
 
 register_hook('hide-details', function () {
   if (showTimer) {
     window.clearInterval(showTimer)
   }
-})
-
-register_hook('show-popup', function (data, category, dom, callback) {
-  var div = document.createElement('div')
-  div.className = 'images loading'
-  var imageWrapper
-
-  let body = dom.getElementsByClassName('popupBody')
-  if (body.length) {
-    dom.insertBefore(div, body[0])
-  } else {
-    dom.appendChild(div)
-  }
-
-  var currentLoader = new ImageLoader(data)
-  data.popupImageCounter = {}
-
-  currentLoader.first({
-    counter: data.popupImageCounter
-  }, function (err, data) {
-    div.classList.remove('loading')
-
-    if (!data) {
-      return callback(err)
-    }
-
-    imageWrapper = document.createElement('div')
-    imageWrapper.className = 'imageWrapper'
-    div.appendChild(imageWrapper)
-
-    let options = {
-      size: 150
-    }
-
-    let img = show(data, options, imageWrapper)
-    if (img) {
-      img.onload = () => {
-        dom.classList.add('hasImage')
-      }
-    }
-
-    callback(null)
-  })
 })

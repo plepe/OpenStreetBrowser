@@ -12,6 +12,7 @@ var markers = require('./markers')
 var maki = require('./maki')
 var qs = require('sheet-router/qs')
 var editLink = require('./editLink')
+const objectDisplay = require('./objectDisplay')
 
 const showMore = require('./showMore')
 
@@ -551,6 +552,18 @@ CategoryOverpass.prototype.notifyPopupClose = function (object, popup) {
 }
 
 CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
+  let id_with_sublayer = (object.sublayer_id === 'main' ? '' : object.sublayer_id + ':') + object.id
+
+  objectDisplay({
+    feature: object,
+    category: this,
+    dom: popup._contentNode,
+    displayId: 'popup'
+  }, () => {
+    console.log('popup done')
+  })
+
+  /*
   if (this.popupBodyTemplate) {
     let popupBody = popup._contentNode.querySelector('#popupBody')
     if (!popupBody) {
@@ -569,8 +582,6 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
     popupBody.currentHTML = html
   }
 
-  let id_with_sublayer = (object.sublayer_id === 'main' ? '' : object.sublayer_id + ':') + object.id
-
   let hasBody = false
   Array.from(popup._contentNode.querySelectorAll('.popupBody')).forEach(div => {
     if (!div.innerHTML.match(/^\s*(<ul>\s*<\/ul>|)\s*$/)) {
@@ -582,20 +593,14 @@ CategoryOverpass.prototype.updatePopupContent = function (object, popup) {
   } else {
     popup._contentNode.classList.remove('hasBody')
   }
+  */
 
   var footer = popup._contentNode.getElementsByClassName('popup-footer')
   if (!footer.length) {
     footer = document.createElement('ul')
     popup._contentNode.appendChild(footer)
     footer.className = 'popup-footer'
-
-    call_hooks_callback('show-popup', object, this, popup._contentNode,
-      function (err) {
-        if (err.length) {
-          console.log('show-popup produced errors:', err)
-        }
-      }
-    )
+    footer.setAttribute('data-order', 1000)
   }
 
   var footerContent = '<li><a class="showDetails" href="#' + this.id + '/' + id_with_sublayer + '/details">' + lang('show details') + '</a></li>'

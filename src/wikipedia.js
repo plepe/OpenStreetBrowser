@@ -276,6 +276,8 @@ register_hook('show-details', function (data, category, dom, callback) {
       content: div,
       order: 1
     })
+  } else {
+    callback()
   }
 
   function done (err) {
