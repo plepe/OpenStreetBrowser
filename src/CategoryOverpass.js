@@ -264,7 +264,6 @@ CategoryOverpass.prototype.updateAssets = function (div) {
           }
           param = newParam
         }
-        console.log(param)
 
         span.innerHTML = markers[m[2]](param)
       }
@@ -530,9 +529,7 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
     category: this,
     dom: popup._contentNode,
     displayId: 'popup'
-  }, () => {
-    console.log('popup done')
-  })
+  }, () => {})
 
   // Move close button into the content, to make its position depending whether a scrollbar is visible or not
   popup._contentNode.insertBefore(popup._closeButton, popup._contentNode.firstChild)
