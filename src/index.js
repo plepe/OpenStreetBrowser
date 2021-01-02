@@ -42,7 +42,8 @@ require('./GeoInfo')
 require('./PluginMeasure')
 require('./PluginGeoLocate')
 require('./tagsDisplay-tag2link')
-const objectDisplay = require('./objectDisplay')
+const ObjectDisplay = require('./ObjectDisplay')
+let currentObjectDisplay = null
 
 window.onload = function () {
   var initState = config.defaultView
@@ -240,7 +241,7 @@ function show (id, options, callback) {
         }
 
         if (options.showDetails) {
-          objectDisplay({
+          currentObjectDisplay = new ObjectDisplay({
             feature: data,
             dom: document.getElementById('contentDetails'),
             category,
@@ -258,6 +259,11 @@ function show (id, options, callback) {
 }
 
 function hide () {
+  if (currentObjectDisplay) {
+    currentObjectDisplay.close()
+    currentObjectDisplay = null
+  }
+
   call_hooks('hide-' + document.getElementById('content').className)
   document.getElementById('content').className = 'list'
 }
