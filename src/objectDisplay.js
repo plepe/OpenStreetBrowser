@@ -68,13 +68,15 @@ module.exports = function objectDisplay ({feature, category, dom, displayId, fal
   displayBlock({
     dom,
     content: exportAll(feature),
-    title: lang('header:export')
+    title: lang('header:export'),
+    order: 5
   })
 
   displayBlock({
     dom,
     content: tagsDisplay(feature.object.tags),
-    title: lang('header:attributes')
+    title: lang('header:attributes'),
+    order: 10
   })
 
   div = document.createElement('dl')
@@ -103,7 +105,8 @@ module.exports = function objectDisplay ({feature, category, dom, displayId, fal
   displayBlock({
     dom,
     content: div,
-    title: lang('header:osm_meta')
+    title: lang('header:osm_meta'),
+    order: 11
   })
 
   call_hooks_callback('show-' + displayId, feature, category, dom, err => {
