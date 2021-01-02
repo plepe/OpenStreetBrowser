@@ -1,7 +1,27 @@
 const exportAll = require('./exportAll')
 const tagsDisplay = require('./tagsDisplay').display
 
-module.exports = function objectDisplay ({feature, category, dom}) {
+function getProperty(data, id, displayId, fallbackIds) {
+  const idCap = id[0].toUpperCase() + id.substr(1)
+
+  let variants = [displayId + idCap]
+  variants = variants.concat(fallbackIds.map(fid => fid + idCap))
+  variants.push(id)
+
+  variants = variants.filter(vid => vid in data)
+
+  if (variants.length) {
+    return data[variants[0]]
+  }
+
+  return ''
+}
+
+module.exports = function objectDisplay ({feature, category, dom, displayId, fallbackIds}) {
+  if (!fallbackIds) {
+    fallbackIds = []
+  }
+
   var div, h, dt, dd, li, a
   var k
 
@@ -13,13 +33,14 @@ module.exports = function objectDisplay ({feature, category, dom}) {
 
   div = document.createElement('div')
   div.className = 'description'
-  div.innerHTML = feature.data.popupDescription || feature.data.description || ''
+  div.innerHTML = getProperty(feature.data, 'description', displayId, fallbackIds)
+
   header.appendChild(div)
   feature.sublayer.updateAssets(div, feature)
 
   div = document.createElement('div')
   div.className = 'title'
-  div.innerHTML = feature.data.title || ''
+  div.innerHTML = getProperty(feature.data, 'title', displayId, fallbackIds)
   header.appendChild(div)
   feature.sublayer.updateAssets(div, feature)
 
@@ -28,7 +49,7 @@ module.exports = function objectDisplay ({feature, category, dom}) {
   dom.appendChild(div)
 
   function updateBody (div) {
-    div.innerHTML = feature.data.detailBody || feature.data.body || ''
+    div.innerHTML = getProperty(feature.data, 'body', displayId, fallbackIds)
     feature.sublayer.updateAssets(div, feature)
   }
 
@@ -38,7 +59,7 @@ module.exports = function objectDisplay ({feature, category, dom}) {
   div = document.createElement('div')
   div.className = 'body'
   dom.appendChild(div)
-  category.renderTemplate(feature, 'detailsBody', function (div, err, result) {
+  category.renderTemplate(feature, displayId + 'Body', function (div, err, result) {
     div.innerHTML = result
     feature.sublayer.updateAssets(div, feature)
   }.bind(this, div))

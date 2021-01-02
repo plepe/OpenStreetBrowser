@@ -243,7 +243,9 @@ function show (id, options, callback) {
           objectDisplay({
             feature: data,
             dom: document.getElementById('contentDetails'),
-            category
+            category,
+            displayId: 'details',
+            fallbackIds: ['popup']
           })
         }
 
