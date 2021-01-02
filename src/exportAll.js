@@ -125,7 +125,9 @@ register_hook('init', function () {
   })
 })
 
-module.exports = (data, div) => {
+module.exports = (data) => {
+  const div = document.createElement('div')
+
   let formExport = new form('exportOne', formDef())
 
   let domForm = document.createElement('form')
@@ -155,4 +157,8 @@ module.exports = (data, div) => {
     })
   }
   div.appendChild(submit)
+
+  global.setTimeout(() => formExport.resize(), 0)
+
+  return div
 }

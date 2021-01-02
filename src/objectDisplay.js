@@ -1,5 +1,6 @@
 const exportAll = require('./exportAll')
 const tagsDisplay = require('./tagsDisplay').display
+const displayBlock = require('./displayBlock')
 
 function getProperty(data, id, displayId, fallbackIds) {
   const idCap = id[0].toUpperCase() + id.substr(1)
@@ -64,23 +65,17 @@ module.exports = function objectDisplay ({feature, category, dom, displayId, fal
     feature.sublayer.updateAssets(div, feature)
   }.bind(this, div))
 
-  h = document.createElement('h3')
-  h.innerHTML = lang('header:export')
-  dom.appendChild(h)
+  displayBlock({
+    dom,
+    content: exportAll(feature),
+    title: lang('header:export')
+  })
 
-  div = document.createElement('div')
-  dom.appendChild(div)
-  exportAll(feature, div)
-
-  h = document.createElement('h3')
-  h.innerHTML = lang('header:attributes')
-  dom.appendChild(h)
-
-  dom.appendChild(tagsDisplay(feature.object.tags))
-
-  h = document.createElement('h3')
-  h.innerHTML = lang('header:osm_meta')
-  dom.appendChild(h)
+  displayBlock({
+    dom,
+    content: tagsDisplay(feature.object.tags),
+    title: lang('header:attributes')
+  })
 
   div = document.createElement('dl')
   div.className = 'meta'
@@ -104,7 +99,12 @@ module.exports = function objectDisplay ({feature, category, dom, displayId, fal
     dd.appendChild(document.createTextNode(feature.object.meta[k]))
     div.appendChild(dd)
   }
-  dom.appendChild(div)
+
+  displayBlock({
+    dom,
+    content: div,
+    title: lang('header:osm_meta')
+  })
 
   call_hooks_callback('show-' + displayId, feature, category, dom, err => {
     if (err.length) {
