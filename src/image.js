@@ -73,14 +73,14 @@ function show (img, options, div) {
 }
 
 register_hook('show-details', function (data, category, dom, callback) {
-  displayImages(data, category, dom, callback, null)
+  displayImages(data, category, dom, callback, 'details')
 })
 
 register_hook('show-popup', function (data, category, dom, callback) {
-  displayImages(data, category, dom, callback, 1)
+  displayImages(data, category, dom, callback, 'popup')
 })
 
-function displayImages(data, category, dom, callback, count) {
+function displayImages(data, category, dom, callback, displayId) {
   var div = document.createElement('div')
   div.className = 'images'
   var imageWrapper
@@ -98,17 +98,18 @@ function displayImages(data, category, dom, callback, count) {
   currentLoader.next({
     counter: data.detailsImageCounter,
     wrap: true
-  }, function (err, img) {
-    if (!img) {
+  }, function (err, data) {
+    if (!data) {
       return callback(err)
     }
 
-    displayBlock({
+    const block = displayBlock({
       dom,
       content: div,
-      title: lang('images'),
-      order: 2
+      title: displayId === 'popup' ? null : lang('images'),
+      order: displayId === 'popup' ? -1 : 2
     })
+    block.classList.add('empty')
 
     imageWrapper = document.createElement('div')
     imageWrapper.className = 'imageWrapper'
@@ -118,10 +119,16 @@ function displayImages(data, category, dom, callback, count) {
       size: Math.max(imageWrapper.offsetWidth, imageWrapper.offsetHeight)
     }
 
-    showTimer = window.setInterval(showNext, 5000)
+    let img = show(data, options, imageWrapper)
+    if (img) {
+      img.onload = () => {
+        block.classList.remove('empty')
+        dom.classList.add('hasImage')
+      }
+    }
 
-    show(img, options, imageWrapper)
-    if (count !== 1) {
+    if (displayId === 'details') {
+      showTimer = window.setInterval(showNext, 5000)
       loadNext()
     }
   })
@@ -130,12 +137,12 @@ function displayImages(data, category, dom, callback, count) {
     currentLoader.next({
       counter: data.detailsImageCounter,
       wrap: true
-    }, function (err, img) {
+    }, function (err, data) {
       if (err) {
         return console.log("Can't load next image", err)
       }
 
-      show(img, options, nextImageWrapper)
+      show(data, options, nextImageWrapper)
     })
   }
 

@@ -19,6 +19,7 @@ module.exports = class ObjectDisplay {
 
     let header = document.createElement('div')
     header.className = 'header'
+    header.setAttribute('data-order', -1000)
     dom.appendChild(header)
 
     div = document.createElement('div')
@@ -34,32 +35,38 @@ module.exports = class ObjectDisplay {
     header.appendChild(div)
     feature.sublayer.updateAssets(div, feature)
 
-    div = document.createElement('div')
-    div.className = 'body'
-    dom.appendChild(div)
-
-    const updateBody = (div) => {
-      div.innerHTML = getProperty(feature.data, 'body', this.displayId, fallbackIds)
-      feature.sublayer.updateAssets(div, feature)
-    }
-
-    feature.object.on('update', updateBody.bind(this, div))
-    updateBody(div)
-
     let body = document.createElement('div')
     body.className = 'body'
-    dom.appendChild(body)
-    category.renderTemplate(feature, this.displayId + 'Body', (err, result) => {
-      body.innerHTML = result
-      feature.sublayer.updateAssets(body, feature)
+
+    let bodyCategory = document.createElement('div')
+    body.appendChild(bodyCategory)
+    let bodyTemplate = document.createElement('div')
+    body.appendChild(bodyTemplate)
+
+    let bodyBlock = displayBlock({
+      dom,
+      content: body,
+      order: 0
     })
 
-    category.on('update', this.updateListener = () => {
+    this.updateListener = () => {
+      bodyCategory.innerHTML = getProperty(feature.data, 'body', this.displayId, fallbackIds)
+      feature.sublayer.updateAssets(bodyCategory, feature)
+
       category.renderTemplate(feature, this.displayId + 'Body', (err, result) => {
-        body.innerHTML = result
-        feature.sublayer.updateAssets(body, feature)
+        bodyTemplate.innerHTML = result
+        feature.sublayer.updateAssets(bodyTemplate, feature)
+
+        if (bodyTemplate.innerHTML.match(/^\s*(<ul>\s*<\/ul>|)\s*$/) && bodyCategory.innerHTML.match(/^\s*(<ul>\s*<\/ul>|)\s*$/)) {
+          bodyBlock.classList.add('empty')
+        } else {
+          bodyBlock.classList.remove('empty')
+        }
       })
-    })
+    }
+
+    category.on('update', this.updateListener)
+    this.updateListener()
     
     if (['details'].includes(this.displayId)) {
       displayBlock({
@@ -115,7 +122,7 @@ module.exports = class ObjectDisplay {
       footerContent += '<li>' + editLink(feature) + '</li>'
       displayBlock({
         dom,
-        content: '<ul class="popup-footer">' + footerContent + '</ul>',
+        content: '<ul class="footer">' + footerContent + '</ul>',
         order: 1000
       })
     }

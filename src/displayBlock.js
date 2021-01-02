@@ -23,6 +23,8 @@ module.exports = function displayBlock ({dom, content, title, order}) {
   dom.appendChild(block)
 
   reorder(dom)
+
+  return block
 }
 
 function reorder (dom) {
