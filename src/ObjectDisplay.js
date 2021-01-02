@@ -4,6 +4,8 @@ const displayBlock = require('./displayBlock')
 
 module.exports = class ObjectDisplay {
   constructor ({feature, category, dom, displayId, fallbackIds}, callback) {
+    this.category = category
+
     if (!fallbackIds) {
       fallbackIds = []
     }
@@ -48,6 +50,13 @@ module.exports = class ObjectDisplay {
     category.renderTemplate(feature, displayId + 'Body', (err, result) => {
       body.innerHTML = result
       feature.sublayer.updateAssets(body, feature)
+    })
+
+    category.on('update', this.updateListener = () => {
+      category.renderTemplate(feature, displayId + 'Body', (err, result) => {
+        body.innerHTML = result
+        feature.sublayer.updateAssets(body, feature)
+      })
     })
     
     displayBlock({
@@ -104,6 +113,9 @@ module.exports = class ObjectDisplay {
   }
 
   close () {
+    if (this.updateListener) {
+      this.category.off('update', this.updateListener)
+    }
   }
 }
 
