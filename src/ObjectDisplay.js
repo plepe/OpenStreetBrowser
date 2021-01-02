@@ -16,6 +16,8 @@ module.exports = class ObjectDisplay {
     var k
 
     dom.innerHTML = ''
+    dom.classList.add('objectDisplay')
+    dom.classList.add('objectDisplay-' + displayId)
 
     let header = document.createElement('div')
     header.className = 'header'

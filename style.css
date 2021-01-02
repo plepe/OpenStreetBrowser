@@ -112,21 +112,22 @@ a:active {
 }
 #content.details > #contentDetails {
   display: block;
+  margin-left: -10px;
+  margin-right: -10px;
 }
 #content.options > #contentOptions {
   display: block;
 }
 
-#contentDetails > .header > .title {
-  border-bottom: 1px solid #3f3f3f;
-  margin-bottom: 1em;
-  margin-top: 0.5em;
+.objectDisplay > .header {
+  padding: 0.5em 10px;
 }
-#contentDetails > .header > .title {
+.objectDisplay > .header > .title {
   font-size: 1.5em;
   font-weight: normal;
+  margin: 0;
 }
-#contentDetails > .header > .description {
+.objectDisplay > .header > .description {
   display: block;
   font-style: italic;
   color: #7f7f7f;
@@ -134,9 +135,55 @@ a:active {
   font-weight: normal;
 }
 
+.objectDisplay.hasImage .images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+.objectDisplay.hasImage .images .imageWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.objectDisplay-popup.hasImage .images .imageWrapper {
+  max-height: 12em;
+}
+.objectDisplay-details.hasImage .images .imageWrapper {
+  height: 200px;
+}
+.objectDisplay .images .imageWrapper img {
+  max-width: 100%;
+  border-radius: 6px;
+  display: block;
+}
+.objectDisplay-popup .images .imageWrapper img {
+  max-height: 12em;
+}
+.objectDisplay-details .images .imageWrapper img {
+  max-height: 200px;
+}
+
+.objectDisplay .block {
+  border-top: 1px solid #afafaf;
+  padding: 0.5em 10px;
+}
+.objectDisplay .block > h3 {
+  margin-top: 0;
+  margin-bottom: 0.25em;
+  border: none;
+}
+.objectDisplay .block.empty {
+  border-top: none;
+  padding: 0 0;
+}
 
 /* Popups */
-.leaflet-popup-content ul.popup-footer li {
+.objectDisplay ul.footer {
+  padding-left: 0;
+}
+.objectDisplay ul.footer li {
   display: inline-block;
   list-style: none;
   padding-right: 1em;
@@ -351,11 +398,10 @@ a:active {
   font-family: "Helvetica Neue", "Arial", "Helvetica", sans-serif;
   line-height: 1.4;
 }
-#content h1,
-.leaflet-popup-content > h1 {
+#content h1 {
   margin: 0;
 }
-#contentDetails a {
+.objectDisplay a {
   color: #0078A8;
 }
 
@@ -376,70 +422,27 @@ a:active {
   margin: 0;
   overflow: auto;
 }
-.leaflet-popup-content > .header {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  padding: 1em 1em 0 1em;
-}
-.leaflet-popup-content.hasImage > .header,
-.leaflet-popup-content.hasBody > .header {
-  padding-bottom: 0.5em;
-  margin-bottom: 0.5em;
-  border-bottom: 1px solid #afafaf;
-}
-.leaflet-popup-content > .header::after {
-  content: '';
-  clear: both;
-  display: table;
-}
-.leaflet-popup-content > .popupBody {
-  padding: 0 1em;
-}
-.leaflet-popup-content > .popup-footer {
-  padding: 0.5em 1em 0.5em 1em;
-  border-top: 1px solid #afafaf;
-  margin-top: 0.5em;
-}
-.leaflet-popup-content .header .description {
-  display: block;
-  font-style: italic;
-  color: #7f7f7f;
-  font-size: 1.5em;
-  font-weight: normal;
-}
-.leaflet-popup-content .header .title {
-  font-size: 1.5em;
-  font-weight: normal;
-}
-.leaflet-popup-content .header .details {
-  float: right;
-  max-width: 50%;
-  text-align: right;
-  color: #7f7f7f;
-  word-wrap: break-word;
-}
-
 .body ul,
-.leaflet-popup-content ul {
+.objectDisplay ul {
   margin: 0;
   padding-left: 20px;
 }
 .body ul > li,
-.leaflet-popup-content ul > li {
+.objectDisplay ul > li {
   position: relative;
 }
 .body ul > li.hasSymbol,
-.leaflet-popup-content ul > li.hasSymbol {
+.objectDisplay ul > li.hasSymbol {
   list-style: none;
 }
 .body ul > li.hasSymbol > i,
-.leaflet-popup-content ul > li.hasSymbol > i,
+.objectDisplay ul > li.hasSymbol > i,
 .body ul > li.hasSymbol > .symbol,
-.leaflet-popup-content ul > li.hasSymbol > .symbol,
+.objectDisplay ul > li.hasSymbol > .symbol,
 .body ul > li.hasSymbol > img,
-.leaflet-popup-content ul > li.hasSymbol > img,
+.objectDisplay ul > li.hasSymbol > img,
 .body ul > li.hasSymbol > span > svg,
-.leaflet-popup-content ul > li.hasSymbol > span > svg {
+.objectDisplay ul > li.hasSymbol > span > svg {
   position: absolute;
   margin-left: -20px;
   padding-top: 2px;
@@ -447,14 +450,14 @@ a:active {
   text-align: center;
 }
 .body ul > li > .key,
-.leaflet-popup-content ul > li > .key {
+.objectDisplay ul > li > .key {
   font-weight: bold;
 }
 
-#contentDetails div > .loadingIndicator {
+.objectDisplay div > .loadingIndicator {
   display: none;
 }
-#contentDetails div.loading > .loadingIndicator {
+.objectDisplay div.loading > .loadingIndicator {
   float: right;
   display: block;
 }
@@ -476,55 +479,18 @@ a:active {
   text-align: justify;
   margin-bottom: 0.5em;
 }
-#contentDetails h3 {
+.objectDisplay h3 {
   border-bottom: 1px solid black;
   clear: both;
   text-align: left;
 }
-#contentDetails h4 {
+.objectDisplay h4 {
   clear: both;
   text-decoration: underline;
   font-weight: bold;
 }
 .wikipedia .reference {
   display: none;
-}
-.leaflet-popup-content.hasImage .images {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-}
-.leaflet-popup-content.hasImage.hasBody .images {
-  border-bottom: 1px solid #afafaf;
-  padding-bottom: 0.5em;
-  margin-bottom: 0.5em;
-}
-.leaflet-popup-content.hasImage .images .imageWrapper {
-  margin: 0 1em 0 1em;
-  max-height: 12.5em;
-}
-.leaflet-popup-content.hasImage .images img {
-  max-width: 100%;
-  max-height: 12.5em;
-  border-radius: 6px;
-  display: block;
-}
-
-#contentDetails .images {
-}
-#contentDetails .images .imageWrapper {
-  text-align: center;
-  width: 100%;
-  height: 200px;
-  position: relative;
-}
-#contentDetails .images .imageWrapper img {
-  max-width: 100%;
-  max-height: 100%;
-  position: absolute;
-  top: 0; bottom: 0; left: 0; right: 0;
-  margin: auto;
-  border-radius: 6px;
 }
 
 .info .sign,
@@ -542,7 +508,7 @@ a:active {
   display: table;
 }
 
-#contentDetails ul.overpass-layer-list,
+.objectDisplay .body ul.overpass-layer-list,
 ul.overpass-layer-list {
   padding-left: 0;
 }
@@ -560,7 +526,7 @@ ul.overpass-layer-list > li:hover,
 ul.overpass-layer-list > li.selected {
   background: #cfcfcf !important;
 }
-#contentDetails ul.overpass-layer-list > li a,
+.objectDisplay ul.overpass-layer-list > li a,
 ul.overpass-layer-list > li a {
   color: #000000;
 }
@@ -615,10 +581,6 @@ ul.overpass-layer-list > li > a > .content > .details {
   color: #3f3f3f;
   max-width: 50%;
   text-align: right;
-}
-
-.leaflet-popup-content h1 .title {
-  font-style: italic;
 }
 
 .leaflet-popup-content-wrapper {
