@@ -5,6 +5,7 @@ const displayBlock = require('./displayBlock')
 module.exports = class ObjectDisplay {
   constructor ({feature, category, dom, displayId, fallbackIds}, callback) {
     this.category = category
+    this.displayId = displayId
 
     if (!fallbackIds) {
       fallbackIds = []
@@ -21,14 +22,14 @@ module.exports = class ObjectDisplay {
 
     div = document.createElement('div')
     div.className = 'description'
-    div.innerHTML = getProperty(feature.data, 'description', displayId, fallbackIds)
+    div.innerHTML = getProperty(feature.data, 'description', this.displayId, fallbackIds)
 
     header.appendChild(div)
     feature.sublayer.updateAssets(div, feature)
 
     div = document.createElement('div')
     div.className = 'title'
-    div.innerHTML = getProperty(feature.data, 'title', displayId, fallbackIds)
+    div.innerHTML = getProperty(feature.data, 'title', this.displayId, fallbackIds)
     header.appendChild(div)
     feature.sublayer.updateAssets(div, feature)
 
@@ -36,8 +37,8 @@ module.exports = class ObjectDisplay {
     div.className = 'body'
     dom.appendChild(div)
 
-    function updateBody (div) {
-      div.innerHTML = getProperty(feature.data, 'body', displayId, fallbackIds)
+    const updateBody = (div) => {
+      div.innerHTML = getProperty(feature.data, 'body', this.displayId, fallbackIds)
       feature.sublayer.updateAssets(div, feature)
     }
 
@@ -47,13 +48,14 @@ module.exports = class ObjectDisplay {
     let body = document.createElement('div')
     body.className = 'body'
     dom.appendChild(body)
-    category.renderTemplate(feature, displayId + 'Body', (err, result) => {
+    category.renderTemplate(feature, this.displayId + 'Body', (err, result) => {
       body.innerHTML = result
       feature.sublayer.updateAssets(body, feature)
     })
 
     category.on('update', this.updateListener = () => {
-      category.renderTemplate(feature, displayId + 'Body', (err, result) => {
+      console.log('update')
+      category.renderTemplate(feature, this.displayId + 'Body', (err, result) => {
         body.innerHTML = result
         feature.sublayer.updateAssets(body, feature)
       })
@@ -103,7 +105,7 @@ module.exports = class ObjectDisplay {
       order: 11
     })
 
-    call_hooks_callback('show-' + displayId, feature, category, dom, err => {
+    call_hooks_callback('show-' + this.displayId, feature, category, dom, err => {
       if (err.length) {
         return callback(err.join(', '))
       }
@@ -116,6 +118,8 @@ module.exports = class ObjectDisplay {
     if (this.updateListener) {
       this.category.off('update', this.updateListener)
     }
+
+    call_hooks('hide-' + this.displayId)
   }
 }
 
