@@ -532,6 +532,7 @@ CategoryOverpass.prototype.notifyPopupOpen = function (object, popup) {
   }, () => {})
 
   // Move close button into the content, to make its position depending whether a scrollbar is visible or not
+  popup._closeButton.setAttribute('data-order', -1001)
   popup._contentNode.insertBefore(popup._closeButton, popup._contentNode.firstChild)
 }
 
