@@ -3,7 +3,7 @@ var OpeningHours = require('opening_hours')
 var colorInterpolate = require('color-interpolate')
 var osmParseDate = require('openstreetmap-date-parser')
 var osmFormatDate = require('openstreetmap-date-format')
-const natsort = require('natsort')
+const natsort = require('natsort').default
 const md5 = require('md5')
 
 var md5cache = {}
