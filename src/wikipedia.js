@@ -33,7 +33,7 @@ function prepare (div) {
   }
 
   var p = content.firstChild.firstChild
-  while (p && (p.tagName !== 'P' || p.className !== '' || p.textContent.match(/^\s*$/))) {
+  while (p && (p.tagName !== 'P' || p.className !== '' || p.textContent.match(/^\s*$/) || p.querySelector('span#coordinates'))) {
     p = p.nextSibling
   }
 

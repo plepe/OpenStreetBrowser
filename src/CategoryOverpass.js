@@ -53,7 +53,11 @@ var defaultValues = {
     preferredZoom: 16
   },
   layouts: {
-    list: listTemplate.replace(/template/g, 'list')
+    list: listTemplate.replace(/template/g, 'list'),
+    popup:
+      '<h1>{{ object.popupTitle|default(object.title) }}</h1>' +
+      '{% if object.popupDescription or object.description %}<div class="description">{{ object.popupDescription|default(object.description) }}</div>{% endif %}' +
+      '{% if object.popupBody or object.body %}<div class="body">{{ object.popupBody|default(object.body) }}</div>{% endif %}'
   },
   queryOptions: {
   }
