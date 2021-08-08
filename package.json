@@ -50,20 +50,19 @@
   },
   "scripts": {
     "test": "mocha --bail",
-    "build": "npm run build-locales && browserify -g browserify-css src/index.js -t [ babelify ] -p tinyify -o dist/openstreetbrowser.js",
+    "build": "npm run build-locales && browserify -g browserify-css src/index.js -t [ babelify ] -o dist/openstreetbrowser.js && minify dist/openstreetbrowser.js > dist/openstreetbrowser.min.js",
     "build-locales": "for i in `ls locales/` ; do browserify locales/$i -o dist/locale-$i ; done",
     "watch": "npm run build-locales && watchify --debug -g browserify-css src/index.js -o dist/openstreetbrowser.js -v",
     "prepare": "npm run build",
     "lint": "standard src/*.js"
   },
   "devDependencies": {
-    "@babel/preset-es2015": "^7.0.0-beta.53",
     "browserify": "^17.0.0",
     "browserify-css": "^0.15.0",
     "leaflet-polylinedecorator": "git+https://github.com/plepe/Leaflet.PolylineDecorator.git",
+    "minify": "^7.0.2",
     "mocha": "^8.2.1",
     "standard": "^16.0.3",
-    "tinyify": "^3.0.0",
     "watchify": "^3.11.1"
   },
   "standard": {
