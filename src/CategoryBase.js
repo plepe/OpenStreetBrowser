@@ -2,6 +2,7 @@
 /* eslint camelcase: 0 */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var tabs = require('modulekit-tabs')
+const hooks = require('modulekit-hooks')
 const ee = require('event-emitter')
 
 function CategoryBase (options, data, repository) {
@@ -132,7 +133,7 @@ CategoryBase.prototype.open = function () {
 
   this.isOpen = true
 
-  call_hooks('categoryOpen', this)
+  hooks.call('categoryOpen', this)
   this.emit('open')
 }
 
@@ -145,7 +146,7 @@ CategoryBase.prototype.close = function () {
 
   this.isOpen = false
 
-  call_hooks('categoryClose', this)
+  hooks.call('categoryClose', this)
   this.emit('close')
 }
 

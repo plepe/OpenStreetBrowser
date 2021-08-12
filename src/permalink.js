@@ -1,10 +1,12 @@
+const hooks = require('modulekit-hooks')
+
 let permalink
 
-register_hook('state-update', function (state, hash) {
+hooks.register('state-update', function (state, hash) {
   permalink.href = hash
 })
 
-register_hook('init', function () {
+hooks.register('init', function () {
   let li = document.createElement('li')
 
   permalink = document.createElement('a')

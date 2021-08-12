@@ -1,3 +1,5 @@
+const hooks = require('modulekit-hooks')
+
 const exportAll = require('./exportAll')
 const tagsDisplay = require('./tagsDisplay').display
 const displayBlock = require('./displayBlock')
@@ -129,7 +131,7 @@ module.exports = class ObjectDisplay {
       })
     }
 
-    call_hooks_callback('show-' + this.displayId, feature, category, dom, err => {
+    hooks.call_callback('show-' + this.displayId, feature, category, dom, err => {
       if (err.length) {
         return callback(err.join(', '))
       }
@@ -143,7 +145,7 @@ module.exports = class ObjectDisplay {
       this.category.off('update', this.updateListener)
     }
 
-    call_hooks('hide-' + this.displayId)
+    hooks.call('hide-' + this.displayId)
   }
 }
 

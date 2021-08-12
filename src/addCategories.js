@@ -1,6 +1,7 @@
 /* global OverpassLayer, repositoriesGitea */
 require('./addCategories.css')
 
+const hooks = require('modulekit-hooks')
 const tabs = require('modulekit-tabs')
 const weightSort = require('weight-sort')
 
@@ -192,7 +193,7 @@ function addCategoriesHide () {
   tab.unselect()
 }
 
-register_hook('init', function (callback) {
+hooks.register('init', function (callback) {
   tab = new tabs.Tab({
     id: 'addCategories'
   })

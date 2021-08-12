@@ -1,4 +1,6 @@
-register_hook('init', function () {
+const hooks = require('modulekit-hooks')
+
+hooks.register('init', function () {
   // Geo location
   L.control.locate({
     locateOptions: {

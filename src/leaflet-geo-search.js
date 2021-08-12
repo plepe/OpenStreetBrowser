@@ -1,6 +1,7 @@
+const hooks = require('modulekit-hooks')
 const LeafletGeoSearch = require('leaflet-geosearch')
 
-register_hook('init', function () {
+hooks.register('init', function () {
   // Add Geo Search
   var provider = new LeafletGeoSearch.OpenStreetMapProvider()
   var searchControl = new LeafletGeoSearch.GeoSearchControl({

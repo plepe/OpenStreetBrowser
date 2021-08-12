@@ -1,3 +1,5 @@
+const hooks = require('modulekit-hooks')
+
 var wikidata = require('./wikidata')
 const displayBlock = require('./displayBlock')
 
@@ -115,7 +117,7 @@ function getAbstract (value, callback) {
   )
 }
 
-register_hook('show-details', function (data, category, dom, callback) {
+hooks.register('show-details', function (data, category, dom, callback) {
   var ob = data.object
   var found = 0
   var foundPrefixes = []

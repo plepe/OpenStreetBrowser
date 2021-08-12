@@ -1,5 +1,7 @@
 /* global languages:false, lang_str:false */
 /* eslint camelcase:0 */
+const hooks = require('modulekit-hooks')
+
 var tagTranslations = require('./tagTranslations')
 
 function getPreferredDataLanguage () {
@@ -79,7 +81,7 @@ function langName (code) {
   return ret
 }
 
-register_hook('init_callback', function (initState, callback) {
+hooks.register('init_callback', function (initState, callback) {
   if (!('ui_lang' in options)) {
     options.ui_lang = ui_lang
   }
@@ -92,7 +94,7 @@ register_hook('init_callback', function (initState, callback) {
   callback(null)
 })
 
-register_hook('options_form', function (def) {
+hooks.register('options_form', function (def) {
   def.ui_lang = {
     'name': lang('options:ui_lang'),
     'type': 'select',
@@ -112,7 +114,7 @@ register_hook('options_form', function (def) {
   }
 })
 
-register_hook('options_save', function (options, old_options) {
+hooks.register('options_save', function (options, old_options) {
   if ('data_lang' in options) {
     if (old_options.data_lang !== options.data_lang) {
       tagTranslations.setTagLanguage(options.data_lang)

@@ -1,4 +1,5 @@
-var OverpassLayer = require('overpass-layer')
+const hooks = require('modulekit-hooks')
+const OverpassLayer = require('overpass-layer')
 const { measureFrom } = require('measure-ts')
 const formatcoords = require('formatcoords')
 
@@ -119,7 +120,7 @@ module.exports = {
   settings
 }
 
-register_hook('options_form', def => {
+hooks.register('options_form', def => {
   def.formatUnitsSystem = {
     'name': lang('formatUnits:system'),
     'type': 'select',
@@ -169,14 +170,14 @@ register_hook('options_form', def => {
   }
 })
 
-register_hook('options_orig_data', data => {
+hooks.register('options_orig_data', data => {
   data.formatUnitsSystem = settings.system
   data.formatUnitsCoordFormat = settings.coordFormat
   data.formatUnitsCoordSpacer = settings.coordSpacer
   data.formatUnitsSpeed = settings.speed
 })
 
-register_hook('options_save', data => {
+hooks.register('options_save', data => {
   let old = JSON.stringify(settings)
 
   settings.coordFormat = data.formatUnitsCoordFormat
@@ -185,11 +186,11 @@ register_hook('options_save', data => {
   settings.speed = data.formatUnitsSpeed
 
   if (old !== JSON.stringify(settings)) {
-    call_hooks('format-units-refresh')
+    hooks.call('format-units-refresh')
   }
 })
 
-register_hook('init', () => {
+hooks.register('init', () => {
   let old = JSON.stringify(settings)
 
   settings.coordFormat = global.options.formatUnitsCoordFormat || settings.coordFormat
@@ -198,7 +199,7 @@ register_hook('init', () => {
   settings.speed = global.options.formatUnitsSpeed || settings.speed
 
   if (old !== JSON.stringify(settings)) {
-    call_hooks('format-units-refresh')
+    hooks.call('format-units-refresh')
   }
 })
 

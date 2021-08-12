@@ -1,8 +1,9 @@
+const hooks = require('modulekit-hooks')
 var queryString = require('query-string')
 
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
-register_hook('state-apply', function (state) {
+hooks.register('state-apply', function (state) {
   if (!('categories' in state)) {
     return
   }

@@ -1,9 +1,12 @@
+const ModulekitForm = require('modulekit-form')
+const hooks = require('modulekit-hooks')
+
 /* globals form, ajax, options:true */
 var moduleOptions = {}
 var prevPage
 var optionsFormEl
 
-register_hook('init', function () {
+hooks.register('init', function () {
   var menu = document.getElementById('menu')
 
   var li = document.createElement('li')
@@ -27,9 +30,9 @@ moduleOptions.open = function () {
     }
   }
 
-  call_hooks('options_form', def)
+  hooks.call('options_form', def)
 
-  var optionsForm = new form('options', def)
+  var optionsForm = new ModulekitForm('options', def)
   prevPage = document.getElementById('content').className
   document.getElementById('content').className = 'options'
   var dom = document.getElementById('contentOptions')
@@ -38,7 +41,7 @@ moduleOptions.open = function () {
   let orig_options = {
     debug: false
   }
-  call_hooks('options_orig_data', orig_options)
+  hooks.call('options_orig_data', orig_options)
   for (let k in orig_options) {
     if (!(k in options)) {
       options[k] = orig_options[k]
@@ -87,7 +90,7 @@ moduleOptions.submit = function (optionsForm) {
 
     document.getElementById('content').className = prevPage
 
-    call_hooks('options_save', data, oldOptions)
+    hooks.call('options_save', data, oldOptions)
 
     if (reload) {
       location.reload()

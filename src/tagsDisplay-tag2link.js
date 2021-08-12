@@ -1,9 +1,11 @@
+const hooks = require('modulekit-hooks')
+
 const httpGet = require('./httpGet')
 const formatter = require('./tagsDisplay').formatter
 
 let tag2link
 
-register_hook('init_callback', (initState, callback) => {
+hooks.register('init_callback', (initState, callback) => {
   httpGet('dist/tag2link.json', {}, (err, result) => {
     if (err) {
       console.error('Can\'t read dist/tag2link.json - execute bin/download_dependencies')

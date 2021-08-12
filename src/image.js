@@ -1,3 +1,5 @@
+const hooks = require('modulekit-hooks')
+
 var httpGet = require('./httpGet')
 var ImageLoader = require('./ImageLoader')
 const displayBlock = require('./displayBlock')
@@ -72,11 +74,11 @@ function show (img, options, div) {
   }
 }
 
-register_hook('show-details', function (data, category, dom, callback) {
+hooks.register('show-details', function (data, category, dom, callback) {
   displayImages(data, category, dom, callback, 'details')
 })
 
-register_hook('show-popup', function (data, category, dom, callback) {
+hooks.register('show-popup', function (data, category, dom, callback) {
   displayImages(data, category, dom, callback, 'popup')
 })
 
@@ -162,7 +164,7 @@ function displayImages(data, category, dom, callback, displayId) {
   }
 }
 
-register_hook('hide-details', function () {
+hooks.register('hide-details', function () {
   if (showTimer) {
     window.clearInterval(showTimer)
   }

@@ -1,3 +1,5 @@
+const hooks = require('modulekit-hooks')
+
 function editLinkRemote (type, osm_id) {
   let id = type.substr(0, 1) + osm_id
 
@@ -51,11 +53,11 @@ module.exports = function (object) {
   return '<a class="editLink" href="#edit" onclick="return editLink(\'' + object.object.type + '\', ' + object.object.osm_id + ')">' + lang('edit') + '</a>'
 }
 
-register_hook('options_orig_data', function (data) {
+hooks.register('options_orig_data', function (data) {
   data.editor = 'id'
 })
 
-register_hook('options_form', function (def) {
+hooks.register('options_form', function (def) {
   def.editor = {
     'name': lang('options:chooseEditor'),
     'type': 'select',

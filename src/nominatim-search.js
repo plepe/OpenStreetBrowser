@@ -1,3 +1,4 @@
+const hooks = require('modulekit-hooks')
 const tabs = require('modulekit-tabs')
 const httpGet = require('./httpGet')
 require('./nominatim-search.css')
@@ -51,7 +52,7 @@ function search (str) {
   )
 }
 
-register_hook('init', function () {
+hooks.register('init', function () {
   tab = new tabs.Tab({
     id: 'search',
     weight: -1

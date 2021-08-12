@@ -1,6 +1,9 @@
 /* globals map:true, overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true */
 
 const tabs = require('modulekit-tabs')
+const hooks = require('modulekit-hooks')
+const ModulekitLang = require('modulekit-lang')
+global.lang = ModulekitLang.lang
 
 var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
@@ -46,6 +49,10 @@ const ObjectDisplay = require('./ObjectDisplay')
 let currentObjectDisplay = null
 
 window.onload = function () {
+  ModulekitLang.set(null, init1)
+}
+
+function init1 () {
   var initState = config.defaultView
 
   map = L.map('map')
@@ -60,8 +67,8 @@ window.onload = function () {
 
   global.tabs = new tabs.Tabs(document.getElementById('globalTabs'))
 
-  call_hooks('init')
-  call_hooks_callback('init_callback', initState, onload2.bind(this, initState))
+  hooks.call('init')
+  hooks.call_callback('init_callback', initState, onload2.bind(this, initState))
 
   map.createPane('selected')
   map.getPane('selected').style.zIndex = 498
@@ -152,7 +159,7 @@ function onload2 (initState) {
   })
 
   state.update()
-  call_hooks('initFinish')
+  hooks.call('initFinish')
 }
 
 function loadBaseCategory () {
@@ -200,13 +207,13 @@ window.setPath = function (path, state) {
       return
     }
 
-    call_hooks('show', path, param)
+    hooks.call('show', path, param)
   })
 }
 
 function show (id, options, callback) {
   if (options.showDetails) {
-    call_hooks('hide-' + document.getElementById('content').className)
+    hooks.call('hide-' + document.getElementById('content').className)
     document.getElementById('content').className = 'details'
     document.getElementById('contentDetails').innerHTML = lang('loading')
   }
@@ -264,7 +271,7 @@ function hide () {
     currentObjectDisplay = null
   }
 
-  call_hooks('hide-' + document.getElementById('content').className)
+  hooks.call('hide-' + document.getElementById('content').className)
   document.getElementById('content').className = 'list'
 }
 

@@ -1,12 +1,13 @@
 /* globals overpassUrl:true */
+const hooks = require('modulekit-hooks')
 
-register_hook('init', function () {
+hooks.register('init', function () {
   if (options.overpassUrl) {
     overpassUrl = options.overpassUrl
   }
 })
 
-register_hook('options_form', function (def) {
+hooks.register('options_form', function (def) {
   var values = config.overpassUrl
   if (!Array.isArray(values)) {
     values = [ values ]
@@ -21,7 +22,7 @@ register_hook('options_form', function (def) {
   }
 })
 
-register_hook('options_save', function (data) {
+hooks.register('options_save', function (data) {
   if ('overpassUrl' in data) {
     if (data.overpassUrl === null) {
       overpassUrl = config.overpassUrl

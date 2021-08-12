@@ -1,6 +1,8 @@
 const tabs = require('modulekit-tabs')
+const hooks = require('modulekit-hooks')
 const async = require('async')
 const FileSaver = require('file-saver')
+const ModulekitForm = require('modulekit-form')
 
 const chunkSplit = require('./chunkSplit')
 
@@ -16,7 +18,7 @@ let formExport
 function prepareDownload (callback) {
   let conf = formExport.get_data()
 
-  call_hooks('prepareDownload', conf)
+  hooks.call('prepareDownload', conf)
 
   global.baseCategory.allMapFeatures((err, data) => {
     if (err) {
@@ -59,7 +61,7 @@ function createDownload (conf, data, callback) {
         var blob = new Blob([ result.content ], { type: result.fileType + ';charset=utf-8' })
         FileSaver.saveAs(blob, 'openstreetbrowser.' + result.extension)
 
-        call_hooks('finishDownload', conf)
+        hooks.call('finishDownload', conf)
 
         callback()
       }
@@ -82,7 +84,7 @@ function formDef () {
   }
 }
 
-register_hook('init', function () {
+hooks.register('init', function () {
   tab = new tabs.Tab({
     id: 'export',
     weight: 10
@@ -93,7 +95,7 @@ register_hook('init', function () {
   tab.header.title = lang('export-all')
   tab.content.innerHTML = '<h3>' + lang('export-all') + '</h3>'
 
-  formExport = new form('export', formDef())
+  formExport = new ModulekitForm('export', formDef())
 
   let domForm = document.createElement('form')
   tab.content.appendChild(domForm)
@@ -128,7 +130,7 @@ register_hook('init', function () {
 module.exports = (data) => {
   const div = document.createElement('div')
 
-  let formExport = new form('exportOne', formDef())
+  let formExport = new ModulekitForm('exportOne', formDef())
 
   let domForm = document.createElement('form')
   div.appendChild(domForm)

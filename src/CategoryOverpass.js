@@ -4,6 +4,7 @@ var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var OverpassLayer = require('overpass-layer')
 var OverpassLayerList = require('overpass-layer').List
 var queryString = require('query-string')
+const hooks = require('modulekit-hooks')
 
 var CategoryBase = require('./CategoryBase')
 var state = require('./state')
@@ -142,7 +143,7 @@ function CategoryOverpass (options, data, repository) {
   )
 
 
-  call_hooks('category-overpass-init', this)
+  hooks.call('category-overpass-init', this)
 
   var p = document.createElement('div')
   p.className = 'loadingIndicator'
@@ -163,7 +164,7 @@ function CategoryOverpass (options, data, repository) {
     this.dom.appendChild(this.domStatus)
   }
 
-  register_hook('state-get', function (state) {
+  hooks.register('state-get', function (state) {
     if (this.isOpen) {
       if (state.categories) {
         state.categories += ','
@@ -190,7 +191,7 @@ function CategoryOverpass (options, data, repository) {
     }
   }.bind(this))
 
-  register_hook('state-apply', function (state) {
+  hooks.register('state-apply', function (state) {
     if (!('categories' in state)) {
       return
     }

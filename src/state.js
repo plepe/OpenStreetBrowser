@@ -1,6 +1,7 @@
 /* globals setPath, history */
 
-var queryString = require('query-string')
+const hooks = require('modulekit-hooks')
+const queryString = require('query-string')
 
 function get () {
   var state = {}
@@ -26,7 +27,7 @@ function get () {
   }
 
   // other modules
-  call_hooks('state-get', state)
+  hooks.call('state-get', state)
 
   // done
   return state
@@ -46,7 +47,7 @@ function apply (state) {
   }
 
   // other modules
-  call_hooks('state-apply', state)
+  hooks.call('state-apply', state)
 }
 
 function stringify (state) {
@@ -149,14 +150,14 @@ function update (state, push) {
 
   var newHash = '#' + stringify(state)
 
-  call_hooks('state-update', state, newHash)
+  hooks.call('state-update', state, newHash)
 
   if (push) {
     history.pushState(null, null, newHash)
-    call_hooks('statePush', state, newHash)
+    hooks.call('statePush', state, newHash)
   } else if (location.hash !== newHash && (location.hash !== '' || newHash !== '#')) {
     history.replaceState(null, null, newHash)
-    call_hooks('stateReplace', state, newHash)
+    hooks.call('stateReplace', state, newHash)
   }
 }
 

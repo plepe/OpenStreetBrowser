@@ -1,3 +1,5 @@
+const hooks = require('modulekit-hooks')
+
 var FullscreenControl = L.Control.extend({
   options: {
     position: 'topleft'
@@ -18,11 +20,11 @@ var FullscreenControl = L.Control.extend({
   }
 })
 
-register_hook('init', function (callback) {
+hooks.register('init', function (callback) {
   map.addControl(new FullscreenControl())
 })
 
-register_hook('show', function (url, options) {
+hooks.register('show', function (url, options) {
   if (options.showDetails) {
     document.body.classList.remove('fullscreen')
   }

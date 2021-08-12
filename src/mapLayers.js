@@ -1,7 +1,9 @@
+const hooks = require('modulekit-hooks')
+
 var mapLayers = {}
 var currentMapLayer = null
 
-register_hook('init', function () {
+hooks.register('init', function () {
   if (!config.baseMaps) {
     var osmMapnik = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       {
@@ -47,7 +49,7 @@ register_hook('init', function () {
   })
 })
 
-register_hook('options_form', function (def) {
+hooks.register('options_form', function (def) {
   var baseMaps = {}
 
   if (!config.baseMaps) {
@@ -65,7 +67,7 @@ register_hook('options_form', function (def) {
   }
 })
 
-register_hook('options_save', function (data) {
+hooks.register('options_save', function (data) {
   if ('preferredBaseMap' in data && data.preferredBaseMap in mapLayers) {
     if (currentMapLayer) {
       map.removeLayer(currentMapLayer)

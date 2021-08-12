@@ -1,3 +1,5 @@
+const hooks = require('modulekit-hooks')
+
 const formatUnits = require('./formatUnits')
 
 let control
@@ -8,7 +10,7 @@ let unitSystems = {
   m: 'metres'
 }
 
-register_hook('init', function () {
+hooks.register('init', function () {
   // Measurement plugin
   if (L.control.polylineMeasure) {
     control = L.control.polylineMeasure({
@@ -17,7 +19,7 @@ register_hook('init', function () {
   }
 })
 
-register_hook('format-units-refresh', () => {
+hooks.register('format-units-refresh', () => {
   if (control) {
     control.options.unit = unitSystems[formatUnits.settings.system]
   }

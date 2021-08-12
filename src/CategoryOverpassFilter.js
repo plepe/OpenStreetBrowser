@@ -1,5 +1,7 @@
 const OverpassLayer = require('overpass-layer')
 const tabs = require('modulekit-tabs')
+const hooks = require('modulekit-hooks')
+const ModulekitForm = require('modulekit-form')
 const natsort = require('natsort').default
 
 const state = require('./state')
@@ -137,7 +139,7 @@ class CategoryOverpassFilter {
       masterOptions['order'] = false
     }
 
-    this.formFilter = new form('filter-' + this.master.id, this.data, masterOptions)
+    this.formFilter = new ModulekitForm('filter-' + this.master.id, this.data, masterOptions)
     this.formFilter.show(this.domFilter)
     this.formFilter.onchange = () => {
       let param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
@@ -262,7 +264,7 @@ class CategoryOverpassFilter {
   }
 }
 
-register_hook('category-overpass-init', (category) => {
+hooks.register('category-overpass-init', (category) => {
   if (category.data.filter) {
     new CategoryOverpassFilter(category)
   }

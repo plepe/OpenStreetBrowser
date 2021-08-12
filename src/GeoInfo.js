@@ -3,6 +3,7 @@ const turf = {
   length: require('@turf/length').default
 }
 const tabs = require('modulekit-tabs')
+const hooks = require('modulekit-hooks')
 
 const formatUnits = require('./formatUnits')
 const displayBlock = require('./displayBlock')
@@ -12,7 +13,7 @@ function heading (value) {
   return [ 'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'N' ][Math.round(value / 45)]
 }
 
-register_hook('init', function () {
+hooks.register('init', function () {
   let tab = new tabs.Tab({
     id: 'search',
     weight: -1
@@ -172,14 +173,14 @@ register_hook('init', function () {
     global.map.on('locationfound', saveLocation)
   })
 
-  register_hook('format-units-refresh', updateMapView)
-  register_hook('format-units-refresh', updateMouse)
-  register_hook('format-units-refresh', removeMouse)
-  register_hook('format-units-refresh', updateLocation)
+  hooks.register('format-units-refresh', updateMapView)
+  hooks.register('format-units-refresh', updateMouse)
+  hooks.register('format-units-refresh', removeMouse)
+  hooks.register('format-units-refresh', updateLocation)
 })
 
 let showDetailsCurrent
-register_hook('show-details', (data, category, dom, callback) => {
+hooks.register('show-details', (data, category, dom, callback) => {
   let div = document.createElement('div')
   div.className = 'geo-info'
 
@@ -194,7 +195,7 @@ register_hook('show-details', (data, category, dom, callback) => {
   geoInfoShowDetails.apply(this, showDetailsCurrent)
   callback()
 })
-register_hook('format-units-refresh', () => {
+hooks.register('format-units-refresh', () => {
   if (showDetailsCurrent) {
     showDetailsCurrent[2].innerHTML = ''
     geoInfoShowDetails.apply(this, showDetailsCurrent)
