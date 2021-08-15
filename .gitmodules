@@ -5,16 +5,6 @@
 [submodule "lib/modulekit/base"]
 	path = lib/modulekit/base
 	url = https://github.com/plepe/modulekit-base.git
-[submodule "lib/modulekit/lang"]
-	path = lib/modulekit/lang
-	url = https://github.com/plepe/modulekit-lang.git
-        branch = master
-[submodule "lib/modulekit/form"]
-	path = lib/modulekit/form
-	url = https://github.com/plepe/modulekit-form.git
-[submodule "lib/modulekit/ajax"]
-	path = lib/modulekit/ajax
-	url = https://github.com/plepe/modulekit-ajax.git
 [submodule "lib/modulekit/mysql-sessions"]
 	path = lib/modulekit/mysql-sessions
 	url = https://github.com/plepe/PHP-MySQL-Sessions.git

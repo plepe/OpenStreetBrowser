@@ -1,3 +1,4 @@
+const ajax = require('modulekit-ajax')
 const async = require('async')
 var wikidata = require('./wikidata')
 var wikipedia = require('./wikipedia')

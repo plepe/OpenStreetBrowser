@@ -1,7 +1,8 @@
 const ModulekitForm = require('modulekit-form')
 const hooks = require('modulekit-hooks')
+const ajax = require('modulekit-ajax')
 
-/* globals form, ajax, options:true */
+/* globals options:true */
 var moduleOptions = {}
 var prevPage
 var optionsFormEl

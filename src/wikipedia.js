@@ -1,4 +1,5 @@
 const hooks = require('modulekit-hooks')
+const ajax = require('modulekit-ajax')
 
 var wikidata = require('./wikidata')
 const displayBlock = require('./displayBlock')
