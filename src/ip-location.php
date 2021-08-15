@@ -8,6 +8,11 @@ register_hook('init', function () {
     return;
   }
 
+  if (!file_exists('data/GeoIP/GeoLite2-City.mmdb')) {
+    $config['checkIpLocation'] = false;
+    return;
+  }
+
   $reader = new Reader('data/GeoIP/GeoLite2-City.mmdb');
 
   try {
