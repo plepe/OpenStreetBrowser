@@ -1,3 +1,4 @@
+const Lang = require('modulekit-lang')
 var OverpassLayer = require('overpass-layer')
 var OpeningHours = require('opening_hours')
 var colorInterpolate = require('color-interpolate')
@@ -93,6 +94,7 @@ OverpassLayer.twig.extendFunction('evaluate', function (tags) {
   var d = global.currentCategory.layer.mainlayer.evaluate(ob)
   return d
 })
+
 function enumerate (list) {
   if (!list) {
     return ''
@@ -102,24 +104,9 @@ function enumerate (list) {
     list = list.split(/;/g)
   }
 
-  if (list.length > 2) {
-    let result = lang_str.enumerate_start.replace('{0}', list[0]).replace('{1}', list[1])
-
-    for (let i = 2; i < list.length - 1; i++) {
-      result = lang_str.enumerate_middle.replace('{0}', result).replace('{1}', list[i])
-    }
-
-    return lang_str.enumerate_end.replace('{0}', result).replace('{1}', list[list.length - 1])
-  }
-  else if (list.length == 2) {
-    return lang_str.enumerate_2.replace('{0}', list[0]).replace('{1}', list[1])
-  }
-  else if (list.length > 0) {
-    return list[0]
-  }
-
-  return ''
+  Lang.enumerate(list)
 }
+
 OverpassLayer.twig.extendFunction('enumerate', (list) => enumerate(list))
 OverpassLayer.twig.extendFilter('enumerate', (list) => enumerate(list))
 OverpassLayer.twig.extendFilter('ksort', (list) => {

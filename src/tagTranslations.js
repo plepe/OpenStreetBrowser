@@ -1,5 +1,6 @@
-/* global lang_str lang_non_translated */
+/* global lang_non_translated */
 /* eslint camelcase:0 */
+const Lang = require('modulekit-lang')
 var OverpassLayer = require('overpass-layer')
 var tagLang = null
 
@@ -20,7 +21,7 @@ OverpassLayer.twig.extendFunction('localizedTag', function (tags, id) {
   return tags[id]
 })
 OverpassLayer.twig.extendFunction('trans', function () {
-  return lang.apply(this, arguments)
+  return Lang.lang.apply(this, arguments)
 })
 OverpassLayer.twig.extendFunction('isTranslated', function (str) {
   return tagTranslationsIsTranslated(str)
@@ -30,12 +31,12 @@ OverpassLayer.twig.extendFunction('repoTrans', function (str) {
     return str
   }
 
-  let lang = global.currentCategory.repository.lang
-  return str in lang ? lang[str] : str
+  let language = global.currentCategory.repository.lang
+  return str in language ? language[str] : str
 })
 
 function tagTranslationsIsTranslated (str) {
-  return !(str in lang_non_translated) && (str in lang_str)
+  return !(str in lang_non_translated) && (str in Lang.strings())
 }
 
 function tagTranslationsTrans () {
@@ -50,9 +51,9 @@ function tagTranslationsTrans () {
   }
 
   if (typeof value === 'undefined') {
-    return lang('tag:' + tag, count)
+    return Lang.lang('tag:' + tag, count)
   } else {
-    return lang('tag:' + tag + '=' + value, count)
+    return Lang.lang('tag:' + tag + '=' + value, count)
   }
 }
 
@@ -67,13 +68,13 @@ function tagTranslationsTransList (key, values) {
     return tagTranslationsTrans(key, value.trim())
   }.bind(this, key))
 
-  return lang_enumerate(values)
+  return Lang.enumerate(values)
 }
 
 module.exports = {
   trans: tagTranslationsTrans,
   isTranslated: tagTranslationsIsTranslated,
-  setTagLanguage: function (lang) {
-    tagLang = lang
+  setTagLanguage: function (language) {
+    tagLang = language
   }
 }

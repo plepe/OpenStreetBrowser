@@ -1,6 +1,7 @@
-/* global languages:false, lang_str:false */
+/* global languages:false */
 /* eslint camelcase:0 */
 const hooks = require('modulekit-hooks')
+const Lang = require('modulekit-lang')
 
 var tagTranslations = require('./tagTranslations')
 
@@ -49,7 +50,7 @@ function getDataLanguages () {
     ret[code] = langName(code)
   }
 
-  for (var k in lang_str) {
+  for (var k in Lang.strings()) {
     var m = k.match(/^lang:(.*)$/)
     if (m) {
       code = m[1]
@@ -68,14 +69,14 @@ function getDataLanguages () {
 function langName (code) {
   var ret = ''
 
-  if (('lang_native:' + code) in lang_str && lang_str['lang_native:' + code]) {
-    ret += lang_str['lang_native:' + code]
+  if (('lang_native:' + code) in Lang.strings() && Lang.strings()['lang_native:' + code]) {
+    ret += Lang.strings()['lang_native:' + code]
   } else {
     ret += 'Language "' + code + '"'
   }
 
-  if (('lang:' + code) in lang_str && lang_str['lang:' + code]) {
-    ret += ' (' + lang_str['lang:' + code] + ')'
+  if (('lang:' + code) in Lang.strings() && Lang.strings()['lang:' + code]) {
+    ret += ' (' + Lang.strings()['lang:' + code] + ')'
   }
 
   return ret
@@ -96,7 +97,7 @@ hooks.register('init_callback', function (initState, callback) {
 
 hooks.register('options_form', function (def) {
   def.ui_lang = {
-    'name': lang('options:ui_lang'),
+    'name': Lang.lang('options:ui_lang'),
     'type': 'select',
     'values': getUiLanguages(),
     'req': true,
@@ -105,12 +106,12 @@ hooks.register('options_form', function (def) {
   }
 
   def.data_lang = {
-    'name': lang('options:data_lang'),
-    'desc': lang('options:data_lang:desc'),
+    'name': Lang.lang('options:data_lang'),
+    'desc': Lang.lang('options:data_lang:desc'),
     'type': 'select',
     'values': getDataLanguages(),
     'default': getPreferredDataLanguage(),
-    'placeholder': lang('options:data_lang:local')
+    'placeholder': Lang.lang('options:data_lang:local')
   }
 })
 
