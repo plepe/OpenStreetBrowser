@@ -27,7 +27,7 @@
     "ip-location": "^1.0.1",
     "json-multiline-strings": "^0.1.0",
     "leaflet": "^1.7.1",
-    "leaflet-geosearch": "^3.1.0",
+    "leaflet-geosearch": "^3.5.0",
     "leaflet-polylineoffset": "^1.1.1",
     "leaflet-textpath": "git+https://github.com/makinacorpus/Leaflet.TextPath.git#leaflet0.8-dev",
     "leaflet.locatecontrol": "^0.72.2",
@@ -43,7 +43,7 @@
     "openstreetmap-date-format": "^0.3.1",
     "openstreetmap-date-parser": "^0.1.2",
     "openstreetmap-tag-translations": "git+https://github.com/plepe/openstreetmap-tag-translations.git",
-    "overpass-layer": "^3.0.0",
+    "overpass-layer": "^3.0.2",
     "query-string": "^6.13.8",
     "sheet-router": "^4.2.3",
     "weight-sort": "^1.3.1"
@@ -63,7 +63,7 @@
     "minify": "^7.0.2",
     "mocha": "^8.2.1",
     "standard": "^16.0.3",
-    "watchify": "^3.11.1"
+    "watchify": "^4.0.0"
   },
   "standard": {
     "global": [
