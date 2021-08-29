@@ -36,6 +36,10 @@ $config['overpassUrl'] = array(
   '//api.openstreetmap.fr/oapi/interpreter',
 );
 
+// Additional parameters to Overpass (e.g. timeGap)
+$config['overpassOptions'] = array(
+);
+
 // Acquire a license key from https://www.maxmind.com/ and set it here
 #$config['GeoLite2-LicenseKey'] = '';
 
