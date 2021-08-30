@@ -125,6 +125,9 @@ register_hook('show-details', function (data, category, dom, callback) {
   var div = document.createElement('div')
   div.className = 'wikipedia'
 
+  const mainBlock = document.createElement('div')
+  div.appendChild(mainBlock)
+
   if ('wikipedia' in ob.tags) {
     foundPrefixes.push('')
 
@@ -132,7 +135,7 @@ register_hook('show-details', function (data, category, dom, callback) {
       value = value.trim()
 
       found++
-      showWikipedia(value, div, done)
+      showWikipedia(value, mainBlock, done)
     })
   }
 
@@ -141,9 +144,12 @@ register_hook('show-details', function (data, category, dom, callback) {
     if (m) {
       let prefix = m[1]
 
+      const block = document.createElement('div')
+      div.appendChild(block)
+
       h = document.createElement('h4')
       h.appendChild(document.createTextNode(lang('tag:' + prefix)))
-      div.appendChild(h)
+      block.appendChild(h)
 
       foundPrefixes.push(prefix)
 
@@ -151,7 +157,7 @@ register_hook('show-details', function (data, category, dom, callback) {
         value = value.trim()
 
         found++
-        showWikipedia(value, div, done)
+        showWikipedia(value, block, done)
       })
     }
 
@@ -166,17 +172,21 @@ register_hook('show-details', function (data, category, dom, callback) {
         continue
       }
 
+      let block = mainBlock
       if (prefix) {
+        block = document.createElement('div')
+        div.appendChild(block)
+
         h = document.createElement('h4')
         h.appendChild(document.createTextNode(lang('tag:' + prefix)))
-        div.appendChild(h)
+        block.appendChild(h)
       }
 
       foundPrefixes.push(prefix)
 
       ;(m[3] + ':' + ob.tags[k]).split(/;/g).forEach(value => {
         found++
-        showWikipedia(value, div, done)
+        showWikipedia(value, block, done)
       })
     }
   }
@@ -202,7 +212,7 @@ register_hook('show-details', function (data, category, dom, callback) {
 
         if (options.data_lang + 'wiki' in result.sitelinks) {
           x = result.sitelinks[options.data_lang + 'wiki']
-          return showWikipedia(options.data_lang + ':' + x.title, div, done)
+          return showWikipedia(options.data_lang + ':' + x.title, mainBlock, done)
         }
 
         for (k in result.sitelinks) {
@@ -212,7 +222,7 @@ register_hook('show-details', function (data, category, dom, callback) {
 
           x = result.sitelinks[k]
           m = k.match(/^(.*)wiki$/)
-          return showWikipedia(m[1] + ':' + x.title, div, done)
+          return showWikipedia(m[1] + ':' + x.title, mainBlock, done)
         }
 
         done()
@@ -230,9 +240,12 @@ register_hook('show-details', function (data, category, dom, callback) {
       }
       foundPrefixes.push(prefix)
 
+      const block = document.createElement('div')
+      div.appendChild(block)
+
       h = document.createElement('h4')
       h.appendChild(document.createTextNode(lang('tag:' + prefix)))
-      div.appendChild(h)
+      block.appendChild(h)
 
       ob.tags[k].split(/;/g).forEach(value => {
         value = value.trim()
@@ -250,7 +263,7 @@ register_hook('show-details', function (data, category, dom, callback) {
 
           if (options.data_lang + 'wiki' in result.sitelinks) {
             x = result.sitelinks[options.data_lang + 'wiki']
-            return showWikipedia(options.data_lang + ':' + x.title, div, done)
+            return showWikipedia(options.data_lang + ':' + x.title, block, done)
           }
 
           for (k in result.sitelinks) {
@@ -260,7 +273,7 @@ register_hook('show-details', function (data, category, dom, callback) {
 
             x = result.sitelinks[k]
             m = k.match(/^(.*)wiki$/)
-            return showWikipedia(m[1] + ':' + x.title, div, done)
+            return showWikipedia(m[1] + ':' + x.title, block, done)
           }
 
           done()
