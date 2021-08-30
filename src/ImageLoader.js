@@ -49,19 +49,19 @@ ImageLoader.prototype.parseObject = function (data) {
     }
   }
 
-  if (data.object.tags.wikipedia) {
+  if (data.object.tags.wikidata) {
+    this.sources.push({
+      type: 'wikidata',
+      value: data.object.tags.wikidata
+    })
+  } else if (data.object.tags.wikipedia) {
+    // only include wikipedia if no wikidata entry exists
     this.sources.push({
       type: 'wikipedia',
       value: data.object.tags.wikipedia
     })
   }
 
-  if (data.object.tags.wikidata) {
-    this.sources.push({
-      type: 'wikidata',
-      value: data.object.tags.wikidata
-    })
-  }
 
   if (data.object.tags.wikimedia_commons) {
     this.sources.push({
