@@ -119,6 +119,11 @@ ImageLoader.prototype.loadWikidata = function (src, callback) {
 ImageLoader.prototype.loadWikimediaCommons = function (src, callback) {
   var value = src.value
 
+  let m = value.match(/^https?:\/\/commons\.wikimedia\.org\/wiki\/(.*)$/)
+  if (m) {
+    value = m[1]
+  }
+
   if (value.substr(0, 9) === 'Category:') {
     var param = { page: value }
     if (src.continue) {
