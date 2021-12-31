@@ -81,5 +81,11 @@
     "heading:NW": "NO",
     "main:about": "A prepaus de",
     "main:code": "Còde",
-    "options:chooseEditor": "Chaussissètz un editor"
+    "options:chooseEditor": "Chaussissètz un editor",
+    "empty value": "valor vueja",
+    "geoinfo:nw-corner": "Canton nòrd-oest",
+    "geoinfo:centroid": "Centroïd",
+    "geoinfo:se-corner": "Canton sud-est",
+    "geoinfo:location": "Posicion actuala",
+    "options:debug_mode": "Depuracion"
 }
