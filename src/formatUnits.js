@@ -111,10 +111,14 @@ module.exports = {
       decimalPlaces = parseInt(m[3])
     }
 
-    return formatcoords(value).format(format, {
+    let result = formatcoords(value).format(format, {
       latLonSeparator: settings.coordSpacer,
       decimalPlaces
     })
+
+    result = '<a href="geo:' + value.lat.toFixed(5) + ',' + value.lng.toFixed(5) + '">' + result + '</a>'
+
+    return result
   },
   settings
 }
