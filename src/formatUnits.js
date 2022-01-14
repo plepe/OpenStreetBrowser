@@ -144,7 +144,7 @@ register_hook('options_form', def => {
       'FFf': 'DD° MM′ SS.SSS″ X',
       'Ff': 'DD° MM.MMM′ X',
       'f': 'DD.DDD° X',
-      'd': '±DD.DDD'
+      '-d': '±DD.DDD'
     },
     'default': settings.coordFormat
   }
