@@ -30,6 +30,9 @@
 .geo-info > .object-shape::before {
   background: url("../img/geo-info-object-shape.svg");
 }
+.geo-info > .object-line::before {
+  background: url("../img/geo-info-object-line.svg");
+}
 .geo-info > .object-nw-corner::before {
   background: url("../img/geo-info-object-nw.svg");
 }

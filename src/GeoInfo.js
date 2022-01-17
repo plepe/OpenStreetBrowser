@@ -208,9 +208,10 @@ function geoInfoShowDetails (data, category, div) {
   let geojson = ob.GeoJSON()
   let area = turf.area(geojson)
   let length = turf.length(geojson) * 1000
+  let isLine = geojson.geometry.type === 'LineString'
 
   if (area !== 0 || length !== 0) {
-    result += '<div class="object-shape">' +
+    result += '<div class="object-' + (isLine ? 'line' : 'shape') +'">' +
       '<span class="value">' +
       lang('geoinfo:length') + ': ' + formatUnits.distance(length) +
       (area === 0 ? '' : ', ' + lang('geoinfo:area') + ': ' + formatUnits.area(area)) +
