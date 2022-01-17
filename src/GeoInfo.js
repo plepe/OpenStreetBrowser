@@ -1,5 +1,7 @@
 const turf = {
+  along: require('@turf/along').default,
   area: require('@turf/area').default,
+  centerOfMass: require('@turf/center-of-mass').default,
   length: require('@turf/length').default
 }
 const tabs = require('modulekit-tabs')
@@ -208,7 +210,7 @@ function geoInfoShowDetails (data, category, div) {
   let geojson = ob.GeoJSON()
   let area = turf.area(geojson)
   let length = turf.length(geojson) * 1000
-  let isLine = geojson.geometry.type === 'LineString'
+  let isLine = geojson.geometry.type === 'LineString' || geojson.geometry.type === 'MultiLineString'
 
   if (area !== 0 || length !== 0) {
     result += '<div class="object-' + (isLine ? 'line' : 'shape') +'">' +
@@ -223,6 +225,15 @@ function geoInfoShowDetails (data, category, div) {
   }
 
   result += '<div class="object-center" title="' + lang('geoinfo:centroid') + '"><span class="value">' + formatUnits.coord({ lat: ob.center.lat, lng: ob.center.lon }) + '</span></div>'
+
+  if (geojson.geometry.type === 'LineString') {
+    const point = turf.along(geojson, length / 2000)
+    result += '<div class="object-middlepoint" title="' + lang('geoinfo:middlepoint') + '"><span class="value">' + formatUnits.coord({ lat: point.geometry.coordinates[1], lng: point.geometry.coordinates[0] }) + '</span></div>'
+  }
+  else if (geojson.geometry.type === 'Polygon') {
+    const point = turf.centerOfMass(geojson, length / 2000)
+    result += '<div class="object-centerOfMass" title="' + lang('geoinfo:centerOfMass') + '"><span class="value">' + formatUnits.coord({ lat: point.geometry.coordinates[1], lng: point.geometry.coordinates[0] }) + '</span></div>'
+  }
 
   if (ob.bounds.minlat !== ob.bounds.maxlat || ob.bounds.minlon !== ob.bounds.maxlon) {
     result += '<div class="object-se-corner" title="' + lang('geoinfo:se-corner') + '"><span class="value">' + formatUnits.coord({ lat: ob.bounds.maxlat, lng: ob.bounds.minlon }) + '</span></div>'
