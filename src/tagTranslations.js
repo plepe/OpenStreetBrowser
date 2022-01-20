@@ -1,5 +1,6 @@
 /* global lang_str lang_non_translated */
 /* eslint camelcase:0 */
+const sprintf = require('sprintf-js')
 var OverpassLayer = require('overpass-layer')
 var tagLang = null
 
@@ -31,7 +32,9 @@ OverpassLayer.twig.extendFunction('repoTrans', function (str) {
   }
 
   let lang = global.currentCategory.repository.lang
-  return str in lang ? lang[str] : str
+  const format = str in lang ? lang[str] : str
+
+  return vsprintf(format, Array.from(arguments).slice(1))
 })
 
 function tagTranslationsIsTranslated (str) {
