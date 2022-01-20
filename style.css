@@ -605,3 +605,10 @@ ul.overpass-layer-list > li > a > .content > .details {
   float: right;
   position: inherit;
 }
+.warning {
+  border: 1px solid red;
+  border-radius: 0.5em;
+  padding: 0.25em 1em;
+  margin-bottom: 0.25em;
+  background-color: #ffdfdf;
+}
