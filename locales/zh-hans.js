@@ -4,4 +4,4 @@ global.locale = {
   osmDateFormatTemplates: require('openstreetmap-date-format/templates/en')
 }
 
-require('moment/locale/zh-hans')
+require('moment/locale/zh-cn')
