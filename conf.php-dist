@@ -120,6 +120,7 @@ $languages = array(
   "uk", // Ukrainian
   "nb", // Bokmål (Norwegian)
   "tr", // Turkish
+  "zh-hans", // Simplified Chinese
 );
 
 // Uncomment the following lines to use a MYSQL database for session handling.
