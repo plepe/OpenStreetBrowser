@@ -36,7 +36,7 @@
     "measure-ts": "^3.3.2",
     "mini-svg-data-uri": "^1.4.3",
     "modulekit-tabs": "^0.2.2",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "natsort": "^2.0.3",
     "opening_hours": "^3.6.0",
     "openstreetbrowser-categories-main": "git+https://github.com/plepe/openstreetbrowser-categories-main.git",
