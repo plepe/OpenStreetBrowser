@@ -9,6 +9,10 @@ class RepositoryBase {
     return null;
   }
 
+  function isEmpty () {
+    return false;
+  }
+
   function info () {
     $ret = array();
 

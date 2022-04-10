@@ -15,18 +15,20 @@ if (!isset($_REQUEST['repo'])) {
   foreach ($allRepositories as $repoId => $repoData) {
     $repo = getRepo($repoId, $repoData);
 
-    print $c++ ? ',' : '';
-    print json_encode($repoId, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) . ':';
-    $info = $repo->info();
+    if (!$repo->isEmpty()) {
+      print $c++ ? ',' : '';
+      print json_encode($repoId, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) . ':';
+      $info = $repo->info();
 
-    if (isset($repoData['repositoryUrl'])) {
-      $info['repositoryUrl'] = $repoData['repositoryUrl'];
-    }
-    if (isset($repoData['categoryUrl'])) {
-      $info['categoryUrl'] = $repoData['categoryUrl'];
-    }
+      if (isset($repoData['repositoryUrl'])) {
+	$info['repositoryUrl'] = $repoData['repositoryUrl'];
+      }
+      if (isset($repoData['categoryUrl'])) {
+	$info['categoryUrl'] = $repoData['categoryUrl'];
+      }
 
-    print json_encode($info, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_FORCE_OBJECT);
+      print json_encode($info, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_FORCE_OBJECT);
+    }
   }
 
   print '}';
