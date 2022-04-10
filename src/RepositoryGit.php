@@ -24,9 +24,25 @@ class RepositoryGit extends RepositoryBase {
   }
 
   function timestamp () {
-    $ts = (int)shell_exec("cd " . escapeShellArg($this->path) . "; git log -1 --all --pretty=format:%ct");
+    if (!isset($this->_timestamp)) {
+      $ts = shell_exec("cd " . escapeShellArg($this->path) . "; git log -1 --all --pretty=format:%ct");
 
-    return $ts;
+      $this->_timestamp = $ts === null ? null : (int)$ts;
+    }
+
+    return $this->_timestamp;
+  }
+
+  function isEmpty () {
+    if ($this->timestamp() === null) {
+      return true;
+    }
+
+    if (!sizeof($this->scandir('.'))) {
+      return true;
+    }
+
+    return false;
   }
 
   function data ($options) {
