@@ -98,6 +98,13 @@ class RepositoryGit extends RepositoryBase {
     }
     pclose($d);
 
+    $ret = array_filter(
+      $ret,
+      function ($file) {
+	return preg_match("/\.(html|json)$/", $file);
+      }
+    );
+
     return $ret;
   }
 
