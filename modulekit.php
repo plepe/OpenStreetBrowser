@@ -15,6 +15,7 @@ $include = array(
     'src/options.php',
     'src/language.php',
     'src/ip-location.php',
+    'src/wikidata.php',
     'src/wikipedia.php',
     'src/ImageLoader.php',
     'src/RepositoryBase.php',

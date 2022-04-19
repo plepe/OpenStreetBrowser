@@ -5,15 +5,7 @@ function ajax_wikipedia ($param) {
     $wp_page = $m[2];
   }
   elseif (preg_match("/^Q\d+$/", $param['page'])) {
-    $id = $param['page'];
-    $body = file_get_contents("https://www.wikidata.org/wiki/Special:EntityData/{$id}.json");
-    $body = json_decode($body, true);
-
-    if (!array_key_exists('entities', $body) || !array_key_exists($id, $body['entities'])) {
-      return false;
-    }
-
-    $data = $body['entities'][$id];
+    $data = wikidataLoad($param['page']);
 
     if (array_key_exists('sitelinks', $data)) {
       if (array_key_exists($param['lang'] . 'wiki', $data['sitelinks'])) {
