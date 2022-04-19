@@ -2,6 +2,7 @@ var wikidata = require('./wikidata')
 const displayBlock = require('./displayBlock')
 
 var cache = {}
+var getAbstractCache = {}
 var loadClash = {}
 
 function stripLinks (dom) {
@@ -98,6 +99,11 @@ function get (value, callback) {
 }
 
 function getAbstract (value, callback) {
+  if (value in getAbstractCache) {
+    callback(null, getAbstractCache[value])
+    return getAbstractCache[value]
+  }
+
   get(value,
     function (err, result) {
       var text = null
