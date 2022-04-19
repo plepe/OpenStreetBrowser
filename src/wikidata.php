@@ -17,3 +17,20 @@ function wikidataLoad ($id) {
 
   return $wikidataCache[$id];
 }
+
+function wikidataGetLabel ($id, $lang) {
+  $data = wikidataLoad($id);
+
+  if (array_key_exists($lang, $data['labels'])) {
+    return $data['labels'][$lang]['value'];
+  }
+  elseif (array_key_exists('en', $data['labels'])) {
+    return $data['labels']['en']['value'];
+  }
+  elseif (!sizeof($data['labels'])) {
+    return $id;
+  }
+  else {
+    return array_values($data['labels'])[0]['value'];
+  }
+}

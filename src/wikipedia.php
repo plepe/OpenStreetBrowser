@@ -8,6 +8,11 @@ function ajax_wikipedia ($param) {
     $data = wikidataLoad($param['page']);
 
     if (array_key_exists('sitelinks', $data)) {
+      $sitelinks_ids = array_keys($data['sitelinks']);
+      $sitelinks_ids = array_values(array_filter($sitelinks_ids, function ($id) {
+        return preg_match('/wiki$/', $id) && $id !== 'commonswiki';
+      }));
+
       if (array_key_exists($param['lang'] . 'wiki', $data['sitelinks'])) {
         $wp_lang = $param['lang'];
         $wp_url = $data['sitelinks'][$param['lang'] . 'wiki']['url'];
@@ -16,17 +21,25 @@ function ajax_wikipedia ($param) {
         $wp_lang = 'en';
         $wp_url = $data['sitelinks']['enwiki']['url'];
       }
+      elseif (sizeof($sitelinks_ids)) {
+        $id = $sitelinks_ids[0];
+        $wp_lang = substr($id, 0, strlen($id) - 4);
+        $wp_url = $data['sitelinks'][$id]['url'];
+      }
       else {
-        $sitelinks_ids = array_keys($data['sitelinks']);
-        $sitelinks_ids = array_values(array_filter($sitelinks_ids, function ($id) {
-          return preg_match('/wiki$/', $id);
-        }));
-
-        if (sizeof($sitelinks_ids)) {
-          $id = $sitelinks_ids[0];
-          $wp_lang = substr($id, 0, strlen($id) - 4);
-          $wp_url = $data['sitelinks'][$id]['url'];
+        $content = "<div><div id='mw-content-text'><div><p>" . wikidataGetLabel($param['page'], $param['lang']) . "</p></div></div></div>";
+        $url = "https://wikidata.org/wiki/{$param['page']}";
+        if (array_key_exists('commonswiki', $data['sitelinks'])) {
+          $url = $data['sitelinks']['commonswiki']['url'];
         }
+
+        return array(
+          'content' => $content,
+          'languages' => [
+            $param['lang'] => $url,
+          ],
+          'language' => $param['lang'],
+        );
       }
     }
   }
