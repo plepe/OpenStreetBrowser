@@ -27,7 +27,7 @@ function ajax_wikipedia ($param) {
         $wp_url = $data['sitelinks'][$id]['url'];
       }
       else {
-        $content = "<div><div id='mw-content-text'><div><p>" . wikidataGetLabel($param['page'], $param['lang']) . "</p></div></div></div>";
+        $content = "<div><div id='mw-content-text'><div><p>" . wikidataFormat($param['page'], $param['lang']) . "</p></div></div></div>";
         $url = "https://wikidata.org/wiki/{$param['page']}";
         if (array_key_exists('commonswiki', $data['sitelinks'])) {
           $url = $data['sitelinks']['commonswiki']['url'];
