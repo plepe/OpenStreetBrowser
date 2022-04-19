@@ -102,9 +102,10 @@ function get (value, callback) {
 }
 
 function getAbstract (value, callback) {
-  if (value in getAbstractCache) {
-    callback(null, getAbstractCache[value])
-    return getAbstractCache[value]
+  const cacheId = options.data_lang + ':' + value
+  if (cacheId in getAbstractCache) {
+    callback(null, getAbstractCache[cacheId])
+    return getAbstractCache[cacheId]
   }
 
   get(value,
@@ -119,7 +120,7 @@ function getAbstract (value, callback) {
         text += ' <a target="_blank" href="' + result.languages[result.language] + '">' + lang('more') + '</a>'
       }
 
-      getAbstractCache[value] = text
+      getAbstractCache[cacheId] = text
 
       callback(err, text)
     }
@@ -418,8 +419,9 @@ module.exports = {
 }
 
 OverpassLayer.twig.extendFilter('wikipediaAbstract', function (value, param) {
-  if (value in getAbstractCache) {
-    let result = getAbstractCache[value]
+  const cacheId = options.data_lang + ':' + value
+  if (cacheId in getAbstractCache) {
+    let result = getAbstractCache[cacheId]
     return '<div class="wikipedia" data-id="' + value + '" data-done="true">' + result + '</div>'
   }
 
