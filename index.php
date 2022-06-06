@@ -44,7 +44,9 @@ html_export_var(array(
   <link rel="stylesheet" href="node_modules/leaflet-geosearch/assets/css/leaflet.css" />
   <link rel="stylesheet" href="node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
   <link rel="stylesheet" href="node_modules/leaflet.polylinemeasure/Leaflet.PolylineMeasure.css" />
+  <link rel="stylesheet" href="node_modules/leaflet-contextmenu/dist/leaflet.contextmenu.min.css" />
   <script src="node_modules/leaflet/dist/leaflet.js"></script>
+  <script src="node_modules/leaflet-contextmenu/dist/leaflet.contextmenu.min.js"></script>
   <script src="node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
   <script src="node_modules/leaflet-textpath/leaflet.textpath.js"></script>
   <script src="node_modules/leaflet-polylineoffset/leaflet.polylineoffset.js"></script>

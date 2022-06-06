@@ -27,6 +27,7 @@
     "ip-location": "^1.0.1",
     "json-multiline-strings": "^0.1.0",
     "leaflet": "^1.7.1",
+    "leaflet-contextmenu": "^1.4.0",
     "leaflet-geosearch": "^3.6.0",
     "leaflet-polylineoffset": "^1.1.1",
     "leaflet-textpath": "git+https://github.com/makinacorpus/Leaflet.TextPath.git#leaflet0.8-dev",
