@@ -44,3 +44,18 @@ register_hook('state-get', function (state) {
     }
   }
 })
+
+function placeMarker (e) {
+  markerPos = [ e.latlng.lat, e.latlng.lng ]
+  markerText = null
+  update()
+
+  state.update(null, true)
+}
+
+register_hook('contextmenu-items', function (items) {
+  items.push({
+    text: 'Place marker here',
+    callback: placeMarker
+  })
+})
