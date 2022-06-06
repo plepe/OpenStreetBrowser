@@ -19,6 +19,14 @@ register_hook('state-apply', function (state) {
 
       update()
     }
+
+    global.setTimeout(() => {
+      // After loading a new marker, check if it visible - if not, fly to position
+      const viewport = global.map.getBounds()
+      if (!viewport.contains(markerPos)) {
+        map.flyTo(markerPos)
+      }
+    }, 1)
   }
 })
 
