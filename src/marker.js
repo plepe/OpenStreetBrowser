@@ -10,17 +10,19 @@ register_hook('state-apply', function (state) {
   }
 
   if (state.marker) {
-    markerPos = state.marker.split('/')
-    markerText = markerPos[2]
-    markerPos = [
-      parseFloat(markerPos[0]),
-      parseFloat(markerPos[1])
-    ]
+    const m = state.marker.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)(?:\/(.*))?$/)
+    if (m) {
+      markerText = m[3]
+      markerPos = [
+        parseFloat(m[1]),
+        parseFloat(m[2])
+      ]
 
-    marker = L.marker(markerPos).addTo(global.map)
+      marker = L.marker(markerPos).addTo(global.map)
 
-    if (markerText) {
-      marker.bindPopup(markerText)
+      if (markerText) {
+        marker.bindPopup(markerText)
+      }
     }
   }
 })
