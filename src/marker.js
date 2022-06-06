@@ -1,13 +1,12 @@
+const state = require('./state')
+
 let marker
 let markerPos
 let markerText
 
 register_hook('state-apply', function (state) {
-  if (marker) {
-    global.map.removeLayer(marker)
-    markerPos = null
-    markerText = null
-  }
+  markerPos = null
+  markerText = null
 
   if (state.marker) {
     const m = state.marker.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)(?:\/(.*))?$/)
@@ -18,14 +17,23 @@ register_hook('state-apply', function (state) {
         parseFloat(m[2])
       ]
 
-      marker = L.marker(markerPos).addTo(global.map)
-
-      if (markerText) {
-        marker.bindPopup(markerText)
-      }
+      update()
     }
   }
 })
+
+function update () {
+  if (marker) {
+    global.map.removeLayer(marker)
+  }
+
+  if (markerPos) {
+    marker = L.marker(markerPos).addTo(global.map)
+    if (markerText) {
+      marker.bindPopup(markerText)
+    }
+  }
+}
 
 register_hook('state-get', function (state) {
   if (markerPos) {
