@@ -79,6 +79,6 @@ Extra filters:
 * filter `wikipediaAbstract`: shows the abstract of a Wikipedia article in the selected data language (or, if not available, the language which was used in input, resp. 'en' for Wikidata input). Input is either 'language:article' (e.g. 'en:Douglas Adams') or a wikidata id (e.g. 'Q42').
 
 Notes:
-* Variables will automatically be HTML escaped, if not the filter raw is used, e.g.: {{ tags.name|raw }}
+* Variables will automatically be HTML escaped, unless the filter raw is used, e.g.: {{ tags.name|raw }}
 * The templates will be rendered when the object becomes visible and when the zoom level changes.
 * If you set an arbitrary value within a twig template (e.g.: {% set foo = "bar" %}), it will also be available in further templates of the same object by using (e.g.: {{ foo }}). The templates will be evaluated in the order as they are defined.
