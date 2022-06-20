@@ -79,6 +79,16 @@ class RepositoryGit extends RepositoryBase {
         $data['categories'][$id] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'), array('filter'))));
       }
 
+      if (preg_match("/^([0-9a-zA-Z_\-]+)\.yaml$/", $r, $m)) {
+        $d1 = yaml_parse(shell_exec("cd " . escapeShellArg($this->path) . "; git show {$this->branchEsc}:" . escapeShellArg($f)));
+
+	if (!$this->isCategory($d1)) {
+	  continue;
+	}
+
+        $data['categories'][$m[1]] = $d1;
+      }
+
       if (preg_match("/^[0-9]{6} blob [0-9a-f]{40}\t((detailsBody|popupBody)\.html)$/", $r, $m)) {
 	$data['templates'][$m[2]] = shell_exec("cd " . escapeShellArg($this->path) . "; git show {$this->branchEsc}:" . escapeShellArg($m[1]));
       }

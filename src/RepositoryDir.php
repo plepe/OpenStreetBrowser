@@ -41,6 +41,16 @@ class RepositoryDir extends RepositoryBase {
         $data['categories'][$m[1]] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'), array('filter'))));
       }
 
+      if (preg_match("/^([0-9a-zA-Z_\-]+)\.yaml$/", $f, $m)) {
+        $d1 = yaml_parse(file_get_contents("{$this->path}/{$f}"));
+
+	if (!$this->isCategory($d1)) {
+	  continue;
+	}
+
+        $data['categories'][$m[1]] = $d1;
+      }
+
       if (preg_match("/^(detailsBody|popupBody).html$/", $f, $m)) {
 	$data['templates'][$m[1]] = file_get_contents("{$this->path}/{$f}");
       }
