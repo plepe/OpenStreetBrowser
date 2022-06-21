@@ -1,3 +1,5 @@
+const OverpassLayer = require('overpass-layer')
+
 var httpGet = require('./httpGet')
 var loadClash = {}
 var cache = {}
@@ -22,6 +24,7 @@ function wikidataLoad (id, callback) {
 
     if (!result.entities || !result.entities[id]) {
       console.log('invalid result', result)
+      cache[id] = false
       return callback(err, null)
     }
 
@@ -39,3 +42,13 @@ function wikidataLoad (id, callback) {
 module.exports = {
   load: wikidataLoad
 }
+
+OverpassLayer.twig.extendFilter('wikidataEntity', function (value, param) {
+  if (value in cache) {
+    return cache[value]
+  }
+
+  wikidataLoad(value, () => {})
+
+  return null
+})
