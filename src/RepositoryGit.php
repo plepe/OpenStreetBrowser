@@ -71,6 +71,7 @@ class RepositoryGit extends RepositoryBase {
         }
 
         $d1 = json_decode(shell_exec("cd " . escapeShellArg($this->path) . "; git show {$this->branchEsc}:" . escapeShellArg($f)), true);
+        $d1['format'] = 'json';
 
 	if (!$this->isCategory($d1)) {
 	  continue;
@@ -81,6 +82,7 @@ class RepositoryGit extends RepositoryBase {
 
       if (preg_match("/^([0-9a-zA-Z_\-]+)\.yaml$/", $r, $m)) {
         $d1 = yaml_parse(shell_exec("cd " . escapeShellArg($this->path) . "; git show {$this->branchEsc}:" . escapeShellArg($f)));
+        $d1['format'] = 'yaml';
 
 	if (!$this->isCategory($d1)) {
 	  continue;

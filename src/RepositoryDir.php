@@ -33,6 +33,7 @@ class RepositoryDir extends RepositoryBase {
     while ($f = readdir($d)) {
       if (preg_match("/^([0-9a-zA-Z_\-]+)\.json$/", $f, $m) && $f !== 'package.json') {
         $d1 = json_decode(file_get_contents("{$this->path}/{$f}"), true);
+        $d1['format'] = 'json';
 
 	if (!$this->isCategory($d1)) {
 	  continue;
@@ -43,6 +44,7 @@ class RepositoryDir extends RepositoryBase {
 
       if (preg_match("/^([0-9a-zA-Z_\-]+)\.yaml$/", $f, $m)) {
         $d1 = yaml_parse(file_get_contents("{$this->path}/{$f}"));
+        $d1['format'] = 'yaml';
 
 	if (!$this->isCategory($d1)) {
 	  continue;
