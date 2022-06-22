@@ -71,12 +71,24 @@ class RepositoryGit extends RepositoryBase {
         }
 
         $d1 = json_decode(shell_exec("cd " . escapeShellArg($this->path) . "; git show {$this->branchEsc}:" . escapeShellArg($f)), true);
+        $d1['format'] = 'json';
 
 	if (!$this->isCategory($d1)) {
 	  continue;
 	}
 
         $data['categories'][$id] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'), array('filter'))));
+      }
+
+      if (preg_match("/^([0-9a-zA-Z_\-]+)\.yaml$/", $r, $m)) {
+        $d1 = yaml_parse(shell_exec("cd " . escapeShellArg($this->path) . "; git show {$this->branchEsc}:" . escapeShellArg($f)));
+        $d1['format'] = 'yaml';
+
+	if (!$this->isCategory($d1)) {
+	  continue;
+	}
+
+        $data['categories'][$m[1]] = $d1;
       }
 
       if (preg_match("/^[0-9]{6} blob [0-9a-f]{40}\t((detailsBody|popupBody)\.html)$/", $r, $m)) {
