@@ -76,8 +76,10 @@ Extra filters:
 * filter `md5`: calculate md5 hash of a string.
 * filter `enumerate`: enumerate the given list, e.g. "foo, bar, and bla". Input either an array (`[ "foo", "bar", "bla" ]|enumerate`) or a string with `;` as separator (`"foo;bar;bla"|enumerate`).
 * filter `debug`: print the value (and further arguments) to the javascript console (via `console.log()`)
+* filter `wikipediaAbstract`: shows the abstract of a Wikipedia article in the selected data language (or, if not available, the language which was used in input, resp. 'en' for Wikidata input). Input is either 'language:article' (e.g. 'en:Douglas Adams') or a wikidata id (e.g. 'Q42').
+* filter `wikidataEntity`: returns the wikidata entity in structured form (or `null` if the entity is not cached or `false` if it does not exist). Example: https://www.wikidata.org/wiki/Special:EntityData/Q42.json
 
 Notes:
-* Variables will automatically be HTML escaped, if not the filter raw is used, e.g.: {{ tags.name|raw }}
+* Variables will automatically be HTML escaped, unless the filter raw is used, e.g.: {{ tags.name|raw }}
 * The templates will be rendered when the object becomes visible and when the zoom level changes.
 * If you set an arbitrary value within a twig template (e.g.: {% set foo = "bar" %}), it will also be available in further templates of the same object by using (e.g.: {{ foo }}). The templates will be evaluated in the order as they are defined.

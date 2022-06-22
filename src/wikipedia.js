@@ -1,7 +1,11 @@
+const async = require('async')
+const OverpassLayer = require('overpass-layer')
+
 var wikidata = require('./wikidata')
 const displayBlock = require('./displayBlock')
 
 var cache = {}
+var getAbstractCache = {}
 var loadClash = {}
 
 function stripLinks (dom) {
@@ -98,6 +102,12 @@ function get (value, callback) {
 }
 
 function getAbstract (value, callback) {
+  const cacheId = options.data_lang + ':' + value
+  if (cacheId in getAbstractCache) {
+    callback(null, getAbstractCache[cacheId])
+    return getAbstractCache[cacheId]
+  }
+
   get(value,
     function (err, result) {
       var text = null
@@ -110,10 +120,42 @@ function getAbstract (value, callback) {
         text += ' <a target="_blank" href="' + result.languages[result.language] + '">' + lang('more') + '</a>'
       }
 
+      getAbstractCache[cacheId] = text
+
       callback(err, text)
     }
   )
 }
+
+function updateDomWikipedia (dom, callback) {
+  const wikipediaQueries = dom.querySelectorAll('.wikipedia')
+  async.each(
+    wikipediaQueries,
+    (div, done) => {
+      if (div.hasAttribute('data-done')) {
+        return done()
+      }
+
+      getAbstract(div.getAttribute('data-id'),
+        (err, result) => {
+          if (result) {
+            div.innerHTML = result
+            div.setAttribute('data-done', 'true')
+          }
+          done()
+        }
+      )
+    },
+    () => {
+      callback()
+    }
+  )
+}
+
+register_hook('show-popup', function (data, category, dom, callback) {
+  updateDomWikipedia(dom, () => updateDomWikipedia(dom, () => {}))
+  callback()
+})
 
 register_hook('show-details', function (data, category, dom, callback) {
   var ob = data.object
@@ -375,3 +417,16 @@ function getImages (tagValue, callback) {
 module.exports = {
   getImages: getImages
 }
+
+OverpassLayer.twig.extendFilter('wikipediaAbstract', function (value, param) {
+  let result
+  const cacheId = options.data_lang + ':' + value
+  if (cacheId in getAbstractCache) {
+    const text = getAbstractCache[cacheId]
+    result = '<div class="wikipedia" data-id="' + value + '" data-done="true">' + text + '</div>'
+  } else {
+    result = '<div class="wikipedia" data-id="' + value + '"><a href="https://wikidata.org/wiki/' + value + '">' + value + '</a></div>'
+  }
+
+  return OverpassLayer.twig.filters.raw(result)
+})
