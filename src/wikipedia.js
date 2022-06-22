@@ -419,11 +419,14 @@ module.exports = {
 }
 
 OverpassLayer.twig.extendFilter('wikipediaAbstract', function (value, param) {
+  let result
   const cacheId = options.data_lang + ':' + value
   if (cacheId in getAbstractCache) {
-    let result = getAbstractCache[cacheId]
-    return '<div class="wikipedia" data-id="' + value + '" data-done="true">' + result + '</div>'
+    const text = getAbstractCache[cacheId]
+    result = '<div class="wikipedia" data-id="' + value + '" data-done="true">' + text + '</div>'
+  } else {
+    result = '<div class="wikipedia" data-id="' + value + '"><a href="https://wikidata.org/wiki/' + value + '">' + value + '</a></div>'
   }
 
-  return '<div class="wikipedia" data-id="' + value + '"><a href="https://wikidata.org/wiki/' + value + '">' + value + '</a></div>'
+  return OverpassLayer.twig.filters.raw(result)
 })
