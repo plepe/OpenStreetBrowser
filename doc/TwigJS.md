@@ -80,6 +80,6 @@ Extra filters:
 * filter `wikidataEntity`: returns the wikidata entity in structured form (or `null` if the entity is not cached or `false` if it does not exist). Example: https://www.wikidata.org/wiki/Special:EntityData/Q42.json
 
 Notes:
-* Variables will automatically be HTML escaped, unless the filter raw is used, e.g.: {{ tags.name|raw }}
+* Variables will automatically be HTML escaped, unless the filter raw is used, e.g.: `{{ tags.name|raw }}`
 * The templates will be rendered when the object becomes visible and when the zoom level changes.
-* If you set an arbitrary value within a twig template (e.g.: {% set foo = "bar" %}), it will also be available in further templates of the same object by using (e.g.: {{ foo }}). The templates will be evaluated in the order as they are defined.
+* If you set an arbitrary value within a twig template (e.g.: `{% set foo = "bar" %}`), it will also be available in further templates of the same object by using (e.g.: `{{ foo }}`). The templates will be evaluated in the order as they are defined.
