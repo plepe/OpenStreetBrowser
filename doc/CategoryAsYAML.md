@@ -1,6 +1,6 @@
 Categories can be created as YAML files. This is much simpler as JSON files and allows adding comments.
 
-A simple example:
+A simple example ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example1.yaml)):
 
 ```yaml
 type: overpass
@@ -9,7 +9,7 @@ query:
   15: nwr[amenity=restaurant]
 ```
 
-Another example, showing fountains from z15 and (additionally) drinking_water from z17:
+Another example, showing fountains from z15 and (additionally) drinking_water from z17 ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example2.yaml)):
 ```yaml
 type: overpass
 query:
@@ -30,8 +30,8 @@ feature:
     {% endif %}
 ```
 
-Roads, with different color depending on its priority:
-```
+Roads, with different color depending on its priority ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example3.yaml)):
+```yaml
 type: overpass
 name: 
   en: Roads # English name of the category
