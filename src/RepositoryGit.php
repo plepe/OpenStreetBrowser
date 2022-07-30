@@ -80,7 +80,10 @@ class RepositoryGit extends RepositoryBase {
         $data['categories'][$id] = jsonMultilineStringsJoin($d1, array('exclude' => array(array('const'), array('filter'))));
       }
 
-      if (preg_match("/^([0-9a-zA-Z_\-]+)\.yaml$/", $r, $m)) {
+      if (preg_match("/^[0-9]{6} blob [0-9a-f]{40}\t(([0-9a-zA-Z_\-]+)\.yaml)$/", $r, $m)) {
+        $f = $m[1];
+        $id = $m[2];
+
         $d1 = yaml_parse(shell_exec("cd " . escapeShellArg($this->path) . "; git show {$this->branchEsc}:" . escapeShellArg($f)));
         $d1['format'] = 'yaml';
 
@@ -88,7 +91,7 @@ class RepositoryGit extends RepositoryBase {
 	  continue;
 	}
 
-        $data['categories'][$m[1]] = $d1;
+        $data['categories'][$id] = $d1;
       }
 
       if (preg_match("/^[0-9]{6} blob [0-9a-f]{40}\t((detailsBody|popupBody)\.html)$/", $r, $m)) {
@@ -129,7 +132,7 @@ class RepositoryGit extends RepositoryBase {
     $ret = array_filter(
       $ret,
       function ($file) {
-	return preg_match("/\.(html|json)$/", $file);
+	return preg_match("/\.(html|json|yaml)$/", $file);
       }
     );
 
