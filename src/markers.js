@@ -45,7 +45,7 @@ function markerLine (data) {
 
   ret += '</svg>'
 
-  return ret
+  return OverpassLayer.twig.filters.raw(ret)
 }
 
 function markerPolygon (data) {
@@ -59,7 +59,7 @@ function markerPolygon (data) {
 
   ret += '</svg>'
 
-  return ret
+  return OverpassLayer.twig.filters.raw(ret)
 }
 
 function markerCircle (data) {
@@ -77,7 +77,7 @@ function markerCircle (data) {
 
   ret += '</svg>'
 
-  return ret
+  return OverpassLayer.twig.filters.raw(ret)
 }
 
 function markerPointer (data) {
@@ -91,7 +91,7 @@ function markerPointer (data) {
 
   ret += '</svg>'
 
-  return ret
+  return OverpassLayer.twig.filters.raw(ret)
 }
 
 function parseOptions (data) {
