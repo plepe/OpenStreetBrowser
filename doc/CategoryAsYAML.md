@@ -1,27 +1,40 @@
-Categories can be created as YAML files. This is much simpler as JSON files and allows adding comments.
+Categories can be created as YAML files. This is much simpler as JSON files, because you don't have to add all these quotes, you can use multi-line strings and allows adding comments.
 
-A simple example ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example1.yaml)):
+A simple example ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example1.yaml)). It queries nodes, ways and relations with amenity=restaurant from OpenStreetMap (via Overpass API), starting from zoom level 15. `nwr` is short for `(node[amenity=restaurant];way[amenity=restaurant];relation[amenity=restaurant];)`:
 
 ```yaml
+# This is necessary, it tells OSB that this uses OverpassQL for queries.
 type: overpass
 # From zoom level 15 on, load all node, ways and relations with amenity=restaurant.
 query:
   15: nwr[amenity=restaurant]
 ```
 
-Another example, showing fountains from z15 and (additionally) drinking_water from z17 ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example2.yaml)):
+Another example, showing fountains from z15 and (additionally) drinking_water from z17. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example2.yaml)):
+
+This is the first examples which uses [TwigJS](https://github.com/twigjs/twig.js) for programming logic. TwigJS is a port of the [Twig template language](https://twig.symfony.com/doc/3.x/templates.html).
+
+Here, we are using Unicode characters as icons. Alternatively, OpenStreetBrowser includes a [few icon sets](./Icons.md) which you can use.
+
 ```yaml
 type: overpass
 query:
+  # query as single line string:
   15: nwr[amenity=fountain]
+  # query as multi line string:
   17: |
     (
       nwr[amenity=fountain];
       nwr[amenity=drinking_water];
     )
 feature:
+  # In the description, '{{ ... }}' is a TwigJS template. In this case it will
+  # translate either the tag 'amenity=fountain' or 'amenity=drinking_water'
+  # into a localized string:
   description: |
     {{ tagTrans('amenity', tags.amenity) }}
+  # '{% ... %} is a code block in Twig, it can be used for setting variables,
+  # if and for statements. This places different icons in the markers:
   markerSign: |
     {% if tags.amenity == 'fountain' %}
     ⛲
@@ -30,11 +43,75 @@ feature:
     {% endif %}
 ```
 
-Roads, with different color depending on its priority ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example3.yaml)):
+Improving on the example above, we add a `const` block. The values of this block are available throughout the code ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example3.yaml)):
+```yaml
+type: overpass
+query:
+  15: nwr[amenity=fountain]
+  # This query uses a regular expression to match either fountain or drinking_water:
+  17: nwr[amenity~"^(fountain|drinking_water)$"]
+feature:
+  description: |
+    {{ tagTrans('amenity', tags.amenity) }}
+  # Here, the correct icon for display is read from the 'const' structure
+  markerSign: |
+    {{ const[tags.amenity].icon }}
+  # We can use different markers depending on the type of item
+  markerSymbol: |
+    {{ markerPointer({ fillColor: const[tags.amenity].color }) }}
+  # This is for the marker in the listing in the sidebar
+  listMarkerSymbol: |
+    {{ markerCircle({ fillColor: const[tags.amenity].color }) }}
+const:
+  fountain:
+    icon: ⛲
+    color: #0000ff
+  drinking_water:
+    icon: 🚰
+    color: #007fff
+```
+
+Improving on the example above, we add a `info` block to show a map key. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example4.yaml)):
+```yaml
+type: overpass
+query:
+  15: nwr[amenity=fountain]
+  17: nwr[amenity~"^(fountain|drinking_water)$"]
+feature:
+  description: |
+    {{ tagTrans('amenity', tags.amenity) }}
+  # Here, the correct icon for display is read from the 'const' structure
+  markerSign: |
+    {{ const[tags.amenity].icon }}
+  markerSymbol: |
+    {{ markerPointer({ fillColor: const[tags.amenity].color }) }}
+  listMarkerSymbol: |
+    {{ markerCircle({ fillColor: const[tags.amenity].color }) }}
+info: |
+  <table>
+  {% for value, data in const if data.zoom >= map.zoom %}
+    <tr>
+      <td>{{ markerCircle({ fillColor: data.color }) }}<div class='sign'>{{ data.icon }}</div></td>
+      <td>{{ tagTrans('amenity', value) }}</td>
+    </tr>
+  {% endfor %}
+  </table>"
+const:
+  fountain:
+    icon: ⛲
+    color: #0000ff
+    zoom: 15
+  drinking_water:
+    icon: 🚰
+    color: #007fff
+    zoom: 17
+```
+
+Roads, with different color depending on its priority ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/roads1.yaml)):
 ```yaml
 type: overpass
 name: 
-  en: Roads # English name of the category
+  en: Roads 1 # English name of the category
 query:
   9: way[highway~"^(motorway|trunk)$"];
   11: way[highway~"^(motorway|trunk|primary)$"];
