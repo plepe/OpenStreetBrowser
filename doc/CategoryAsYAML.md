@@ -46,6 +46,9 @@ feature:
 Improving on the example above, we add a `const` block. The values of this block are available throughout the code ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example3.yaml)):
 ```yaml
 type: overpass
+# Adding a category name (in English: "Example 3")
+name:
+  en: Example 3
 query:
   15: nwr[amenity=fountain]
   # This query uses a regular expression to match either fountain or drinking_water:
@@ -65,10 +68,10 @@ feature:
 const:
   fountain:
     icon: ⛲
-    color: #0000ff
+    color: '#0000ff' # need to quote, because YAML would treat the color as comment
   drinking_water:
     icon: 🚰
-    color: #007fff
+    color: '#007fff'
 ```
 
 Improving on the example above, we add a `info` block to show a map key. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example4.yaml)):
@@ -88,23 +91,59 @@ feature:
   listMarkerSymbol: |
     {{ markerCircle({ fillColor: const[tags.amenity].color }) }}
 info: |
+  # We create a table which shows icon in the left column and description in the
+  # right. Due to the 'if' statement in the for loop the map key changes due to
+  # the current zoom level (`map.zoom`):
   <table>
-  {% for value, data in const if data.zoom >= map.zoom %}
+  {% for value, data in const if data.zoom <= map.zoom %}
     <tr>
       <td>{{ markerCircle({ fillColor: data.color }) }}<div class='sign'>{{ data.icon }}</div></td>
       <td>{{ tagTrans('amenity', value) }}</td>
     </tr>
   {% endfor %}
-  </table>"
+  </table>
 const:
   fountain:
     icon: ⛲
-    color: #0000ff
+    color: '#0000ff'
     zoom: 15
   drinking_water:
     icon: 🚰
-    color: #007fff
+    color: '#007fff'
     zoom: 17
+```
+
+Back to the restaurants, we will display the cuisine(s) of the restaurants and even add a filter. In OpenStreetMap, cuisine is tag which can take several values, separated by `;`, e.g. `pizza;burger`. Detailed documentation about filters can be found [here](./Filter.md). ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example5.yaml)):
+```yaml
+type: overpass
+name:
+  en: Example 5
+query:
+  15: nwr[amenity=restaurant]
+feature:
+  description: |
+    {{ tagTrans('amenity', tags.amenity) }}
+  # Details are written to the right side of the popup / the box in the list.
+  # tagTransList is a function, which splits the value by ';' and translates
+  # each value individually. They are joined as enumeration.
+  details: |
+    {{ tagTransList('cuisine', tags.cuisine) }}
+filter:
+  cuisine:
+    name: "{{ keyTrans('cuisine') }}"
+    type: select
+    key: cuisine
+    op: has # query semicolon-separated lists
+    values: |
+      {% for value in const.cuisine %}
+      <option value='{{ value }}'>{{ tagTrans('cuisine', value) }}</option>
+      {% endfor %}
+      <option value='-' query='nwr[!cuisine]' weight='1'>{{ trans('empty value') }}</option>
+      <option value='*' query='nwr[cuisine]' weight='1'>Any value</option>
+    # The option will be ordered by text content. Set 'weight' option to override order.
+    # Also, the last two options set an explicit OverpassQL query.
+const:
+  cuisine: ["pizza", "burger", "kebab"]
 ```
 
 Roads, with different color depending on its priority ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/roads1.yaml)):
@@ -121,7 +160,7 @@ feature:
   description: |
     {{ tagTrans('highway', tags.highway) }}
   markerSymbol: # empty, to hide the marker
-  listMarkerSymbol: line
+  listMarkerSymbol: line # show a line which is generated from the style
   style:
     width: 4
     color: |
@@ -129,4 +168,41 @@ feature:
       {% elseif tags.highway == 'trunk' %}#ff3f00
       {% elseif tags.highway == 'primary' %}#ff7f00
       {% else %}#ffff00{% endif %}
+```
+
+We rewrite the above example to use `const` for coloring. Also, we are adding a casing, to improve visibility of the roads on the map, and a label. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/roads1.yaml)):
+```yaml
+type: overpass
+name:
+  en: Roads 2 # English name of the category
+query:
+  9: way[highway~"^(motorway|trunk)$"];
+  11: way[highway~"^(motorway|trunk|primary)$"];
+  13: way[highway~"^(motorway|trunk|primary|secondary|tertiary)$"];
+  15: way[highway~"^(motorway|trunk|primary|secondary|tertiary|road|residential)$"];
+feature:
+  description: |
+    {{ tagTrans('highway', tags.highway) }}
+  markerSymbol: # empty, to hide the marker
+  listMarkerSymbol: line # show a line which is generated from the style
+  style:casing:
+    width: 8
+    color: '#000000'
+    pane: casing # use the predefined 'casing' pane, so that this line is below the 'style'
+  style:
+    width: 4
+    color: |
+      {{ (const[tags.highway]|default(const.default)).color }}
+    text: |
+      {{ tags.name }}
+    textOffset: -8
+const:
+  motorway:
+    color: '#ff0000'
+  trunk:
+    color: '#ff3f00'
+  primary:
+    color: '#ff7f00'
+  default:
+    color: '#ffff00'
 ```
