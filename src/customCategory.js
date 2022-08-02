@@ -38,6 +38,7 @@ class CustomCategory {
 
     input.onclick = () => {
       this.applyContent(this.textarea.value)
+      ajax('customCategory', { content: this.textarea.value }, (result) => {})
       return true
     }
   }
