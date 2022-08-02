@@ -8,6 +8,8 @@
     "category-info-tooltip": "Info & Map key",
     "closed": "closed",
     "default": "default",
+    "apply": "Apply",
+    "customCategory:create": "Create custom category",
     "edit": "edit",
     "editor:id": "iD (in-browser editor)",
     "editor:remote": "Remote Control (JOSM or Merkaator)",

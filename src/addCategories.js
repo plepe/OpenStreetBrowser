@@ -5,6 +5,7 @@ const tabs = require('modulekit-tabs')
 const weightSort = require('weight-sort')
 
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
+const customCategory = require('./customCategory')
 
 let tab
 
@@ -36,6 +37,8 @@ function addCategoriesShow (repo, options={}) {
     }
 
     var list = {}
+
+    customCategory(content)
 
     if (repo) {
       var backLink = document.createElement('a')
