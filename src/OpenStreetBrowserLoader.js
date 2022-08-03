@@ -105,6 +105,47 @@ class OpenStreetBrowserLoader {
   }
 
   /**
+   * @param [object] options Options.
+   * @param {boolean} [options.force=false] Whether repository should be reloaded or not.
+   * @param function callback Callback which will be called with (err, list)
+   */
+  getRepositoryList (options, callback) {
+    if (this.list) {
+      return callback(null, this.list)
+    }
+
+    if (this.repositoryListCallbacks) {
+      return this.repositoryListCallbacks.push(callback)
+    }
+
+    this.repositoryListCallbacks = [callback]
+
+    var param = []
+    param.push('lang=' + encodeURIComponent(ui_lang))
+    param.push(config.categoriesRev)
+    param = param.length ? '?' + param.join('&') : ''
+
+    fetch('repo.php' + param)
+      .then(res => res.json())
+      .then(data => {
+        this.list = data
+
+        global.setTimeout(() => {
+          const cbs = this.repositoryListCallbacks
+          this.repositoryListCallbacks = null
+          cbs.forEach(cb => cb(null, this.list))
+        }, 0)
+      })
+      .catch(err => {
+        global.setTimeout(() => {
+          const cbs = this.repositoryListCallbacks
+          this.repositoryListCallbacks = null
+          cbs.forEach(cb => cb(err))
+        }, 0)
+      })
+  }
+
+  /**
    * @param string id ID of the template
    * @parapm [object] options Options.
    * @waram {boolean} [options.force=false] Whether repository should be reload or not.
