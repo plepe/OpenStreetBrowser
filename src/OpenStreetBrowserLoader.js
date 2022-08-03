@@ -276,4 +276,8 @@ class OpenStreetBrowserLoader {
   }
 }
 
+OpenStreetBrowserLoader.prototype.registerRepository = function (id, repository) {
+  this.repositories[id] = repository
+}
+
 module.exports = new OpenStreetBrowserLoader()
