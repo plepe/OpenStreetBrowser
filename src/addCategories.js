@@ -26,7 +26,7 @@ function addCategoriesShow (repo, options={}) {
 
   OpenStreetBrowserLoader.getRepository(repo, options, function (err, repository) {
     if (err) {
-      alert(err)
+      return global.alert(err)
     }
 
     const repoData = repository.data
