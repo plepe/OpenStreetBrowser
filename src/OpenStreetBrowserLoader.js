@@ -45,7 +45,8 @@ class OpenStreetBrowserLoader {
     opt.categoryId = ids.entityId
     opt.repositoryId = ids.repositoryId
 
-    this.getRepo(ids.repositoryId, opt, function (err, repoData) {
+    this.getRepository(ids.repositoryId, opt, (err, repository) => {
+      const repoData = repository.data
       // maybe loaded in the meantime?
       if (ids.fullId in this.categories) {
         return callback(null, this.categories[ids.fullId])

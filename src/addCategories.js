@@ -24,10 +24,12 @@ function addCategoriesShow (repo, options={}) {
 
   content.innerHTML = '<h3>' + lang('more_categories') + '</h3>' + '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
 
-  OpenStreetBrowserLoader.getRepo(repo, options, function (err, repoData) {
+  OpenStreetBrowserLoader.getRepository(repo, options, function (err, repository) {
     if (err) {
       alert(err)
     }
+
+    const repoData = repository.data
 
     content.innerHTML = '<h3>' + lang('more_categories') + '</h3>'
 
