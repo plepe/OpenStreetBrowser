@@ -46,7 +46,6 @@ class OpenStreetBrowserLoader {
     opt.repositoryId = ids.repositoryId
 
     this.getRepository(ids.repositoryId, opt, (err, repository) => {
-      const repoData = repository.data
       // maybe loaded in the meantime?
       if (ids.fullId in this.categories) {
         return callback(null, this.categories[ids.fullId])
@@ -56,24 +55,29 @@ class OpenStreetBrowserLoader {
         return callback(err, null)
       }
 
-      if (!(ids.entityId in repoData.categories)) {
-        return callback(new Error('category "' + ids.entityId + '" not defined'), null)
-      }
-
-      this.getCategoryFromData(ids.id, opt, repoData.categories[ids.entityId], function (err, category) {
-        if (category) {
-          category.setMap(this.map)
+      repository.getCategory(ids.entityId, opt, (err, data) => {
+        // maybe loaded in the meantime?
+        if (ids.fullId in this.categories) {
+          return callback(null, this.categories[ids.fullId])
         }
 
-        callback(err, category)
-      }.bind(this))
-    }.bind(this))
+        if (err) { return callback(err) }
+
+        this.getCategoryFromData(ids.id, opt, data, (err, category) =>{
+          if (category) {
+            category.setMap(this.map)
+          }
+
+          callback(err, category)
+        })
+      })
+    })
   }
 
   /**
    * @param string repo ID of the repository
-   * @parapm [object] options Options.
-   * @waram {boolean} [options.force=false] Whether repository should be reload or not.
+   * @param [object] options Options.
+   * @param {boolean} [options.force=false] Whether repository should be reloaded or not.
    * @param function callback Callback which will be called with (err, repoData)
    */
   getRepo (repo, options, callback) {
@@ -129,6 +133,12 @@ class OpenStreetBrowserLoader {
     req.send()
   }
 
+  /**
+   * @param string repo ID of the repository
+   * @param [object] options Options.
+   * @param {boolean} [options.force=false] Whether repository should be reloaded or not.
+   * @param function callback Callback which will be called with (err, repository)
+   */
   getRepository (id, options, callback) {
     if (id in this.repositories) {
       return callback(null, this.repositories[id])
@@ -169,7 +179,7 @@ class OpenStreetBrowserLoader {
     opt.templateId = ids.entityId
     opt.repositoryId = ids.repositoryId
 
-    this.getRepo(ids.repositoryId, opt, function (err, repoData) {
+    this.getRepository(ids.repositoryId, opt, (err, repository) => {
       // maybe loaded in the meantime?
       if (ids.fullId in this.templates) {
         return callback(null, this.templates[ids.fullId])
@@ -179,14 +189,19 @@ class OpenStreetBrowserLoader {
         return callback(err, null)
       }
 
-      if (!repoData.templates || !(ids.entityId in repoData.templates)) {
-        return callback(new Error('template not defined'), null)
-      }
+      repository.getTemplate(ids.entityId, opt, (err, data) => {
+        // maybe loaded in the meantime?
+        if (ids.fullId in this.templates) {
+          return callback(null, this.templates[ids.fullId])
+        }
 
-      this.templates[ids.fullId] = OverpassLayer.twig.twig({ data: repoData.templates[ids.entityId], autoescape: true })
+        if (err) { return callback(err) }
 
-      callback(null, this.templates[ids.fullId])
-    }.bind(this))
+        this.templates[ids.fullId] = OverpassLayer.twig.twig({ data, autoescape: true })
+
+        callback(null, this.templates[ids.fullId])
+      })
+    })
   }
 
   getCategoryFromData (id, options, data, callback) {
