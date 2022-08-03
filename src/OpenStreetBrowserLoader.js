@@ -6,7 +6,6 @@ class OpenStreetBrowserLoader {
   constructor () {
     this.types = {}
     this.categories = {}
-    this.repoCache = {}
     this.repositories = {}
     this.templates = {}
     this._loadClash = {} // if a category is being loaded multiple times, collect callbacks
@@ -78,79 +77,31 @@ class OpenStreetBrowserLoader {
    * @param string repo ID of the repository
    * @param [object] options Options.
    * @param {boolean} [options.force=false] Whether repository should be reloaded or not.
-   * @param function callback Callback which will be called with (err, repoData)
-   */
-  getRepo (repo, options, callback) {
-    if (options.force) {
-      delete this.repoCache[repo]
-    }
-
-    if (repo in this.repoCache) {
-      return callback.apply(this, this.repoCache[repo])
-    }
-
-    if (repo in this._loadClash) {
-      this._loadClash[repo].push(callback)
-      return
-    }
-
-    this._loadClash[repo] = [ callback ]
-
-    function reqListener (req) {
-      if (req.status !== 200) {
-        console.log('http error when loading repository', req)
-        this.repoCache[repo] = [ req.statusText, null ]
-      } else {
-        try {
-          let repoData = JSON.parse(req.responseText)
-          this.repositories[repo] = new Repository(repo, repoData)
-          this.repoCache[repo] = [ null,  repoData ]
-        } catch (err) {
-          console.log('couldn\'t parse repository', req.responseText)
-          this.repoCache[repo] = [ 'couldn\t parse repository', null ]
-        }
-      }
-
-      var todo = this._loadClash[repo]
-      delete this._loadClash[repo]
-
-      todo.forEach(function (callback) {
-        callback.apply(this, this.repoCache[repo])
-      }.bind(this))
-    }
-
-    var param = []
-    if (repo) {
-      param.push('repo=' + encodeURIComponent(repo))
-    }
-    param.push('lang=' + encodeURIComponent(ui_lang))
-    param.push(config.categoriesRev)
-    param = param.length ? '?' + param.join('&') : ''
-
-    var req = new XMLHttpRequest()
-    req.addEventListener('load', reqListener.bind(this, req))
-    req.open('GET', 'repo.php' + param)
-    req.send()
-  }
-
-  /**
-   * @param string repo ID of the repository
-   * @param [object] options Options.
-   * @param {boolean} [options.force=false] Whether repository should be reloaded or not.
    * @param function callback Callback which will be called with (err, repository)
    */
   getRepository (id, options, callback) {
     if (id in this.repositories) {
-      return callback(null, this.repositories[id])
-    }
+      const repository = this.repositories[id]
 
-    this.getRepo(id, options, (err, repoData) => {
-      if (err) {
-        return callback(err)
+      if (repository.loadCallbacks) {
+        return repository.loadCallbacks.push((err) => callback(err, repository))
       }
 
-      callback(null, this.repositories[id])
-    })
+      if (options.force) {
+        repository.clearCache()
+        return repository.load((err) => {
+          if (err) { return callback(err) }
+
+          options.force = false
+          callback(repository.err, repository)
+        })
+      }
+
+      return callback(repository.err, repository)
+    }
+
+    this.repositories[id] = new Repository(id)
+    this.repositories[id].load((err) => callback(err, this.repositories[id]))
   }
 
   /**
