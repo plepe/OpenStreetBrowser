@@ -5,6 +5,28 @@ const md5 = require('md5')
 
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
+class CustomCategoryRepository {
+  constructor () {
+  }
+
+  load (callback) {
+    callback(null)
+  }
+
+  clearCache () {
+  }
+
+  getCategory (id, options, callback) {
+    ajax('customCategory', { id }, (result) => {
+      callback(null, yaml.load(result))
+    })
+  }
+
+  getTemplate (id, options, callback) {
+    callback(null, '')
+  }
+}
+
 class CustomCategory {
   constructor () {
   }
@@ -46,7 +68,7 @@ class CustomCategory {
   applyContent (content) {
     this.content = content
 
-    const id = 'custom:' + md5(content)
+    const id = 'custom/' + md5(content)
     const data = yaml.load(content)
 
     if (this.category) {
@@ -102,3 +124,7 @@ module.exports = function customCategory (content) {
   div.appendChild(a)
   content.appendChild(div)
 }
+
+hooks.register('init', () => {
+  OpenStreetBrowserLoader.registerRepository('custom', new CustomCategoryRepository())
+})
