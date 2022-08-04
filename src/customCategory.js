@@ -5,6 +5,8 @@ const md5 = require('md5')
 
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
+const cache = {}
+
 class CustomCategoryRepository {
   constructor () {
   }
@@ -17,6 +19,10 @@ class CustomCategoryRepository {
   }
 
   getCategory (id, options, callback) {
+    if (id in cache) {
+      return callback(null, yaml.load(cache[id]))
+    }
+
     ajax('customCategory', { id }, (result) => {
       callback(null, yaml.load(result))
     })
@@ -75,15 +81,16 @@ class CustomCategory {
   applyContent (content) {
     this.content = content
 
-    const id = 'custom/' + md5(content)
+    const id = md5(content)
     const data = yaml.load(content)
+    cache[id] = content
 
     if (this.category) {
       this.category.remove()
       this.category = null
     }
 
-    OpenStreetBrowserLoader.getCategoryFromData(id, {}, data, (err, category) => {
+    OpenStreetBrowserLoader.getCategoryFromData('custom/' + id, {}, data, (err, category) => {
       if (err) {
         return global.alert(err)
       }
