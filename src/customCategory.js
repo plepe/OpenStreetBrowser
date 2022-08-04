@@ -59,6 +59,13 @@ class CustomCategory {
     this.modal.content.element.appendChild(input)
 
     input.onclick = () => {
+      try {
+        yaml.load(this.textarea.value)
+      }
+      catch (e) {
+        return global.alert(e)
+      }
+
       this.applyContent(this.textarea.value)
       ajax('customCategory', { content: this.textarea.value }, (result) => {})
       return true
