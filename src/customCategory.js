@@ -82,7 +82,6 @@ class CustomCategory {
     this.content = content
 
     const id = md5(content)
-    const data = yaml.load(content)
     cache[id] = content
 
     if (this.category) {
@@ -90,14 +89,14 @@ class CustomCategory {
       this.category = null
     }
 
-    OpenStreetBrowserLoader.getCategoryFromData('custom/' + id, {}, data, (err, category) => {
+    OpenStreetBrowserLoader.getCategory('custom/' + id, {}, (err, category) => {
       if (err) {
         return global.alert(err)
       }
 
       this.category = category
       this.category.setParentDom(document.getElementById('contentListAddCategories'))
-      this.category.setMap(global.map)
+
 
       if (this.category.tabEdit) {
         this.category.tools.remove(this.category.tabEdit)
