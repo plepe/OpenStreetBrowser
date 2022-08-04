@@ -6,6 +6,7 @@ const md5 = require('md5')
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
 const cache = {}
+const customCategories = []
 
 class CustomCategoryRepository {
   constructor () {
@@ -35,6 +36,15 @@ class CustomCategoryRepository {
 
 class CustomCategory {
   constructor () {
+    customCategories.push(this)
+  }
+
+  load (id, callback) {
+    this.id = id
+    ajax('customCategory', { id }, (result) => {
+      this.content = result
+      callback(null, result)
+    })
   }
 
   edit () {
@@ -82,6 +92,7 @@ class CustomCategory {
     this.content = content
 
     const id = md5(content)
+    this.id = id
     cache[id] = content
 
     if (this.category) {
@@ -96,21 +107,6 @@ class CustomCategory {
 
       this.category = category
       this.category.setParentDom(document.getElementById('contentListAddCategories'))
-
-
-      if (this.category.tabEdit) {
-        this.category.tools.remove(this.category.tabEdit)
-      }
-
-      this.category.tabEdit = new tabs.Tab({
-        id: 'edit'
-      })
-      this.category.tools.add(this.category.tabEdit)
-      this.category.tabEdit.header.innerHTML = '<i class="fa fa-pen"></i>'
-      this.category.tabEdit.on('select', () => {
-        this.category.tabEdit.unselect()
-        this.edit()
-      })
 
       this.category.open()
     })
@@ -127,6 +123,23 @@ function createCustomCategory () {
   return false
 }
 
+function editCustomCategory (id) {
+  let done = customCategories.filter(customCategory => {
+    if (customCategory.id === id) {
+      customCategory.edit()
+      return true
+    }
+  })
+
+  if (!done.length) {
+    const customCategory = new CustomCategory()
+    customCategory.load(id, (err) => {
+      if (err) { return global.alert(err) }
+      customCategory.edit()
+    })
+  }
+}
+
 module.exports = function customCategory (content) {
   let div = document.createElement('div')
 
@@ -140,4 +153,25 @@ module.exports = function customCategory (content) {
 
 hooks.register('init', () => {
   OpenStreetBrowserLoader.registerRepository('custom', new CustomCategoryRepository())
+})
+register_hook('category-overpass-init', (category) => {
+  const m = category.id.match(/^custom\/(.*)$/)
+  if (m) {
+    const id = m[1]
+
+    if (category.tabEdit) {
+      category.tools.remove(this.category.tabEdit)
+    }
+
+    category.tabEdit = new tabs.Tab({
+      id: 'edit',
+      weight: 9
+    })
+    category.tools.add(category.tabEdit)
+    category.tabEdit.header.innerHTML = '<i class="fa fa-pen"></i>'
+    category.tabEdit.on('select', () => {
+      category.tabEdit.unselect()
+      editCustomCategory(id)
+    })
+  }
 })
