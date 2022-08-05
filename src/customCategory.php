@@ -14,10 +14,7 @@ function ajax_customCategory ($param) {
       $result = $row['content'];
       $stmt->closeCursor();
 
-      $stmt = $db->prepare("update customCategory set lastAccess=:now where id=:id");
-      $stmt->bindValue(':id', $param['id']);
-      $stmt->bindValue(':now', (new DateTime())->format('Y-m-d H:i:s'), PDO::PARAM_STR);
-      $stmt->execute();
+      customCategoryUpdateAccess($param['id']);
 
       return $result;
     }
@@ -28,12 +25,32 @@ function ajax_customCategory ($param) {
   if ($param['content']) {
     $id = md5($param['content']);
 
-    //$stmt = $db->prepare("insert into customCategory (id, content) values (:id, :content) on duplicate key update lastAccess=:now");
-    $stmt = $db->prepare("insert into customCategory (id, content) values (:id, :content) on conflict(id) do update set lastAccess=:now");
+    $stmt = $db->prepare("insert or ignore into customCategory (id, content) values (:id, :content)");
     $stmt->bindValue(':id', $id, PDO::PARAM_STR);
     $stmt->bindValue(':content', $param['content'], PDO::PARAM_STR);
-    $stmt->bindValue(':now', (new DateTime())->format('Y-m-d H:i:s'), PDO::PARAM_STR);
     $result = $stmt->execute();
+
+    customCategoryUpdateAccess($id);
+
     return $result;
   }
+}
+
+function customCategoryUpdateAccess ($id) {
+  global $db;
+
+  if (!isset($_SESSION['customCategoryAccess'])) {
+    $_SESSION['customCategoryAccess'] = [];
+  }
+
+  // update access per session only once a day
+  if (array_key_exists($id, $_SESSION['customCategoryAccess']) && $_SESSION['customCategoryAccess'][$id] > time() - 86400) {
+    return;
+  }
+
+  $_SESSION['customCategoryAccess'][$id] = time();
+
+  $stmt = $db->prepare("insert into customCategoryAccess (id) values (:id)");
+  $stmt->bindValue(':id', $id);
+  $stmt->execute();
 }
