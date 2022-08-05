@@ -613,18 +613,55 @@ ul.overpass-layer-list > li > a > .content > .details {
   background-color: #ffdfdf;
 }
 
-.WindowModal-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-content: stretch;
-}
-.WindowModal-content textarea {
+.Window > .content textarea {
   height: 100%;
   width: 100%;
   resize: none;
   box-sizing: border-box;
 }
-.WindowModal-content .controls {
+.Window > .content .controls {
   flex-grow: 0;
+}
+
+/* Window */
+.Window {
+  position: absolute;
+  z-index: 99999;
+  background-color: #f1f1f1;
+  border: 1px solid #000000;
+  resize: both;
+  overflow: hidden;
+  width: min(60em, 80%);
+  height: min(30em, 60%);
+  left: 10%;
+  top: 10%;
+
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+}
+.Window > .header {
+  padding: 0.25em;
+  font-weight: bold;
+  cursor: move;
+  z-index: 100000;
+  background-color: #dfdfdf;
+  color: #000000;
+  flex-grow: 0;
+  position: relative;
+}
+.Window > .header > .closeBtn {
+}
+.Window > .header > .closeBtn::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f00d";
+  position: absolute;
+  right: 0.25em;
+  top: 0.25em;
+}
+.Window > .content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
 }

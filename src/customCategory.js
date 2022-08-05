@@ -1,8 +1,8 @@
-const ModalWindow = require('window-modal')
 const tabs = require('modulekit-tabs')
 const yaml = require('js-yaml')
 const md5 = require('md5')
 
+const Window = require('./Window')
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
 const cache = {}
@@ -48,30 +48,28 @@ class CustomCategory {
   }
 
   edit () {
-    if (this.modal) {
-      this.modal.focused = true
+    if (this.window) {
+      this.window.focused = true
       return
     }
 
-    this.modal = new ModalWindow({
-      title: 'Custom Category',
-      hideMinimize: true,
-      zIndex: '99999'
+    this.window = new Window({
+      title: 'Custom Category'
     })
 
-    this.modal.addEventListener('close', () => {
-      this.modal = null
+    this.window.on('close', () => {
+      this.window = null
     })
 
     this.textarea = document.createElement('textarea')
-    this.modal.content.element.appendChild(this.textarea)
+    this.window.content.appendChild(this.textarea)
     if (this.content !== undefined) {
       this.textarea.value = this.content
     }
 
     const controls = document.createElement('div')
     controls.className = 'controls'
-    this.modal.content.element.appendChild(controls)
+    this.window.content.appendChild(controls)
 
     const input = document.createElement('input')
     input.type = 'submit'
@@ -90,6 +88,8 @@ class CustomCategory {
       ajax('customCategory', { content: this.textarea.value }, (result) => {})
       return true
     }
+
+    this.window.show()
   }
 
   applyContent (content) {
