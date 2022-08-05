@@ -10,6 +10,7 @@
     "default": "default",
     "apply": "Apply",
     "customCategory:create": "Create custom category",
+    "copied-clipboard": "Copied to clipboard",
     "edit": "edit",
     "editor:id": "iD (in-browser editor)",
     "editor:remote": "Remote Control (JOSM or Merkaator)",

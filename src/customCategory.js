@@ -178,5 +178,26 @@ register_hook('category-overpass-init', (category) => {
       category.tabEdit.unselect()
       editCustomCategory(id, category)
     })
+
+    if (!category.tabShare) {
+      category.tabShare = new tabs.Tab({
+        id: 'share',
+        weight: 10
+      })
+      category.tools.add(category.tabShare)
+      category.tabShare.header.innerHTML = '<i class="fa fa-share-alt"></i>'
+      category.tabShare.header.className = 'share-button'
+      category.tabShare.on('select', () => {
+        category.tabShare.unselect()
+        const url = location.origin + location.pathname + '#categories=custom/' + id
+        navigator.clipboard.writeText(url)
+
+        const notify = document.createElement('div')
+        notify.className = 'notify'
+        notify.innerHTML = lang('copied-clipboard')
+        category.tabShare.header.appendChild(notify)
+        global.setTimeout(() => category.tabShare.header.removeChild(notify), 2000)
+      })
+    }
   }
 })

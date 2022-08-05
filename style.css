@@ -665,3 +665,17 @@ ul.overpass-layer-list > li > a > .content > .details {
   flex-direction: column;
   align-content: stretch;
 }
+
+/* Copy to clipboard */
+.share-button {
+  position: relative;
+}
+.share-button > .notify {
+  position: absolute;
+  background: white;
+  border: 1px solid black;
+  border-radius: 0.25em;
+  width: 8em;
+  text-align: center;
+  z-index: 1;
+}
