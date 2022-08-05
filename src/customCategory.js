@@ -69,10 +69,14 @@ class CustomCategory {
       this.textarea.value = this.content
     }
 
+    const controls = document.createElement('div')
+    controls.className = 'controls'
+    this.modal.content.element.appendChild(controls)
+
     const input = document.createElement('input')
     input.type = 'submit'
     input.value = lang('apply')
-    this.modal.content.element.appendChild(input)
+    controls.appendChild(input)
 
     input.onclick = () => {
       try {
