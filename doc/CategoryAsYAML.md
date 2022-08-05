@@ -1,9 +1,9 @@
 Categories can be created as YAML files. This is much simpler as JSON files, because you don't have to add all these quotes, you can use multi-line strings and allows adding comments.
 
-A simple example ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example1.yaml)). It queries nodes, ways and relations with amenity=restaurant from OpenStreetMap (via Overpass API), starting from zoom level 15. `nwr` is short for `(node[amenity=restaurant];way[amenity=restaurant];relation[amenity=restaurant];)`:
+A simple example ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example1.yaml)). It queries nodes, ways and relations with amenity=restaurant from OpenStreetMap (via Overpass API), starting from zoom level 15. `nwr` is short for `(node[amenity=restaurant];way[amenity=restaurant];relation[amenity=restaurant];)`. Please note, that only a subset of OverpassQL is available (see [overpass-frontend](https://github.com/plepe/overpass-frontend) for details).
 
 ```yaml
-# This is necessary, it tells OSB that this uses OverpassQL for queries.
+# This is necessary, it tells OSB that this category is of type 'overpass'. An alternative would be 'index' (for directories).
 type: overpass
 # From zoom level 15 on, load all node, ways and relations with amenity=restaurant.
 query:
@@ -206,3 +206,5 @@ const:
   default:
     color: '#ffff00'
 ```
+
+All scripts of a feature are processed in the order of their appearance. As they all use the same scope, Twig variables (set via `{% set varname = 'value' %}`) are available in all sub-sequent scripts.
