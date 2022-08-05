@@ -127,7 +127,7 @@ function createCustomCategory () {
   return false
 }
 
-function editCustomCategory (id) {
+function editCustomCategory (id, category) {
   let done = customCategories.filter(customCategory => {
     if (customCategory.id === id) {
       customCategory.edit()
@@ -139,6 +139,7 @@ function editCustomCategory (id) {
     const customCategory = new CustomCategory()
     customCategory.load(id, (err) => {
       if (err) { return global.alert(err) }
+      customCategory.category = category
       customCategory.edit()
     })
   }
@@ -175,7 +176,7 @@ register_hook('category-overpass-init', (category) => {
     category.tabEdit.header.innerHTML = '<i class="fa fa-pen"></i>'
     category.tabEdit.on('select', () => {
       category.tabEdit.unselect()
-      editCustomCategory(id)
+      editCustomCategory(id, category)
     })
   }
 })
