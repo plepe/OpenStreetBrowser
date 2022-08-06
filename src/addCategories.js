@@ -166,7 +166,7 @@ function addCategoriesShow (repo, options={}) {
       var editLink = null
       if (repo && categoryUrl) {
         editLink = document.createElement('a')
-        editLink.href = categoryUrl.render({ repositoryId: repoId, categoryId: id, branchId: branchId })
+        editLink.href = categoryUrl.render({ repositoryId: repoId, categoryId: id, branchId: branchId, categoryFormat: data.format })
       }
       if (!repo && repositoryUrl) {
         editLink = document.createElement('a')

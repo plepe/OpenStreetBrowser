@@ -3,6 +3,7 @@
 // repositoryUrl and categoryUrl are twig templates, which take the following input values:
 // {{ repositoryId }}    id of the repository
 // {{ categoryId }}      id of the category (not for repositoryUrl)
+// {{ categoryFormat }}  format of the file (json or yaml)
 // {{ branchId }}        id of the branch (not for repositoryUrl)
 $repositories = array(
   'default' => array(
@@ -11,7 +12,7 @@ $repositories = array(
     // public URL of repository
     'repositoryUrl' => 'https://github.com/example/categories',
     // public URL of source of a category in repository
-    'categoryUrl' => 'https://github.com/example/categories/tree/{{ branchId }}/{{ categoryId }}.json',
+    'categoryUrl' => 'https://github.com/example/categories/tree/{{ branchId }}/{{ categoryId }}.{{ categoryFormat }}',
   ),
 );
 

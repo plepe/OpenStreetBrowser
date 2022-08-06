@@ -31,7 +31,7 @@ function getRepositories () {
 
             if (array_key_exists('url', $repositoriesGitea)) {
 	      $r['repositoryUrl'] = "{$repositoriesGitea['url']}/{{ repositoryId }}";
-	      $r['categoryUrl'] = "{$repositoriesGitea['url']}/{{ repositoryId }}/src/branch/{{ branchId }}/{{ categoryId }}.json";
+	      $r['categoryUrl'] = "{$repositoriesGitea['url']}/{{ repositoryId }}/src/branch/{{ branchId }}/{{ categoryId }}.{{ categoryFormat }}";
             }
 
             $result["{$f1}/{$f2id}"] = $r;
