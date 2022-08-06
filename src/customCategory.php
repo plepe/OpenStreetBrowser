@@ -6,6 +6,14 @@ function ajax_customCategory ($param) {
     return null;
   }
 
+  if (isset($param['list'])) {
+    $stmt = $db->prepare("select * from customCategory left join (select id, count(id) accessCount, max(ts) lastAccess from customCategoryAccess group by id) t on customCategory.id=t.id order by accessCount desc, created desc limit 25");
+    $stmt->execute();
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $data;
+  }
+
   if ($param['id']) {
     $stmt = $db->prepare("select content from customCategory where id=:id");
     $stmt->bindValue(':id', $param['id'], PDO::PARAM_STR);
