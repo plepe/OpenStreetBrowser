@@ -166,8 +166,8 @@ hooks.register('browser-more-categories', (browser, parameters) => {
     block.appendChild(header)
 
     let ul = document.createElement('ul')
-    let li = document.createElement('li')
 
+    let li = document.createElement('li')
     let a = document.createElement('a')
     a.innerHTML = lang('customCategory:create')
     a.href = '#'
@@ -178,9 +178,49 @@ hooks.register('browser-more-categories', (browser, parameters) => {
     li.appendChild(a)
     ul.appendChild(li)
 
+    li = document.createElement('li')
+    a = document.createElement('a')
+    a.innerHTML = lang('customCategory:list')
+    a.href = '#more-categories?custom=list'
+    li.appendChild(a)
+    ul.appendChild(li)
+
     block.appendChild(ul)
+    browser.catchLinks()
+  }
+  else if (parameters.custom === 'list') {
+    customCategoriesList(browser, parameters)
   }
 })
+
+function customCategoriesList (browser, options) {
+  browser.dom.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
+
+  ajax('customCategory', { 'list': true }, (result) => {
+    browser.dom.innerHTML = ''
+
+    const ul = document.createElement('ul')
+    browser.dom.appendChild(ul)
+
+    result.forEach(cat => {
+      const li = document.createElement('li')
+
+      const a = document.createElement('a')
+      a.href = '#categories=custom/' + cat.id
+      a.appendChild(document.createTextNode(cat.id))
+      li.appendChild(a)
+
+      const edit = document.createElement('a')
+      edit.onclick = () => editCustomCategory(cat.id)
+      edit.innerHTML = ' <i class="fa fa-pen"></i>'
+      li.appendChild(edit)
+
+      ul.appendChild(li)
+    })
+
+    browser.catchLinks()
+  })
+}
 
 hooks.register('init', () => {
   OpenStreetBrowserLoader.registerRepository('custom', new CustomCategoryRepository())
