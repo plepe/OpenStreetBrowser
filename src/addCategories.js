@@ -5,7 +5,6 @@ const tabs = require('modulekit-tabs')
 const weightSort = require('weight-sort')
 
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
-const customCategory = require('./customCategory')
 
 let tab
 
@@ -27,8 +26,6 @@ function addCategoriesList (options = {}) {
     }
 
     var list = {}
-
-    customCategory(content)
 
     if (typeof repositoriesGitea === 'object' && repositoriesGitea.url) {
       let a = document.createElement('a')
@@ -120,8 +117,6 @@ function addCategoriesShow (repo, options={}) {
     }
 
     var list = {}
-
-    customCategory(content)
 
     var backLink = document.createElement('a')
     backLink.className = 'back'

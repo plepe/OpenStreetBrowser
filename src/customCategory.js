@@ -153,16 +153,23 @@ function editCustomCategory (id, category) {
   }
 }
 
-module.exports = function customCategory (content) {
-  let div = document.createElement('div')
+hooks.register('more-categories-index', (content) => {
+  let header = document.createElement('h4')
+  header.innerHTML = lang('customCategory:header')
+  content.appendChild(header)
+
+  let ul = document.createElement('ul')
+  let li = document.createElement('li')
 
   let a = document.createElement('a')
   a.innerHTML = lang('customCategory:create')
   a.href = '#'
   a.onclick = createCustomCategory
-  div.appendChild(a)
-  content.appendChild(div)
-}
+  li.appendChild(a)
+  ul.appendChild(li)
+
+  content.appendChild(ul)
+})
 
 hooks.register('init', () => {
   OpenStreetBrowserLoader.registerRepository('custom', new CustomCategoryRepository())

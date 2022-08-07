@@ -10,6 +10,7 @@
     "default": "default",
     "apply": "Apply",
     "tip-tutorial": "Check out the [Tutorial]",
+    "customCategory:header": "Custom categories",
     "customCategory:create": "Create custom category",
     "copied-clipboard": "Copied to clipboard",
     "edit": "edit",
