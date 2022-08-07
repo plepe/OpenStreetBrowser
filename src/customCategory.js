@@ -153,22 +153,29 @@ function editCustomCategory (id, category) {
   }
 }
 
-hooks.register('more-categories-index', (content) => {
-  let header = document.createElement('h4')
-  header.innerHTML = lang('customCategory:header')
-  content.appendChild(header)
+hooks.register('browser-more-categories', (browser, parameters) => {
+  const content = browser.dom
 
-  let ul = document.createElement('ul')
-  let li = document.createElement('li')
+  if (!Object.keys(parameters).length) {
+    let header = document.createElement('h4')
+    header.innerHTML = lang('customCategory:header')
+    content.appendChild(header)
 
-  let a = document.createElement('a')
-  a.innerHTML = lang('customCategory:create')
-  a.href = '#'
-  a.onclick = createCustomCategory
-  li.appendChild(a)
-  ul.appendChild(li)
+    let ul = document.createElement('ul')
+    let li = document.createElement('li')
 
-  content.appendChild(ul)
+    let a = document.createElement('a')
+    a.innerHTML = lang('customCategory:create')
+    a.href = '#'
+    a.onclick = () => {
+      createCustomCategory()
+      browser.close()
+    }
+    li.appendChild(a)
+    ul.appendChild(li)
+
+    content.appendChild(ul)
+  }
 })
 
 hooks.register('init', () => {

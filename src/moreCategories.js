@@ -1,5 +1,7 @@
 const tabs = require('modulekit-tabs')
 
+const Browser = require('./Browser')
+
 let tab
 
 function moreCategoriesIndex () {
@@ -10,7 +12,10 @@ function moreCategoriesIndex () {
   const dom = document.createElement('div')
   content.appendChild(dom)
 
-  hooks.call('more-categories-index', dom)
+  const browser = new Browser('more-categories', dom)
+  browser.buildPage({})
+
+  browser.on('close', () => tab.unselect())
 }
 
 register_hook('init', function (callback) {
@@ -22,13 +27,9 @@ register_hook('init', function (callback) {
   tab.header.innerHTML = '<i class="fa fa-plus" aria-hidden="true"></i>'
   tab.header.title = lang('more_categories')
 
-  let initialized = false
-
   tab.on('select', () => {
-    if (!initialized) {
-      moreCategoriesIndex()
-      initialized = true
-    }
+    tab.content.innerHTML = ''
+    moreCategoriesIndex()
   })
 })
 
