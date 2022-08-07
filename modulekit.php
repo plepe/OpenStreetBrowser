@@ -23,6 +23,7 @@ $include = array(
     'src/RepositoryDir.php',
     'src/RepositoryGit.php',
     'src/repositories.php',
+    'src/repositoriesGitea.php',
     'src/customCategory.php',
   ),
   'css' => array(
