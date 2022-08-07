@@ -665,6 +665,12 @@ ul.overpass-layer-list > li > a > .content > .details {
   flex-direction: column;
   align-content: stretch;
 }
+.tip-tutorial {
+  margin-left: 1em;
+}
+.tip-tutorial a {
+  text-decoration: underline;
+}
 
 /* Copy to clipboard */
 .share-button {

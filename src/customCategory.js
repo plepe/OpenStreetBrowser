@@ -76,6 +76,14 @@ class CustomCategory {
     input.value = lang('apply')
     controls.appendChild(input)
 
+    const tutorial = document.createElement('span')
+    tutorial.className = 'tip-tutorial'
+    let text = lang('tip-tutorial')
+    text = text.replace('[', '<a target="_blank" href="https://github.com/plepe/OpenStreetBrowser/blob/master/doc/CategoryAsYAML.md">')
+    text = text.replace(']', '</a>')
+    tutorial.innerHTML = text
+    controls.appendChild(tutorial)
+
     input.onclick = () => {
       try {
         yaml.load(this.textarea.value)
