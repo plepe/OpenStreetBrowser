@@ -157,9 +157,13 @@ hooks.register('browser-more-categories', (browser, parameters) => {
   const content = browser.dom
 
   if (!Object.keys(parameters).length) {
+    let block = document.createElement('div')
+    block.setAttribute('weight', 0)
+    content.appendChild(block)
+
     let header = document.createElement('h4')
     header.innerHTML = lang('customCategory:header')
-    content.appendChild(header)
+    block.appendChild(header)
 
     let ul = document.createElement('ul')
     let li = document.createElement('li')
@@ -174,7 +178,7 @@ hooks.register('browser-more-categories', (browser, parameters) => {
     li.appendChild(a)
     ul.appendChild(li)
 
-    content.appendChild(ul)
+    block.appendChild(ul)
   }
 })
 

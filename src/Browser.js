@@ -1,6 +1,8 @@
 const EventEmitter = require('events')
 const queryString = require('query-string')
 
+const domSort = require('./domSort')
+
 module.exports = class Browser extends EventEmitter {
   constructor (id, dom) {
     super()
@@ -16,6 +18,8 @@ module.exports = class Browser extends EventEmitter {
     hooks.call('browser-' + this.id, this, parameters)
     this.emit('buildPage', parameters)
     this.parameters = parameters
+
+    domSort(this.dom)
   }
 
   clear () {

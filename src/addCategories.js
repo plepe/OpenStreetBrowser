@@ -236,12 +236,16 @@ hooks.register('browser-more-categories', (browser, parameters) => {
   const content = browser.dom
 
   if (!Object.keys(parameters).length) {
+    let block = document.createElement('div')
+    block.setAttribute('weight', 1)
+    content.appendChild(block)
+
     let header = document.createElement('h4')
     header.innerHTML = lang('repositories')
-    content.appendChild(header)
+    block.appendChild(header)
 
     let div = document.createElement('div')
-    content.appendChild(div)
+    block.appendChild(div)
     addCategoriesList(div, browser, parameters)
 
     browser.catchLinks()
