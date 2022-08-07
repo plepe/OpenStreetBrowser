@@ -7,9 +7,16 @@ function ajax_customCategory ($param) {
   }
 
   if (isset($param['list'])) {
-    $stmt = $db->prepare("select * from customCategory left join (select id, count(id) accessCount, max(ts) lastAccess from customCategoryAccess group by id) t on customCategory.id=t.id order by accessCount desc, created desc limit 25");
+    // the popularity column counts every acess with declining value over time,
+    // it halves every year.
+    $stmt = $db->prepare("select customCategory.id, customCategory.created, customCategory.content, t.accessCount, t.popularity, t.lastAccess from customCategory left join (select id, count(id) accessCount, sum(1/((julianday('2023-08-06 00:00:00') - julianday(ts))/365.25 + 1)) popularity, max(ts) lastAccess from customCategoryAccess group by id) t on customCategory.id=t.id order by popularity desc, created desc limit 25");
     $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $data = array_map(function ($d) {
+      $d['popularity'] = (float)$d['popularity'];
+      $d['accessCount'] = (int)$d['accessCount'];
+      return $d;
+    }, $data);
     $stmt->closeCursor();
     return $data;
   }
