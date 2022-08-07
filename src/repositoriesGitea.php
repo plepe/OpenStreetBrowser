@@ -14,6 +14,7 @@ register_hook("get-repositories", function ($result) {
             $r = array(
               'path' => "{$repositoriesGitea['path']}/{$f1}/{$f2}",
               'type' => 'git',
+              'group' => 'gitea',
             );
 
             if (array_key_exists('url', $repositoriesGitea)) {

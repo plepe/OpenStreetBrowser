@@ -26,6 +26,7 @@ if (!isset($_REQUEST['repo'])) {
       if (isset($repoData['categoryUrl'])) {
 	$info['categoryUrl'] = $repoData['categoryUrl'];
       }
+      $info['group'] = $repoData['group'] ?? 'default';
 
       print json_encode($info, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_FORCE_OBJECT);
     }
