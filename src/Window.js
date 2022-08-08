@@ -14,7 +14,10 @@ module.exports = class Window extends EventEmitter {
 
     this.closeBtn = document.createElement('div')
     this.closeBtn.className = 'closeBtn'
-    this.closeBtn.onclick = () => this.close()
+    this.closeBtn.onclick = (e) => {
+      this.close()
+      e.stopImmediatePropagation()
+    }
     this.header.appendChild(this.closeBtn)
 
     this.content = document.createElement('div')
@@ -22,6 +25,15 @@ module.exports = class Window extends EventEmitter {
     this.dom.appendChild(this.content)
 
     dragElement(this.dom)
+
+    this.dom.onclick = () => {
+      const activeEl = document.activeElement
+
+      if (document.body.lastElementChild !== this.dom) {
+        document.body.appendChild(this.dom)
+        activeEl.focus()
+      }
+    }
   }
 
   show () {
