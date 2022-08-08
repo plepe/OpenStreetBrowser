@@ -25,7 +25,15 @@ class CustomCategoryRepository {
     }
 
     ajax('customCategory', { id }, (result) => {
-      const data = yaml.load(result)
+      let data
+      cache[id] = result
+
+      try {
+        data = yaml.load(result)
+      }
+      catch (e) {
+        return global.alert(e)
+      }
 
       if (Object.is(data) && !('name' in data)) {
         data.name = 'Custom ' + id.substr(0, 6)
