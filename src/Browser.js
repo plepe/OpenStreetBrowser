@@ -33,7 +33,7 @@ module.exports = class Browser extends EventEmitter {
     Array.from(links).forEach(link => {
       const href = link.getAttribute('href')
 
-      if (href.substr(0, this.id.length + 2) === '#' + this.id + '?') {
+      if (href && href.substr(0, this.id.length + 2) === '#' + this.id + '?') {
         link.onclick = () => {
           this.history.push(this.parameters)
 
