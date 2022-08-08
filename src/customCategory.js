@@ -25,7 +25,13 @@ class CustomCategoryRepository {
     }
 
     ajax('customCategory', { id }, (result) => {
-      callback(null, yaml.load(result))
+      const data = yaml.load(result)
+
+      if (Object.is(data) && !('name' in data)) {
+        data.name = 'Custom ' + id.substr(0, 6)
+      }
+
+      callback(null, data)
     })
   }
 
@@ -200,7 +206,7 @@ function customCategoriesList (browser, options) {
 
       const a = document.createElement('a')
       a.href = '#categories=custom/' + cat.id
-      a.appendChild(document.createTextNode(cat.id))
+      a.appendChild(document.createTextNode(cat.name))
       li.appendChild(a)
 
       const edit = document.createElement('a')

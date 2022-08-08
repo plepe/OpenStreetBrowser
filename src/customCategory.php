@@ -15,8 +15,19 @@ function ajax_customCategory ($param) {
     $data = array_map(function ($d) {
       $d['popularity'] = (float)$d['popularity'];
       $d['accessCount'] = (int)$d['accessCount'];
+
+      $content = yaml_parse($d['content']);
+      if ($content && is_array($content) && array_key_exists('name', $content)) {
+        $d['name'] = lang($content['name']);
+      }
+      else {
+        $d['name'] = 'Custom ' . substr($d['id'], 0, 6);
+      }
+
+      unset($d['content']);
       return $d;
     }, $data);
+
     $stmt->closeCursor();
     return $data;
   }
