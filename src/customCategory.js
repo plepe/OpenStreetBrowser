@@ -84,7 +84,7 @@ class CustomCategory {
     tutorial.innerHTML = text
     controls.appendChild(tutorial)
 
-    input.onclick = () => {
+    input.onclick = (e) => {
       try {
         yaml.load(this.textarea.value)
       }
@@ -94,7 +94,7 @@ class CustomCategory {
 
       this.applyContent(this.textarea.value)
       ajax('customCategory', { content: this.textarea.value }, (result) => {})
-      return true
+      e.preventDefault()
     }
 
     this.window.show()
@@ -125,15 +125,6 @@ class CustomCategory {
   }
 }
 
-
-function createCustomCategory () {
-  let category
-
-  category = new CustomCategory()
-  category.edit()
-
-  return false
-}
 
 function editCustomCategory (id, category) {
   let done = customCategories.filter(customCategory => {
@@ -171,9 +162,11 @@ hooks.register('browser-more-categories', (browser, parameters) => {
     let a = document.createElement('a')
     a.innerHTML = lang('customCategory:create')
     a.href = '#'
-    a.onclick = () => {
-      createCustomCategory()
+    a.onclick = (e) => {
+      const category = new CustomCategory()
+      category.edit()
       browser.close()
+      e.preventDefault()
     }
     li.appendChild(a)
     ul.appendChild(li)
@@ -211,7 +204,10 @@ function customCategoriesList (browser, options) {
       li.appendChild(a)
 
       const edit = document.createElement('a')
-      edit.onclick = () => editCustomCategory(cat.id)
+      edit.onclick = (e) => {
+        editCustomCategory(cat.id)
+        e.preventDefault()
+      }
       edit.innerHTML = ' <i class="fa fa-pen"></i>'
       li.appendChild(edit)
 
@@ -225,7 +221,8 @@ function customCategoriesList (browser, options) {
 hooks.register('init', () => {
   OpenStreetBrowserLoader.registerRepository('custom', new CustomCategoryRepository())
 })
-register_hook('category-overpass-init', (category) => {
+
+hooks.register('category-overpass-init', (category) => {
   const m = category.id.match(/^custom\/(.*)$/)
   if (m) {
     const id = m[1]
