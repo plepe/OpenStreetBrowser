@@ -1,6 +1,7 @@
 const tabs = require('modulekit-tabs')
 const yaml = require('js-yaml')
 const md5 = require('md5')
+const OverpassLayer = require('overpass-layer')
 
 const Window = require('./Window')
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
@@ -278,9 +279,48 @@ hooks.register('category-overpass-init', (category) => {
 })
 
 function customCategoryTest (value) {
+  if (!value) {
+    return new Error('Empty category')
+  }
+
   let data
   try {
     data = yaml.load(value)
+  }
+  catch (e) {
+    return e
+  }
+
+  const fields = ['feature', 'memberFeature']
+  for (let i1 = 0; i1 < fields.length; i1++) {
+    const k1 = fields[i1]
+    if (data[k1]) {
+      for (k2 in data[k1]) {
+        const err = customCategoryTestCompile(data[k1][k2])
+        if (err) {
+          return new Error('Compiling /' + k1 + '/' + k2 + ': ' + err.message)
+        }
+
+        if (k2 === 'style' || k2.match(/^style:/)) {
+          for (const k3 in data[k1][k2]) {
+            const err = customCategoryTestCompile(data[k1][k2][k3])
+            if (err) {
+              return new Error('Compiling /' + k1 + '/' + k2 + '/' + k3 + ': ' + err.message)
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+function customCategoryTestCompile (data) {
+  if (typeof data !== 'string' || data.search('{') === -1) {
+    return
+  }
+
+  try {
+    OverpassLayer.twig.twig({ data })
   }
   catch (e) {
     return e
