@@ -99,11 +99,9 @@ class CustomCategory {
     controls.appendChild(tutorial)
 
     input.onclick = (e) => {
-      try {
-        yaml.load(this.textarea.value)
-      }
-      catch (e) {
-        return global.alert(e)
+      const err = customCategoryTest(this.textarea.value)
+      if (err) {
+        return global.alert(err)
       }
 
       this.applyContent(this.textarea.value)
@@ -278,3 +276,13 @@ hooks.register('category-overpass-init', (category) => {
     }
   }
 })
+
+function customCategoryTest (value) {
+  let data
+  try {
+    data = yaml.load(value)
+  }
+  catch (e) {
+    return e
+  }
+}
