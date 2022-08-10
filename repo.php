@@ -60,6 +60,13 @@ if ($branchId) {
   }
 }
 
+if (array_key_exists('file', $_REQUEST)) {
+  $file = $repo->file_get_contents($_REQUEST['file']);
+  Header("Content-Type: text/plain; charset=utf/8");
+  print $file;
+  exit(0);
+}
+
 $cacheDir = null;
 $ts = $repo->timestamp($path);
 if (isset($config['cache'])) {
