@@ -275,6 +275,28 @@ hooks.register('category-overpass-init', (category) => {
         global.setTimeout(() => category.tabShare.header.removeChild(notify), 2000)
       })
     }
+  } else {
+    if (category.tabClone) {
+      category.tools.remove(this.category.tabClone)
+    }
+
+    category.tabClone = new tabs.Tab({
+      id: 'clone',
+      weight: 9
+    })
+    category.tools.add(category.tabClone)
+    category.tabClone.header.innerHTML = '<i class="fa fa-pen"></i>'
+    category.tabClone.on('select', () => {
+      const clone = new CustomCategory()
+      OpenStreetBrowserLoader.getFile(category.id, {},
+        (err, result) => {
+          if (err) { return global.alert(err) }
+          clone.content = yaml.dump(result)
+          clone.edit()
+        }
+      )
+    })
+
   }
 })
 
