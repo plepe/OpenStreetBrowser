@@ -308,8 +308,10 @@ hooks.register('category-overpass-init', (category) => {
         (err, content) => {
           if (category.data.format === 'json') {
             content = JSON.parse(content)
-            content = jsonMultilineStrings.join(content, { exclude: [ 'const', 'filter'] })
-            content = yaml.dump(content)
+            content = jsonMultilineStrings.join(content, { exclude: [ [ 'const' ], [ 'filter' ] ] })
+            content = yaml.dump(content, {
+              lineWidth: 9999
+            })
           }
 
           clone.applyContent(content)
