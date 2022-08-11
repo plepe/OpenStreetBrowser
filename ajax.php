@@ -17,9 +17,6 @@ function error($msg) {
 Header("Content-Type: application/json; charset=UTF-8");
 
 $postdata = file_get_contents("php://input");
-if ($postdata) {
-  $postdata = json_decode($postdata, true);
-}
 
 $fun = "ajax_{$_REQUEST['__func']}";
 $return = $fun($_REQUEST, $postdata);

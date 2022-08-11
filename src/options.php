@@ -1,5 +1,7 @@
 <?php
-function ajax_options_save($get_param, $post_param) {
+function ajax_options_save($get_param, $postdata) {
+  $post_param = json_decode($postdata, true);
+
   call_hooks('options_save', $post_param);
 
   $_SESSION['options'] = $post_param;
