@@ -82,11 +82,15 @@ class RepositoryDir extends RepositoryBase {
 
   function file_get_contents ($file) {
     if (substr($file, 0, 1) === '.' || preg_match("/\/\./", $file)) {
-      return null;
+      return false;
     }
 
     if (!$this->access($file)) {
       return false;
+    }
+
+    if (!file_exists("{$this->path}/{$file}")) {
+      return null;
     }
 
     return file_get_contents("{$this->path}/{$file}");
