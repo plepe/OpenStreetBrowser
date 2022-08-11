@@ -107,7 +107,6 @@ class CustomCategory {
       }
 
       this.applyContent(this.textarea.value)
-      ajax('customCategory', { content: this.textarea.value }, (result) => {})
       e.preventDefault()
     }
 
@@ -116,6 +115,7 @@ class CustomCategory {
 
   applyContent (content) {
     this.content = content
+    ajax('customCategory', { content: this.content }, () => {})
 
     if (this.textarea) {
       this.textarea.value = content
