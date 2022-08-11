@@ -31,8 +31,8 @@ OverpassLayer.twig.extendFunction('repoTrans', function (str) {
     return str
   }
 
-  let lang = global.currentCategory.repository.lang
-  const format = str in lang ? lang[str] : str
+  const lang = global.currentCategory.repository.lang
+  const format = lang && str in lang ? lang[str] : str
 
   return vsprintf(format, Array.from(arguments).slice(1))
 })
