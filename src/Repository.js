@@ -10,6 +10,27 @@ module.exports = class Repository {
     }
   }
 
+  file_get_contents (fileName, options, callback) {
+    let param = []
+    param.push('repo=' + encodeURIComponent(this.id))
+    param.push('file=' + encodeURIComponent(fileName))
+    param.push(config.categoriesRev)
+    param = param.length ? '?' + param.join('&') : ''
+
+    fetch('repo.php' + param)
+      .then(res => res.text())
+      .then(data => {
+        global.setTimeout(() => {
+          callback(null, data)
+        }, 0)
+      })
+      .catch(err => {
+        global.setTimeout(() => {
+          callback(err)
+        }, 0)
+      })
+  }
+
   load (callback) {
     if (this.loadCallbacks) {
       return this.loadCallbacks.push(callback)
