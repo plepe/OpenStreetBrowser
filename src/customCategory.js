@@ -261,16 +261,21 @@ hooks.register('category-overpass-init', (category) => {
     })
 
     if (!category.tabShare) {
+      const url = location.origin + location.pathname + '#categories=custom/' + id
+
       category.tabShare = new tabs.Tab({
         id: 'share',
         weight: 10
       })
       category.tools.add(category.tabShare)
-      category.tabShare.header.innerHTML = '<i class="fa fa-share-alt"></i>'
+      category.shareLink = document.createElement('a')
+      category.shareLink.href = url
+      category.shareLink.innerHTML = '<i class="fa fa-share-alt"></i>'
+
+      category.tabShare.header.appendChild(category.shareLink)
       category.tabShare.header.className = 'share-button'
       category.tabShare.on('select', () => {
         category.tabShare.unselect()
-        const url = location.origin + location.pathname + '#categories=custom/' + id
         navigator.clipboard.writeText(url)
 
         const notify = document.createElement('div')
