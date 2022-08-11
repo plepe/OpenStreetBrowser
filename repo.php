@@ -62,8 +62,20 @@ if ($branchId) {
 
 if (array_key_exists('file', $_REQUEST)) {
   $file = $repo->file_get_contents($_REQUEST['file']);
-  Header("Content-Type: text/plain; charset=utf/8");
-  print $file;
+
+  if ($file === false) {
+    Header("HTTP/1.1 403 Forbidden");
+    print "Access denied.";
+  }
+  else if ($file === null) {
+    Header("HTTP/1.1 404 File not found");
+    print "File not found.";
+  }
+  else {
+    Header("Content-Type: text/plain; charset=utf-8");
+    print $file;
+  }
+
   exit(0);
 }
 
