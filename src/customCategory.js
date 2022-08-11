@@ -2,6 +2,7 @@ const tabs = require('modulekit-tabs')
 const yaml = require('js-yaml')
 const md5 = require('md5')
 const OverpassLayer = require('overpass-layer')
+const jsonMultilineStrings = require('json-multiline-strings')
 
 const Window = require('./Window')
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
@@ -285,13 +286,20 @@ hooks.register('category-overpass-init', (category) => {
       weight: 9
     })
     category.tools.add(category.tabClone)
-    category.tabClone.header.innerHTML = '<i class="fa fa-pen"></i>'
+    category.tabClone.header.innerHTML = '<i class="fa fa-clone"></i>'
     category.tabClone.on('select', () => {
+      category.tabClone.unselect()
+
       const clone = new CustomCategory()
-      OpenStreetBrowserLoader.getFile(category.id, {},
-        (err, result) => {
-          if (err) { return global.alert(err) }
-          clone.content = yaml.dump(result)
+      category.repository.file_get_contents(category.data.fileName, {},
+        (err, content) => {
+          if (category.data.format === 'json') {
+            content = JSON.parse(content)
+            content = jsonMultilineStrings.join(content, { exclude: [ 'const', 'filter'] })
+            content = yaml.dump(content)
+          }
+
+          clone.content = content
           clone.edit()
         }
       )
