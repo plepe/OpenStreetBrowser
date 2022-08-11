@@ -117,6 +117,10 @@ class CustomCategory {
   applyContent (content) {
     this.content = content
 
+    if (this.textarea) {
+      this.textarea.value = content
+    }
+
     const id = md5(content)
     this.id = id
     cache[id] = content
@@ -291,6 +295,8 @@ hooks.register('category-overpass-init', (category) => {
       category.tabClone.unselect()
 
       const clone = new CustomCategory()
+      clone.edit()
+
       category.repository.file_get_contents(category.data.fileName, {},
         (err, content) => {
           if (category.data.format === 'json') {
@@ -299,8 +305,8 @@ hooks.register('category-overpass-init', (category) => {
             content = yaml.dump(content)
           }
 
-          clone.content = content
-          clone.edit()
+          clone.applyContent(content)
+          category.close()
         }
       )
     })
