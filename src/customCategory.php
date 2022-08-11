@@ -1,12 +1,12 @@
 <?php
-function ajax_customCategory ($param) {
+function ajax_customCategory ($param, $content) {
   global $db;
 
   if (!$db) {
     return null;
   }
 
-  if (isset($param['list'])) {
+  if (isset($param['action']) && $param['action'] === 'list') {
     // the popularity column counts every acess with declining value over time,
     // it halves every year.
     $stmt = $db->prepare("select customCategory.id, customCategory.created, customCategory.content, t.accessCount, t.popularity, t.lastAccess from customCategory left join (select id, count(id) accessCount, sum(1/((julianday('2023-08-06 00:00:00') - julianday(ts))/365.25 + 1)) popularity, max(ts) lastAccess from customCategoryAccess group by id) t on customCategory.id=t.id order by popularity desc, created desc limit 25");
@@ -32,7 +32,7 @@ function ajax_customCategory ($param) {
     return $data;
   }
 
-  if ($param['id']) {
+  if (isset($param['id'])) {
     $stmt = $db->prepare("select content from customCategory where id=:id");
     $stmt->bindValue(':id', $param['id'], PDO::PARAM_STR);
     if ($stmt->execute()) {
@@ -48,12 +48,12 @@ function ajax_customCategory ($param) {
     return false;
   }
 
-  if ($param['content']) {
-    $id = md5($param['content']);
+  if (isset($param['action']) && $param['action'] === 'save') {
+    $id = md5($content);
 
     $stmt = $db->prepare("insert or ignore into customCategory (id, content) values (:id, :content)");
     $stmt->bindValue(':id', $id, PDO::PARAM_STR);
-    $stmt->bindValue(':content', $param['content'], PDO::PARAM_STR);
+    $stmt->bindValue(':content', $content, PDO::PARAM_STR);
     $result = $stmt->execute();
 
     customCategoryUpdateAccess($id);

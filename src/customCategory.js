@@ -115,7 +115,7 @@ class CustomCategory {
 
   applyContent (content) {
     this.content = content
-    ajax('customCategory', { content: this.content }, () => {})
+    ajax('customCategory', { action: 'save' }, this.content, () => {})
 
     if (this.textarea) {
       this.textarea.value = content
@@ -207,7 +207,7 @@ hooks.register('browser-more-categories', (browser, parameters) => {
 function customCategoriesList (browser, options) {
   browser.dom.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
 
-  ajax('customCategory', { 'list': true }, (result) => {
+  ajax('customCategory', { action: 'list' }, (result) => {
     browser.dom.innerHTML = ''
 
     const ul = document.createElement('ul')
