@@ -255,6 +255,7 @@ hooks.register('category-overpass-init', (category) => {
     })
     category.tools.add(category.tabEdit)
     category.tabEdit.header.innerHTML = '<i class="fa fa-pen"></i>'
+    category.tabEdit.header.title = lang('edit')
     category.tabEdit.on('select', () => {
       category.tabEdit.unselect()
       editCustomCategory(id, category)
@@ -296,6 +297,7 @@ hooks.register('category-overpass-init', (category) => {
     })
     category.tools.add(category.tabClone)
     category.tabClone.header.innerHTML = '<i class="fa fa-clone"></i>'
+    category.tabClone.header.title = lang('customCategory:clone')
     category.tabClone.on('select', () => {
       category.tabClone.unselect()
 

@@ -11,6 +11,7 @@
     "apply": "Apply",
     "tip-tutorial": "Check out the [Tutorial]",
     "customCategory:header": "Custom categories",
+    "customCategory:clone": "Clone as custom category",
     "customCategory:create": "Create custom category",
     "customCategory:list": "List popular custom categories",
     "copied-clipboard": "Copied to clipboard",
