@@ -7,11 +7,11 @@ const jsonMultilineStrings = require('json-multiline-strings')
 const Window = require('./Window')
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
-const cache = {}
-const customCategories = []
+const editors = []
 
 class CustomCategoryRepository {
   constructor () {
+    this.clearCache()
   }
 
   load (callback) {
@@ -19,21 +19,28 @@ class CustomCategoryRepository {
   }
 
   clearCache () {
+    this.cache = {}
+  }
+
+  listCategories (options, callback) {
+    fetch('customCategory.php?action=list')
+      .then(res => res.json())
+      .then(result => callback(null, result))
   }
 
   getCategory (id, options, callback) {
-    if (id in cache) {
-      return callback(null, yaml.load(cache[id]))
+    if (id in this.cache) {
+      return callback(null, yaml.load(this.cache[id]))
     }
 
     fetch('customCategory.php?id=' + id)
       .then(res => res.text())
-      .then(result => {
+      .then(content => {
         let data
-        cache[id] = result
+        this.cache[id] = content
 
         try {
-          data = yaml.load(result)
+          data = yaml.load(content)
         }
         catch (e) {
           return global.alert(e)
@@ -43,8 +50,18 @@ class CustomCategoryRepository {
           data.name = 'Custom ' + id.substr(0, 6)
         }
 
-        callback(null, data)
+        callback(null, data, content)
       })
+  }
+
+  saveCategory (body, options, callback) {
+    const id = md5(body)
+    this.cache[id] = body
+
+    fetch('customCategory.php?action=save', {
+      method: 'POST',
+      body
+    })
   }
 
   getTemplate (id, options, callback) {
@@ -52,33 +69,17 @@ class CustomCategoryRepository {
   }
 }
 
-class CustomCategory {
-  constructor () {
-    customCategories.push(this)
+class CustomCategoryEditor {
+  constructor (repository) {
+    this.repository = repository
+    editors.push(this)
   }
 
   load (id, callback) {
-    this.id = id
-
-    fetch('customCategory.php?id=' + id)
-      .then(res => res.text())
-      .then(result => {
-        let data
-        cache[id] = result
-        this.content = result
-
-        try {
-          data = yaml.load(result)
-        }
-        catch (e) {
-          return global.alert(e)
-        }
-
-        if (Object.is(data) && !('name' in data)) {
-          data.name = 'Custom ' + id.substr(0, 6)
-        }
-
-        callback(null, data)
+    this.repository.getCategory(id, {},
+      (err, category, content) => {
+        this.content = content
+        callback(err, content)
       })
   }
 
@@ -134,10 +135,7 @@ class CustomCategory {
 
   applyContent (content) {
     this.content = content
-    fetch('customCategory.php?action=save', {
-      method: 'POST',
-      body: this.content
-    })
+    this.repository.saveCategory(this.content, {}, () => {})
 
     if (this.textarea) {
       this.textarea.value = content
@@ -145,7 +143,6 @@ class CustomCategory {
 
     const id = md5(content)
     this.id = id
-    cache[id] = content
 
     if (this.category) {
       this.category.remove()
@@ -167,16 +164,16 @@ class CustomCategory {
 
 
 function editCustomCategory (id, category) {
-  let done = customCategories.filter(customCategory => {
-    if (customCategory.id === id) {
-      customCategory.edit()
+  let done = editors.filter(editor => {
+    if (editor.id === id) {
+      editor.edit()
       return true
     }
   })
 
   if (!done.length) {
-    const customCategory = new CustomCategory()
-    customCategory.load(id, (err) => {
+    const editor = new CustomCategoryEditor(repository)
+    editor.load(id, (err) => {
       if (err) { return global.alert(err) }
       customCategory.category = category
       customCategory.edit()
@@ -203,8 +200,8 @@ hooks.register('browser-more-categories', (browser, parameters) => {
     a.innerHTML = lang('customCategory:create')
     a.href = '#'
     a.onclick = (e) => {
-      const category = new CustomCategory()
-      category.edit()
+      const editor = new CustomCategoryEditor(repository)
+      editor.edit()
       browser.close()
       e.preventDefault()
     }
@@ -229,9 +226,8 @@ hooks.register('browser-more-categories', (browser, parameters) => {
 function customCategoriesList (browser, options) {
   browser.dom.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
 
-  fetch('customCategory.php?action=list')
-    .then(res => res.json())
-    .then(result => {
+  repository.listCategories({},
+    (err, result) => {
       browser.dom.innerHTML = ''
 
       const ul = document.createElement('ul')
@@ -260,8 +256,9 @@ function customCategoriesList (browser, options) {
     })
 }
 
+const repository = new CustomCategoryRepository()
 hooks.register('init', () => {
-  OpenStreetBrowserLoader.registerRepository('custom', new CustomCategoryRepository())
+  OpenStreetBrowserLoader.registerRepository('custom', repository)
 })
 
 hooks.register('category-overpass-init', (category) => {
@@ -325,7 +322,7 @@ hooks.register('category-overpass-init', (category) => {
     category.tabClone.on('select', () => {
       category.tabClone.unselect()
 
-      const clone = new CustomCategory()
+      const clone = new CustomCategoryEditor(repository)
       clone.edit()
 
       category.repository.file_get_contents(category.data.fileName, {},
