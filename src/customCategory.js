@@ -26,23 +26,25 @@ class CustomCategoryRepository {
       return callback(null, yaml.load(cache[id]))
     }
 
-    ajax('customCategory', { id }, (result) => {
-      let data
-      cache[id] = result
+    fetch('customCategory.php?id=' + id)
+      .then(res => res.text())
+      .then(result => {
+        let data
+        cache[id] = result
 
-      try {
-        data = yaml.load(result)
-      }
-      catch (e) {
-        return global.alert(e)
-      }
+        try {
+          data = yaml.load(result)
+        }
+        catch (e) {
+          return global.alert(e)
+        }
 
-      if (Object.is(data) && !('name' in data)) {
-        data.name = 'Custom ' + id.substr(0, 6)
-      }
+        if (Object.is(data) && !('name' in data)) {
+          data.name = 'Custom ' + id.substr(0, 6)
+        }
 
-      callback(null, data)
-    })
+        callback(null, data)
+      })
   }
 
   getTemplate (id, options, callback) {
@@ -57,10 +59,27 @@ class CustomCategory {
 
   load (id, callback) {
     this.id = id
-    ajax('customCategory', { id }, (result) => {
-      this.content = result
-      callback(null, result)
-    })
+
+    fetch('customCategory.php?id=' + id)
+      .then(res => res.text())
+      .then(result => {
+        let data
+        cache[id] = result
+        this.content = result
+
+        try {
+          data = yaml.load(result)
+        }
+        catch (e) {
+          return global.alert(e)
+        }
+
+        if (Object.is(data) && !('name' in data)) {
+          data.name = 'Custom ' + id.substr(0, 6)
+        }
+
+        callback(null, data)
+      })
   }
 
   edit () {
@@ -115,7 +134,10 @@ class CustomCategory {
 
   applyContent (content) {
     this.content = content
-    ajax('customCategory', { action: 'save' }, this.content, () => {})
+    fetch('customCategory.php?action=save', {
+      method: 'POST',
+      body: this.content
+    })
 
     if (this.textarea) {
       this.textarea.value = content
@@ -207,33 +229,35 @@ hooks.register('browser-more-categories', (browser, parameters) => {
 function customCategoriesList (browser, options) {
   browser.dom.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
 
-  ajax('customCategory', { action: 'list' }, (result) => {
-    browser.dom.innerHTML = ''
+  fetch('customCategory.php?action=list')
+    .then(res => res.json())
+    .then(result => {
+      browser.dom.innerHTML = ''
 
-    const ul = document.createElement('ul')
-    browser.dom.appendChild(ul)
+      const ul = document.createElement('ul')
+      browser.dom.appendChild(ul)
 
-    result.forEach(cat => {
-      const li = document.createElement('li')
+      result.forEach(cat => {
+        const li = document.createElement('li')
 
-      const a = document.createElement('a')
-      a.href = '#categories=custom/' + cat.id
-      a.appendChild(document.createTextNode(cat.name))
-      li.appendChild(a)
+        const a = document.createElement('a')
+        a.href = '#categories=custom/' + cat.id
+        a.appendChild(document.createTextNode(cat.name))
+        li.appendChild(a)
 
-      const edit = document.createElement('a')
-      edit.onclick = (e) => {
-        editCustomCategory(cat.id)
-        e.preventDefault()
-      }
-      edit.innerHTML = ' <i class="fa fa-pen"></i>'
-      li.appendChild(edit)
+        const edit = document.createElement('a')
+        edit.onclick = (e) => {
+          editCustomCategory(cat.id)
+          e.preventDefault()
+        }
+        edit.innerHTML = ' <i class="fa fa-pen"></i>'
+        li.appendChild(edit)
 
-      ul.appendChild(li)
+        ul.appendChild(li)
+      })
+
+      browser.catchLinks()
     })
-
-    browser.catchLinks()
-  })
 }
 
 hooks.register('init', () => {

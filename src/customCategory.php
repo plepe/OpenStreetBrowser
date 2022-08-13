@@ -79,32 +79,3 @@ class CustomCategoryRepository {
 }
 
 $customCategoryRepository = new CustomCategoryRepository();
-
-function ajax_customCategory ($param, $content) {
-  global $db;
-  global $customCategoryRepository;
-
-  if (!$db) {
-    return null;
-  }
-
-  if (isset($param['action']) && $param['action'] === 'list') {
-    return $customCategoryRepository->list($param);
-  }
-
-  if (isset($param['id'])) {
-    $category = $customCategoryRepository->getCategory($param['id']);
-    if ($category) {
-      $customCategoryRepository->recordAccess($param['id']);
-    }
-
-    return $category;
-  }
-
-  if (isset($param['action']) && $param['action'] === 'save') {
-    $id = $customCategoryRepository->saveCategory($content);
-    $customCategoryRepository->recordAccess($id);
-
-    return $id;
-  }
-}
