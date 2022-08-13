@@ -41,7 +41,16 @@ class CustomCategoryRepository {
 
     $id = md5($content);
 
-    $stmt = $db->prepare("insert or ignore into customCategory (id, content) values (:id, :content)");
+    switch ($db->getAttribute(PDO::ATTR_DRIVER_NAME)) {
+      case 'mysql':
+        $sqlAction = "insert ignore";
+        break;
+      case 'sqlite':
+      default:
+        $sqlAction = "insert or ignore";
+    }
+
+    $stmt = $db->prepare("{$sqlAction} into customCategory (id, content) values (:id, :content)");
     $stmt->bindValue(':id', $id, PDO::PARAM_STR);
     $stmt->bindValue(':content', $content, PDO::PARAM_STR);
     $result = $stmt->execute();
@@ -52,9 +61,18 @@ class CustomCategoryRepository {
   function list ($options=[]) {
     global $db;
 
+    // $sqlCalcAge: the age of the access in days
+    switch ($db->getAttribute(PDO::ATTR_DRIVER_NAME)) {
+      case 'mysql':
+        $sqlCalcAge = "datediff(now(), ts)";
+        break;
+      case 'sqlite':
+        $sqlCalcAge = "julianday('now')-julianday(ts)";
+    }
+
     // the popularity column counts every acess with declining value over time,
     // it halves every year.
-    $stmt = $db->prepare("select customCategory.id, customCategory.created, customCategory.content, t.accessCount, t.popularity, t.lastAccess from customCategory left join (select id, count(id) accessCount, sum(1/((julianday('2023-08-06 00:00:00') - julianday(ts))/365.25 + 1)) popularity, max(ts) lastAccess from customCategoryAccess group by id) t on customCategory.id=t.id order by popularity desc, created desc limit 25");
+    $stmt = $db->prepare("select customCategory.id, customCategory.created, customCategory.content, t.accessCount, t.popularity, t.lastAccess from customCategory left join (select id, count(id) accessCount, sum(1/(({$sqlCalcAge})/365.25+1)) popularity, max(ts) lastAccess from customCategoryAccess group by id) t on customCategory.id=t.id order by popularity desc, created desc limit 25");
     $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $data = array_map(function ($d) {
