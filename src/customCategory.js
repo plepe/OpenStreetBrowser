@@ -30,7 +30,7 @@ class CustomCategoryRepository {
 
   getCategory (id, options, callback) {
     if (id in this.cache) {
-      return callback(null, yaml.load(this.cache[id]))
+      return callback(null, yaml.load(this.cache[id]), this.cache[id])
     }
 
     fetch('customCategory.php?id=' + id)
@@ -175,8 +175,8 @@ function editCustomCategory (id, category) {
     const editor = new CustomCategoryEditor(repository)
     editor.load(id, (err) => {
       if (err) { return global.alert(err) }
-      customCategory.category = category
-      customCategory.edit()
+      editor.category = category
+      editor.edit()
     })
   }
 }
