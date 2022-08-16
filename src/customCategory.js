@@ -98,6 +98,7 @@ class CustomCategoryEditor {
     })
 
     this.textarea = document.createElement('textarea')
+    this.textarea.spellcheck = false
     this.window.content.appendChild(this.textarea)
     if (this.content !== undefined) {
       this.textarea.value = this.content
