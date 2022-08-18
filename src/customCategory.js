@@ -46,7 +46,11 @@ class CustomCategoryRepository {
           return global.alert(e)
         }
 
-        if (Object.is(data) && !('name' in data)) {
+        if (data && typeof data !== 'object') {
+          callback(new Error('Data can not be parsed into an object'))
+        }
+
+        if (!data.name) {
           data.name = 'Custom ' + id.substr(0, 6)
         }
 
@@ -356,6 +360,10 @@ function customCategoryTest (value) {
   }
   catch (e) {
     return e
+  }
+
+  if (!data || typeof data !== 'object') {
+    return new Error('Data can not be parsed into an object')
   }
 
   const fields = ['feature', 'memberFeature']
