@@ -204,7 +204,7 @@ class OpenStreetBrowserLoader {
     }
 
     if (!data.type) {
-      return callback(new Error('no type defined'), null)
+      data.type = 'overpass'
     }
 
     if (!(data.type in this.types)) {
