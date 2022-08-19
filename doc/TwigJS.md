@@ -80,6 +80,7 @@ Extra filters:
 * filter `wikidataEntity`: returns the wikidata entity in structured form (or `null` if the entity is not cached or `false` if it does not exist). Example: https://www.wikidata.org/wiki/Special:EntityData/Q42.json
 * filter `json_pp`: JSON pretty print the object. As parameter to the filter, the following options can be passed:
   * `indent`: indentation (default: 2)
+* filter `yaml`: YAML pretty print the object. As options the filter, all options to [yaml.dump of js-yaml](https://github.com/nodeca/js-yaml#dump-object---options-) can be used.
 
 Notes:
 * Variables will automatically be HTML escaped, unless the filter raw is used, e.g.: `{{ tags.name|raw }}`
