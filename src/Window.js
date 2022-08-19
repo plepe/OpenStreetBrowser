@@ -4,6 +4,7 @@ module.exports = class Window extends EventEmitter {
   constructor (options) {
     super()
 
+    this.visible = false
     this.dom = document.createElement('div')
     this.dom.className = 'Window'
 
@@ -27,6 +28,8 @@ module.exports = class Window extends EventEmitter {
     dragElement(this.dom)
 
     this.dom.onclick = () => {
+      if (!this.visible) { return }
+
       const activeEl = document.activeElement
 
       if (document.body.lastElementChild !== this.dom) {
@@ -37,11 +40,13 @@ module.exports = class Window extends EventEmitter {
   }
 
   show () {
+    this.visible = true
     document.body.appendChild(this.dom)
     this.emit('show')
   }
 
   close () {
+    this.visible = false
     document.body.removeChild(this.dom)
     this.emit('close')
   }
