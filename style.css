@@ -622,6 +622,10 @@ ul.overpass-layer-list > li > a > .content > .details {
 .Window > .content .controls {
   flex-grow: 0;
 }
+.Window > .content .controls > .actions {
+  margin-left: 1em;
+  display: inline;
+}
 
 /* Window */
 .Window {

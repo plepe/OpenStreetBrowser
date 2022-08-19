@@ -123,6 +123,17 @@ class CustomCategoryEditor {
     inputClose.onclick = () => this.window.close()
     controls.appendChild(inputClose)
 
+    const icons = document.createElement('div')
+    icons.className = 'actions'
+    controls.appendChild(icons)
+
+    this.inputDownload = document.createElement('a')
+    this.textarea.onchange = () => this.updateDownload()
+    this.updateDownload()
+    this.inputDownload.title = lang('download')
+    this.inputDownload.innerHTML = '<i class="fas fa-download"></i>'
+    icons.appendChild(this.inputDownload)
+
     const tutorial = document.createElement('span')
     tutorial.className = 'tip-tutorial'
     let text = lang('tip-tutorial')
@@ -150,6 +161,7 @@ class CustomCategoryEditor {
 
     if (this.textarea) {
       this.textarea.value = content
+      this.updateDownload()
     }
 
     const id = md5(content)
@@ -170,6 +182,12 @@ class CustomCategoryEditor {
 
       this.category.open()
     })
+  }
+
+  updateDownload () {
+    const file = new Blob([this.textarea.value], { type: 'application/yaml' })
+    this.inputDownload.href = URL.createObjectURL(file)
+    this.inputDownload.download = md5(this.textarea.value) + '.yaml'
   }
 }
 
