@@ -15,6 +15,7 @@ module.exports = class Window extends EventEmitter {
 
     this.closeBtn = document.createElement('div')
     this.closeBtn.className = 'closeBtn'
+    this.closeBtn.title = lang('close')
     this.closeBtn.onclick = (e) => {
       this.close()
       e.stopImmediatePropagation()
