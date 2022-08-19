@@ -117,6 +117,12 @@ class CustomCategoryEditor {
     input.value = lang('apply')
     controls.appendChild(input)
 
+    const inputClose = document.createElement('input')
+    inputClose.type = 'button'
+    inputClose.value = lang('close')
+    inputClose.onclick = () => this.window.close()
+    controls.appendChild(inputClose)
+
     const tutorial = document.createElement('span')
     tutorial.className = 'tip-tutorial'
     let text = lang('tip-tutorial')
