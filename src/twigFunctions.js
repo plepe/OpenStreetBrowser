@@ -140,3 +140,11 @@ OverpassLayer.twig.extendFilter('debug', function (value, param) {
   console.log.apply(null, [ value, ...param ])
   return value
 })
+OverpassLayer.twig.extendFilter('json_pp', function (value, param) {
+  const options = param[0] || {}
+
+  value = JSON.parse(JSON.stringify(value))
+  delete value._keys // remove TwigJS artefact
+
+  return JSON.stringify(value, null, 'indent' in options ? ' '.repeat(options.indent) : '  ')
+})

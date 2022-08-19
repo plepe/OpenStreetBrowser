@@ -78,6 +78,8 @@ Extra filters:
 * filter `debug`: print the value (and further arguments) to the javascript console (via `console.log()`)
 * filter `wikipediaAbstract`: shows the abstract of a Wikipedia article in the selected data language (or, if not available, the language which was used in input, resp. 'en' for Wikidata input). Input is either 'language:article' (e.g. 'en:Douglas Adams') or a wikidata id (e.g. 'Q42').
 * filter `wikidataEntity`: returns the wikidata entity in structured form (or `null` if the entity is not cached or `false` if it does not exist). Example: https://www.wikidata.org/wiki/Special:EntityData/Q42.json
+* filter `json_pp`: JSON pretty print the object. As parameter to the filter, the following options can be passed:
+  * `indent`: indentation (default: 2)
 
 Notes:
 * Variables will automatically be HTML escaped, unless the filter raw is used, e.g.: `{{ tags.name|raw }}`
