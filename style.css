@@ -624,6 +624,7 @@ ul.overpass-layer-list > li > a > .content > .details {
 }
 .Window > .content .controls > .actions {
   margin-left: 1em;
+  margin-right: 1em;
   display: inline;
 }
 
@@ -670,7 +671,8 @@ ul.overpass-layer-list > li > a > .content > .details {
   align-content: stretch;
 }
 .tip-tutorial {
-  margin-left: 1em;
+  padding: 0.25em 0;
+  display: inline-block;
 }
 .tip-tutorial a {
   text-decoration: underline;
