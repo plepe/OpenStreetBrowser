@@ -22,6 +22,7 @@ if (isset($_REQUEST['id'])) {
   }
 
   Header("Content-Type: application/yaml; charset=utf-8");
+  Header("Content-Disposition: inline; filename=\"{$_REQUEST['id']}.yaml\"");
   print $category;
 }
 
