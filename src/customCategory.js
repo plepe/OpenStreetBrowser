@@ -114,13 +114,16 @@ class CustomCategoryEditor {
 
     const input = document.createElement('input')
     input.type = 'submit'
-    input.value = lang('apply')
+    input.value = lang('apply-keep')
     controls.appendChild(input)
 
     const inputClose = document.createElement('input')
     inputClose.type = 'button'
-    inputClose.value = lang('close')
-    inputClose.onclick = () => this.window.close()
+    inputClose.value = lang('apply-close')
+    inputClose.onclick = () => {
+      this.submit()
+      this.window.close()
+    }
     controls.appendChild(inputClose)
 
     const icons = document.createElement('div')
@@ -143,16 +146,20 @@ class CustomCategoryEditor {
     controls.appendChild(tutorial)
 
     input.onclick = (e) => {
-      const err = customCategoryTest(this.textarea.value)
-      if (err) {
-        return global.alert(err)
-      }
-
-      this.applyContent(this.textarea.value)
+      this.submit()
       e.preventDefault()
     }
 
     this.window.show()
+  }
+
+  submit () {
+    const err = customCategoryTest(this.textarea.value)
+    if (err) {
+      return global.alert(err)
+    }
+
+    this.applyContent(this.textarea.value)
   }
 
   applyContent (content) {
