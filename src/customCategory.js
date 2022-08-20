@@ -418,8 +418,30 @@ function customCategoryTestCompile (data) {
     return
   }
 
+  let template
   try {
-    OverpassLayer.twig.twig({ data })
+    template = OverpassLayer.twig.twig({ data })
+  }
+  catch (e) {
+    return e
+  }
+
+  const fakeOb = {
+    id: 'n1',
+    sublayer_id: 'main',
+    osm_id: 1,
+    type: 'node',
+    tags: {
+      foo: 'bar'
+    },
+    map: {
+      zoom: 15,
+      metersPerPixel: 0.8
+    }
+  }
+
+  try {
+    template.render(fakeOb)
   }
   catch (e) {
     return e
