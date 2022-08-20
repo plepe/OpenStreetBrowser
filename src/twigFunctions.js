@@ -144,16 +144,33 @@ OverpassLayer.twig.extendFilter('debug', function (value, param) {
 OverpassLayer.twig.extendFilter('json_pp', function (value, param) {
   const options = param[0] || {}
 
-  value = JSON.parse(JSON.stringify(value))
-  delete value._keys // remove TwigJS artefact
+  if (value === 'undefined') {
+    return 'null'
+  }
+
+  value = twigClear(value)
 
   return JSON.stringify(value, null, 'indent' in options ? ' '.repeat(options.indent) : '  ')
 })
 OverpassLayer.twig.extendFilter('yaml', function (value, param) {
   const options = param[0] || {}
 
-  value = JSON.parse(JSON.stringify(value))
-  delete value._keys // remove TwigJS artefact
+  value = twigClear(value)
 
   return yaml.dump(value, options)
 })
+
+function twigClear (value) {
+  if (value === null || typeof value !== 'object') {
+    return value
+  }
+
+  const v = {}
+  for (let k in value) {
+    if (k !== '_keys') {
+      v[k] = value[k]
+    }
+  }
+
+  return v
+}
