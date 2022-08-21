@@ -30,32 +30,40 @@ class CustomCategoryRepository {
 
   getCategory (id, options, callback) {
     if (id in this.cache) {
-      return callback(null, yaml.load(this.cache[id]), this.cache[id])
+      const data = this.parseCategory(id, this.cache[id])
+      return callback(null, data, this.cache[id])
     }
 
     fetch('customCategory.php?id=' + id)
       .then(res => res.text())
       .then(content => {
-        let data
         this.cache[id] = content
 
-        try {
-          data = yaml.load(content)
-        }
-        catch (e) {
-          return global.alert(e)
-        }
-
-        if (data && typeof data !== 'object') {
-          callback(new Error('Data can not be parsed into an object'))
-        }
-
-        if (!data.name) {
-          data.name = 'Custom ' + id.substr(0, 6)
-        }
+        const data = this.parseCategory(id, content)
 
         callback(null, data, content)
       })
+  }
+
+  parseCategory (id, content) {
+    let data
+
+    try {
+      data = yaml.load(content)
+    }
+    catch (e) {
+      return global.alert(e)
+    }
+
+    if (data && typeof data !== 'object') {
+      callback(new Error('Data can not be parsed into an object'))
+    }
+
+    if (!data.name) {
+      data.name = 'Custom ' + id.substr(0, 6)
+    }
+
+    return data
   }
 
   saveCategory (body, options, callback) {
