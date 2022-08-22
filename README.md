@@ -37,6 +37,8 @@ You are welcome to send pull requests via Github!
 ### Category definition
 There are currently two types of categories: `index` (for sub categories) and `overpass` (for OpenStreetMap data, loaded via an Overpass API request). Each of them is defined via a JSON structure. They can be combined into a single file.
 
+Check out the [tutorial](./doc/Tutorial.md)!
+
 #### Category 'index'
 File: dir.json
 ```json
