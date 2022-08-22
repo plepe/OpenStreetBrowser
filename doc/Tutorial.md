@@ -3,8 +3,6 @@ Categories can be created as YAML files. This is much simpler as JSON files, bec
 A simple example ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example1.yaml)). It queries nodes, ways and relations with amenity=restaurant from OpenStreetMap (via Overpass API), starting from zoom level 15. `nwr` is short for `(node[amenity=restaurant];way[amenity=restaurant];relation[amenity=restaurant];)`. Please note, that only a subset of OverpassQL is available (see [overpass-frontend](https://github.com/plepe/overpass-frontend) for details).
 
 ```yaml
-# This is necessary, it tells OSB that this category is of type 'overpass'. An alternative would be 'index' (for directories).
-type: overpass
 # From zoom level 15 on, load all node, ways and relations with amenity=restaurant.
 query:
   15: nwr[amenity=restaurant]
@@ -17,7 +15,6 @@ This is the first examples which uses [TwigJS](https://github.com/twigjs/twig.js
 Here, we are using Unicode characters as icons. Alternatively, OpenStreetBrowser includes a [few icon sets](./Icons.md) which you can use.
 
 ```yaml
-type: overpass
 query:
   # query as single line string:
   15: nwr[amenity=fountain]
@@ -45,7 +42,6 @@ feature:
 
 Improving on the example above, we add a `const` block. The values of this block are available throughout the code ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example3.yaml)):
 ```yaml
-type: overpass
 # Adding a category name (in English: "Example 3")
 name:
   en: Example 3
@@ -76,7 +72,6 @@ const:
 
 Improving on the example above, we add a `info` block to show a map key. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example4.yaml)):
 ```yaml
-type: overpass
 query:
   15: nwr[amenity=fountain]
   17: nwr[amenity~"^(fountain|drinking_water)$"]
@@ -115,7 +110,6 @@ const:
 
 Back to the restaurants, we will display the cuisine(s) of the restaurants and even add a filter. In OpenStreetMap, cuisine is tag which can take several values, separated by `;`, e.g. `pizza;burger`. Detailed documentation about filters can be found [here](./Filter.md). ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example5.yaml)):
 ```yaml
-type: overpass
 name:
   en: Example 5
 query:
@@ -153,7 +147,6 @@ const:
 
 Roads, with different color depending on its priority ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/roads1.yaml)):
 ```yaml
-type: overpass
 name: 
   en: Roads 1 # English name of the category
 query:
@@ -177,7 +170,6 @@ feature:
 
 We rewrite the above example to use `const` for coloring. Also, we are adding a casing, to improve visibility of the roads on the map, and a label. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/roads1.yaml)):
 ```yaml
-type: overpass
 name:
   en: Roads 2 # English name of the category
 query:
