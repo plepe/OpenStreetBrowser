@@ -12,6 +12,7 @@ $depend = array(
 $include = array(
   'php' => array(
     'src/defaults.php',
+    'src/database.php',
     'src/options.php',
     'src/language.php',
     'src/ip-location.php',
@@ -22,6 +23,8 @@ $include = array(
     'src/RepositoryDir.php',
     'src/RepositoryGit.php',
     'src/repositories.php',
+    'src/repositoriesGitea.php',
+    'src/customCategory.php',
   ),
   'css' => array(
     'style.css',

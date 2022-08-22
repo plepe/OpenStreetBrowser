@@ -4,31 +4,18 @@ require('./addCategories.css')
 const tabs = require('modulekit-tabs')
 const weightSort = require('weight-sort')
 
+const state = require('./state')
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
 let tab
 
-function addCategoriesShow (repo, options={}) {
-  let content = tab.content
-  let repoId
-  let branchId
+function addCategoriesList (content, browser, options = {}) {
+  content.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
 
-  if (repo) {
-    [ repoId, branchId ] = repo.split(/~/)
-  }
-
-  if (!branchId) {
-    branchId = 'master'
-  }
-
-  content.innerHTML = '<h3>' + lang('more_categories') + '</h3>' + '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
-
-  OpenStreetBrowserLoader.getRepo(repo, options, function (err, repoData) {
+  OpenStreetBrowserLoader.getRepositoryList(options, function (err, repoData) {
     if (err) {
-      alert(err)
+      return global.alert(err)
     }
-
-    content.innerHTML = '<h3>' + lang('more_categories') + '</h3>'
 
     var categoryUrl = null
     if (repoData.categoryUrl) {
@@ -37,66 +24,132 @@ function addCategoriesShow (repo, options={}) {
 
     var list = {}
 
-    if (repo) {
-      var backLink = document.createElement('a')
-      backLink.className = 'back'
-      backLink.href = '#'
-      backLink.innerHTML = '<i class="fa fa-chevron-circle-left" aria-hidden="true"></i> '
-      backLink.appendChild(document.createTextNode(lang('back')))
-
-      backLink.onclick = function () {
-        addCategoriesShow()
-        return false
-      }
-      content.appendChild(backLink)
-
-      let h = document.createElement('h2')
-      h.appendChild(document.createTextNode(repoId))
-      content.appendChild(h)
-
-      list = repoData.categories
-    } else {
-      if (typeof repositoriesGitea === 'object' && repositoriesGitea.url) {
-        let a = document.createElement('a')
-        a.href = repositoriesGitea.url
-        a.target = '_blank'
-        a.innerHTML = lang('more_categories_gitea')
-        content.appendChild(a)
-      }
-
-      list = weightSort(repoData, {
-        key: 'timestamp',
-        reverse: true
-      })
+    if (typeof repositoriesGitea === 'object' && repositoriesGitea.url) {
+      let a = document.createElement('a')
+      a.href = repositoriesGitea.url
+      a.target = '_blank'
+      a.innerHTML = lang('more_categories_gitea')
+      content.appendChild(a)
     }
+
+    list = weightSort(repoData, {
+      key: 'timestamp',
+      reverse: true
+    })
 
     let menu = document.createElement('ul')
     menu.className = 'menu'
     content.appendChild(menu)
 
-    if (repo) {
-      let li = document.createElement('li')
-      menu.appendChild(li)
+    let header = document.createElement('h3')
+    header.innerHTML = lang('repositories') + ':'
+    content.appendChild(header)
 
-      let text = document.createElement('a')
-      text.innerHTML = lang('repo-use-as-base')
-      text.href = '#repo=' + repo
-      text.onclick = addCategoriesHide
-      li.appendChild(text)
+    while (content.lastChild) {
+      content.removeChild(content.lastChild)
     }
 
-    if (repo) {
-      let li = document.createElement('li')
-      menu.appendChild(li)
+    var ul = document.createElement('ul')
 
-      let text = document.createElement('a')
-      text.innerHTML = lang('reload')
-      text.href = '#'
-      text.onclick = () => {
-        addCategoriesShow(repo, { force: true })
+    for (var id in list) {
+      var data = list[id]
+
+      var repositoryUrl = null
+      if (data.repositoryUrl) {
+        repositoryUrl = OverpassLayer.twig.twig({ data: data.repositoryUrl, autoescape: true })
       }
-      li.appendChild(text)
+
+      var li = document.createElement('li')
+
+      let a = document.createElement('a')
+      a.href = '#more-categories?id=' + id
+
+      li.appendChild(a)
+      a.appendChild(document.createTextNode('name' in data ? lang(data.name) : id))
+
+      var editLink = null
+      if (repositoryUrl) {
+        editLink = document.createElement('a')
+        editLink.href = repositoryUrl.render({ repositoryId: id })
+      }
+      if (editLink) {
+        editLink.className = 'source-code'
+        editLink.title = 'Show source code'
+        editLink.target = '_blank'
+        editLink.innerHTML = '<i class="fa fa-file-code-o" aria-hidden="true"></i>'
+        li.appendChild(document.createTextNode(' '))
+        li.appendChild(editLink)
+      }
+
+      ul.appendChild(li)
     }
+
+    content.appendChild(ul)
+    browser.catchLinks()
+  })
+}
+
+function addCategoriesShow (repo, browser, options={}) {
+  const content = browser.dom
+
+  let [ repoId, branchId ] = repo.split(/~/)
+
+  if (!branchId) {
+    branchId = 'master'
+  }
+
+  content.innerHTML = '<i class="fa fa-spinner fa-pulse fa-fw"></i> ' + lang('loading')
+
+  OpenStreetBrowserLoader.getRepository(repo, options, function (err, repository) {
+    if (err) {
+      return global.alert(err)
+    }
+
+    const repoData = repository.data
+
+    content.innerHTML = ''
+
+    var categoryUrl = null
+    if (repoData.categoryUrl) {
+      categoryUrl = OverpassLayer.twig.twig({ data: repoData.categoryUrl, autoescape: true })
+    }
+
+    var list = {}
+
+    var backLink = document.createElement('a')
+    backLink.className = 'back'
+    backLink.href = '#more-categories?'
+    backLink.innerHTML = '<i class="fa fa-chevron-circle-left" aria-hidden="true"></i> '
+    backLink.appendChild(document.createTextNode(lang('back')))
+    content.appendChild(backLink)
+    browser.catchLinks()
+
+    let h = document.createElement('h2')
+    h.appendChild(document.createTextNode(repoId))
+    content.appendChild(h)
+
+    list = repoData.categories
+
+    let menu = document.createElement('ul')
+    menu.className = 'menu'
+    content.appendChild(menu)
+
+    let li = document.createElement('li')
+    menu.appendChild(li)
+
+    let text = document.createElement('a')
+    text.innerHTML = lang('repo-use-as-base')
+    text.href = '#repo=' + repo
+    text.onclick = () => browser.close()
+    li.appendChild(text)
+
+    li = document.createElement('li')
+    menu.appendChild(li)
+
+    text = document.createElement('a')
+    text.innerHTML = lang('reload')
+    text.href = '#more-categories?id=' + repo + '&force=true'
+    li.appendChild(text)
 
     if ('branches' in repoData) {
       let li = document.createElement('li')
@@ -131,7 +184,7 @@ function addCategoriesShow (repo, options={}) {
     }
 
     let header = document.createElement('h3')
-    header.innerHTML = lang(repo ? 'categories' : 'repositories') + ':'
+    header.innerHTML = lang('categories') + ':'
     content.appendChild(header)
 
     var ul = document.createElement('ul')
@@ -144,21 +197,11 @@ function addCategoriesShow (repo, options={}) {
         repositoryUrl = OverpassLayer.twig.twig({ data: data.repositoryUrl, autoescape: true })
       }
 
-      var li = document.createElement('li')
+      li = document.createElement('li')
 
       let a = document.createElement('a')
-      if (repo) {
-        a.href = '#categories=' + (repo === 'default' ? '' : repo + '/') + id
-        a.onclick = function () {
-          addCategoriesHide()
-        }
-      } else {
-        a.href = '#'
-        a.onclick = function (id) {
-          addCategoriesShow(id)
-          return false
-        }.bind(this, id)
-      }
+      a.href = '#categories=' + (repo === 'default' ? '' : repo + '/') + id
+      a.onclick = () => browser.close()
 
       li.appendChild(a)
       a.appendChild(document.createTextNode('name' in data ? lang(data.name) : id))
@@ -185,28 +228,33 @@ function addCategoriesShow (repo, options={}) {
     }
 
     content.appendChild(ul)
+    browser.catchLinks()
   })
 }
 
-function addCategoriesHide () {
-  tab.unselect()
-}
+hooks.register('browser-more-categories', (browser, parameters) => {
+  const content = browser.dom
 
-register_hook('init', function (callback) {
-  tab = new tabs.Tab({
-    id: 'addCategories'
-  })
-  global.tabs.add(tab)
+  if (!Object.keys(parameters).length) {
+    let block = document.createElement('div')
+    block.setAttribute('weight', 1)
+    content.appendChild(block)
 
-  tab.header.innerHTML = '<i class="fa fa-plus" aria-hidden="true"></i>'
-  tab.header.title = lang('more_categories')
+    let header = document.createElement('h4')
+    header.innerHTML = lang('repositories')
+    block.appendChild(header)
 
-  let initialized = false
+    let div = document.createElement('div')
+    block.appendChild(div)
+    addCategoriesList(div, browser, parameters)
 
-  tab.on('select', () => {
-    if (!initialized) {
-      addCategoriesShow()
-      initialized = true
-    }
-  })
+    browser.catchLinks()
+  }
+  else if (parameters.id) {
+    addCategoriesShow(parameters.id, browser, parameters)
+  }
+  else if (parameters.repo || parameters.categories) {
+    state.apply(parameters)
+    browser.close()
+  }
 })

@@ -5,6 +5,7 @@ var osmParseDate = require('openstreetmap-date-parser')
 var osmFormatDate = require('openstreetmap-date-format')
 const natsort = require('natsort').default
 const md5 = require('md5')
+const yaml = require('js-yaml')
 
 var md5cache = {}
 
@@ -140,3 +141,36 @@ OverpassLayer.twig.extendFilter('debug', function (value, param) {
   console.log.apply(null, [ value, ...param ])
   return value
 })
+OverpassLayer.twig.extendFilter('json_pp', function (value, param) {
+  const options = param[0] || {}
+
+  if (value === 'undefined') {
+    return 'null'
+  }
+
+  value = twigClear(value)
+
+  return JSON.stringify(value, null, 'indent' in options ? ' '.repeat(options.indent) : '  ')
+})
+OverpassLayer.twig.extendFilter('yaml', function (value, param) {
+  const options = param[0] || {}
+
+  value = twigClear(value)
+
+  return yaml.dump(value, options)
+})
+
+function twigClear (value) {
+  if (value === null || typeof value !== 'object') {
+    return value
+  }
+
+  const v = {}
+  for (let k in value) {
+    if (k !== '_keys') {
+      v[k] = value[k]
+    }
+  }
+
+  return v
+}

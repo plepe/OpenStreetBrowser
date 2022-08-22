@@ -128,6 +128,11 @@ feature:
   # each value individually. They are joined as enumeration.
   details: |
     {{ tagTransList('cuisine', tags.cuisine) }}
+  # Body is shown in the popup and the details in the sidebar. An easy way to
+  # show all tags is using the TwigJS 'yaml' filter, which produces YAML.
+  # Alternatively, you could use 'json_pp' (JSON pretty print).
+  body: |
+    <pre>{{ tags|yaml }}</pre>
 filter:
   cuisine:
     name: "{{ keyTrans('cuisine') }}"

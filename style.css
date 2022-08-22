@@ -612,3 +612,82 @@ ul.overpass-layer-list > li > a > .content > .details {
   margin-bottom: 0.25em;
   background-color: #ffdfdf;
 }
+
+.Window > .content textarea {
+  height: 100%;
+  width: 100%;
+  resize: none;
+  box-sizing: border-box;
+}
+.Window > .content .controls {
+  flex-grow: 0;
+}
+.Window > .content .controls > .actions {
+  margin-left: 1em;
+  margin-right: 1em;
+  display: inline;
+}
+
+/* Window */
+.Window {
+  position: absolute;
+  z-index: 99999;
+  background-color: #f1f1f1;
+  border: 1px solid #000000;
+  resize: both;
+  overflow: hidden;
+  width: min(60em, 80%);
+  height: min(30em, 60%);
+  left: 10%;
+  top: 10%;
+
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+}
+.Window > .header {
+  padding: 0.25em;
+  font-weight: bold;
+  cursor: move;
+  z-index: 100000;
+  background-color: #dfdfdf;
+  color: #000000;
+  flex-grow: 0;
+  position: relative;
+}
+.Window > .header > .closeBtn {
+}
+.Window > .header > .closeBtn::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f00d";
+  position: absolute;
+  right: 0.25em;
+  top: 0.25em;
+}
+.Window > .content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+}
+.tip-tutorial {
+  padding: 0.25em 0;
+  display: inline-block;
+}
+.tip-tutorial a {
+  text-decoration: underline;
+}
+
+/* Copy to clipboard */
+.share-button {
+  position: relative;
+}
+.share-button > .notify {
+  position: absolute;
+  background: white;
+  border: 1px solid black;
+  border-radius: 0.25em;
+  width: 8em;
+  text-align: center;
+  z-index: 1;
+}

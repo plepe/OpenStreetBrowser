@@ -34,6 +34,7 @@ class RepositoryDir extends RepositoryBase {
       if (preg_match("/^([0-9a-zA-Z_\-]+)\.json$/", $f, $m) && $f !== 'package.json') {
         $d1 = json_decode(file_get_contents("{$this->path}/{$f}"), true);
         $d1['format'] = 'json';
+        $d1['fileName'] = $f;
 
 	if (!$this->isCategory($d1)) {
 	  continue;
@@ -45,6 +46,7 @@ class RepositoryDir extends RepositoryBase {
       if (preg_match("/^([0-9a-zA-Z_\-]+)\.yaml$/", $f, $m)) {
         $d1 = yaml_parse(file_get_contents("{$this->path}/{$f}"));
         $d1['format'] = 'yaml';
+        $d1['fileName'] = $f;
 
 	if (!$this->isCategory($d1)) {
 	  continue;
@@ -80,11 +82,15 @@ class RepositoryDir extends RepositoryBase {
 
   function file_get_contents ($file) {
     if (substr($file, 0, 1) === '.' || preg_match("/\/\./", $file)) {
-      return null;
+      return false;
     }
 
     if (!$this->access($file)) {
       return false;
+    }
+
+    if (!file_exists("{$this->path}/{$file}")) {
+      return null;
     }
 
     return file_get_contents("{$this->path}/{$file}");

@@ -95,6 +95,14 @@ $config['baseMaps'] = array(
   ),
 );
 
+// customCategory needs a database
+$db_conf = [
+  //'dsn' => 'mysql:host=localhost;dbname=openstreetbrowser',
+  'dsn' => 'sqlite:data/db.sqlite',
+  'username' => 'USERNAME',
+  'password' => 'PASSWORD',
+];
+
 // List of available user interface languages
 $languages = array(
   "en", // English
