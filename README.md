@@ -35,7 +35,7 @@ git clone https://github.com/plepe/openstreetbrowser-categories-main.git node_mo
 You are welcome to send pull requests via Github!
 
 ### Category definition
-There are currently two types of categories: `index` (for sub categories) and `overpass` (for OpenStreetMap data, loaded via an Overpass API request). Each of them is defined via a JSON structure. They can be combined into a single file.
+There are currently two types of categories: `index` (for sub categories) and `overpass` (for OpenStreetMap data, loaded via an Overpass API request). Each of them is defined via a JSON (old) or YAML (recommended) structure. They can be combined into a single file.
 
 Check out the [tutorial](./doc/Tutorial.md)!
 
@@ -55,6 +55,16 @@ File: dir.json
         }
     ]
 }
+```
+
+or File: dir.yaml
+```yaml
+type: index
+subCategories:
+  - id: foo
+  - id: bar
+    type: overpass
+    query: node[amenity=bar]
 ```
 
 This will define a category with the id 'dir' (from the file name) with two sub-categories: 'foo' (which will be loaded from the file `foo.json`) and 'bar' (which is defined inline as category of type 'overpass' and will show all nodes with the tag 'amenity' set to value 'bar' - see below for more details).
