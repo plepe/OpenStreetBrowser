@@ -104,7 +104,7 @@ class RepositoryBase {
 
   function isCategory ($data) {
     if (!array_key_exists('type', $data)) {
-      return false;
+      return true;
     }
 
     return in_array($data['type'], array('index', 'overpass'));
