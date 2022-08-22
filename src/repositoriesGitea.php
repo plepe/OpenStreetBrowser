@@ -1,5 +1,5 @@
 <?php
-register_hook("get-repositories", function ($result) {
+register_hook("get-repositories", function (&$result) {
   global $repositoriesGitea;
 
   if (isset($repositoriesGitea)) {
