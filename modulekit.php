@@ -30,4 +30,4 @@ $include = array(
     'style.css',
   ),
 );
-$version = "5.1";
+$version = "5.2";
