@@ -2,6 +2,7 @@ const tabs = require('modulekit-tabs')
 const yaml = require('js-yaml')
 const md5 = require('md5')
 const OverpassLayer = require('overpass-layer')
+const OverpassFrontendFilter = require('overpass-frontend/src/Filter')
 const jsonMultilineStrings = require('json-multiline-strings')
 
 const Window = require('./Window')
@@ -405,6 +406,24 @@ function customCategoryTest (value) {
     return new Error('Data can not be parsed into an object')
   }
 
+  if (!('query' in data)) {
+    return new Error('No "query" defined!')
+  }
+
+  if (typeof data.query === 'string') {
+    const r = customCategoryTestQuery(data.query)
+    if (r) { return r }
+  } else if (data.query === null) {
+    return new Error('No "query" defined!')
+  } else if (Object.values(data.query).length) {
+    for (let z in data.query) {
+      const r = customCategoryTestQuery(data.query[z])
+      if (r) { return new Error('Query z' + z + ': ' + r) }
+    }
+  } else {
+    return new Error('"query" can not be parsed!')
+  }
+
   const fields = ['feature', 'memberFeature']
   for (let i1 = 0; i1 < fields.length; i1++) {
     const k1 = fields[i1]
@@ -457,6 +476,24 @@ function customCategoryTestCompile (data) {
 
   try {
     template.render(fakeOb)
+  }
+  catch (e) {
+    return e
+  }
+}
+
+function customCategoryTestQuery (str) {
+  if (typeof str !== 'string') {
+    return 'Query is not a string!'
+  }
+
+  // make sure the request ends with ';'
+  if (!str.match(/;\s*$/)) {
+    str += ';'
+  }
+
+  try {
+    const query = new OverpassFrontendFilter(str)
   }
   catch (e) {
     return e
