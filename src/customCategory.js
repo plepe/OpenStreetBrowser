@@ -51,13 +51,12 @@ class CustomCategoryRepository {
 
     try {
       data = yaml.load(content)
-    }
-    catch (e) {
+    } catch (e) {
       return global.alert(e)
     }
 
     if (data && typeof data !== 'object') {
-      callback(new Error('Data can not be parsed into an object'))
+      return new Error('Data can not be parsed into an object')
     }
 
     if (!data.name) {
@@ -207,9 +206,8 @@ class CustomCategoryEditor {
   }
 }
 
-
 function editCustomCategory (id, category) {
-  let done = editors.filter(editor => {
+  const done = editors.filter(editor => {
     if (editor.id === id) {
       editor.edit()
       return true
@@ -230,15 +228,15 @@ hooks.register('browser-more-categories', (browser, parameters) => {
   const content = browser.dom
 
   if (!Object.keys(parameters).length) {
-    let block = document.createElement('div')
+    const block = document.createElement('div')
     block.setAttribute('weight', 0)
     content.appendChild(block)
 
-    let header = document.createElement('h4')
+    const header = document.createElement('h4')
     header.innerHTML = lang('customCategory:header')
     block.appendChild(header)
 
-    let ul = document.createElement('ul')
+    const ul = document.createElement('ul')
 
     let li = document.createElement('li')
     let a = document.createElement('a')
@@ -262,8 +260,7 @@ hooks.register('browser-more-categories', (browser, parameters) => {
 
     block.appendChild(ul)
     browser.catchLinks()
-  }
-  else if (parameters.custom === 'list') {
+  } else if (parameters.custom === 'list') {
     customCategoriesList(browser, parameters)
   }
 })
@@ -372,9 +369,14 @@ hooks.register('category-overpass-init', (category) => {
 
       category.repository.file_get_contents(category.data.fileName, {},
         (err, content) => {
+          if (err) {
+            console.error(err)
+            return global.alert(err)
+          }
+
           if (category.data.format === 'json') {
             content = JSON.parse(content)
-            content = jsonMultilineStrings.join(content, { exclude: [ [ 'const' ], [ 'filter' ] ] })
+            content = jsonMultilineStrings.join(content, { exclude: [['const'], ['filter']] })
             content = yaml.dump(content, {
               lineWidth: 9999
             })
@@ -385,7 +387,6 @@ hooks.register('category-overpass-init', (category) => {
         }
       )
     })
-
   }
 })
 
@@ -397,8 +398,7 @@ function customCategoryTest (value) {
   let data
   try {
     data = yaml.load(value)
-  }
-  catch (e) {
+  } catch (e) {
     return e
   }
 
@@ -416,7 +416,7 @@ function customCategoryTest (value) {
   } else if (data.query === null) {
     return new Error('No "query" defined!')
   } else if (Object.values(data.query).length) {
-    for (let z in data.query) {
+    for (const z in data.query) {
       const r = customCategoryTestQuery(data.query[z])
       if (r) { return new Error('Query z' + z + ': ' + r) }
     }
@@ -428,7 +428,7 @@ function customCategoryTest (value) {
   for (let i1 = 0; i1 < fields.length; i1++) {
     const k1 = fields[i1]
     if (data[k1]) {
-      for (k2 in data[k1]) {
+      for (const k2 in data[k1]) {
         const err = customCategoryTestCompile(data[k1][k2])
         if (err) {
           return new Error('Compiling /' + k1 + '/' + k2 + ': ' + err.message)
@@ -455,8 +455,7 @@ function customCategoryTestCompile (data) {
   let template
   try {
     template = OverpassLayer.twig.twig({ data })
-  }
-  catch (e) {
+  } catch (e) {
     return e
   }
 
@@ -476,8 +475,7 @@ function customCategoryTestCompile (data) {
 
   try {
     template.render(fakeOb)
-  }
-  catch (e) {
+  } catch (e) {
     return e
   }
 }
@@ -493,9 +491,8 @@ function customCategoryTestQuery (str) {
   }
 
   try {
-    const query = new OverpassFrontendFilter(str)
-  }
-  catch (e) {
+    new OverpassFrontendFilter(str)
+  } catch (e) {
     return e
   }
 }
