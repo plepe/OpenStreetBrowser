@@ -129,8 +129,9 @@ class CustomCategoryEditor {
     inputClose.type = 'button'
     inputClose.value = lang('apply-close')
     inputClose.onclick = () => {
-      this.submit()
-      this.window.close()
+      if (this.submit()) {
+        this.window.close()
+      }
     }
     controls.appendChild(inputClose)
 
@@ -164,10 +165,12 @@ class CustomCategoryEditor {
   submit () {
     const err = customCategoryTest(this.textarea.value)
     if (err) {
-      return global.alert(err)
+      global.alert(err)
+      return false
     }
 
     this.applyContent(this.textarea.value)
+    return true
   }
 
   applyContent (content) {
