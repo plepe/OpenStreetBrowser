@@ -454,7 +454,7 @@ function customCategoryTestCompile (data) {
 
   let template
   try {
-    template = OverpassLayer.twig.twig({ data })
+    template = OverpassLayer.twig.twig({ data, rethrow: true })
   } catch (e) {
     return e
   }
