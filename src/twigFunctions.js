@@ -53,7 +53,8 @@ OverpassLayer.twig.extendFilter('matches', function (value, param) {
     throw new Error("Filter 'matches' needs a parameter!")
   }
 
-  return value.toString().match(param[0])
+  const r = new RegExp(...param)
+  return value.toString().match(r)
 })
 OverpassLayer.twig.extendFilter('natsort', function (values, options) {
   return values.sort(natsort(options))

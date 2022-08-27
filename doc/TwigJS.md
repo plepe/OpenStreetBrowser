@@ -67,7 +67,7 @@ There are several extra functions defined for the TwigJS language:
 
 Extra filters:
 * filter websiteUrl: return a valid http link. Example: `{{ "www.google.com"|websiteUrl }}` -> "http://www.google.com"; `{{ "https://google.com"|websiteUrl }}` -> "https://google.com"
-* filter `matches`: regular expression match. e.g. `{{ "test"|matches("e(st)$") }}` returns `[ "est", "st" ]`. Returns null if it does not match.
+* filter `matches`: regular expression match. e.g. `{{ "test"|matches("e(st)$") }}` returns `[ "est", "st" ]`. You can pass a second parameter with [RegExp flags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/RegExp). Returns null if it does not match.
 * filter `osmParseDate`: returns an array with the lower and upper boundary of the year of a `start_date` tag. See [openstreetmap-date-parser](https://github.com/plepe/openstreetmap-date-parser) for details.
 * filter `osmFormatDate`: returns the date as localized strings. Accept an object for options, e.g. `{{ tags.start_date|osmFormatDate({ format: 'short' }) }}`. See [openstreetmap-date-format](https://github.com/plepe/openstreetmap-date-format) for details.
 * filter `natsort`: Sort an array naturally, see [natsort](https://www.npmjs.com/package/natsort) for details.
