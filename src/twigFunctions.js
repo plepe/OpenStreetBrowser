@@ -143,7 +143,11 @@ OverpassLayer.twig.extendFunction('debug', function () {
   console.log.apply(null, arguments)
 })
 OverpassLayer.twig.extendFilter('debug', function (value, param) {
-  console.log.apply(null, [ value, ...param ])
+  if (param) {
+    console.log.apply(null, [value, ...param])
+  } else {
+    console.log(value)
+  }
   return value
 })
 OverpassLayer.twig.extendFilter('json_pp', function (value, param) {
@@ -152,6 +156,7 @@ OverpassLayer.twig.extendFilter('json_pp', function (value, param) {
   if (value === 'undefined') {
     return 'null'
   }
+  throw new Error('foo')
 
   value = twigClear(value)
 
