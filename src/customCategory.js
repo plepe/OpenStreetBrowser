@@ -427,37 +427,34 @@ function customCategoryTest (value) {
     return new Error('"query" can not be parsed!')
   }
 
-  let fields = ['feature', 'memberFeature']
-  for (let i1 = 0; i1 < fields.length; i1++) {
-    const k1 = fields[i1]
-    if (data[k1]) {
-      for (const k2 in data[k1]) {
-        const err = customCategoryTestCompile(data[k1][k2])
-        if (err) {
-          return new Error('Compiling /' + k1 + '/' + k2 + ': ' + err.message)
-        }
+  const testPaths = [
+    [ /^(memberF|f)eature$/, /./ ],
+    [ /^(memberF|f)eature$/, /^style(:.*)$/, /./ ],
+    [ 'info' ]
+  ]
 
-        if (k2 === 'style' || k2.match(/^style:/)) {
-          for (const k3 in data[k1][k2]) {
-            const err = customCategoryTestCompile(data[k1][k2][k3])
-            if (err) {
-              return new Error('Compiling /' + k1 + '/' + k2 + '/' + k3 + ': ' + err.message)
-            }
-          }
-        }
+  try {
+    testPaths.forEach(path => customCategoryTestCompilePath(data, path, ''))
+  }
+  catch (err) {
+    return err
+  }
+}
+
+function customCategoryTestCompilePath (data, subPaths, path) {
+  if (subPaths.length) {
+    const p = subPaths[0]
+
+    for (const k in data) {
+      if (typeof p === 'string' ? k === p : k.match(p)) {
+        customCategoryTestCompilePath(data[k], subPaths.slice(1), path + '/' + k)
       }
     }
   }
 
-  fields = ['info']
-  for (let i1 = 0; i1 < fields.length; i1++) {
-    const k1 = fields[i1]
-    if (data[k1]) {
-      const err = customCategoryTestCompile(data[k1])
-      if (err) {
-        return new Error('Compiling /' + k1 + ': ' + err.message)
-      }
-    }
+  const err = customCategoryTestCompile(data)
+  if (err) {
+    throw new Error('Compiling ' + path + ': ' + err.message)
   }
 }
 
