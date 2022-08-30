@@ -430,6 +430,8 @@ function customCategoryTest (value) {
   const testPaths = [
     [ /^(memberF|f)eature$/, /./ ],
     [ /^(memberF|f)eature$/, /^style(:.*)$/, /./ ],
+    [ 'filter', /./, /(name|query|values|placeholder|valueName)/ ],
+    [ 'filter', /./, 'values', /./ , 'name'],
     [ 'info' ]
   ]
 
