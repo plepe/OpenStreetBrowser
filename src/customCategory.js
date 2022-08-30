@@ -427,7 +427,7 @@ function customCategoryTest (value) {
     return new Error('"query" can not be parsed!')
   }
 
-  const fields = ['feature', 'memberFeature']
+  let fields = ['feature', 'memberFeature']
   for (let i1 = 0; i1 < fields.length; i1++) {
     const k1 = fields[i1]
     if (data[k1]) {
@@ -445,6 +445,17 @@ function customCategoryTest (value) {
             }
           }
         }
+      }
+    }
+  }
+
+  fields = ['info']
+  for (let i1 = 0; i1 < fields.length; i1++) {
+    const k1 = fields[i1]
+    if (data[k1]) {
+      const err = customCategoryTestCompile(data[k1])
+      if (err) {
+        return new Error('Compiling /' + k1 + ': ' + err.message)
       }
     }
   }
