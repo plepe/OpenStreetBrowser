@@ -51,5 +51,9 @@
     "zoom_in_more": "Zoome hinein für weitere Kartenobjekte",
     "main:about": "Über",
     "main:code": "Code",
-    "options:debug_mode": "Debug-Modus"
+    "options:debug_mode": "Debug-Modus",
+    "geoinfo:mouse": "Mausposition",
+    "geoinfo:length": "Länge",
+    "geoinfo:area": "Fläche",
+    "options:chooseEditor": "Wähle Editor"
 }
