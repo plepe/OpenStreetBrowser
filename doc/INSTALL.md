@@ -1,4 +1,7 @@
-These install instructions assume a plain Ubuntu 22.04 server installation.
+These install instructions are tested on a plain Ubuntu 22 or Debian 11 Server installation.
+
+You either need to [install a modern nodejs version](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
+or replace the `openstreetbrowser.min.js` with `openstreetbrowser.js` in `index.html`.
 
 ```sh
 sudo apt install apache2 libapache2-mod-php curl git php-cli composer nodejs npm php-curl php-yaml
@@ -20,20 +23,20 @@ For improved performance you should also run:
 modulekit/build_cache
 ```
 
-Browse to http://localhost/openstreetbrowser
-
-Have fun!
+Have fun on http://localhost/openstreetbrowser which is now served via apache from php!
 
 # Debugging
-For debugging you should add the following line to conf.php:
+
+For debugging add the following line to conf.php:
 ```php
 $modulekit_nocache = true;
 ```
 
-Also you should run:
+And then run:
 ```sh
 npm run watch
 ```
-This is very similar to `npm run build`, but watches JavaScript files for
-changes and will update the dist/openstreetbrowser.js file. Also it will add
-debugging information to the final JavaScript file.
+
+This is very similar to `npm run build`,
+but watches JavaScript files for changes and updates the dist/openstreetbrowser.js file automatically.
+It also adds debugging information to the final JavaScript file.
