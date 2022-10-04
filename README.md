@@ -1,6 +1,5 @@
 ## INSTALL
 ```sh
-sudo apt install php-yaml
 git clone https://github.com/plepe/openstreetbrowser.git
 cd openstreetbrowser
 npm install

@@ -1,21 +1,17 @@
-These install instructions assume a plain Ubuntu 16.04 server installation.
+These install instructions assume a plain Ubuntu 22.04 server installation.
 
 ```sh
-sudo apt install apache2 libapache2-mod-php git php-cli composer nodejs-legacy npm php-curl
+sudo apt install apache2 libapache2-mod-php curl git php-cli composer nodejs npm php-curl php-yaml
 sudo chmod 777 /var/www/html
 cd /var/www/html
 git clone https://github.com/plepe/openstreetbrowser.git
 cd openstreetbrowser
 npm install
-# At 'npm install' ignore the error "Failed at the openstreetbrowser lint
-# script 'standard src/*.js'. This just means that there are some errors with
-# the coding style, but this is not fatal.
 composer install
-git submodule init
-git submodule update
+git submodule update --init
 cp conf.php-dist conf.php
 nano conf.php
-npm run build
+mkdir data
 bin/download_dependencies
 ```
 
