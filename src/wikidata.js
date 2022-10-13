@@ -44,11 +44,16 @@ module.exports = {
 }
 
 OverpassLayer.twig.extendFilter('wikidataEntity', function (value, param) {
+  const ob = global.currentMapFeature
   if (value in cache) {
     return cache[value]
   }
 
-  wikidataLoad(value, () => {})
+  wikidataLoad(value, () => {
+    if (ob) {
+      ob.recalc()
+    }
+  })
 
   return null
 })
