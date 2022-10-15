@@ -87,5 +87,15 @@
     "options:chooseEditor": "Escolha o editor",
     "geoinfo:nw-corner": "Canto noroeste",
     "geoinfo:se-corner": "Canto sudeste",
-    "empty value": "valor vazio"
+    "empty value": "valor vazio",
+    "close": "Fechar",
+    "download": "Baixar",
+    "apply-keep": "Aplicar e continuar editando",
+    "apply-close": "Aplicar e fechar",
+    "tip-tutorial": "Veja o [Tutorial]",
+    "customCategory:header": "Categorias personalizadas",
+    "customCategory:clone": "Clonar como categoria personalizada",
+    "customCategory:create": "Criar categoria personalizada",
+    "customCategory:list": "Listar categorias personalizadas populares",
+    "copied-clipboard": "Copiado para área de transferência"
 }
