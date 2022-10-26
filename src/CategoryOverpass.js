@@ -419,8 +419,10 @@ CategoryOverpass.prototype.open = function () {
       this.tabInfo.header.title = lang('category-info-tooltip')
       this.domInfo = this.tabInfo.content
       this.domInfo.classList.add('info')
+    }
 
-      this.templateInfo = OverpassLayer.twig.twig({ data: this.data.info, autoescape: true })
+    if (!this.templateInfo) {
+      this.templateInfo = OverpassLayer.twig.twig({ data: this.data.info, autoescape: true, rethrow: true })
     }
 
     this.updateInfo()
