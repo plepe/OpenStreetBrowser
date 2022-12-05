@@ -164,7 +164,7 @@ function addCategoriesShow (repo, browser, options={}) {
       branchSelector.onchange = () => {
         let branch = branchSelector.value
 
-        addCategoriesShow(repoId + '~' + branch)
+        addCategoriesShow(repoId + '~' + branch, browser, options)
       }
 
       Object.keys(repoData.branches).forEach(
