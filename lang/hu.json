@@ -87,5 +87,15 @@
     "heading:W": "NY",
     "heading:NW": "ÉNY",
     "options:chooseEditor": "Szerkesztő kiválasztása",
-    "empty value": "üres érték"
+    "empty value": "üres érték",
+    "close": "Bezárás",
+    "download": "Letöltés",
+    "apply-keep": "Alkalmaz & szerkesztés folytatása",
+    "apply-close": "Alkalmaz & bezárás",
+    "tip-tutorial": "Nézz utána az oktatóanyagban: [Tutorial]",
+    "customCategory:header": "Egyéni kategóriák",
+    "customCategory:clone": "Másolat készítése egyéni kategóriaként",
+    "customCategory:create": "Egyéni kategória létrehozása",
+    "customCategory:list": "Népszerű egyéni kategóriák felsorolása",
+    "copied-clipboard": "Vágólapra másolva"
 }
