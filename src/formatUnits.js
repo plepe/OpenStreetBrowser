@@ -207,6 +207,7 @@ register_hook('init', () => {
 })
 
 OverpassLayer.twig.extendFunction('formatDistance', function () {
+  console.error('Using deprecated twig function formatDistance. Please use filter formatUnit instead.') // 2022-12
   return module.exports.distance.call(this, arguments[0])
 })
 OverpassLayer.twig.extendFilter('formatUnit', function () {
