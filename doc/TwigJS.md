@@ -81,6 +81,7 @@ Extra filters:
 * filter `json_pp`: JSON pretty print the object. As parameter to the filter, the following options can be passed:
   * `indent`: indentation (default: 2)
 * filter `yaml`: YAML pretty print the object. As options the filter, all options to [yaml.dump of js-yaml](https://github.com/nodeca/js-yaml#dump-object---options-) can be used.
+* filter `formatUnit`: format a value in the selected unit system of the user. Use as parameter the type of measurement ('distance' (default), 'area', 'speed', 'height', 'coord'). Example: `{{ 2|formatUnit('distance') }}` -> '2 m'.
 
 Notes:
 * Variables will automatically be HTML escaped, unless the filter raw is used, e.g.: `{{ tags.name|raw }}`

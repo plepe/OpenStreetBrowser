@@ -209,3 +209,6 @@ register_hook('init', () => {
 OverpassLayer.twig.extendFunction('formatDistance', function () {
   return module.exports.distance.call(this, arguments[0])
 })
+OverpassLayer.twig.extendFilter('formatUnit', function () {
+  return module.exports[arguments[1][0] || 'distance'].call(this, arguments[0], arguments[1][1])
+})
