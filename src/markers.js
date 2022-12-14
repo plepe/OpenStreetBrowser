@@ -122,6 +122,9 @@ function parseOptions (data) {
   if (typeof data.styles === 'string') {
     data.styles = data.styles.split(/,/g)
   }
+  else if (!data.styles) {
+    data.styles = []
+  }
 
   return data.styles.map(k => (k === 'default' ? data.style : data['style:' + k]) || {})
 }
