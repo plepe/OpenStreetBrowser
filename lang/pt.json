@@ -1,9 +1,9 @@
 {
-    "add_filter": "",
-    "any value": "",
+    "add_filter": "Adicionar filtro",
+    "any value": "qualquer valor",
     "available_branches": "",
     "back": "voltar",
-    "categories": "",
+    "categories": "Categorias",
     "category-info-tooltip": "Info & Legenda",
     "closed": "fechado",
     "default": "padrão",
@@ -46,5 +46,10 @@
     "unnamed": "sem nome",
     "wikipedia:no-url-parse": "Não foi possível analisar URL da Wikipédia",
     "zoom_in_appear": "Faça zoom in para detalhes do mapa aparecerem",
-    "zoom_in_more": "Faça zoom in para mostrar mais detalhes no mapa"
+    "zoom_in_more": "Faça zoom in para mostrar mais detalhes no mapa",
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "download": "Baixar",
+    "apply-keep": "Aplicar e continuar editando",
+    "apply-close": "Aplicar e fechar"
 }
