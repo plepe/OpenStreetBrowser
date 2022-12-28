@@ -45,6 +45,7 @@ When rendering map features, the following properties are available:
 * `meta.uid` (UID of the user, who changed the object last)
 * `map.zoom` (Current zoom level)
 * `const.*` (Values from the 'const' option)
+* `filter.*` (if filters are defined, the values of the selected filter options)
 * `user.*` (Values from the user's options, e.g. `user.ui_lang`, `user.data_lang`, ...)
 
 For the info-section of a category the following properties are available:

@@ -157,6 +157,11 @@ class CategoryOverpassFilter {
     })
     this.master.on('open', this.openCategory.bind(this))
     this.master.on('stateGet', this.stateGet.bind(this))
+    this.master.layer.on('twigData',
+      (ob, data, result) => {
+        result.filter = this.formFilter.get_data()
+      }
+    )
   }
 
   setParam (param) {
