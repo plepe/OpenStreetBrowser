@@ -136,6 +136,8 @@ The following values are possible for categories (the only mandatory value is qu
   * markerSign: a HTML string which will be shown within the marker and in the list. (default: '')
   * priority: a numeric value by which the elements in the list will be sorted (lower values first)
   * preferredZoom: At which max. zoom level will the map zoom when showing details
+  * exclude: if value evaluates to true, will not be shown on the map (and the list)
+  * listExclude: if value evaluates to true, will not be shown in the list (priority over exclude)
 * const: an object variable which is available as prefix in twig functions.
 
 All values in the "feature" section may use the [TwigJS language](doc/TwigJS.md) for evaluation.
