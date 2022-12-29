@@ -53,7 +53,8 @@
   },
   "scripts": {
     "test": "mocha --bail",
-    "build": "npm run build-locales && browserify -g browserify-css src/index.js -t [ babelify ] -o dist/openstreetbrowser.js && minify dist/openstreetbrowser.js > dist/openstreetbrowser.min.js",
+    "build": "npm run build-locales && npm run build-code",
+    "build-code": "browserify -g browserify-css src/index.js -t [ babelify ] -o dist/openstreetbrowser.js && minify dist/openstreetbrowser.js > dist/openstreetbrowser.min.js",
     "build-locales": "for i in `ls locales/` ; do browserify locales/$i -o dist/locale-$i ; done",
     "watch": "npm run build-locales && watchify --debug -g browserify-css src/index.js -o dist/openstreetbrowser.js -v",
     "prepare": "npm run build",
