@@ -10,7 +10,7 @@ const CategoryOverpass = require('./CategoryOverpass')
 CategoryOverpass.defaultValues.filter = {
   title: {
     type: 'text',
-    key: [ 'name', 'name:*', 'operator', 'operator:*', 'ref', 'ref:*' ],
+    key: ['name', 'name:*', 'operator', 'operator:*', 'ref', 'ref:*'],
     name: '{{ trans("filter:title") }}',
     op: 'strsearch',
     weight: -1,
@@ -39,11 +39,11 @@ class CategoryOverpassFilter {
       this.formFilter.focus()
     })
 
-    for (var k in this.data) {
-      let f = this.data[k]
+    for (const k in this.data) {
+      const f = this.data[k]
       if ('name' in f && typeof f.name === 'string') {
         global.currentCategory = this.master
-        let t = OverpassLayer.twig.twig({ data: f.name, autoescape: true })
+        const t = OverpassLayer.twig.twig({ data: f.name, autoescape: true })
         f.name = decodeHTML(t.render({}).toString())
       } else if (!('name' in f)) {
         f.name = lang('tag:' + k)
@@ -54,20 +54,20 @@ class CategoryOverpassFilter {
       }
 
       if ('values' in f) {
-        let valueNameTemplate = OverpassLayer.twig.twig({ data: f.valueName || '{{ value }}', autoescape: true })
+        const valueNameTemplate = OverpassLayer.twig.twig({ data: f.valueName || '{{ value }}', autoescape: true })
 
         if (typeof f.values === 'string') {
-          let valuesTemplate = OverpassLayer.twig.twig({ data: f.values, autoescape: true })
-          let div = document.createElement('div')
+          const valuesTemplate = OverpassLayer.twig.twig({ data: f.values, autoescape: true })
+          const div = document.createElement('div')
           div.innerHTML = valuesTemplate.render(this.master.data)
 
-          let options = div.getElementsByTagName('option')
+          const options = div.getElementsByTagName('option')
           f.values = {}
 
           for (let i = 0; i < options.length; i++) {
-            let option = options[i]
+            const option = options[i]
 
-            let k = option.value
+            const k = option.value
             f.values[k] = {}
 
             Array.from(option.attributes).forEach(attr => {
@@ -81,21 +81,21 @@ class CategoryOverpassFilter {
         }
 
         if (Array.isArray(f.values) && f.valueName) {
-          let newValues = {}
+          const newValues = {}
           f.values.forEach(value => {
             newValues[value] = decodeHTML(valueNameTemplate.render({ value }).toString())
           })
           f.values = newValues
         } else if (typeof f.values === 'object') {
-          for (var k1 in f.values) {
+          for (const k1 in f.values) {
             if (typeof f.values[k1] === 'string') {
-              let t = OverpassLayer.twig.twig({ data: f.values[k1], autoescape: true })
+              const t = OverpassLayer.twig.twig({ data: f.values[k1], autoescape: true })
               f.values[k1] = decodeHTML(t.render({}).toString())
             } else if (typeof f.values[k1] === 'object') {
               if (!('name' in f.values[k1])) {
                 f.values[k1].name = decodeHTML(valueNameTemplate.render({ value: k1 }).toString())
               } else if (f.values[k1].name) {
-                let t = OverpassLayer.twig.twig({ data: f.values[k1].name, autoescape: true })
+                const t = OverpassLayer.twig.twig({ data: f.values[k1].name, autoescape: true })
                 f.values[k1].name = decodeHTML(t.render({}))
               }
             }
@@ -103,13 +103,13 @@ class CategoryOverpassFilter {
         }
 
         if (!('sort' in f) || (f.sort === 'natsort')) {
-          let v = {}
-          let sorter = natsort({ insensitive: true })
-          let keys = Object.keys(f.values)
+          const v = {}
+          const sorter = natsort({ insensitive: true })
+          const keys = Object.keys(f.values)
 
           keys
             .sort((a, b) => {
-              let weight = (f.values[a].weight || 0) - (f.values[b].weight || 0)
+              const weight = (f.values[a].weight || 0) - (f.values[b].weight || 0)
               if (weight !== 0) {
                 return weight
               }
@@ -123,24 +123,24 @@ class CategoryOverpassFilter {
       }
 
       if ('placeholder' in f && typeof f.placeholder === 'string') {
-        let t = OverpassLayer.twig.twig({ data: f.placeholder, autoescape: true })
+        const t = OverpassLayer.twig.twig({ data: f.placeholder, autoescape: true })
         f.placeholder = decodeHTML(t.render({}).toString())
       }
     }
 
-    let masterOptions = {
-      'change_on_input': true
+    const masterOptions = {
+      change_on_input: true
     }
     if (Object.keys(this.data).length > 1) {
-      masterOptions['type'] = 'form_chooser'
+      masterOptions.type = 'form_chooser'
       masterOptions['button:add_element'] = '-- ' + lang('add_filter') + ' --'
-      masterOptions['order'] = false
+      masterOptions.order = false
     }
 
     this.formFilter = new form('filter-' + this.master.id, this.data, masterOptions)
     this.formFilter.show(this.domFilter)
     this.formFilter.onchange = () => {
-      let param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
+      const param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
 
       this.applyParam(param)
 
@@ -171,26 +171,26 @@ class CategoryOverpassFilter {
   applyParam (param) {
     this.additionalFilter = Object.keys(param).map(k => {
       let values = param[k]
-      let d = this.data[k]
+      const d = this.data[k]
 
       if (values === null) {
         return d.emptyQuery
       }
 
       if (!Array.isArray(values)) {
-        values = [ values ]
+        values = [values]
       }
 
-      let ret = values.map(value => {
+      const ret = values.map(value => {
         if ('values' in d && value in d.values && typeof d.values[value] === 'object' && 'query' in d.values[value]) {
-          let f = new Filter(d.values[value].query)
+          const f = new Filter(d.values[value].query)
           return f.def
         } else if (d.queryTemplate) {
-          let f = new Filter(decodeHTML(d.queryTemplate.render({ value: value }).toString()))
+          const f = new Filter(decodeHTML(d.queryTemplate.render({ value: value }).toString()))
           return f.def
         }
 
-        var v  = {
+        let v = {
           key: 'key' in d ? d.key : k,
           value: value,
           op: '='
@@ -209,23 +209,23 @@ class CategoryOverpassFilter {
 
         if (Array.isArray(v.key)) {
           v = {
-            "or": v.key.map(
+            or: v.key.map(
               key => {
-                let v1 = { key, value: v.value, op: v.op }
+                const v1 = { key, value: v.value, op: v.op }
 
-                let m = key.match(/^(.*)\*(.*)/)
+                const m = key.match(/^(.*)\*(.*)/)
                 if (m) {
                   v1.key = '^' + m[1] + '.*' + m[2]
                   v1.keyRegexp = true
                 }
 
-                return [ v1 ]
+                return [v1]
               }
             )
           }
         }
 
-        return [ v ]
+        return [v]
       }).filter(f => f) // remove null values
 
       switch (ret.length) {
@@ -252,14 +252,14 @@ class CategoryOverpassFilter {
   openCategory () {
     this.formFilter.resize()
 
-    let param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
+    const param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
     this.applyParam(param)
   }
 
   stateGet (param) {
-    let data = this.formFilter.get_data()
+    const data = this.formFilter.get_data()
 
-    for (var k in data) {
+    for (const k in data) {
       if (data[k]) {
         param[k] = data[k]
       }
