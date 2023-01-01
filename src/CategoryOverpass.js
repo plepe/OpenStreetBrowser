@@ -441,6 +441,7 @@ CategoryOverpass.prototype.updateInfo = function () {
     layer_id: this.id,
     'const': this.data.const
   }
+  this.emit('updateInfo', data)
   if (this.map) {
     data.map = {
       zoom: this.map.getZoom(),
