@@ -1,42 +1,29 @@
-const OverpassLayer = require('overpass-layer')
 const tabs = require('modulekit-tabs')
 const natsort = require('natsort').default
 
 const state = require('./state')
-const Filter = require('overpass-frontend').Filter
 const getPathFromJSON = require('./getPathFromJSON')
 const CategoryOverpass = require('./CategoryOverpass')
 
-CategoryOverpass.defaultValues.filter = {
-  title: {
-    type: 'text',
-    key: ['name', 'name:*', 'operator', 'operator:*', 'ref', 'ref:*'],
-    name: '{{ trans("filter:title") }}',
-    op: 'strsearch',
-    weight: -1,
-    show_default: true
-  }
-}
-
-class CategoryOverpassFilter {
+class CategoryOverpassConfig {
   constructor (master) {
     this.master = master
-    this.data = this.master.data.filter
+    this.data = this.master.data.config
 
-    this.tabFilter = new tabs.Tab({
-      id: 'filter'
+    this.tabConfig = new tabs.Tab({
+      id: 'config'
     })
-    this.master.tools.add(this.tabFilter)
+    this.master.tools.add(this.tabConfig)
 
-    this.tabFilter.header.innerHTML = '<i class="fa fa-filter" aria-hidden="true"></i>'
-    this.tabFilter.header.title = lang('filter')
+    this.tabConfig.header.innerHTML = '<i class="fa fa-cog" aria-hidden="true"></i>'
+    this.tabConfig.header.title = lang('config')
 
-    this.domFilter = document.createElement('form')
-    this.tabFilter.content.appendChild(this.domFilter)
+    this.domConfig = document.createElement('form')
+    this.tabConfig.content.appendChild(this.domConfig)
 
-    this.tabFilter.on('select', () => {
-      this.formFilter.resize()
-      this.formFilter.focus()
+    this.tabConfig.on('select', () => {
+      this.formConfig.resize()
+      this.formConfig.focus()
     })
 
     for (const k in this.data) {
@@ -133,14 +120,14 @@ class CategoryOverpassFilter {
     }
     if (Object.keys(this.data).length > 1) {
       masterOptions.type = 'form_chooser'
-      masterOptions['button:add_element'] = '-- ' + lang('add_filter') + ' --'
+      masterOptions['button:add_element'] = '-- ' + lang('add_config') + ' --'
       masterOptions.order = false
     }
 
-    this.formFilter = new form('filter-' + this.master.id, this.data, masterOptions)
-    this.formFilter.show(this.domFilter)
-    this.formFilter.onchange = () => {
-      const param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
+    this.formConfig = new form('config-' + this.master.id, this.data, masterOptions)
+    this.formConfig.show(this.domConfig)
+    this.formConfig.onchange = () => {
+      const param = JSON.parse(JSON.stringify(this.formConfig.get_data()))
 
       this.applyParam(param)
 
@@ -150,135 +137,60 @@ class CategoryOverpassFilter {
     this.master.on('setParam', this.setParam.bind(this))
     this.master.on('applyParam', (param) => {
       this.applyParam(param)
-
-      if (!this.tabFilter.isSelected()) {
-        this.tabFilter.select()
-      }
     })
     this.master.on('open', this.openCategory.bind(this))
     this.master.on('stateGet', this.stateGet.bind(this))
     this.master.layer.on('twigData',
       (ob, data, result) => {
-        result.filter = this.formFilter.get_data()
+        result.config = this.formConfig.get_data()
+      }
+    )
+    this.master.on('updateInfo',
+      (result) => {
+        result.config = this.formConfig.get_data()
       }
     )
   }
 
   setParam (param) {
-    this.formFilter.set_data(param)
-  }
-
-  applyParam (param) {
     const v = {}
     for (const k in param) {
       const m = k.match(/^config\.(.*)$/)
-      if (!m) {
-        v[k] = param[k]
+      if (m) {
+        v[m[1]] = param[k]
       }
     }
     console.log(v)
 
-    this.additionalFilter = Object.keys(v).map(k => {
-      let values = param[k]
-      const d = this.data[k]
+    this.formConfig.set_data(v)
+  }
 
-      if (values === null) {
-        return d.emptyQuery
-      }
-
-      if (!Array.isArray(values)) {
-        values = [values]
-      }
-
-      const ret = values.map(value => {
-        if ('values' in d && value in d.values && typeof d.values[value] === 'object' && 'query' in d.values[value]) {
-          const f = new Filter(d.values[value].query)
-          return f.def
-        } else if (d.queryTemplate) {
-          const f = new Filter(decodeHTML(d.queryTemplate.render({ value: value }).toString()))
-          return f.def
-        }
-
-        let v = {
-          key: 'key' in d ? d.key : k,
-          value: value,
-          op: '='
-        }
-
-        if ('op' in d) {
-          if (d.op === 'has_key_value') {
-            v = {
-              key: value,
-              op: 'has_key'
-            }
-          } else {
-            v.op = d.op
-          }
-        }
-
-        if (Array.isArray(v.key)) {
-          v = {
-            or: v.key.map(
-              key => {
-                const v1 = { key, value: v.value, op: v.op }
-
-                const m = key.match(/^(.*)\*(.*)/)
-                if (m) {
-                  v1.key = '^' + m[1] + '.*' + m[2]
-                  v1.keyRegexp = true
-                }
-
-                return [v1]
-              }
-            )
-          }
-        }
-
-        return [v]
-      }).filter(f => f) // remove null values
-
-      switch (ret.length) {
-        case 0:
-          return null
-        case 1:
-          return ret[0]
-        default:
-          return { or: ret }
-      }
-    }).filter(f => f) // remove null values
-
-    if (this.additionalFilter.length === 0) {
-      this.additionalFilter = []
-    } else if (this.additionalFilter.length === 1) {
-      this.additionalFilter = this.additionalFilter[0]
-    } else {
-      this.additionalFilter = { and: this.additionalFilter }
-    }
-
-    this.master.layer.setFilter(this.additionalFilter)
+  applyParam (param) {
+    this.master.layer.recalc()
+    this.master.updateInfo()
   }
 
   openCategory () {
-    this.formFilter.resize()
+    this.formConfig.resize()
 
-    const param = JSON.parse(JSON.stringify(this.formFilter.get_data()))
+    const param = JSON.parse(JSON.stringify(this.formConfig.get_data()))
     this.applyParam(param)
   }
 
   stateGet (param) {
-    const data = this.formFilter.get_data()
+    const data = this.formConfig.get_data()
 
     for (const k in data) {
       if (data[k]) {
-        param[k] = data[k]
+        param['config.' + k] = data[k]
       }
     }
   }
 }
 
 register_hook('category-overpass-init', (category) => {
-  if (category.data.filter) {
-    new CategoryOverpassFilter(category)
+  if (category.data.config) {
+    new CategoryOverpassConfig(category)
   }
 })
 
