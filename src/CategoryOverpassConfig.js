@@ -180,7 +180,7 @@ class CategoryOverpassConfig {
     const data = this.formConfig.get_data()
 
     for (const k in data) {
-      if (data[k]) {
+      if (data[k] != this.data[k].default) {
         param['config.' + k] = data[k]
       }
     }
