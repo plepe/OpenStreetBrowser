@@ -21,11 +21,6 @@ if (isset($_GET['lang'])) {
   $_SESSION['ui_lang'] = $_GET['lang'];
 }
 
-if (sizeof($_GET)) {
-  Header('Location: .#' . http_build_query($_GET));
-  exit(0);
-}
-
 html_export_var(array(
   'config' => $config,
 ));

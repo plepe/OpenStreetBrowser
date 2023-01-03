@@ -50,6 +50,11 @@ let currentObjectDisplay = null
 window.onload = function () {
   var initState = config.defaultView
 
+  if (global.location.search) {
+    global.location = '.#' + global.location.search.substr(1) + (global.location.hash ? '&' + global.location.hash.substr(1) : '')
+    return
+  }
+
   map = L.map('map')
   map.getMetersPerPixel = mapMetersPerPixel.bind(map)
 
