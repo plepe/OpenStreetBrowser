@@ -165,6 +165,7 @@ class CategoryOverpassConfig {
   }
 
   applyParam (param) {
+    this.setParam(param)
     this.master.layer.recalc()
     this.master.updateInfo()
   }
