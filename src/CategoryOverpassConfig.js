@@ -136,7 +136,15 @@ class CategoryOverpassConfig {
 
     this.master.on('setParam', this.setParam.bind(this))
     this.master.on('applyParam', (param) => {
-      this.applyParam(param)
+      const v = {}
+      for (const k in param) {
+        const m = k.match(/^config\.(.*)$/)
+        if (m) {
+          v[m[1]] = param[k]
+        }
+      }
+
+      this.applyParam(v)
     })
     this.master.on('open', this.openCategory.bind(this))
     this.master.on('stateGet', this.stateGet.bind(this))
@@ -153,16 +161,7 @@ class CategoryOverpassConfig {
   }
 
   setParam (param) {
-    const v = {}
-    for (const k in param) {
-      const m = k.match(/^config\.(.*)$/)
-      if (m) {
-        v[m[1]] = param[k]
-      }
-    }
-    console.log(v)
-
-    this.formConfig.set_data(v)
+    this.formConfig.set_data(param)
   }
 
   applyParam (param) {

@@ -149,9 +149,17 @@ class CategoryOverpassFilter {
 
     this.master.on('setParam', this.setParam.bind(this))
     this.master.on('applyParam', (param) => {
-      this.applyParam(param)
+      const v = {}
+      for (const k in param) {
+        const m = k.match(/^config\.(.*)$/)
+        if (!m) {
+          v[k] = param[k]
+        }
+      }
 
-      if (!this.tabFilter.isSelected()) {
+      this.applyParam(v)
+
+      if (Object.keys(v).length && !this.tabFilter.isSelected()) {
         this.tabFilter.select()
       }
     })
@@ -169,16 +177,7 @@ class CategoryOverpassFilter {
   }
 
   applyParam (param) {
-    const v = {}
-    for (const k in param) {
-      const m = k.match(/^config\.(.*)$/)
-      if (!m) {
-        v[k] = param[k]
-      }
-    }
-    console.log(v)
-
-    this.additionalFilter = Object.keys(v).map(k => {
+    this.additionalFilter = Object.keys(param).map(k => {
       let values = param[k]
       const d = this.data[k]
 
