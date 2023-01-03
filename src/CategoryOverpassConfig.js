@@ -118,7 +118,8 @@ class CategoryOverpassConfig {
     const masterOptions = {
       change_on_input: true
     }
-    if (Object.keys(this.data).length > 1) {
+    const count_hide_default = Object.keys(this.data).filter(k => !this.data[k].show_default)
+    if (count_hide_default.length) {
       masterOptions.type = 'form_chooser'
       masterOptions['button:add_element'] = '-- ' + lang('add_config') + ' --'
       masterOptions.order = false
