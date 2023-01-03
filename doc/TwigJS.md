@@ -46,6 +46,7 @@ When rendering map features, the following properties are available:
 * `map.zoom` (Current zoom level)
 * `const.*` (Values from the 'const' option)
 * `filter.*` (if filters are defined, the values of the selected filter options)
+* `config.*` (if config options are defined, the values of the selected configuration options)
 * `user.*` (Values from the user's options, e.g. `user.ui_lang`, `user.data_lang`, ...)
 
 For the info-section of a category the following properties are available:

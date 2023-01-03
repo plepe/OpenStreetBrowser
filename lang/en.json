@@ -1,11 +1,13 @@
 {
     "add_filter": "Add filter",
+    "add_config": "Add configuration option",
     "any value": "any value",
     "available_branches": "Available branches",
     "back": "back",
     "cancel": "Cancel",
     "categories": "Categories",
     "category-info-tooltip": "Info & Map key",
+    "color_scheme": "Color scheme",
     "close": "Close",
     "closed": "closed",
     "default": "default",
