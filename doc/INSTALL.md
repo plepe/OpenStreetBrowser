@@ -4,7 +4,7 @@ You either need to [install a modern nodejs version](https://nodejs.org/en/downl
 or replace the `openstreetbrowser.min.js` with `openstreetbrowser.js` in `index.html`.
 
 ```sh
-sudo apt install apache2 libapache2-mod-php curl git php-cli composer nodejs npm php-curl php-yaml
+sudo apt install apache2 libapache2-mod-php curl git php-cli composer nodejs npm php-curl php-yaml acl
 sudo chmod 777 /var/www/html
 cd /var/www/html
 git clone https://github.com/plepe/openstreetbrowser.git
