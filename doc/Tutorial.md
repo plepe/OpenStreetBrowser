@@ -1,6 +1,6 @@
 Categories can be created as YAML files. This is much simpler as JSON files, because you don't have to add all these quotes, you can use multi-line strings and allows adding comments.
 
-A simple example ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example1.yaml)). It queries nodes, ways and relations with amenity=restaurant from OpenStreetMap (via Overpass API), starting from zoom level 15. `nwr` is short for `(node[amenity=restaurant];way[amenity=restaurant];relation[amenity=restaurant];)`. Please note, that only a subset of OverpassQL is available (see [overpass-frontend](https://github.com/plepe/overpass-frontend) for details).
+A simple example ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example1.yaml) | [Try this](https://www.openstreetbrowser.org/#categories=openstreetbrowser/examples/example1)). It queries nodes, ways and relations with amenity=restaurant from OpenStreetMap (via Overpass API), starting from zoom level 15. `nwr` is short for `(node[amenity=restaurant];way[amenity=restaurant];relation[amenity=restaurant];)`. Please note, that only a subset of OverpassQL is available (see [overpass-frontend](https://github.com/plepe/overpass-frontend) for details).
 
 ```yaml
 # From zoom level 15 on, load all node, ways and relations with amenity=restaurant.
@@ -8,7 +8,7 @@ query:
   15: nwr[amenity=restaurant]
 ```
 
-Another example, showing fountains from z15 and (additionally) drinking_water from z17. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example2.yaml)):
+Another example, showing fountains from z15 and (additionally) drinking_water from z17. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example2.yaml) | [Try this](https://www.openstreetbrowser.org/#categories=openstreetbrowser/examples/example2)):
 
 This is the first examples which uses [TwigJS](https://github.com/twigjs/twig.js) for programming logic. TwigJS is a port of the [Twig template language](https://twig.symfony.com/doc/3.x/templates.html).
 
@@ -40,7 +40,7 @@ feature:
     {% endif %}
 ```
 
-Improving on the example above, we add a `const` block. The values of this block are available throughout the code ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example3.yaml)):
+Improving on the example above, we add a `const` block. The values of this block are available throughout the code ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example3.yaml) | [Try this](https://www.openstreetbrowser.org/#categories=openstreetbrowser/examples/example3)):
 ```yaml
 # Adding a category name (in English: "Example 3")
 name:
@@ -70,7 +70,7 @@ const:
     color: '#007fff'
 ```
 
-Improving on the example above, we add a `info` block to show a map key. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example4.yaml)):
+Improving on the example above, we add a `info` block to show a map key. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example4.yaml) | [Try this](https://www.openstreetbrowser.org/#categories=openstreetbrowser/examples/example4)):
 ```yaml
 query:
   15: nwr[amenity=fountain]
@@ -108,7 +108,7 @@ const:
     zoom: 17
 ```
 
-Back to the restaurants, we will display the cuisine(s) of the restaurants and even add a filter. In OpenStreetMap, cuisine is tag which can take several values, separated by `;`, e.g. `pizza;burger`. Detailed documentation about filters can be found [here](./Filter.md). ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example5.yaml)):
+Back to the restaurants, we will display the cuisine(s) of the restaurants and even add a filter. In OpenStreetMap, cuisine is tag which can take several values, separated by `;`, e.g. `pizza;burger`. Detailed documentation about filters can be found [here](./Filter.md). ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example5.yaml) | [Try this](https://www.openstreetbrowser.org/#categories=openstreetbrowser/examples/example5)):
 ```yaml
 name:
   en: Example 5
@@ -145,7 +145,7 @@ const:
   cuisine: ["pizza", "burger", "kebab"]
 ```
 
-Roads, with different color depending on its priority ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/roads1.yaml)):
+Roads, with different color depending on its priority ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/roads1.yaml) | [Try this](https://www.openstreetbrowser.org/#categories=openstreetbrowser/examples/roads1)):
 ```yaml
 name: 
   en: Roads 1 # English name of the category
@@ -168,7 +168,7 @@ feature:
       {% else %}#ffff00{% endif %}
 ```
 
-We rewrite the above example to use `const` for coloring. Also, we are adding a casing, to improve visibility of the roads on the map, and a label. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/roads1.yaml)):
+We rewrite the above example to use `const` for coloring. Also, we are adding a casing, to improve visibility of the roads on the map, and a label. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/roads2.yaml) | [Try this](https://www.openstreetbrowser.org/#categories=openstreetbrowser/examples/roads2)):
 ```yaml
 name:
   en: Roads 2 # English name of the category
