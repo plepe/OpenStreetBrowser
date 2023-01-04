@@ -39,24 +39,7 @@ There are currently two types of categories: `index` (for sub categories) and `o
 Check out the [tutorial](./doc/Tutorial.md)!
 
 #### Category 'index'
-File: dir.json
-```json
-{
-    "type": "index",
-    "subCategories": [
-        {
-            "id": "foo"
-        },
-        {
-            "id": "bar",
-            "type": "overpass",
-            "query": "node[amenity=bar]"
-        }
-    ]
-}
-```
-
-or File: dir.yaml
+File: dir.yaml
 ```yaml
 type: index
 subCategories:
@@ -66,31 +49,25 @@ subCategories:
     query: node[amenity=bar]
 ```
 
-This will define a category with the id 'dir' (from the file name) with two sub-categories: 'foo' (which will be loaded from the file `foo.json`) and 'bar' (which is defined inline as category of type 'overpass' and will show all nodes with the tag 'amenity' set to value 'bar' - see below for more details).
+This will define a category with the id 'dir' (from the file name) with two sub-categories: 'foo' (which will be loaded from the file `foo.yaml`) and 'bar' (which is defined inline as category of type 'overpass' and will show all nodes with the tag 'amenity' set to value 'bar' - see below for more details).
 
 #### Category 'overpass'
-File: foo.json
-```json
-{
-    "type": "overpass",
-    "query": {
-        "12": "(node[highway~'^(motorway_junction)$'];way[highway~'^(motorway|trunk)$'];)",
-        "14": "(node[highway~'^(motorway_junction|mini_roundabout|crossing)$'];way[highway~'^(motorway|trunk|primary)$'];)",
-        "16": "(node[highway];way[highway];)"
-    },
-    "feature": {
-        "style": {
-            "color": "{% if tags.highway == 'motorway' %}#ff0000{% elseif tags.highway == 'trunk' %}#ff7f00{% elseif tags.highway == 'primary' %}#ffff00{% else %}#0000ff{% endif %}"
-        },
-        "markerSign": "{% if tags.highway == 'motorway_junction' %}↗{% elseif tags.highway == 'mini_roundabout' %}↻{% elseif tags.highway == 'crossing' %}▤{% endif %}",
-        "title": "{{ localizedTag(tags, 'name') |default(localizedTag(tags, 'operator')) | default(localizedTag(tags, 'ref')) | default(trans('unnamed')) }}",
-        "description": "{{ tagTrans('highway', tags.highway) }}",
-        "body": "Foo value: {{ const.foo }}"
-    },
-    "const": {
-        "foo": "foo value"
-    }
-}
+File: foo.yaml
+```yaml
+type: overpass
+query:
+  12: (node[highway~'^(motorway_junction)$'];way[highway~'^(motorway|trunk)$'];)
+  14: (node[highway~'^(motorway_junction|mini_roundabout|crossing)$'];way[highway~'^(motorway|trunk|primary)$'];)
+  16: (node[highway];way[highway];)
+feature:
+  style:
+    color: '{% if tags.highway == ''motorway'' %}#ff0000{% elseif tags.highway == ''trunk'' %}#ff7f00{% elseif tags.highway == ''primary'' %}#ffff00{% else %}#0000ff{% endif %}'
+  markerSign: '{% if tags.highway == ''motorway_junction'' %}↗{% elseif tags.highway == ''mini_roundabout'' %}↻{% elseif tags.highway == ''crossing'' %}▤{% endif %}'
+  title: '{{ localizedTag(tags, ''name'') |default(localizedTag(tags, ''operator'')) | default(localizedTag(tags, ''ref'')) | default(trans(''unnamed'')) }}'
+  description: '{{ tagTrans(''highway'', tags.highway) }}'
+  body: 'Foo value: {{ const.foo }}'
+const:
+  foo: foo value
 ```
 
 This will define a category with the id 'foo' (from the file name). It will show some highway amenities, depending on the current zoom level.
