@@ -205,3 +205,5 @@ const:
 ```
 
 All scripts of a feature are processed in the order of their appearance. As they all use the same scope, Twig variables (set via `{% set varname = 'value' %}`) are available in all sub-sequent scripts.
+
+For a full list of parameters, see [the category parameters](./CategoryParameters.md).
