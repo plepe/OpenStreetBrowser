@@ -16,17 +16,22 @@ function cssStyle (style) {
   if ('dashOffset' in style) {
     ret += 'stroke-dashoffset: ' + style.dashOffset + ';'
   }
-  if ('fillColor' in style) {
-    ret += 'fill: ' + style.fillColor + ';'
-  } else if ('color' in style) {
-    ret += 'fill: ' + style.color + ';'
+
+  if ('fill' in style && style.fill) {
+    if ('fillColor' in style) {
+      ret += 'fill: ' + style.fillColor + ';'
+    } else if ('color' in style) {
+      ret += 'fill: ' + style.color + ';'
+    } else {
+      ret += 'fill: #3388ff;'
+    }
+    if ('fillOpacity' in style) {
+      ret += 'fill-opacity: ' + style.fillOpacity + ';'
+    } else {
+      ret += 'fill-opacity: 0.2;'
+    }
   } else {
-    ret += 'fill: #3388ff;'
-  }
-  if ('fillOpacity' in style) {
-    ret += 'fill-opacity: ' + style.fillOpacity + ';'
-  } else {
-    ret += 'fill-opacity: 0.2;'
+    ret += 'fill-opacity: 0;'
   }
 
   return ret
