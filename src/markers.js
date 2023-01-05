@@ -37,13 +37,30 @@ function cssStyle (style) {
   return ret
 }
 
+function getHalfHeight (data) {
+  let styles = parseOptions(data)
+
+  let halfHeight = 8
+  styles.forEach(style => {
+    const h = (style.width || 3) / 2 + Math.abs(style.offset || 0)
+    if (h > halfHeight) {
+      halfHeight = h
+    }
+  })
+
+  return Math.ceil(halfHeight / 2) * 2
+}
+
 function markerLine (data) {
   let styles = parseOptions(data)
 
-  let ret = '<svg anchorX="13" anchorY="8" width="25" height="15">'
+  const halfHeight = getHalfHeight(data)
+  const height = halfHeight * 2 + 1
+
+  let ret = '<svg anchorX="13" anchorY="8" width="25" height="' + height + '">'
 
   styles.forEach(style => {
-    let y = 8.0 + parseLength('offset' in style ? style.offset : 0, global.map.getMetersPerPixel())
+    let y = halfHeight + parseLength('offset' in style ? style.offset : 0, global.map.getMetersPerPixel())
 
     ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
   })
@@ -54,12 +71,17 @@ function markerLine (data) {
 }
 
 function markerPolygon (data) {
-  let ret = '<svg anchorX="13" anchorY="8" width="25" height="25">'
-
   let styles = parseOptions(data)
+  const halfHeight = getHalfHeight(data)
+  const halfWidth = Math.max(9, halfHeight + 3)
+  const height = (halfHeight + halfWidth) * 2 + 1
+
+  let ret = '<svg anchorX="' + (halfHeight + halfWidth + 1) + '" anchorY="' + (halfHeight + halfWidth + 1) + '" width="' + height + '" height="' + height + '">'
 
   styles.forEach(style => {
-    ret += '<rect x="3" y="3" width="18" height="18" style="' + cssStyle(style) + '"/>'
+    let offset = parseLength('offset' in style ? style.offset : 0, global.map.getMetersPerPixel())
+
+    ret += '<rect x="' + (halfHeight + offset) + '" y="' + (halfHeight + offset) + '" width="' + ((halfWidth - offset) * 2) + '" height="' + ((halfWidth - offset) * 2) + '" style="' + cssStyle(style) + '"/>'
   })
 
   ret += '</svg>'
