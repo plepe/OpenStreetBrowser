@@ -17,7 +17,7 @@ function cssStyle (style) {
     ret += 'stroke-dashoffset: ' + style.dashOffset + ';'
   }
 
-  if ('fill' in style && style.fill) {
+  if (!('fill' in style) || style.fill) {
     if ('fillColor' in style) {
       ret += 'fill: ' + style.fillColor + ';'
     } else if ('color' in style) {
