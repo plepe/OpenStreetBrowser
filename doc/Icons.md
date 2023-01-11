@@ -62,6 +62,7 @@ The following style parameters are possible:
 * `color`: outline color, default `#000000`.
 * `width`: outline width, default `3`.
 * `offset`: outline offset, default `0`.
+* `fill`: if the marker should be filled (boolean), default `true`.
 * `fillColor`: color of the fill, default value of `color`. If no `color` is set, use `#f2756a`.
 * `fillOpacity`: opacity of the fill, default `0.2`.
 * `dashArray`: outline dashes, e.g. `5,5'. Default: `none`.
