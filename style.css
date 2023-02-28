@@ -517,7 +517,7 @@ ul.overpass-layer-list > li {
   background: #dfdfdf;
   border-radius: 5px;
   border: 1px solid #afafaf;
-  padding: 2px;
+  padding: 2px !important;
   margin-bottom: 2px;
   display: flex;
   flex-direction: row;
@@ -531,19 +531,20 @@ ul.overpass-layer-list > li a {
   color: #000000;
 }
 ul.overpass-layer-list > li > a {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
   width: 100%;
 }
 ul.overpass-layer-list > li > a > .marker {
-  position: absolute;
-  margin-left: -35px;
-  width: 30px;
-  height: 30px;
+  position: relative;
+  min-width: 30px;
+  min-height: 30px;
   text-align: center;
-  display: block;
+  display: flex;
+  align-items: center;
   color: black;
   text-decoration: none;
-  margin-top: 3px;
   flex-grow: 0;
 }
 ul.overpass-layer-list > li > a > .marker > .symbol {
@@ -561,6 +562,7 @@ ul.overpass-layer-list > li > a > .marker > .sign {
 ul.overpass-layer-list > li > a > .content {
   text-decoration: none;
   display: block;
+  flex-grow: 1;
 }
 ul.overpass-layer-list > li > a > .content > .description {
   display: block;
