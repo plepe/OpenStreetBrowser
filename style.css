@@ -540,26 +540,27 @@ ul.overpass-layer-list > li > a:hover {
   text-decoration: none;
 }
 ul.overpass-layer-list > li > a > .marker {
-  position: relative;
   min-width: 30px;
   min-height: 30px;
   text-align: center;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto;
   color: black;
-  flex-grow: 0;
 }
 ul.overpass-layer-list > li > a > .marker > .symbol {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  display: flex;
+  place-self: center;
 }
 ul.overpass-layer-list > li > a > .marker > .sign {
-  text-align: center;
-  position: absolute;
-  top: 3px;
-  font-size: 15px;
-  left: 0;
-  right: 0;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
   z-index: 1;
-  display: inline-block;
+  font-size: 15px;
+  display: flex;
+  place-self: center;
 }
 ul.overpass-layer-list > li > a > .content {
   text-decoration: none;
