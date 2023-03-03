@@ -536,6 +536,9 @@ ul.overpass-layer-list > li > a {
   gap: 0.5em;
   width: 100%;
 }
+ul.overpass-layer-list > li > a:hover {
+  text-decoration: none;
+}
 ul.overpass-layer-list > li > a > .marker {
   position: relative;
   min-width: 30px;
@@ -544,7 +547,6 @@ ul.overpass-layer-list > li > a > .marker {
   display: flex;
   align-items: center;
   color: black;
-  text-decoration: none;
   flex-grow: 0;
 }
 ul.overpass-layer-list > li > a > .marker > .symbol {
