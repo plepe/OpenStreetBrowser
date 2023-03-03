@@ -18,9 +18,9 @@ const showMore = require('./showMore')
 const listTemplate = '<a href="{{ object.appUrl|default("#") }}">' +
   '<div class="marker">' +
   '{% if object.templateMarkerSymbol|default(object.markerSymbol)|trim == "line" %}' +
-  '<div class="symbol">{{ markerLine(object) }}</div>' +
+  '<div class="symbol">{{ markerLine(object, {ignoreStyles:["hover"]}) }}</div>' +
   '{% elseif object.templateMarkerSymbol|default(object.markerSymbol)|trim == "polygon" %}' +
-  '<div class="symbol">{{ markerPolygon(object) }}</div>' +
+  '<div class="symbol">{{ markerPolygon(object, {ignoreStyles:["hover"]}) }}</div>' +
   '{% elseif object.templateMarkerSymbol or object.markerSymbol %}' +
   '<div class="symbol">{{ object.templateMarkerSymbol|default(object.markerSymbol) }}</div>' +
   '{% elseif object.marker and object.marker.iconUrl %}' +
