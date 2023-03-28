@@ -50,7 +50,9 @@ You can pass URL options to the icon to modify its look. Note that every icon is
 ```
 
 #### Markers
-Simple syntax (example: a black line):
+Markers are rendered by the module [openstreetbrowser-markers](https://github.com/plepe/openstreetbrowser-markers).
+
+You can either use a `<img data-src="...">` syntax or TwigJS: `{{ markerLine({ ... }) }}`. A simple example (a black line, 3px wide):
 ```html
 <img data-src="marker:line?width=3&amp;color=black">
 {{ markerLine({ width: 3, color: 'black' }) }}
@@ -65,8 +67,9 @@ The following style parameters are possible:
 * `fill`: if the marker should be filled (boolean), default `true`.
 * `fillColor`: color of the fill, default value of `color`. If no `color` is set, use `#f2756a`.
 * `fillOpacity`: opacity of the fill, default `0.2`.
-* `dashArray`: outline dashes, e.g. `5,5'. Default: `none`.
+* `dashArray`: outline dashes, e.g. `5,5`. Default: `none`.
 * `dashOffset`: offset of outline dashes. Default: `0`.
+* `radius` or `size`: Radius resp. size of the circle/pointer. Default: `10`.
 
 Syntax with multiple symbols (example: a white line with a black casing). Only styles which are listed in the `styles` parameter will be used. Instead of `style:default:width` use `style:width`:
 ```html
