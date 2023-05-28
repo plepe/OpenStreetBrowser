@@ -2,6 +2,7 @@
 /* eslint camelcase: 0 */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var OverpassLayer = require('overpass-layer')
+const isTrue = require('overpass-layer/src/isTrue')
 var OverpassLayerList = require('overpass-layer').List
 var queryString = require('query-string')
 
@@ -578,7 +579,11 @@ CategoryOverpass.prototype.allMapFeatures = function (callback) {
     return callback(null, [])
   }
 
-  callback(null, Object.values(this.layer.mainlayer.visibleFeatures))
+  let list = Object.values(this.layer.mainlayer.visibleFeatures)
+
+  list = list.filter(item => !isTrue(item.data.exclude))
+
+  callback(null, list)
 }
 
 CategoryOverpass.defaultValues = defaultValues
