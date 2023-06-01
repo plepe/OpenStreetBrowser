@@ -246,13 +246,23 @@ function show (id, options, callback) {
         }
 
         if (options.showDetails) {
+          const dom = document.getElementById('contentDetails')
           currentObjectDisplay = new ObjectDisplay({
             feature: data,
-            dom: document.getElementById('contentDetails'),
+            dom,
             category,
             displayId: 'details',
             fallbackIds: ['popup']
           }, err => callback(err))
+
+          let closeButton = document.createElement('div')
+          closeButton.setAttribute('data-order', -2000)
+          closeButton.className = 'closeButton'
+          closeButton.innerHTML = '×'
+          closeButton.onclick = () => {
+            hide()
+          }
+          dom.insertBefore(closeButton, dom.firstChild)
         } else {
           callback(err)
         }

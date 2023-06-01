@@ -118,6 +118,13 @@ a:active {
 #content.options > #contentOptions {
   display: block;
 }
+#contentDetails > .closeButton {
+  font: 16px/14px Tahoma, Verdana, sans-serif;
+  font-weight: bold;
+  color: #c3c3c3;
+  float: right;
+  margin-right: 0.5em;
+}
 
 .objectDisplay > .header {
   padding: 0.5em 10px;
