@@ -1,3 +1,5 @@
+const state = require('./state')
+
 var mapLayers = {}
 var currentMapLayer = null
 
@@ -44,6 +46,7 @@ register_hook('init', function () {
 
   map.on('baselayerchange', function (e) {
     currentMapLayer = e.layer
+    state.update()
   })
 })
 
@@ -72,5 +75,23 @@ register_hook('options_save', function (data) {
     }
 
     map.addLayer(mapLayers[data.preferredBaseMap])
+  }
+})
+
+register_hook('state-get', (data) => {
+  for (const k in mapLayers) {
+    if (currentMapLayer === mapLayers[k]) {
+      data.basemap = k
+    }
+  }
+})
+
+register_hook('state-apply', (data) => {
+  if ('basemap' in data) {
+    if (currentMapLayer) {
+      map.removeLayer(currentMapLayer)
+    }
+
+    mapLayers[data.basemap].addTo(map)
   }
 })
