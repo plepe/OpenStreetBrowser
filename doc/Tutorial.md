@@ -1,5 +1,8 @@
 Categories can be created as YAML files. This is much simpler as JSON files, because you don't have to add all these quotes, you can use multi-line strings and allows adding comments.
 
+A short tutorial is available as Youtube video:<br>
+[![Video - Tutorial Custom Categories](./tutorial-customCategories.jpg)](https://www.youtube.com/watch?v=I0x4Kwz6u90)
+
 A simple example ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example1.yaml) | [Try this](https://www.openstreetbrowser.org/#categories=openstreetbrowser/examples/example1)). It queries nodes, ways and relations with amenity=restaurant from OpenStreetMap (via Overpass API), starting from zoom level 15. `nwr` is short for `(node[amenity=restaurant];way[amenity=restaurant];relation[amenity=restaurant];)`. Please note, that only a subset of OverpassQL is available (see [overpass-frontend](https://github.com/plepe/overpass-frontend) for details).
 
 ```yaml
