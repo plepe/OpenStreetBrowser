@@ -44,7 +44,16 @@ class RepositoryBase {
     }
 
     foreach ($categories as $id => $_category) {
-      $category = &$categories[$id];
+      if (preg_match('/^[0-9]+$/', $id)) {
+        $id = $_category['id'];
+
+        if (!array_key_exists($id, $data['categories'])) {
+          $category = $_category;
+          $data['categories'][$id] = $category;
+        }
+      } else {
+        $category = &$categories[$id];
+      }
 
       if (is_array($category) && $category['type'] === 'index') {
         foreach ($category['subCategories'] as $subIndex => $_subCategory) {
@@ -52,7 +61,12 @@ class RepositoryBase {
 
           if (array_key_exists('type', $subCategory)) {
             $data['categories'][$subCategory['id']] = $subCategory;
-            $this->unfoldCategories($data, $subCategory);
+            if (array_key_exists('subCategories', $subCategory)) {
+              $this->unfoldCategories($data, $subCategory['subCategories']);
+              $data['categories'][$subCategory['id']]['subCategories'] = array_map(function ($c) {
+                return array('id' => $c['id']);
+              }, $subCategory['subCategories']);
+            }
 
             $category['subCategories'][$subIndex] = array(
               'id' => $subCategory['id']
