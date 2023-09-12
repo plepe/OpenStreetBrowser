@@ -62,7 +62,7 @@ $config['baseMaps'] = array(
     'id' => 'osm-mapnik',
     'name' => 'OSM Default',
     'attribution' => '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-    'url' => '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    'url' => 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     'maxZoom' => 19,
   ),
   array(
