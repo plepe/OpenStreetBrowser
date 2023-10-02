@@ -87,5 +87,17 @@
     "heading:SW": "Pd.-Zach.",
     "heading:W": "Zach.",
     "heading:NW": "Pn.-Zach.",
-    "options:chooseEditor": "Wybierz edytor"
+    "options:chooseEditor": "Wybierz edytor",
+    "add_config": "Dodaj opcję konfiguracji",
+    "color_scheme": "Schemat kolorów",
+    "close": "Zamknij",
+    "download": "Pobierz",
+    "apply-keep": "Zastosuj i kontynuuj edycję",
+    "apply-close": "Zastosuj i zamknij",
+    "tip-tutorial": "Sprawdź [Poradnik]",
+    "customCategory:header": "Kategorie niestandardowe",
+    "customCategory:clone": "Klonuj jako kategorię niestandardową",
+    "customCategory:create": "Utwórz kategorię niestandardową",
+    "customCategory:list": "Lista popularnych kategorii niestandardowych",
+    "copied-clipboard": "Skopiowane do schowka"
 }
