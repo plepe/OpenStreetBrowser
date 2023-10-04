@@ -5,7 +5,7 @@ var currentMapLayer = null
 
 register_hook('init', function () {
   if (!config.baseMaps) {
-    var osmMapnik = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    var osmMapnik = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
       {
         maxZoom: config.maxZoom || 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
