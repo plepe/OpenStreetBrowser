@@ -15,7 +15,7 @@ query:
 
 Another example, showing fountains from z15 and (additionally) drinking_water from z17. ([Source](https://www.openstreetbrowser.org/dev/OpenStreetBrowser/examples/src/branch/master/example2.yaml) | [Try this](https://www.openstreetbrowser.org/#categories=openstreetbrowser/examples/example2)):
 
-This is the first examples which uses [TwigJS](https://github.com/twigjs/twig.js) for programming logic. TwigJS is a port of the [Twig template language](https://twig.symfony.com/doc/3.x/templates.html).
+This is the first examples which uses [TwigJS](https://github.com/twigjs/twig.js) for programming logic. [On this page](./TwigJS.md), the specific usage for OpenStreetBrowser is explained: how the values of the current object can be accessed and which additional functions and filters are available.
 
 Here, we are using Unicode characters as icons. Alternatively, OpenStreetBrowser includes a [few icon sets](./Icons.md) which you can use.
 
