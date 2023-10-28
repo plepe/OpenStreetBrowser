@@ -1,6 +1,6 @@
 {
     "add_filter": "Filter hinzufügen",
-    "any value": "",
+    "any value": "irgendein Wert",
     "available_branches": "Verfügbare Zweige",
     "back": "zurück",
     "cancel": "Abbrechen",
@@ -55,5 +55,14 @@
     "geoinfo:mouse": "Mausposition",
     "geoinfo:length": "Länge",
     "geoinfo:area": "Fläche",
-    "options:chooseEditor": "Wähle Editor"
+    "options:chooseEditor": "Wähle Editor",
+    "add_config": "Kofigurierbare Option hinzufügen",
+    "color_scheme": "Farbschema",
+    "download": "Download",
+    "apply-keep": "Anwenden und weiter bearbeiten",
+    "apply-close": "Anwenden und schließen",
+    "tip-tutorial": "Sieh dir das [Tutorial] an",
+    "customCategory:header": "Benutzerdefinierte Kategorien",
+    "customCategory:clone": "Als benutzerdefinierte Kategorie klonen",
+    "customCategory:create": "Benutzerdefinierte Kategorie erstellen"
 }
