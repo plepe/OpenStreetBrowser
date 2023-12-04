@@ -98,7 +98,10 @@ class RepositoryBase {
         }
       }
       elseif (is_array($category) && array_key_exists('name', $category)) {
-        if (array_key_exists($lang, $category['name'])) {
+        if (is_string($category['name'])) {
+          $name = $category['name'];
+        }
+        elseif (array_key_exists($lang, $category['name'])) {
           $name = $category['name'][$lang];
         }
         elseif (array_key_exists('en', $category['name'])) {
