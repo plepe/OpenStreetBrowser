@@ -77,6 +77,17 @@ All of these fields can use [TwigJS](./TwigJS.md).
 | fillOpacity | float | 0.2 | Fill opacity.
 | nodeFeature | Marker *or* Circle *or* CircleMarker | CircleMarker | (nodes only) Which type of feature to show on nodes.
 | radius | length | 10 | (nodes with nodeFeature 'Circle' or 'CircleMarker' only) Radius of the circle (for 'Circle': in meters, for 'CircleMarker': in pixels).
+| zIndex | float | 0.0 | Order of features (higher = front). (this impacts performance, using 'pane' is recommended).
+| text | string | *null* | Label to show along the line (*null* for no label). (this impacts performace, as SVG labels are used).
+| textRepeat | boolean | false | Specifies if the text should be repeated along the polyline.
+| textCenter | boolean | false | Centers the text according to the polyline's bounding box.
+| textOffset | float | 0 | Set an offset to position text relative to the polyline.
+| textBelow | boolean | false | Show text below the path.
+| textFill | color | black | Color of the text.
+| textFillOpacity | opacity | 1.0 | Text opacity.
+| textFontWeight | string | normal | Boldness or lightness of the glyphs used to render the text.
+| textFontSize | font size | 12px | Font size of the text.
+| textLetterSpacing | float | 0 | Extra letter spacing of the text.
 | pattern *or* pattern*X* | arrowHead *or* dash *or* marker | *empty string* | If set, draw a pattern along the (out)line. Use a suffix (e.g. *X*) to show several patterns on the same line.
 | pattern*X*-offset | length | 0 | Offset of the first pattern symbol, from the start point of the line.
 | pattern*X*-endOffset | length | 0 | Minimum offset of the last pattern symbol, from the end point of the line.
