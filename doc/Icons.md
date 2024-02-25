@@ -15,7 +15,7 @@ You may upload images to your repository and use them via a relative image link:
 This will include the image from your repository (when uploaded to your 'img' directory).
 
 #### Font Awesome Icons
-[Font Awesome 5 Free](https://fontawesome.com/) ([search](https://fontawesome.com/v5/search?o=r&m=free)) is included in OpenStreetBrowser, therefore you can use, e.g.:
+[Font Awesome 6 Free](https://fontawesome.com/) ([search](https://fontawesome.com/v5/search?o=r&m=free)) is included in OpenStreetBrowser, therefore you can use, e.g.:
 ```html
 <i class="fas fa-compass"></i> <!-- solid -->
 <i class="far fa-compass"></i> <!-- regular -->
@@ -27,14 +27,13 @@ You can use normal CSS to modify its look, e.g.
 ```
 
 #### Mapbox Maki Icons
-[Mapbox Maki Icons 5](https://www.mapbox.com/maki-icons/) are also included in OpenStreetBrowser. They can be accessed as images with protocol 'maki', e.g.:
+[Mapbox Maki Icons 8](https://www.mapbox.com/maki-icons/) are also included in OpenStreetBrowser. They can be accessed as images with protocol 'maki', e.g.:
 ```html
 <img data-src="maki:park">
 ```
 
-This will include the park-15.svg icon. Mapbox Maki icons come in two sizes: 11 and 15. Default is 15, if you want to use 11 pass the size parameter with value 11:
 ```html
-<img data-src="maki:park?size=11">
+<img data-src="maki:park">
 ```
 
 You can pass URL options to the icon to modify its look. Note that every icon is a [SVG path](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths) and all [style options](https://developer.mozilla.org/de/docs/Web/SVG/Tutorial/Fills_and_Strokes) are available:
@@ -43,7 +42,7 @@ You can pass URL options to the icon to modify its look. Note that every icon is
 ```
 
 #### Temaki Icons
-[Temaki icons](https://ideditor.github.io/temaki/docs/) are additions to the Mapbox Maki Icons with the difference that they only exist in to size of 15px.
+[Temaki icons](https://rapideditor.github.io/temaki/docs/) are additions to the Mapbox Maki Icons.
 ```html
 <img data-src="temaki:shinto">
 <img data-src="temaki:shinto?fill=red">

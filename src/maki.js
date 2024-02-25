@@ -4,8 +4,8 @@ const svgToDataURI = require('mini-svg-data-uri')
 var loadClash = {}
 var cache = {}
 var paths = {
-  maki: 'node_modules/@mapbox/maki/icons/ID-SIZE.svg',
-  temaki: 'node_modules/@ideditor/temaki/icons/ID.svg'
+  maki: 'node_modules/@mapbox/maki/icons/ID.svg',
+  temaki: 'node_modules/@rapideditor/temaki/icons/ID.svg'
 }
 
 function applyOptions (code, options) {
@@ -23,7 +23,7 @@ function applyOptions (code, options) {
 }
 
 function maki (set, file, options, callback) {
-  var m = file.match(/^(.*)-(11|15)/)
+  var m = file.match(/^(.*)/)
   if (m) {
     file = m[1]
     options.size = m[2]
