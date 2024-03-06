@@ -87,5 +87,17 @@
     "heading:W": "B",
     "heading:NW": "KB",
     "options:chooseEditor": "Editör Seçiniz",
-    "empty value": "boş değer"
+    "empty value": "boş değer",
+    "add_config": "Yapılandırma seçeneği ekle",
+    "color_scheme": "Renk düzeni",
+    "close": "Kapat",
+    "download": "İndir",
+    "apply-keep": "Uygula ve düzenlemeye devam et",
+    "apply-close": "Uygula ve kapat",
+    "tip-tutorial": "[Eğitim]'e göz atın",
+    "customCategory:header": "Özel kategoriler",
+    "customCategory:clone": "Özel kategori olarak klonla",
+    "customCategory:create": "Özel bir kategori oluşturma",
+    "customCategory:list": "Popüler özel kategorileri listeleyin",
+    "copied-clipboard": "Panoya kopyalandı"
 }
