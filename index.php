@@ -49,7 +49,7 @@ html_export_var(array(
   <?php print modulekit_include_js(); /* prints all js-includes */ ?>
   <?php print modulekit_include_css(); /* prints all css-includes */ ?>
   <?php print_add_html_headers(); /* print additional html headers */ ?>
-  <script src="dist/openstreetbrowser.js?<?=$modulekit['version']?>"></script>
+  <script src="dist/openstreetbrowser.min.js?<?=$modulekit['version']?>"></script>
   <script src="dist/locale-<?=$ui_lang?>.js?<?=$modulekit['version']?>"></script>
 <?php @include "local-head.php" ?>
 </head>
