@@ -44,6 +44,7 @@ When rendering map features, the following properties are available:
 * `meta.user` (Username of the user, who changed the object last)
 * `meta.uid` (UID of the user, who changed the object last)
 * `map.zoom` (Current zoom level)
+* `map.metersPerPixel` (The size of a pixel in meters at the center of the view)
 * `const.*` (Values from the 'const' option)
 * `filter.*` (if filters are defined, the values of the selected filter options)
 * `config.*` (if config options are defined, the values of the selected configuration options)
@@ -52,6 +53,7 @@ When rendering map features, the following properties are available:
 For the info-section of a category the following properties are available:
 * `layer_id` (the id of the category)
 * `map.zoom` (Current zoom level)
+* `map.metersPerPixel` (The size of a pixel in meters at the center of the view)
 * `const.*` (Values from the 'const' option)
 
 There are several extra functions defined for the TwigJS language:
