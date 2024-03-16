@@ -6,7 +6,7 @@ function ajax_options_save($get_param, $postdata) {
 
   $_SESSION['options'] = $post_param;
 
-  return array('success' => true);
+  return array('success' => true, 'options' => $_SESSION['options']);
 }
 
 function ajax_options_save_key ($get_param, $postdata) {
@@ -20,7 +20,7 @@ function ajax_options_save_key ($get_param, $postdata) {
 
   call_hooks('options_save', $_SESSION['options']);
 
-  return array('success' => true);
+  return array('success' => true, 'options' => $_SESSION['options']);
 }
 
 function ajax_options_save_key_array_add ($get_param, $postdata) {
@@ -34,7 +34,7 @@ function ajax_options_save_key_array_add ($get_param, $postdata) {
 
   call_hooks('options_save', $_SESSION['options']);
 
-  return array('success' => true);
+  return array('success' => true, 'options' => $_SESSION['options']);
 }
 
 function ajax_options_save_key_array_remove ($get_param, $postdata) {
@@ -51,7 +51,7 @@ function ajax_options_save_key_array_remove ($get_param, $postdata) {
 
   call_hooks('options_save', $_SESSION['options']);
 
-  return array('success' => true);
+  return array('success' => true, 'options' => $_SESSION['options']);
 }
 
 if (!array_key_exists('options', $_SESSION)) {
