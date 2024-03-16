@@ -25,17 +25,15 @@ hooks.register('category-overpass-init', (category) => {
   let isPinned = 'custom-category-pin' in options ? options['custom-category-pin'].includes(id) : false
 
   category.tools.add(category.tabPin)
-  let header = document.createElement('span')
-  header.href = '#'
-  header.title = lang(isPinned ? 'customCategory:forget' : 'customCategory:remember')
-  header.innerHTML = isPinned ? '<i class="fa-solid fa-bookmark"></i>' : '<i class="fa-regular fa-bookmark"></i>'
-  category.tabPin.header.appendChild(header)
+  let pinHeader = document.createElement('span')
+  pinHeader.href = '#'
+  category.tabPin.header.appendChild(pinHeader)
+  updateHeader(category, isPinned, pinHeader)
 
   category.tabPin.on('select', () => {
     category.tabPin.unselect()
     isPinned = !isPinned
-    header.innerHTML = isPinned ? '<i class="fa-solid fa-bookmark"></i>' : '<i class="fa-regular fa-bookmark"></i>'
-    header.title = lang(isPinned ? 'customCategory:forget' : 'customCategory:remember')
+    updateHeader(category, isPinned, pinHeader)
 
     ajax(isPinned ? 'options_save_key_array_add' : 'options_save_key_array_remove',
       {},
@@ -56,3 +54,8 @@ register_hook('options_form', def => {
     count: {default: 1}
   }
 })
+
+function updateHeader (category, isPinned, pinHeader) {
+  pinHeader.title = lang(isPinned ? 'customCategory:forget' : 'customCategory:remember')
+  pinHeader.innerHTML = isPinned ? '<i class="fa-solid fa-bookmark"></i>' : '<i class="fa-regular fa-bookmark"></i>'
+}
