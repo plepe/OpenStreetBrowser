@@ -7,7 +7,7 @@
     "category-info-tooltip": "Info & Map_key",
     "closed": "chiuso",
     "default": "predefinito",
-    "edit": "edita",
+    "edit": "modifica",
     "error": "Errore",
     "export-all": "Esporta tutte le caratteristiche visibili della mappa",
     "export-prepare": "Preparare il download",
@@ -46,5 +46,8 @@
     "unnamed": "privo di nome",
     "wikipedia:no-url-parse": "Non è possibile decifrare la URL Wikipedia",
     "zoom_in_appear": "ingrandire la mappa per mostrare le caratteristiche",
-    "zoom_in_more": "ingrandire la mappa per mostrare ulteriori caratteristiche"
+    "zoom_in_more": "ingrandire la mappa per mostrare ulteriori caratteristiche",
+    "editor:id": "iD (Editor nel browser)",
+    "editor:remote": "Controllo remoto (JOSM or Merkaator)",
+    "editor:remote:help": "Devi abilitare il controllo remoto in JOSM o Merkaator."
 }
