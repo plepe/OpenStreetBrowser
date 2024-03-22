@@ -226,6 +226,7 @@ function editCustomCategory (id, category) {
     editor.load(id, (err) => {
       if (err) { return global.alert(err) }
       editor.category = category
+      category.emit('editor-init', editor)
       editor.edit()
     })
   }
