@@ -1,7 +1,7 @@
 const tabs = require('modulekit-tabs')
 
 register_hook('init', () => {
-  if ('custom-category-pin' in options) {
+  if ('custom-category-pin' in options && options['custom-category-pin']) {
     options['custom-category-pin'].forEach(id => {
       OpenStreetBrowserLoader.getCategory('custom/' + id, {}, (err, category) => {
         category.setParentDom(document.getElementById('contentListAddCategories'))
@@ -22,7 +22,7 @@ hooks.register('category-overpass-init', (category) => {
     weight: 9
   })
 
-  let isPinned = 'custom-category-pin' in options ? options['custom-category-pin'].includes(id) : false
+  let isPinned = 'custom-category-pin' in options && Array.isArray(options['custom-category-pin']) ? options['custom-category-pin'].includes(id) : false
 
   category.tools.add(category.tabPin)
   let pinHeader = document.createElement('span')
