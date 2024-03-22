@@ -32,6 +32,18 @@ hooks.register('category-overpass-init', (category) => {
   category.tabPin.header.appendChild(pinHeader)
   updateHeader(category, isPinned(id), pinHeader)
 
+  category.on('editor-init', (editor) => {
+    // overwrite default postApplyContent action
+    editor._postApplyContent = () => {
+      if (!isPinned(id) && editor.category) {
+        editor.category.remove()
+        editor.category = null
+      } else {
+        editor.category.close()
+      }
+    }
+  })
+
   category.tabPin.on('select', () => {
     category.tabPin.unselect()
     let nowPinned = !isPinned(id)
@@ -60,4 +72,12 @@ register_hook('options_form', def => {
 function updateHeader (category, isPinned, pinHeader) {
   pinHeader.title = lang(isPinned ? 'customCategory:forget' : 'customCategory:remember')
   pinHeader.innerHTML = isPinned ? '<i class="fa-solid fa-bookmark"></i>' : '<i class="fa-regular fa-bookmark"></i>'
+
+  if (isPinned) {
+    category.tabEdit.header.innerHTML = '<i class="fa fa-clone"></i>'
+    category.tabEdit.header.title = lang('customCategory:clone')
+  } else {
+    category.tabEdit.header.innerHTML = '<i class="fa fa-pen"></i>'
+    category.tabEdit.header.title = lang('edit')
+  }
 }
