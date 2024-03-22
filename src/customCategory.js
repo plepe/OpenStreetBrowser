@@ -185,10 +185,7 @@ class CustomCategoryEditor {
     const id = md5(content)
     this.id = id
 
-    if (this.category) {
-      this.category.remove()
-      this.category = null
-    }
+    this._postApplyContent()
 
     OpenStreetBrowserLoader.getCategory('custom/' + id, {}, (err, category) => {
       if (err) {
@@ -206,6 +203,13 @@ class CustomCategoryEditor {
     const file = new Blob([this.textarea.value], { type: 'application/yaml' })
     this.inputDownload.href = URL.createObjectURL(file)
     this.inputDownload.download = md5(this.textarea.value) + '.yaml'
+  }
+
+  _postApplyContent () {
+    if (this.category) {
+      this.category.remove()
+      this.category = null
+    }
   }
 }
 
