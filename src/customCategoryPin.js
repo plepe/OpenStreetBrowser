@@ -10,6 +10,10 @@ register_hook('init', () => {
   }
 })
 
+function isPinned (id) {
+  return 'custom-category-pin' in options && Array.isArray(options['custom-category-pin']) ? options['custom-category-pin'].includes(id) : false
+}
+
 hooks.register('category-overpass-init', (category) => {
   const m = category.id.match(/^custom\/(.*)$/)
   if (!m) {
@@ -22,20 +26,18 @@ hooks.register('category-overpass-init', (category) => {
     weight: 9
   })
 
-  let isPinned = 'custom-category-pin' in options && Array.isArray(options['custom-category-pin']) ? options['custom-category-pin'].includes(id) : false
-
   category.tools.add(category.tabPin)
   let pinHeader = document.createElement('span')
   pinHeader.href = '#'
   category.tabPin.header.appendChild(pinHeader)
-  updateHeader(category, isPinned, pinHeader)
+  updateHeader(category, isPinned(id), pinHeader)
 
   category.tabPin.on('select', () => {
     category.tabPin.unselect()
-    isPinned = !isPinned
-    updateHeader(category, isPinned, pinHeader)
+    let nowPinned = !isPinned(id)
+    updateHeader(category, nowPinned, pinHeader)
 
-    ajax(isPinned ? 'options_save_key_array_add' : 'options_save_key_array_remove',
+    ajax(nowPinned ? 'options_save_key_array_add' : 'options_save_key_array_remove',
       {},
       { option: 'custom-category-pin', element: id },
       result => {
