@@ -77,8 +77,19 @@ register_hook('options_form', def => {
   }
 })
 
-register_hook('options_save', newOptions => {
+register_hook('options_save', (newOptions, oldOptions) => {
   startup(newOptions)
+
+  if (oldOptions && Array.isArray(oldOptions['pinned-categories'])) {
+    const newList = newOptions['pinned-categories'] ?? []
+    oldOptions['pinned-categories'].forEach(id => {
+      if (!newList.includes(id)) {
+        OpenStreetBrowserLoader.getCategory(id, {}, (err, category) => {
+          updateHeader(category, false, category.tabPin.header.firstChild)
+        })
+      }
+    })
+  }
 })
 
 function updateHeader (category, isPinned, pinHeader) {
