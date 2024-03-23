@@ -1,6 +1,7 @@
 const tabs = require('modulekit-tabs')
 
-register_hook('init', () => {
+register_hook('init', startup)
+function startup () {
   if ('pinned-categories' in options && Array.isArray(options['pinned-categories'])) {
     options['pinned-categories'].forEach(id => {
       OpenStreetBrowserLoader.getCategory(id, {}, (err, category) => {
@@ -9,11 +10,13 @@ register_hook('init', () => {
           return global.alert('Error loading pinned category "' + id + '":\n' + err.message)
         }
 
-        category.setParentDom(document.getElementById('contentListAddCategories'))
+        if (!category.parentDom) {
+          category.setParentDom(document.getElementById('contentListAddCategories'))
+        }
       })
     })
   }
-})
+}
 
 function isPinned (id) {
   return 'pinned-categories' in options && Array.isArray(options['pinned-categories']) ? options['pinned-categories'].includes(id) : false
@@ -72,6 +75,10 @@ register_hook('options_form', def => {
     type: 'text',
     count: {default: 1, index_type: 'array'}
   }
+})
+
+register_hook('options_save', newOptions => {
+  startup(newOptions)
 })
 
 function updateHeader (category, isPinned, pinHeader) {
