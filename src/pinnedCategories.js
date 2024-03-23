@@ -5,7 +5,8 @@ register_hook('init', () => {
     options['pinned-categories'].forEach(id => {
       OpenStreetBrowserLoader.getCategory(id, {}, (err, category) => {
         if (err) {
-          return global.alert(err)
+          console.error(err)
+          return global.alert('Error loading pinned category "' + id + '":\n' + err.message)
         }
 
         category.setParentDom(document.getElementById('contentListAddCategories'))
