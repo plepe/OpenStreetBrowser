@@ -2,7 +2,19 @@ const yaml = require('js-yaml')
 let error = false
 
 function createYaml (form) {
-  return yaml.dump(form.get_data())
+  const data = form.get_data()
+  let result = '### OpenStreetBrowser Options ###\n'
+
+  Object.entries(form.def).forEach(([k, d]) => {
+    result += '## ' + d.name + '\n'
+    if (d.desc) {
+      result += '# ' + d.desc.split('\n').join('\n# ') + '\n'
+    }
+
+    result += k + ': ' + yaml.dump(data[k]).slice(0, -1).split('\n').join('\n  ') + '\n\n'
+  })
+
+  return result
 }
 
 register_hook('options_open', (optionsForm, optionsFormEl) => {
