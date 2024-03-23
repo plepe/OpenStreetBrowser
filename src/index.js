@@ -45,7 +45,7 @@ require('./PluginMeasure')
 require('./PluginGeoLocate')
 require('./tagsDisplay-tag2link')
 require('./customCategory')
-require('./customCategoryPin')
+require('./pinnedCategories')
 const ObjectDisplay = require('./ObjectDisplay')
 let currentObjectDisplay = null
 

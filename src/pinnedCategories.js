@@ -1,8 +1,8 @@
 const tabs = require('modulekit-tabs')
 
 register_hook('init', () => {
-  if ('custom-category-pin' in options && options['custom-category-pin']) {
-    options['custom-category-pin'].forEach(id => {
+  if ('pinned-categories' in options && options['pinned-categories']) {
+    options['pinned-categories'].forEach(id => {
       OpenStreetBrowserLoader.getCategory('custom/' + id, {}, (err, category) => {
         category.setParentDom(document.getElementById('contentListAddCategories'))
       })
@@ -11,7 +11,7 @@ register_hook('init', () => {
 })
 
 function isPinned (id) {
-  return 'custom-category-pin' in options && Array.isArray(options['custom-category-pin']) ? options['custom-category-pin'].includes(id) : false
+  return 'pinned-categories' in options && Array.isArray(options['pinned-categories']) ? options['pinned-categories'].includes(id) : false
 }
 
 hooks.register('category-overpass-init', (category) => {
@@ -51,7 +51,7 @@ hooks.register('category-overpass-init', (category) => {
 
     ajax(nowPinned ? 'options_save_key_array_add' : 'options_save_key_array_remove',
       {},
-      { option: 'custom-category-pin', element: id },
+      { option: 'pinned-categories', element: id },
       result => {
         if (result.success) {
           options = result.options
@@ -62,20 +62,20 @@ hooks.register('category-overpass-init', (category) => {
 })
 
 register_hook('options_form', def => {
-  def['custom-category-pin'] = {
-    name: lang('customCategory:remembered'),
+  def['pinned-categories'] = {
+    name: lang('pinnedCategories:remembered'),
     type: 'text',
     count: {default: 1}
   }
 })
 
 function updateHeader (category, isPinned, pinHeader) {
-  pinHeader.title = lang(isPinned ? 'customCategory:forget' : 'customCategory:remember')
+  pinHeader.title = lang(isPinned ? 'pinnedCategories:forget' : 'pinnedCategories:remember')
   pinHeader.innerHTML = isPinned ? '<i class="fa-solid fa-bookmark"></i>' : '<i class="fa-regular fa-bookmark"></i>'
 
   if (isPinned) {
     category.tabEdit.header.innerHTML = '<i class="fa fa-clone"></i>'
-    category.tabEdit.header.title = lang('customCategory:clone')
+    category.tabEdit.header.title = lang('pinnedCategories:clone')
   } else {
     category.tabEdit.header.innerHTML = '<i class="fa fa-pen"></i>'
     category.tabEdit.header.title = lang('edit')
