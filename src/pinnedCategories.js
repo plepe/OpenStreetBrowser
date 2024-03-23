@@ -1,9 +1,13 @@
 const tabs = require('modulekit-tabs')
 
 register_hook('init', () => {
-  if ('pinned-categories' in options && options['pinned-categories']) {
+  if ('pinned-categories' in options && Array.isArray(options['pinned-categories'])) {
     options['pinned-categories'].forEach(id => {
       OpenStreetBrowserLoader.getCategory(id, {}, (err, category) => {
+        if (err) {
+          return global.alert(err)
+        }
+
         category.setParentDom(document.getElementById('contentListAddCategories'))
       })
     })
@@ -65,7 +69,7 @@ register_hook('options_form', def => {
   def['pinned-categories'] = {
     name: lang('pinnedCategories:remembered'),
     type: 'text',
-    count: {default: 1}
+    count: {default: 1, index_type: 'array'}
   }
 })
 
