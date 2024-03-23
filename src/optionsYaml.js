@@ -11,7 +11,9 @@ function createYaml (form) {
       result += '# ' + d.desc.split('\n').join('\n# ') + '\n'
     }
 
-    result += k + ': ' + yaml.dump(data[k]).slice(0, -1).split('\n').join('\n  ') + '\n\n'
+    const o = {}
+    o[k] = data[k]
+    result += yaml.dump(o) + '\n'
   })
 
   return result
