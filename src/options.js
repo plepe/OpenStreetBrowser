@@ -66,6 +66,8 @@ moduleOptions.open = function () {
     return false
   }
 
+  call_hooks('options_open', optionsForm, optionsFormEl)
+
   return false
 }
 
