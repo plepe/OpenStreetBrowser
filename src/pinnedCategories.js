@@ -3,7 +3,7 @@ const tabs = require('modulekit-tabs')
 register_hook('init', () => {
   if ('pinned-categories' in options && options['pinned-categories']) {
     options['pinned-categories'].forEach(id => {
-      OpenStreetBrowserLoader.getCategory('custom/' + id, {}, (err, category) => {
+      OpenStreetBrowserLoader.getCategory(id, {}, (err, category) => {
         category.setParentDom(document.getElementById('contentListAddCategories'))
       })
     })
@@ -15,12 +15,12 @@ function isPinned (id) {
 }
 
 hooks.register('category-overpass-init', (category) => {
-  const m = category.id.match(/^custom\/(.*)$/)
+  const m = category.id.match(/^(.*)\/(.*)$/)
   if (!m) {
     return
   }
 
-  const id = m[1]
+  const id = category.id
   category.tabPin = new tabs.Tab({
     id: 'pin',
     weight: 9
@@ -72,6 +72,10 @@ register_hook('options_form', def => {
 function updateHeader (category, isPinned, pinHeader) {
   pinHeader.title = lang(isPinned ? 'pinnedCategories:forget' : 'pinnedCategories:remember')
   pinHeader.innerHTML = isPinned ? '<i class="fa-solid fa-bookmark"></i>' : '<i class="fa-regular fa-bookmark"></i>'
+
+  if (!category.tabEdit) {
+    return
+  }
 
   if (isPinned) {
     category.tabEdit.header.innerHTML = '<i class="fa fa-clone"></i>'
