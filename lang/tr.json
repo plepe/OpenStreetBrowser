@@ -99,5 +99,8 @@
     "customCategory:clone": "Özel kategori olarak klonla",
     "customCategory:create": "Özel bir kategori oluşturma",
     "customCategory:list": "Popüler özel kategorileri listeleyin",
-    "copied-clipboard": "Panoya kopyalandı"
+    "copied-clipboard": "Panoya kopyalandı",
+    "pinnedCategories:forget": "Kategoriyi profilden kaldırın",
+    "pinnedCategories:remember": "Kategoriyi profilinize sabitleyin",
+    "pinnedCategories:remembered": "Sabitlenmiş kategoriler"
 }
