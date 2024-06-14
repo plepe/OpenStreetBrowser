@@ -99,5 +99,8 @@
     "customCategory:clone": "Klonuj jako kategorię niestandardową",
     "customCategory:create": "Utwórz kategorię niestandardową",
     "customCategory:list": "Lista popularnych kategorii niestandardowych",
-    "copied-clipboard": "Skopiowane do schowka"
+    "copied-clipboard": "Skopiowane do schowka",
+    "pinnedCategories:forget": "Odepnij kategorię od swojego profilu",
+    "pinnedCategories:remember": "Przypnij kategorię do swojego profilu",
+    "pinnedCategories:remembered": "Przypięte kategorie"
 }
