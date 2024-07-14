@@ -91,6 +91,7 @@ All of these fields can use [TwigJS](./TwigJS.md).
 | pattern *or* pattern*X* | arrowHead *or* dash *or* marker | *empty string* | If set, draw a pattern along the (out)line. Use a suffix (e.g. *X*) to show several patterns on the same line.
 | pattern*X*-offset | length | 0 | Offset of the first pattern symbol, from the start point of the line.
 | pattern*X*-endOffset | length | 0 | Minimum offset of the last pattern symbol, from the end point of the line.
+| pattern*X*-lineOffset | length | 0 | Left (negative) or Right (positive) offset.
 | pattern*X*-repeat | length | 0 | Repetition interval of the pattern symbols. Defines the distance between each consecutive symbol's anchor point.
 | pattern*X*-polygon | boolean | true | arrowHead only: draw a line (false) or a polygon (true).
 | pattern*X*-pixelSize | length | 10 | arrowHead and dash only: size of pattern
