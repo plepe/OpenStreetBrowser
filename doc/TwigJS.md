@@ -46,6 +46,7 @@ When rendering map features, the following properties are available:
 * `map.zoom` (Current zoom level)
 * `map.metersPerPixel` (The size of a pixel in meters at the center of the view)
 * `map.boundaries` (List of boundaries the map center lies within, see below at function 'boundaries')
+* `map.driving_side` (If the map center lies in a boundary with driving_side=left, 'left'; otherwise 'right')
 * `const.*` (Values from the 'const' option)
 * `filter.*` (if filters are defined, the values of the selected filter options)
 * `config.*` (if config options are defined, the values of the selected configuration options)
