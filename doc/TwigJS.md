@@ -68,6 +68,7 @@ There are several extra functions defined for the TwigJS language:
 * function colorInterpolate(map, value): interpolates between two or more colors. E.g. `colorInterpolate([ 'red', 'yellow', 'green' ], 0.75)`.
 * function enumerate(list): enumerate the given list, e.g. "foo, bar, and bla". Input either an array (`enumerate([ "foo", "bar", "bla" ])`) or a string with `;` as separator (`enumerate("foo;bar;bla")`).
 * function debug(): print all arguments to the javascript console (via `console.log()`)
+* function boundaries(lat, lon): return list of boundaries where the coordinates lie within. If the boundaries are not loaded, return `null`. Every item has a property `tags` and `geometry` (GeoJSON geometry).
 
 Extra filters:
 * filter websiteUrl: return a valid http link. Example: `{{ "www.google.com"|websiteUrl }}` -> "http://www.google.com"; `{{ "https://google.com"|websiteUrl }}` -> "https://google.com"
