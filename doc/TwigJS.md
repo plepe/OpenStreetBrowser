@@ -45,6 +45,8 @@ When rendering map features, the following properties are available:
 * `meta.uid` (UID of the user, who changed the object last)
 * `map.zoom` (Current zoom level)
 * `map.metersPerPixel` (The size of a pixel in meters at the center of the view)
+* `map.boundaries` (List of boundaries the map center lies within, see below at function 'boundaries')
+* `map.driving_side` (If the map center lies in a boundary with driving_side=left, 'left'; otherwise 'right')
 * `const.*` (Values from the 'const' option)
 * `filter.*` (if filters are defined, the values of the selected filter options)
 * `config.*` (if config options are defined, the values of the selected configuration options)
@@ -68,6 +70,7 @@ There are several extra functions defined for the TwigJS language:
 * function colorInterpolate(map, value): interpolates between two or more colors. E.g. `colorInterpolate([ 'red', 'yellow', 'green' ], 0.75)`.
 * function enumerate(list): enumerate the given list, e.g. "foo, bar, and bla". Input either an array (`enumerate([ "foo", "bar", "bla" ])`) or a string with `;` as separator (`enumerate("foo;bar;bla")`).
 * function debug(): print all arguments to the javascript console (via `console.log()`)
+* function boundaries(lat, lon): return list of boundaries where the coordinates lie within. If the boundaries are not loaded, return `null`. Every item has a property `tags` and `geometry` (GeoJSON geometry).
 
 Extra filters:
 * filter websiteUrl: return a valid http link. Example: `{{ "www.google.com"|websiteUrl }}` -> "http://www.google.com"; `{{ "https://google.com"|websiteUrl }}` -> "https://google.com"

@@ -4,4 +4,10 @@ curl -H "Accept: application/json" -H "Content-Type: application/sparql-query" -
 curl -H "Accept: application/json" -H "Content-Type: application/sparql-query" -H "User-Agent: OpenStreetBrowser" -XPOST -d @'lib/tag2link-sophox.qry' https://sophox.org/sparql > data/tag2link-sophox.json
 bin/tag2link-converter
 
+# Extract boundaries from JOSM
+wget -O data/josm-latest.jar https://josm.openstreetmap.de/josm-latest.jar
+unzip data/josm-latest.jar data/boundaries.osm
+node bin/convert_boundaries.js
+rm data/josm-latest.jar data/boundaries.osm
+
 bin/download_geoip2

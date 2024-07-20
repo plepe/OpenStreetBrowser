@@ -47,6 +47,8 @@ require('./PluginGeoLocate')
 require('./tagsDisplay-tag2link')
 require('./customCategory')
 require('./pinnedCategories')
+require('./boundaries')
+
 const ObjectDisplay = require('./ObjectDisplay')
 let currentObjectDisplay = null
 
