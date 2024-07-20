@@ -45,6 +45,7 @@ When rendering map features, the following properties are available:
 * `meta.uid` (UID of the user, who changed the object last)
 * `map.zoom` (Current zoom level)
 * `map.metersPerPixel` (The size of a pixel in meters at the center of the view)
+* `map.boundaries` (List of boundaries the map center lies within, see below at function 'boundaries')
 * `const.*` (Values from the 'const' option)
 * `filter.*` (if filters are defined, the values of the selected filter options)
 * `config.*` (if config options are defined, the values of the selected configuration options)

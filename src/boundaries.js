@@ -51,4 +51,13 @@ OverpassLayer.twig.extendFunction('boundaries', function (lat, lon) {
   return list
 })
 
+
+register_hook('category-overpass-init', (category) => {
+  category.layer.on('globalTwigData', (twigData) => {
+    const center = category.layer.map.getCenter()
+    const list = check(center.lat, center.lng)
+    twigData.map.boundaries = list
+  })
+})
+
 module.exports = { check }
