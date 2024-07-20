@@ -22,6 +22,8 @@ const output = osmtogeojson(input, {
 output.features.forEach(feature => {
   delete feature.id
   delete feature.properties.id
+  feature.tags = feature.properties
+  delete feature.properties
 })
 
 fs.writeFileSync('data/boundaries.geojson', JSON.stringify(output))

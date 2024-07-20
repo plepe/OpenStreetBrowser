@@ -36,21 +36,7 @@ function check (lat, lon) {
   return data.filter(feature => turf.booleanWithin(poi, feature))
 }
 
-OverpassLayer.twig.extendFunction('boundaries', function (lat, lon) {
-  let list = check(lat, lon)
-
-  if (list) {
-    list = list.map(feature => {
-      return {
-        tags: feature.properties,
-        geometry: feature.geometry
-      }
-    })
-  }
-
-  return list
-})
-
+OverpassLayer.twig.extendFunction('boundaries', check)
 
 register_hook('category-overpass-init', (category) => {
   category.layer.on('globalTwigData', (twigData) => {
