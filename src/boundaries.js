@@ -44,11 +44,14 @@ register_hook('category-overpass-init', (category) => {
     const list = check(center.lat, center.lng)
     twigData.map.boundaries = list
     twigData.map.driving_side = 'right'
-    list.forEach(boundary => {
-      if (boundary.tags.driving_side) {
-        twigData.map.driving_side = boundary.tags.driving_side
-      }
-    })
+
+    if (list) {
+      list.forEach(boundary => {
+        if (boundary.tags.driving_side) {
+          twigData.map.driving_side = boundary.tags.driving_side
+        }
+      })
+    }
   })
 })
 
