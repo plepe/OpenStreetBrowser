@@ -375,19 +375,11 @@ hooks.register('category-overpass-init', (category) => {
       const clone = new CustomCategoryEditor(repository)
       clone.edit()
 
-      category.repository.file_get_contents(category.data.fileName, {},
+      cloneCategory(category,
         (err, content) => {
           if (err) {
             console.error(err)
             return global.alert(err)
-          }
-
-          if (category.data.format === 'json') {
-            content = JSON.parse(content)
-            content = jsonMultilineStrings.join(content, { exclude: [['const'], ['filter']] })
-            content = yaml.dump(content, {
-              lineWidth: 9999
-            })
           }
 
           clone.applyContent(content)
@@ -513,4 +505,24 @@ function customCategoryTestQuery (str) {
   } catch (e) {
     return e
   }
+}
+
+function cloneCategory (category, callback) {
+  category.repository.file_get_contents(category.data.fileName, {},
+    (err, content) => {
+      if (err) {
+        return callback(err)
+      }
+
+      if (category.data.format === 'json') {
+        content = JSON.parse(content)
+        content = jsonMultilineStrings.join(content, { exclude: [['const'], ['filter']] })
+        content = yaml.dump(content, {
+          lineWidth: 9999
+        })
+      }
+
+      callback(null, content)
+    }
+  )
 }
