@@ -141,6 +141,18 @@ class RepositoryGit extends RepositoryBase {
     return $ret;
   }
 
+  function languages () {
+    $list = [];
+
+    foreach ($this->scandir('lang/') as $f) {
+      if (preg_match('/^lang\/([a-zA-Z-]+)\.json$/', $f, $m)) {
+        $list[] = $m[1];
+      }
+    }
+
+    return $list;
+  }
+
   function file_get_contents ($file) {
     return shell_exec("cd " . escapeShellArg($this->path) . "; git show {$this->branchEsc}:" . escapeShellArg($file));
   }

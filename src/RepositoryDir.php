@@ -64,6 +64,18 @@ class RepositoryDir extends RepositoryBase {
     return $data;
   }
 
+  function languages () {
+    $list = [];
+
+    foreach (scandir("{$this->path}/lang/") as $f) {
+      if (preg_match('/^([a-zA-Z-]+)\.json$/', $f, $m)) {
+        $list[] = $m[1];
+      }
+    }
+
+    return $list;
+  }
+
   function access ($file) {
     return (substr($file, 0, 1) !== '.' && !preg_match('/\/\./', $file));
   }

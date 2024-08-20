@@ -33,6 +33,7 @@ class RepositoryBase {
       'templates' => array(),
       'timestamp' => Date(DATE_ISO8601, $this->timestamp()),
       'lang' => array(),
+      'languages' => $this->languages(),
     );
 
     return $data;
@@ -125,5 +126,9 @@ class RepositoryBase {
     }
 
     return in_array($data['type'], array('index', 'overpass'));
+  }
+
+  function languages () {
+    return [];
   }
 }
