@@ -348,7 +348,7 @@ CategoryOverpass.prototype.open = function () {
 
         this.layer.setLayout(listData.prefix, listTemplate.replace(/template/g, listData.prefix))
 
-        let list = new OverpassLayerList(this.layer, listData)
+        let list = new OverpassLayerList(this.layer.layers, listData)
         this.lists.push(list)
 
         let dom = document.createElement('div')
@@ -397,7 +397,7 @@ CategoryOverpass.prototype.open = function () {
         dom.appendChild(p)
       }
     } else {
-      let list = new OverpassLayerList(this.layer, {})
+      let list = new OverpassLayerList(this.layer.layers, {})
       this.lists.push(list)
       list.addTo(this.domContent)
       this.listsDom.push(this.domContent)
