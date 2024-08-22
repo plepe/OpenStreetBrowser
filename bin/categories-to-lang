@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs')
 const async = require('async')
+const yaml = require('js-yaml')
 
 var all = {}
 var allIds = []
@@ -35,7 +36,7 @@ fs.readdir(
           return done()
         }
 
-        let m = f.match(/^(.*)\.json$/)
+        let m = f.match(/^(.*)\.(json|yaml)$/)
         if (!m) {
           return done()
         }
@@ -46,7 +47,7 @@ fs.readdir(
         fs.readFile(f, function (err, contents) {
           if (err) { return done(err) }
 
-          let data = JSON.parse(contents)
+          let data = parseFile(f, contents)
 
           if ('name' in data) {
             for (var lang in data.name) {
@@ -124,4 +125,21 @@ function writeTranslationFiles () {
       }
     )
   })
+}
+
+function parseFile (filename, contents) {
+  const m = filename.match(/\.(json|yaml)$/)
+  const mode = m[1]
+  let data
+
+  switch (mode) {
+    case 'yaml':
+      data = yaml.load(contents)
+      break
+    case 'json':
+    default:
+      data = JSON.parse(contents)
+  }
+
+  return data
 }
