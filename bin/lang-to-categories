@@ -92,43 +92,11 @@ function writeCategories () {
           }
 
           fs.readFile(f, function (err, contents) {
-            let data = JSON.parse(contents)
-
-            if (!('name' in data)) {
-              data.name = {}
-            }
-
-            for (var lang in all[id]) {
-              if (all[id][lang]) {
-                data.name[lang] = all[id][lang]
-              }
-            }
-
-            if (data.type && data.type === 'index') {
-              writeSubCategories(data.subCategories, all)
-            }
-            if (data.type && data.type === 'overpass') {
-              if (data.lists) {
-                for (let listId in data.lists) {
-                  let list = data.lists[listId]
-                  let langStrId = id + ':' + listId
-
-                  for (var lang in all[langStrId]) {
-                    if (all[langStrId][lang]) {
-                      list.name[lang] = all[langStrId][lang]
-                    }
-                  }
-                  list.name = sortKeys(list.name)
-                }
-              }
-            }
-
-            let result = {}
-            data.name = sortKeys(data.name)
+            const result = updateFileJS(id, contents)
 
             fs.writeFile(
               f,
-              JSON.stringify(data, null, '    ') + '\n',
+              result,
               function (err, result) {
                 done(err)
               }
@@ -138,4 +106,42 @@ function writeCategories () {
       )
     }
   )
+}
+
+function updateFileJS (id, contents) {
+  let data = JSON.parse(contents)
+
+  if (!('name' in data)) {
+    data.name = {}
+  }
+
+  for (var lang in all[id]) {
+    if (all[id][lang]) {
+      data.name[lang] = all[id][lang]
+    }
+  }
+
+  if (data.type && data.type === 'index') {
+    writeSubCategories(data.subCategories, all)
+  }
+  if (data.type && data.type === 'overpass') {
+    if (data.lists) {
+      for (let listId in data.lists) {
+        let list = data.lists[listId]
+        let langStrId = id + ':' + listId
+
+        for (var lang in all[langStrId]) {
+          if (all[langStrId][lang]) {
+            list.name[lang] = all[langStrId][lang]
+          }
+        }
+        list.name = sortKeys(list.name)
+      }
+    }
+  }
+
+  let result = {}
+  data.name = sortKeys(data.name)
+
+  return JSON.stringify(data, null, '    ') + '\n'
 }
