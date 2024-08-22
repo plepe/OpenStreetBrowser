@@ -106,7 +106,8 @@ function parseSubCategories(categories, all) {
 function writeTranslationFiles () {
   async.each(Object.keys(all), function (lang, done) {
     allIds = allIds.sort()
-    let data = {}
+    let data = JSON.parse(JSON.stringify(all[lang]))
+
     allIds.forEach(function (id) {
       data[id] = ''
     })
