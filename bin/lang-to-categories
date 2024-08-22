@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs')
-const forEach = require('async-foreach').forEach
+const async = require('async')
 
 var all = {}
 var allIds = []
@@ -17,13 +17,12 @@ function sortKeys (ob) {
 
 /* read existing translation files in lang/ */
 fs.readdir('lang', function (err, files) {
-  forEach(files, function (f) {
+  async.each(files, function (f, done) {
     let m = f.match(/^(.*)\.json$/)
     if (!m) {
-      return
+      return done()
     }
 
-    let done = this.async()
     let lang = m[1]
 
     fs.readFile('lang/' + f, function (err, contents) {
@@ -42,7 +41,7 @@ fs.readdir('lang', function (err, files) {
         }
       }
 
-      done()
+      done(err)
     })
   },
   writeCategories)
@@ -75,24 +74,22 @@ function writeCategories () {
   fs.readdir(
     '.',
     function (err, files) {
-      forEach(
+      async.each(
         files,
-        function (f) {
+        function (f, done) {
           if (f === 'package.json') {
-            return
+            return done()
           }
 
           let m = f.match(/^(.*)\.json$/)
           if (!m) {
-            return
+            return done()
           }
 
           let id = m[1]
           if (!(id in all)) {
-            return
+            return done()
           }
-
-          let done = this.async()
 
           fs.readFile(f, function (err, contents) {
             let data = JSON.parse(contents)
@@ -133,7 +130,7 @@ function writeCategories () {
               f,
               JSON.stringify(data, null, '    ') + '\n',
               function (err, result) {
-                done()
+                done(err)
               }
             )
           })

@@ -1,19 +1,18 @@
 #!/usr/bin/env node
 const fs = require('fs')
-const forEach = require('async-foreach').forEach
+const async = require('async')
 
 var all = {}
 var allIds = []
 
 /* read existing translation files in lang/ */
 fs.readdir('lang', function (err, files) {
-  forEach(files, function (f) {
+  async.each(files, function (f, done) {
     let m = f.match(/^(.*)\.json$/)
     if (!m) {
-      return
+      return done()
     }
 
-    let done = this.async()
     let lang = m[1]
 
     fs.readFile('lang/' + f, function (err) {
@@ -21,7 +20,7 @@ fs.readdir('lang', function (err, files) {
         all[lang] = {}
       }
 
-      done()
+      done(err)
     })
   })
 })
@@ -29,23 +28,24 @@ fs.readdir('lang', function (err, files) {
 fs.readdir(
   '.',
   function (err, files) {
-    forEach(
+    async.each(
       files,
-      function (f) {
+      function (f, done) {
         if (f === 'package.json') {
-          return
+          return done()
         }
 
         let m = f.match(/^(.*)\.json$/)
         if (!m) {
-          return
+          return done()
         }
 
-        let done = this.async()
         let id = m[1]
         allIds.push('category:' + id)
 
         fs.readFile(f, function (err, contents) {
+          if (err) { return done(err) }
+
           let data = JSON.parse(contents)
 
           if ('name' in data) {
@@ -103,9 +103,7 @@ function parseSubCategories(categories, all) {
 }
 
 function writeTranslationFiles () {
-  forEach(Object.keys(all), function (lang) {
-    let done = this.async()
-
+  async.each(Object.keys(all), function (lang, done) {
     allIds = allIds.sort()
     let data = {}
     allIds.forEach(function (id) {
@@ -122,7 +120,7 @@ function writeTranslationFiles () {
       'lang/' + lang + '.json',
       JSON.stringify(data, null, '    ') + '\n',
       function (err, result) {
-        done()
+        done(err)
       }
     )
   })
