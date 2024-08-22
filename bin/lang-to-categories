@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs')
 const async = require('async')
+const yaml = require('js-yaml')
 
 var all = {}
 var allIds = []
@@ -81,7 +82,7 @@ function writeCategories () {
             return done()
           }
 
-          let m = f.match(/^(.*)\.json$/)
+          let m = f.match(/^(.*)\.(json|yaml)$/)
           if (!m) {
             return done()
           }
@@ -91,8 +92,18 @@ function writeCategories () {
             return done()
           }
 
+          const mode = m[2]
+
           fs.readFile(f, function (err, contents) {
-            const result = updateFileJS(id, contents)
+            let result
+            switch (mode) {
+              case 'yaml':
+                result = updateFileYAML(id, contents)
+                break
+              case 'json':
+              default:
+                result = updateFileJS(id, contents)
+            }
 
             fs.writeFile(
               f,
@@ -144,4 +155,45 @@ function updateFileJS (id, contents) {
   data.name = sortKeys(data.name)
 
   return JSON.stringify(data, null, '    ') + '\n'
+}
+
+function updateFileYAML (id, contents) {
+  const origData = yaml.load(contents)
+
+  const data = {
+    name: origData.name ?? {}
+  }
+
+  for (var lang in all[id]) {
+    if (all[id][lang]) {
+      data.name[lang] = all[id][lang]
+    }
+  }
+
+  const nameRendered = yaml.dump(data).split(/\n/g).slice(0, -1)
+
+  const lines = contents.toString().split(/\r?\n/g)
+  let newLines = []
+  let foundName = false
+  let toDrop = false
+  lines.forEach(line => {
+    if (line.match(/^name:/)) {
+      toDrop = true
+      newLines = newLines.concat(nameRendered)
+      foundName = true
+    } else if (toDrop) {
+      if (!line.match(/^ /)) {
+        toDrop = false
+        newLines.push(line)
+      }
+    } else {
+      newLines.push(line)
+    }
+  })
+
+  if (!foundName) {
+    newLines = nameRendered.concat(lines)
+  }
+
+  return newLines.join('\n')
 }
