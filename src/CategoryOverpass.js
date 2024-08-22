@@ -1,7 +1,7 @@
 /* global openstreetbrowserPrefix */
 /* eslint camelcase: 0 */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
-var OverpassLayer = require('overpass-layer')
+var LeafletGeowiki = require('leaflet-geowiki')
 const isTrue = require('overpass-layer/src/isTrue')
 var OverpassLayerList = require('overpass-layer').List
 var queryString = require('query-string')
@@ -107,7 +107,10 @@ function CategoryOverpass (options, data, repository) {
   data.updateAssets = this.updateAssets.bind(this)
   data.layouts.popup = () => null
 
-  this.layer = new OverpassLayer(data)
+  this.layer = new LeafletGeowiki({
+    style: data,
+    overpassFrontend: global.overpassFrontend
+  })
 
   this.layer.onLoadStart = function (ev) {
     this.dom.classList.add('loading')

@@ -30,6 +30,7 @@
     "json-multiline-strings": "^0.1.0",
     "leaflet": "^1.9.4",
     "leaflet-geosearch": "^3.7.0",
+    "leaflet-geowiki": "github:geowiki-net/leaflet-geowiki",
     "leaflet-polylineoffset": "^1.1.1",
     "leaflet-textpath": "git+https://github.com/makinacorpus/Leaflet.TextPath.git#leaflet0.8-dev",
     "leaflet.locatecontrol": "^0.72.2",
