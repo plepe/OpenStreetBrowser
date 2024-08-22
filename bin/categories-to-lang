@@ -15,9 +15,9 @@ fs.readdir('lang', function (err, files) {
 
     let lang = m[1]
 
-    fs.readFile('lang/' + f, function (err) {
+    fs.readFile('lang/' + f, function (err, body) {
       if (!(lang in all)) {
-        all[lang] = {}
+        all[lang] = JSON.parse(body)
       }
 
       done(err)
