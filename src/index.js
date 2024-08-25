@@ -2,6 +2,7 @@
 
 const tabs = require('modulekit-tabs')
 
+import App from 'geowiki-lib-app'
 var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var state = require('./state')
@@ -52,7 +53,18 @@ require('./boundaries')
 const ObjectDisplay = require('./ObjectDisplay')
 let currentObjectDisplay = null
 
+/* Geowiki Init */
+let app
+const baseModules = []
+App.modules = [...baseModules, ...App.modules, ...require('../modules')]
+
 window.onload = function () {
+  app = new App()
+  app.on('init', init2)
+}
+/* /Geowiki Init */
+
+function init2 (err) {
   var initState = config.defaultView
 
   if (global.location.search) {
