@@ -2,7 +2,6 @@ const OverpassLayer = require('overpass-layer')
 const tabs = require('modulekit-tabs')
 const natsort = require('natsort').default
 
-const state = require('./state')
 const Filter = require('overpass-frontend').Filter
 const getPathFromJSON = require('./getPathFromJSON')
 const CategoryOverpass = require('./CategoryOverpass')
@@ -145,7 +144,7 @@ class CategoryOverpassFilter {
 
       this.applyParam(param)
 
-      state.update()
+      global.state.update()
     }
 
     this.master.on('setParam', this.setParam.bind(this))

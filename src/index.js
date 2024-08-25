@@ -5,7 +5,6 @@ const tabs = require('modulekit-tabs')
 import App from 'geowiki-lib-app'
 var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
-var state = require('./state')
 var hash = require('sheet-router/hash')
 global.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 
@@ -54,12 +53,25 @@ let currentObjectDisplay = null
 
 /* Geowiki Init */
 let app
-const baseModules = []
+const baseModules = [
+  require('./config'),
+  require('geowiki-lib-leaflet')
+]
 App.modules = [...baseModules, ...App.modules, ...require('../modules')]
 
 window.onload = function () {
   app = new App()
   app.on('init', init2)
+
+  // TODO: replace global.state by app.state
+  global.state = app.state
+  global.state.update = (state, push) => {
+    app.state.updateLink(push)
+  }
+
+  // TODO: Replace register_hook by app.on('state-...', ...)
+  app.state.on('get', state => call_hooks('state-get', state))
+  app.state.on('apply', state => call_hooks('state-apply', state))
 }
 /* /Geowiki Init */
 
@@ -71,10 +83,8 @@ function init2 (err) {
     return
   }
 
-  map = L.map('map')
+  map = app.map
   map.getMetersPerPixel = mapMetersPerPixel.bind(map)
-
-  map.attributionControl.setPrefix('<a target="_blank" href="https://wiki.openstreetmap.org/wiki/OpenStreetBrowser">OpenStreetBrowser</a>')
 
   // due to php export, options may be an array -> fix
   if (Array.isArray(options)) {
@@ -107,24 +117,6 @@ function onload2 (initState) {
 
   OpenStreetBrowserLoader.setMap(map)
 
-  var newState
-  if (location.hash && location.hash.length > 1) {
-    newState = state.parse(location.hash.substr(1))
-  } else {
-    newState = initState
-  }
-
-  // make sure the map has an initial location
-  if (!('zoom' in newState) && !('lat' in newState) && !('lon' in newState)) {
-    state.apply(initState)
-  }
-
-  state.apply(newState)
-
-  if ('repo' in newState) {
-    global.mainRepo = newState.repo
-  }
-
   loadBaseCategory()
 
   map.on('popupopen', function (e) {
@@ -133,7 +125,7 @@ function onload2 (initState) {
       if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/') {
         currentPath = url
         // only push state, when last popup close happened >1sec earlier
-        state.update(null, Date.now() - lastPopupClose > 1000)
+        app.state.update(null, Date.now() - lastPopupClose > 1000)
       }
 
       OpenStreetBrowserLoader.getCategory(e.popup.object.layer_id, function (err, category) {
@@ -160,18 +152,10 @@ function onload2 (initState) {
 
     lastPopupClose = Date.now()
     currentPath = null
-    state.update(null, true)
+    app.state.update(null, true)
     hide()
   })
-  map.on('moveend', function (e) {
-    state.update()
-  })
 
-  hash(function (loc) {
-    state.apply(state.parse(loc.substr(1)))
-  })
-
-  state.update()
   call_hooks('initFinish')
 }
 

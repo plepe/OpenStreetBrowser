@@ -7,7 +7,6 @@ var OverpassLayerList = require('overpass-layer').List
 var queryString = require('query-string')
 
 var CategoryBase = require('./CategoryBase')
-var state = require('./state')
 var tabs = require('modulekit-tabs')
 var maki = require('./maki')
 var qs = require('sheet-router/qs')
@@ -409,7 +408,7 @@ CategoryOverpass.prototype.open = function () {
 
   this.isOpen = true
 
-  state.update()
+  global.state.update() // TODO
 
   if ('info' in this.data) {
     if (!this.tabInfo) {
@@ -470,7 +469,7 @@ CategoryOverpass.prototype.close = function () {
   this.layer.remove()
   this.lists.forEach(list => list.remove())
 
-  state.update()
+  global.state.update() // TODO
 }
 
 CategoryOverpass.prototype.get = function (id, callback) {

@@ -4,7 +4,6 @@ require('./addCategories.css')
 const tabs = require('modulekit-tabs')
 const weightSort = require('weight-sort')
 
-const state = require('./state')
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 
 let tab
@@ -254,7 +253,7 @@ hooks.register('browser-more-categories', (browser, parameters) => {
     addCategoriesShow(parameters.id, browser, parameters)
   }
   else if (parameters.repo || parameters.categories) {
-    state.apply(parameters)
+    global.state.apply(parameters) // TODO
     browser.close()
   }
 })

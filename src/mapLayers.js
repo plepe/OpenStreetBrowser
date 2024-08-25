@@ -1,5 +1,3 @@
-const state = require('./state')
-
 var mapLayers = {}
 var currentMapLayer = null
 
@@ -46,7 +44,7 @@ register_hook('init', function () {
 
   map.on('baselayerchange', function (e) {
     currentMapLayer = e.layer
-    state.update()
+    global.state.update()
   })
 })
 
