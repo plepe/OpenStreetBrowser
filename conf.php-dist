@@ -22,6 +22,12 @@ $repositories = array(
 #  'url' => "https://www.openstreetbrowser.org/dev",
 #);
 
+// Basic information about this app
+$config['app'] = [
+  'name' => 'OpenStreetBrowser',
+  'url' => 'https://openstreetbrowser.org',
+];
+
 // Set to true to reload categories on every page visit.
 $config['categoriesAlwaysReload'] = true;
 

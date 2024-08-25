@@ -29,7 +29,7 @@ html_export_var(array(
 <html>
 <head>
   <meta charset="utf-8">
-  <title>OpenStreetBrowser</title>
+  <title><?php echo $config['app']['name'] ?? 'OpenStreetBrowser'; ?></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/png" href="img/osb-192.png" />
