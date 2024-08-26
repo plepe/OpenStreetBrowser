@@ -1,6 +1,13 @@
 const yaml = require('js-yaml')
 let error = false
 
+module.exports = {
+  id: 'optionsYaml',
+  requireModules: ['options'],
+  appInit (app) {
+  }
+}
+
 function createYaml (form) {
   const data = form.get_data()
   let result = '### OpenStreetBrowser Options ###\n'

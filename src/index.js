@@ -23,8 +23,6 @@ global.tabs = null
 var lastPopupClose = 0
 
 // Optional modules
-require('./options')
-require('./optionsYaml')
 require('./language')
 require('./overpassChooser')
 require('./fullscreen')

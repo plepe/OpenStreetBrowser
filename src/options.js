@@ -1,4 +1,10 @@
 /* globals form, ajax, options:true */
+module.exports = {
+  id: 'options',
+  appInit (app) {
+  }
+}
+
 var moduleOptions = {}
 var prevPage
 var optionsFormEl
@@ -98,5 +104,3 @@ moduleOptions.submit = function (optionsForm) {
 
   return false
 }
-
-module.exports = moduleOptions
