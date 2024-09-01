@@ -102,5 +102,7 @@
     "options:chooseEditor": "Choisir un éditeur",
     "pinnedCategories:forget": "Désépingler une catégorie de votre profil",
     "pinnedCategories:remember": "Épingler une catégorie à votre profil",
-    "pinnedCategories:remembered": "Catégories épinglées"
+    "pinnedCategories:remembered": "Catégories épinglées",
+    "formatUnits:coordSpacer:space": "Espace",
+    "formatUnits:coordSpacer:colon": "Deux-points"
 }
