@@ -153,8 +153,8 @@ register_hook('options_form', def => {
     'name': lang('formatUnits:coordSpacer'),
     'type': 'select_other',
     'values': {
-      ' ': 'Space',
-      ', ': 'Colon'
+      ' ': lang('formatUnits:coordSpacer:space'),
+      ', ': lang('formatUnits:coordSpacer:colon'),
     },
     'default': settings.coordSpacer
   }

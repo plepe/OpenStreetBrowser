@@ -39,6 +39,8 @@
     "filter:type": "Type",
     "formatUnits:coordFormat": "Coordinate format",
     "formatUnits:coordSpacer": "Coordinate spacer",
+    "formatUnits:coordSpacer:space": "Space",
+    "formatUnits:coordSpacer:colon": "Colon",
     "formatUnits:system": "Unit system",
     "formatUnits:system:si": "SI Units",
     "formatUnits:system:imp": "Imperial units",
