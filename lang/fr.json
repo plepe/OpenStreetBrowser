@@ -104,5 +104,6 @@
     "pinnedCategories:remember": "Épingler une catégorie à votre profil",
     "pinnedCategories:remembered": "Catégories épinglées",
     "formatUnits:coordSpacer:space": "Espace",
-    "formatUnits:coordSpacer:colon": "Deux-points"
+    "formatUnits:coordSpacer:colon": "Deux-points",
+    "formatUnits:coordFormat:help": "Une définition de format telle que spécifiée dans le [module formatCoords]"
 }
