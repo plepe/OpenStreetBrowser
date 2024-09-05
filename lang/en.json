@@ -38,6 +38,7 @@
     "filter:title": "Title",
     "filter:type": "Type",
     "formatUnits:coordFormat": "Coordinate format",
+    "formatUnits:coordFormat:help": "A format definition as specified in [module formatCoords]",
     "formatUnits:coordSpacer": "Coordinate spacer",
     "formatUnits:coordSpacer:space": "Space",
     "formatUnits:coordSpacer:colon": "Colon",

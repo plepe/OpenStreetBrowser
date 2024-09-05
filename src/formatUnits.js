@@ -138,7 +138,9 @@ register_hook('options_form', def => {
 
   def.formatUnitsCoordFormat = {
     'name': lang('formatUnits:coordFormat'),
-    'desc': 'A format definition as specified in <a target="_blank" href="https://github.com/nerik/formatcoords">module formatCoords</a>',
+    'desc': lang('formatUnits:coordFormat:help')
+      .replace('[', '<a target="_blank" href="https://github.com/nerik/formatcoords">')
+      .replace(']', '</a>'),
     'type': 'select_other',
     'values': {
       'FFf': 'DD° MM′ SS.SSS″ X',
@@ -146,6 +148,7 @@ register_hook('options_form', def => {
       'f': 'DD.DDD° X',
       '-d': '±DD.DDD'
     },
+    'button:other': lang('other'),
     'default': settings.coordFormat
   }
 
@@ -156,6 +159,7 @@ register_hook('options_form', def => {
       ' ': lang('formatUnits:coordSpacer:space'),
       ', ': lang('formatUnits:coordSpacer:colon'),
     },
+    'button:other': lang('other'),
     'default': settings.coordSpacer
   }
 
