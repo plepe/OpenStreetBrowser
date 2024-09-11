@@ -22,11 +22,12 @@ function ajax_ImageLoaderWikimediaCategoryList ($param) {
       $imgs = $ul->getElementsByTagName('img');
 
       for ($j = 0; $j < $imgs->length; $j++) {
-        $ret[] = $imgs->item($j)->getAttribute('alt');
+        $item = $imgs->item($j);
+        $ret[] = $item->getAttribute('alt');
         $retData[] = array(
-          'id' => $imgs->item($j)->getAttribute('alt'),
-          'width' => $imgs->item($j)->getAttribute('data-file-width'),
-          'height' => $imgs->item($j)->getAttribute('data-file-height'),
+          'id' => $item->getAttribute('alt'),
+          'width' => $item->getAttribute('data-file-width'),
+          'height' => $item->getAttribute('data-file-height'),
         );
       }
     }
