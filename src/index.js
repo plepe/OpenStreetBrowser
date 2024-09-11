@@ -25,7 +25,6 @@ var lastPopupClose = 0
 // Optional modules
 require('./language')
 require('./overpassChooser')
-require('./fullscreen')
 require('./mapLayers')
 require('./twigFunctions')
 require('./categories')
