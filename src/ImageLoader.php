@@ -23,9 +23,17 @@ function ajax_ImageLoaderWikimediaCategoryList ($param) {
 
       for ($j = 0; $j < $imgs->length; $j++) {
         $item = $imgs->item($j);
-        $ret[] = $item->getAttribute('alt');
+        $srcPath = explode('/', $item->getAttribute('src'));
+
+        if (sizeof($srcPath) < 2) {
+          continue;
+        }
+
+        $id = urldecode($srcPath[sizeof($srcPath) - 2]);
+
+        $ret[] = $id;
         $retData[] = array(
-          'id' => $item->getAttribute('alt'),
+          'id' => $id,
           'width' => $item->getAttribute('data-file-width'),
           'height' => $item->getAttribute('data-file-height'),
         );
