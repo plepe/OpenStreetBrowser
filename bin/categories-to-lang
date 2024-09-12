@@ -32,7 +32,7 @@ fs.readdir(
     async.each(
       files,
       function (f, done) {
-        if (f in ['package.json', 'package-lock.json']) {
+        if (['package.json', 'package-lock.json'].includes(f)) {
           return done()
         }
 
