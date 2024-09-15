@@ -138,6 +138,7 @@ function CategoryOverpass (options, data, repository) {
   this.layer.on('twigData',
     (ob, data, result) => {
       result.user = global.options
+      result.layer_id = this.id
       global.currentCategory = this
     }
   )
