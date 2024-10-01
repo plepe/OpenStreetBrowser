@@ -3,7 +3,7 @@ OpenStreetBrowser is a web application where you can 'browse' the information fr
 
 * Visit [OpenStreetBrowser](https://www.openstreetbrowser.org)
 * Main repositories on Github: [Software & UI](https://github.com/plepe/OpenStreetBrowser), [Main Categories](https://github.com/plepe/openstreetbrowser-categories-main), [Tag Translations](https://github.com/plepe/openstreetmap-tag-translations)
-* Translations: [Weblate](https://weblate.openstreetbrowser.org/projects/openstreetbrowser/), [Statistics & List of contributors](https://openstreetbrowser.org/translations/)
+* Translations: [Weblate](https://hosted.weblate.org/projects/openstreetbrowser/), [Statistics & List of contributors](https://openstreetbrowser.org/translations/)
 
 ## INSTALL
 ```sh
