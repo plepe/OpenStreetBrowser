@@ -102,5 +102,7 @@
     "copied-clipboard": "Skopiowane do schowka",
     "pinnedCategories:forget": "Odepnij kategorię od swojego profilu",
     "pinnedCategories:remember": "Przypnij kategorię do swojego profilu",
-    "pinnedCategories:remembered": "Przypięte kategorie"
+    "pinnedCategories:remembered": "Przypięte kategorie",
+    "formatUnits:coordSpacer:space": "Przestrzeń",
+    "formatUnits:coordFormat:help": "Definicja formatu określona w [module formatCoords]"
 }

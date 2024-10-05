@@ -33,7 +33,7 @@
     "more_results": "weitere Ergebnisse anzeigen",
     "open": "geöffnet",
     "options:data_lang": "Datensprache",
-    "options:data_lang:desc": "Bei vielen Kartenelementen wurde der Name (und andere Tags) in verschiedene Sprachen übersetzt  (z.B. mit 'name:en', 'name:de'). Gib an, welche Sprache für die Anzeige verwendet werden soll, oder wähle \"Lokale Sprache\", damit immer der nicht übersetzte Wert (z. B. \"name\") verwendet wird.",
+    "options:data_lang:desc": "Bei vielen Kartenelementen wurde der Name (und andere Tags) in verschiedene Sprachen übersetzt (z.B. mit 'name:en', 'name:de'). Gib an, welche Sprache für die Anzeige verwendet werden soll, oder wähle \"Lokale Sprache\", damit immer der nicht übersetzte Wert (z. B. \"name\") verwendet wird.",
     "options:data_lang:local": "Lokale Sprache",
     "options:overpassUrl": "OverpassAPI Adresse",
     "options:preferredBaseMap": "Bevorzugte Hintergrundkarte",
