@@ -99,5 +99,11 @@
     "customCategory:list": "Népszerű egyéni kategóriák felsorolása",
     "copied-clipboard": "Vágólapra másolva",
     "add_config": "Konfigurációs beállítás hozzáadása",
-    "color_scheme": "Színséma"
+    "color_scheme": "Színséma",
+    "pinnedCategories:forget": "Kategória eltávolítása a profilodból",
+    "pinnedCategories:remember": "Kategória rögzítése a profilodhoz",
+    "pinnedCategories:remembered": "Saját kategóriák",
+    "formatUnits:coordSpacer:space": "Szóköz",
+    "formatUnits:coordSpacer:colon": "Kettőspont",
+    "formatUnits:coordFormat:help": "A [formatCoords modulban] meghatározott formátumdefiníció"
 }
