@@ -9,6 +9,33 @@ const yaml = require('js-yaml')
 
 var md5cache = {}
 
+const cardinalDirections = {
+  'NORTH': 0,
+  'N': 0,
+  'NNE': 22.5,
+  'NE': 45,
+  'NORTHEAST': 45,
+  'ENE': 67.5,
+  'EAST': 90,
+  'E': 90,
+  'ESE': 112.5,
+  'SE': 135,
+  'SOUTHEAST': 45,
+  'SSE': 157.5,
+  'SOUTH': 180,
+  'S': 180,
+  'SSW': 202.5,
+  'SW': 225,
+  'SOUTHWEST': 225,
+  'WSW': 247.5,
+  'WEST': 270,
+  'W': 270,
+  'WNW': 292.5,
+  'NW': 315,
+  'NORTHWEST': 315,
+  'NNW': 337.5
+}
+
 OverpassLayer.twig.extendFunction('tagsPrefix', function (tags, prefix) {
   var ret = {}
   var count = 0
@@ -58,6 +85,18 @@ OverpassLayer.twig.extendFilter('matches', function (value, param) {
 })
 OverpassLayer.twig.extendFilter('natsort', function (values, options) {
   return values.sort(natsort(options))
+})
+OverpassLayer.twig.extendFilter('parseDirection', function (value, options) {
+  if (typeof value === 'string') {
+    const valueUpper = value.trim().toUpperCase()
+    if (valueUpper in cardinalDirections) {
+      return cardinalDirections[valueUpper]
+    }
+
+    return parseFloat(value)
+  }
+
+  return value
 })
 OverpassLayer.twig.extendFilter('unique', function (values, options) {
   // source: https://stackoverflow.com/a/14438954

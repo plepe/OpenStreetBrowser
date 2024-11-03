@@ -81,6 +81,7 @@ Extra filters:
 * filter `ksort`: Sort an associative array by key (alphabetic)
 * filter `unique`: Remove duplicate elements from an array.
 * filter `md5`: calculate md5 hash of a string.
+* filter `parseDirection`: parses the value of a direction (e.g. 'east' => 90, 'SE' => 135). If the value is a string, but not a cardinal direction return the value as number (e.g. '90' => 90). Other values are returned as is.
 * filter `enumerate`: enumerate the given list, e.g. "foo, bar, and bla". Input either an array (`[ "foo", "bar", "bla" ]|enumerate`) or a string with `;` as separator (`"foo;bar;bla"|enumerate`).
 * filter `debug`: print the value (and further arguments) to the javascript console (via `console.log()`)
 * filter `wikipediaAbstract`: shows the abstract of a Wikipedia article in the selected data language (or, if not available, the language which was used in input, resp. 'en' for Wikidata input). Input is either 'language:article' (e.g. 'en:Douglas Adams') or a wikidata id (e.g. 'Q42').
