@@ -85,5 +85,9 @@
     "heading:SW": "SW",
     "formatUnits:speed:km/h": "km/h",
     "heading:SE": "SO",
-    "heading:W": "W"
+    "heading:W": "W",
+    "close": "Schließen",
+    "pinnedCategories:remembered": "Angeheftete Kategorien",
+    "copied-clipboard": "In die Zwischenablage kopiert",
+    "empty value": "leerer Wert"
 }
