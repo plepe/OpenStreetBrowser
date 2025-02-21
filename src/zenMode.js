@@ -5,8 +5,12 @@ let zenmodeListener
 register_hook('fullscreen-activate', activateZenMode)
 register_hook('fullscreen-deactivate', deactivateZenMode)
 
+const showEvents = ['mousemove', 'touchstart']
+
 function activateZenMode () {
-  document.querySelector('#map').addEventListener('mousemove', startZenTimeout)
+  showEvents.forEach(ev =>
+    document.querySelector('#map').addEventListener(ev, startZenTimeout)
+  )
   startZenTimeout()
 }
 
@@ -21,7 +25,9 @@ function startZenTimeout () {
 
 function deactivateZenMode () {
   global.clearTimeout(zenmodeTimeout)
-  document.querySelector('#map').removeEventListener('mousemove', startZenTimeout)
+  showEvents.forEach(ev =>
+    document.querySelector('#map').removeEventListener(ev, startZenTimeout)
+  )
   document.body.classList.remove('zenMode')
 }
 
