@@ -11,6 +11,9 @@ var FullscreenControl = L.Control.extend({
     container.onclick = function () {
       document.body.classList.toggle('fullscreen')
       map.invalidateSize()
+
+      call_hooks('fullscreen-' + (document.body.classList.contains('fullscreen') ? 'activate' : 'deactivate'))
+
       return false
     }
 

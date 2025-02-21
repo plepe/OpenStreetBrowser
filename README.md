@@ -93,6 +93,8 @@ With the function `register_hook` you can hook into several functions. The follo
 * `show-popup`: called when a popup is being displayed. Parameters: data (see properties in doc/TwigJS.md), category, dom, callback.
 * `options_save`: called when options are saved. Parameters: options (the new object), old_options (before save)
 * `initFinish`: called when the app initialization finishes
+* `fullscreen-activate`: called, wenn the fullscreen mode gets activated.
+* `fullscreen-deactivate`: called, wenn the fullscreen mode gets deactivated.
 
 ### New locale
 * Add language code to the `$languages` array in conf.php (and conf.php-dist)
