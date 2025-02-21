@@ -366,6 +366,17 @@ a:active {
 .fullscreen #mapShadow {
   display: none;
 }
+
+@keyframes zenMode {
+  from {opacity: 1};
+  to {opacity: 0};
+}
+.zenMode .leaflet-control-container .leaflet-top {
+  opacity: 0;
+  animation-name: zenMode;
+  animation-duration: 1s;
+}
+
 #loadingIndicator {
   display: none;
 }
