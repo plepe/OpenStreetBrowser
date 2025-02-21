@@ -6,7 +6,6 @@ register_hook('fullscreen-activate', activateZenMode)
 register_hook('fullscreen-deactivate', deactivateZenMode)
 
 function activateZenMode () {
-  console.log('act')
   document.querySelector('#map').addEventListener('mousemove', startZenTimeout)
   startZenTimeout()
 }
@@ -21,7 +20,6 @@ function startZenTimeout () {
 }
 
 function deactivateZenMode () {
-  console.log('deact')
   global.clearTimeout(zenmodeTimeout)
   document.querySelector('#map').removeEventListener('mousemove', startZenTimeout)
   document.body.classList.remove('zenMode')
