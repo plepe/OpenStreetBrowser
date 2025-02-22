@@ -105,5 +105,8 @@
     "customCategory:list": "Seznam oblíbených vlastních kategorií",
     "color_scheme": "Barevné schéma",
     "download": "Stáhnout",
-    "apply-keep": "Použít a pokračovat v úpravách"
+    "apply-keep": "Použít a pokračovat v úpravách",
+    "options:fullscreenMode": "Celoobrazovkový režim",
+    "options:fullscreenMode:screen": "Použít celou obrazovku",
+    "options:fullscreenMode:window": "Zůstat v okně"
 }
