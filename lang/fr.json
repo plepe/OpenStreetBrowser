@@ -105,5 +105,8 @@
     "pinnedCategories:remembered": "Catégories épinglées",
     "formatUnits:coordSpacer:space": "Espace",
     "formatUnits:coordSpacer:colon": "Deux-points",
-    "formatUnits:coordFormat:help": "Une définition de format telle que spécifiée dans le [module formatCoords]"
+    "formatUnits:coordFormat:help": "Une définition de format telle que spécifiée dans le [module formatCoords]",
+    "options:fullscreenMode": "Mode plein écran",
+    "options:fullscreenMode:window": "Rester dans la fenêtre",
+    "options:fullscreenMode:screen": "Utiliser l'écran"
 }
