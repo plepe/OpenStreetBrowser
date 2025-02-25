@@ -89,5 +89,20 @@
     "close": "Schließen",
     "pinnedCategories:remembered": "Angeheftete Kategorien",
     "copied-clipboard": "In die Zwischenablage kopiert",
-    "empty value": "leerer Wert"
+    "empty value": "leerer Wert",
+    "pinnedCategories:forget": "Entferne Kategorie aus Profil",
+    "customCategory:list": "Liste beliebte benutzerdefinierte Kategorien",
+    "pinnedCategories:remember": "Hefte Kategorie an Profil an",
+    "formatUnits:system": "Einheitensystem",
+    "formatUnits:system:si": "SI-Einheiten",
+    "formatUnits:system:m": "Immer Meter verwenden",
+    "formatUnits:speed": "Einheit Geschwindigkeit",
+    "formatUnits:speed:ft/s": "ft/s",
+    "geoinfo:nw-corner": "Nordwestliche Ecke",
+    "geoinfo:center": "Mittelpunkt",
+    "geoinfo:centroid": "Zentroid",
+    "options:fullscreenMode": "Vollbildmodus",
+    "options:fullscreenMode:screen": "Bildschirm benutzen",
+    "options:fullscreenMode:window": "Im Fenster bleiben",
+    "geoinfo:se-corner": "Südöstliche Ecke"
 }
