@@ -105,5 +105,8 @@
     "pinnedCategories:remembered": "Saját kategóriák",
     "formatUnits:coordSpacer:space": "Szóköz",
     "formatUnits:coordSpacer:colon": "Kettőspont",
-    "formatUnits:coordFormat:help": "A [formatCoords modulban] meghatározott formátumdefiníció"
+    "formatUnits:coordFormat:help": "A [formatCoords modulban] meghatározott formátumdefiníció",
+    "options:fullscreenMode": "Teljes képernyős mód",
+    "options:fullscreenMode:screen": "Képernyő használata",
+    "options:fullscreenMode:window": "Maradás az ablakban"
 }
