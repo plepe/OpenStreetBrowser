@@ -30,9 +30,10 @@ register_hook('state-apply', function (state) {
 
         if (!category.parentDom) {
           category.setParentDom(document.getElementById('contentListAddCategories'))
+          global.rootCategories[id] = category
         }
-        category.open()
 
+        category.open()
       }
     })
   })

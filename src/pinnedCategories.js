@@ -11,6 +11,7 @@ function startup () {
         }
 
         if (!category.parentDom) {
+          global.rootCategories[id] = category
           category.setParentDom(document.getElementById('contentListAddCategories'))
         }
       })

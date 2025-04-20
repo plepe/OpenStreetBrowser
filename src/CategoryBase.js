@@ -93,6 +93,9 @@ CategoryBase.prototype.setMap = function (map) {
 }
 
 CategoryBase.prototype.setParent = function (parent) {
+  // if this was a root category, remove from list
+  delete(global.rootCategories[this.id])
+
   this.parentCategory = parent
 
   if (this.isOpen) {

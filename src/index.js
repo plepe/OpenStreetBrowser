@@ -1,6 +1,7 @@
 /* globals map:true, overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true */
 
 const tabs = require('modulekit-tabs')
+const async = require('async')
 
 var OverpassFrontend = require('overpass-frontend')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
@@ -20,6 +21,7 @@ global.overpassFrontend = null
 global.currentPath = null
 global.mainRepo = ''
 global.tabs = null
+global.rootCategories = {}
 var lastPopupClose = 0
 
 // Optional modules
@@ -174,6 +176,7 @@ function loadBaseCategory () {
     }
 
     baseCategory = category
+    global.rootCategories[repo + 'index'] = category
     category.setParentDom(document.getElementById('contentListBaseCategory'))
     category.open()
 
@@ -182,7 +185,29 @@ function loadBaseCategory () {
 }
 
 global.allMapFeatures = function (callback) {
-  global.baseCategory.allMapFeatures(callback)
+  let result = []
+
+  async.eachOf(global.rootCategories, (baseCategory, id, done) => {
+    if (!baseCategory.allMapFeatures) {
+      console.error('allMapFeatures(): Root-Category ' + id + ': allMapFeatures() not supported')
+      return done()
+    }
+
+    baseCategory.allMapFeatures(
+      (err, data) => {
+        if (err) {
+          console.error('allMapFeatures(): Repo ' + id + ': error loading allMapFeatures', err)
+          return done()
+        }
+
+        result = result.concat(data)
+        done()
+      }
+    )
+  },
+  (err) => {
+    callback(err, result)
+  })
 }
 
 window.setPath = function (path, state) {

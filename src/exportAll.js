@@ -18,7 +18,7 @@ function prepareDownload (callback) {
 
   call_hooks('prepareDownload', conf)
 
-  global.baseCategory.allMapFeatures((err, data) => {
+  global.allMapFeatures((err, data) => {
     if (err) {
       return callback(err)
     }
