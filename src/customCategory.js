@@ -88,6 +88,8 @@ class CustomCategoryEditor {
   }
 
   load (id, callback) {
+    this.id = id
+
     this.repository.getCategory(id, {},
       (err, category, content) => {
         this.content = content
@@ -182,6 +184,14 @@ class CustomCategoryEditor {
       this.updateDownload()
     }
 
+    if (this.id) {
+      const fullId = 'custom/' + this.id
+      const options = global.options
+      if (!options['pinned-categories'] || !options['pinned-categories'].includes(fullId)) {
+        delete(global.rootCategories[fullId])
+      }
+    }
+
     const id = md5(content)
     this.id = id
 
@@ -194,6 +204,7 @@ class CustomCategoryEditor {
 
       this.category = category
       this.category.setParentDom(document.getElementById('contentListAddCategories'))
+      global.rootCategories['custom/' + id] = category
 
       this.category.open()
     })
