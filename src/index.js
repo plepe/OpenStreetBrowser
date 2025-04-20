@@ -20,6 +20,7 @@ global.overpassFrontend = null
 global.currentPath = null
 global.mainRepo = ''
 global.tabs = null
+global.rootCategories = {}
 var lastPopupClose = 0
 
 // Optional modules
@@ -174,6 +175,7 @@ function loadBaseCategory () {
     }
 
     baseCategory = category
+    global.rootCategories[repo + 'index'] = category
     category.setParentDom(document.getElementById('contentListBaseCategory'))
     category.open()
 
