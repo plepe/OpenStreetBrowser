@@ -33,7 +33,7 @@
     "options:data_lang": "Llenguatge de la data",
     "options:data_lang:desc": "Moltes característiques del mapa tenen el seu nom (i altres etiquetes) traduïts a diferents idiomes (per exemple, amb 'name:en', 'name:de'). Especifiqueu quin idioma s'ha d'utilitzar per mostrar o 'Llengua local' perquè sempre s'utilitzi el valor no traduït (per exemple, 'name').",
     "options:data_lang:local": "Llengua local",
-    "options:overpassUrl": "OverpassAPI URL",
+    "options:overpassUrl": "URL d'OverpassAPI",
     "options:preferredBaseMap": "Mapa base preferit",
     "options:ui_lang": "Llenguatge de la interfície",
     "other": "Altres",
@@ -99,5 +99,14 @@
     "main:about": "Sobre",
     "main:code": "Codi",
     "options:debug_mode": "Mode de depuració",
-    "options:chooseEditor": "Escull Editor"
+    "options:chooseEditor": "Escull Editor",
+    "pinnedCategories:forget": "Lleva la categoria del teu perfil",
+    "pinnedCategories:remember": "Fixa la categoria al teu perfil",
+    "pinnedCategories:remembered": "Categories fixades",
+    "formatUnits:coordFormat:help": "Una definició de format com s'especifica al [mòdul formatCoords]",
+    "formatUnits:coordSpacer:space": "Espai",
+    "formatUnits:coordSpacer:colon": "Dos punts",
+    "options:fullscreenMode": "Pantalla completa",
+    "options:fullscreenMode:screen": "Usa pantalla",
+    "options:fullscreenMode:window": "Roman a la finestra"
 }
