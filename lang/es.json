@@ -105,5 +105,8 @@
     "heading:SE": "SE",
     "heading:S": "S",
     "heading:SW": "SO",
-    "options:chooseEditor": "Elegir editor"
+    "options:chooseEditor": "Elegir editor",
+    "options:fullscreenMode": "Modo a pantalla completa",
+    "options:fullscreenMode:screen": "Usar pantalla",
+    "options:fullscreenMode:window": "Permanecer en pantalla"
 }
