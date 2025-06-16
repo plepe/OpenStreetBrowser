@@ -105,5 +105,8 @@
     "filter:title": "தலைப்பு",
     "export:OSMJSON": "OSM சாதொபொகு ஆக பதிவிறக்கவும்",
     "export:OSMXML": "OSM நீகுமொ ஆக பதிவிறக்கவும்",
-    "formatUnits:coordFormat": "ஒருங்கிணைப்பு வடிவம்"
+    "formatUnits:coordFormat": "ஒருங்கிணைப்பு வடிவம்",
+    "options:fullscreenMode": "முழுத்திரை பயன்முறை",
+    "options:fullscreenMode:screen": "திரையைப் பயன்படுத்தவும்",
+    "options:fullscreenMode:window": "சாளரத்தில் இருங்கள்"
 }
