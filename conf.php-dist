@@ -116,6 +116,7 @@ $languages = array(
   "et", // Estonian
   "fr", // French
   "hu", // Hungarian
+  "id", // Indonesian
   "it", // Italian
   "ja", // Japanese
   "nl", // Dutch
