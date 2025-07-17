@@ -126,6 +126,7 @@ $languages = array(
   "ro", // Romanian
   "ru", // Russian
   "sr", // Serbian
+  "sv", // Swedish
   "uk", // Ukrainian
   "nb", // Bokmål (Norwegian)
   "th", // Thai
