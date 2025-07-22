@@ -104,5 +104,7 @@
     "pinnedCategories:remember": "Przypnij kategorię do swojego profilu",
     "pinnedCategories:remembered": "Przypięte kategorie",
     "formatUnits:coordSpacer:space": "Przestrzeń",
-    "formatUnits:coordFormat:help": "Definicja formatu określona w [module formatCoords]"
+    "formatUnits:coordFormat:help": "Definicja formatu określona w [module formatCoords]",
+    "formatUnits:coordSpacer:colon": "Dwukropek",
+    "options:fullscreenMode": "Tryb pełnoekranowy"
 }
