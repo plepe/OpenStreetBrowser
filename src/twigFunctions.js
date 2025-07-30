@@ -4,7 +4,7 @@ var colorInterpolate = require('color-interpolate')
 var osmParseDate = require('openstreetmap-date-parser')
 var osmFormatDate = require('openstreetmap-date-format')
 const natsort = require('natsort').default
-const md5 = require('md5')
+const crypto = require('crypto')  // Use the crypto module for secure hashing
 const yaml = require('js-yaml')
 
 var md5cache = {}
@@ -117,7 +117,7 @@ OverpassLayer.twig.extendFilter('osmFormatDate', function (value, param) {
 })
 OverpassLayer.twig.extendFilter('md5', function (value) {
   if (!(value in md5cache)) {
-    md5cache[value] = md5(value)
+    md5cache[value] = crypto.createHash('sha256').update(value).digest('hex')  // Use SHA-256 for hashing
   }
 
   return md5cache[value]

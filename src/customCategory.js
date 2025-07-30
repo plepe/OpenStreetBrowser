@@ -1,6 +1,6 @@
 const tabs = require('modulekit-tabs')
 const yaml = require('js-yaml')
-const md5 = require('md5')
+const crypto = require('crypto') // Updated to use crypto module for secure hashing
 const OverpassLayer = require('overpass-layer')
 const OverpassFrontendFilter = require('overpass-frontend/src/Filter')
 const jsonMultilineStrings = require('json-multiline-strings')
@@ -67,7 +67,7 @@ class CustomCategoryRepository {
   }
 
   saveCategory (body, options, callback) {
-    const id = md5(body)
+    const id = crypto.createHash('sha256').update(body).digest('hex') // Updated to use SHA-256
     this.cache[id] = body
 
     fetch('customCategory.php?action=save', {
@@ -192,7 +192,7 @@ class CustomCategoryEditor {
       }
     }
 
-    const id = md5(content)
+    const id = crypto.createHash('sha256').update(content).digest('hex') // Updated to use SHA-256
     this.id = id
 
     this._postApplyContent()
@@ -213,7 +213,7 @@ class CustomCategoryEditor {
   updateDownload () {
     const file = new Blob([this.textarea.value], { type: 'application/yaml' })
     this.inputDownload.href = URL.createObjectURL(file)
-    this.inputDownload.download = md5(this.textarea.value) + '.yaml'
+    this.inputDownload.download = crypto.createHash('sha256').update(this.textarea.value).digest('hex') + '.yaml' // Updated to use SHA-256
   }
 
   _postApplyContent () {
