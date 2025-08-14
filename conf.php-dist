@@ -119,6 +119,8 @@ $languages = array(
   "id", // Indonesian
   "it", // Italian
   "ja", // Japanese
+  "ko", // Korean
+  "ml", // Malayalam
   "nl", // Dutch
   "oc", // Occitan
   "pl", // Polish
