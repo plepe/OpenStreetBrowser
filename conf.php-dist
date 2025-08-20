@@ -109,6 +109,7 @@ $languages = array(
   "ast", // Asturian
   "ca", // Catalan
   "cs", // Czech
+  "be", // Belarusian
   "da", // Danish
   "de", // German
   "el", // Greek
