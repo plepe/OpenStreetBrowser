@@ -38,5 +38,19 @@
     "open": "തുറക്കുക",
     "options:data_lang": "ഡാറ്റാ ഭാഷ",
     "repositories": "റിപ്പോസിറ്ററികൾ",
-    "zoom_in_appear": "ഭൂപട ഫീച്ചറുകൾ ദൃശ്യമാകുന്നതിന് സൂം ചെയ്യുക"
+    "zoom_in_appear": "ഭൂപട ഫീച്ചറുകൾ ദൃശ്യമാകുന്നതിന് സൂം ചെയ്യുക",
+    "add_filter": "ഫിൽടർ ചേർക്കുക",
+    "add_config": "കോൺഫിഗറേഷൻ ഓപ്ഷൻ ചേർക്കുക",
+    "any value": "ഏതെങ്കിലും മൂല്യം",
+    "available_branches": "ലഭ്യമായ ശാഖകൾ",
+    "back": "പിന്നോട്ട്",
+    "categories": "വർഗ്ഗങ്ങൾ",
+    "category-info-tooltip": "വിവരവും മാപ്പ് കീയും",
+    "customCategory:header": "ഇഷ്ടാനുസൃത വർഗ്ഗങ്ങൾ",
+    "customCategory:clone": "ഇഷ്ടാനുസൃത വർഗ്ഗമായി ക്ലോൺ ചെയ്യുക",
+    "customCategory:create": "ഇഷ്ടാനുസൃത വർഗ്ഗം സൃഷ്ടിക്കുക",
+    "customCategory:list": "പ്രചാരമേറിയ ഇഷ്ടാനുസൃത വർഗ്ഗങ്ങൾ പട്ടികപ്പെടുത്തുക",
+    "pinnedCategories:forget": "നിങ്ങളുടെ പ്രൊഫൈലിൽ നിന്ന് വർഗ്ഗം അൺപിൻ ചെയ്യുക",
+    "pinnedCategories:remember": "നിങ്ങളുടെ പ്രൊഫൈലിലേക്ക് വർഗ്ഗം പിൻ ചെയ്യുക",
+    "pinnedCategories:remembered": "പിൻ ചെയ്ത വർഗ്ഗങ്ങൾ"
 }
