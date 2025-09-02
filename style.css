@@ -380,7 +380,7 @@ a:active {
 #loadingIndicator {
   display: none;
 }
-.fullscreen.loading > #loadingIndicator {
+.fullscreen.loading #loadingIndicator {
   display: block;
   z-index: 10000;
   height: 3px;
@@ -391,7 +391,7 @@ a:active {
   background: black;
   overflow: hidden;
 }
-.fullscreen.loading > #loadingIndicator:before {
+.fullscreen.loading #loadingIndicator:before {
   display: block;
   position: absolute;
   content: "";

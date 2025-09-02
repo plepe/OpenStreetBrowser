@@ -54,7 +54,9 @@ html_export_var(array(
 <?php @include "local-head.php" ?>
 </head>
 <body lang="<?=$ui_lang;?>">
-  <div id='map'></div>
+  <div id='map'>
+    <div id='loadingIndicator'></div>
+  </div>
   <div id='mapShadow'></div>
   <div id='sidebar'>
     <div id='header'>
@@ -76,8 +78,6 @@ html_export_var(array(
         <li><a target='_blank' href='https://wiki.openstreetmap.org/wiki/OpenStreetBrowser'><?=lang("main:about")?></a></li>
       </ul>
     </div>
-  </div>
-  <div id='loadingIndicator'>
   </div>
 <?php @include "local-body.php" ?>
 </body>
