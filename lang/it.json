@@ -98,5 +98,15 @@
     "heading:NW": "NW",
     "main:code": "Codice",
     "options:debug_mode": "Debug mode",
-    "options:chooseEditor": "Scegli Editor"
+    "options:chooseEditor": "Scegli Editor",
+    "formatUnits:coordFormat:help": "Una definizione di formato come specificato in [module formatCoords]",
+    "formatUnits:coordSpacer": "Coordinate spacer",
+    "formatUnits:coordSpacer:colon": "Virgola",
+    "formatUnits:system": "Sistema di unità",
+    "formatUnits:system:si": "Unità SI",
+    "formatUnits:system:m": "Sempre metri",
+    "geoinfo:nw-corner": "Angolo nord-occidentale",
+    "geoinfo:centroid": "Centroide",
+    "geoinfo:se-corner": "Angolo sud-est",
+    "main:about": "Informazioni"
 }
