@@ -97,5 +97,16 @@
     "customCategory:clone": "Clonar como categoria personalizada",
     "customCategory:create": "Criar categoria personalizada",
     "customCategory:list": "Listar categorias personalizadas populares",
-    "copied-clipboard": "Copiado para área de transferência"
+    "copied-clipboard": "Copiado para área de transferência",
+    "add_config": "Adicionar opção de configuração",
+    "color_scheme": "Esquema de Cores",
+    "pinnedCategories:forget": "Desafixar categoria do seu perfil",
+    "pinnedCategories:remember": "Fixar categoria ao seu perfil",
+    "pinnedCategories:remembered": "Categorias fixadas",
+    "formatUnits:coordFormat:help": "Uma definição de formato conforme especificado em [module formatCoords]",
+    "formatUnits:coordSpacer:space": "Espaço",
+    "formatUnits:coordSpacer:colon": "Dois pontos",
+    "options:fullscreenMode": "Modo de tela cheia",
+    "options:fullscreenMode:screen": "Usar a tela",
+    "options:fullscreenMode:window": "Fique na janela"
 }
