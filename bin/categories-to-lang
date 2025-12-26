@@ -7,82 +7,94 @@ var all = {}
 var allIds = []
 
 /* read existing translation files in lang/ */
-fs.readdir('lang', function (err, files) {
-  async.each(files, function (f, done) {
-    let m = f.match(/^(.*)\.json$/)
-    if (!m) {
-      return done()
-    }
-
-    let lang = m[1]
-
-    fs.readFile('lang/' + f, function (err, body) {
-      if (!(lang in all)) {
-        all[lang] = JSON.parse(body)
-      }
-
-      done(err)
-    })
-  })
+async.waterfall([
+  done => readLangFiles(done),
+  done => readAllCategories(done),
+  done => writeTranslationFiles(done),
+], err => {
+  console.log(err)
 })
 
-fs.readdir(
-  '.',
-  function (err, files) {
-    async.each(
-      files,
-      function (f, done) {
-        if (['package.json', 'package-lock.json'].includes(f)) {
-          return done()
+function readLangFiles (callback) {
+  fs.readdir('lang', function (err, files) {
+    async.each(files, function (f, done) {
+      let m = f.match(/^(.*)\.json$/)
+      if (!m) {
+        return done()
+      }
+
+      let lang = m[1]
+
+      fs.readFile('lang/' + f, function (err, body) {
+        if (!(lang in all)) {
+          all[lang] = JSON.parse(body)
         }
 
-        let m = f.match(/^(.*)\.(json|yaml)$/)
-        if (!m) {
-          return done()
-        }
+        done(err)
+      })
+    }, callback)
+  })
+}
 
-        let id = m[1]
-        allIds.push('category:' + id)
+function readAllCategories (callback) {
+  fs.readdir(
+    '.',
+    function (err, files) {
+      async.each(
+        files,
+        function (f, done) {
+          if (['package.json', 'package-lock.json'].includes(f)) {
+            return done()
+          }
 
-        fs.readFile(f, function (err, contents) {
-          if (err) { return done(err) }
+          let m = f.match(/^(.*)\.(json|yaml)$/)
+          if (!m) {
+            return done()
+          }
 
-          let data = parseFile(f, contents)
+          let id = m[1]
+          allIds.push('category:' + id)
 
-          if ('name' in data) {
-            for (var lang in data.name) {
-              if (!(lang in all)) {
-                all[lang] = {}
+          fs.readFile(f, function (err, contents) {
+            if (err) { return done(err) }
+
+            let data = parseFile(f, contents)
+
+            if ('name' in data) {
+              for (var lang in data.name) {
+                if (!(lang in all)) {
+                  all[lang] = {}
+                }
+
+                all[lang]['category:' + id] = data.name[lang]
               }
 
-              all[lang]['category:' + id] = data.name[lang]
-            }
+              if (data.type && data.type === 'index') {
+                parseSubCategories(data.subCategories, all)
+              }
+              if (data.type && data.type === 'overpass') {
+                if (data.lists) {
+                  for (let listId in data.lists) {
+                    let list = data.lists[listId]
+                    let langStrId = 'category:' + id + ':' + listId
 
-            if (data.type && data.type === 'index') {
-              parseSubCategories(data.subCategories, all)
-            }
-            if (data.type && data.type === 'overpass') {
-              if (data.lists) {
-                for (let listId in data.lists) {
-                  let list = data.lists[listId]
-                  let langStrId = 'category:' + id + ':' + listId
-
-                  allIds.push(langStrId)
-                  for (let lang in list.name) {
-                    all[lang][langStrId] = list.name[lang]
+                    allIds.push(langStrId)
+                    for (let lang in list.name) {
+                      all[lang][langStrId] = list.name[lang]
+                    }
                   }
                 }
               }
             }
-          }
 
-          done()
-        })
-      },
-      writeTranslationFiles
-    )
-  }
-)
+            done()
+          })
+        },
+        callback
+      )
+    }
+  )
+}
 
 function parseSubCategories(categories, all) {
   categories.forEach(data => {
@@ -103,7 +115,7 @@ function parseSubCategories(categories, all) {
   })
 }
 
-function writeTranslationFiles () {
+function writeTranslationFiles (callback) {
   async.each(Object.keys(all), function (lang, done) {
     allIds = allIds.sort()
     let data = JSON.parse(JSON.stringify(all[lang]))
@@ -125,7 +137,7 @@ function writeTranslationFiles () {
         done(err)
       }
     )
-  })
+  }, callback)
 }
 
 function parseFile (filename, contents) {
