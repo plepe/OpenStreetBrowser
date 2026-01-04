@@ -1,4 +1,10 @@
 <?php
+$config['app'] = [
+  'name' => 'OpenStreetBrowser',
+  'url' => 'https://openstreetbrowser.org',
+  'contact' => 'openstreetbrowser@example.com',
+];
+
 // Repositories from which to read the categories.
 // repositoryUrl and categoryUrl are twig templates, which take the following input values:
 // {{ repositoryId }}    id of the repository
