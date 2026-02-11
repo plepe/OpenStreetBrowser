@@ -66,7 +66,9 @@ function readAllCategories (callback) {
                   all[lang] = {}
                 }
 
-                all[lang]['category:' + id] = data.name[lang]
+                if (!all[lang]['category:' + id]) {
+                  all[lang]['category:' + id] = data.name[lang]
+                }
               }
 
               if (data.type && data.type === 'index') {
