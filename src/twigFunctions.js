@@ -1,6 +1,5 @@
 var OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
 var OpeningHours = require('opening_hours')
-var colorInterpolate = require('color-interpolate')
 var osmParseDate = require('openstreetmap-date-parser')
 var osmFormatDate = require('openstreetmap-date-format')
 const natsort = require('natsort').default
@@ -104,10 +103,6 @@ OverpassLayer.twig.extendFilter('unique', function (values, options) {
     return self.indexOf(value) === index
   }
   return values.filter(onlyUnique)
-})
-OverpassLayer.twig.extendFunction('colorInterpolate', function (map, value) {
-  var colormap = colorInterpolate(map)
-  return colormap(value)
 })
 OverpassLayer.twig.extendFilter('osmParseDate', function (value) {
   return osmParseDate(value)
