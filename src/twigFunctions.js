@@ -1,4 +1,4 @@
-var OverpassLayer = require('overpass-layer')
+var OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
 var OpeningHours = require('opening_hours')
 var colorInterpolate = require('color-interpolate')
 var osmParseDate = require('openstreetmap-date-parser')

@@ -1,5 +1,5 @@
 const async = require('async')
-const OverpassLayer = require('overpass-layer')
+const OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
 
 var wikidata = require('./wikidata')
 const displayBlock = require('./displayBlock')

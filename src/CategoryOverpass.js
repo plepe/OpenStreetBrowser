@@ -1,9 +1,9 @@
 /* global openstreetbrowserPrefix */
 /* eslint camelcase: 0 */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
-var OverpassLayer = require('overpass-layer')
-const isTrue = require('overpass-layer/src/isTrue')
-var OverpassLayerList = require('overpass-layer').List
+var OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
+const isTrue = require('@geowiki-net/leaflet-geowiki-layer/src/isTrue')
+var OverpassLayerList = require('@geowiki-net/leaflet-geowiki-layer').List
 var queryString = require('query-string')
 
 var CategoryBase = require('./CategoryBase')

@@ -1,7 +1,7 @@
 /* global lang_str lang_non_translated */
 /* eslint camelcase:0 */
 const sprintf = require('sprintf-js')
-var OverpassLayer = require('overpass-layer')
+var OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
 var tagLang = null
 
 OverpassLayer.twig.extendFunction('keyTrans', function () {

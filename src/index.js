@@ -3,7 +3,7 @@
 const tabs = require('modulekit-tabs')
 const async = require('async')
 
-var OverpassFrontend = require('overpass-frontend')
+var OverpassFrontend = require('@geowiki-net/geowiki-api')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var state = require('./state')
 var hash = require('sheet-router/hash')
@@ -18,6 +18,7 @@ global.map = null
 global.baseCategory = null
 global.overpassUrl = null
 global.overpassFrontend = null
+global.geowikiAPI = null
 global.currentPath = null
 global.mainRepo = ''
 global.tabs = null
@@ -96,6 +97,7 @@ function onload2 (initState) {
   }
 
   overpassFrontend = new OverpassFrontend(overpassUrl, config.overpassOptions)
+  geowikiAPI = overpassFrontend
 
   OpenStreetBrowserLoader.setMap(map)
 

@@ -1,4 +1,4 @@
-const OverpassLayer = require('overpass-layer')
+const OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
 
 var httpGet = require('./httpGet')
 var loadClash = {}
