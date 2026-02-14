@@ -2,7 +2,6 @@ const OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
 const tabs = require('modulekit-tabs')
 const natsort = require('natsort').default
 
-const state = require('./state')
 const Filter = require('@geowiki-net/geowiki-api').Filter
 const getPathFromJSON = require('./getPathFromJSON')
 const CategoryOverpass = require('./CategoryOverpass')
@@ -145,7 +144,7 @@ class CategoryOverpassFilter {
 
       this.applyParam(param)
 
-      state.update()
+      app.state.updateLink()
     }
 
     this.master.on('setParam', this.setParam.bind(this))

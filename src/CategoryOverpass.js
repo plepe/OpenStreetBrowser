@@ -7,7 +7,6 @@ var OverpassLayerList = require('@geowiki-net/leaflet-geowiki-layer').List
 var queryString = require('query-string')
 
 var CategoryBase = require('./CategoryBase')
-var state = require('./state')
 var tabs = require('modulekit-tabs')
 var markers = require('./markers')
 var maki = require('./maki')
@@ -408,7 +407,7 @@ CategoryOverpass.prototype.open = function () {
 
   this.isOpen = true
 
-  state.update()
+  app.state.updateLink()
 
   if ('info' in this.data) {
     if (!this.tabInfo) {
@@ -469,7 +468,7 @@ CategoryOverpass.prototype.close = function () {
   this.layer.remove()
   this.lists.forEach(list => list.remove())
 
-  state.update()
+  app.state.updateLink()
 }
 
 CategoryOverpass.prototype.get = function (id, callback) {

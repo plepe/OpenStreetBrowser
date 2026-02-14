@@ -6,14 +6,12 @@ const async = require('async')
 import App from '@geowiki-net/geowiki-lib-app'
 var OverpassFrontend = require('@geowiki-net/geowiki-api')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
-var state = require('./state')
 var hash = require('sheet-router/hash')
 global.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 
 require('./CategoryIndex')
 require('./CategoryOverpass')
 require('./category.css')
-const mapMetersPerPixel = require('./map-getMetersPerPixel')
 
 global.map = null
 global.baseCategory = null
@@ -59,27 +57,37 @@ let currentObjectDisplay = null
 
 /* Geowiki Init */
 let app
-const baseModules = []
+const baseModules = [
+  require('./config'),
+  require('./map'),
+]
 App.modules = [...baseModules, ...App.modules, ...require('../modules')]
 
 window.onload = function () {
   app = new App()
-  app.on('init', init2)
+  global.app = app
+
+  app.config = config
+
+  app.initModules(init2)
+
+  // legacy
+  app.state.on('apply', state => call_hooks('state-apply', state))
+  app.state.on('get', state => call_hooks('state-get', state))
 }
+
 /* /Geowiki Init */
 
 function init2 (err) {
-  var initState = config.defaultView
-
   if (global.location.search) {
     global.location = '.#' + global.location.search.substr(1) + (global.location.hash ? '&' + global.location.hash.substr(1) : '')
     return
   }
 
-  map = L.map('map')
-  map.getMetersPerPixel = mapMetersPerPixel.bind(map)
+  app.loadCssFiles()
 
-  map.attributionControl.setPrefix('<a target="_blank" href="https://wiki.openstreetmap.org/wiki/OpenStreetBrowser">OpenStreetBrowser</a>')
+  app.config.defaultState = config.defaultView
+  var initState = app.getInitState()
 
   // due to php export, options may be an array -> fix
   if (Array.isArray(options)) {
@@ -87,19 +95,6 @@ function init2 (err) {
   }
 
   global.tabs = new tabs.Tabs(document.getElementById('globalTabs'))
-
-  call_hooks('init')
-  call_hooks_callback('init_callback', initState, onload2.bind(this, initState))
-
-  map.createPane('selected')
-  map.getPane('selected').style.zIndex = 498
-  map.createPane('casing')
-  map.getPane('casing').style.zIndex = 399
-}
-
-function onload2 (initState) {
-  // Scale bar
-  L.control.scale().addTo(map)
 
   if (!overpassUrl) {
     overpassUrl = config.overpassUrl
@@ -111,21 +106,12 @@ function onload2 (initState) {
   overpassFrontend = new OverpassFrontend(overpassUrl, config.overpassOptions)
   geowikiAPI = overpassFrontend
 
-  OpenStreetBrowserLoader.setMap(map)
+  app.init(initState)
+  call_hooks('init')
+  call_hooks_callback('init_callback', initState, onload2.bind(this, initState))
+}
 
-  var newState
-  if (location.hash && location.hash.length > 1) {
-    newState = state.parse(location.hash.substr(1))
-  } else {
-    newState = initState
-  }
-
-  // make sure the map has an initial location
-  if (!('zoom' in newState) && !('lat' in newState) && !('lon' in newState)) {
-    state.apply(initState)
-  }
-
-  state.apply(newState)
+function onload2 (initState) {
 
   if ('repo' in newState) {
     global.mainRepo = newState.repo
@@ -139,7 +125,8 @@ function onload2 (initState) {
       if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/') {
         currentPath = url
         // only push state, when last popup close happened >1sec earlier
-        state.update(null, Date.now() - lastPopupClose > 1000)
+        console.log('TODO state update')
+        //state.update(null, Date.now() - lastPopupClose > 1000)
       }
 
       OpenStreetBrowserLoader.getCategory(e.popup.object.layer_id, function (err, category) {
@@ -166,18 +153,14 @@ function onload2 (initState) {
 
     lastPopupClose = Date.now()
     currentPath = null
-    state.update(null, true)
+    app.state.updateLink({ update: true })
     hide()
   })
   map.on('moveend', function (e) {
-    state.update()
+    app.state.updateLink()
   })
 
-  hash(function (loc) {
-    state.apply(state.parse(loc.substr(1)))
-  })
-
-  state.update()
+  app.state.updateLink()
   call_hooks('initFinish')
 }
 
