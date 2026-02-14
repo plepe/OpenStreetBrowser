@@ -64,17 +64,26 @@ App.modules = [...baseModules, ...App.modules, ...require('../modules')]
 
 window.onload = function () {
   app = new App()
-  app.on('init', init2)
+
+  app.config = config
+  state = app.state
+
+  app.initModules(init2)
 }
 /* /Geowiki Init */
 
 function init2 (err) {
-  var initState = config.defaultView
-
   if (global.location.search) {
     global.location = '.#' + global.location.search.substr(1) + (global.location.hash ? '&' + global.location.hash.substr(1) : '')
     return
   }
+
+  app.loadCssFiles()
+
+  app.config.defaultState = config.defaultView
+  var initState = app.getInitState()
+
+  app.init(initState)
 
   map = L.map('map')
   map.getMetersPerPixel = mapMetersPerPixel.bind(map)
@@ -139,7 +148,8 @@ function onload2 (initState) {
       if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/') {
         currentPath = url
         // only push state, when last popup close happened >1sec earlier
-        state.update(null, Date.now() - lastPopupClose > 1000)
+        console.log('TODO state update')
+        //state.update(null, Date.now() - lastPopupClose > 1000)
       }
 
       OpenStreetBrowserLoader.getCategory(e.popup.object.layer_id, function (err, category) {
@@ -166,18 +176,18 @@ function onload2 (initState) {
 
     lastPopupClose = Date.now()
     currentPath = null
-    state.update(null, true)
+    state.updateLink({ update: true })
     hide()
   })
   map.on('moveend', function (e) {
-    state.update()
+    state.updateLink()
   })
 
   hash(function (loc) {
     state.apply(state.parse(loc.substr(1)))
   })
 
-  state.update()
+  state.updateLink()
   call_hooks('initFinish')
 }
 

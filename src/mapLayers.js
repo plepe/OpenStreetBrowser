@@ -46,7 +46,7 @@ register_hook('init', function () {
 
   map.on('baselayerchange', function (e) {
     currentMapLayer = e.layer
-    state.update()
+    state.updateLink()
   })
 })
 
