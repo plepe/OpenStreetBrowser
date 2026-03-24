@@ -18,7 +18,6 @@ register_hook('options_form', function (def) {
     'type': 'select_other',
     'values': values,
     'placeholder': lang('default'),
-    'reloadOnChange': true,
     'button:other': lang('options:overpassUrl:custom'),
     'other_def': {
       type: 'text',
