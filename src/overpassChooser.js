@@ -1,4 +1,5 @@
 /* globals overpassUrl:true */
+var overpassChosenFrontends = {}
 
 register_hook('init', function () {
   if (options.overpassUrl) {
@@ -37,6 +38,14 @@ register_hook('options_save', function (data) {
       overpassUrl = data.overpassUrl
     }
 
-    overpassFrontend.url = overpassUrl
+    if (!(overpassFrontend.url in overpassChosenFrontends)) {
+      overpassChosenFrontends[overpassFrontend.url] = global.overpassFrontend
+    }
+
+    if (!(overpassUrl in overpassChosenFrontends)) {
+      overpassChosenFrontends[overpassUrl] = new OverpassFrontend(overpassUrl, config.overpassOptions)
+    }
+
+    global.overpassFrontend = overpassChosenFrontends[overpassUrl]
   }
 })
