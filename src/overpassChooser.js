@@ -19,6 +19,7 @@ register_hook('options_form', function (def) {
     'type': 'select_other',
     'values': values,
     'placeholder': lang('default'),
+    //'reloadOnChange': true,
     'button:other': lang('options:overpassUrl:custom'),
     'other_def': {
       type: 'text',
@@ -29,23 +30,17 @@ register_hook('options_form', function (def) {
 
 register_hook('options_save', function (data) {
   if ('overpassUrl' in data) {
-    if (data.overpassUrl === null) {
-      overpassUrl = config.overpassUrl
-      if (Array.isArray(overpassUrl) && overpassUrl.length) {
-        overpassUrl = overpassUrl[0]
-      }
-    } else {
-      overpassUrl = data.overpassUrl
-    }
-
     if (!(overpassFrontend.url in overpassChosenFrontends)) {
       overpassChosenFrontends[overpassFrontend.url] = global.overpassFrontend
     }
 
+    const overpassUrl = data.overpassUrl
     if (!(overpassUrl in overpassChosenFrontends)) {
       overpassChosenFrontends[overpassUrl] = new OverpassFrontend(overpassUrl, config.overpassOptions)
     }
 
     global.overpassFrontend = overpassChosenFrontends[overpassUrl]
+
+    call_hooks('overpass-server-changed')
   }
 })

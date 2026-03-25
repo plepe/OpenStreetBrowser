@@ -213,6 +213,15 @@ function CategoryOverpass (options, data, repository) {
 
     // opening categories is handled by src/categories.js
   }.bind(this))
+
+  register_hook('overpass-server-changed', () => {
+    if (this.isOpen) {
+    console.log('here')
+      this.layer.hideAll()
+      this.layer.overpassFrontend = global.overpassFrontend
+      this.layer.check_update_map()
+    }
+  })
 }
 
 CategoryOverpass.prototype.setParam = function (param) {
