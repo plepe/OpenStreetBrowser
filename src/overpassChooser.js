@@ -1,4 +1,5 @@
 /* globals overpassUrl:true */
+var OverpassFrontend = require('@geowiki-net/geowiki-api')
 var overpassChosenFrontends = {}
 
 register_hook('init', function () {

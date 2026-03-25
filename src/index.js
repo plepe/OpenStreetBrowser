@@ -3,7 +3,7 @@
 const tabs = require('modulekit-tabs')
 const async = require('async')
 
-var OverpassFrontend = require('overpass-frontend')
+var OverpassFrontend = require('@geowiki-net/geowiki-api')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 var state = require('./state')
 var hash = require('sheet-router/hash')
