@@ -9,10 +9,15 @@ register_hook('init', function () {
 })
 
 register_hook('options_form', function (def) {
-  var values = config.overpassUrl
-  if (!Array.isArray(values)) {
-    values = [ values ]
+  var _values = config.overpassUrl
+  if (!Array.isArray(config.overpassUrl)) {
+    _values = [ _values ]
   }
+
+  var values = {}
+  _values.forEach(k => values[k] = k)
+
+  values['_upload'] = lang('options:overpassUrl:upload')
 
   def.overpassUrl = {
     'name': lang('options:overpassUrl'),
@@ -26,6 +31,13 @@ register_hook('options_form', function (def) {
       placeholder: 'https://....',
     }
   }
+
+  def.overpassUrlUpload = {
+    'type': 'file',
+    'name': lang('options:overpassUrl:upload'),
+    'desc': lang('options:overpassUrl:upload:info'),
+    'show_depend': ['check', 'overpassUrl', ['is', '_upload']],
+  }
 })
 
 register_hook('options_save', function (data) {
@@ -35,7 +47,12 @@ register_hook('options_save', function (data) {
     }
 
     const overpassUrl = data.overpassUrl
-    if (!(overpassUrl in overpassChosenFrontends)) {
+
+    if (overpassUrl === '_upload' && data.overpassUrlUpload) {
+      const options = { ...config.overpassOptions, filename: data.overpassUrlUpload.name }
+      overpassChosenFrontends[overpassUrl] = new OverpassFrontend(data.overpassUrlUpload.url, config.overpassOptions)
+    }
+    else if (!(overpassUrl in overpassChosenFrontends)) {
       overpassChosenFrontends[overpassUrl] = new OverpassFrontend(overpassUrl, config.overpassOptions)
     }
 

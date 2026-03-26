@@ -97,6 +97,8 @@
     "options:overpassUrl": "OverpassAPI URL",
     "options:overpassUrl:custom": "Custom OverpassAPI URL",
     "options:overpassUrl:info": "URL of a OverpassAPI instance or a .osm, .osm.json or .osm.bz2 file.",
+    "options:overpassUrl:upload": "Upload OSM file",
+    "options:overpassUrl:upload:info": "Files will only be uploaded into the browser's memory.",
     "options:preferredBaseMap": "Preferred base map",
     "options:ui_lang": "Interface language",
     "options:chooseEditor": "Choose Editor",
