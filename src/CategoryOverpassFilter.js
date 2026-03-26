@@ -1,4 +1,4 @@
-const OverpassLayer = require('overpass-layer')
+const OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
 const tabs = require('modulekit-tabs')
 const natsort = require('natsort').default
 

@@ -1,7 +1,7 @@
 const tabs = require('modulekit-tabs')
 const yaml = require('js-yaml')
 const md5 = require('md5')
-const OverpassLayer = require('overpass-layer')
+const OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
 const OverpassFrontendFilter = require('@geowiki-net/geowiki-api/src/Filter')
 const jsonMultilineStrings = require('json-multiline-strings')
 
