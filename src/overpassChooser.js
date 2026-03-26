@@ -14,10 +14,16 @@ register_hook('options_form', function (def) {
 
   def.overpassUrl = {
     'name': lang('options:overpassUrl'),
-    'type': 'select',
+    'desc': lang('options:overpassUrl:info'),
+    'type': 'select_other',
     'values': values,
-    'req': false,
-    'placeholder': lang('default')
+    'placeholder': lang('default'),
+    'reloadOnChange': true,
+    'button:other': lang('options:overpassUrl:custom'),
+    'other_def': {
+      type: 'text',
+      placeholder: 'https://....',
+    }
   }
 })
 
