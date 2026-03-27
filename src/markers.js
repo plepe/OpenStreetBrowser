@@ -1,5 +1,5 @@
 const markers = require('openstreetbrowser-markers')
-var OverpassLayer = require('overpass-layer')
+var OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
 
 OverpassLayer.twig.extendFunction('markerLine', (data, options) => OverpassLayer.twig.filters.raw(markers.line(data, options)))
 OverpassLayer.twig.extendFunction('markerCircle', (data, options) => OverpassLayer.twig.filters.raw(markers.circle(data, options)))

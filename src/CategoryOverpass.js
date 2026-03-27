@@ -1,9 +1,9 @@
 /* global openstreetbrowserPrefix */
 /* eslint camelcase: 0 */
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
-var OverpassLayer = require('overpass-layer')
-const isTrue = require('overpass-layer/src/isTrue')
-var OverpassLayerList = require('overpass-layer').List
+var OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
+const isTrue = require('@geowiki-net/leaflet-geowiki-layer/src/isTrue')
+var OverpassLayerList = require('@geowiki-net/leaflet-geowiki-layer').List
 var queryString = require('query-string')
 
 var CategoryBase = require('./CategoryBase')
@@ -106,6 +106,7 @@ function CategoryOverpass (options, data, repository) {
   data.stylesNoAutoShow = [ 'selected' ]
   data.updateAssets = this.updateAssets.bind(this)
   data.layouts.popup = () => null
+  data.geowikiAPI = global.overpassFrontend
 
   this.layer = new OverpassLayer(data)
 
@@ -213,6 +214,16 @@ function CategoryOverpass (options, data, repository) {
 
     // opening categories is handled by src/categories.js
   }.bind(this))
+
+  register_hook('overpass-server-changed', () => {
+    this.layer.hideAll()
+
+    this.layer.geowikiAPI = global.overpassFrontend
+
+    if (this.isOpen) {
+      this.layer.check_update_map()
+    }
+  })
 }
 
 CategoryOverpass.prototype.setParam = function (param) {

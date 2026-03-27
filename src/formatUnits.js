@@ -1,4 +1,4 @@
-var OverpassLayer = require('overpass-layer')
+var OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
 const { measureFrom } = require('measure-ts')
 const formatcoords = require('formatcoords')
 
