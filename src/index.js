@@ -88,6 +88,10 @@ function onload2 (initState) {
   // Scale bar
   L.control.scale().addTo(map)
 
+  if (overpassUrl === '_upload') {
+    overpassUrl = null
+  }
+
   if (!overpassUrl) {
     overpassUrl = config.overpassUrl
     if (Array.isArray(overpassUrl) && overpassUrl.length) {
