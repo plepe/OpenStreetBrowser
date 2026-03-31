@@ -126,8 +126,7 @@ function onload2 (initState) {
       if (location.hash.substr(1) !== url && location.hash.substr(1, url.length + 1) !== url + '/') {
         currentPath = url
         // only push state, when last popup close happened >1sec earlier
-        console.log('TODO state update')
-        //state.update(null, Date.now() - lastPopupClose > 1000)
+        app.state.updateLink(null, Date.now() - lastPopupClose > 1000)
       }
 
       OpenStreetBrowserLoader.getCategory(e.popup.object.layer_id, function (err, category) {
@@ -235,6 +234,14 @@ register_hook('state-apply', state => {
 
     call_hooks('show', currentPath, param)
   })
+})
+
+register_hook('state-get', state => {
+  state.path = currentPath
+
+  if (global.mainRepo !== '') {
+    state.repo = global.mainRepo
+  }
 })
 
 function show (id, options, callback) {
