@@ -208,8 +208,8 @@ global.allMapFeatures = function (callback) {
   })
 }
 
-window.setPath = function (path, state) {
-  currentPath = path
+register_hook('state-apply', state => {
+  currentPath = state.path
 
   if ('repo' in state && state.repo !== global.mainRepo && baseCategory) {
     baseCategory.remove()
@@ -217,25 +217,25 @@ window.setPath = function (path, state) {
     loadBaseCategory()
   }
 
-  if (!path) {
+  if (!state.path) {
     map.closePopup()
     return
   }
 
   var param = {
-    showDetails: !!path.match(/\/details$/),
+    showDetails: !!currentPath.match(/\/details$/),
     hasLocation: 'lat' in state && 'lon' in state && 'zoom' in state
   }
 
-  show(path, param, function (err) {
+  show(currentPath, param, function (err) {
     if (err) {
       alert(err)
       return
     }
 
-    call_hooks('show', path, param)
+    call_hooks('show', currentPath, param)
   })
-}
+})
 
 function show (id, options, callback) {
   if (options.showDetails) {
