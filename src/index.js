@@ -73,6 +73,9 @@ window.onload = function () {
   // legacy
   app.state.on('apply', state => call_hooks('state-apply', state))
   app.state.on('get', state => call_hooks('state-get', state))
+  register_hook('options_form', form => app.emit('options-form', form))
+  register_hook('options_orig_data', data => app.emit('options-orig-data', data))
+  register_hook('options_save', (data, prevData) => app.emit('options-apply', data, prevData))
 }
 
 /* /Geowiki Init */
@@ -92,6 +95,7 @@ function init2 (err) {
   if (Array.isArray(options)) {
     options = {}
   }
+  app.emit('options-apply', options)
 
   global.tabs = new tabs.Tabs(document.getElementById('globalTabs'))
 
