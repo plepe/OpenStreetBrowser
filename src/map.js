@@ -7,7 +7,15 @@ module.exports = {
   id: 'map',
   appInit (app) {
     app.on('init', state => {
-      map = L.map('map')
+      const mapOptions = app.config.mapOptions || {}
+
+      if (app.config.maxZoom) {
+        mapOptions.maxZoom = app.config.maxZoom
+      }
+
+      app.emit('map-options', mapOptions)
+
+      map = L.map('map', mapOptions)
       app.map = map
       global.map = map
 
