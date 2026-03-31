@@ -1,4 +1,4 @@
-/* globals map:true, overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true */
+/* globals overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true */
 
 const tabs = require('modulekit-tabs')
 const async = require('async')
@@ -122,10 +122,6 @@ function init2 (err) {
 
 function onload2 (initState) {
   loadBaseCategory()
-
-  map.on('moveend', function (e) {
-    app.state.updateLink()
-  })
 
   app.state.updateLink()
   call_hooks('initFinish')

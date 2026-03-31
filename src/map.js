@@ -26,6 +26,10 @@ module.exports = {
       map.getPane('selected').style.zIndex = 498
       map.createPane('casing')
       map.getPane('casing').style.zIndex = 399
+
+      map.on('moveend', function (e) {
+        app.state.updateLink()
+      })
     })
 
     app.on('state-apply', state => {
