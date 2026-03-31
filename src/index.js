@@ -108,16 +108,16 @@ function init2 (err) {
   geowikiAPI = overpassFrontend
 
   app.init(initState)
+
+  if ('repo' in initState) {
+    global.mainRepo = initState.repo
+  }
+
   call_hooks('init')
   call_hooks_callback('init_callback', initState, onload2.bind(this, initState))
 }
 
 function onload2 (initState) {
-
-  if ('repo' in newState) {
-    global.mainRepo = newState.repo
-  }
-
   loadBaseCategory()
 
   map.on('popupopen', function (e) {
