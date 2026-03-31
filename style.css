@@ -347,26 +347,6 @@ a:active {
 }
 }
 
-/* FULLSCREEN */
-.leaflet-control-fullscreen {
-  font-size: 20px;
-}
-.fullscreen #sidebar {
-  display: none;
-}
-.fullscreen #map {
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: auto;
-  height: auto;
-  border: none;
-}
-.fullscreen #mapShadow {
-  display: none;
-}
-
 @keyframes zenMode {
   from {opacity: 1};
   to {opacity: 0};
