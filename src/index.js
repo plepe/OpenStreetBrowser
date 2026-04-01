@@ -22,7 +22,6 @@ global.rootCategories = {}
 require('./options')
 require('./optionsYaml')
 require('./language')
-require('./overpassChooser')
 require('./zenMode')
 require('./mapLayers')
 require('./twigFunctions')
@@ -52,6 +51,7 @@ const baseModules = [
   require('./map'),
   require('./popups'),
   require('./geowikiAPI'),
+  require('./overpassChooser'),
 ]
 App.modules = [...baseModules, ...App.modules, ...require('../modules')]
 

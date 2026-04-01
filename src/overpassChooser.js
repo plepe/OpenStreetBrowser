@@ -2,11 +2,14 @@
 var OverpassFrontend = require('@geowiki-net/geowiki-api')
 var overpassChosenFrontends = {}
 
-register_hook('init', function () {
-  if (options.overpassUrl) {
-    overpassUrl = options.overpassUrl
+module.exports = {
+  id: 'overpassChooser',
+  appInit (app) {
+    if (options.overpassUrl) {
+      global.overpassUrl = options.overpassUrl
+    }
   }
-})
+}
 
 register_hook('options_form', function (def) {
   var _values = config.overpassUrl
