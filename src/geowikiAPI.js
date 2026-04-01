@@ -7,14 +7,16 @@ global.geowikiAPI = null
 module.exports = {
   id: 'geowikiAPI',
   appInit (app) {
-    if (!global.overpassUrl) {
-      global.overpassUrl = app.config.overpassUrl
-      if (Array.isArray(global.overpassUrl) && global.overpassUrl.length) {
-        overpassUrl = overpassUrl[0]
+    app.on('init', () => {
+      if (!global.overpassUrl) {
+        global.overpassUrl = app.config.overpassUrl
+        if (Array.isArray(global.overpassUrl) && global.overpassUrl.length) {
+          overpassUrl = overpassUrl[0]
+        }
       }
-    }
 
-    global.overpassFrontend = new OverpassFrontend(overpassUrl, config.overpassOptions)
-    global.geowikiAPI = overpassFrontend
+      global.overpassFrontend = new OverpassFrontend(overpassUrl, config.overpassOptions)
+      global.geowikiAPI = overpassFrontend
+    })
   }
 }
