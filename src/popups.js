@@ -1,4 +1,5 @@
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
+const ObjectDisplay = require('./ObjectDisplay')
 
 module.exports = {
   id: 'popups',

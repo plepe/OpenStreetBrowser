@@ -49,8 +49,6 @@ require('./customCategory')
 require('./pinnedCategories')
 require('./boundaries')
 
-const ObjectDisplay = require('./ObjectDisplay')
-
 /* Geowiki Init */
 let app
 const baseModules = [
