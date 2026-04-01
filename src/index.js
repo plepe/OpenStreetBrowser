@@ -1,11 +1,10 @@
-/* globals overpassFrontend:true, currentPath:true, options:true, baseCategory:true, overpassUrl:true */
+/* globals currentPath:true, options:true, baseCategory:true */
 
 const tabs = require('modulekit-tabs')
 const async = require('async')
 
 import App from '@geowiki-net/geowiki-lib-app'
 
-var OverpassFrontend = require('@geowiki-net/geowiki-api')
 var OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
 global.OpenStreetBrowserLoader = OpenStreetBrowserLoader
 
@@ -15,9 +14,6 @@ require('./category.css')
 
 global.map = null
 global.baseCategory = null
-global.overpassUrl = null
-global.overpassFrontend = null
-global.geowikiAPI = null
 global.mainRepo = ''
 global.tabs = null
 global.rootCategories = {}
@@ -55,6 +51,7 @@ const baseModules = [
   require('./config'),
   require('./map'),
   require('./popups'),
+  require('./geowikiAPI'),
 ]
 App.modules = [...baseModules, ...App.modules, ...require('../modules')]
 
@@ -96,16 +93,6 @@ function init2 (err) {
   app.emit('options-apply', options)
 
   global.tabs = new tabs.Tabs(document.getElementById('globalTabs'))
-
-  if (!overpassUrl) {
-    overpassUrl = config.overpassUrl
-    if (Array.isArray(overpassUrl) && overpassUrl.length) {
-      overpassUrl = overpassUrl[0]
-    }
-  }
-
-  overpassFrontend = new OverpassFrontend(overpassUrl, config.overpassOptions)
-  geowikiAPI = overpassFrontend
 
   app.init(initState)
 
