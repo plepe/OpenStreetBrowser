@@ -1,5 +1,4 @@
 var OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
-var OpeningHours = require('opening_hours')
 
 const cardinalDirections = {
   'NORTH': 0,
@@ -28,16 +27,6 @@ const cardinalDirections = {
   'NNW': 337.5
 }
 
-OverpassLayer.twig.extendFunction('openingHoursState', function (openingHours) {
-  try {
-    var oh = new OpeningHours(openingHours)
-  } catch (err) {
-    console.log('Error in opening_hours: ' + err)
-    return 'unknown'
-  }
-
-  return oh.getStateString(new Date(), true)
-})
 OverpassLayer.twig.extendFilter('parseDirection', function (value, options) {
   if (typeof value === 'string') {
     const valueUpper = value.trim().toUpperCase()
