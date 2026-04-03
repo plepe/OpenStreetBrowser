@@ -24,7 +24,7 @@ require('./optionsYaml')
 require('./language')
 require('./zenMode')
 require('./mapLayers')
-require('./twigFunctions')
+require('./twigFunctions') // legacy
 require('./markers')
 require('./categories')
 require('./wikipedia')
@@ -49,6 +49,7 @@ let app
 const baseModules = [
   require('./config'),
   require('@geowiki-net/geowiki-lib-leaflet'),
+  require('@geowiki-net/geowiki-twig-functions'),
   require('./map-legacy'),
   require('./popups'),
   require('./geowikiAPI'),

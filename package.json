@@ -16,6 +16,7 @@
     "@geowiki-net/geowiki-lib-app": "github:geowiki-net/geowiki-lib-app#osb",
     "@geowiki-net/geowiki-lib-leaflet": "github:geowiki-net/geowiki-lib-leaflet",
     "@geowiki-net/geowiki-module-fullscreen": "github:geowiki-net/geowiki-module-fullscreen",
+    "@geowiki-net/geowiki-twig-functions": "github:geowiki-net/geowiki-twig-functions",
     "@geowiki-net/leaflet-geowiki-layer": "github:geowiki-net/leaflet-geowiki-layer#devel-4",
     "@mapbox/maki": "^8.0.1",
     "@rapideditor/temaki": "^5.7.0",

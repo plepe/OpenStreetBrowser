@@ -1,12 +1,5 @@
 var OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
 var OpeningHours = require('opening_hours')
-var osmParseDate = require('openstreetmap-date-parser')
-var osmFormatDate = require('openstreetmap-date-format')
-const natsort = require('natsort').default
-const md5 = require('md5')
-const yaml = require('js-yaml')
-
-var md5cache = {}
 
 const cardinalDirections = {
   'NORTH': 0,
@@ -35,24 +28,6 @@ const cardinalDirections = {
   'NNW': 337.5
 }
 
-OverpassLayer.twig.extendFunction('tagsPrefix', function (tags, prefix) {
-  var ret = {}
-  var count = 0
-
-  for (var k in tags) {
-    if (k.substr(0, prefix.length) === prefix) {
-      ret[k.substr(prefix.length)] = k
-      count++
-    }
-  }
-
-  if (count === 0) {
-    return null
-  }
-
-  return ret
-})
-
 OverpassLayer.twig.extendFunction('openingHoursState', function (openingHours) {
   try {
     var oh = new OpeningHours(openingHours)
@@ -62,28 +37,6 @@ OverpassLayer.twig.extendFunction('openingHoursState', function (openingHours) {
   }
 
   return oh.getStateString(new Date(), true)
-})
-OverpassLayer.twig.extendFilter('websiteUrl', function (value) {
-  if (value.match(/^https?:\/\//)) {
-    return value
-  }
-
-  return 'http://' + value
-})
-OverpassLayer.twig.extendFilter('matches', function (value, param) {
-  if (value === null || typeof value === 'undefined') {
-    return false
-  }
-
-  if (!param.length) {
-    throw new Error("Filter 'matches' needs a parameter!")
-  }
-
-  const r = new RegExp(...param)
-  return value.toString().match(r)
-})
-OverpassLayer.twig.extendFilter('natsort', function (values, options) {
-  return values.sort(natsort(options))
 })
 OverpassLayer.twig.extendFilter('parseDirection', function (value, options) {
   if (typeof value === 'string') {
@@ -96,26 +49,6 @@ OverpassLayer.twig.extendFilter('parseDirection', function (value, options) {
   }
 
   return value
-})
-OverpassLayer.twig.extendFilter('unique', function (values, options) {
-  // source: https://stackoverflow.com/a/14438954
-  function onlyUnique (value, index, self) {
-    return self.indexOf(value) === index
-  }
-  return values.filter(onlyUnique)
-})
-OverpassLayer.twig.extendFilter('osmParseDate', function (value) {
-  return osmParseDate(value)
-})
-OverpassLayer.twig.extendFilter('osmFormatDate', function (value, param) {
-  return osmFormatDate(value, param.length ? param[0] : {})
-})
-OverpassLayer.twig.extendFilter('md5', function (value) {
-  if (!(value in md5cache)) {
-    md5cache[value] = md5(value)
-  }
-
-  return md5cache[value]
 })
 OverpassLayer.twig.extendFunction('evaluate', function (tags) {
   const ob = {
@@ -156,59 +89,3 @@ function enumerate (list) {
 }
 OverpassLayer.twig.extendFunction('enumerate', (list) => enumerate(list))
 OverpassLayer.twig.extendFilter('enumerate', (list) => enumerate(list))
-OverpassLayer.twig.extendFilter('ksort', (list) => {
-  if (Array.isArray(list)) {
-    return list
-  }
-
-  let keys = list._keys || Object.keys(list)
-  keys.sort()
-  let result = Object.assign({}, list)
-  result._keys = keys
-  return result
-})
-OverpassLayer.twig.extendFunction('debug', function () {
-  console.log.apply(null, arguments)
-})
-OverpassLayer.twig.extendFilter('debug', function (value, param) {
-  if (param) {
-    console.log.apply(null, [value, ...param])
-  } else {
-    console.log(value)
-  }
-  return value
-})
-OverpassLayer.twig.extendFilter('json_pp', function (value, param) {
-  const options = param[0] || {}
-
-  if (value === 'undefined') {
-    return 'null'
-  }
-  throw new Error('foo')
-
-  value = twigClear(value)
-
-  return JSON.stringify(value, null, 'indent' in options ? ' '.repeat(options.indent) : '  ')
-})
-OverpassLayer.twig.extendFilter('yaml', function (value, param) {
-  const options = param[0] || {}
-
-  value = twigClear(value)
-
-  return yaml.dump(value, options)
-})
-
-function twigClear (value) {
-  if (value === null || typeof value !== 'object') {
-    return value
-  }
-
-  const v = {}
-  for (let k in value) {
-    if (k !== '_keys') {
-      v[k] = value[k]
-    }
-  }
-
-  return v
-}
