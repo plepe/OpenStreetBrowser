@@ -11,8 +11,6 @@ module.exports = {
 
       app.map.getMetersPerPixel = mapMetersPerPixel.bind(app.map)
 
-      app.map.attributionControl.setPrefix('<a target="_blank" href="https://wiki.openstreetmap.org/wiki/OpenStreetBrowser">OpenStreetBrowser</a>')
-
       // Scale bar
       L.control.scale().addTo(app.map)
 
