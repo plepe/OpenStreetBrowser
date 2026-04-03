@@ -189,7 +189,6 @@ OverpassLayer.twig.extendFilter('json_pp', function (value, param) {
   if (value === 'undefined') {
     return 'null'
   }
-  throw new Error('foo')
 
   value = twigClear(value)
 
