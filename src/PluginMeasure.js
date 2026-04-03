@@ -8,7 +8,7 @@ let unitSystems = {
   m: 'metres'
 }
 
-register_hook('init', function () {
+register_hook('map-init', function (map) {
   // Measurement plugin
   if (L.control.polylineMeasure) {
     control = L.control.polylineMeasure({

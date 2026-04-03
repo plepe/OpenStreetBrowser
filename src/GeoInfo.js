@@ -12,7 +12,7 @@ function heading (value) {
   return [ 'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'N' ][Math.round(value / 45)]
 }
 
-register_hook('init', function () {
+register_hook('map-init', function () {
   let tab = new tabs.Tab({
     id: 'search',
     weight: -1

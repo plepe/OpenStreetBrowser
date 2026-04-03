@@ -1,4 +1,4 @@
-register_hook('init', function () {
+register_hook('map-init', function (map) {
   // Geo location
   L.control.locate({
     locateOptions: {
