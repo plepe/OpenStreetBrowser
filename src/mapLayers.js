@@ -9,7 +9,7 @@ register_hook('init', function () {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }
     )
-    osmMapnik.addTo(map)
+    osmMapnik.addTo(app.map)
 
     return
   }
@@ -39,10 +39,10 @@ register_hook('init', function () {
     mapLayers[def.id] = layer
   }
 
-  preferredLayer.addTo(map)
-  L.control.layers(layers).addTo(map)
+  preferredLayer.addTo(app.map)
+  L.control.layers(layers).addTo(app.map)
 
-  map.on('baselayerchange', function (e) {
+  app.map.on('baselayerchange', function (e) {
     currentMapLayer = e.layer
     app.state.updateLink()
   })
@@ -69,10 +69,10 @@ register_hook('options_form', function (def) {
 register_hook('options_save', function (data) {
   if ('preferredBaseMap' in data && data.preferredBaseMap in mapLayers) {
     if (currentMapLayer) {
-      map.removeLayer(currentMapLayer)
+      app.map.removeLayer(currentMapLayer)
     }
 
-    map.addLayer(mapLayers[data.preferredBaseMap])
+    app.map.addLayer(mapLayers[data.preferredBaseMap])
   }
 })
 
@@ -87,9 +87,9 @@ register_hook('state-get', (data) => {
 register_hook('state-apply', (data) => {
   if ('basemap' in data) {
     if (currentMapLayer) {
-      map.removeLayer(currentMapLayer)
+      app.map.removeLayer(currentMapLayer)
     }
 
-    mapLayers[data.basemap].addTo(map)
+    mapLayers[data.basemap].addTo(app.map)
   }
 })

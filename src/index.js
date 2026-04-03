@@ -48,7 +48,8 @@ require('./boundaries')
 let app
 const baseModules = [
   require('./config'),
-  require('./map'),
+  require('@geowiki-net/geowiki-lib-leaflet'),
+  require('./map-legacy'),
   require('./popups'),
   require('./geowikiAPI'),
   require('./overpassChooser'),

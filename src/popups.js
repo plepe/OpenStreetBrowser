@@ -22,7 +22,7 @@ function appInit (_app) {
     currentPath = state.path
 
     if (!state.path) {
-      map.closePopup()
+      app.map.closePopup()
       return
     }
 
