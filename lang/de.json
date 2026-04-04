@@ -105,5 +105,6 @@
     "options:fullscreenMode:screen": "Bildschirm benutzen",
     "options:fullscreenMode:window": "Im Fenster bleiben",
     "geoinfo:se-corner": "Südöstliche Ecke",
-    "editor:id": "iD (In-Browser-Editor)"
+    "editor:id": "iD (In-Browser-Editor)",
+    "editor:remote": "Fernsteuerung (JOSM oder Merkaator)"
 }
