@@ -1,4 +1,5 @@
 var OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
+const Events = require('events')
 
 const cardinalDirections = {
   'NORTH': 0,
@@ -40,12 +41,12 @@ OverpassLayer.twig.extendFilter('parseDirection', function (value, options) {
   return value
 })
 OverpassLayer.twig.extendFunction('evaluate', function (tags) {
-  const ob = {
+  const ob = new Events({
     id: 'x0',
     meta: {},
     tags: tags,
     type: 'special'
-  }
+  })
 
   return global.currentCategory.layer.mainlayer.evaluate(ob)
 })
