@@ -68,7 +68,10 @@ window.onload = function () {
   app.state.on('get', state => call_hooks('state-get', state))
   app.state.on('fullscreen-activate', () => call_hooks('fullscreen-activate'))
   app.state.on('fullscreen-deactivate', () => call_hooks('fullscreen-deactivate'))
-  app.on('map-init', map => call_hooks('map-init', map))
+  app.on('map-init', map => {
+    global.map = map
+    call_hooks('map-init', map)
+  })
   register_hook('options_form', form => app.emit('options-form', form))
   register_hook('options_orig_data', data => app.emit('options-orig-data', data))
   register_hook('options_save', (data, prevData) => app.emit('options-apply', data, prevData))

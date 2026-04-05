@@ -5,8 +5,6 @@ module.exports = {
   id: 'map-legacy',
   appInit (app) {
     app.on('map-init', map => {
-      global.map = map
-
       OpenStreetBrowserLoader.setMap(app.map)
 
       app.map.getMetersPerPixel = mapMetersPerPixel.bind(app.map)
