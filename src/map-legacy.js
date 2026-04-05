@@ -17,5 +17,12 @@ module.exports = {
       app.map.createPane('casing')
       app.map.getPane('casing').style.zIndex = 399
     })
+
+    // Fullscreen
+    register_hook('show', function (url, options) {
+      if (options.showDetails) {
+        document.body.classList.remove('fullscreen')
+      }
+    })
   }
 }
