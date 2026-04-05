@@ -14,8 +14,8 @@ function heading (value) {
 
 register_hook('init', function () {
   let tab = new tabs.Tab({
-    id: 'search',
-    weight: -1
+    id: 'geo-info',
+    weight: 5
   })
   tab.content.classList.add('geo-info')
   global.tabs.add(tab)
