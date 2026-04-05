@@ -63,8 +63,6 @@ window.onload = function () {
 
   app.config = config
 
-  app.initModules(init2)
-
   // legacy
   app.state.on('apply', state => call_hooks('state-apply', state))
   app.state.on('get', state => call_hooks('state-get', state))
@@ -74,6 +72,8 @@ window.onload = function () {
   register_hook('options_form', form => app.emit('options-form', form))
   register_hook('options_orig_data', data => app.emit('options-orig-data', data))
   register_hook('options_save', (data, prevData) => app.emit('options-apply', data, prevData))
+
+  app.initModules(init2)
 }
 
 /* /Geowiki Init */
