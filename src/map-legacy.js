@@ -20,8 +20,8 @@ module.exports = {
 
     // Fullscreen
     register_hook('show', function (url, options) {
-      if (options.showDetails) {
-        document.body.classList.remove('fullscreen')
+      if (options.showDetails && app.fullscreenDeactivate) {
+        app.fullscreenDeactivate()
       }
     })
   }
