@@ -66,8 +66,8 @@ window.onload = function () {
   // legacy
   app.state.on('apply', state => call_hooks('state-apply', state))
   app.state.on('get', state => call_hooks('state-get', state))
-  app.state.on('fullscreen-activate', () => call_hooks('fullscreen-activate'))
-  app.state.on('fullscreen-deactivate', () => call_hooks('fullscreen-deactivate'))
+  app.on('fullscreen-activate', () => call_hooks('fullscreen-activate'))
+  app.on('fullscreen-deactivate', () => call_hooks('fullscreen-deactivate'))
   app.on('map-init', map => {
     global.map = map
     call_hooks('map-init', map)
