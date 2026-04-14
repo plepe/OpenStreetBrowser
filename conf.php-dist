@@ -39,7 +39,13 @@ $config['urlOpenStreetMap'] = 'https://www.openstreetmap.org';
 
 // URL of the Overpass API
 $config['overpassUrl'] = array(
-  '//overpass-api.de/api/interpreter',
+  [
+    // 'name' => 'Overpass API at overpass-api.de', // optional: custom name
+    'url' => '//overpass-api.de/api/interpreter',
+    'options' => [
+      // 'attribution' => '(c) OpenStreetMap contributors', // override attribution
+    ],
+  ],
   '//api.openstreetmap.fr/oapi/interpreter',
 );
 

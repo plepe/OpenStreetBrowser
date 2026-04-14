@@ -1,6 +1,8 @@
 /* globals overpassUrl:true */
 var OverpassFrontend = require('@geowiki-net/geowiki-api')
-var overpassChosenFrontends = {}
+var geowikiAPI = require('./geowikiAPI')
+var overpassChosenFrontends = null
+let uploaded = 0
 
 module.exports = {
   id: 'overpassChooser',
@@ -12,13 +14,10 @@ module.exports = {
 }
 
 register_hook('options_form', function (def) {
-  var _values = config.overpassUrl
-  if (!Array.isArray(config.overpassUrl)) {
-    _values = [ _values ]
-  }
-
   var values = {}
-  _values.forEach(k => values[k] = k)
+  geowikiAPI.list.forEach(entry => {
+    values[entry.id] = entry
+  })
 
   values['_upload'] = lang('options:overpassUrl:upload')
 
@@ -27,6 +26,7 @@ register_hook('options_form', function (def) {
     'desc': lang('options:overpassUrl:info'),
     'type': 'select_other',
     'values': values,
+    'values_mode': 'keys',
     'placeholder': lang('default'),
     'button:other': lang('options:overpassUrl:custom'),
     'other_def': {
@@ -45,21 +45,43 @@ register_hook('options_form', function (def) {
 
 register_hook('options_save', function (data) {
   if ('overpassUrl' in data) {
-    if (!(overpassFrontend.url in overpassChosenFrontends)) {
-      overpassChosenFrontends[overpassFrontend.url] = global.overpassFrontend
+    if (!overpassChosenFrontends) {
+      overpassChosenFrontends = {}
+      overpassChosenFrontends[geowikiAPI.list[0].id] = global.geowikiAPI
     }
 
-    const overpassUrl = data.overpassUrl
+    let id = data.overpassUrl
+    let entry
 
-    if (overpassUrl === '_upload' && data.overpassUrlUpload) {
-      const options = { ...config.overpassOptions, filename: data.overpassUrlUpload.name }
-      overpassChosenFrontends[overpassUrl] = new OverpassFrontend(data.overpassUrlUpload.url, config.overpassOptions)
-    }
-    else if (!(overpassUrl in overpassChosenFrontends)) {
-      overpassChosenFrontends[overpassUrl] = new OverpassFrontend(overpassUrl, config.overpassOptions)
+    if (id === '_upload') {
+      if (data.overpassUrlUpload) {
+        entry = {
+          id: '_upload' + (uploaded++),
+          name: data.overpassUrlUpload.name,
+          url: data.overpassUrlUpload.url,
+          options: { filename: data.overpassUrlUpload.name }
+        }
+
+        id = entry.id
+        geowikiAPI.list.push(entry)
+      }
+    } else {
+      const chosen = geowikiAPI.list.filter(entry => entry.id === id)
+      if (!chosen.length) {
+        console.log('not found')
+        return
+      }
+
+      entry = chosen[0]
     }
 
-    global.overpassFrontend = overpassChosenFrontends[overpassUrl]
+    if (id in overpassChosenFrontends) {
+      global.overpassFrontend = overpassChosenFrontends[id]
+    } else {
+      const api = new OverpassFrontend(entry.url, { ...config.overpassOptions, ...entry.options })
+      overpassChosenFrontends[id] = api
+      global.overpassFrontend = api
+    }
 
     call_hooks('overpass-server-changed')
   }
