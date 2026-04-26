@@ -110,5 +110,7 @@
     "customCategory:clone": "Κλωνοποίηση ως προσαρμοσμένη κατηγορία",
     "customCategory:create": "Δημιουργία προσαρμοσμένης κατηγορίας",
     "customCategory:list": "Λίστα δημοφιλών προσαρμοσμένων κατηγοριών",
-    "tip-tutorial": "Διαβάστε τον [Εκπαιδευτικό Οδηγό]"
+    "tip-tutorial": "Διαβάστε τον [Εκπαιδευτικό Οδηγό]",
+    "options:overpassUrl:upload": "Ανέβασμα αρχείου OSM",
+    "options:overpassUrl:upload:info": "Τα αρχεία θα ανέβουν μόνο στη μνήμη του προγράμματος περιήγησης."
 }
