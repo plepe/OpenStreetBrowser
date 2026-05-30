@@ -3,6 +3,9 @@ var ImageLoader = require('./ImageLoader')
 const displayBlock = require('./displayBlock')
 var showTimer
 
+// source: https://www.mediawiki.org/wiki/Common_thumbnail_sizes, $wgThumbnailSteps
+const wikimediaAllowedSizes = [ 20, 40, 60, 120, 250, 330, 500, 960, 1280, 1920, 3840 ]
+
 function showImage (image, dom) {
   var a = document.createElement('a')
   a.target = '_blank'
@@ -115,8 +118,14 @@ function displayImages(data, category, dom, callback, displayId) {
     imageWrapper.className = 'imageWrapper'
     div.appendChild(imageWrapper)
 
+    const prefSize = Math.max(imageWrapper.offsetWidth, imageWrapper.offsetHeight)
+    let chosenSize = wikimediaAllowedSizes.filter(v => v > prefSize)[0]
+    if (!chosenSize) {
+      chosenSize = wikimediaAllowedSizes[wikimediaAllowedSizes.length - 1]
+    }
+
     options = {
-      size: Math.max(imageWrapper.offsetWidth, imageWrapper.offsetHeight)
+      size: chosenSize
     }
 
     let img = show(data, options, imageWrapper)
