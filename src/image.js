@@ -6,6 +6,15 @@ var showTimer
 // source: https://www.mediawiki.org/wiki/Common_thumbnail_sizes, $wgThumbnailSteps
 const wikimediaAllowedSizes = [ 20, 40, 60, 120, 250, 330, 500, 960, 1280, 1920, 3840 ]
 
+function nextAllowedSize (prefSize) {
+  let chosenSize = wikimediaAllowedSizes.filter(v => v > prefSize)[0]
+  if (!chosenSize) {
+    return wikimediaAllowedSizes[wikimediaAllowedSizes.length - 1]
+  }
+
+  return chosenSize
+}
+
 function showImage (image, dom) {
   var a = document.createElement('a')
   a.target = '_blank'
@@ -39,10 +48,10 @@ function showWikimediaImage (image, options, dom) {
 
       let m = result.body.match(/<a href="([^"]+\/)([0-9]+)(px-[^"\/]+)" class="mw-thumbnail-link"/)
       if (m) {
-        let src = m[1] + options.size + m[3]
-        let srcset = m[1] + options.size + m[3] + ' 1x, ' +
-          m[1] + Math.ceil(options.size * 1.5) + m[3] + ' 1.5x, ' +
-          m[1] + Math.ceil(options.size * 2) + m[3] + ' 2x'
+        let src = m[1] + nextAllowedSize(options.size) + m[3]
+        let srcset = m[1] + nextAllowedSize(options.size) + m[3] + ' 1x, ' +
+          m[1] + nextAllowedSize(options.size * 1.5) + m[3] + ' 1.5x, ' +
+          m[1] + nextAllowedSize(options.size * 2) + m[3] + ' 2x'
 
         let a = document.createElement('a')
         a.target = '_blank'
@@ -118,14 +127,8 @@ function displayImages(data, category, dom, callback, displayId) {
     imageWrapper.className = 'imageWrapper'
     div.appendChild(imageWrapper)
 
-    const prefSize = Math.max(imageWrapper.offsetWidth, imageWrapper.offsetHeight)
-    let chosenSize = wikimediaAllowedSizes.filter(v => v > prefSize)[0]
-    if (!chosenSize) {
-      chosenSize = wikimediaAllowedSizes[wikimediaAllowedSizes.length - 1]
-    }
-
     options = {
-      size: chosenSize
+      size: Math.max(imageWrapper.offsetWidth, imageWrapper.offsetHeight)
     }
 
     let img = show(data, options, imageWrapper)
