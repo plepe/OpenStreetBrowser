@@ -52,7 +52,7 @@ function ajax_wikipedia ($param) {
     $wp_url = "https://{$wp_lang}.wikipedia.org/wiki/" . urlencode(strtr($wp_page, array(" " => "_")));
   }
 
-  $content = file_get_contents($wp_url);
+  $content = http_get_contents($wp_url);
 
   $langList = array($wp_lang => $wp_url);
 

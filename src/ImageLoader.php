@@ -9,7 +9,7 @@ function ajax_ImageLoaderWikimediaCategoryList ($param) {
     $wm_url .= "&filefrom=" . urlencode(strtr($param['continue'], array(" " => "_")));
   }
 
-  $content = file_get_contents($wm_url);
+  $content = http_get_contents($wm_url);
 
   $dom = new DOMDocument();
   $dom->loadHTML($content);
