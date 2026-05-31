@@ -219,6 +219,7 @@ function CategoryOverpass (options, data, repository) {
     this.layer.hideAll()
 
     this.layer.geowikiAPI = global.overpassFrontend
+    this.layer.setAttribution()
 
     if (this.isOpen) {
       this.layer.check_update_map()
