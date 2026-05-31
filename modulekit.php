@@ -25,6 +25,7 @@ $include = array(
     'src/repositories.php',
     'src/repositoriesGitea.php',
     'src/customCategory.php',
+    'src/overpassUrl.php',
     'src/http_get_contents.php',
   ),
   'css' => array(

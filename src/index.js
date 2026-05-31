@@ -99,7 +99,7 @@ function onload2 (initState) {
     }
   }
 
-  overpassFrontend = new OverpassFrontend(overpassUrl, config.overpassOptions)
+  overpassFrontend = new OverpassFrontend(overpassUrl.url, {...config.overpassOptions, ...(overpassUrl.options ?? {})})
 
   OpenStreetBrowserLoader.setMap(map)
 

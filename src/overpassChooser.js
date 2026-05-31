@@ -4,7 +4,7 @@ var overpassChosenFrontends = {}
 
 register_hook('init', function () {
   if (options.overpassUrl) {
-    overpassUrl = options.overpassUrl
+    overpassUrl = global.config.overpassUrl.filter(entry => entry.url === options.overpassUrl)[0] ?? {}
   }
 })
 
@@ -15,7 +15,7 @@ register_hook('options_form', function (def) {
   }
 
   var values = {}
-  _values.forEach(k => values[k] = k)
+  _values.forEach(k => values[k.url] = k.url)
 
   values['_upload'] = lang('options:overpassUrl:upload')
 
@@ -46,14 +46,16 @@ register_hook('options_save', function (data) {
       overpassChosenFrontends[overpassFrontend.url] = global.overpassFrontend
     }
 
-    const overpassUrl = data.overpassUrl
+    const overpassUrl = data.overpassUrl || config.overpassUrl[0].url
 
     if (overpassUrl === '_upload' && data.overpassUrlUpload) {
       const options = { ...config.overpassOptions, filename: data.overpassUrlUpload.name }
       overpassChosenFrontends[overpassUrl] = new OverpassFrontend(data.overpassUrlUpload.url, config.overpassOptions)
     }
     else if (!(overpassUrl in overpassChosenFrontends)) {
-      overpassChosenFrontends[overpassUrl] = new OverpassFrontend(overpassUrl, config.overpassOptions)
+      const selectedOverpassUrl = global.config.overpassUrl.filter(entry => entry.url === overpassUrl)[0] ?? {}
+
+      overpassChosenFrontends[overpassUrl] = new OverpassFrontend(overpassUrl, {...config.overpassOptions, ...(selectedOverpassUrl.options ?? {})})
     }
 
     global.overpassFrontend = overpassChosenFrontends[overpassUrl]
