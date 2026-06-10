@@ -1,6 +1,6 @@
 {
-    "add_filter": "",
-    "any value": "",
+    "add_filter": "Lisa filter",
+    "any value": "iga väärtus",
     "available_branches": "",
     "back": "",
     "categories": "",
@@ -46,5 +46,6 @@
     "unnamed": "nimeta",
     "wikipedia:no-url-parse": "",
     "zoom_in_appear": "",
-    "zoom_in_more": ""
+    "zoom_in_more": "",
+    "add_config": "Lisa seadistusvalik"
 }
