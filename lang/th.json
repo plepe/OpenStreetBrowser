@@ -108,5 +108,8 @@
     "options:fullscreenMode": "โหมดเต็มจอ",
     "options:fullscreenMode:screen": "ใช้หน้าจอ",
     "options:fullscreenMode:window": "อยู่ในหน้าต่าง",
-    "options:preferredBaseMap": "ฐานแผนที่ที่ต้องการ"
+    "options:preferredBaseMap": "ฐานแผนที่ที่ต้องการ",
+    "options:overpassUrl:custom": "กำหนดที่อยู่ OverpassAPI เอง",
+    "options:overpassUrl:upload": "อัพโหลดไฟล์ OSM",
+    "options:overpassUrl:upload:info": "ไฟล์จะถูกอัปโหลดเข้าสู่หน่วยความจำของเบราว์เซอร์เท่านั้น"
 }
