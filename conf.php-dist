@@ -147,6 +147,7 @@ $languages = array(
   "th", // Thai
   "tr", // Turkish
   "zh-hans", // Simplified Chinese
+  "vi", // Vietnamese
 );
 
 // Uncomment the following lines to use a MYSQL database for session handling.
