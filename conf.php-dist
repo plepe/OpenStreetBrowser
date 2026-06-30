@@ -127,6 +127,7 @@ $languages = array(
   "es", // Spanish
   "et", // Estonian
   "fr", // French
+  "gl", // Galician
   "hu", // Hungarian
   "id", // Indonesian
   "it", // Italian
@@ -144,10 +145,11 @@ $languages = array(
   "sv", // Swedish
   "uk", // Ukrainian
   "nb", // Bokmål (Norwegian)
+  "ta", // Tamil
   "th", // Thai
   "tr", // Turkish
-  "zh-hans", // Simplified Chinese
   "vi", // Vietnamese
+  "zh-hans", // Simplified Chinese
 );
 
 // Uncomment the following lines to use a MYSQL database for session handling.
