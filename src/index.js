@@ -34,6 +34,8 @@ require('./zenMode')
 require('./mapLayers')
 require('./twigFunctions')
 require('./markers')
+require('./contextmenu')
+require('./marker')
 require('./categories')
 require('./wikipedia')
 require('./image')
@@ -63,7 +65,11 @@ window.onload = function () {
     return
   }
 
-  map = L.map('map')
+  const mapOptions = {}
+  call_hooks('map-options', mapOptions)
+
+  map = L.map('map', mapOptions)
+
   map.getMetersPerPixel = mapMetersPerPixel.bind(map)
 
   map.attributionControl.setPrefix('<a target="_blank" href="https://wiki.openstreetmap.org/wiki/OpenStreetBrowser">OpenStreetBrowser</a>')
