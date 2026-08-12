@@ -63,7 +63,7 @@ function placeMarker (e) {
 
 register_hook('contextmenu-items', function (items) {
   items.push({
-    text: 'Place marker here',
+    text: lang('marker:place_marker'),
     callback: placeMarker
   })
 })
