@@ -67,7 +67,7 @@ function update () {
         dom.appendChild(header)
       }
 
-      const block = document.createElement('div')
+      let block = document.createElement('div')
       block.className = 'block'
 
       const geoInfo = document.createElement('div')
@@ -85,18 +85,48 @@ function update () {
 
       dom.appendChild(block)
 
+      block = document.createElement('div')
+      block.className = 'block'
+
+      const menu = document.createElement('ul')
+      menu.className = 'footer'
+      block.appendChild(menu)
+
+      const share = document.createElement('li')
+      share.className = 'shareLink'
+      menu.appendChild(share)
+
+      const link = document.createElement('a')
+      link.href = '#marker=' + getParameter()
+      link.innerHTML = lang('share')
+      link.onclick = () => {
+        navigator.clipboard.writeText(link.href)
+        link.innerHTML = lang('copied-clipboard')
+        global.setTimeout(() => link.innerHTML = lang('share'), 1000)
+        return false
+      }
+      share.appendChild(link)
+
+      dom.appendChild(block)
+
       e.popup._contentNode.classList.add('objectDisplay')
     }
   }
 }
 
+function getParameter () {
+  let result = markerPos[0].toFixed(5) + '/' + markerPos[1].toFixed(5)
+
+  if (markerText) {
+    result += '/' + markerText
+  }
+
+  return result
+}
+
 register_hook('state-get', function (state) {
   if (markerPos) {
-    state.marker = markerPos[0].toFixed(5) + '/' + markerPos[1].toFixed(5)
-
-    if (markerText) {
-      state.marker += '/' + markerText
-    }
+    state.marker = getParameter()
   }
 })
 
