@@ -11,7 +11,7 @@ register_hook('state-apply', function (state) {
   if (state.marker) {
     const m = state.marker.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)(?:\/(.*))?$/)
     if (m) {
-      markerText = m[3]
+      markerText = m[3] ?? ''
       markerPos = [
         parseFloat(m[1]),
         parseFloat(m[2])
@@ -37,8 +37,27 @@ function update () {
 
   if (markerPos) {
     marker = L.marker(markerPos).addTo(global.map)
-    if (markerText) {
-      marker.bindPopup(markerText)
+    popup = L.popup()
+
+    const dom = document.createElement('div')
+
+    popup.setContent('<div class="header" data-order="-1000"><div class="title">' + markerText + '</div></div>')
+    marker.bindPopup(popup)
+
+    popup.openCallback = (e) => {
+      const dom = e.popup._contentNode
+      console.log(e)
+
+      let closeButton = document.createElement('a')
+      closeButton.setAttribute('data-order', -2000)
+      closeButton.className = 'leaflet-popup-close-button'
+      closeButton.innerHTML = '×'
+      dom.insertBefore(closeButton, dom.firstChild)
+      closeButton.onclick = () => {
+        e.popup.close()
+      }
+
+      e.popup._contentNode.classList.add('objectDisplay')
     }
   }
 }
