@@ -112,5 +112,6 @@
     "options:overpassUrl:custom": "URL OverpassAPI personalizzato",
     "options:overpassUrl:info": "URL di una istanza OverpassAPI o un file .osm, .osm.json o .osm.bz2.",
     "options:overpassUrl:upload:info": "I file verranno caricati solo nella memoria del browser.",
-    "options:overpassUrl:upload": "Carica file OSM"
+    "options:overpassUrl:upload": "Carica file OSM",
+    "marker:place_marker": "Inserisci segnaposto qui"
 }
