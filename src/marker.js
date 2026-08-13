@@ -44,6 +44,7 @@ function update () {
 
     popup.openCallback = (e) => {
       const dom = e.popup._contentNode
+      dom.innerHTML = ''
 
       const closeButton = document.createElement('a')
       closeButton.setAttribute('data-order', -2000)
