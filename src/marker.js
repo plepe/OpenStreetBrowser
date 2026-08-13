@@ -1,4 +1,5 @@
 const state = require('./state')
+const formatUnits = require('./formatUnits')
 
 let marker
 let markerPos
@@ -62,6 +63,24 @@ function update () {
 
       header.appendChild(title)
       dom.appendChild(header)
+
+      const block = document.createElement('div')
+      block.className = 'block'
+
+      const geoInfo = document.createElement('div')
+      geoInfo.className = 'geo-info'
+      block.appendChild(geoInfo)
+
+      const objectCenter = document.createElement('div')
+      objectCenter.className = 'object-center'
+      geoInfo.appendChild(objectCenter)
+
+      const value = document.createElement('div')
+      value.className = 'value'
+      objectCenter.appendChild(value)
+      value.innerHTML = formatUnits.coord({ lat: markerPos[0], lng: markerPos[1] })
+
+      dom.appendChild(block)
 
       e.popup._contentNode.classList.add('objectDisplay')
     }
