@@ -54,15 +54,17 @@ function update () {
         e.popup.close()
       }
 
-      const header = document.createElement('div')
-      header.className = 'header'
+      if (markerText) {
+        const header = document.createElement('div')
+        header.className = 'header'
 
-      const title = document.createElement('div')
-      title.className = 'title'
-      title.appendChild(document.createTextNode(markerText))
+        const title = document.createElement('div')
+        title.className = 'title'
+        title.appendChild(document.createTextNode(markerText))
 
-      header.appendChild(title)
-      dom.appendChild(header)
+        header.appendChild(title)
+        dom.appendChild(header)
+      }
 
       const block = document.createElement('div')
       block.className = 'block'
