@@ -39,16 +39,12 @@ function update () {
     marker = L.marker(markerPos).addTo(global.map)
     popup = L.popup()
 
-    const dom = document.createElement('div')
-
-    popup.setContent('<div class="header" data-order="-1000"><div class="title">' + markerText + '</div></div>')
     marker.bindPopup(popup)
 
     popup.openCallback = (e) => {
       const dom = e.popup._contentNode
-      console.log(e)
 
-      let closeButton = document.createElement('a')
+      const closeButton = document.createElement('a')
       closeButton.setAttribute('data-order', -2000)
       closeButton.className = 'leaflet-popup-close-button'
       closeButton.innerHTML = '×'
@@ -56,6 +52,16 @@ function update () {
       closeButton.onclick = () => {
         e.popup.close()
       }
+
+      const header = document.createElement('div')
+      header.className = 'header'
+
+      const title = document.createElement('div')
+      title.className = 'title'
+      title.appendChild(document.createTextNode(markerText))
+
+      header.appendChild(title)
+      dom.appendChild(header)
 
       e.popup._contentNode.classList.add('objectDisplay')
     }
