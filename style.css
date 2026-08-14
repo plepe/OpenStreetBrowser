@@ -714,3 +714,7 @@ ul.overpass-layer-list > li > a > .content > .details {
   text-align: center;
   z-index: 1;
 }
+
+.marker-edit-form textarea {
+  width: 100%;
+}

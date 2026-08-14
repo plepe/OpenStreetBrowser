@@ -147,6 +147,9 @@ function onload2 (initState) {
         category.notifyPopupOpen(e.popup.object, e.popup)
       })
     }
+    if (e.popup.openCallback) {
+      e.popup.openCallback(e)
+    }
   })
   map.on('popupclose', function (e) {
     if (e.popup.object) {
