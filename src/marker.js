@@ -168,6 +168,8 @@ class Marker {
 
       state.update(null, true)
     }
+
+    textarea.focus()
   }
 
   remove () {
