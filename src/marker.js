@@ -107,10 +107,66 @@ function update () {
       }
       share.appendChild(link)
 
+      const li = document.createElement('li')
+      li.className = 'shareLink'
+      menu.appendChild(li)
+
+      const editLink = document.createElement('a')
+      editLink.className = 'editLink'
+      editLink.href = '#'
+      editLink.innerHTML = lang('edit')
+      li.appendChild(editLink)
+
+      editLink.onclick = () => {
+        edit(dom)
+        return false
+      }
+
       dom.appendChild(block)
 
       e.popup._contentNode.classList.add('objectDisplay')
     }
+  }
+}
+
+function edit (dom) {
+  let header = dom.querySelector('.header')
+  if (!header) {
+    header = document.createElement('div')
+    header.className = 'header'
+    dom.insertBefore(header, dom.firstChild)
+  }
+
+  header.innerHTML = ''
+
+  const form = document.createElement('form')
+  form.className = 'marker-edit-form'
+  header.appendChild(form)
+
+  const textarea = document.createElement('textarea')
+  form.appendChild(textarea)
+  textarea.value = markerText
+
+  const submit = document.createElement('input')
+  submit.type = 'submit'
+  submit.value = lang('save')
+  form.appendChild(submit)
+
+  form.onsubmit = () => {
+    markerText = textarea.value
+    header.innerHTML = ''
+
+    if (markerText) {
+      const title = document.createElement('div')
+      title.className = 'title'
+      title.appendChild(document.createTextNode(markerText))
+
+      header.appendChild(title)
+    } else {
+      dom.removeChild(header)
+    }
+
+    state.update(null, true)
   }
 }
 
