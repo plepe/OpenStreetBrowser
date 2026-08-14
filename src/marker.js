@@ -89,7 +89,7 @@ class Marker {
       }
       share.appendChild(link)
 
-      const li = document.createElement('li')
+      let li = document.createElement('li')
       li.className = 'shareLink'
       menu.appendChild(li)
 
@@ -101,6 +101,23 @@ class Marker {
 
       editLink.onclick = () => {
         this.edit(dom)
+        return false
+      }
+
+      li = document.createElement('li')
+      li.className = 'removeLink'
+      menu.appendChild(li)
+
+      const removeLink = document.createElement('a')
+      removeLink.className = 'removeLink'
+      removeLink.href = '#'
+      removeLink.innerHTML = lang('remove')
+      li.appendChild(removeLink)
+
+      removeLink.onclick = () => {
+        this.remove()
+        markers = markers.splice(markers.indexOf(this), 1)
+        state.update(null, true)
         return false
       }
 
