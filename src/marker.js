@@ -2,47 +2,29 @@ const state = require('./state')
 const formatUnits = require('./formatUnits')
 
 let marker
-let markerPos
-let markerText
 
-register_hook('state-apply', function (state) {
-  markerPos = null
-  markerText = null
+class Marker {
+  constructor (pos, text) {
+    this.pos = pos
+    this.text = text
+  }
 
-  if (state.marker) {
-    const m = state.marker.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)(?:\/(.*))?$/)
-    if (m) {
-      markerText = m[3] ?? ''
-      markerPos = [
-        parseFloat(m[1]),
-        parseFloat(m[2])
-      ]
+  getParameter () {
+    let result = this.pos[0].toFixed(5) + '/' + this.pos[1].toFixed(5)
 
-      update()
+    if (this.text) {
+      result += '/' + this.text
     }
 
-    global.setTimeout(() => {
-      // After loading a new marker, check if it visible - if not, fly to position
-      const viewport = global.map.getBounds()
-      if (!viewport.contains(markerPos)) {
-        map.flyTo(markerPos)
-      }
-    }, 1)
-  }
-})
-
-function update () {
-  if (marker) {
-    global.map.removeLayer(marker)
+    return result
   }
 
-  if (markerPos) {
-    marker = L.marker(markerPos).addTo(global.map)
-    popup = L.popup()
+  show () {
+    this.feature = L.marker(this.pos).addTo(global.map)
+    this.popup = L.popup()
 
-    marker.bindPopup(popup)
-
-    popup.openCallback = (e) => {
+    this.feature.bindPopup(this.popup)
+    this.popup.openCallback = (e) => {
       const dom = e.popup._contentNode
       dom.innerHTML = ''
 
@@ -55,13 +37,13 @@ function update () {
         e.popup.close()
       }
 
-      if (markerText) {
+      if (this.text) {
         const header = document.createElement('div')
         header.className = 'header'
 
         const title = document.createElement('div')
         title.className = 'title'
-        title.appendChild(document.createTextNode(markerText))
+        title.appendChild(document.createTextNode(this.text))
 
         header.appendChild(title)
         dom.appendChild(header)
@@ -81,7 +63,7 @@ function update () {
       const value = document.createElement('div')
       value.className = 'value'
       objectCenter.appendChild(value)
-      value.innerHTML = formatUnits.coord({ lat: markerPos[0], lng: markerPos[1] })
+      value.innerHTML = formatUnits.coord({ lat: this.pos[0], lng: this.pos[1] })
 
       dom.appendChild(block)
 
@@ -97,7 +79,7 @@ function update () {
       menu.appendChild(share)
 
       const link = document.createElement('a')
-      link.href = '#marker=' + getParameter()
+      link.href = '#marker=' + this.getParameter()
       link.innerHTML = lang('share')
       link.onclick = () => {
         navigator.clipboard.writeText(link.href)
@@ -118,7 +100,7 @@ function update () {
       li.appendChild(editLink)
 
       editLink.onclick = () => {
-        edit(dom)
+        this.edit(dom)
         return false
       }
 
@@ -127,69 +109,97 @@ function update () {
       e.popup._contentNode.classList.add('objectDisplay')
     }
   }
-}
 
-function edit (dom) {
-  let header = dom.querySelector('.header')
-  if (!header) {
-    header = document.createElement('div')
-    header.className = 'header'
-    dom.insertBefore(header, dom.firstChild)
-  }
-
-  header.innerHTML = ''
-
-  const form = document.createElement('form')
-  form.className = 'marker-edit-form'
-  header.appendChild(form)
-
-  const textarea = document.createElement('textarea')
-  form.appendChild(textarea)
-  textarea.value = markerText
-
-  const submit = document.createElement('input')
-  submit.type = 'submit'
-  submit.value = lang('save')
-  form.appendChild(submit)
-
-  form.onsubmit = () => {
-    markerText = textarea.value
-    header.innerHTML = ''
-
-    if (markerText) {
-      const title = document.createElement('div')
-      title.className = 'title'
-      title.appendChild(document.createTextNode(markerText))
-
-      header.appendChild(title)
-    } else {
-      dom.removeChild(header)
+  edit (dom) {
+    let header = dom.querySelector('.header')
+    if (!header) {
+      header = document.createElement('div')
+      header.className = 'header'
+      dom.insertBefore(header, dom.firstChild)
     }
 
-    state.update(null, true)
+    header.innerHTML = ''
+
+    const form = document.createElement('form')
+    form.className = 'marker-edit-form'
+    header.appendChild(form)
+
+    const textarea = document.createElement('textarea')
+    form.appendChild(textarea)
+    textarea.value = this.text
+
+    const submit = document.createElement('input')
+    submit.type = 'submit'
+    submit.value = lang('save')
+    form.appendChild(submit)
+
+    form.onsubmit = () => {
+      this.text = textarea.value
+      header.innerHTML = ''
+
+      if (this.text) {
+        const title = document.createElement('div')
+        title.className = 'title'
+        title.appendChild(document.createTextNode(this.text))
+
+        header.appendChild(title)
+      } else {
+        dom.removeChild(header)
+      }
+
+      state.update(null, true)
+    }
+  }
+
+  remove () {
+    global.map.removeLayer(this.feature)
   }
 }
 
-function getParameter () {
-  let result = markerPos[0].toFixed(5) + '/' + markerPos[1].toFixed(5)
 
-  if (markerText) {
-    result += '/' + markerText
+register_hook('state-apply', function (state) {
+  if (state.marker) {
+    if (marker) {
+      marker.remove()
+    }
+
+    const m = state.marker.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)(?:\/(.*))?$/)
+    if (m) {
+      const markerText = m[3] ?? ''
+      const markerPos = [
+        parseFloat(m[1]),
+        parseFloat(m[2])
+      ]
+
+      marker = new Marker(markerPos, markerText)
+      marker.show()
+    }
+
+    global.setTimeout(() => {
+      // After loading a new marker, check if it visible - if not, fly to position
+      const viewport = global.map.getBounds()
+      if (!viewport.contains(marker.pos)) {
+        map.flyTo(marker.pos)
+      }
+    }, 1)
   }
-
-  return result
-}
+})
 
 register_hook('state-get', function (state) {
-  if (markerPos) {
-    state.marker = getParameter()
+  if (marker) {
+    state.marker = marker.getParameter()
   }
 })
 
 function placeMarker (e) {
-  markerPos = [ e.latlng.lat, e.latlng.lng ]
-  markerText = null
-  update()
+  if (marker) {
+    marker.remove()
+  }
+
+  const markerPos = [ e.latlng.lat, e.latlng.lng ]
+  const markerText = null
+  marker = new Marker(markerPos, markerText)
+  marker.show()
 
   state.update(null, true)
 }
