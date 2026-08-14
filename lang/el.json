@@ -112,5 +112,8 @@
     "customCategory:list": "Λίστα δημοφιλών προσαρμοσμένων κατηγοριών",
     "tip-tutorial": "Διαβάστε τον [Εκπαιδευτικό Οδηγό]",
     "options:overpassUrl:upload": "Ανέβασμα αρχείου OSM",
-    "options:overpassUrl:upload:info": "Τα αρχεία θα ανέβουν μόνο στη μνήμη του προγράμματος περιήγησης."
+    "options:overpassUrl:upload:info": "Τα αρχεία θα ανέβουν μόνο στη μνήμη του προγράμματος περιήγησης.",
+    "marker:place_marker": "Τοποθέτηση δείκτη εδώ",
+    "share": "Κοινοποίηση",
+    "remove": "Αφαίρεση"
 }
