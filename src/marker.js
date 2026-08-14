@@ -6,7 +6,7 @@ let markers = []
 class Marker {
   constructor (pos, text) {
     this.pos = pos
-    this.text = text.replace('_1', ',').replace('_2', '/').replace('_0', '_')
+    this.text = (text ?? '').replace('_1', ',').replace('_2', '/').replace('_0', '_')
   }
 
   getParameter () {
