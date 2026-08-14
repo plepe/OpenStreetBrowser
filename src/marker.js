@@ -1,7 +1,7 @@
 const state = require('./state')
 const formatUnits = require('./formatUnits')
 
-let marker
+let markers = []
 
 class Marker {
   constructor (pos, text) {
@@ -159,46 +159,47 @@ class Marker {
 
 register_hook('state-apply', function (state) {
   if (state.marker) {
-    if (marker) {
-      marker.remove()
-    }
+    markers.forEach(marker => marker.remove())
 
-    const m = state.marker.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)(?:\/(.*))?$/)
-    if (m) {
-      const markerText = m[3] ?? ''
-      const markerPos = [
-        parseFloat(m[1]),
-        parseFloat(m[2])
-      ]
+    parameters = state.marker.split(',')
+    markers = parameters.map(p => {
+      const m = p.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)(?:\/(.*))?$/)
+      if (m) {
+        const markerText = m[3] ?? ''
+        const markerPos = [
+          parseFloat(m[1]),
+          parseFloat(m[2])
+        ]
 
-      marker = new Marker(markerPos, markerText)
-      marker.show()
-    }
+        marker = new Marker(markerPos, markerText)
+        marker.show()
+        return marker
+      }
+    }).filter(marker => marker)
 
     global.setTimeout(() => {
       // After loading a new marker, check if it visible - if not, fly to position
-      const viewport = global.map.getBounds()
-      if (!viewport.contains(marker.pos)) {
-        map.flyTo(marker.pos)
+      if (markers.length) {
+        const viewport = global.map.getBounds()
+        if (!viewport.contains(markers[0].pos)) {
+          map.flyTo(markers[0].pos)
+        }
       }
     }, 1)
   }
 })
 
 register_hook('state-get', function (state) {
-  if (marker) {
-    state.marker = marker.getParameter()
+  if (markers.length) {
+    state.marker = markers.map(marker => marker.getParameter()).join(',')
   }
 })
 
 function placeMarker (e) {
-  if (marker) {
-    marker.remove()
-  }
-
   const markerPos = [ e.latlng.lat, e.latlng.lng ]
   const markerText = null
-  marker = new Marker(markerPos, markerText)
+  const marker = new Marker(markerPos, markerText)
+  markers.push(marker)
   marker.show()
 
   state.update(null, true)
