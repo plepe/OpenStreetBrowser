@@ -84,7 +84,9 @@ class Marker {
       link.onclick = () => {
         navigator.clipboard.writeText(link.href)
         link.innerHTML = lang('copied-clipboard')
-        global.setTimeout(() => link.innerHTML = lang('share'), 1000)
+        global.setTimeout(() => {
+          link.innerHTML = lang('share')
+        }, 1000)
         return false
       }
       share.appendChild(link)
@@ -173,25 +175,26 @@ class Marker {
   }
 }
 
-
 register_hook('state-apply', function (state) {
   if (state.marker) {
     markers.forEach(marker => marker.remove())
 
-    parameters = state.marker.split(',')
+    const parameters = state.marker.split(',')
     markers = parameters.map(p => {
       const m = p.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)(?:\/(.*))?$/)
-      if (m) {
-        const markerText = m[3] ?? ''
-        const markerPos = [
-          parseFloat(m[1]),
-          parseFloat(m[2])
-        ]
-
-        marker = new Marker(markerPos, markerText)
-        marker.show()
-        return marker
+      if (!m) {
+        return null
       }
+
+      const markerText = m[3] ?? ''
+      const markerPos = [
+        parseFloat(m[1]),
+        parseFloat(m[2])
+      ]
+
+      const marker = new Marker(markerPos, markerText)
+      marker.show()
+      return marker
     }).filter(marker => marker)
 
     global.setTimeout(() => {
@@ -213,7 +216,7 @@ register_hook('state-get', function (state) {
 })
 
 function placeMarker (e) {
-  const markerPos = [ e.latlng.lat, e.latlng.lng ]
+  const markerPos = [e.latlng.lat, e.latlng.lng]
   const markerText = null
   const marker = new Marker(markerPos, markerText)
   markers.push(marker)
