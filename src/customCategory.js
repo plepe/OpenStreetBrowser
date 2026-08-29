@@ -4,6 +4,7 @@ const md5 = require('md5')
 const OverpassLayer = require('@geowiki-net/leaflet-geowiki-layer')
 const OverpassFrontendFilter = require('@geowiki-net/geowiki-api/src/Filter')
 const jsonMultilineStrings = require('json-multiline-strings')
+const copyToClipboard = require('./copyToClipboard')
 
 const Window = require('./Window')
 const OpenStreetBrowserLoader = require('./OpenStreetBrowserLoader')
@@ -359,13 +360,7 @@ hooks.register('category-overpass-init', (category) => {
       category.tabShare.header.className = 'share-button'
       category.tabShare.on('select', () => {
         category.tabShare.unselect()
-        navigator.clipboard.writeText(url)
-
-        const notify = document.createElement('div')
-        notify.className = 'notify'
-        notify.innerHTML = lang('copied-clipboard')
-        category.tabShare.header.appendChild(notify)
-        global.setTimeout(() => category.tabShare.header.removeChild(notify), 2000)
+        copyToClipboard(url, category.tabShare.header)
       })
     }
   } else {

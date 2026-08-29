@@ -702,10 +702,6 @@ ul.overpass-layer-list > li > a > .content > .details {
 }
 
 /* Copy to clipboard */
-.share-button {
-  position: relative;
-}
-.share-button > .notify,
 .copy-to-clipboard {
   position: absolute;
   background: white;
