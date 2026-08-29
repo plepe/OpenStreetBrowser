@@ -1,5 +1,6 @@
 const state = require('./state')
 const formatUnits = require('./formatUnits')
+const copyToClipboard = require('./copyToClipboard')
 
 let markers = []
 
@@ -82,11 +83,9 @@ class Marker {
       link.href = '#marker=' + this.getParameter()
       link.innerHTML = lang('share')
       link.onclick = () => {
-        navigator.clipboard.writeText(link.href)
-        link.innerHTML = lang('copied-clipboard')
-        global.setTimeout(() => {
+        copyToClipboard(link.href, link, () => {
           link.innerHTML = lang('share')
-        }, 1000)
+        })
         return false
       }
       share.appendChild(link)
