@@ -83,9 +83,7 @@ class Marker {
       link.href = '#marker=' + this.getParameter()
       link.innerHTML = lang('share')
       link.onclick = () => {
-        copyToClipboard(link.href, link, () => {
-          link.innerHTML = lang('share')
-        })
+        copyToClipboard(link.href, link)
         return false
       }
       share.appendChild(link)
