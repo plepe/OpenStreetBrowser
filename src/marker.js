@@ -118,7 +118,7 @@ class Marker {
 
       removeLink.onclick = () => {
         this.remove()
-        markers = markers.splice(markers.indexOf(this), 1)
+        markers.splice(markers.indexOf(this), 1)
         state.update(null, true)
         return false
       }
