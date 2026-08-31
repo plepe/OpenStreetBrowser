@@ -112,5 +112,8 @@
     "options:overpassUrl:info": "Egy Overpass API példány URL-je, vagy egy .osm, .osm.json vagy .osm.bz2 fájl.",
     "options:overpassUrl:custom": "Egyéni Overpass API URL",
     "options:overpassUrl:upload": "OSM-fájl feltöltése",
-    "options:overpassUrl:upload:info": "A fájlok csak a böngésző memóriájában lesznek feltöltve."
+    "options:overpassUrl:upload:info": "A fájlok csak a böngésző memóriájában lesznek feltöltve.",
+    "marker:place_marker": "Jelölő elhelyezése",
+    "share": "Megosztás",
+    "remove": "Eltávolítás"
 }
