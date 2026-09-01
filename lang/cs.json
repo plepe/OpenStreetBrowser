@@ -108,5 +108,10 @@
     "apply-keep": "Použít a pokračovat v úpravách",
     "options:fullscreenMode": "Celoobrazovkový režim",
     "options:fullscreenMode:screen": "Použít celou obrazovku",
-    "options:fullscreenMode:window": "Zůstat v okně"
+    "options:fullscreenMode:window": "Zůstat v okně",
+    "options:overpassUrl:upload": "Nahrát soubor OSM",
+    "options:overpassUrl:upload:info": "Soubory budou nahrány pouze do paměti prohlížeče.",
+    "marker:place_marker": "Zde umístěte značku",
+    "share": "Sdílet",
+    "remove": "Odebrat"
 }
