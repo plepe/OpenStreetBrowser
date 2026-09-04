@@ -4,7 +4,7 @@
   "description": "A re-make of the famous OpenStreetBrowser (pure JS, using Overpass API)",
   "main": "src/export.js",
   "repository": "https://github.com/plepe/openstreetbrowser",
-  "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
+  "author": "Stephan B\u00f6sch-Plepelits <skunk@xover.mud.at>",
   "license": "GPL-3.0",
   "dependencies": {
     "@babel/cli": "^7.19.3",
@@ -56,7 +56,8 @@
   "overrides": {
     "osmtogeojson": {
       "@xmldom/xmldom": "~0.8.10"
-    }
+    },
+    "locutus": "3.0.25"
   },
   "scripts": {
     "test": "mocha --bail",
