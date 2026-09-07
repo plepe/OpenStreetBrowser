@@ -106,5 +106,13 @@
     "formatUnits:coordSpacer:space": "Przestrzeń",
     "formatUnits:coordFormat:help": "Definicja formatu określona w [module formatCoords]",
     "formatUnits:coordSpacer:colon": "Dwukropek",
-    "options:fullscreenMode": "Tryb pełnoekranowy"
+    "options:fullscreenMode": "Tryb pełnoekranowy",
+    "options:fullscreenMode:screen": "Użyj ekranu",
+    "options:fullscreenMode:window": "Pozostań w oknie",
+    "options:overpassUrl:info": "URL instancji OverpassAPI albo plik .osm, .osm.json, .osm.bz2",
+    "options:overpassUrl:upload": "Wgraj plik OSM",
+    "options:overpassUrl:upload:info": "Pliki zostaną wgrane jedynie do pamięci przeglądarki.",
+    "marker:place_marker": "Dodaj tutaj znacznik",
+    "share": "Udostępnij",
+    "remove": "Usuń"
 }
