@@ -112,5 +112,8 @@
     "options:overpassUrl:custom": "Пользовательский URL OverpassAPI",
     "options:overpassUrl:info": "URL экземпляра OverpassAPI или файл .osm, .osm.json, .osm.bz2.",
     "options:overpassUrl:upload": "Загрузить файл OSM",
-    "options:overpassUrl:upload:info": "Файлы будут загружены только в память браузера."
+    "options:overpassUrl:upload:info": "Файлы будут загружены только в память браузера.",
+    "marker:place_marker": "Поставьте метку здесь",
+    "share": "Поделиться",
+    "remove": "Удалить"
 }
