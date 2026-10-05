@@ -113,5 +113,7 @@
     "options:overpassUrl:upload:info": "Soubory budou nahrány pouze do paměti prohlížeče.",
     "marker:place_marker": "Zde umístěte značku",
     "share": "Sdílet",
-    "remove": "Odebrat"
+    "remove": "Odebrat",
+    "options:overpassUrl:custom": "Vlastní OverpassAPI URL",
+    "options:overpassUrl:info": "URL souboru OverpassAPI nebo .osm.json nebo .osm.bz2."
 }
