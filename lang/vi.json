@@ -1,1 +1,16 @@
-{}
+{
+    "add_filter": "Thêm bộ lọc",
+    "add_config": "Thêm tùy chọn cấu hình",
+    "any value": "bất kỳ giá trị nào",
+    "back": "quay trở lại",
+    "cancel": "Hủy bỏ",
+    "close": "Đóng",
+    "closed": "Đã đóng cửa",
+    "default": "mặc định",
+    "download": "Tải xuống",
+    "apply-keep": "Áp dụng & tiếp tục chỉnh sửa",
+    "apply-close": "Áp dụng & đóng",
+    "export:OSMXML": "Tải xuống dưới dạng OSM XML",
+    "facilities": "Cơ sở vật chất",
+    "filter:type": "Loại"
+}
